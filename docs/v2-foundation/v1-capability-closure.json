@@ -15,7 +15,7 @@
     "openAction": null,
     "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "Tenant record + FQDN lifecycle is fully delivered and proven (proof:domain-identity-matrix; proof:tenant-custom-domain-resolution); provisioning operates via the system-admin surface. A richer self-service provisioning UI is not part of this capability \u2014 the '(partial UI)' note is cosmetic, not a closure gap.",
+    "acceptablePartialRouteReason": "Tenant record + FQDN lifecycle is fully delivered and proven (proof:domain-identity-matrix; proof:tenant-custom-domain-resolution); provisioning operates via the system-admin surface. A richer self-service provisioning UI is not part of this capability — the '(partial UI)' note is cosmetic, not a closure gap.",
     "semanticCompleteness": {
       "status": "complete",
       "lifecycle": "Tenant host identity lifecycle is explicit: apex/reserved/invalid/malformed hosts resolve no tenant, seeded slug FQDNs resolve to hostSource=slug, and active verified custom domains resolve to hostSource=custom_domain. Evidence: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts and tenant-custom-domain-resolution runtime proof.",
@@ -28,7 +28,16 @@
       "readinessModel": "Readiness is invariant-ready once the resolver and registry are available; proofs skip honestly only when required seeded/local substrate is absent and do not fake tenant resolution. Evidence: domain-identity-matrix and tenant-custom-domain-resolution runtime proofs.",
       "proof": "Runtime proofs: proof:domain-identity-matrix validates classification plus live slug resolution; proof:tenant-custom-domain-resolution validates live tenant_domains resolution, inactive/pending/disabled rejection, and unique enabled-domain guard. Proof level: 4 live substrate validation.",
       "uiSemanticDefinition": "V2 UI generation must treat tenant identity as a context primitive: display current tenant/host source, distinguish apex/global vs tenant contexts, expose provisioning only to platform tenant operators, and never infer a tenant from invalid or untrusted hosts."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0029, ADR-0021; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "User identity + tenant membership",
@@ -57,7 +66,16 @@
       "readinessModel": "Membership readiness is invariant-ready once tenant context and Postgres identity tables are available; list reads use tenant context and pending invitation queries always filter by organisation_id. Evidence: members usecase comments and tests.",
       "proof": "Unit proofs: apps/platform-api/tests/unit/members.test.ts, members-v2.test.ts, packages/domain-identity/tests/domain-identity.test.ts; substrate proof: postgres-identity-repository and organisation profile/member route coverage in test:platform-api. Proof level: 3 state-machine/permission validation.",
       "uiSemanticDefinition": "V2 UI must expose member and pending-invitation tables, invite form, role/status/username edit actions, resend and remove actions, external identity read-only details, last-admin guard states, duplicate/conflict states, validation errors, permission-denied states, and audit-before-change expectations."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0036, ADR-0038; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "End-user profile + preferences self-service",
@@ -86,7 +104,16 @@
       "readinessModel": "Profile and preferences are always-on once the Postgres substrate is migrated; live proofs skip honestly if Postgres is unavailable and verify no secret-bearing columns plus RLS tenant isolation. Evidence: profile-self-service and notification-preferences runtime proofs.",
       "proof": "Unit proofs: apps/platform-api/tests/unit/profile.test.ts and notifications.test.ts. Runtime proofs: proof:profile-self-service, proof:notification-preferences, proof:notification-dispatch. Proof level: 4 live Postgres/RLS and live route-handler validation.",
       "uiSemanticDefinition": "V2 UI must expose Account profile fields displayName/locale/timezone, notification preference channel/category toggles, read defaults, update validation, own-user-only semantics, no-tenant/operator default states, permission-denied states, and no secret-bearing payload display."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0068; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "API keys / personal access tokens",
@@ -115,7 +142,16 @@
       "readinessModel": "Runtime readiness is proof:api-keys plus proof:api-key-routes. The live Postgres proof skips honestly when the substrate is unavailable and never fake-passes. Evidence: apps/platform-api/scripts/api-keys-runtime-proof.ts.",
       "proof": "Unit proof: apps/platform-api/tests/unit/api-keys.test.ts. Runtime proofs: apps/platform-api/scripts/api-keys-runtime-proof.ts and apps/platform-api/scripts/api-key-routes-runtime-proof.ts. Proof levels: 4 live substrate for repository/crypto/RLS and 4 live route-handler validation.",
       "uiSemanticDefinition": "V2 UI must expose key list metadata, create form with name/scopes and secret reveal-once, revoke action, developer entitlement/active-count summary, operator read-only tenant key view, permission-denied states, and no secret/hash in list surfaces."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant groups",
@@ -134,8 +170,8 @@
     "v2Target": "reuse-and-extend: V1 API+permissions+contract are the semantic source; V2 must add the missing admin UI slice (no behaviour change)",
     "completionAction": "V1C-01",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "UI semantic gap closed by the Semantic Reference Harness headless journey (proof:ui-semantic-groups) \u2014 machine-readable definition + passing journey \u2014 establishing the V2 build contract (states/permissions/validation/a11y). A shipped V1 admin page is intentionally out of scope for this semantic closure.",
-    "closedBy": "V1-completion acceleration slice \u2014 Semantic Reference Harness",
+    "acceptablePartialRouteReason": "UI semantic gap closed by the Semantic Reference Harness headless journey (proof:ui-semantic-groups) — machine-readable definition + passing journey — establishing the V2 build contract (states/permissions/validation/a11y). A shipped V1 admin page is intentionally out of scope for this semantic closure.",
+    "closedBy": "V1-completion acceleration slice — Semantic Reference Harness",
     "semanticCompleteness": {
       "status": "complete",
       "lifecycle": "Group lifecycle is explicit: list existing Keycloak groups, create after name validation and duplicate check, update after existence and conflict checks, and delete after protected-name guard. Evidence: apps/platform-api/src/usecases/groups.ts and apps/platform-api/tests/unit/groups.test.ts.",
@@ -148,7 +184,16 @@
       "readinessModel": "Readiness is invariant-ready for semantics, with route execution requiring tenant context plus auth-settings credential for the tenant realm; the UI semantic harness proves the V2 build contract without shipping a V1 page. Evidence: route credential checks and proof:ui-semantic-groups.",
       "proof": "Unit proof: apps/platform-api/tests/unit/groups.test.ts. UI semantic proof: proof:ui-semantic-groups. Proof level: 3 behaviour/state validation plus semantic harness for future UI generation.",
       "uiSemanticDefinition": "V2 UI must expose group list, create/update/delete actions, reserved/protected and duplicate-name states, tenant credential unavailable state, permission gates, validation messaging, and accessible table/form/action semantics from the Semantic Reference Harness."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0021, ADR-0058, ADR-ACT-0285 (UI semantic harness); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Sub-organisations",
@@ -167,8 +212,8 @@
     "v2Target": "reuse-and-extend: V1 API+permissions+contract are the semantic source; V2 must add the missing admin UI slice (no behaviour change)",
     "completionAction": "V1C-02",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "UI semantic gap closed by the Semantic Reference Harness headless journey (proof:ui-semantic-sub-organisations) as a FLAT tenant-scoped list \u2014 parent_id is internal-only and not exposed by the API, so no hierarchy UI was invented. A shipped V1 admin page is intentionally out of scope for this semantic closure.",
-    "closedBy": "V1-completion acceleration slice \u2014 Semantic Reference Harness",
+    "acceptablePartialRouteReason": "UI semantic gap closed by the Semantic Reference Harness headless journey (proof:ui-semantic-sub-organisations) as a FLAT tenant-scoped list — parent_id is internal-only and not exposed by the API, so no hierarchy UI was invented. A shipped V1 admin page is intentionally out of scope for this semantic closure.",
+    "closedBy": "V1-completion acceleration slice — Semantic Reference Harness",
     "semanticCompleteness": {
       "status": "complete",
       "lifecycle": "Sub-organisation lifecycle is explicit: list active child organisations, create with slug/displayName, update displayName, and deactivate by setting is_active false. Evidence: apps/platform-api/src/usecases/sub-organisations.ts and sub-organisations unit tests.",
@@ -181,7 +226,16 @@
       "readinessModel": "Readiness is invariant-ready once Postgres organisations table is available; organisations has no RLS, so every query explicitly filters by parent_id from the FQDN-resolved tenant context. Evidence: sub-organisations usecase comments and tests.",
       "proof": "Unit proof: apps/platform-api/tests/unit/sub-organisations.test.ts. UI semantic proof: proof:ui-semantic-sub-organisations. Proof level: 3 state-machine/validation proof plus semantic harness for future UI generation.",
       "uiSemanticDefinition": "V2 UI must expose a flat sub-organisation table, create and displayName update forms, deactivate action, reserved/duplicate/not-found states, parent-internal semantics, permission gates, validation messaging, and accessible table/form/action states from the Semantic Reference Harness."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0021, ADR-0058, ADR-ACT-0285 (UI semantic harness); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "RBAC (roles + permissions)",
@@ -210,7 +264,16 @@
       "readinessModel": "Readiness is invariant-ready because permission resolution is pure and covered by domain tests; route enforcement is exercised through API pipeline permission tests. Evidence: domain-identity tests and apps/platform-api/tests/substrate/api-pipeline.test.ts.",
       "proof": "Unit proofs: packages/domain-identity/tests/domain-identity.test.ts, apps/platform-api/tests/unit/members.test.ts, contracts-admin-drift tests. Proof level: 3 semantic role/permission state validation.",
       "uiSemanticDefinition": "V2 UI must derive role pickers from TENANT_ROLES, never offer system-admin as a tenant role, display permission-denied states from requiredPermission, enforce last-admin guard messaging, and keep role labels separate from route permission strings."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0021; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "ABAC / Policy Decision Point",
@@ -242,7 +305,16 @@
       "readinessModel": "Readiness is invariant-ready for the local policy seam; Keycloak unavailable and resource_not_registered are explicit degraded/non-decisive states with static fallback rather than fake allow. Evidence: authorize-resource tests and API pipeline UMA tests.",
       "proof": "Unit proofs: apps/platform-api/tests/unit/authorize-resource.test.ts and resource-policies.test.ts. Runtime proof: proof:entitlement-policy-chain covers permission-before-entitlement policy ordering. Proof level: 3 state/policy-chain validation.",
       "uiSemanticDefinition": "V2 UI must expose resource-policy read/write surfaces only to permitted auth-settings actors, show resource/scope/permission vocabulary, present step-up/forbidden/unavailable states distinctly, and never imply UMA grants when static fallback is the actual decision source."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0058; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Delegated administration roles",
@@ -273,7 +345,16 @@
       "readinessModel": "Readiness is invariant-ready for the usecase contract; local runtime proof exercises the composition root against in-memory port/audit and Postgres adapter tests cover storage behaviour. Evidence: proof:delegated-admin and postgres-delegated-admin-roles tests.",
       "proof": "Unit proofs: apps/platform-api/tests/unit/delegations.test.ts and postgres-delegated-admin-roles.test.ts. Runtime proof: proof:delegated-admin. Proof level: 3 local state-machine and audit-order validation.",
       "uiSemanticDefinition": "V2 UI must expose operator tenant delegation list, grant form with grantee/scope/expiry, revoke action, duplicate-active/no-op states, denied states, self-only grantee read semantics, server-stamped grantedBy display, and audit ordering expectations."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0063; ADR-ACT-0304; migration 037; proof:delegated-admin; delegations.test.ts; postgres-delegated-admin-roles.test.ts; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Entitlement engine",
@@ -302,7 +383,16 @@
       "readinessModel": "Entitlement reads are deterministic once the Postgres substrate is migrated; live readiness is proven by proof:entitlements-postgres, which verifies table existence, forced RLS, no secret columns, tenant isolation, operator bypass, grant/revoke, and audit-before-change.",
       "proof": "Unit proof: apps/platform-api/tests/unit/entitlements.test.ts. Runtime proofs: proof:entitlements, proof:entitlement-policy-chain, proof:entitlements-postgres, proof:entitlements-routes. Proof levels: 3 for local state/policy proofs and 4 for live Postgres/routes.",
       "uiSemanticDefinition": "V2 UI must expose tenant read-only entitlement catalog states, operator grant/revoke actions with note/metadata, unknown-key rejection, permission-denied states, audit-before-change expectation, and no secret-bearing fields in entitlement/service-catalog surfaces."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0057; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Support-mode / break-glass access",
@@ -334,7 +424,16 @@
       "readinessModel": "Readiness is hermetic-domain ready for approval and support-session semantics; workflow waits for approval and completes on approval signal, with no live external provider claim. Evidence: apps/platform-api/scripts/support-approval-runtime-proof.ts.",
       "proof": "Unit proof: apps/platform-api/tests/unit/support-mode.test.ts. Runtime proof: proof:support-approval. Proof level: 3 local workflow/session state-machine validation.",
       "uiSemanticDefinition": "V2 UI must expose support access request/approval state, required reason, target tenant, one-hour window, matching-tenant-only access, audit status, denied/non-admin states, and avoid granting tenant permissions through support mode."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0066; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Audit of privileged access",
@@ -363,7 +462,16 @@
       "readinessModel": "Readiness is invariant-ready for contextual audit reads; the broader live history proof validates read-only projection, source isolation, secret exclusion, pagination, and no mutation against live Postgres. Evidence: proof:history.",
       "proof": "Unit proof: apps/platform-api/tests/unit/audit.test.ts. Runtime adjacent proof: proof:history validates live read-only audit/history projection. Proof level: 4 for live history projection plus 3 for contextual audit unit semantics.",
       "uiSemanticDefinition": "V2 UI must expose audit panels with logical resource filters, resource/action/actor/time filters, bounded pagination, forbidden/invalid states, tenant-only results, redacted metadata, and no mutation controls on read-only audit events."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0040; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Platform login + session",
@@ -392,7 +500,16 @@
       "readinessModel": "Readiness depends on Keycloak/Redis/session configuration, with fixture mode explicit for deterministic E2E and auth credential readiness used for tenant realm settings. Evidence: keycloak mapper readiness, auth-routes substrate tests, and proof:auth-settings.",
       "proof": "Substrate/unit proofs: auth-routes, auth-usecase, session-fixture, cookie-security, token-crypto, and session-config tests. Runtime proof: proof:auth-settings validates live Keycloak auth settings round trips adjacent to the session auth substrate. Proof level: 4 for live auth provider substrate plus 3 for session state behavior.",
       "uiSemanticDefinition": "V2 UI must model login as a browser redirect handoff, expose provider choices from /api/auth/providers, render authenticated/unauthenticated/session-loading states from /api/session, treat callback errors as login-page failures, support logout navigation, and never expose Keycloak secrets or raw tokens."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0022; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "IdP brokering + OIDC provider management",
@@ -421,7 +538,16 @@
       "readinessModel": "Readiness distinguishes configured/ok, missing credential, invalid credential, forbidden realm operation, realm unreachable, discovery invalid, and externally limited login simulation. Evidence: auth-settings-readiness usecase, idp-runtime-proof, and oidc-enterprise-runtime-proof.",
       "proof": "Runtime proofs: proof:auth-idps validates live Keycloak IdP CRUD/redaction/secret rotation; proof:auth-oidc-enterprise validates live discovery/JWKS/callback/test-connection against Keycloak. Proof level: 4 live provider validation.",
       "uiSemanticDefinition": "V2 UI must expose provider list, create/edit/delete/enable toggles, discovery import, callback URL display, connection test status, read/write permission gates, no-tenant/no-credential/realm failure states, write-only secret controls, and redacted summaries only."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0043, ADR-0046, ADR-0037; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Claim mapping + group/role mapping",
@@ -441,7 +567,7 @@
     "completionAction": "V1C-06",
     "acceptablePartialRoute": true,
     "acceptablePartialRouteReason": "UI semantic gap closed by the Semantic Reference Harness headless journey (proof:ui-semantic-claim-mapping): load/add/edit/remove + full-replace save, conflict/validation, permission and accessibility. The real external-IdP (Google/Azure/Apple) end-to-end mapping proof remains externally limited (ADR-ACT-0220) and is explicitly SEPARATE from these locally-proven UI semantics.",
-    "closedBy": "V1-completion acceleration slice \u2014 Semantic Reference Harness",
+    "closedBy": "V1-completion acceleration slice — Semantic Reference Harness",
     "semanticCompleteness": {
       "status": "complete",
       "lifecycle": "Mapping lifecycle is read managed mappers, project to claimMappings/roleMappings, full-replace desired config, audit before writes, upsert desired managed mappers, delete stale managed mappers, preserve foreign mappers, and return updated config. Evidence: oidc-mapping tests.",
@@ -454,7 +580,16 @@
       "readinessModel": "Readiness is tied to auth-settings tenant credential/provider availability plus Keycloak mapper readiness; external real-IdP login proof remains explicitly externally limited and separate from local semantic mapping proof. Evidence: keycloak-mapper-readiness tests and acceptablePartialRouteReason.",
       "proof": "Unit proof: apps/platform-api/tests/unit/oidc-mapping.test.ts. UI semantic proof: proof:ui-semantic-claim-mapping. Proof level: 5 for end-to-end semantic UI contract plus 3 for mapper state reconciliation.",
       "uiSemanticDefinition": "V2 UI must expose mapping table, empty state, add/edit/remove rows, full-replace save, duplicate/validation/server-conflict/server-failure states, read-only/no-access personas, external-IdP limitation notice, keyboard-only operation, and accessible error associations."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0046, ADR-ACT-0220 (external-IdP limitation), ADR-ACT-0285 (UI semantic harness); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Real IdP login simulation",
@@ -470,7 +605,16 @@
     "evidence": "ADR-0046",
     "proof": "blocked",
     "openAction": null,
-    "v2Target": "carry-forward-blocked: V1 mechanism reused; real-IdP proof remains external \u2014 accept as not-applicable in self-contained V2 stack"
+    "v2Target": "carry-forward-blocked: V1 mechanism reused; real-IdP proof remains external — accept as not-applicable in self-contained V2 stack",
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "MFA + session policy + lockout",
@@ -502,7 +646,16 @@
       "readinessModel": "Readiness is credential-derived and provider-backed: configured/ok only when tenant realm credential can mutate/read policies, with invalid/forbidden/unreachable classified rather than hidden. Evidence: auth-settings-runtime-proof and auth-settings-readiness tests.",
       "proof": "Runtime proof: proof:auth-settings validates live Keycloak readiness, MFA read/write/read-back/restore, and session policy write/read-back/restore. Unit proofs validate audit-first ordering and schemas. Proof level: 4 live provider validation.",
       "uiSemanticDefinition": "V2 UI must expose MFA, lockout, and session policy forms/tabs, read and write permission gates, validation for enum/numeric bounds, no-credential/invalid/forbidden/unreachable readiness states, save success/failure, and no display of tenant credentials."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0042; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Configuration registry + history",
@@ -531,7 +684,16 @@
       "readinessModel": "Readiness is invariant-ready once tenant_settings/Postgres is available; definition registry is pure and serialisable, and history/audit projection is covered by the live history proof. Evidence: registry.ts and proof:history.",
       "proof": "Unit proofs: apps/platform-api/tests/unit/platform-config.test.ts and contracts-admin config validation tests. Adjacent runtime proof: proof:history validates live audit/history projection for config changes. Proof level: 3 for state/validation plus 4 for live history projection.",
       "uiSemanticDefinition": "V2 UI must generate config controls from definition DTOs, render source default vs tenant_override, category filters, allowed enum values, boolean/json/string editors, per-definition permission/read-only states, validation errors, clear override action, and history/audit links."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0039; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "configuration",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Branding + theming",
@@ -563,7 +725,16 @@
       "readinessModel": "Theme is degraded-to-default when tenant_settings or tenant resolution is unavailable; config-managed branding is invariant-ready with Postgres tenant_settings. Evidence: /api/theme route comments and platform-config tests.",
       "proof": "Unit proofs: platform-config tests cover branding definitions, override source, validation, and audit-first writes; theme route is covered through route-level config/theme tests. Proof level: 3 state/contract validation.",
       "uiSemanticDefinition": "V2 UI must consume /api/theme before auth, apply defaults when tenant theme is absent, generate branding controls from config definitions, distinguish bootstrap theme from editable branding registry, and show read-only/forbidden/default-vs-override states."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "configuration",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Custom domains, DNS ownership, TLS, canonical",
@@ -596,7 +767,16 @@
       "readinessModel": "Readiness distinguishes no_domains, pending_dns, verified, inactive auth-client, local routing proven, public DNS/TLS deferred, and canonical redirect cutover; local proofs explicitly do not claim public DNS/TLS readiness. Evidence: tenant-domains and tenant-domains-routing runtime proofs.",
       "proof": "Runtime proofs: proof:tenant-domains, proof:tenant-domains-routing, proof:tenant-domain-canonical, proof:tenant-domain-claim-lifecycle, proof:tenant-custom-domain-resolution, and proof:tenant-custom-domain-auth-origin. Proof level: 4 live substrate/route-handler validation.",
       "uiSemanticDefinition": "V2 UI must expose domain list/readiness, challenge creation with TXT record, verify/retry states, activation/deactivation, local routing status, canonical set/unset, conflict and invalid-domain errors, deferred public TLS/DNS labels, permission-denied states, and no token leakage after creation."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0048, ADR-0033; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "configuration",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Write-only secret settings",
@@ -625,7 +805,16 @@
       "readinessModel": "Readiness reports configured/missing/invalid/forbidden/unreachable/provider-unavailable without exposing secret material, and provider-backed secret stores require live substrate validation. Evidence: provider-secrets, auth-settings, and credential-lifecycle runtime proofs.",
       "proof": "Unit proofs: token-crypto, auth-settings-audit, idp-management. Runtime proofs: proof:auth-credential-lifecycle, proof:auth-idps, proof:api-keys, provider secret proofs. Proof level: 4 for live provider/storage-backed secret validation.",
       "uiSemanticDefinition": "V2 UI must render secret fields as write-only create/rotate controls, show configured/has-secret/readiness metadata, never prefill or reveal stored secrets, treat blank IdP secret as preserve existing, warn on destructive rotation/clear, and surface validation/provider errors without secret echo."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0043, ADR-0041; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "configuration",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Product catalog, plans, prices",
@@ -659,7 +848,16 @@
       "readinessModel": "Readiness is migration/catalog-seed backed: route registration proof validates the exposed surface and unit tests validate the in-process catalog behavior; provider billing readiness remains a separate capability. Evidence: proof:billing-catalog and billing-catalog tests.",
       "proof": "Unit proof: apps/platform-api/tests/unit/billing-catalog.test.ts. Runtime route proof: proof:billing-catalog validates catalog route registration. Provider proof: proof:lago-billing-provider validates live HTTP-backed plan sync through the Lago adapter. Proof level: 4 provider substrate validation plus level 3 usecase state behavior.",
       "uiSemanticDefinition": "V2 UI must expose product, plan, and price tables, create forms, product/plan filters, tenant read-only catalog view, operator-only create actions, validation errors, permission-denied states, inactive item display, and currency/period/price typing."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0057, ADR-ACT-0241, ADR-ACT-0292; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "commercial-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Subscriptions, invoices, payment methods, dunning",
@@ -693,7 +891,16 @@
       "readinessModel": "Readiness is provider-backed: in-memory provider proof reports ready, Lago proof checks /health or SDK public-key path, and control/readiness route proofs classify adapter availability separately from catalog seed readiness. Evidence: proof:billing-provider and proof:lago-billing-provider.",
       "proof": "Runtime proofs: proof:billing-provider validates in-memory provider account/payment/refund flow; proof:lago-billing-provider validates live HTTP-backed Lago customer/plan/subscription/cancel/invoice flow. Unit proof: lago-billing-provider.test.ts. Proof level: 4 provider substrate validation plus level 3 behavior/provider seam validation.",
       "uiSemanticDefinition": "V2 UI must expose account/customer state, plan/subscription/invoice/payment method/dunning status tables, provider readiness states, payment capture/refund outcomes, idempotent submission behavior, tenant read permissions, and operator-only provider actions."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0057, ADR-ACT-0270, ADR-ACT-0292; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "commercial-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Usage metering + meter event ingestion",
@@ -722,7 +929,16 @@
       "readinessModel": "Readiness is live Postgres-backed with honest skip when Postgres is unavailable; proof validates RLS tenant isolation, operator rls_bypass read, windowed aggregation, and no secret columns. Evidence: apps/platform-api/scripts/metering-runtime-proof.ts.",
       "proof": "Runtime proofs: proof:metering validates live Postgres idempotency, entitlement gate, aggregation, RLS isolation, and no secret columns; proof:metering-quota-routes validates live route handlers and access-control metadata. Proof level: 4 live substrate/route validation.",
       "uiSemanticDefinition": "V2 UI must expose read-only usage tables, meter labels/units/windows, tenant/operator views, deduplicated ingestion status only on operator surfaces, entitlement-denied and no-tenant states, no tenant self-ingestion controls, and no secret-bearing fields."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0067, ADR-0061; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "commercial-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Quota enforcement",
@@ -751,7 +967,16 @@
       "readinessModel": "Readiness is live Postgres-backed with honest skip when unavailable; runtime proof validates set/evaluate/assert across entitlement grant/revoke and metered usage. Evidence: quota-enforcement-runtime-proof.",
       "proof": "Runtime proofs: proof:quota-enforcement validates live entitlement-before-quota ordering, quota exceeded state, assertQuota typed denial, revoke-denial, and no_quota allow; proof:metering-quota-routes validates live route handlers. Proof level: 4 live substrate/route validation.",
       "uiSemanticDefinition": "V2 UI must expose quota list with key, entitlement, meter, limit, window, usage, allowed, state, updated metadata, operator set form, tenant read-only view, no_quota/no_entitlement/exceeded states, validation errors, and audit-backed save semantics."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0067; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "commercial-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Relational storage + migrations + RLS",
@@ -780,7 +1005,16 @@
       "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
       "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
       "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "data-platform",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-data",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Backup + restore",
@@ -809,7 +1043,16 @@
       "readinessModel": "Readiness is proof:backup-local and backup control route: live backup integrity is ready only when Postgres and pg_dump are available; restore is guarded rather than automatically run. Evidence: backup-local-runtime-proof.",
       "proof": "Runtime proof: proof:backup-local validates live Postgres backup integrity, file permissions, environment guards, restore confirmation guards, and restore transaction flags. Proof level: 4 live substrate backup validation.",
       "uiSemanticDefinition": "V2 UI must expose backup status/control as operator-only evidence, show latest artifact/guard/readiness states, make restore unavailable unless environment and confirmation policy allow it, and never expose dump contents or secrets."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0064; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "data-platform",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "PITR, retention, legal hold, data residency",
@@ -842,7 +1085,16 @@
       "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
       "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
       "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "data-platform",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-data",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
@@ -873,7 +1125,16 @@
       "readinessModel": "Runtime readiness is the proof:data-governance command, which verifies route registration, classification semantics, catalogue lineage, and DSR fulfillment evidence. Evidence: package.json script proof:data-governance.",
       "proof": "Unit proof: apps/platform-api/tests/unit/data-governance.test.ts. Runtime proof: apps/platform-api/scripts/data-governance-runtime-proof.ts. Proof level: 3 state-machine validation.",
       "uiSemanticDefinition": "No bespoke UI is shipped; V2 UI must derive from the API contract and DSR/catalog semantics in this semanticCompleteness record plus docs/api/openapi.json. The capability-ui-contract foundation asset makes this an explicit source requirement."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "data-platform",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-data",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant data import / export",
@@ -904,7 +1165,16 @@
       "readinessModel": "Runtime readiness is proof:data-portability, validating route registration, encryption, SecretStore wrapping, tamper rejection, rollback, resume, and durable Postgres group application. Evidence: package.json script proof:data-portability.",
       "proof": "Unit proof: apps/platform-api/tests/unit/data-portability.test.ts. Runtime proof: apps/platform-api/scripts/data-portability-runtime-proof.ts. Proof level: 4 live-substrate-adjacent validation with durable Postgres adapter proof.",
       "uiSemanticDefinition": "No bespoke UI is shipped; V2 UI must expose export/import actions, archive verification state, failed group progress, and resume semantics from this record plus docs/api/openapi.json. The capability-ui-contract foundation asset makes this explicit."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "data-platform",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Search + indexing (product search)",
@@ -933,7 +1203,16 @@
       "readinessModel": "Readiness is Postgres FTS live probe with honest skip when Postgres is unavailable; proof validates non-blocked status and route-level readiness response. Evidence: search-runtime-proof and search-routes-runtime-proof.",
       "proof": "Runtime proofs: proof:search validates live Postgres index/query/remove/reindex/no-secret schema; proof:search-isolation validates RLS tenant isolation and permission filtering; proof:search-routes validates live handlers and access metadata. Proof level: 4 live substrate/route validation.",
       "uiSemanticDefinition": "V2 UI must expose a tenant search box/results view, empty-query validation, no-results due to permission filtering, operator readiness/reindex controls, readiness states, secret-free result cards, and no user-facing index mutation controls."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0060; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "search",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-data",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Object storage + tenant prefixes + signed URLs",
@@ -963,7 +1242,16 @@
       "readinessModel": "Readiness distinguishes configured, isolation_failed, and provider_unreachable using write/read/delete plus foreign-key rejection probes; local proof honestly notes IAM/bucket-policy isolation is not automated locally. Evidence: tenant-storage-runtime-proof.",
       "proof": "Unit proof: apps/platform-api/tests/unit/storage-objects.test.ts. Runtime proofs: proof:tenant-storage validates live MinIO/in-memory probe and prefix isolation; proof:tenant-storage-objects validates object lifecycle semantics. Proof level: 4 live storage substrate plus 3 object state-machine validation.",
       "uiSemanticDefinition": "V2 UI must expose object list/upload/delete/download, scan state badges, clean-only download enablement, rejected/quarantined/unavailable states, quota exceeded errors, legal-hold deletion guard, readiness/probe states, and tenant-prefix isolation without exposing raw provider credentials."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0049, ADR-0064; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "storage",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-data",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Event bus, durable queues, DLQ, redrive",
@@ -992,7 +1280,16 @@
       "readinessModel": "Readiness is operator event/DLQ visibility plus worker heartbeat liveness; live proofs fail on RLS, secret payload, retry, redrive, or heartbeat regressions and skip honestly when Postgres is unavailable. Evidence: event-worker proof.",
       "proof": "Runtime proofs: proof:event-bus validates live Postgres outbox/RLS/secret rejection; proof:event-worker validates processing/retry/DLQ/heartbeat; proof:event-redrive validates live admin routes and requeue. Proof level: 4 live substrate/route validation.",
       "uiSemanticDefinition": "V2 UI must expose event list, DLQ list, redrive action, worker liveness, organisation filter, pending/processed/dead-letter states, retry counts, invalid/missing organisation errors, operator-only permission gates, and secret-free payload projection."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0059, ADR-0051, ADR-0052; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "events-workflow",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Workflow engine, scheduled jobs, approvals",
@@ -1023,7 +1320,16 @@
       "readinessModel": "Readiness combines in-memory/local workflow closure, Temporal provider adapter/live proof, and workflow readiness route; live provider proof skips honestly when endpoints are unavailable. Evidence: proof:workflow-provider-live and related proof aliases.",
       "proof": "Proofs: workflow-closure, workflow-engine, approval-workflow, workflow-adapters, temporal-workflow-provider, and workflow-provider-live. Proof level: 3 for hermetic state-machine closure, 4 for live provider validation when workflow-provider profile is available.",
       "uiSemanticDefinition": "V2 UI must expose workflow list/status/detail, provider readiness, start/signal/cancel actions, approval waiting/completed/failed states, tenant access denial, audit-backed transition history, and operator/tenant permission gates."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0059; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "events-workflow",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Scheduled jobs (built-in, on the event substrate)",
@@ -1052,7 +1358,16 @@
       "readinessModel": "Readiness is tick invocable and route-accessible even though daemon loop is not claimed; live proof validates table schema, RLS isolation, enqueue behavior, and route handlers. Evidence: scheduled-jobs proofs.",
       "proof": "Runtime proofs: proof:scheduled-jobs validates live Postgres schedule persistence/due/run-now/RLS/no-secret schema; proof:scheduled-job-routes validates route handlers and access metadata. Proof level: 4 live substrate/route validation.",
       "uiSemanticDefinition": "V2 UI must expose scheduled job list, create form, enabled toggle, run-now action, next/last run fields, due/deduplicated states, organisation filter, invalid id/body errors, and operator-only permission gates."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0059; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "events-workflow",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Notification delivery + preferences + channels",
@@ -1081,7 +1396,16 @@
       "readinessModel": "Readiness reports real local/smtp/webhook transport availability; Mailpit/webhook proofs skip honestly when backing services are absent and never mark a fake send as sent. Evidence: notification transport proofs.",
       "proof": "Runtime proofs: notification-preferences, notification-dispatch, notification-email-transport, notification-webhook-transport, and notification-transport-routes. Proof level: 4 for live Postgres/Mailpit/webhook route validation.",
       "uiSemanticDefinition": "V2 UI must expose notification preference toggles by channel/category, profile-linked self-service states, operator readiness/test-send controls, sent/suppressed/failed statuses, missing recipient and transport failure states, validation errors, and no secret payload display."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0068; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "events-workflow",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Background workers / job runner",
@@ -1110,7 +1434,16 @@
       "readinessModel": "Readiness is worker heartbeat liveness alive/stale/stopped and event-processing proof; failure to claim/process/dead-letter is a proof/readiness failure. Evidence: proof:event-worker.",
       "proof": "Runtime proof: proof:event-worker validates live Postgres claim/process/idempotent skip/retry/dead-letter/heartbeat. Proof level: 4 live substrate validation.",
       "uiSemanticDefinition": "V2 UI must expose worker list, worker kind/id, heartbeat age, alive/stale/stopped state, processed/retry/dead-letter metrics, and operator-only access without direct tenant job execution controls."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0059, ADR-0055; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "compute-runtime",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Serverless / function runtime",
@@ -1126,7 +1459,16 @@
     "evidence": "ADR-0055",
     "proof": "not-yet-proven",
     "openAction": null,
-    "v2Target": "out-of-scope-future: net-new post-cut product capability; no V1 asset to migrate; explicitly NOT a V1\u2192V2 foundation-closure blocker (decided not-applicable to the self-contained V2 stack for the cut)"
+    "v2Target": "out-of-scope-future: net-new post-cut product capability; no V1 asset to migrate; explicitly NOT a V1→V2 foundation-closure blocker (decided not-applicable to the self-contained V2 stack for the cut)",
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0055; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "compute-runtime",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Runtime secrets management",
@@ -1138,7 +1480,7 @@
     "port": "SecretStorePort",
     "adapter": "OpenBaoSecretAdapter / PostgresSecretAdapter",
     "auditAction": "secret_ref.created / secret_ref.revoked / secret_ref.deleted (audit-before-change; name/ref only, never the value)",
-    "readinessCheck": "operator secret-store readiness (built-in Postgres SELECT 1 / OpenBao sys/health; never faked \u2014 OpenBao down \u21d2 degraded)",
+    "readinessCheck": "operator secret-store readiness (built-in Postgres SELECT 1 / OpenBao sys/health; never faked — OpenBao down ⇒ degraded)",
     "evidence": "ADR-0069, ADR-0055, ADR-0031",
     "proof": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
     "openAction": null,
@@ -1155,7 +1497,16 @@
       "readinessModel": "Readiness distinguishes built-in Postgres ready, OpenBao ready, OpenBao degraded/unreachable, and secret-free readiness payloads; no silent fallback upgrades provider readiness. Evidence: provider-secrets-readiness and secrets-openbao proofs.",
       "proof": "Runtime proofs: proof:secret-store-contract validates live Postgres store contract/encryption/RLS/audit; proof:secrets-openbao validates live OpenBao provider; proof:provider-secrets-readiness validates ready/degraded classification. Proof level: 4 live provider/storage validation.",
       "uiSemanticDefinition": "V2 UI must expose operator secret metadata list, create/rotate/revoke/delete actions, provider/readiness states, opaque refs, version/revoked status, cross-tenant denial, degraded provider warnings, and write-only value fields that are never prefilled or revealed."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0069, ADR-0055, ADR-0031; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "compute-runtime",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Logs (aggregation + tenant-scoped search)",
@@ -1184,7 +1535,16 @@
       "readinessModel": "Readiness distinguishes configured, degraded, provider_unreachable, not_applicable, not_configured, ok, unreachable, and unknown signal states, with live Loki/Grafana/OTel probes reporting honestly. Evidence: tenant-observability runtime proof.",
       "proof": "Unit proofs: logs-usecase and tenant-observability tests. Runtime proof: proof:tenant-observability validates the high-cardinality guard, pure classifier, live Loki bounded ingestion/query, and infra signal classification. Proof level: 4 live provider validation.",
       "uiSemanticDefinition": "V2 UI must expose bounded log search filters, direction and limit controls, tenant-scoped readiness states, provider-unreachable/degraded/not-configured displays, service/level labels, request correlation fields, no mutation actions, and no high-cardinality ids as labels."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0035, ADR-0050; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Metrics + traces",
@@ -1216,7 +1576,16 @@
       "readinessModel": "Readiness reports live Prometheus target health, Grafana datasource/dashboard availability, Tempo/Loki correlation configuration, degraded Prometheus readiness, and external route denial for /metrics. Evidence: proof:metrics-prometheus and proof:dashboards.",
       "proof": "Runtime proofs: proof:metrics-prometheus and proof:dashboards validate live Prometheus, Grafana, datasource, dashboard, metric, and route-exposure behavior. Proof level: 4 live composed-provider validation.",
       "uiSemanticDefinition": "V2 UI must render operator signal status, metric family summaries, dashboard links, provider degraded/unreachable states, no external /metrics link, datasource health, trace/log correlation status, and safe route-level labels without tenant/user/request identifiers."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0062, ADR-0020; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Alerting, incident management, on-call, status page",
@@ -1233,11 +1602,20 @@
     "proof": "proof:platform-services (readiness only)",
     "openAction": null,
     "v2Target": "superseded: alerting + incidents reuse the proven built-in capability; descoped on-call/status-page/SLO are not migrated",
-    "supersededBy": "Observability \u2014 built-in alerting + incidents",
-    "residualScope": "rejected-final: on-call rotation, status page and SLOs are descoped \u2014 NOT a V1\u2192V2 cut blocker. Core alerting + incident management is delivered+proven by the canonical built-in capability (/admin/monitoring; /api/admin/alerts; /api/admin/incidents)."
+    "supersededBy": "Observability — built-in alerting + incidents",
+    "residualScope": "rejected-final: on-call rotation, status page and SLOs are descoped — NOT a V1→V2 cut blocker. Core alerting + incident management is delivered+proven by the canonical built-in capability (/admin/monitoring; /api/admin/alerts; /api/admin/incidents).",
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0062; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
-    "capability": "Observability \u2014 built-in alerting + incidents",
+    "capability": "Observability — built-in alerting + incidents",
     "category": "observability-ops",
     "status": "delivered-and-proven",
     "route": "/admin/monitoring",
@@ -1263,7 +1641,16 @@
       "readinessModel": "Readiness is operator built-in observability readiness backed by live Postgres signal stores plus notification substrate availability; unavailable substrate is skipped/degraded honestly and not marked healthy. Evidence: observability-signals, alerting, incident, and bridge proofs.",
       "proof": "Runtime proofs: proof:observability-signals, proof:alerting, proof:incident-foundation, and proof:alert-notification-bridge validate live Postgres signal, rule, incident, audit, RLS, and notification behavior. Proof level: 4 live substrate validation.",
       "uiSemanticDefinition": "V2 UI must expose signal tables, sample latest values, alert rule forms, evaluate/no-data/within/fired states, incident lifecycle actions, audit visibility, notification delivery/suppression outcomes, tenant isolation, and operator-only read/write gates."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0062; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Internal service catalog + readiness",
@@ -1292,7 +1679,16 @@
       "readinessModel": "Readiness uses honest per-service statuses, environment metadata, worker registry presence, default-up service counts, and tenant/system viewer filtering, with unavailable profile-gated services never reported healthy. Evidence: proof:platform-services.",
       "proof": "Unit proofs: platform-services and service-clickthrough tests. Runtime proofs: proof:platform-services and proof:service-clickthrough-policy validate live probes, safe console URLs, viewer filtering, route gating, and tenant fallback behavior. Proof level: 4 for live readiness, 3 for policy matrix.",
       "uiSemanticDefinition": "V2 UI must render service readiness tables, status chips from the honest vocabulary, worker summaries, environment metadata, direct-local versus routed console links, tenant-safe filtering, no global-only link leakage, and no secret-bearing fields."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0062; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Code quality + secret + dependency scanning",
@@ -1325,7 +1721,16 @@
       "readinessModel": "Readiness is gate success plus optional Sonar/service readiness from platform service probes; missing local tools are classified honestly according to script mode. Evidence: semgrep/SBOM/CodeQL scripts and platform services proof.",
       "proof": "Proofs include semgrep:gate, sbom:verify, sbom:policy, codeql:validate, test:security, and proof:security-control-route. Proof level: 3 fail-closed gate state validation plus level 1 route registration.",
       "uiSemanticDefinition": "V2 UI must expose security gate status, last evidence/report links, global-only Sonar/security route access, pass/fail/skip states, remediation messages, and no tenant-scoped access to global code quality consoles."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0016; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "security-governance",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Compliance reports, access reviews, evidence packs",
@@ -1355,7 +1760,16 @@
       "readinessModel": "Readiness is assembled from live foundation signals and route registration; report ready is true only when required source readiness values satisfy the usecase. Evidence: proof:compliance-report.",
       "proof": "Runtime proof: compliance-report-runtime-proof validates deterministic report composition. Route proof: proof:compliance-report-route validates admin route registration. Proof level: 3 behavior composition plus level 1 route contract.",
       "uiSemanticDefinition": "V2 UI must expose report generation timestamp, tenant selection, metrics/incidents/legal-hold/retention/storage sections, ready/not-ready state, source drilldowns, permission gates, and evidence export hooks."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "security-governance",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant isolation proof",
@@ -1384,7 +1798,16 @@
       "readinessModel": "Isolation readiness is proven by live substrate checks for resolver, RLS, storage prefixes, and tenant-scoped provider probes; an unavailable provider is degraded/unreachable rather than treated as isolated. Evidence: proof inventory.",
       "proof": "Runtime proofs include proof:domain-identity-matrix and proof:tenant-storage, with additional live RLS isolation in metering, search, observability, webhooks, events, and secret-store proofs. Proof level: 4 live substrate isolation validation.",
       "uiSemanticDefinition": "V2 UI must never infer tenant from client-side state alone, must display no-tenant/forbidden states for unresolved hosts, must scope every tenant table/action/filter to server-provided tenant context, and must not expose cross-tenant search/storage/log/provider data."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "security-governance",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Webhooks (developer-facing)",
@@ -1413,7 +1836,16 @@
       "readinessModel": "Readiness classifies no_subscriptions, configured, and has_dead_deliveries, while worker/redrive proofs validate pending/dead/delivered metrics against live Postgres. Evidence: classifyWebhookReadiness tests and proofs.",
       "proof": "Runtime proofs: proof:webhooks validates signed test delivery; proof:webhook-worker validates fan-out/retry/dead-letter; proof:webhook-redrive validates dead-letter metrics and redrive. Proof level: 4 live Postgres plus HTTP delivery validation.",
       "uiSemanticDefinition": "V2 UI must expose webhook list/create/edit/delete/test, reveal-once secret handling, event-type selection, enabled toggle, delivery log, dead-letter metrics, redrive action, readiness states, tenant permission gates, and never display stored secrets."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0051, ADR-0052; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "developer-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "API docs, developer portal, SDKs, rate limits",
@@ -1445,7 +1877,16 @@
       "readinessModel": "Developer portal is always-on once built from source contracts; live Postgres/Redis proofs classify provider availability for API keys and rate limits, with Redis degraded falling back to Postgres for counting. Evidence: rate-limits-redis and API key proofs.",
       "proof": "Runtime proofs: proof:api-keys, proof:api-key-routes, proof:rate-limits, proof:rate-limits-redis. Contract proofs include OpenAPI drift and GraphQL runtime tests. Proof level: 4 live API key/rate-limit substrate validation.",
       "uiSemanticDefinition": "V2 UI must expose developer portal summary, API key table/create/revoke with reveal-once secret modal, scopes, redacted key prefix, OpenAPI/GraphQL links, rate-limit summaries, entitlement/provider error states, permission gates, and no stored secret or hash fields."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "developer-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Rate limiting (API)",
@@ -1474,7 +1915,16 @@
       "readinessModel": "Postgres proof skips honestly if unavailable; Redis provider readiness is ready on PING, degraded on Redis failure, with Postgres fallback still valid. Evidence: apps/platform-api/scripts/rate-limits-runtime-proof.ts and apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts.",
       "proof": "Unit proof: apps/platform-api/tests/unit/rate-limits.test.ts. Runtime proofs: proof:rate-limits, proof:rate-limits-redis, proof:api-key-routes. Proof levels: 4 for live Postgres and Redis substrate validation.",
       "uiSemanticDefinition": "V2 UI must expose tenant rate-limit read state, operator policy table/form for policyKey entitlementKey limit windowSeconds action, live used count, exceeded/allowed state, degraded-provider messaging, permission gates, and invalid tenant/error presentation."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "developer-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Mock providers (dev/test)",
@@ -1490,7 +1940,16 @@
     "evidence": "ADR-0017",
     "proof": "service readiness",
     "openAction": null,
-    "v2Target": "wrap-dev-only: carry forward as dev/test-only provider; forbidden in V2 production by policy"
+    "v2Target": "wrap-dev-only: carry forward as dev/test-only provider; forbidden in V2 production by policy",
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0017; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "developer-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant lifecycle: provision, suspend, delete, export",
@@ -1520,7 +1979,16 @@
       "readinessModel": "Runtime readiness is npm run proof:tenant-lifecycle, which proves audit and subsystem coordination order for suspend and delete. Evidence: package.json script proof:tenant-lifecycle.",
       "proof": "Unit proof: apps/platform-api/tests/unit/tenant-lifecycle.test.ts. Runtime proof: apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts. Proof level: 3 state-machine/coordination validation.",
       "uiSemanticDefinition": "No new UI is required; V2 UI must expose suspend/delete/export lifecycle actions, audit-before-change expectations, export-first delete warning, and failure-stop semantics from this record and the TenantLifecycleCoordinator contract."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0066, ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "support-admin",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Support tickets, customer health, announcements",
@@ -1551,7 +2019,16 @@
       "readinessModel": "Readiness is live route/usecase availability over Postgres-backed support tables and metering-derived health signals; support approval proof validates workflow boundary state rather than assuming support access. Evidence: support unit tests and proof:support-approval.",
       "proof": "Unit proofs: apps/platform-api/tests/unit/support-tickets.test.ts and support-announcements.test.ts. Runtime proof: proof:support-approval validates approval waiting/completed workflow and support-session audit lifecycle. Proof level: 3 state/behavior validation.",
       "uiSemanticDefinition": "V2 UI must expose ticket list/detail/create/status actions, customer health signals, announcement list/create, approval-required support access state, audit visibility, permission gates, empty/error states, and no direct support access before approval."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0066; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "support-admin",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Universal Service Foundation scope + principles",
@@ -1580,7 +2057,16 @@
       "readinessModel": "Readiness is the strict validator summary: ok, cutReady, totalRules, consistencyFindings, completionBlockerCount, and per-rule findings. Evidence: npm run v2:readiness / tools/v2-readiness.",
       "proof": "Proof is the validator suite plus live repository run: rules, CLI, golden, package status, import parity, and architecture tests validate the foundation contract. Proof level: 3 for source-state semantic validation.",
       "uiSemanticDefinition": "V2 UI generation must consume these semantic assets as source of truth, preserving capability identity, lifecycle, permissions, validation, error/readiness states, proof requirements, and route contracts without inferring hidden semantics from code or visual layout."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0053; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Build-versus-compose decision framework",
@@ -1609,7 +2095,16 @@
       "readinessModel": "A decision alone never implies readiness; composed/provider readiness must be adapter-confirmed and reports ready, degraded, or not_configured independently. Evidence: provider-readiness-contract and composed-provider-readiness proofs.",
       "proof": "Proofs: service-catalog-registry validates static decisions; provider-environment-classification validates deployment-ladder classification; provider-config validates production/secret policy. Proof level: 3 for policy/state validation.",
       "uiSemanticDefinition": "V2 UI must expose decision, visibility, environment model, proof refs, provider lifecycle/readiness, entitlement requirements, and production blockers as source-backed fields, not as free-form UI labels."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0054; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Service catalog + provider integration model",
@@ -1639,7 +2134,16 @@
       "readinessModel": "Readiness is joined from platform-services and composed-provider readiness, with adapter-confirmed status vocabulary and no fake healthy state. Evidence: platform-services and composed-provider-readiness proofs.",
       "proof": "Runtime/local proofs: proof:service-catalog-registry, proof:platform-services, proof:service-clickthrough-policy, proof:clickthrough, and proof:entitlements-routes. Proof level: 3 for registry filtering and 4 where live readiness is probed.",
       "uiSemanticDefinition": "V2 UI must render catalog tables, tenant/operator filtered views, service classifications, entitlement gates, readiness state, clickthrough links only when allowed, proof refs, and production blockers without exposing secrets."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0055; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Environment-specific vs shared service model",
@@ -1668,7 +2172,16 @@
       "readinessModel": "Readiness is represented by bootstrapStatus, providerConfigStatus, lastBootstrappedAt, and composed provider readiness; bootstrap is recorded only after explicit operation. Evidence: environment-registry and admin-bootstrap proofs.",
       "proof": "Proofs: proof:provider-environment-classification, proof:environment-registry, proof:environment-operations, and proof:environment-admin-bootstrap. Proof level: 4 for live registry/bootstrap and 3 for deterministic operation/classification policy.",
       "uiSemanticDefinition": "V2 UI must expose environment registry rows, stage policy, allowed profiles/mocks, destructive-operation flags, provider status, bootstrap state, permission gates, audit history, and rejection states for unsafe operations."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0056; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Provider configuration plane",
@@ -1680,7 +2193,7 @@
     "port": "ProviderConfigPort / ProviderReadinessPort",
     "adapter": "HttpHealthProbeAdapter",
     "auditAction": "provider_config.set / provider_config.deleted (audit-before-change; no secret)",
-    "readinessCheck": "adapter-confirmed lifecycle (deriveReadinessLifecycle) \u2014 config alone never implies ready",
+    "readinessCheck": "adapter-confirmed lifecycle (deriveReadinessLifecycle) — config alone never implies ready",
     "evidence": "ADR-0070",
     "proof": "proof:provider-config; proof:provider-readiness-contract",
     "openAction": null,
@@ -1697,7 +2210,16 @@
       "readinessModel": "Readiness is adapter-confirmed: configured plus adapter ready becomes ready; degraded/unreachable/no adapter result becomes degraded; disabled remains disabled; proposed state remains non-delivered. Evidence: provider-readiness-contract proof.",
       "proof": "Runtime proof: proof:provider-config validates live Postgres policy; contract proof: proof:provider-readiness-contract validates lifecycle derivation. Proof level: 4 for live config store and 3 for pure readiness contract.",
       "uiSemanticDefinition": "V2 UI must expose provider config list/create/update/delete, lifecycle/readiness state, endpoint/config fields, opaque credential ref selection, degraded/missing credential states, operator permission gates, audit links, and no plaintext secret entry except write-only ref creation flows."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0070; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Composed provider readiness spine",
@@ -1726,7 +2248,16 @@
       "readinessModel": "Readiness uses adapter-confirmed status and lifecycle mapping; ready requires a successful health probe, degraded means wired but failing, and not_configured means no endpoint. Evidence: composed-provider-readiness proof.",
       "proof": "Runtime proof: proof:composed-provider-readiness validates honest probe classification for Meilisearch, Prometheus, Alertmanager, Windmill, Temporal, and Tempo/related providers. Proof level: 4 live/honest composed provider readiness validation.",
       "uiSemanticDefinition": "V2 UI must expose provider readiness table, status/lifecycle badges, endpoint configured/unconfigured state, degraded details, live-proof caveat text, operator gates, and no secret-bearing provider details."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0071; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "History read-model (read-only projection)",
@@ -1755,7 +2286,16 @@
       "readinessModel": "Readiness is always-on when Postgres source tables are available; live proof validates projection availability and honest skip when the backend is absent. Evidence: proof:history.",
       "proof": "Runtime proof: proof:history validates live Postgres union projection, redaction, tenant isolation, pagination, and read-only behavior. Proof level: 4 live substrate validation.",
       "uiSemanticDefinition": "V2 UI must expose tenant/operator history feeds, source/type filters, pagination controls, safe summaries, no raw metadata/payload/secret display, permission-denied states, and source drilldowns only through owning capability views."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-data",
+    "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "data-platform",
+    "operationalOwner": "team-data",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-data",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "OIDC discovery / issuer / JWKS validation",
@@ -1784,7 +2324,16 @@
       "readinessModel": "Readiness is invariant-ready for local validation, and live proof validates behavior against reachable Keycloak plus negative unreachable/invalid classifications. Evidence: proof:auth-oidc-enterprise.",
       "proof": "Unit proof: apps/platform-api/tests/unit/oidc-discovery.test.ts. Runtime proof: proof:auth-oidc-enterprise validates live discovery/JWKS and negative classifications. Proof level: 4 live OIDC provider validation.",
       "uiSemanticDefinition": "V2 UI must expose issuer/discovery URL form fields, import action, validation result, endpoint metadata preview, issuer/JWKS errors, local-only HTTP policy errors, permission gates, and no raw document or secret display."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "OIDC test connection + callback display",
@@ -1813,7 +2362,16 @@
       "readinessModel": "Readiness is invariant-ready for callback derivation and live provider-backed for test connection, proven against local Keycloak. Evidence: proof:auth-oidc-enterprise.",
       "proof": "Unit proof: oidc-discovery and idp-management tests. Runtime proof: proof:auth-oidc-enterprise validates callback derivation and live non-interactive test-connection. Proof level: 4 live provider validation.",
       "uiSemanticDefinition": "V2 UI must display copyable callback URL, test connection action, test result states, not-found/not-configured/issuer/JWKS/unreachable errors, audit-safe result history, permission gates, and no client secret or raw token display."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "OIDC login simulation",
@@ -1829,7 +2387,16 @@
     "evidence": "ADR-0046",
     "proof": "blocked",
     "openAction": null,
-    "v2Target": "carry-forward-blocked: no honest non-interactive proof; not-applicable in self-contained stack"
+    "v2Target": "carry-forward-blocked: no honest non-interactive proof; not-applicable in self-contained stack",
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant host identity resolution",
@@ -1858,7 +2425,16 @@
       "readinessModel": "Readiness is invariant-ready when resolver code and registry are available; runtime proof requires local Postgres for live resolution and skips only when no seeded organisation exists. Evidence: domain-identity-matrix runtime proof.",
       "proof": "Runtime proofs: proof:domain-identity-matrix and proof:tenant-custom-domain-resolution. Proof level: 4 live local Postgres resolver validation.",
       "uiSemanticDefinition": "V2 UI must consume host identity as context only: show resolved tenant/global state, prevent tenant UI on unresolved hosts, and present custom-domain source distinctly from slug source without granting permissions."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-ACT-0231; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "identity-access",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant domain activation (auth-client)",
@@ -1887,7 +2463,16 @@
       "readinessModel": "Invariant-ready after verified ownership and successful auth-client mutation; activation does not imply routing or TLS readiness. Evidence: tenant-domain-canonical runtime proof.",
       "proof": "Unit proof: apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts. Runtime proof: proof:tenant-domain-canonical. Proof level: 4 live registry validation with injected auth-client port.",
       "uiSemanticDefinition": "V2 UI must expose activate/deactivate actions only when permitted, show inactive/active states, block activation until ownership is verified, clear canonical/routing presentation after deactivation, and show typed guard failures."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-ACT-0232; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "configuration",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant canonical domain set/unset",
@@ -1920,7 +2505,16 @@
       "readinessModel": "Readiness is local canonical cutover only; public DNS/TLS remain explicitly deferred and canonical is a marker that does not imply public routing/TLS readiness. Evidence: tenant-domain-canonical runtime proof.",
       "proof": "Runtime proof: proof:tenant-domain-canonical validates live registry guards, redirect policy, atomic replacement, unset, and deactivation clearing. Proof level: 4 live substrate validation.",
       "uiSemanticDefinition": "V2 UI must expose one canonical marker per tenant, set/unset actions, guard-specific disabled/error states, redirect policy state, public DNS/TLS deferral labels, and canonical clearing after deactivation."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-ACT-0232; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "configuration",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant custom-domain auth callback",
@@ -1950,7 +2544,16 @@
       "readinessModel": "Readiness is deterministic derivation proof for local Postgres/Redis; live brokered login is external and explicitly carried as not-applicable-final rather than fake-passed. Evidence: tenant-custom-domain-auth-origin runtime proof.",
       "proof": "Runtime proof: proof:tenant-custom-domain-auth-origin validates real handleAuthLogin against live local Postgres and Redis for active, inactive, unknown, and slug host cases. Proof level: 4 live handler/substrate validation.",
       "uiSemanticDefinition": "V2 UI must show custom-domain auth callback eligibility only for active domains, display the exact callback origin, explain inactive/unknown fallback states, and keep real IdP login proof separate from derivation readiness."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-security",
+    "ownerArtefact": "ADR-ACT-0232; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "authentication",
+    "operationalOwner": "team-security",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-security",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Tenant service clickthrough policy",
@@ -1979,7 +2582,16 @@
       "readinessModel": "Readiness is invariant for pure policy and reconciler checks; live web-profile checks add route evidence when Caddy is reachable and otherwise report an honest skip. Evidence: proof:service-clickthrough-policy.",
       "proof": "Unit proof: service-clickthrough.test.ts. Runtime proofs: proof:service-clickthrough-policy and proof:clickthrough validate policy, route behavior, response redaction, and composed readiness inclusion. Proof level: 3 policy validation plus level 4 where live web routes are checked.",
       "uiSemanticDefinition": "V2 UI must show only allowed clickthrough links, preserve trailing slashes/landing paths, hide dev-only services in production, distinguish global-only and tenant-safe services, show denied reasons where appropriate, and never expose not-exposed services."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-ACT-0233; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "not-applicable",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Environment registry + bootstrap",
@@ -1987,7 +2599,7 @@
     "status": "delivered-and-proven",
     "route": "ops port",
     "permission": "platform.environments.read/write",
-    "contract": "manifests \u2192 generated .env/",
+    "contract": "manifests → generated .env/",
     "port": "EnvRegistryPort",
     "adapter": "ManifestEnvAdapter",
     "auditAction": "environment.bootstrapped",
@@ -2008,7 +2620,16 @@
       "readinessModel": "Readiness is represented by bootstrapStatus, lastBootstrappedAt, providerConfigStatus, and operation proof results; bootstrap state is recorded only after explicit bootstrap action. Evidence: environment-registry proof.",
       "proof": "Runtime proofs: proof:environment-registry, proof:environment-admin-bootstrap, and proof:environment-operations. Proof level: 4 for live registry state and 3 for deterministic operation/bootstrap validation.",
       "uiSemanticDefinition": "V2 UI must expose environment ladder rows, stage policy, allowed profiles/mocks, destructive-operation flags, bootstrap status, provider status, safe operation buttons, permission gates, rejection states, and admin handoff metadata without plaintext secrets."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0072; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Provider environment classification",
@@ -2037,7 +2658,16 @@
       "readinessModel": "Classification does not imply runtime readiness; provider readiness remains adapter-confirmed through composed provider readiness and provider config. Evidence: provider-readiness and composed-provider proofs.",
       "proof": "Static proof: proof:provider-environment-classification validates registry and matrix classification plus negative self-tests. Proof level: 3 policy/state validation.",
       "uiSemanticDefinition": "V2 UI must display provider environment model, shared-service checklist evidence, production blockers, mock-only warnings, composed provider coverage, and explicit separation between classification and readiness."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0070; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "E2E confidence ladder (stage-aware)",
@@ -2066,7 +2696,16 @@
       "readinessModel": "Readiness is FULL only when all required stage groups pass and ladder evidence is current, ordered, single-SHA, and attested; otherwise stage/ladder readiness is degraded or failed. Evidence: verify-ladder and aggregate-confidence tests.",
       "proof": "Proofs: scripts/evidence/tests/verify-ladder.test.mjs, scripts/tests/tests/aggregate-confidence.test.mjs, stage-exit tests, and make all stage evidence. Proof level: 3 state-machine validation.",
       "uiSemanticDefinition": "V2 UI must surface stage confidence, evidence freshness, SHA consistency, degraded/failure reasons, group-level status, promotion blocking state, and links to evidence without allowing UI to override validator results."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0075; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "OpenAPI drift hard gate",
@@ -2095,7 +2734,16 @@
       "readinessModel": "Readiness is strict drift gate passing with zero missing routes, extra routes, unresolved refs, and schemaless bodies. Evidence: validate-openapi-drift --strict.",
       "proof": "Proof: tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs plus architecture test target. Proof level: 3 static contract gate state validation.",
       "uiSemanticDefinition": "V2 UI/API tooling must treat OpenAPI as the generated client/docs contract, surface drift failures, route/method/schema/ref details, strict/report-only mode, and block cut when strict drift is nonzero."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "developer-platform",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "not-applicable",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "i18n runtime + validation",
@@ -2125,7 +2773,16 @@
       "readinessModel": "Readiness is strict i18n validator success plus i18n runtime/provider tests passing; report-only mode is advisory and not cut-ready evidence for governed paths. Evidence: validate-i18n and package tests.",
       "proof": "Proofs: validate-i18n tests, architecture test target, packages/i18n-runtime tests, and React provider tests. Proof level: 3 runtime/provider plus static validation.",
       "uiSemanticDefinition": "V2 UI must use translation keys for all governed user-facing copy, preserve interpolation parameters, provide accessible translated labels, support raw-literal exceptions only through config, and expose missing-key/raw-literal failures as build blockers."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0026; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Accessibility (a11y) gate",
@@ -2154,7 +2811,16 @@
       "readinessModel": "Readiness is PASSED only when every route/profile result has no serious/critical axe violation and required structural landmarks exist. Evidence: accessibility coverage report.",
       "proof": "Proof: e2e/discovery/accessibility.spec.ts under Playwright discovery/e2e gates. Proof level: 5 end-to-end semantic UI accessibility validation.",
       "uiSemanticDefinition": "V2 UI generation must preserve main landmarks, h1 structure, accessible names, reduced-motion/high-contrast behavior, WCAG A/AA constraints, and evidence output compatibility for every generated route."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "architecture",
+    "ownerArtefact": "ADR-0075; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "architecture-governance",
+    "operationalOwner": "architecture",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "architecture",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   },
   {
     "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
@@ -2183,6 +2849,15 @@
       "readinessModel": "Readiness is the tenant observability/correlation ladder: browser trace production plus Tempo retrieval of both frontend and BFF spans, with unavailable observability services reported honestly. Evidence: browser-bff-trace and observability-correlation harness.",
       "proof": "Proofs: e2e/discovery/browser-bff-trace.spec.ts and tools/e2e/observability-correlation. Proof level: 5 end-to-end semantic telemetry validation.",
       "uiSemanticDefinition": "V2 UI must preserve Faro and OTEL initialization, same-origin trace propagation, flush hooks for tests, scenario/correlation headers, protected-route denial telemetry, and admin observability views that can surface browser-to-BFF trace health."
-    }
+    },
+    "ownerType": "team",
+    "ownerId": "team-platform",
+    "ownerArtefact": "ADR-0074; docs/evidence/platform/browser-diagnostics-faro.md (ADR-ACT-0274); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+    "owningDomain": "observability-operations",
+    "operationalOwner": "team-platform",
+    "securityOwner": "team-security",
+    "dataOwner": "team-data",
+    "runtimeOwner": "team-platform",
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
   }
 ]

@@ -4,2328 +4,905 @@
   "capabilities": [
     {
       "capability": "Tenant identity (record + FQDN)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0029, ADR-0021; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "User identity + tenant membership",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0036, ADR-0038; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "End-user profile + preferences self-service",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0068; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "API keys / personal access tokens",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant groups",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0021, ADR-0058, ADR-ACT-0285 (UI semantic harness); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Sub-organisations",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0021, ADR-0058, ADR-ACT-0285 (UI semantic harness); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "RBAC (roles + permissions)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0021; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "ABAC / Policy Decision Point",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0058; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Delegated administration roles",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0063; ADR-ACT-0304; migration 037; proof:delegated-admin; delegations.test.ts; postgres-delegated-admin-roles.test.ts; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Entitlement engine",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0057; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Support-mode / break-glass access",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0066; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Audit of privileged access",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0040; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Platform login + session",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0022; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "IdP brokering + OIDC provider management",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0043, ADR-0046, ADR-0037; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Claim mapping + group/role mapping",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0046, ADR-ACT-0220 (external-IdP limitation), ADR-ACT-0285 (UI semantic harness); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Real IdP login simulation",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "MFA + session policy + lockout",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0042; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Configuration registry + history",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0039; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "configuration",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Branding + theming",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "configuration",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0048, ADR-0033; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "configuration",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Write-only secret settings",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0043, ADR-0041; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "configuration",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Product catalog, plans, prices",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0057, ADR-ACT-0241, ADR-ACT-0292; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "commercial-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0057, ADR-ACT-0270, ADR-ACT-0292; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "commercial-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Usage metering + meter event ingestion",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0067, ADR-0061; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "commercial-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Quota enforcement",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0067; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "commercial-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Relational storage + migrations + RLS",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "data-platform",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-data",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Backup + restore",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0064; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "data-platform",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "data-platform",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-data",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "data-platform",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-data",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant data import / export",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "data-platform",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Search + indexing (product search)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0060; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "search",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-data",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0049, ADR-0064; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "storage",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-data",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0059, ADR-0051, ADR-0052; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "events-workflow",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0059; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "events-workflow",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0059; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "events-workflow",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Notification delivery + preferences + channels",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0068; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "events-workflow",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Background workers / job runner",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0059, ADR-0055; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "compute-runtime",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Serverless / function runtime",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0055; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "compute-runtime",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Runtime secrets management",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0069, ADR-0055, ADR-0031; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "compute-runtime",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0035, ADR-0050; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Metrics + traces",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0062, ADR-0020; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Alerting, incident management, on-call, status page",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0062; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Observability — built-in alerting + incidents",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0062; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Internal service catalog + readiness",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0062; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Code quality + secret + dependency scanning",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0016; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "security-governance",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "security-governance",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant isolation proof",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "security-governance",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Webhooks (developer-facing)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0051, ADR-0052; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "developer-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "developer-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Rate limiting (API)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "developer-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Mock providers (dev/test)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0017; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "developer-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0066, ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "support-admin",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Support tickets, customer health, announcements",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0066; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "support-admin",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Universal Service Foundation scope + principles",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0053; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Build-versus-compose decision framework",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0054; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Service catalog + provider integration model",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0055; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Environment-specific vs shared service model",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0056; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Provider configuration plane",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0070; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Composed provider readiness spine",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0071; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "History read-model (read-only projection)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-data",
+      "ownerArtefact": "ADR-0063; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "data-platform",
+      "operationalOwner": "team-data",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-data",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "OIDC test connection + callback display",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "OIDC login simulation",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-0046; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant host identity resolution",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-ACT-0231; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "identity-access",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant domain activation (auth-client)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-ACT-0232; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "configuration",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant canonical domain set/unset",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-ACT-0232; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "configuration",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant custom-domain auth callback",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-security",
+      "ownerArtefact": "ADR-ACT-0232; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "authentication",
+      "operationalOwner": "team-security",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-security",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Tenant service clickthrough policy",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-ACT-0233; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "not-applicable",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Environment registry + bootstrap",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0072; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Provider environment classification",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0070; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0075; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "OpenAPI drift hard gate",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0065; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "developer-platform",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "not-applicable",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "i18n runtime + validation",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0026; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Accessibility (a11y) gate",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "architecture",
+      "ownerArtefact": "ADR-0075; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "architecture-governance",
+      "operationalOwner": "architecture",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "architecture",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "ownerType": "unknown",
-      "ownerId": "unknown",
-      "ownerArtefact": "v1-capability-closure.json",
-      "owningDomain": "unknown",
-      "operationalOwner": "unknown",
-      "securityOwner": "unknown",
-      "dataOwner": "unknown",
-      "runtimeOwner": "unknown",
+      "ownerType": "team",
+      "ownerId": "team-platform",
+      "ownerArtefact": "ADR-0074; docs/evidence/platform/browser-diagnostics-faro.md (ADR-ACT-0274); package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "owningDomain": "observability-operations",
+      "operationalOwner": "team-platform",
+      "securityOwner": "team-security",
+      "dataOwner": "team-data",
+      "runtimeOwner": "team-platform",
       "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
     }
   ],
-  "pass": false,
-  "gaps": [
-    {
-      "kind": "ownership",
-      "subject": "Tenant identity (record + FQDN)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant identity (record + FQDN)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "User identity + tenant membership",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "User identity + tenant membership",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "End-user profile + preferences self-service",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "End-user profile + preferences self-service",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "API keys / personal access tokens",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "API keys / personal access tokens",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant groups",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant groups",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Sub-organisations",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Sub-organisations",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "RBAC (roles + permissions)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "RBAC (roles + permissions)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "RBAC (roles + permissions)",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "ABAC / Policy Decision Point",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "ABAC / Policy Decision Point",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Delegated administration roles",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Delegated administration roles",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Entitlement engine",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Entitlement engine",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Support-mode / break-glass access",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Support-mode / break-glass access",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Audit of privileged access",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Audit of privileged access",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Platform login + session",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Platform login + session",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "IdP brokering + OIDC provider management",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "IdP brokering + OIDC provider management",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "IdP brokering + OIDC provider management",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Claim mapping + group/role mapping",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Claim mapping + group/role mapping",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Real IdP login simulation",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Real IdP login simulation",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "MFA + session policy + lockout",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "MFA + session policy + lockout",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Configuration registry + history",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Configuration registry + history",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Branding + theming",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Branding + theming",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Custom domains, DNS ownership, TLS, canonical",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Custom domains, DNS ownership, TLS, canonical",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Write-only secret settings",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Write-only secret settings",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Write-only secret settings",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Product catalog, plans, prices",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Product catalog, plans, prices",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Subscriptions, invoices, payment methods, dunning",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Subscriptions, invoices, payment methods, dunning",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Usage metering + meter event ingestion",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Usage metering + meter event ingestion",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Quota enforcement",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Quota enforcement",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Relational storage + migrations + RLS",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Relational storage + migrations + RLS",
-      "message": "data-owning capability without data owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Relational storage + migrations + RLS",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Backup + restore",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Backup + restore",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "PITR, retention, legal hold, data residency",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "PITR, retention, legal hold, data residency",
-      "message": "data-owning capability without data owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "PITR, retention, legal hold, data residency",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "message": "data-owning capability without data owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant data import / export",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant data import / export",
-      "message": "data-owning capability without data owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant data import / export",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Search + indexing (product search)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Search + indexing (product search)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Object storage + tenant prefixes + signed URLs",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Object storage + tenant prefixes + signed URLs",
-      "message": "data-owning capability without data owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Object storage + tenant prefixes + signed URLs",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Event bus, durable queues, DLQ, redrive",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Event bus, durable queues, DLQ, redrive",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Workflow engine, scheduled jobs, approvals",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Workflow engine, scheduled jobs, approvals",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Scheduled jobs (built-in, on the event substrate)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Scheduled jobs (built-in, on the event substrate)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Notification delivery + preferences + channels",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Notification delivery + preferences + channels",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Background workers / job runner",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Background workers / job runner",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Serverless / function runtime",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Runtime secrets management",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Runtime secrets management",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Runtime secrets management",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Logs (aggregation + tenant-scoped search)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Logs (aggregation + tenant-scoped search)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Metrics + traces",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Metrics + traces",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Alerting, incident management, on-call, status page",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Observability — built-in alerting + incidents",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Observability — built-in alerting + incidents",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Internal service catalog + readiness",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Internal service catalog + readiness",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Code quality + secret + dependency scanning",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Code quality + secret + dependency scanning",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Code quality + secret + dependency scanning",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Compliance reports, access reviews, evidence packs",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Compliance reports, access reviews, evidence packs",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant isolation proof",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant isolation proof",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Webhooks (developer-facing)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Webhooks (developer-facing)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "API docs, developer portal, SDKs, rate limits",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "API docs, developer portal, SDKs, rate limits",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Rate limiting (API)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Rate limiting (API)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Mock providers (dev/test)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant lifecycle: provision, suspend, delete, export",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant lifecycle: provision, suspend, delete, export",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Support tickets, customer health, announcements",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Support tickets, customer health, announcements",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Universal Service Foundation scope + principles",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Universal Service Foundation scope + principles",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Build-versus-compose decision framework",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Build-versus-compose decision framework",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Service catalog + provider integration model",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Service catalog + provider integration model",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Environment-specific vs shared service model",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Environment-specific vs shared service model",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Provider configuration plane",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Provider configuration plane",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Composed provider readiness spine",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Composed provider readiness spine",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "History read-model (read-only projection)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "History read-model (read-only projection)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OIDC discovery / issuer / JWKS validation",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OIDC discovery / issuer / JWKS validation",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OIDC test connection + callback display",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OIDC test connection + callback display",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OIDC login simulation",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant host identity resolution",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant host identity resolution",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant domain activation (auth-client)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant domain activation (auth-client)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant domain activation (auth-client)",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant canonical domain set/unset",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant canonical domain set/unset",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant custom-domain auth callback",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant custom-domain auth callback",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant custom-domain auth callback",
-      "message": "security capability without security owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant service clickthrough policy",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Tenant service clickthrough policy",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Environment registry + bootstrap",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Environment registry + bootstrap",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Provider environment classification",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Provider environment classification",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "E2E confidence ladder (stage-aware)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "E2E confidence ladder (stage-aware)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OpenAPI drift hard gate",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "OpenAPI drift hard gate",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "i18n runtime + validation",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "i18n runtime + validation",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Accessibility (a11y) gate",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Accessibility (a11y) gate",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "message": "capability without explicit owner",
-      "evidence": {
-        "source": "v1-capability-closure.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "ownership",
-      "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "message": "provider-backed capability without runtime owner",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    }
-  ]
+  "pass": true,
+  "gaps": []
 }
