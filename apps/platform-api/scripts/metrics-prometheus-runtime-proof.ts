@@ -21,6 +21,7 @@
  *   (requires platform-api on PLATFORM_API_PORT, Prometheus on PROMETHEUS_PORT)
  */
 
+import assert from "node:assert/strict";
 import { loadLocalEnv } from "./lib/local-env.ts";
 
 loadLocalEnv();
@@ -39,6 +40,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function get(

@@ -657,7 +657,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"]
@@ -668,7 +668,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get", "route:get-healthz", "route:get-readyz"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"]
