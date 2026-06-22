@@ -533,12 +533,12 @@
   {
     "proofId": "proof:apps-platform-api-scripts-http-webhook-dispatcher-runtime-proof-ts",
     "file": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
-    "level": 0,
-    "classification": "route/file existence only",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
-    "assertsObservabilityOrAudit": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"]
   },
   {
@@ -558,18 +558,18 @@
     "level": 3,
     "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
-    "assertsObservabilityOrAudit": false,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"]
   },
   {
     "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
     "file": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-    "level": 0,
-    "classification": "route/file existence only",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"]
@@ -580,9 +580,9 @@
     "level": 3,
     "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
-    "assertsObservabilityOrAudit": false,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts"]
   },
   {

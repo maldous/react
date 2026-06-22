@@ -6,4 +6,44 @@
  * timeout/retry declarations, health, recovery, webhook verification,
  * unavailable-provider, and misconfigured-provider fail-closed paths.
  */
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const delegatedProofSource = readFileSync(
+  join(scriptDir, "billing-provider-runtime-proof.ts"),
+  "utf8"
+);
+const adapterSource = readFileSync(
+  join(scriptDir, "../src/adapters/in-memory-billing-provider.ts"),
+  "utf8"
+);
+
+assert.ok(
+  delegatedProofSource.includes("billing.readiness") &&
+    delegatedProofSource.includes('readiness.status, "ready"') &&
+    delegatedProofSource.includes("billing.ensureAccount") &&
+    delegatedProofSource.includes('account.organisationId, "org-billing-proof"'),
+  "delegated billing proof must assert readiness status and persisted account state"
+);
+assert.ok(
+  delegatedProofSource.includes("payment.charge") &&
+    delegatedProofSource.includes('charge.outcome, "succeeded"') &&
+    delegatedProofSource.includes("payment.refund") &&
+    delegatedProofSource.includes("refund.succeeded"),
+  "delegated billing proof must assert charge and refund side effects"
+);
+assert.ok(
+  adapterSource.includes("this.accounts.set") &&
+    adapterSource.includes("validateWebhookSignature") &&
+    adapterSource.includes("withBillingReliability") &&
+    adapterSource.includes("retryAttempts") &&
+    adapterSource.includes("operationTimeoutMs") &&
+    adapterSource.includes("fail closed") &&
+    adapterSource.includes("invalid_refund_amount"),
+  "in-memory billing adapter must persist account state and implement webhook, retry, timeout, and fail-closed behavior"
+);
+
 await import("./billing-provider-runtime-proof.ts");
