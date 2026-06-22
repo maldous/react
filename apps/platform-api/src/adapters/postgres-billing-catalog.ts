@@ -9,6 +9,14 @@ import type {
   CreateBillingProductInput,
 } from "../ports/billing-catalog.ts";
 
+export interface PostgresBillingCatalogProviderConfig {
+  statementTimeoutMs: number;
+  retryAttempts: number;
+  retryBackoffMs: number;
+  configSource: "POSTGRES_APP_URL";
+  secretSource: "POSTGRES_APP_URL";
+}
+
 type ProductRow = {
   product_id: string;
   name: string;
@@ -39,11 +47,33 @@ type PriceRow = {
 
 const toIso = (d: Date | null) => (d ? d.toISOString() : null);
 
+export function loadPostgresBillingCatalogProviderConfig(
+  env: NodeJS.ProcessEnv = process.env
+): PostgresBillingCatalogProviderConfig {
+  return {
+    statementTimeoutMs: Number(env["BILLING_CATALOG_QUERY_TIMEOUT_MS"] ?? "5000"),
+    retryAttempts: Number(env["BILLING_CATALOG_RETRY_ATTEMPTS"] ?? "1"),
+    retryBackoffMs: Number(env["BILLING_CATALOG_RETRY_BACKOFF_MS"] ?? "100"),
+    configSource: "POSTGRES_APP_URL",
+    secretSource: "POSTGRES_APP_URL",
+  };
+}
+
 export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
-  constructor(private readonly pool: pg.Pool) {}
+  private readonly providerConfig: PostgresBillingCatalogProviderConfig;
+
+  constructor(
+    private readonly pool: pg.Pool,
+    config: Partial<PostgresBillingCatalogProviderConfig> = {}
+  ) {
+    this.providerConfig = {
+      ...loadPostgresBillingCatalogProviderConfig(),
+      ...config,
+    };
+  }
 
   async listProducts(): Promise<BillingProduct[]> {
-    const { rows } = await this.pool.query<ProductRow>(
+    const { rows } = await this.query<ProductRow>(
       `SELECT product_id, name, description, is_active, created_at
          FROM public.billing_products
         ORDER BY created_at DESC, name ASC`
@@ -59,14 +89,14 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
 
   async listPlans(productId?: string): Promise<BillingPlan[]> {
     const { rows } = productId
-      ? await this.pool.query<PlanRow>(
+      ? await this.query<PlanRow>(
           `SELECT plan_id, product_id, name, currency, billing_period, is_active, created_at
              FROM public.billing_plans
             WHERE product_id = $1
             ORDER BY created_at DESC, name ASC`,
           [productId]
         )
-      : await this.pool.query<PlanRow>(
+      : await this.query<PlanRow>(
           `SELECT plan_id, product_id, name, currency, billing_period, is_active, created_at
              FROM public.billing_plans
             ORDER BY created_at DESC, name ASC`
@@ -84,14 +114,14 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
 
   async listPrices(planId?: string): Promise<BillingPrice[]> {
     const { rows } = planId
-      ? await this.pool.query<PriceRow>(
+      ? await this.query<PriceRow>(
           `SELECT price_id, plan_id, version, price_type, unit_amount, currency, billing_period, is_active, created_at
              FROM public.billing_prices
             WHERE plan_id = $1
             ORDER BY created_at DESC, version DESC`,
           [planId]
         )
-      : await this.pool.query<PriceRow>(
+      : await this.query<PriceRow>(
           `SELECT price_id, plan_id, version, price_type, unit_amount, currency, billing_period, is_active, created_at
              FROM public.billing_prices
             ORDER BY created_at DESC, version DESC`
@@ -110,7 +140,7 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
   }
 
   async createProduct(input: CreateBillingProductInput): Promise<BillingProduct> {
-    const { rows } = await this.pool.query<ProductRow>(
+    const { rows } = await this.query<ProductRow>(
       `INSERT INTO public.billing_products (name, description, created_by)
        VALUES ($1, $2, $3)
        RETURNING product_id, name, description, is_active, created_at`,
@@ -127,7 +157,7 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
   }
 
   async createPlan(input: CreateBillingPlanInput): Promise<BillingPlan> {
-    const { rows } = await this.pool.query<PlanRow>(
+    const { rows } = await this.query<PlanRow>(
       `INSERT INTO public.billing_plans (product_id, name, currency, billing_period, created_by)
        VALUES ($1, $2, $3, $4, $5)
        RETURNING plan_id, product_id, name, currency, billing_period, is_active, created_at`,
@@ -146,7 +176,7 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
   }
 
   async createPrice(input: CreateBillingPriceInput): Promise<BillingPrice> {
-    const { rows } = await this.pool.query<PriceRow>(
+    const { rows } = await this.query<PriceRow>(
       `WITH next_version AS (
          SELECT COALESCE(MAX(version), 0) + 1 AS version
            FROM public.billing_prices
@@ -178,5 +208,46 @@ export class PostgresBillingCatalogAdapter implements BillingCatalogPort {
       isActive: r.is_active,
       createdAt: toIso(r.created_at),
     };
+  }
+
+  async healthCheck(): Promise<{ status: "ready"; provider: "postgres-billing-catalog" }> {
+    await this.query<{ ok: number }>(
+      `SELECT 1 AS ok
+         FROM information_schema.tables
+        WHERE table_schema = 'public'
+          AND table_name IN ('billing_products', 'billing_plans', 'billing_prices')
+        LIMIT 1`
+    );
+    return { status: "ready", provider: "postgres-billing-catalog" };
+  }
+
+  recoveryAction(): string {
+    return "operator recovery: verify POSTGRES_APP_URL secret/config, run db migrations through 039-billing-catalog.sql, inspect billing catalog table grants, then retry the failed catalog operation";
+  }
+
+  private async query<T extends pg.QueryResultRow>(
+    sql: string,
+    values?: unknown[]
+  ): Promise<pg.QueryResult<T>> {
+    let lastError: unknown;
+    for (let attempt = 0; attempt <= this.providerConfig.retryAttempts; attempt += 1) {
+      try {
+        await this.pool.query(
+          `SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`
+        );
+        return await this.pool.query<T>(sql, values);
+      } catch (err) {
+        lastError = err;
+        if (attempt >= this.providerConfig.retryAttempts) break;
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.providerConfig.retryBackoffMs * (attempt + 1))
+        );
+      }
+    }
+    throw new Error(
+      `postgres-billing-catalog unavailable; no fallback is allowed for catalog persistence, fail-closed after retry attempts: ${
+        lastError instanceof Error ? lastError.message : String(lastError)
+      }`
+    );
   }
 }

@@ -4008,6 +4008,18 @@
       "v2Target": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
       "protectingTests": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
       "decisionRefs": ["ADR-0068", "ADR-ACT-0257"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:billing-catalog",
+        "apps/platform-api/tests/unit/billing-catalog.test.ts"
+      ],
+      "decisionRefs": ["ADR-ACT-0257"]
     }
   ],
   "deletions": [
@@ -4390,6 +4402,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 429,
+  "additionCount": 430,
   "deletionCount": 54
 }

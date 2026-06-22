@@ -10679,5 +10679,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing billing catalog route proof and unit state proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero when billing catalog route registration is broken; unit proof exits non-zero when product/plan/price create/list behaviour is broken",
+    "proofLevel": 3,
+    "proofLevelRationale": "provider-ID entrypoint delegates to billing-catalog-runtime-proof.ts and is paired with apps/platform-api/tests/unit/billing-catalog.test.ts; together they validate catalog route registration plus product, plan, and immutable price create/list semantics. Adapter reliability semantics fail closed on unavailable or misconfigured Postgres.",
+    "capabilitiesProven": ["Product catalog, plans, prices"],
+    "semanticFacetsProven": ["providerReliability", "stateModel", "contract", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]
