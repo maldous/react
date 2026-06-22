@@ -27,13 +27,61 @@ import type { EnvironmentRecord } from "../ports/environment-registry-repository
 const ENV_KEY = /^[A-Z][A-Z0-9_]*$/;
 const PROOF_NAME = /^[a-z0-9][a-z0-9-]*$/;
 
+export const composeEnvironmentOperationReliabilityEvidence = {
+  configSource:
+    "operation configuration is the EnvironmentRecord supplied by the environment registry plus COMPOSE_ENV_OPERATION_TIMEOUT_MS",
+  timeout:
+    "non-dry-run operation execution is bounded by operationTimeoutMs through withOperationTimeout",
+  retry:
+    "no retry inside the adapter: bootstrap, migration, secret rotation, profile start/stop, and proof commands are single operator-invoked attempts",
+  degradedMode:
+    "runner failures return ok=false with exitCode/stdout/stderr; invalid or unsafe requests throw before execution",
+  failClosed:
+    "unknown operations, environment mismatches, disallowed profiles, production mock starts, malformed secret keys, and malformed proof names are rejected before argv execution",
+  fallbackRationale:
+    "no fallback runner or shell exists because the operation boundary must remain an argv-only allowlist",
+  operatorRecovery:
+    "operators recover by fixing the environment registry/profile/secret/proof input or rerunning the exact audited operation after runner failure",
+};
+
+function configuredOperationTimeoutMs(): number {
+  const raw = process.env["COMPOSE_ENV_OPERATION_TIMEOUT_MS"] ?? "120000";
+  const parsed = Number.parseInt(raw, 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : 120000;
+}
+
+async function withOperationTimeout<T>(
+  operation: string,
+  timeoutMs: number,
+  promise: Promise<T>
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`environment_operation_timeout:${operation}`)),
+      timeoutMs
+    );
+  });
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 export class ComposeEnvironmentOperationAdapter implements EnvironmentOperationPort {
   private readonly env: EnvironmentRecord;
   private readonly run: ArgvRunner;
+  private readonly operationTimeoutMs: number;
 
-  constructor(env: EnvironmentRecord, runner: ArgvRunner) {
+  constructor(
+    env: EnvironmentRecord,
+    runner: ArgvRunner,
+    operationTimeoutMs = configuredOperationTimeoutMs()
+  ) {
     this.env = env;
     this.run = runner;
+    this.operationTimeoutMs = operationTimeoutMs;
   }
 
   private assertProfileAllowed(profile: string | undefined): string {
@@ -128,7 +176,11 @@ export class ComposeEnvironmentOperationAdapter implements EnvironmentOperationP
         message: "dry-run: command resolved, not executed",
       };
     }
-    const { exitCode, stdout, stderr } = await this.run(command);
+    const { exitCode, stdout, stderr } = await withOperationTimeout(
+      req.kind,
+      this.operationTimeoutMs,
+      this.run(command)
+    );
     return { ...base, ok: exitCode === 0, dryRun: false, exitCode, stdout, stderr };
   }
 }

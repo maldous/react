@@ -3954,6 +3954,15 @@
       "v2Target": "apps/platform-api/conformance/caddy-local-routing-probe.conformance.ts",
       "protectingTests": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/conformance/compose-environment-operation.conformance.ts",
+      "protectingTests": ["apps/platform-api/scripts/environment-operations-runtime-proof.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [

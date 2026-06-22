@@ -212,6 +212,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-compose-environment-operation-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
     "file": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
     "level": 4,

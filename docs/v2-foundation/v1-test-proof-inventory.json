@@ -10535,5 +10535,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing environment operations runtime proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero; emits proof stdout from the underlying environment operations proof",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to environment-operations-runtime-proof.ts; deterministic proof validates closed operation enum, argv-only dry runs, allowed-profile checks, mock-profile production rejection, no destructive stop volumes, pattern validation, permission checks, and audit emission",
+    "capabilitiesProven": ["Environment registry + operation controls"],
+    "semanticFacetsProven": ["providerReliability", "securityModel", "stateModel", "proof"],
+    "environment": "test",
+    "providerClass": "local-runner",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]
