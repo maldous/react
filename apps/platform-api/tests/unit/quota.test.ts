@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { AuditAction, type AuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { PostgresQuotaRepository } from "../../src/adapters/postgres-quota-repository.ts";
 import { assertQuota, evaluateQuota, listQuotas, setQuota } from "../../src/usecases/quota.ts";
 import type { MeteringRepository } from "../../src/ports/metering-repository.ts";
 import type {
@@ -202,5 +203,71 @@ describe("quota usecase", () => {
     const res = await listQuotas(ORG, deps);
     assert.equal(res.quotas[0]?.state, "exceeded");
     assert.equal(res.quotas[0]?.allowed, false);
+  });
+});
+
+describe("PostgresQuotaRepository provider reliability", () => {
+  function makeProviderPool(options: { failSelect?: boolean } = {}) {
+    const queries: string[] = [];
+    const client = {
+      async query(sql: string) {
+        queries.push(sql);
+        if (options.failSelect && sql.includes("information_schema.tables")) {
+          throw new Error("db down");
+        }
+        return { rows: [], rowCount: 0 };
+      },
+      release() {},
+    };
+    return {
+      queries,
+      pool: {
+        async connect() {
+          return client;
+        },
+      },
+    };
+  }
+
+  it("applies a bounded statement timeout inside the system-admin health check", async () => {
+    const fixture = makeProviderPool();
+    const repo = new PostgresQuotaRepository(fixture.pool, {
+      statementTimeoutMs: 4567,
+      retryAttempts: 0,
+    });
+
+    await repo.healthCheck();
+
+    assert.deepEqual(fixture.queries.slice(0, 4), [
+      "BEGIN",
+      "SET LOCAL ROLE rls_bypass",
+      "SET LOCAL statement_timeout = 4567",
+      `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name = 'tenant_quotas'
+            LIMIT 1`,
+    ]);
+    assert.equal(fixture.queries.at(-1), "COMMIT");
+  });
+
+  it("retries unavailable Postgres and fails closed without a fallback", async () => {
+    const fixture = makeProviderPool({ failSelect: true });
+    const repo = new PostgresQuotaRepository(fixture.pool, {
+      statementTimeoutMs: 450,
+      retryAttempts: 1,
+      retryBackoffMs: 0,
+    });
+
+    await assert.rejects(
+      () => repo.healthCheck(),
+      /postgres-quota-repository unavailable; no fallback.*fail-closed.*retry/
+    );
+    assert.equal(
+      fixture.queries.filter((q) => q === "SET LOCAL statement_timeout = 450").length,
+      2
+    );
+    assert.equal(fixture.queries.filter((q) => q === "ROLLBACK").length, 2);
+    assert.match(repo.recoveryAction(), /POSTGRES_APP_URL/);
   });
 });

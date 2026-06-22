@@ -914,6 +914,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
     "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
     "level": 4,
@@ -936,6 +947,28 @@
     "assertsFailureMode": false,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"]
+  },
+  {
+    "proofId": "proof:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"]
+  },
+  {
+    "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"]
   },
   {
     "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",

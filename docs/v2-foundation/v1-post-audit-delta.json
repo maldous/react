@@ -4142,6 +4142,42 @@
         "apps/platform-api/tests/unit/entitlements.test.ts"
       ],
       "decisionRefs": ["ADR-0057", "ADR-0058", "ADR-ACT-0254"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/metering-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/metering-runtime-proof.ts",
+        "apps/platform-api/tests/unit/metering.test.ts"
+      ],
+      "decisionRefs": ["ADR-0067", "ADR-ACT-0256"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+        "apps/platform-api/tests/unit/quota.test.ts"
+      ],
+      "decisionRefs": ["ADR-0067", "ADR-ACT-0256"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+        "apps/platform-api/tests/unit/rate-limits.test.ts"
+      ],
+      "decisionRefs": ["ADR-0065", "ADR-ACT-0257"]
     }
   ],
   "deletions": [
@@ -4524,6 +4560,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 441,
+  "additionCount": 444,
   "deletionCount": 54
 }

@@ -7,6 +7,7 @@ import {
   listRateLimits,
   setRateLimit,
 } from "../../src/usecases/rate-limits.ts";
+import { PostgresRateLimitRepository } from "../../src/adapters/postgres-rate-limit-repository.ts";
 import type {
   RateLimitPolicyRecord,
   RateLimitRepository,
@@ -164,5 +165,71 @@ describe("rate-limits usecase", () => {
     const listed = await listRateLimits(ORG, deps);
     assert.equal(listed.policies.length, 1);
     assert.equal(listed.policies[0]?.policyKey, "api.requests");
+  });
+});
+
+describe("PostgresRateLimitRepository provider reliability", () => {
+  function makeProviderPool(options: { failSelect?: boolean } = {}) {
+    const queries: string[] = [];
+    const client = {
+      async query(sql: string) {
+        queries.push(sql);
+        if (options.failSelect && sql.includes("information_schema.tables")) {
+          throw new Error("db down");
+        }
+        return { rows: [], rowCount: 0 };
+      },
+      release() {},
+    };
+    return {
+      queries,
+      pool: {
+        async connect() {
+          return client;
+        },
+      },
+    };
+  }
+
+  it("applies a bounded statement timeout inside the system-admin health check", async () => {
+    const fixture = makeProviderPool();
+    const repo = new PostgresRateLimitRepository(fixture.pool, {
+      statementTimeoutMs: 5678,
+      retryAttempts: 0,
+    });
+
+    await repo.healthCheck();
+
+    assert.deepEqual(fixture.queries.slice(0, 4), [
+      "BEGIN",
+      "SET LOCAL ROLE rls_bypass",
+      "SET LOCAL statement_timeout = 5678",
+      `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name IN ('rate_limit_policies', 'rate_limit_counters')
+            LIMIT 1`,
+    ]);
+    assert.equal(fixture.queries.at(-1), "COMMIT");
+  });
+
+  it("retries unavailable Postgres and fails closed without a fallback", async () => {
+    const fixture = makeProviderPool({ failSelect: true });
+    const repo = new PostgresRateLimitRepository(fixture.pool, {
+      statementTimeoutMs: 550,
+      retryAttempts: 1,
+      retryBackoffMs: 0,
+    });
+
+    await assert.rejects(
+      () => repo.healthCheck(),
+      /postgres-rate-limit-repository unavailable; no fallback.*fail-closed.*retry/
+    );
+    assert.equal(
+      fixture.queries.filter((q) => q === "SET LOCAL statement_timeout = 550").length,
+      2
+    );
+    assert.equal(fixture.queries.filter((q) => q === "ROLLBACK").length, 2);
+    assert.match(repo.recoveryAction(), /POSTGRES_APP_URL/);
   });
 });

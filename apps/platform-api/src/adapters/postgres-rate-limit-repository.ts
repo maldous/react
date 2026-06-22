@@ -17,6 +17,20 @@ import type {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
+type PgClient = {
+  query<T = unknown>(
+    sql: string,
+    values?: unknown[]
+  ): Promise<{ rows: T[]; rowCount?: number | null }>;
+};
+
+export interface PostgresRateLimitProviderConfig {
+  statementTimeoutMs: number;
+  retryAttempts: number;
+  retryBackoffMs: number;
+  configSource: "POSTGRES_APP_URL";
+  secretSource: "POSTGRES_APP_URL";
+}
 
 interface PolicyRow {
   policy_key: string;
@@ -48,46 +62,75 @@ function toRecord(r: PolicyRow): RateLimitPolicyRecord {
 const COLUMNS =
   "policy_key, entitlement_key, limit_value, window_seconds, action, updated_at, updated_by";
 
+export function loadPostgresRateLimitProviderConfig(
+  env: NodeJS.ProcessEnv = process.env
+): PostgresRateLimitProviderConfig {
+  return {
+    statementTimeoutMs: Number(env["RATE_LIMIT_QUERY_TIMEOUT_MS"] ?? "5000"),
+    retryAttempts: Number(env["RATE_LIMIT_RETRY_ATTEMPTS"] ?? "1"),
+    retryBackoffMs: Number(env["RATE_LIMIT_RETRY_BACKOFF_MS"] ?? "100"),
+    configSource: "POSTGRES_APP_URL",
+    secretSource: "POSTGRES_APP_URL",
+  };
+}
+
 export class PostgresRateLimitRepository implements RateLimitRepository {
   private readonly pool: PgPool;
-  constructor(pool: PgPool) {
+  private readonly providerConfig: PostgresRateLimitProviderConfig;
+
+  constructor(pool: PgPool, config: Partial<PostgresRateLimitProviderConfig> = {}) {
     this.pool = pool;
+    this.providerConfig = {
+      ...loadPostgresRateLimitProviderConfig(),
+      ...config,
+    };
   }
 
   async getByKey(organisationId: string, policyKey: string): Promise<RateLimitPolicyRecord | null> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `SELECT ${COLUMNS} FROM public.rate_limit_policies WHERE organisation_id = $1 AND policy_key = $2`,
-        [organisationId, policyKey]
-      );
-      const row = r.rows[0] as PolicyRow | undefined;
-      return row ? toRecord(row) : null;
-    });
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<PolicyRow>(
+          `SELECT ${COLUMNS} FROM public.rate_limit_policies WHERE organisation_id = $1 AND policy_key = $2`,
+          [organisationId, policyKey]
+        );
+        const row = r.rows[0];
+        return row ? toRecord(row) : null;
+      })
+    );
   }
 
   async listForTenant(organisationId: string): Promise<RateLimitPolicyRecord[]> {
-    return withTenant(this.pool as never, organisationId, async (client) => {
-      const r = await client.query(
-        `SELECT ${COLUMNS} FROM public.rate_limit_policies ORDER BY policy_key`
-      );
-      return (r.rows as PolicyRow[]).map(toRecord);
-    });
+    return this.withRetry(() =>
+      withTenant(this.pool as never, organisationId, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<PolicyRow>(
+          `SELECT ${COLUMNS} FROM public.rate_limit_policies ORDER BY policy_key`
+        );
+        return r.rows.map(toRecord);
+      })
+    );
   }
 
   async listForTenantAsOperator(organisationId: string): Promise<RateLimitPolicyRecord[]> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `SELECT ${COLUMNS} FROM public.rate_limit_policies WHERE organisation_id = $1 ORDER BY policy_key`,
-        [organisationId]
-      );
-      return (r.rows as PolicyRow[]).map(toRecord);
-    });
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<PolicyRow>(
+          `SELECT ${COLUMNS} FROM public.rate_limit_policies WHERE organisation_id = $1 ORDER BY policy_key`,
+          [organisationId]
+        );
+        return r.rows.map(toRecord);
+      })
+    );
   }
 
   async upsert(input: UpsertRateLimitInput): Promise<void> {
-    await withSystemAdmin(this.pool as never, async (client) => {
-      await client.query(
-        `INSERT INTO public.rate_limit_policies
+    await this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        await client.query(
+          `INSERT INTO public.rate_limit_policies
            (organisation_id, policy_key, entitlement_key, limit_value, window_seconds, action, updated_by, updated_at)
          VALUES ($1, $2, $3, $4, $5, $6, $7, now())
          ON CONFLICT (organisation_id, policy_key) DO UPDATE SET
@@ -97,17 +140,18 @@ export class PostgresRateLimitRepository implements RateLimitRepository {
            action          = EXCLUDED.action,
            updated_by      = EXCLUDED.updated_by,
            updated_at      = now()`,
-        [
-          input.organisationId,
-          input.policyKey,
-          input.entitlementKey,
-          input.limit,
-          input.windowSeconds,
-          input.action,
-          input.updatedBy,
-        ]
-      );
-    });
+          [
+            input.organisationId,
+            input.policyKey,
+            input.entitlementKey,
+            input.limit,
+            input.windowSeconds,
+            input.action,
+            input.updatedBy,
+          ]
+        );
+      })
+    );
   }
 
   // Fixed-window bucket: floor(now / window) * window. Computed in SQL so the bucket
@@ -121,17 +165,20 @@ export class PostgresRateLimitRepository implements RateLimitRepository {
     policyKey: string,
     windowSeconds: number
   ): Promise<number> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `INSERT INTO public.rate_limit_counters (organisation_id, policy_key, window_start, count)
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<{ count: string | number }>(
+          `INSERT INTO public.rate_limit_counters (organisation_id, policy_key, window_start, count)
          VALUES ($1, $2, ${this.windowStartSql(windowSeconds)}, 1)
          ON CONFLICT (organisation_id, policy_key, window_start)
            DO UPDATE SET count = public.rate_limit_counters.count + 1
          RETURNING count`,
-        [organisationId, policyKey]
-      );
-      return Number((r.rows[0] as { count: string | number }).count);
-    });
+          [organisationId, policyKey]
+        );
+        return Number(r.rows[0]!.count);
+      })
+    );
   }
 
   async currentCount(
@@ -139,14 +186,61 @@ export class PostgresRateLimitRepository implements RateLimitRepository {
     policyKey: string,
     windowSeconds: number
   ): Promise<number> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const r = await client.query(
-        `SELECT COALESCE(count, 0)::text AS count FROM public.rate_limit_counters
+    return this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        const r = await client.query<{ count: string }>(
+          `SELECT COALESCE(count, 0)::text AS count FROM public.rate_limit_counters
           WHERE organisation_id = $1 AND policy_key = $2
             AND window_start = ${this.windowStartSql(windowSeconds)}`,
-        [organisationId, policyKey]
-      );
-      return Number((r.rows[0] as { count: string } | undefined)?.count ?? "0");
-    });
+          [organisationId, policyKey]
+        );
+        return Number(r.rows[0]?.count ?? "0");
+      })
+    );
+  }
+
+  async healthCheck(): Promise<{ status: "ready"; provider: "postgres-rate-limit-repository" }> {
+    await this.withRetry(() =>
+      withSystemAdmin(this.pool as never, async (client: PgClient) => {
+        await this.applyQueryTimeout(client);
+        await client.query(
+          `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name IN ('rate_limit_policies', 'rate_limit_counters')
+            LIMIT 1`
+        );
+      })
+    );
+    return { status: "ready", provider: "postgres-rate-limit-repository" };
+  }
+
+  recoveryAction(): string {
+    return "operator recovery: verify POSTGRES_APP_URL secret/config, run migration 025-rate-limits.sql, inspect rate_limit_policies/rate_limit_counters RLS/grants and fixed-window indexes, then retry rate-limit policy or counter operation";
+  }
+
+  private async withRetry<T>(operation: () => Promise<T>): Promise<T> {
+    let lastError: unknown;
+    for (let attempt = 0; attempt <= this.providerConfig.retryAttempts; attempt += 1) {
+      try {
+        return await operation();
+      } catch (err) {
+        lastError = err;
+        if (attempt >= this.providerConfig.retryAttempts) break;
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.providerConfig.retryBackoffMs * (attempt + 1))
+        );
+      }
+    }
+    throw new Error(
+      `postgres-rate-limit-repository unavailable; no fallback is allowed for durable rate-limit policy and counter decisions, fail-closed after retry attempts: ${
+        lastError instanceof Error ? lastError.message : String(lastError)
+      }`
+    );
+  }
+
+  private async applyQueryTimeout(client: PgClient): Promise<void> {
+    await client.query(`SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`);
   }
 }
