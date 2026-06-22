@@ -17,7 +17,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6525", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6526", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -36,7 +36,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6558", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6559", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -55,7 +55,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7873", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7894", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -74,7 +74,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7920", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7941", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -93,121 +93,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7826", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "DELETE /api/admin/data/legal-holds",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-delete-api-admin-data-legal-holds",
-        "routeId": "route:delete-api-admin-data-legal-holds",
-        "method": "DELETE",
-        "path": "/api/admin/data/legal-holds",
-        "authBoundary": true,
-        "permissionBoundary": "platform.data.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7466", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/data/legal-holds",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-data-legal-holds",
-        "routeId": "route:post-api-admin-data-legal-holds",
-        "method": "POST",
-        "path": "/api/admin/data/legal-holds",
-        "authBoundary": true,
-        "permissionBoundary": "platform.data.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7422", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/data/residency",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-data-residency",
-        "routeId": "route:post-api-admin-data-residency",
-        "method": "POST",
-        "path": "/api/admin/data/residency",
-        "authBoundary": true,
-        "permissionBoundary": "platform.data.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7701", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "DELETE /api/admin/data/retention-policies",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-delete-api-admin-data-retention-policies",
-        "routeId": "route:delete-api-admin-data-retention-policies",
-        "method": "DELETE",
-        "path": "/api/admin/data/retention-policies",
-        "authBoundary": true,
-        "permissionBoundary": "platform.data.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7592", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/data/retention-policies",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-data-retention-policies",
-        "routeId": "route:post-api-admin-data-retention-policies",
-        "method": "POST",
-        "path": "/api/admin/data/retention-policies",
-        "authBoundary": true,
-        "permissionBoundary": "platform.data.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7543", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/events/:eventId/redrive",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-events-eventid-redrive",
-        "routeId": "route:post-api-admin-events-eventid-redrive",
-        "method": "POST",
-        "path": "/api/admin/events/:eventId/redrive",
-        "authBoundary": true,
-        "permissionBoundary": "platform.events.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6030", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7847", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -226,7 +112,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7961", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7982", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -245,7 +131,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7985", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8006", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -264,7 +150,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8030", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8051", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -283,7 +169,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8054", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8075", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -302,7 +188,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6612", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6613", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -327,63 +213,6 @@
     },
     {
       "kind": "route-security",
-      "subject": "POST /api/admin/provider-configs",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-provider-configs",
-        "routeId": "route:post-api-admin-provider-configs",
-        "method": "POST",
-        "path": "/api/admin/provider-configs",
-        "authBoundary": true,
-        "permissionBoundary": "platform.providers.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7023", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/provider-configs/:id/delete",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-provider-configs-id-delete",
-        "routeId": "route:post-api-admin-provider-configs-id-delete",
-        "method": "POST",
-        "path": "/api/admin/provider-configs/:id/delete",
-        "authBoundary": true,
-        "permissionBoundary": "platform.providers.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7087", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/provider-configs/:id/lifecycle",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-provider-configs-id-lifecycle",
-        "routeId": "route:post-api-admin-provider-configs-id-lifecycle",
-        "method": "POST",
-        "path": "/api/admin/provider-configs/:id/lifecycle",
-        "authBoundary": true,
-        "permissionBoundary": "platform.providers.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7056", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
       "subject": "POST /api/admin/scheduled-jobs",
       "message": "privileged mutation route without security audit evidence",
       "evidence": {
@@ -397,7 +226,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6743", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6744", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -416,7 +245,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6810", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6811", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -435,7 +264,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6776", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6777", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -473,7 +302,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6896", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6897", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -492,7 +321,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6966", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6967", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -511,7 +340,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6931", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6932", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -568,7 +397,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6286", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6287", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -663,7 +492,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7387", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7403", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -701,7 +530,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7290", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7306", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -777,7 +606,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7357", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7373", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -815,7 +644,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8182", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8203", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -834,7 +663,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8152", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8173", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -853,7 +682,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8113", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8134", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },

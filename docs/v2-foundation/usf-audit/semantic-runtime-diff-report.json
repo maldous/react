@@ -2107,60 +2107,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "DELETE /api/admin/data/legal-holds",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/data/legal-holds",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/data/residency",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "DELETE /api/admin/data/retention-policies",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/data/retention-policies",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/events/:eventId/redrive",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "POST /api/admin/governance/catalog",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
@@ -2198,33 +2144,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "PATCH /api/admin/incidents/:incidentId",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/provider-configs",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/provider-configs/:id/delete",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/provider-configs/:id/lifecycle",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
         "source": "runtime-audit-inventory.json"

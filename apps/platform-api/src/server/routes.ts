@@ -6035,6 +6035,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.events.write",
     resource: "admin:events",
     umaScope: "write" as const,
+    auditEvent: AuditAction.EventRedriven,
     scope: "global" as const,
     handler: async (req, res) => {
       const deadLetterId = req.params["eventId"] ?? "";
@@ -7028,6 +7029,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.providers.write",
     resource: "admin:provider_configs",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ProviderConfigSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const parsed = PutProviderConfigRequestSchema.safeParse(req.body);
@@ -7061,6 +7063,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.providers.write",
     resource: "admin:provider_configs",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ProviderConfigSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const id = req.params["id"] ?? "";
@@ -7076,6 +7079,18 @@ export const routes: Route[] = [
       const { PostgresProviderConfigRepository } =
         await import("../adapters/postgres-provider-config-repository.ts");
       const repo = new PostgresProviderConfigRepository(getApplicationPool());
+      await createPostgresAuditEventPort(getApplicationPool()).emit(
+        createAuditEvent({
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          tenantId: req.actor!.userId,
+          action: AuditAction.ProviderConfigSet,
+          resource: "provider_config",
+          resourceId: id,
+          metadata: { lifecycleState: parsed.data.lifecycleState },
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        })
+      );
       const ok = await repo.setLifecycleState(id, parsed.data.lifecycleState);
       if (!ok) {
         res.json(404, { code: "NOT_FOUND", message: "Provider config not found" });
@@ -7092,6 +7107,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.providers.write",
     resource: "admin:provider_configs",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ProviderConfigDeleted,
     scope: "global" as const,
     handler: async (req, res) => {
       const id = req.params["id"] ?? "";
@@ -7427,6 +7443,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.data.write",
     resource: "admin:data",
     umaScope: "write" as const,
+    auditEvent: AuditAction.LegalHoldSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const { setLegalHold } = await import("../usecases/legal-hold.ts");
@@ -7471,6 +7488,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.data.write",
     resource: "admin:data",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.LegalHoldReleased,
     scope: "global" as const,
     handler: async (req, res) => {
       const { releaseLegalHold } = await import("../usecases/legal-hold.ts");
@@ -7548,6 +7566,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.data.write",
     resource: "admin:data",
     umaScope: "write" as const,
+    auditEvent: AuditAction.RetentionPolicySet,
     scope: "global" as const,
     handler: async (req, res) => {
       const { setRetentionPolicy } = await import("../usecases/retention.ts");
@@ -7597,6 +7616,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.data.write",
     resource: "admin:data",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.RetentionPolicyRemoved,
     scope: "global" as const,
     handler: async (req, res) => {
       const { disableRetentionPolicy } = await import("../usecases/retention.ts");
@@ -7706,6 +7726,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.data.write",
     resource: "admin:data",
     umaScope: "write" as const,
+    auditEvent: AuditAction.OrganisationUpdated,
     scope: "global" as const,
     handler: async (req, res) => {
       const { setTenantResidency } = await import("../usecases/data-residency.ts");
