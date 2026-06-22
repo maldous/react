@@ -10610,5 +10610,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing Keycloak-backed credential lifecycle proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero when Keycloak, credential validation, lifecycle metadata, or mutation/readback behaviour is broken",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to credential-lifecycle-runtime-proof.ts; live proof validates per-tenant credentials against Keycloak, invalid candidate preservation, lifecycle metadata, real realm mutation/readback, and secret non-disclosure.",
+    "capabilitiesProven": ["Auth settings tenant credential lifecycle"],
+    "semanticFacetsProven": ["providerReliability", "securityModel", "stateModel", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]

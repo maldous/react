@@ -837,6 +837,19 @@
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": [
+      "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts"
+    ]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts",
     "file": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
     "level": 4,
