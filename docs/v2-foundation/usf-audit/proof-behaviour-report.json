@@ -405,23 +405,6 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/incident-foundation-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
       "message": "proof only checks file/contract shape",
       "evidence": {
@@ -454,31 +437,6 @@
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": [
           "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
-        ]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": [
-          "route:get",
-          "route:get-admin",
-          "route:get-api-admin-tenants",
-          "route:post-api-admin-tenants",
-          "route:post-api-admin-tenants-tenantid-notifications-test"
-        ],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": [
-          "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"
         ]
       },
       "classification": "must-fix-in-v1"
@@ -531,25 +489,6 @@
         "assertsFailureMode": false,
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": [
-          "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts"
-        ]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2974,7 +2913,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/incident-foundation-runtime-proof.ts"]
@@ -3112,7 +3051,7 @@
         "route:post-api-admin-tenants",
         "route:post-api-admin-tenants-tenantid-notifications-test"
       ],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"]
@@ -3134,7 +3073,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": [

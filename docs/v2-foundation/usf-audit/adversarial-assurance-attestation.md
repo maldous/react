@@ -23,7 +23,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |   579 |
+| must-fix-in-v1 items            |   576 |
 
 ## Known Gaps Identified
 
@@ -121,159 +121,159 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 - USF-GAP-0092: apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts - proof only checks file/contract shape
 - USF-GAP-0093: apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts - proof does not assert side effects
 - USF-GAP-0094: apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0095: apps/platform-api/scripts/incident-foundation-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0096: apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0097: apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0098: apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0099: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0100: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0101: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0102: apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0103: apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0104: apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0105: apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0106: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0107: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0108: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0109: apps/platform-api/scripts/platform-services-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0110: apps/platform-api/scripts/playwright-adapter-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0111: apps/platform-api/scripts/playwright-adapter-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0112: apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0113: apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0114: apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0115: apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0116: apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0117: apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0118: apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0119: apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0120: apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0121: apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0122: apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0123: apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0124: apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0125: apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0126: apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0127: apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0128: apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0129: apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0130: apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0131: apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0132: apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0133: apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0134: apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0135: apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0136: apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0137: apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0138: apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0139: apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0140: apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0141: apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0142: apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0143: apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0144: apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0145: apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0146: apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0147: apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0148: apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0149: apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0150: apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0151: apps/platform-api/scripts/postgres-retention-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0152: apps/platform-api/scripts/postgres-retention-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0153: apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0154: apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0155: apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0156: apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0157: apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0158: apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0159: apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0160: apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0161: apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0162: apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0163: apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0164: apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0165: apps/platform-api/scripts/profile-self-service-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0166: apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0167: apps/platform-api/scripts/provider-config-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0168: apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0169: apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0170: apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0171: apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0172: apps/platform-api/scripts/quota-enforcement-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0173: apps/platform-api/scripts/rate-limits-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0174: apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0175: apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0176: apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0177: apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0178: apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0179: apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0180: apps/platform-api/scripts/search-isolation-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0181: apps/platform-api/scripts/search-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0182: apps/platform-api/scripts/secret-store-contract-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0183: apps/platform-api/scripts/secrets-openbao-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0184: apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0185: apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0186: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0187: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0188: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0189: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert failure mode
-- USF-GAP-0190: apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0191: apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0192: apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0193: apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0194: apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0195: apps/platform-api/scripts/tenant-domains-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0196: apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0197: apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0198: apps/platform-api/scripts/tenant-observability-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0199: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof only checks file/contract shape
-- USF-GAP-0200: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0201: apps/platform-api/scripts/tenant-storage-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0202: apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0203: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0204: apps/platform-api/scripts/webhook-worker-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0205: apps/platform-api/scripts/webhooks-runtime-proof.ts - proof does not assert side effects
-- USF-GAP-0206: GET /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0207: POST /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0208: POST /api/admin/alerts/:alertId/evaluate - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0209: GET /api/admin/backup - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0210: GET /api/admin/billing - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0211: GET /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0212: POST /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0213: GET /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0214: POST /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0215: GET /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0216: POST /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0217: GET /api/admin/billing/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0218: GET /api/admin/clickthrough - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0219: GET /api/admin/data/compliance-report - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0220: DELETE /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0221: GET /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0222: POST /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0223: POST /api/admin/data/residency - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0224: DELETE /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0225: GET /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0226: POST /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0227: GET /api/admin/events - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0228: POST /api/admin/events/:eventId/redrive - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0229: GET /api/admin/events/dead-letter - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0230: GET /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0231: POST /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0232: POST /api/admin/governance/catalog/classify - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0233: GET /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0234: POST /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0235: POST /api/admin/governance/dsr/:dsrId/fulfill - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0236: GET /api/admin/incidents - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0237: PATCH /api/admin/incidents/:incidentId - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0238: GET /api/admin/logs/search - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0239: GET /api/admin/notifications/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0240: GET /api/admin/observability - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0241: GET /api/admin/observability/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0242: GET /api/admin/observability/signals - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0243: GET /api/admin/provider-bindings - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0244: GET /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0245: POST /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0246: POST /api/admin/provider-configs/:id/delete - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0247: POST /api/admin/provider-configs/:id/lifecycle - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0248: GET /api/admin/providers/readiness - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0249: GET /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
-- USF-GAP-0250: POST /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0095: apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0096: apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0097: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0098: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0099: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0100: apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0101: apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0102: apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0103: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0104: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0105: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0106: apps/platform-api/scripts/platform-services-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0107: apps/platform-api/scripts/playwright-adapter-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0108: apps/platform-api/scripts/playwright-adapter-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0109: apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0110: apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0111: apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0112: apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0113: apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0114: apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0115: apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0116: apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0117: apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0118: apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0119: apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0120: apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0121: apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0122: apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0123: apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0124: apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0125: apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0126: apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0127: apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0128: apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0129: apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0130: apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0131: apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0132: apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0133: apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0134: apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0135: apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0136: apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0137: apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0138: apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0139: apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0140: apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0141: apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0142: apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0143: apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0144: apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0145: apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0146: apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0147: apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0148: apps/platform-api/scripts/postgres-retention-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0149: apps/platform-api/scripts/postgres-retention-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0150: apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0151: apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0152: apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0153: apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0154: apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0155: apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0156: apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0157: apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0158: apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0159: apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0160: apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0161: apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0162: apps/platform-api/scripts/profile-self-service-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0163: apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0164: apps/platform-api/scripts/provider-config-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0165: apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0166: apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0167: apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0168: apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0169: apps/platform-api/scripts/quota-enforcement-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0170: apps/platform-api/scripts/rate-limits-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0171: apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0172: apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0173: apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0174: apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0175: apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0176: apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0177: apps/platform-api/scripts/search-isolation-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0178: apps/platform-api/scripts/search-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0179: apps/platform-api/scripts/secret-store-contract-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0180: apps/platform-api/scripts/secrets-openbao-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0181: apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0182: apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0183: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0184: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0185: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0186: apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts - proof does not assert failure mode
+- USF-GAP-0187: apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0188: apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0189: apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0190: apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0191: apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0192: apps/platform-api/scripts/tenant-domains-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0193: apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0194: apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0195: apps/platform-api/scripts/tenant-observability-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0196: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof only checks file/contract shape
+- USF-GAP-0197: apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0198: apps/platform-api/scripts/tenant-storage-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0199: apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0200: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0201: apps/platform-api/scripts/webhook-worker-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0202: apps/platform-api/scripts/webhooks-runtime-proof.ts - proof does not assert side effects
+- USF-GAP-0203: GET /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0204: POST /api/admin/alerts - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0205: POST /api/admin/alerts/:alertId/evaluate - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0206: GET /api/admin/backup - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0207: GET /api/admin/billing - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0208: GET /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0209: POST /api/admin/billing/catalog/plans - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0210: GET /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0211: POST /api/admin/billing/catalog/prices - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0212: GET /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0213: POST /api/admin/billing/catalog/products - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0214: GET /api/admin/billing/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0215: GET /api/admin/clickthrough - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0216: GET /api/admin/data/compliance-report - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0217: DELETE /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0218: GET /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0219: POST /api/admin/data/legal-holds - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0220: POST /api/admin/data/residency - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0221: DELETE /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0222: GET /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0223: POST /api/admin/data/retention-policies - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0224: GET /api/admin/events - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0225: POST /api/admin/events/:eventId/redrive - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0226: GET /api/admin/events/dead-letter - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0227: GET /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0228: POST /api/admin/governance/catalog - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0229: POST /api/admin/governance/catalog/classify - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0230: GET /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0231: POST /api/admin/governance/dsr - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0232: POST /api/admin/governance/dsr/:dsrId/fulfill - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0233: GET /api/admin/incidents - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0234: PATCH /api/admin/incidents/:incidentId - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0235: GET /api/admin/logs/search - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0236: GET /api/admin/notifications/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0237: GET /api/admin/observability - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0238: GET /api/admin/observability/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0239: GET /api/admin/observability/signals - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0240: GET /api/admin/provider-bindings - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0241: GET /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0242: POST /api/admin/provider-configs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0243: POST /api/admin/provider-configs/:id/delete - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0244: POST /api/admin/provider-configs/:id/lifecycle - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0245: GET /api/admin/providers/readiness - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0246: GET /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0247: POST /api/admin/scheduled-jobs - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0248: PATCH /api/admin/scheduled-jobs/:jobId - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0249: POST /api/admin/scheduled-jobs/:jobId/run - route without route-specific alert condition/owner/runbook proof
+- USF-GAP-0250: GET /api/admin/search/readiness - route without route-specific alert condition/owner/runbook proof
