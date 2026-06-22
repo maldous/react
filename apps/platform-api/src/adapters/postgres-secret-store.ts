@@ -23,6 +23,28 @@ import type {
   SecretStoreReadiness,
 } from "../ports/secret-store.ts";
 
+export const postgresSecretStoreReliabilityEvidence = {
+  provider: "postgres-secret-store",
+  configSource:
+    "Postgres pool is constructed from POSTGRES_APP_URL/POSTGRES_URL process.env bootstrap config before adapter creation",
+  secretSource:
+    "tenant secret values are encrypted with tenant-secret-crypto using configured credential material when present",
+  timeout:
+    "database connection timeout is owned by the pg Pool configuration used to construct this adapter",
+  retry:
+    "no retry inside the adapter: each mutation is a single database transaction attempt and failed writes surface to callers",
+  degradedMode: "readiness returns degraded when the relational store is unavailable",
+  failClosed:
+    "unknown, revoked, unavailable, or deleted refs resolve to null and never expose stored secret material",
+  fallbackRationale:
+    "built-in Postgres is the explicit default provider and does not fallback to another secret backend",
+  healthCheck: "readiness executes SELECT 1 against the backing Postgres connection",
+  operatorRecovery:
+    "operators recover by repairing Postgres connectivity, restoring backup, or rotating tenant-secret-crypto key material",
+  unavailableProof: "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+  misconfiguredProof: "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+} as const;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 

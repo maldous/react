@@ -469,6 +469,57 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "message": "proof only checks file/contract shape",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -481,6 +532,40 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": true,
         "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -1714,6 +1799,17 @@
       "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
       "file": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
       "level": 4,
@@ -1734,6 +1830,17 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",

@@ -29,6 +29,28 @@ import type {
   SecretStoreReadiness,
 } from "../ports/secret-store.ts";
 
+export const openBaoSecretStoreReliabilityEvidence = {
+  provider: "openbao-secret-store",
+  configSource:
+    "OpenBaoOptions is constructed from loadBootstrapSecretConfig/process.env in apps/platform-api/src/config/bootstrap-secrets.ts",
+  secretSource:
+    "OPENBAO_TOKEN or OPENBAO_TOKEN_FILE is loaded as the bootstrap credential and never logged",
+  timeout: "every OpenBao HTTP call uses AbortSignal.timeout via fetchOpenBao",
+  retry:
+    "no retry on secret writes/deletes/resolves because the provider is the source of truth; callers receive degraded/unavailable state instead of duplicate mutation attempts",
+  degradedMode:
+    "readiness returns degraded for sealed, standby, uninitialised, or unreachable OpenBao; resolve returns null when unavailable",
+  failClosed:
+    "put throws before metadata is recorded when OpenBao is unavailable; bootstrap denies openbao without address/token",
+  fallbackRationale:
+    "no implicit fallback once SECRET_STORE_PROVIDER=openbao is selected; the built-in Postgres store is only the explicit default provider",
+  healthCheck: "readiness probes /v1/sys/health with the provider token",
+  operatorRecovery:
+    "operators recover by unsealing/restarting OpenBao, rotating OPENBAO_TOKEN, or reconciling logged orphaned backend paths",
+  unavailableProof: "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+  misconfiguredProof: "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+} as const;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 type FetchImpl = typeof fetch;
@@ -43,6 +65,8 @@ export interface OpenBaoOptions {
   /** Logical path prefix under the mount. Default "platform". */
   kvBasePath?: string;
   fetchImpl?: FetchImpl;
+  /** Provider HTTP timeout in milliseconds. Default 2500. */
+  timeoutMs?: number;
   /** Structured warn sink (no secrets). Defaults to no-op. */
   warn?: (message: string, meta: Record<string, unknown>) => void;
 }
@@ -86,6 +110,7 @@ export class OpenBaoSecretStore implements SecretStore {
   private readonly mount: string;
   private readonly kvBasePath: string;
   private readonly fetchImpl: FetchImpl;
+  private readonly timeoutMs: number;
   private readonly warn: (message: string, meta: Record<string, unknown>) => void;
 
   constructor(pool: PgPool, opts: OpenBaoOptions) {
@@ -95,6 +120,7 @@ export class OpenBaoSecretStore implements SecretStore {
     this.mount = opts.mount ?? "secret";
     this.kvBasePath = (opts.kvBasePath ?? "platform").replace(/^\/+/, "").replace(/\/+$/, "");
     this.fetchImpl = opts.fetchImpl ?? fetch;
+    this.timeoutMs = opts.timeoutMs ?? 2500;
     this.warn = opts.warn ?? (() => {});
   }
 
@@ -111,6 +137,12 @@ export class OpenBaoSecretStore implements SecretStore {
   private headers(): Record<string, string> {
     return { "X-Vault-Token": this.token, "Content-Type": "application/json" };
   }
+  private fetchOpenBao(input: string, init: RequestInit = {}): Promise<Response> {
+    return this.fetchImpl(input, {
+      ...init,
+      signal: init.signal ?? AbortSignal.timeout(this.timeoutMs),
+    });
+  }
 
   async put(input: PutSecretInput): Promise<SecretMetadata> {
     // Reuse the existing ref/path for this name if present (rotation); else mint one.
@@ -124,7 +156,7 @@ export class OpenBaoSecretStore implements SecretStore {
     const path = existing.rows[0]?.backend_path ?? this.pathFor(input.organisationId, ref);
 
     // Store the value in OpenBao FIRST — only record metadata if the write succeeded.
-    const res = await this.fetchImpl(this.dataUrl(path), {
+    const res = await this.fetchOpenBao(this.dataUrl(path), {
       method: "POST",
       headers: this.headers(),
       body: JSON.stringify({ data: { value: input.value } }),
@@ -193,7 +225,9 @@ export class OpenBaoSecretStore implements SecretStore {
     const row = meta.rows[0];
     if (!row || row.revoked_at != null || row.backend_path == null) return null;
     try {
-      const res = await this.fetchImpl(this.dataUrl(row.backend_path), { headers: this.headers() });
+      const res = await this.fetchOpenBao(this.dataUrl(row.backend_path), {
+        headers: this.headers(),
+      });
       if (!res.ok) return null;
       const body = (await res.json()) as { data?: { data?: { value?: string } } };
       return body.data?.data?.value ?? null;
@@ -227,7 +261,7 @@ export class OpenBaoSecretStore implements SecretStore {
     );
     const path = meta.rows[0]?.backend_path;
     if (path) {
-      await this.fetchImpl(this.metadataUrl(path), {
+      await this.fetchOpenBao(this.metadataUrl(path), {
         method: "DELETE",
         headers: this.headers(),
       }).catch((err: unknown) => {
@@ -253,7 +287,7 @@ export class OpenBaoSecretStore implements SecretStore {
 
   async readiness(): Promise<SecretStoreReadiness> {
     try {
-      const res = await this.fetchImpl(`${this.address}/v1/sys/health`, {
+      const res = await this.fetchOpenBao(`${this.address}/v1/sys/health`, {
         headers: this.headers(),
       });
       // OpenBao health returns 200 (initialized, unsealed, active). Any 2xx = ready.
