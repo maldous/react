@@ -4029,6 +4029,15 @@
       "v2Target": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
       "protectingTests": ["apps/platform-api/scripts/history-runtime-proof.ts"],
       "decisionRefs": ["ADR-0063", "ADR-ACT-0272"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0068", "ADR-ACT-0260"]
     }
   ],
   "deletions": [
@@ -4411,6 +4420,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 431,
+  "additionCount": 432,
   "deletionCount": 54
 }
