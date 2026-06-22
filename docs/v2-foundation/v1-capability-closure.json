@@ -3812,7 +3812,81 @@
     "securityOwner": "team-security",
     "dataOwner": "team-data",
     "runtimeOwner": "team-security",
-    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "Portable tenant archives classify exported content by ordered entry path and schema: identity/members.json, config/domains.json, and audit/history.json. The manifest records schemaVersion, tenantId, sourceCommit, entry paths, orders, byte counts, and sha256 digests, and verification rejects unsupported schema versions or tenant mismatches.",
+        "evidence": [
+          "apps/platform-api/src/usecases/data-portability.ts",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/tests/unit/data-portability.test.ts"
+        ]
+      },
+      "retention": {
+        "proof": "Export/import is governed by retained tenant identity, domain, audit, and history records. The retention runtime proof exercises candidate selection, audit-before-change, legal-hold skip/delete behavior, and the Postgres retention entrypoint for those persisted sources; portable import progress stores operational resume state only.",
+        "evidence": [
+          "apps/platform-api/scripts/retention-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+          "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+          "apps/platform-api/src/server/routes.ts"
+        ]
+      },
+      "backup": {
+        "proof": "Portable export/import state is Postgres-backed plus encrypted archive material returned to the operator; platform backup proofs cover the database-backed tenant, domain, audit/history, secret-store, and portable_import_progress rows used by the capability.",
+        "evidence": [
+          "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+          "apps/platform-api/src/usecases/data-portability.ts"
+        ]
+      },
+      "restore": {
+        "proof": "Restore is covered by the PITR restore drill and backup restore scripts for the Postgres records feeding tenant export/import. Import resume semantics also restore from durable completed_orders/failed_order progress and re-run only remaining groups.",
+        "evidence": [
+          "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+        ]
+      },
+      "legal hold": {
+        "proof": "Legal hold is enforced by the platform retention/legal-hold controls over the source tenant records exported by this capability; held records are skipped by retention rather than removed, preserving export/import source data while the archive verifier remains tenant-bound.",
+        "evidence": [
+          "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/retention-runtime-proof.ts",
+          "apps/platform-api/src/usecases/data-portability.ts"
+        ]
+      },
+      "DSR": {
+        "proof": "This capability is the DSR/data-portability implementation path: the export route returns encrypted tenant data with manifest/digest/keyRef, while the import route verifies tenantId, schema, digest and ciphertext before applying ordered groups with rollback and resume.",
+        "evidence": [
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/src/usecases/data-portability.ts",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/tests/unit/data-portability.test.ts"
+        ]
+      },
+      "lineage": {
+        "proof": "Lineage is explicit from source query to archive to import: routes collect members, domains, and history; buildPortableTenantExport writes ordered manifest entries with sourceCommit and sha256; verifyPortableTenantArchive rechecks tenantId, bytes and digests; PostgresPortableTenantImportApplier applies each known entry type.",
+        "evidence": [
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/src/usecases/data-portability.ts",
+          "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+        ]
+      },
+      "tenant isolation": {
+        "proof": "Tenant isolation is enforced by tenantId-scoped routes and archive verification: tenantId must be a valid route parameter, secret-store data keys are resolved for that tenant, manifest.tenantId must match the requested tenant, and import application is constructed with the same organisationId/archive digest. Runtime proof covers tamper rejection and tenant-bound verification.",
+        "evidence": [
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/src/usecases/data-portability.ts",
+          "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/tests/unit/data-portability.test.ts"
+        ]
+      }
+    }
   },
   {
     "capability": "Search + indexing (product search)",
