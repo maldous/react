@@ -2100,7 +2100,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates entitlement grant/revoke ordering, quota limit set, usage below and over limit, typed assertQuota denial, no-quota allow path, and entitlement-before-quota denial"
   },
   {
     "id": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
@@ -2208,7 +2210,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "local registry proof validates complete service/provider classification, valid visibility and decision values, entitlement consistency, secret-free fields, production mock rejection, and tenant/operator filtering"
   },
   {
     "id": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
@@ -2217,7 +2221,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "runtime proof validates service clickthrough access matrix, Caddy/web-profile route behavior, apex forward-auth gating, tenant/custom-domain SPA fallback for non-tenant-safe tool routes, and public Keycloak realm route exposure"
   },
   {
     "id": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
@@ -2292,7 +2298,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Loki/Grafana/OTel proof validates high-cardinality guard, classifier states, bounded log ingestion, tenant-scoped query, and honest infra signal reporting"
   },
   {
     "id": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
@@ -2301,7 +2309,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live/local storage proof validates storage classifier, in-memory write/read/delete, prefix guard isolation, live MinIO write/read/delete and foreign-key rejection when reachable, and honest skip otherwise"
   },
   {
     "id": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
@@ -2951,7 +2961,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:email-sender)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/email-sender-runtime-proof.ts; live Mailpit SMTP send/readback, readiness classification, unreachable-provider classification, and proof message cleanup"
   },
   {
     "id": "package.json#proof:tenant-domains",
@@ -3845,7 +3857,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "compose-backed Lago stub via local HTTP proof loader",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "local HTTP-backed Lago adapter proof validates readiness, customer/account, plan sync, subscription create/cancel, invoice fetch, canonical DTO mapping, and cleanup-free fake provider operation"
   },
   {
     "id": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
@@ -3865,7 +3879,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "compose-backed Windmill stub via local HTTP proof loader",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "local HTTP-backed Windmill adapter proof validates script run, flow run, status lookup, cancel call, run status mapping, and canonical DTO mapping"
   },
   {
     "id": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
@@ -3896,7 +3912,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:windmill-automation-provider)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts; local HTTP-backed Windmill adapter script/flow run, status lookup, cancel, and DTO mapping validation"
   },
   {
     "id": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
@@ -3991,6 +4009,39 @@
     "proofLevelRationale": "local runtime proof validates deny-by-default delegation grant, duplicate-active prevention, audit-before-mutation, tenant isolation, system-admin revoke semantics, not_found handling, and self-only grantee listing"
   },
   {
+    "id": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "proof script (direct runtime proof)",
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "deterministic usecase composition proof validates report assembly from metrics, incidents, legal holds, retention, storage readiness, ready boolean, and generatedAt"
+  },
+  {
+    "id": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (hermetic in-memory state-machine proof)",
+    "stageCoverage": "proof script (direct runtime proof)",
+    "failureEvidence": "proof script assertion output plus docs/evidence/data/legal-hold-runtime-proof.json",
+    "proofLevel": 3,
+    "proofLevelRationale": "hermetic state-machine/audit proof validates set active hold, audit-before-change, active guard, release to released, list projection, and no-delete invariant"
+  },
+  {
+    "id": "apps/platform-api/scripts/retention-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/retention-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (hermetic in-memory state-machine proof)",
+    "stageCoverage": "proof script (direct runtime proof)",
+    "failureEvidence": "proof script assertion output plus docs/evidence/data/retention-runtime-proof.json",
+    "proofLevel": 3,
+    "proofLevelRationale": "hermetic state-machine/audit proof validates retention tick selection, held-row skip, unheld delete outcome, audit events, repeated tick behavior, and ledger outcomes"
+  },
+  {
     "id": "package.json#proof:compliance-report-route",
     "path": "package.json#proof:compliance-report-route",
     "kind": "proof",
@@ -4008,7 +4059,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:billing-readiness-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts; validates billing readiness route registration, operationName, required permission, and admin resource metadata"
   },
   {
     "id": "package.json#proof:billing-control-route",
@@ -4017,7 +4070,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:billing-control-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/billing-control-route-runtime-proof.ts; validates billing control route plus billing catalog route registration"
   },
   {
     "id": "package.json#proof:billing-catalog",
@@ -4092,7 +4147,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:observability-control-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/observability-control-route-runtime-proof.ts; validates observability control route registration and operationName"
   },
   {
     "id": "package.json#proof:observability-readiness-route",
@@ -4101,7 +4158,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:observability-readiness-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts; validates observability readiness route registration, operationName, required permission, and admin resource metadata"
   },
   {
     "id": "package.json#proof:observability-provider-closure",
@@ -4110,7 +4169,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:observability-provider-closure)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; validates observability compose profiles, provider services, control/readiness routes, and probe config contract"
   },
   {
     "id": "package.json#proof:observability-metrics-traces-closure",
@@ -4119,7 +4180,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:observability-metrics-traces-closure)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; validates metrics/traces compose wiring, Prometheus scrape config, Tempo config, and route contract"
   },
   {
     "id": "package.json#proof:provider-observability-closure",
@@ -4128,7 +4191,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:provider-observability-closure)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts; validates provider service observability wiring for Windmill, Temporal, pgBackRest, ClamAV, Loki, Prometheus, Tempo, and Alertmanager"
   },
   {
     "id": "package.json#proof:provider-observability-contract",
@@ -4137,7 +4202,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:provider-observability-contract)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts; validates billing and workflow provider observability contract states for metrics, traces, logs, and readiness"
   },
   {
     "id": "package.json#proof:full-observability-contract",
@@ -4146,7 +4213,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:full-observability-contract)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/full-observability-contract-runtime-proof.ts; validates billing, workflow, backup, and security observability contract states across metrics, traces, logs, and error capture"
   },
   {
     "id": "package.json#proof:alert-incident-closure",
@@ -4155,7 +4224,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:alert-incident-closure)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts; live Postgres proof validates alert firing, incident opening, resolution transition, and persisted audit trail"
   },
   {
     "id": "package.json#proof:backup-control-route",
@@ -4175,7 +4246,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:pitr-restore-drill)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; live throwaway Postgres backup/restore drill validates marker capture, dump restore, and verification without touching the platform database"
   },
   {
     "id": "package.json#proof:object-scan-closure",
@@ -4184,7 +4257,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:object-scan-closure)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/object-scan-closure-runtime-proof.ts; local object-security proof validates clean promotion, infected quarantine, scanner-unavailable fail-closed behavior, and legal-hold delete guard"
   },
   {
     "id": "package.json#proof:security-control-route",
@@ -4303,7 +4378,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:http-engine-providers)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/http-engine-provider-runtime-proof.ts; local HTTP provider proof validates billing, payment, workflow, and automation adapter behavior and DTO mapping"
   },
   {
     "id": "package.json#proof:composed-provider-runtime-closure",
@@ -4312,7 +4389,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:composed-provider-runtime-closure)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts; local composed-provider proof validates billing readiness/account, workflow start/signal/status, and automation run/status closure"
   },
   {
     "id": "package.json#proof:data-residency",

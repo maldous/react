@@ -475,3 +475,29 @@ test("R23 accepts a proof script with level and rationale", () => {
   });
   assert.deepEqual(r23(a), []);
 });
+
+test("R23 fires when a delivered capability omits semantic proof level", () => {
+  const a = clone(cleanCtx());
+  a.capabilities[0].semanticCompleteness.proof = "fixture proof without a level";
+  assert.deepEqual(r23(a), [
+    {
+      ruleId: "R23-proof-classification",
+      severity: "error",
+      subject: "C1",
+      message: "delivered-and-proven capability semantic proof must declare Proof level 3..5",
+    },
+  ]);
+});
+
+test("R23 fires when a delivered capability proof level is below the delivered floor", () => {
+  const a = clone(cleanCtx());
+  a.capabilities[0].semanticCompleteness.proof = "fixture proof. Proof level: 2 behavior only.";
+  assert.deepEqual(r23(a), [
+    {
+      ruleId: "R23-proof-classification",
+      severity: "error",
+      subject: "C1",
+      message: "delivered-and-proven capability proof level 2 is below required minimum 3",
+    },
+  ]);
+});

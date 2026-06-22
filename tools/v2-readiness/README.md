@@ -63,7 +63,8 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
   and UI semantic definition.
 - **R23 proof-classification** — every runtime proof script is represented in
   `v1-test-proof-inventory.json` and every proof inventory entry declares `proofLevel` 0-5 plus a
-  rationale.
+  rationale. Every `delivered-and-proven` capability semantic proof must also declare a proof level
+  at or above the delivered floor of Level 3.
 
 R1–R8 + R10–R23 are the consistency validation (must pass); R9 is the fail-closed cut gate.
 

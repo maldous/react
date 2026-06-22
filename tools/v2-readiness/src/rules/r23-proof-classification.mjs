@@ -2,8 +2,18 @@ import { finding } from "../vocab.mjs";
 
 const PROOF_SCRIPT_RE = /^apps\/platform-api\/scripts\/.*(?:proof|runtime-proof).*\.ts$/;
 const VALID_LEVELS = new Set([0, 1, 2, 3, 4, 5]);
+const MIN_DELIVERED_CAPABILITY_PROOF_LEVEL = 3;
 
 const present = (v) => v != null && v !== "" && !(Array.isArray(v) && v.length === 0);
+
+function proofLevelsFromText(text) {
+  if (typeof text !== "string") return [];
+  const levels = [];
+  for (const match of text.matchAll(/\b[Pp]roof levels?:\s*([^.]*)/g)) {
+    for (const level of match[1].matchAll(/[0-5]/g)) levels.push(Number(level[0]));
+  }
+  return levels;
+}
 
 function scriptPathForInventoryRecord(record, packageJsonScripts = {}) {
   const p = record.path || record.id || "";
@@ -55,6 +65,31 @@ export default function r23ProofClassification(ctx) {
           "runtime proof script is not represented in v1-test-proof-inventory.json"
         )
       );
+
+  for (const capability of ctx.capabilities || []) {
+    if (capability.status !== "delivered-and-proven") continue;
+    const levels = proofLevelsFromText(capability.semanticCompleteness?.proof);
+    const subject = capability.capability || "<capability>";
+    if (levels.length === 0) {
+      out.push(
+        finding(
+          "R23-proof-classification",
+          subject,
+          "delivered-and-proven capability semantic proof must declare Proof level 3..5"
+        )
+      );
+      continue;
+    }
+    const maxLevel = Math.max(...levels);
+    if (maxLevel < MIN_DELIVERED_CAPABILITY_PROOF_LEVEL)
+      out.push(
+        finding(
+          "R23-proof-classification",
+          subject,
+          `delivered-and-proven capability proof level ${maxLevel} is below required minimum ${MIN_DELIVERED_CAPABILITY_PROOF_LEVEL}`
+        )
+      );
+  }
 
   return out;
 }

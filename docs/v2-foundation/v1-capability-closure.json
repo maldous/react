@@ -1325,7 +1325,7 @@
       "errorModel": "Semgrep findings, missing/stale SBOM, policy violations, missing CodeQL in authoritative mode, invalid CodeQL config, or absent route fail non-zero; local CodeQL absence can honestly skip where configured. Evidence: tool scripts.",
       "auditModel": "Static quality gates are build evidence rather than runtime audit rows; route access and provider/security changes are audited by owning runtime capabilities. Evidence: stage evidence and security tool reports.",
       "readinessModel": "Readiness is gate success plus optional Sonar/service readiness from platform service probes; missing local tools are classified honestly according to script mode. Evidence: semgrep/SBOM/CodeQL scripts and platform services proof.",
-      "proof": "Proofs include semgrep:gate, sbom:verify, sbom:policy, codeql:validate, test:security, and proof:security-control-route. Proof level: 2 static behavior gates plus level 1 route registration.",
+      "proof": "Proofs include semgrep:gate, sbom:verify, sbom:policy, codeql:validate, test:security, and proof:security-control-route. Proof level: 3 fail-closed gate state validation plus level 1 route registration.",
       "uiSemanticDefinition": "V2 UI must expose security gate status, last evidence/report links, global-only Sonar/security route access, pass/fail/skip states, remediation messages, and no tenant-scoped access to global code quality consoles."
     }
   },
@@ -2095,7 +2095,7 @@
       "errorModel": "Missing route file/OpenAPI file throws; strict mode exits 1 on drift; report-only exits 0 while warning with explicit drift lists. Evidence: tool implementation.",
       "auditModel": "OpenAPI drift changes are audited through git and architecture test output; no runtime audit rows are involved. Evidence: test and stage evidence.",
       "readinessModel": "Readiness is strict drift gate passing with zero missing routes, extra routes, unresolved refs, and schemaless bodies. Evidence: validate-openapi-drift --strict.",
-      "proof": "Proof: tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs plus architecture test target. Proof level: 2 static contract behavior validation.",
+      "proof": "Proof: tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs plus architecture test target. Proof level: 3 static contract gate state validation.",
       "uiSemanticDefinition": "V2 UI/API tooling must treat OpenAPI as the generated client/docs contract, surface drift failures, route/method/schema/ref details, strict/report-only mode, and block cut when strict drift is nonzero."
     }
   },

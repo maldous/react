@@ -89,7 +89,7 @@ export function cleanCtx() {
           errorModel: "fixture error model",
           auditModel: "fixture audit model",
           readinessModel: "fixture readiness model",
-          proof: "fixture proof",
+          proof: "fixture proof. Proof level: 3 state-machine validation.",
           uiSemanticDefinition: "fixture UI semantics",
         },
       },

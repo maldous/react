@@ -3208,6 +3208,22 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/retention-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/retention-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
     "v1Path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
     "v2Path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
     "migrationType": "carry",
@@ -3242,6 +3258,14 @@
   {
     "v1Path": "package.json#proof:compliance-report-route",
     "v2Path": "package.json#proof:compliance-report-route",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
