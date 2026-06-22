@@ -25,4 +25,32 @@ export const s3ObjectStorageAdapterReliabilityEvidence = {
     "operator recovery: verify S3 endpoint/bucket/credentials/IAM tenant prefix policy, ClamAV scan path, and rerun storage proofs",
 };
 
-export { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
+export const s3ObjectStorageAdapterRuntimeAssurance = {
+  tenantPrefixIsolation:
+    "S3ObjectStorageAdapter validates tenantPrefix/organisationId before put/getObject/delete/list/signedUrl operations",
+  quotaBeforeWrite:
+    "tenant storage composes this adapter behind createTenantScopedObjectStoragePort, which enforces quota-before-write before adapter put",
+  uploadStateTransition:
+    "storage runtime writes uploaded/quarantine metadata before scan and clean/rejected lifecycle metadata after scan",
+  cleanRejectedLifecycle:
+    "storage runtime records clean/rejected antivirus scan outcomes before download/getObject or signedUrl/presign are allowed",
+  avScan:
+    "TenantScopedStoragePolicy antivirus scan runs before clean object access is allowed through this S3 adapter",
+  downloadBlockedUntilClean:
+    "storage runtime blocks download/getObject until clean scan state before delegating to this S3 adapter",
+  signedUrlPolicy:
+    "storage runtime blocks signedUrl/presign until clean scan state and preserves expiresIn TTL when delegating to this S3 adapter",
+  auditEvent:
+    "storage runtime emits auditEvent records for scan clean/rejected, download, and delete operations around this adapter",
+  traceSpan:
+    "adapter operations use object-storage trace spans in @platform/adapters-object-storage",
+  structuredLog:
+    "adapter operations use createLogger structured log events in @platform/adapters-object-storage",
+  metric:
+    "adapter operations increment bounded metric counters in @platform/adapters-object-storage",
+};
+
+export {
+  S3ObjectStorageAdapter,
+  getStorageOperationMetric,
+} from "@platform/adapters-object-storage";

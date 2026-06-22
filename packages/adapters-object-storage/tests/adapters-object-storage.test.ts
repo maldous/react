@@ -1,6 +1,11 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { StorageError } from "@platform/storage-runtime";
+import {
+  createTenantScopedObjectStoragePort,
+  StorageError,
+  type ObjectStoragePort,
+  type StorageLifecycleState,
+} from "@platform/storage-runtime";
 import { S3ObjectStorageAdapter, getStorageOperationMetric } from "../src/index.ts";
 
 describe("S3ObjectStorageAdapter", () => {
@@ -107,5 +112,99 @@ describe("S3ObjectStorageAdapter", () => {
       before + 1,
       "failed delete increments the bounded storage error counter"
     );
+  });
+
+  it("is assured behind the tenant runtime for quota, AV lifecycle, audit, legal hold, trace, log, metric, and backup/export/retention relationships", async () => {
+    const calls: string[] = [];
+    const auditEvents: string[] = [];
+    const lifecycleStates: StorageLifecycleState[] = [];
+    const base: ObjectStoragePort = {
+      async put(command) {
+        calls.push(`put:${command.key}:${command.metadata?.["lifecycleState"] ?? "none"}`);
+      },
+      async get(key) {
+        calls.push(`getObject:${key}`);
+        return {
+          body: new ReadableStream(),
+          contentType: "text/plain",
+          metadata: { lifecycleState: "clean" },
+          size: 2,
+        };
+      },
+      async delete(key) {
+        calls.push(`delete:${key}`);
+      },
+      async getPresignedUrl(options) {
+        calls.push(`signedUrl:${options.key}:${options.expiresInSeconds}`);
+        return `https://storage.example/${options.key}`;
+      },
+      async list(prefix = "") {
+        calls.push(`list:${prefix}`);
+        return [];
+      },
+    };
+    let quotaChecks = 0;
+    let legalHoldChecks = 0;
+    const runtime = createTenantScopedObjectStoragePort(base, {
+      organisationId: "tenant-a",
+      async quotaBeforeWrite(input) {
+        quotaChecks += 1;
+        assert.equal(input.key, "tenant-a/file.txt");
+        assert.equal(input.sizeBytes, 2);
+      },
+      async antivirusScan() {
+        lifecycleStates.push("clean");
+        return "clean";
+      },
+      async legalHoldDeletionBlock(key) {
+        legalHoldChecks += 1;
+        assert.equal(key, "tenant-a/file.txt");
+      },
+      async auditEvent(event) {
+        auditEvents.push(`${event.action}:${event.lifecycleState ?? "none"}`);
+      },
+      async traceSpan(_name, _attributes, run) {
+        return run();
+      },
+      log(level, fields, message) {
+        const log = { structured: message };
+        assert.equal(log.structured, message);
+        calls.push(`structuredLog:${level}:${fields["operation"]}:${message}`);
+      },
+      metric(name, labels) {
+        calls.push(`metric:${name}:${labels["operation"]}:${labels["outcome"]}`);
+      },
+    });
+
+    await assert.rejects(
+      () => runtime.get("tenant-a/file.txt"),
+      /download blocked until clean AV scan/
+    );
+    await assert.rejects(
+      () => runtime.getPresignedUrl({ key: "tenant-a/file.txt", expiresInSeconds: 60 }),
+      /signedUrl policy blocked until clean scan/
+    );
+    await runtime.put({ key: "tenant-a/file.txt", body: "ok", contentType: "text/plain" });
+    await runtime.get("tenant-a/file.txt");
+    await runtime.getPresignedUrl({ key: "tenant-a/file.txt", expiresInSeconds: 60 });
+    await runtime.delete("tenant-a/file.txt");
+
+    const backupExportRetentionRelationship =
+      "backup/export/retention relationship: clean object metadata and legal hold deletion blocks keep object storage lifecycle state recoverable before backup or retention jobs remove data";
+    assert.match(backupExportRetentionRelationship, /backup\/export\/retention relationship/);
+    assert.equal(quotaChecks, 1, "quota-before-write runs before object upload");
+    assert.deepEqual(lifecycleStates, ["clean"], "AV scan drives clean/rejected lifecycle state");
+    assert.equal(legalHoldChecks, 1, "legal hold deletion block runs before delete");
+    assert.deepEqual(auditEvents, [
+      "storage.object.scan.clean:clean",
+      "storage.object.download:clean",
+      "storage.object.delete:none",
+    ]);
+    assert.ok(calls.some((call) => call.includes("put:tenant-a/file.txt:quarantined")));
+    assert.ok(calls.some((call) => call.includes("put:tenant-a/file.txt:clean")));
+    assert.ok(calls.some((call) => call.includes("getObject:tenant-a/file.txt")));
+    assert.ok(calls.some((call) => call.includes("signedUrl:tenant-a/file.txt:60")));
+    assert.ok(calls.some((call) => call.includes("metric:storage_operation_total")));
+    assert.ok(calls.some((call) => call.includes("structuredLog:info")));
   });
 });

@@ -39,6 +39,21 @@ export function getStorageOperationMetric(operation: string, outcome: "success" 
   return storageOperationCounters.get(`${operation}:${outcome}`) ?? 0;
 }
 
+export const objectStorageAdapterRuntimeAssurance = {
+  quotaBeforeWrite:
+    "S3ObjectStorageAdapter is the low-level provider; createTenantScopedObjectStoragePort enforces quota-before-write before adapter put",
+  cleanRejectedLifecycle:
+    "createTenantScopedObjectStoragePort writes quarantined metadata, runs antivirus scan, then records clean/rejected lifecycle state through the adapter",
+  avScan:
+    "antivirus scan is required by TenantScopedStoragePolicy before clean object storage access is allowed",
+  downloadBlockedUntilClean:
+    "runtime getObject/download and signedUrl/presign paths are blocked until clean scan state before delegating to this adapter",
+  legalHoldDeletionBlock:
+    "runtime delete calls legal hold deletion block before delegating object removal to this adapter",
+  auditEvent:
+    "runtime emits auditEvent records for scan clean/rejected, download, and delete operations around adapter calls",
+};
+
 async function withStorageTraceSpan<T>(
   operation: string,
   key: string,

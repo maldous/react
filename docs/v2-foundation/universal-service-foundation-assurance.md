@@ -436,6 +436,18 @@ Status: FAIL
 
 The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
 
+## Adversarial Runtime Assurance
+
+Status: FAIL
+
+The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
+
+## Adversarial Runtime Assurance
+
+Status: FAIL
+
+The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
+
 ## Known Gaps Identified
 
 | Question                                              | Machine-generated answer |
@@ -449,7 +461,7 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | Show every semantic orphan.                           |                        7 |
 | Show every provider without unavailable-path proof.   |                        0 |
 | Show every workflow without failure-path proof.       |                       89 |
-| Show every storage operation without lifecycle proof. |                       36 |
+| Show every storage operation without lifecycle proof. |                       13 |
 | Show every event without DLQ/retry proof.             |                        2 |
 | Show every alert without runbook.                     |                      236 |
 
