@@ -13,6 +13,7 @@
  */
 
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
+import assert from "node:assert/strict";
 import { evaluateEntitlement, quotaHook, setEntitlement } from "../src/usecases/entitlements.ts";
 import type {
   EntitlementGrantRecord,
@@ -24,6 +25,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 function makeInMemoryRepo(): EntitlementRepository {

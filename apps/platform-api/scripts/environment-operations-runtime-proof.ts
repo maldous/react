@@ -17,6 +17,7 @@
  */
 
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
+import assert from "node:assert/strict";
 import { ComposeEnvironmentOperationAdapter } from "../src/adapters/compose-environment-operation.ts";
 import { EnvironmentOperationRejected } from "../src/ports/environment-operation.ts";
 import type { EnvironmentRecord } from "../src/ports/environment-registry-repository.ts";
@@ -33,6 +34,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];
