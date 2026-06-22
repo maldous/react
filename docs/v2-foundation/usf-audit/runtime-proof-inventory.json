@@ -192,12 +192,12 @@
   {
     "proofId": "proof:apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof-ts",
     "file": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
-    "level": 0,
-    "classification": "route/file existence only",
-    "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "level": 3,
+    "classification": "state transition behaviour",
+    "routeRefs": ["route:get", "route:get-api-host-identity", "route:get-api-theme"],
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
-    "assertsObservabilityOrAudit": false,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"]
   },
   {

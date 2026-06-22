@@ -2219,7 +2219,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "proofRef": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1469", "docs/api/openapi.json"]
     },
     {
@@ -3374,7 +3374,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "proofRef": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1428", "docs/api/openapi.json"]
     },
     {
@@ -9892,7 +9892,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+        "proofRef": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1469", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:1469",
@@ -12895,7 +12895,7 @@
         "metricName": "http_requests_total/http_request_duration_seconds",
         "alertRequired": true,
         "proofRequired": true,
-        "proofRef": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+        "proofRef": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
         "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1428", "docs/api/openapi.json"],
         "evidence": {
           "routeObject": "apps/platform-api/src/server/routes.ts:1428",
