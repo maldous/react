@@ -375,7 +375,33 @@
         "proof": "unknown",
         "implementation": ["apps/react-enterprise-app/src/routes/organisation/profile.tsx"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/server/provisioning.ts",
+        "evidence": "tenant identity records are retained as platform identity state; retention proofs validate policy windows, legal-hold guarded candidates, and audit-before-change retention behavior for tenant-scoped governance records"
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "restore drill proves platform Postgres recovery for the substrate containing organisation records, tenant_domains rows, identity memberships, and tenant-scoped indexes used by FQDN resolution"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/usecases/data-portability.ts; apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "portable tenant export carries tenant identity context through tenantId plus members, domains, and audit/history entries; import applier restores tenant_domains entries scoped to the archive tenant"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/src/db/migrations/035-legal-holds.sql",
+        "evidence": "legal-hold proofs validate audit-before-change set/release and active-hold guards over tenant-scoped governed records; holds are keyed by organisation_id under RLS"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+        "evidence": "history proof validates tenant-scoped audit/event lineage, portability exports identity/domain/history entries, and custom-domain proof validates active domain-to-tenant lineage from tenant_domains to organisation identity"
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts; apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts; apps/platform-api/src/server/tenant-resolver.ts; apps/platform-api/src/server/pipeline.ts; apps/platform-api/src/db/migrations/021-tenant-domains-registry.sql",
+        "evidence": "tenant identity resolution rejects apex/reserved/unknown/malformed hosts, resolves slug and active custom-domain FQDNs to one organisation, enforces FQDN/session cross-checks, and uses tenant_domains unique enabled-domain indexes to prevent cross-tenant takeover"
+      }
+    }
   },
   {
     "capability": "User identity + tenant membership",
