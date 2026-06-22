@@ -4159,7 +4159,85 @@
         "proof": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
         "implementation": ["apps/platform-api/src/server/routes.ts:4221", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "Storage objects are classified by metadata row and lifecycle state: object_id, organisation_id, object_key, content_type, size_bytes, scan_state uploaded|quarantined|scanning|clean|rejected, and timestamps. Runtime proof exercises quarantined upload, clean scan promotion, rejected scan state, and clean-only signed URL release.",
+        "evidence": [
+          "apps/platform-api/src/ports/storage-objects.ts",
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+          "apps/platform-api/tests/unit/storage-objects.test.ts"
+        ]
+      },
+      "retention": {
+        "proof": "Object storage metadata and provider objects participate in the platform retention model through storage lifecycle and legal-hold guards; deletion is blocked by legal hold before provider or metadata removal, and retained source rows are governed by the retention runtime proof.",
+        "evidence": [
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/src/usecases/legal-hold.ts",
+          "apps/platform-api/scripts/retention-runtime-proof.ts",
+          "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        ]
+      },
+      "backup": {
+        "proof": "Storage assurance covers two backed-up substrates: Postgres storage_objects metadata/progress via platform backup scripts, and tenant-prefixed object data via the object storage adapter/readiness proof. Local backup proof covers database-backed records while storage runtime proof proves live object round-trip and isolation.",
+        "evidence": [
+          "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+          "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+          "packages/adapters-object-storage/src/index.ts"
+        ]
+      },
+      "restore": {
+        "proof": "Restore coverage is tied to the platform PITR/restore drill for storage_objects metadata and the live storage proof for object round-trip behavior after provider configuration is present; clean-only access is re-derived from restored metadata scan_state.",
+        "evidence": [
+          "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        ]
+      },
+      "export": {
+        "proof": "Tenant data export covers storage governance by exporting tenant audit/history and configuration records while storage object access remains controlled by tenant-prefixed object keys, metadata lifecycle state, and signed URL generation only after a clean scan.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+          "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        ]
+      },
+      "DSR": {
+        "proof": "DSR/data-portability uses the tenant export path for governed records and history; storage object records expose tenant-owned object keys and lifecycle state, while actual object bytes remain available only through tenant-scoped clean-state download/signed URL paths.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/tests/unit/storage-objects.test.ts"
+        ]
+      },
+      "lineage": {
+        "proof": "Lineage is explicit from upload through lifecycle: quota-before-write, metadata create, object put with quarantined metadata, AV scan to clean/rejected, audit emission for create/scan/delete, metering storage.bytes, legal-hold guarded delete, and signed URL generation only from clean metadata.",
+        "evidence": [
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+          "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+          "apps/platform-api/tests/unit/storage-objects.test.ts"
+        ]
+      },
+      "tenant isolation": {
+        "proof": "Tenant isolation is enforced before storage or metadata access: object keys must start with organisationId/, Postgres repository asserts tenant prefix before querying or writing, queries include organisation_id, S3 adapter is tenant-scoped, and readiness proof requires a foreign-key rejection before reporting configured.",
+        "evidence": [
+          "apps/platform-api/src/usecases/storage-objects.ts",
+          "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+          "apps/platform-api/src/usecases/tenant-storage.ts",
+          "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+          "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+          "packages/adapters-object-storage/src/index.ts"
+        ]
+      }
+    }
   },
   {
     "capability": "Event bus, durable queues, DLQ, redrive",
