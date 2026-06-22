@@ -6530,7 +6530,80 @@
         "proof": "proof:history",
         "implementation": ["apps/platform-api/src/server/routes.ts:7175", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "History entries are classified by source and safe type: audit action, platform event type, notification category, incident status, or meter key. The port exposes only id, source, type, title, occurredAt, and actorId, with source filtering and pagination.",
+        "evidence": [
+          "apps/platform-api/src/ports/history-repository.ts",
+          "apps/platform-api/src/adapters/postgres-history-repository.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts"
+        ]
+      },
+      "retention": {
+        "proof": "History is a read-only projection over retained source tables rather than a copied store. Retention is owned by audit/events/notification/incident/meter source records and the platform retention proof; history queries do not create or delete retained rows.",
+        "evidence": [
+          "apps/platform-api/src/adapters/postgres-history-repository.ts",
+          "apps/platform-api/src/usecases/history.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts",
+          "apps/platform-api/scripts/retention-runtime-proof.ts"
+        ]
+      },
+      "backup": {
+        "proof": "Because history introduces no new store, backup coverage is the backup coverage of its Postgres source tables. The local backup and restore scripts cover database-backed audit/events/notification/incident/meter rows, and history proof validates the projection from those live rows.",
+        "evidence": [
+          "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/adapters/postgres-history-repository.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts"
+        ]
+      },
+      "restore": {
+        "proof": "Restore coverage follows the source Postgres tables: after PITR or backup restore, history is re-derived by SELECT-only UNION queries from restored audit/events/notification/incident/meter rows without replaying or duplicating projection state.",
+        "evidence": [
+          "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/adapters/postgres-history-repository.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts"
+        ]
+      },
+      "export": {
+        "proof": "Tenant export includes the safe history projection as audit/history.json. The data portability proof builds an encrypted archive containing audit/history.json and verifies manifest order, digests, tenant binding, tamper rejection, and durable import of the history group.",
+        "evidence": [
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/tests/unit/data-portability.test.ts",
+          "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts"
+        ]
+      },
+      "legal hold": {
+        "proof": "Legal hold applies to the durable source rows, not to a separate history store. History is read-only and cannot bypass holds; legal-hold runtime proofs cover held source retention/deletion behavior while history proof verifies queries leave source rows unchanged.",
+        "evidence": [
+          "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts",
+          "apps/platform-api/src/usecases/history.ts"
+        ]
+      },
+      "DSR": {
+        "proof": "DSR/data-portability uses the tenant export path to include audit/history.json, generated from the history read model. The projection deliberately excludes raw metadata, payload, token, credential, and secret fields before export.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts",
+          "apps/platform-api/src/ports/history-repository.ts",
+          "apps/platform-api/src/adapters/postgres-history-repository.ts"
+        ]
+      },
+      "lineage": {
+        "proof": "Lineage is explicit in the UNION branches: audit_events, platform_events, notification_log, incidents, and meter_events each project only safe summary columns with an organisation predicate; routes pass either the session tenant or validated operator-selected tenant to getHistory.",
+        "evidence": [
+          "apps/platform-api/src/adapters/postgres-history-repository.ts",
+          "apps/platform-api/src/usecases/history.ts",
+          "apps/platform-api/src/server/routes.ts",
+          "apps/platform-api/scripts/history-runtime-proof.ts"
+        ]
+      }
+    }
   },
   {
     "capability": "OIDC discovery / issuer / JWKS validation",
