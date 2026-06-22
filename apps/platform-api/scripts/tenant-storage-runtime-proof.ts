@@ -19,6 +19,7 @@ import {
   HeadBucketCommand,
   type S3ServiceException,
 } from "@aws-sdk/client-s3";
+import assert from "node:assert/strict";
 import { createInMemoryObjectStoragePort } from "@platform/storage-runtime";
 import { S3ObjectStorageAdapter } from "@platform/adapters-object-storage";
 import {
@@ -32,6 +33,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 function isConnRefused(err: unknown): boolean {
