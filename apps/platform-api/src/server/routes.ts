@@ -2750,6 +2750,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.members.invite",
     resource: "organisation:members",
     umaScope: "invite" as const,
+    auditEvent: AuditAction.MemberInvited,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2793,6 +2794,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.members.update_role",
     resource: "organisation:members",
     umaScope: "update_role" as const,
+    auditEvent: AuditAction.MemberRoleChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2845,6 +2847,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.members.delete",
     resource: "organisation:members",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.MemberRemoved,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2898,6 +2901,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.members.update_role",
     resource: "organisation:members",
     umaScope: "update_role" as const,
+    auditEvent: AuditAction.MemberUsernameChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2944,6 +2948,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.members.update_role",
     resource: "organisation:members",
     umaScope: "update_role" as const,
+    auditEvent: AuditAction.MemberStatusChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -2997,6 +3002,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.members.invite",
     resource: "organisation:members",
     umaScope: "invite" as const,
+    auditEvent: AuditAction.InvitationResent,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3101,6 +3107,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.groups.create",
     resource: "organisation:groups",
     umaScope: "create" as const,
+    auditEvent: AuditAction.GroupCreated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3151,6 +3158,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.groups.update",
     resource: "organisation:groups",
     umaScope: "update" as const,
+    auditEvent: AuditAction.GroupUpdated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3211,6 +3219,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.groups.delete",
     resource: "organisation:groups",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.GroupDeleted,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3293,6 +3302,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.features.update",
     resource: "organisation:features",
     umaScope: "update" as const,
+    auditEvent: AuditAction.FeatureToggled,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3368,6 +3378,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.config.write",
     resource: "organisation:config",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ConfigValueChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3432,6 +3443,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.config.write",
     resource: "organisation:config",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ConfigValueCleared,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3661,6 +3673,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.email.settings.write",
     resource: "admin:email",
     umaScope: "write" as const,
+    auditEvent: AuditAction.EmailSenderChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -3721,6 +3734,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.email.settings.write",
     resource: "admin:email",
     umaScope: "write" as const,
+    auditEvent: AuditAction.EmailSenderTested,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4252,6 +4266,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.storage.write",
     resource: "admin:storage",
     umaScope: "write" as const,
+    auditEvent: AuditAction.StorageProbed,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4311,6 +4326,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.storage.write",
     resource: "admin:storage",
     umaScope: "write" as const,
+    auditEvent: AuditAction.StorageObjectCreated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4374,6 +4390,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.storage.write",
     resource: "admin:storage",
     umaScope: "write" as const,
+    auditEvent: AuditAction.StorageObjectScanClean,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4403,6 +4420,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.storage.write",
     resource: "admin:storage",
     umaScope: "write" as const,
+    auditEvent: AuditAction.StorageObjectDeleted,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4503,6 +4521,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookCreated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4542,6 +4561,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookUpdated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4591,6 +4611,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookDeleted,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4631,6 +4652,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookSecretRotated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4671,6 +4693,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookTested,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4772,6 +4795,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookRedriven,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -4815,6 +4839,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.webhooks.write",
     resource: "admin:webhooks",
     umaScope: "write" as const,
+    auditEvent: AuditAction.WebhookRedriven,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -5286,6 +5311,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.entitlements.write",
     resource: "admin:entitlements",
     umaScope: "write" as const,
+    auditEvent: AuditAction.EntitlementGranted,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -5366,6 +5392,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.delegations.write",
     resource: "admin:delegations",
     umaScope: "write" as const,
+    auditEvent: AuditAction.DelegationGranted,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -5417,6 +5444,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.delegations.write",
     resource: "admin:delegations",
     umaScope: "write" as const,
+    auditEvent: AuditAction.DelegationRevoked,
     scope: "global" as const,
     handler: async (req, res) => {
       const delegationId = req.params["delegationId"] ?? "";
@@ -5612,6 +5640,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.quotas.write",
     resource: "admin:quotas",
     umaScope: "write" as const,
+    auditEvent: AuditAction.QuotaSet,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -5677,6 +5706,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.api_keys.write",
     resource: "organisation:api_keys",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ApiKeyCreated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -5731,6 +5761,7 @@ export const routes: Route[] = [
     requiredPermission: "tenant.api_keys.write",
     resource: "organisation:api_keys",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ApiKeyRevoked,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -6120,6 +6151,7 @@ export const routes: Route[] = [
     requiredPermission: "profile.update_self",
     resource: "me:profile",
     umaScope: "write" as const,
+    auditEvent: AuditAction.ProfileUpdated,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
@@ -6195,6 +6227,7 @@ export const routes: Route[] = [
     requiredPermission: "profile.update_self",
     resource: "me:notification_preferences",
     umaScope: "write" as const,
+    auditEvent: AuditAction.NotificationPreferencesChanged,
     scope: "tenant" as const,
     handler: async (req, res) => {
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
