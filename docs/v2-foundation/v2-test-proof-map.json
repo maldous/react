@@ -3588,7 +3588,7 @@
     "v2Path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
+    "becomesReusableContract": true,
     "retirementJustification": null
   },
   {
@@ -3978,6 +3978,14 @@
   {
     "v1Path": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
     "v2Path": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+    "v2Path": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,

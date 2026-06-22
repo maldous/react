@@ -4319,6 +4319,18 @@
         "apps/platform-api/tests/unit/prometheus-metrics.test.ts"
       ],
       "decisionRefs": ["ADR-0062", "ADR-0020"]
+    },
+    {
+      "path": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+        "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts"
+      ],
+      "decisionRefs": ["ADR-0072", "ADR-ACT-0268"]
     }
   ],
   "deletions": [
@@ -4701,6 +4713,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 457,
+  "additionCount": 458,
   "deletionCount": 54
 }

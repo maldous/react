@@ -531,6 +531,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+    "level": 3,
+    "classification": "state transition behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
     "file": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
     "level": 4,

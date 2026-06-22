@@ -15,15 +15,15 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | capabilities without ownership  |     0 |
 | semantic orphans                |     7 |
 | runtime orphans                 |     7 |
-| provider reliability gaps       |  2224 |
-| workflow proof gaps             |    97 |
+| provider reliability gaps       |  2214 |
+| workflow proof gaps             |    93 |
 | storage proof gaps              |   111 |
 | event runtime gaps              |     2 |
 | false-positive items            |     0 |
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |  3624 |
+| must-fix-in-v1 items            |  3611 |
 
 ## Known Gaps Identified
 
