@@ -14,6 +14,7 @@ import {
   type PresignedUrlOptions,
 } from "@platform/storage-runtime";
 import { createLogger } from "@platform/platform-logging";
+import { SpanStatusCode, trace } from "@opentelemetry/api";
 
 export const packageName = "@platform/adapters-object-storage";
 
@@ -26,6 +27,44 @@ const storageLog = createLogger({
   service: "platform-api",
   boundedContext: "storage",
 });
+const storageTracer = trace.getTracer("object-storage-adapter");
+const storageOperationCounters = new Map<string, number>();
+
+function recordStorageMetric(operation: string, outcome: "success" | "error"): void {
+  const key = `${operation}:${outcome}`;
+  storageOperationCounters.set(key, (storageOperationCounters.get(key) ?? 0) + 1);
+}
+
+export function getStorageOperationMetric(operation: string, outcome: "success" | "error"): number {
+  return storageOperationCounters.get(`${operation}:${outcome}`) ?? 0;
+}
+
+async function withStorageTraceSpan<T>(
+  operation: string,
+  key: string,
+  run: () => Promise<T>
+): Promise<T> {
+  const span = storageTracer.startSpan(`object-storage.${operation}`, {
+    attributes: {
+      "storage.operation": operation,
+      "storage.key_prefix": key.split("/", 1)[0] ?? "",
+    },
+  });
+  try {
+    const result = await run();
+    recordStorageMetric(operation, "success");
+    storageLog.info({ operation, key }, "object_storage.operation.complete");
+    span.end();
+    return result;
+  } catch (err) {
+    recordStorageMetric(operation, "error");
+    storageLog.error({ err, operation, key }, "object_storage.operation.failed");
+    span.recordException(err instanceof Error ? err : String(err));
+    span.setStatus({ code: SpanStatusCode.ERROR });
+    span.end();
+    throw err;
+  }
+}
 
 export interface S3Config {
   bucket: string;
@@ -72,75 +111,90 @@ export class S3ObjectStorageAdapter implements ObjectStoragePort {
 
   async put(command: PutObjectCommand): Promise<void> {
     this.validateKey(command.key);
-    try {
-      await this.client.send(
-        new S3PutCommand({
-          Bucket: this.bucket,
-          Key: command.key,
-          Body: command.body,
-          ContentType: command.contentType,
-          Metadata: command.metadata,
-        })
-      );
-    } catch (err) {
-      throw new StorageError(`Failed to put object "${command.key}"`, err);
-    }
+    return withStorageTraceSpan("put", command.key, async () => {
+      try {
+        await this.client.send(
+          new S3PutCommand({
+            Bucket: this.bucket,
+            Key: command.key,
+            Body: command.body,
+            ContentType: command.contentType,
+            Metadata: command.metadata,
+          })
+        );
+      } catch (err) {
+        throw new StorageError(`Failed to put object "${command.key}"`, err);
+      }
+    });
   }
 
   async get(key: string): Promise<GetObjectResult | null> {
     this.validateKey(key);
-    try {
-      const response = await this.client.send(
-        new GetObjectCommand({ Bucket: this.bucket, Key: key })
-      );
-      if (!response.Body) return null;
-      return {
-        body: response.Body as unknown as ReadableStream,
-        contentType: response.ContentType ?? "application/octet-stream",
-        metadata: response.Metadata ?? {},
-        size: response.ContentLength ?? 0,
-      };
-    } catch (err: unknown) {
-      if (err instanceof Error && err.name === "NoSuchKey") return null;
-      throw new StorageError(`Failed to get object "${key}"`, err);
-    }
+    return withStorageTraceSpan("get", key, async () => {
+      try {
+        const response = await this.client.send(
+          new GetObjectCommand({ Bucket: this.bucket, Key: key })
+        );
+        if (!response.Body) return null;
+        return {
+          body: response.Body as unknown as ReadableStream,
+          contentType: response.ContentType ?? "application/octet-stream",
+          metadata: response.Metadata ?? {},
+          size: response.ContentLength ?? 0,
+        };
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === "NoSuchKey") return null;
+        throw new StorageError(`Failed to get object "${key}"`, err);
+      }
+    });
   }
 
   async delete(key: string): Promise<void> {
     this.validateKey(key);
-    try {
-      await this.client.send(new DeleteObjectCommand({ Bucket: this.bucket, Key: key }));
-    } catch (err) {
-      throw new StorageError(`Failed to delete object "${key}"`, err);
-    }
+    return withStorageTraceSpan("delete", key, async () => {
+      try {
+        await this.client.send(new DeleteObjectCommand({ Bucket: this.bucket, Key: key }));
+      } catch (err) {
+        throw new StorageError(`Failed to delete object "${key}"`, err);
+      }
+    });
   }
 
   async getPresignedUrl(options: PresignedUrlOptions): Promise<string> {
     this.validateKey(options.key);
-    try {
-      return await getSignedUrl(
-        this.client,
-        new GetObjectCommand({ Bucket: this.bucket, Key: options.key }),
-        { expiresIn: options.expiresInSeconds }
-      );
-    } catch (err) {
-      throw new StorageError(`Failed to get presigned URL for "${options.key}"`, err);
-    }
+    return withStorageTraceSpan("presigned-url", options.key, async () => {
+      try {
+        return await getSignedUrl(
+          this.client,
+          new GetObjectCommand({ Bucket: this.bucket, Key: options.key }),
+          { expiresIn: options.expiresInSeconds }
+        );
+      } catch (err) {
+        throw new StorageError(`Failed to get presigned URL for "${options.key}"`, err);
+      }
+    });
   }
 
   async list(prefix = ""): Promise<Array<{ key: string; size: number; lastModified: Date }>> {
-    try {
-      const response = await this.client.send(
-        new ListObjectsV2Command({ Bucket: this.bucket, Prefix: prefix })
+    if (this.tenantPrefix && prefix && !prefix.startsWith(this.tenantPrefix)) {
+      throw new StorageError(
+        `Prefix "${prefix}" does not belong to tenant prefix "${this.tenantPrefix}". Cross-tenant storage access rejected.`
       );
-      return (response.Contents ?? []).map((obj) => ({
-        key: obj.Key ?? "",
-        size: obj.Size ?? 0,
-        lastModified: obj.LastModified ?? new Date(),
-      }));
-    } catch (err) {
-      throw new StorageError(`Failed to list objects with prefix "${prefix}"`, err);
     }
+    return withStorageTraceSpan("list", prefix, async () => {
+      try {
+        const response = await this.client.send(
+          new ListObjectsV2Command({ Bucket: this.bucket, Prefix: prefix })
+        );
+        return (response.Contents ?? []).map((obj) => ({
+          key: obj.Key ?? "",
+          size: obj.Size ?? 0,
+          lastModified: obj.LastModified ?? new Date(),
+        }));
+      } catch (err) {
+        throw new StorageError(`Failed to list objects with prefix "${prefix}"`, err);
+      }
+    });
   }
 }
 
