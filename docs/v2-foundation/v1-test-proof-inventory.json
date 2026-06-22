@@ -10871,5 +10871,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected portable tenant import provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "local runtime proof plus unit retention semantics",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script exits non-zero and docs/evidence/data/retention-runtime-proof.json is not produced when retention validation, audit-before-change, legal hold guard, candidate outcomes, or route registration semantics break",
+    "proofLevel": 3,
+    "proofLevelRationale": "provider-ID wrapper delegates to retention-runtime-proof.ts; retention proof validates policy validation, audit-before-change, legal-hold guarded candidate processing, outcomes, and route registration while the Postgres adapter supplies timeout/retry/fail-closed/health behavior",
+    "capabilitiesProven": ["Retention policy and execution"],
+    "semanticFacetsProven": ["providerReliability", "stateModel", "audit", "workflow", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected retention provider contract is broken"
   }
 ]

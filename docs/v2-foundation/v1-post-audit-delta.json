@@ -4094,6 +4094,18 @@
         "npm run proof:data-portability"
       ],
       "decisionRefs": ["ADR-0063", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/retention-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/retention-runtime-proof.ts",
+        "apps/platform-api/tests/unit/retention.test.ts"
+      ],
+      "decisionRefs": ["ADR-0064", "ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -4476,6 +4488,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 437,
+  "additionCount": 438,
   "deletionCount": 54
 }
