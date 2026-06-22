@@ -930,8 +930,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"]
   },
@@ -941,8 +941,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"]
   },
@@ -952,8 +952,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"]
   },
@@ -963,8 +963,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"]
   },
@@ -974,7 +974,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"]
