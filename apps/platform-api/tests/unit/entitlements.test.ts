@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { ForbiddenError } from "@platform/platform-errors";
 import { AuditAction, type AuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { PostgresEntitlementRepository } from "../../src/adapters/postgres-entitlement-repository.ts";
 import {
   assertEntitlement,
   evaluateEntitlement,
@@ -190,5 +191,71 @@ describe("entitlement policy chain (ADR-0058)", () => {
   it("quota hook is a Phase-1 no-op (never enforces)", () => {
     assert.equal(quotaHook("webhooks").status, "not_enforced");
     assert.equal(quotaHook("unknown").status, "not_applicable");
+  });
+});
+
+describe("PostgresEntitlementRepository provider reliability", () => {
+  function makeProviderPool(options: { failSelect?: boolean } = {}) {
+    const queries: string[] = [];
+    const client = {
+      async query(sql: string) {
+        queries.push(sql);
+        if (options.failSelect && sql.includes("information_schema.tables")) {
+          throw new Error("db down");
+        }
+        return { rows: [], rowCount: 0 };
+      },
+      release() {},
+    };
+    return {
+      queries,
+      pool: {
+        async connect() {
+          return client;
+        },
+      },
+    };
+  }
+
+  it("applies a bounded statement timeout inside the system-admin health check", async () => {
+    const fixture = makeProviderPool();
+    const repo = new PostgresEntitlementRepository(fixture.pool, {
+      statementTimeoutMs: 2345,
+      retryAttempts: 0,
+    });
+
+    await repo.healthCheck();
+
+    assert.deepEqual(fixture.queries.slice(0, 4), [
+      "BEGIN",
+      "SET LOCAL ROLE rls_bypass",
+      "SET LOCAL statement_timeout = 2345",
+      `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name = 'tenant_entitlements'
+            LIMIT 1`,
+    ]);
+    assert.equal(fixture.queries.at(-1), "COMMIT");
+  });
+
+  it("retries unavailable Postgres and fails closed without a fallback", async () => {
+    const fixture = makeProviderPool({ failSelect: true });
+    const repo = new PostgresEntitlementRepository(fixture.pool, {
+      statementTimeoutMs: 300,
+      retryAttempts: 1,
+      retryBackoffMs: 0,
+    });
+
+    await assert.rejects(
+      () => repo.healthCheck(),
+      /postgres-entitlement-repository unavailable; no fallback.*fail-closed.*retry/
+    );
+    assert.equal(
+      fixture.queries.filter((q) => q === "SET LOCAL statement_timeout = 300").length,
+      2
+    );
+    assert.equal(fixture.queries.filter((q) => q === "ROLLBACK").length, 2);
+    assert.match(repo.recoveryAction(), /POSTGRES_APP_URL/);
   });
 });

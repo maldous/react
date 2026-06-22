@@ -4118,6 +4118,30 @@
         "apps/platform-api/tests/unit/scheduled-jobs.test.ts"
       ],
       "decisionRefs": ["ADR-0059", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+        "apps/platform-api/tests/unit/email-sender.test.ts"
+      ],
+      "decisionRefs": ["ADR-0047", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+        "apps/platform-api/tests/unit/entitlements.test.ts"
+      ],
+      "decisionRefs": ["ADR-0057", "ADR-0058", "ADR-ACT-0254"]
     }
   ],
   "deletions": [
@@ -4500,6 +4524,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 439,
+  "additionCount": 441,
   "deletionCount": 54
 }

@@ -8,6 +8,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { type AuditEvent, type AuditEventPort } from "@platform/audit-events";
 import type { EmailPort } from "@platform/email-runtime";
+import { PostgresEmailSenderSecretStore } from "../../src/adapters/postgres-email-sender-store.ts";
 import type { EmailSenderSecretStore } from "../../src/ports/email-sender-store.ts";
 import {
   classifyEmailSendError,
@@ -403,5 +404,71 @@ describe("classifyEmailSendError (pure)", () => {
       "provider_unreachable"
     );
     assert.equal(classifyEmailSendError(new Error("boom")), "provider_unreachable");
+  });
+});
+
+describe("PostgresEmailSenderSecretStore provider reliability", () => {
+  function makeStorePool(options: { failSelect?: boolean } = {}) {
+    const queries: string[] = [];
+    const client = {
+      async query(sql: string) {
+        queries.push(sql);
+        if (options.failSelect && sql.includes("information_schema.tables")) {
+          throw new Error("db down");
+        }
+        return { rows: [], rowCount: 0 };
+      },
+      release() {},
+    };
+    return {
+      queries,
+      pool: {
+        async connect() {
+          return client;
+        },
+      },
+    };
+  }
+
+  it("applies a bounded statement timeout inside the system-admin health check", async () => {
+    const fixture = makeStorePool();
+    const store = new PostgresEmailSenderSecretStore(fixture.pool, {
+      statementTimeoutMs: 1234,
+      retryAttempts: 0,
+    });
+
+    await store.healthCheck();
+
+    assert.deepEqual(fixture.queries.slice(0, 4), [
+      "BEGIN",
+      "SET LOCAL ROLE rls_bypass",
+      "SET LOCAL statement_timeout = 1234",
+      `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name = 'tenant_email_sender_credentials'
+            LIMIT 1`,
+    ]);
+    assert.equal(fixture.queries.at(-1), "COMMIT");
+  });
+
+  it("retries unavailable Postgres and fails closed without a fallback", async () => {
+    const fixture = makeStorePool({ failSelect: true });
+    const store = new PostgresEmailSenderSecretStore(fixture.pool, {
+      statementTimeoutMs: 250,
+      retryAttempts: 1,
+      retryBackoffMs: 0,
+    });
+
+    await assert.rejects(
+      () => store.healthCheck(),
+      /postgres-email-sender-store unavailable; no fallback.*fail-closed.*retry/
+    );
+    assert.equal(
+      fixture.queries.filter((q) => q === "SET LOCAL statement_timeout = 250").length,
+      2
+    );
+    assert.equal(fixture.queries.filter((q) => q === "ROLLBACK").length, 2);
+    assert.match(store.recoveryAction(), /POSTGRES_APP_URL/);
   });
 });

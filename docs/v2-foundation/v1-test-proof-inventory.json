@@ -10913,5 +10913,59 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected scheduled job provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: Mailpit SMTP/API plus fake pg substrate unit test for Postgres timeout/retry/fail-closed sequencing",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when tenant email sender readiness, live SMTP delivery, secret-free failure handling, Postgres timeout, retry, health, or fail-closed behavior breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to email-sender-runtime-proof.ts; live Mailpit proof validates SMTP send/readback and unavailable-provider classification while apps/platform-api/tests/unit/email-sender.test.ts exercises Postgres provider health, statement timeout, retry, rollback, no-fallback fail-closed behavior, and recovery guidance",
+    "capabilitiesProven": ["Tenant email sender", "Notification delivery"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "readinessModel",
+      "contracts",
+      "securityBoundary",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected email sender secret store provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: local Compose Postgres plus fake pg substrate unit test for Postgres timeout/retry/fail-closed sequencing",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when tenant_entitlements RLS, operator reads, grant/revoke semantics, secret-free records, Postgres timeout, retry, health, or fail-closed behavior breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to entitlements-postgres-runtime-proof.ts; live Postgres proof validates tenant_entitlements migration, forced RLS, tenant isolation, operator reads, grant/revoke semantics, and secret-free records while apps/platform-api/tests/unit/entitlements.test.ts exercises provider health, statement timeout, retry, rollback, no-fallback fail-closed behavior, and recovery guidance",
+    "capabilitiesProven": ["Tenant entitlements and plan gating"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "securityBoundary",
+      "stateModel",
+      "audit",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected entitlement provider contract is broken"
   }
 ]
