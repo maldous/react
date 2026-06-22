@@ -6478,7 +6478,45 @@
     "securityOwner": "team-security",
     "dataOwner": "team-data",
     "runtimeOwner": "team-security",
-    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/src/db/migrations/021-tenant-domains-registry.sql; apps/platform-api/src/ports/tenant-domain-registry.ts; apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+        "evidence": "tenant_domains classifies organisation_id, domain, ownership_status, auth_client_status, routing_status, tls_status, canonical, redirect_policy, lifecycle timestamps, and disabled_at; DNS challenge secrets are owned separately and conflict paths return no token."
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+        "evidence": "Domain claim lifecycle proof retains disabled tenant domain history, while retention proofs exercise audited retention candidates and legal-hold skipped/deleted outcomes for persisted governance records."
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "Backup proof runs the real Postgres backup script, verifies a seeded marker is present in the dump, enforces protected-environment refusal, and checks restore guard configuration for platform Postgres state including tenant_domains."
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "PITR restore drill restores a platform database dump into a throwaway Postgres container and verifies recovered marker state without touching the live platform database."
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/usecases/data-portability.ts",
+        "evidence": "Data-portability proof verifies encrypted tenant archives that include config/domains.json with domain status and authClient state, plus grouped import rollback and archive integrity."
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/src/db/migrations/035-legal-holds.sql",
+        "evidence": "Legal-hold proof exercises audit-before-change set/release lifecycle and active hold guards; migration 035 defines tenant-isolated legal_holds over resource_table and row_id for retained platform records."
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "evidence": "DSR/export fulfillment evidence is protected by the data-governance proof and the portability proof covers encrypted export integrity for tenant domain configuration payloads."
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts; apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/history-runtime-proof.ts",
+        "evidence": "Domain lifecycle proofs exercise pending, verified, active, canonical, deactivated, disabled, and conflict states; history proof projects audit rows into read-only tenant history without mutating source rows."
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts; apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+        "evidence": "Registry queries and mutations are scoped by organisation_id and disabled_at, the partial unique index prevents enabled cross-tenant domain claims, and auth-origin proof only derives tenant realm callbacks for active verified custom domains."
+      }
+    }
   },
   {
     "capability": "Tenant canonical domain set/unset",
