@@ -48,6 +48,9 @@ const gqlLog = createLogger({ name: "graphql", service: "platform-api", boundedC
 
 interface GraphQLContext {
   organisationId: string;
+  actorId: string;
+  actorRoles: string[];
+  sourceHost?: string;
 }
 
 const resolvers: ResolverMap = {
@@ -73,6 +76,11 @@ const resolvers: ResolverMap = {
         {
           organisationId: (ctx as GraphQLContext).organisationId,
           displayName: (args as { displayName: string }).displayName,
+          actor: {
+            actorId: (ctx as GraphQLContext).actorId,
+            actorRoles: (ctx as GraphQLContext).actorRoles,
+            sourceHost: (ctx as GraphQLContext).sourceHost,
+          },
         },
         createOrganisationDependencies()
       ),
@@ -264,7 +272,12 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
 
   // Execute. Use-case errors (NotFound/Validation) surface as GraphQL errors;
   // translate i18n keys so the response does not leak raw message keys.
-  const context: GraphQLContext = { organisationId: actor.organisationId };
+  const context: GraphQLContext = {
+    organisationId: actor.organisationId,
+    actorId: actor.userId,
+    actorRoles: actor.roles,
+    sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+  };
   const result = await executeOperation(schema, {
     query,
     operationName,

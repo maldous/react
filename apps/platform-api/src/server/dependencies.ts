@@ -31,6 +31,7 @@ import {
   type AuthorisationPort,
 } from "@platform/authorisation-runtime";
 import { createLokiLogQueryAdapter, type LokiLogQueryAdapter } from "@platform/adapters-loki";
+import { createPostgresAuditEventPort, type AuditEventPort } from "@platform/audit-events";
 import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 import type { IdentityRepository } from "../ports/identity-repository.ts";
 import type { SessionStore } from "@platform/session-runtime";
@@ -130,6 +131,7 @@ export function getPostgresReadinessAdapter(): PostgresReadinessAdapter {
 
 export interface OrganisationDependencies {
   organisations: OrganisationRepository;
+  audit: AuditEventPort;
 }
 
 /**
@@ -137,7 +139,10 @@ export interface OrganisationDependencies {
  * Tests can substitute by passing their own bundle directly to the use case.
  */
 export function createOrganisationDependencies(): OrganisationDependencies {
-  return { organisations: getOrganisationRepository() };
+  return {
+    organisations: getOrganisationRepository(),
+    audit: createPostgresAuditEventPort(getApplicationPool()),
+  };
 }
 
 // ---------------------------------------------------------------------------

@@ -7,6 +7,11 @@ import {
   updateOrganisationDisplayName,
 } from "../../src/usecases/organisation.ts";
 import { NotFoundError, ValidationError } from "@platform/platform-errors";
+import {
+  AuditAction,
+  createInMemoryAuditEventPort,
+  type AuditEventPort,
+} from "@platform/audit-events";
 import type { OrganisationRepository } from "../../src/ports/organisation-repository.ts";
 import type { OrganisationProfile } from "@platform/contracts-organisation";
 
@@ -26,12 +31,25 @@ function makeFakeRepo(overrides: Partial<OrganisationRepository> = {}): Organisa
   };
 }
 
+const ACTOR = {
+  actorId: "00000000-0000-4000-8000-0000000000aa",
+  actorRoles: ["tenant-admin"],
+  sourceHost: "fixture-org.aldous.info",
+};
+
+function makeDeps(
+  repo: OrganisationRepository,
+  audit: AuditEventPort = createInMemoryAuditEventPort()
+) {
+  return { organisations: repo, audit };
+}
+
 describe("getOrganisationProfile", () => {
   it("returns profile from repository", async () => {
     const repo = makeFakeRepo();
     const result = await getOrganisationProfile(
       { organisationId: FIXTURE_PROFILE.id },
-      { organisations: repo }
+      makeDeps(repo)
     );
     assert.equal(result.id, FIXTURE_PROFILE.id);
     assert.equal(result.slug, FIXTURE_PROFILE.slug);
@@ -43,7 +61,7 @@ describe("getOrganisationProfile", () => {
       () =>
         getOrganisationProfile(
           { organisationId: "00000000-0000-0000-0000-000000000099" },
-          { organisations: repo }
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof NotFoundError
     );
@@ -63,10 +81,35 @@ describe("updateOrganisationDisplayName", () => {
   it("returns updated profile from repository", async () => {
     const repo = makeFakeRepo();
     const result = await updateOrganisationDisplayName(
-      { organisationId: FIXTURE_PROFILE.id, displayName: "New Name" },
-      { organisations: repo }
+      { organisationId: FIXTURE_PROFILE.id, displayName: "New Name", actor: ACTOR },
+      makeDeps(repo)
     );
     assert.equal(result.displayName, "New Name");
+  });
+
+  it("emits OrganisationUpdated audit before updating the repository", async () => {
+    const audit = createInMemoryAuditEventPort();
+    const observed: string[] = [];
+    const repo = makeFakeRepo({
+      updateDisplayName: async (_id, displayName) => {
+        const events = await audit.query({ tenantId: FIXTURE_PROFILE.id });
+        observed.push(events[0]?.action ?? "missing");
+        return { ...FIXTURE_PROFILE, displayName };
+      },
+    });
+    await updateOrganisationDisplayName(
+      { organisationId: FIXTURE_PROFILE.id, displayName: "New Name", actor: ACTOR },
+      makeDeps(repo, audit)
+    );
+    assert.deepEqual(observed, [AuditAction.OrganisationUpdated]);
+    const [event] = await audit.query({ tenantId: FIXTURE_PROFILE.id });
+    assert.equal(event?.actorId, ACTOR.actorId);
+    assert.equal(event?.resource, "organisation:profile");
+    assert.equal(event?.resourceId, FIXTURE_PROFILE.id);
+    assert.deepEqual(event?.metadata, {
+      before: { displayName: "Fixture Organisation" },
+      after: { displayName: "New Name" },
+    });
   });
 
   it("trims whitespace from display name before calling repo", async () => {
@@ -78,8 +121,8 @@ describe("updateOrganisationDisplayName", () => {
       },
     });
     await updateOrganisationDisplayName(
-      { organisationId: FIXTURE_PROFILE.id, displayName: "  Trimmed  " },
-      { organisations: repo }
+      { organisationId: FIXTURE_PROFILE.id, displayName: "  Trimmed  ", actor: ACTOR },
+      makeDeps(repo)
     );
     assert.equal(captured, "Trimmed");
   });
@@ -89,8 +132,8 @@ describe("updateOrganisationDisplayName", () => {
     await assert.rejects(
       () =>
         updateOrganisationDisplayName(
-          { organisationId: FIXTURE_PROFILE.id, displayName: "" },
-          { organisations: repo }
+          { organisationId: FIXTURE_PROFILE.id, displayName: "", actor: ACTOR },
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof ValidationError
     );
@@ -101,8 +144,8 @@ describe("updateOrganisationDisplayName", () => {
     await assert.rejects(
       () =>
         updateOrganisationDisplayName(
-          { organisationId: FIXTURE_PROFILE.id, displayName: "   " },
-          { organisations: repo }
+          { organisationId: FIXTURE_PROFILE.id, displayName: "   ", actor: ACTOR },
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof ValidationError
     );
@@ -113,8 +156,8 @@ describe("updateOrganisationDisplayName", () => {
     await assert.rejects(
       () =>
         updateOrganisationDisplayName(
-          { organisationId: FIXTURE_PROFILE.id, displayName: "X" },
-          { organisations: repo }
+          { organisationId: FIXTURE_PROFILE.id, displayName: "X", actor: ACTOR },
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof ValidationError
     );
@@ -125,8 +168,8 @@ describe("updateOrganisationDisplayName", () => {
     await assert.rejects(
       () =>
         updateOrganisationDisplayName(
-          { organisationId: FIXTURE_PROFILE.id, displayName: "A".repeat(121) },
-          { organisations: repo }
+          { organisationId: FIXTURE_PROFILE.id, displayName: "A".repeat(121), actor: ACTOR },
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof ValidationError
     );
@@ -137,8 +180,8 @@ describe("updateOrganisationDisplayName", () => {
     await assert.rejects(
       () =>
         updateOrganisationDisplayName(
-          { organisationId: FIXTURE_PROFILE.id, displayName: "Bad\x00Name" },
-          { organisations: repo }
+          { organisationId: FIXTURE_PROFILE.id, displayName: "Bad\x00Name", actor: ACTOR },
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof ValidationError
     );
@@ -149,8 +192,12 @@ describe("updateOrganisationDisplayName", () => {
     await assert.rejects(
       () =>
         updateOrganisationDisplayName(
-          { organisationId: "00000000-0000-0000-0000-000000000099", displayName: "New" },
-          { organisations: repo }
+          {
+            organisationId: "00000000-0000-0000-0000-000000000099",
+            displayName: "New",
+            actor: ACTOR,
+          },
+          makeDeps(repo)
         ),
       (err: unknown) => err instanceof NotFoundError
     );

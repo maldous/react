@@ -5248,6 +5248,7 @@ export const routes: Route[] = [
     requiredPermission: "organisation.update",
     resource: "organisation:profile",
     umaScope: "write" as const,
+    auditEvent: AuditAction.OrganisationUpdated,
     handler: handlePatchOrganisationProfile,
   },
   // GraphQL boundary (ADR-0013, ADR-ACT-0199). Authentication + tenant-FQDN are

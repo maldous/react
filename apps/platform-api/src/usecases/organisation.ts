@@ -1,4 +1,5 @@
 import type { OrganisationProfile } from "@platform/contracts-organisation";
+import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 import { NotFoundError, ValidationError } from "@platform/platform-errors";
 import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 
@@ -43,6 +44,7 @@ export function normaliseOrganisationDisplayName(value: string): string {
 
 export interface OrganisationUseCaseDeps {
   organisations: OrganisationRepository;
+  audit: AuditEventPort;
 }
 
 export async function getOrganisationProfile(
@@ -57,10 +59,33 @@ export async function getOrganisationProfile(
 }
 
 export async function updateOrganisationDisplayName(
-  input: { organisationId: string; displayName: string },
+  input: {
+    organisationId: string;
+    displayName: string;
+    actor: { actorId: string; actorRoles: string[]; sourceHost?: string };
+  },
   deps: OrganisationUseCaseDeps
 ): Promise<OrganisationProfile> {
   const displayName = normaliseOrganisationDisplayName(input.displayName);
+  const existing = await deps.organisations.getById(input.organisationId);
+  if (!existing) {
+    throw new NotFoundError("api.error.organisationNotFound");
+  }
+  await deps.audit.emit(
+    createAuditEvent({
+      actorId: input.actor.actorId,
+      actorRoles: input.actor.actorRoles,
+      tenantId: input.organisationId,
+      action: AuditAction.OrganisationUpdated,
+      resource: "organisation:profile",
+      resourceId: input.organisationId,
+      metadata: {
+        before: { displayName: existing.displayName },
+        after: { displayName },
+      },
+      sourceHost: input.actor.sourceHost,
+    })
+  );
   const profile = await deps.organisations.updateDisplayName(input.organisationId, displayName);
   if (!profile) {
     throw new NotFoundError("api.error.organisationNotFound");

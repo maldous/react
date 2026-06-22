@@ -52,7 +52,15 @@ export const handlePatchOrganisationProfile: PipelineHandler = async (req, res) 
   }
   try {
     const profile = await updateOrganisationDisplayName(
-      { organisationId, displayName: parsed.data.displayName },
+      {
+        organisationId,
+        displayName: parsed.data.displayName,
+        actor: {
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        },
+      },
       createOrganisationDependencies()
     );
     res.json(200, profile);
