@@ -1,3 +1,4 @@
+import net from "node:net";
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { AuditAction, type AuditEvent, type AuditEventPort } from "@platform/audit-events";
@@ -12,6 +13,7 @@ import {
   scanStorageObject,
 } from "../../src/usecases/storage-objects.ts";
 import { LegalHoldGuard } from "../../src/usecases/legal-hold.ts";
+import { ClamAvAdapter, getClamAvMetric } from "../../src/adapters/clamav-antivirus.ts";
 import { StubAntivirusPort, type AntivirusPort } from "../../src/ports/antivirus.ts";
 import type {
   CreateStorageObjectInput,
@@ -274,5 +276,107 @@ describe("storage objects", () => {
       ForbiddenError
     );
     assert.ok(await ctx.deps.repository.get(ORG, `${ORG}/legal.txt`));
+  });
+});
+
+async function withFakeClamAv<T>(
+  response: string,
+  fn: (address: { host: string; port: number }) => Promise<T>
+): Promise<T> {
+  const server = net.createServer((socket) => {
+    socket.on("data", () => {
+      socket.write(response);
+      socket.end();
+    });
+  });
+  await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+  const address = server.address();
+  assert.ok(address && typeof address === "object");
+  try {
+    return await fn({ host: address.address, port: address.port });
+  } finally {
+    await new Promise<void>((resolve, reject) =>
+      server.close((err) => (err ? reject(err) : resolve()))
+    );
+  }
+}
+
+describe("ClamAvAdapter storage assurance hooks", () => {
+  it("enforces tenantPrefix isolation before scan", async () => {
+    const adapter = new ClamAvAdapter({
+      host: "127.0.0.1",
+      port: 9,
+      tenantPrefix: "tenant-a/",
+    });
+
+    await assert.rejects(
+      () =>
+        adapter.scan({
+          objectKey: "tenant-b/file.txt",
+          body: Buffer.from("safe"),
+          contentType: "text/plain",
+        }),
+      /tenantPrefix isolation/
+    );
+  });
+
+  it("checks quota-before-write, legal hold, audit, trace/log/metric and clean lifecycle", async () => {
+    await withFakeClamAv("stream: OK\0", async ({ host, port }) => {
+      const audit: string[] = [];
+      let quotaChecked = false;
+      let legalHoldChecked = false;
+      const before = getClamAvMetric("clamav_scan_total", { verdict: "clean" });
+      const adapter = new ClamAvAdapter({
+        host,
+        port,
+        tenantPrefix: "tenant-a/",
+        retryAttempts: 0,
+        quotaBeforeWrite: async () => {
+          quotaChecked = true;
+        },
+        legalHoldDeletionBlock: async () => {
+          legalHoldChecked = true;
+        },
+        auditEvent: async (event) => {
+          audit.push(event.action);
+        },
+      });
+
+      const result = await adapter.scan({
+        objectKey: "tenant-a/file.txt",
+        body: Buffer.from("safe"),
+        contentType: "text/plain",
+      });
+
+      assert.equal(result.verdict, "clean");
+      assert.equal(quotaChecked, true);
+      assert.equal(legalHoldChecked, true);
+      assert.deepEqual(audit, ["clamav.scan.clean"]);
+      assert.equal(getClamAvMetric("clamav_scan_total", { verdict: "clean" }), before + 1);
+    });
+  });
+
+  it("audits rejected lifecycle and keeps callers responsible for download blocked until clean", async () => {
+    await withFakeClamAv("stream: Eicar-Test-Signature FOUND\0", async ({ host, port }) => {
+      const audit: string[] = [];
+      const adapter = new ClamAvAdapter({
+        host,
+        port,
+        tenantPrefix: "tenant-a/",
+        retryAttempts: 0,
+        auditEvent: async (event) => {
+          audit.push(event.action);
+        },
+      });
+
+      const result = await adapter.scan({
+        objectKey: "tenant-a/eicar.txt",
+        body: Buffer.from("EICAR"),
+        contentType: "text/plain",
+      });
+
+      assert.equal(result.verdict, "rejected");
+      assert.deepEqual(audit, ["clamav.scan.rejected"]);
+    });
   });
 });

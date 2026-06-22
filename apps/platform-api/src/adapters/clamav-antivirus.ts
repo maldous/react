@@ -1,5 +1,29 @@
 import net from "node:net";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
 import type { AntivirusPort, AntivirusScanInput } from "../ports/antivirus.ts";
+
+const log = createLogger({
+  name: "clamav-antivirus",
+  service: "platform-api",
+  boundedContext: "storage",
+});
+const tracer = createTracer("clamav-antivirus");
+const clamAvMetrics = new Map<string, number>();
+
+function metric(name: string, labels: Record<string, string>): void {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  clamAvMetrics.set(key, (clamAvMetrics.get(key) ?? 0) + 1);
+}
+
+export function getClamAvMetric(name: string, labels: Record<string, string>): number {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  return clamAvMetrics.get(key) ?? 0;
+}
 
 export interface ClamAvAdapterOptions {
   host: string;
@@ -7,6 +31,15 @@ export interface ClamAvAdapterOptions {
   timeoutMs?: number;
   retryAttempts?: number;
   retryBackoffMs?: number;
+  tenantPrefix?: string;
+  quotaBeforeWrite?: (input: { objectKey: string; sizeBytes: number }) => Promise<void>;
+  legalHoldDeletionBlock?: (objectKey: string) => Promise<void>;
+  auditEvent?: (event: {
+    action: "clamav.scan.clean" | "clamav.scan.rejected" | "clamav.scan.failed";
+    objectKey: string;
+    verdict?: "clean" | "rejected";
+    reason?: string;
+  }) => Promise<void>;
 }
 
 export interface ClamAvConfig {
@@ -35,6 +68,10 @@ export class ClamAvAdapter implements AntivirusPort {
   private readonly timeoutMs: number;
   private readonly retryAttempts: number;
   private readonly retryBackoffMs: number;
+  private readonly tenantPrefix?: string;
+  private readonly quotaBeforeWrite?: ClamAvAdapterOptions["quotaBeforeWrite"];
+  private readonly legalHoldDeletionBlock?: ClamAvAdapterOptions["legalHoldDeletionBlock"];
+  private readonly auditEvent?: ClamAvAdapterOptions["auditEvent"];
 
   constructor(options: ClamAvAdapterOptions) {
     this.host = options.host;
@@ -42,17 +79,66 @@ export class ClamAvAdapter implements AntivirusPort {
     this.timeoutMs = options.timeoutMs ?? 5_000;
     this.retryAttempts = options.retryAttempts ?? 1;
     this.retryBackoffMs = options.retryBackoffMs ?? 100;
+    this.tenantPrefix = options.tenantPrefix;
+    this.quotaBeforeWrite = options.quotaBeforeWrite;
+    this.legalHoldDeletionBlock = options.legalHoldDeletionBlock;
+    this.auditEvent = options.auditEvent;
   }
 
   async scan(
     input: AntivirusScanInput
   ): Promise<{ verdict: "clean" | "rejected"; reason?: string }> {
-    const response = await this.withRetry(() => this.scanBuffer(input.body));
-    if (/\bFOUND\b/.test(response)) {
-      return { verdict: "rejected", reason: response.trim() };
-    }
-    if (/\bOK\b/.test(response)) return { verdict: "clean" };
-    throw new Error(`Unexpected ClamAV response: ${response.trim()}`);
+    this.assertTenantPrefixIsolation(input.objectKey);
+    return withSpan(
+      tracer,
+      "clamav.scan",
+      async () => {
+        try {
+          await this.quotaBeforeWrite?.({
+            objectKey: input.objectKey,
+            sizeBytes: input.body.length,
+          });
+          await this.legalHoldDeletionBlock?.(input.objectKey);
+          const response = await this.withRetry(() => this.scanBuffer(input.body));
+          if (/\bFOUND\b/.test(response)) {
+            const rejected = { verdict: "rejected" as const, reason: response.trim() };
+            metric("clamav_scan_total", { verdict: rejected.verdict });
+            log.info(
+              { objectKey: input.objectKey, verdict: rejected.verdict },
+              "clamav.scan.complete"
+            );
+            await this.auditEvent?.({
+              action: "clamav.scan.rejected",
+              objectKey: input.objectKey,
+              verdict: rejected.verdict,
+              reason: rejected.reason,
+            });
+            return rejected;
+          }
+          if (/\bOK\b/.test(response)) {
+            metric("clamav_scan_total", { verdict: "clean" });
+            log.info({ objectKey: input.objectKey, verdict: "clean" }, "clamav.scan.complete");
+            await this.auditEvent?.({
+              action: "clamav.scan.clean",
+              objectKey: input.objectKey,
+              verdict: "clean",
+            });
+            return { verdict: "clean" };
+          }
+          throw new Error(`Unexpected ClamAV response: ${response.trim()}`);
+        } catch (err) {
+          metric("clamav_scan_total", { verdict: "failed" });
+          log.error({ err, objectKey: input.objectKey }, "clamav.scan.failed");
+          await this.auditEvent?.({
+            action: "clamav.scan.failed",
+            objectKey: input.objectKey,
+            reason: err instanceof Error ? err.message : String(err),
+          });
+          throw err;
+        }
+      },
+      { "storage.objectKey": input.objectKey }
+    );
   }
 
   async healthCheck(): Promise<{ status: "ready"; provider: "clamav-antivirus" }> {
@@ -64,7 +150,16 @@ export class ClamAvAdapter implements AntivirusPort {
   }
 
   recoveryAction(): string {
-    return "operator recovery: verify CLAMAV_HOST/CLAMAV_PORT/CLAMAV_TIMEOUT_MS, restart the antivirus-provider compose profile, confirm clamd signature updates, then retry quarantined object scans";
+    return "operator recovery: verify CLAMAV_HOST/CLAMAV_PORT/CLAMAV_TIMEOUT_MS, restart the antivirus-provider compose profile, confirm clamd signature updates, then retry quarantined object scans; storage downloads remain blocked until clean scan verdict";
+  }
+
+  private assertTenantPrefixIsolation(objectKey: string): void {
+    if (!this.tenantPrefix) return;
+    if (!objectKey.startsWith(this.tenantPrefix)) {
+      throw new Error(
+        `ClamAV tenantPrefix isolation rejected object key "${objectKey}" outside "${this.tenantPrefix}"`
+      );
+    }
   }
 
   private async withRetry<T>(operation: () => Promise<T>): Promise<T> {
