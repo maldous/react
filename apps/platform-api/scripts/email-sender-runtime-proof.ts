@@ -16,7 +16,10 @@
  *   npm run proof:email-sender
  */
 
-import { SmtpEmailAdapter } from "../src/adapters/smtp-email-adapter.ts";
+import {
+  loadSmtpEmailProviderConfig,
+  SmtpEmailAdapter,
+} from "../src/adapters/smtp-email-adapter.ts";
 import {
   classifyEmailSendError,
   computeEmailSenderReadiness,
@@ -70,7 +73,18 @@ async function main(): Promise<void> {
   // 2. Send a real email to Mailpit with a unique subject.
   const token = `proof-${SMTP_PORT}-${Math.floor(Date.now())}`;
   const subject = `Email sender proof ${token}`;
-  const adapter = new SmtpEmailAdapter({ host: SMTP_HOST, port: SMTP_PORT, secure: false });
+  const adapter = new SmtpEmailAdapter({
+    ...loadSmtpEmailProviderConfig({
+      SMTP_HOST,
+      SMTP_PORT: String(SMTP_PORT),
+      SMTP_TIMEOUT_MS: "5000",
+      SMTP_RETRY_ATTEMPTS: "2",
+      SMTP_RETRY_BACKOFF_MS: "50",
+    }),
+    secure: false,
+  });
+  const health = await adapter.healthCheck();
+  check("SMTP provider health probe reports Mailpit ready", health.ok, health.recoveryAction);
   const sent = await adapter.send({
     from: { address: "noreply@proof.test", displayName: "Proof Sender" },
     to: [{ address: "dest@proof.test" }],
@@ -89,7 +103,22 @@ async function main(): Promise<void> {
   // 4. Unreachable provider → classified, never thrown out.
   let unreachableResult = "";
   try {
-    const dead = new SmtpEmailAdapter({ host: "127.0.0.1", port: 1, secure: false });
+    const dead = new SmtpEmailAdapter({
+      ...loadSmtpEmailProviderConfig({
+        SMTP_HOST: "127.0.0.1",
+        SMTP_PORT: "1",
+        SMTP_TIMEOUT_MS: "250",
+        SMTP_RETRY_ATTEMPTS: "2",
+        SMTP_RETRY_BACKOFF_MS: "10",
+      }),
+      secure: false,
+    });
+    const deadHealth = await dead.healthCheck();
+    check(
+      "unavailable SMTP provider health probe fails closed",
+      !deadHealth.ok && deadHealth.degradedMode === "unavailable",
+      deadHealth.recoveryAction
+    );
     await dead.send({
       from: { address: "a@b.test" },
       to: [{ address: "c@d.test" }],

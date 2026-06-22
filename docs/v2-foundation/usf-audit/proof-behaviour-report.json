@@ -1356,6 +1356,40 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "message": "proof only checks file/contract shape",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -2812,6 +2846,17 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",

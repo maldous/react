@@ -1210,6 +1210,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "level": 0,
+    "classification": "route/file existence only",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
     "file": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
     "level": 3,

@@ -10781,5 +10781,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: Mailpit SMTP/API via make compose-up-default",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script exits non-zero when SMTP delivery, health probing, unavailable-provider fail-closed behavior, or failure classification breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to email-sender-runtime-proof.ts; live Mailpit SMTP send/readback, SMTP provider health probe, unavailable-provider fail-closed path, retry/timeout-bounded send, and secret-free failure classification are exercised",
+    "capabilitiesProven": ["Tenant email sender", "Notification delivery"],
+    "semanticFacetsProven": ["providerReliability", "readinessModel", "contracts", "proof"],
+    "environment": "test",
+    "providerClass": "sandbox-external",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected SMTP provider contract is broken"
   }
 ]
