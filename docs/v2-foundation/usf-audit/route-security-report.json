@@ -441,25 +441,6 @@
     },
     {
       "kind": "route-security",
-      "subject": "GET /api/admin/logs/search",
-      "message": "admin route without route-level RBAC/ABAC/PDP evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-get-api-admin-logs-search",
-        "routeId": "route:get-api-admin-logs-search",
-        "method": "GET",
-        "path": "/api/admin/logs/search",
-        "authBoundary": true,
-        "permissionBoundary": "platform.logs.read",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "unknown",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5548", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
       "subject": "GET /api/auth/providers",
       "message": "route without auth decision",
       "evidence": {
@@ -1157,7 +1138,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5786", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5789", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },

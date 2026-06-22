@@ -360,7 +360,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6861", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6864", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-alerts",
@@ -375,7 +375,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6887", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6890", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-alerts-alertid-evaluate",
@@ -390,7 +390,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6921", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6924", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-backup",
@@ -405,7 +405,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7049", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7052", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-billing",
@@ -420,7 +420,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts; apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8183", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8186", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-billing-catalog-plans",
@@ -435,7 +435,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8275", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8278", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-billing-catalog-plans",
@@ -450,7 +450,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8298", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8301", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-billing-catalog-prices",
@@ -465,7 +465,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8334", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8337", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-billing-catalog-prices",
@@ -480,7 +480,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8357", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8360", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-billing-catalog-products",
@@ -495,7 +495,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8197", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8200", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-billing-catalog-products",
@@ -510,7 +510,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8239", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8242", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-billing-readiness",
@@ -525,7 +525,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8169", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8172", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-clickthrough",
@@ -540,7 +540,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7553", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7556", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-data-compliance-report",
@@ -555,7 +555,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8081", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8084", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:delete-api-admin-data-legal-holds",
@@ -570,7 +570,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7875", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7878", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-data-legal-holds",
@@ -585,7 +585,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7919", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7922", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-data-legal-holds",
@@ -600,7 +600,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7830", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7833", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-data-residency",
@@ -615,7 +615,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8113", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8116", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:delete-api-admin-data-retention-policies",
@@ -630,7 +630,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8003", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8006", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-data-retention-policies",
@@ -645,7 +645,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8051", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8054", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-data-retention-policies",
@@ -660,7 +660,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7953", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7956", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-events",
@@ -675,7 +675,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6342", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6345", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-events-eventid-redrive",
@@ -690,7 +690,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6388", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6391", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-events-dead-letter",
@@ -705,7 +705,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6365", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6368", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-governance-catalog",
@@ -720,7 +720,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8393", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8396", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-governance-catalog",
@@ -735,7 +735,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8410", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8413", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-governance-catalog-classify",
@@ -750,7 +750,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8449", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8452", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-governance-dsr",
@@ -765,7 +765,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8488", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8491", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-governance-dsr",
@@ -780,7 +780,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8509", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8512", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-governance-dsr-dsrid-fulfill",
@@ -795,7 +795,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8549", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8552", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-incidents",
@@ -810,7 +810,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6950", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6953", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-admin-incidents-incidentid",
@@ -825,7 +825,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6976", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6979", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-logs-search",
@@ -840,7 +840,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:tenant-observability; logs-usecase tests",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5548", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5549", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-notifications-readiness",
@@ -855,7 +855,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6592", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6595", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-observability",
@@ -870,7 +870,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts; apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7020", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7023", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-observability-readiness",
@@ -885,7 +885,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7035", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7038", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-observability-signals",
@@ -900,7 +900,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6835", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6838", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-provider-bindings",
@@ -915,7 +915,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7525", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7528", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-provider-configs",
@@ -930,7 +930,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7378", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7381", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-provider-configs",
@@ -945,7 +945,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7394", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7397", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-provider-configs-id-delete",
@@ -960,7 +960,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7472", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7475", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-provider-configs-id-lifecycle",
@@ -975,7 +975,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7428", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7431", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-providers-readiness",
@@ -990,7 +990,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:composed-provider-readiness",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7511", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7514", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-scheduled-jobs",
@@ -1005,7 +1005,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7082", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7085", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-scheduled-jobs",
@@ -1020,7 +1020,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7108", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7111", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-admin-scheduled-jobs-jobid",
@@ -1035,7 +1035,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7177", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7180", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
@@ -1050,7 +1050,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7142", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7145", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-search-readiness",
@@ -1065,7 +1065,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6289", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6292", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-search-reindex",
@@ -1080,7 +1080,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6303", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6306", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-secrets",
@@ -1095,7 +1095,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7241", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7244", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-secrets",
@@ -1110,7 +1110,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7264", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7267", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-secrets-delete",
@@ -1125,7 +1125,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7336", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7339", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-secrets-readiness",
@@ -1140,7 +1140,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7227", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7230", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-secrets-revoke",
@@ -1155,7 +1155,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7300", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7303", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-security",
@@ -1170,7 +1170,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7063", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7066", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-sub-tenants",
@@ -1245,7 +1245,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "support-mode unit tests; proof:support-approval",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6810", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6813", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-support-tickets",
@@ -1260,7 +1260,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "support-mode unit tests; proof:support-approval",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6788", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6791", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-support-tickets",
@@ -1275,7 +1275,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "support-mode unit tests; proof:support-approval",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6746", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6749", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants",
@@ -1290,7 +1290,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/entitlements-routes-runtime-proof.ts; apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts; apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5770", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5773", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants",
@@ -1320,7 +1320,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:api-keys; proof:api-key-routes",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6722", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6725", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-announcements",
@@ -1335,7 +1335,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:api-keys; proof:api-key-routes",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6647", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6650", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-api-keys",
@@ -1350,7 +1350,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6157", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6160", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-auth-settings-credential-readiness",
@@ -1410,7 +1410,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:delegated-admin",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5655", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5658", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-delegations",
@@ -1425,7 +1425,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:delegated-admin",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5684", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5687", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:delete-api-admin-tenants-tenantid-delegations-delegationid",
@@ -1440,7 +1440,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:delegated-admin",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5736", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5739", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-delete",
@@ -1455,7 +1455,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7794", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7797", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-entitlements",
@@ -1470,7 +1470,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5584", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5587", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-admin-tenants-tenantid-entitlements",
@@ -1485,7 +1485,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5603", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5606", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-export",
@@ -1500,7 +1500,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7628", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7631", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-history",
@@ -1515,7 +1515,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:history",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7600", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7603", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-import",
@@ -1530,7 +1530,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7676", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7679", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-meter-events",
@@ -1545,7 +1545,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5806", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5809", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-notifications-test",
@@ -1560,7 +1560,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6606", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6609", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-quotas",
@@ -1575,7 +1575,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5935", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5938", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-admin-tenants-tenantid-quotas",
@@ -1590,7 +1590,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5954", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5957", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-rate-limits",
@@ -1605,7 +1605,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6176", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6179", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-admin-tenants-tenantid-rate-limits",
@@ -1620,7 +1620,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6195", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6198", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-tenantid-suspend",
@@ -1635,7 +1635,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7763", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7766", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-tenants-tenantid-usage",
@@ -1650,7 +1650,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5897", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5900", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-tenants-auth-settings-credential",
@@ -1695,7 +1695,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6423", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6426", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-workflows",
@@ -1710,7 +1710,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts; apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8603", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8606", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-workflows-workflowid",
@@ -1725,7 +1725,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8740", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8743", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-workflows-workflowid-cancel",
@@ -1740,7 +1740,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:workflow-provider-live",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8708", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8711", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-workflows-workflowid-signal",
@@ -1755,7 +1755,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:workflow-provider-live",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8669", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8672", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-admin-workflows-readiness",
@@ -1770,7 +1770,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8589", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8592", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-admin-workflows-start",
@@ -1785,7 +1785,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:workflow-provider-live",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8620", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8623", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-auth-providers",
@@ -2235,7 +2235,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6522", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6525", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-me-notification-preferences",
@@ -2250,7 +2250,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6549", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6552", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-me-profile",
@@ -2265,7 +2265,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6442", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6445", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:patch-api-me-profile",
@@ -2280,7 +2280,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6473", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6476", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-api-keys",
@@ -2295,7 +2295,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6001", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6004", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:post-api-org-api-keys",
@@ -2310,7 +2310,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6020", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6023", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:delete-api-org-api-keys-keyid",
@@ -2325,7 +2325,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6075", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6078", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-audit",
@@ -2355,7 +2355,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8217", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8220", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-config",
@@ -2415,7 +2415,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6116", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6119", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-domains",
@@ -2640,7 +2640,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5562", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5565", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-features",
@@ -2745,7 +2745,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "proof:history",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7573", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7576", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-members",
@@ -2910,7 +2910,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5916", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5919", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-rate-limits",
@@ -2925,7 +2925,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6138", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6141", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-readiness",
@@ -2955,7 +2955,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6240", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6243", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-storage-objects",
@@ -3135,7 +3135,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5878", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5881", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-org-webhooks",
@@ -3345,7 +3345,7 @@
       "alertRouting": "unknown",
       "runbook": "unknown",
       "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5786", "docs/api/openapi.json"]
+      "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5789", "docs/api/openapi.json"]
     },
     {
       "routeId": "route:get-api-session",
@@ -5017,9 +5017,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6861", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6864", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6861",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6864",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5056,9 +5056,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6887", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6890", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6887",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6890",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5095,9 +5095,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6921", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6924", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6921",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6924",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5134,9 +5134,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7049", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7052", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7049",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7052",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5173,9 +5173,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts; apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8183", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8186", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8183",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8186",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5212,9 +5212,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8275", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8278", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8275",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8278",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5251,9 +5251,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8298", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8301", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8298",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8301",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5290,9 +5290,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8334", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8337", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8334",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8337",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5329,9 +5329,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8357", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8360", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8357",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8360",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5368,9 +5368,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8197", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8200", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8197",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8200",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5407,9 +5407,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8239", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8242", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8239",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8242",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5446,9 +5446,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8169", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8172", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8169",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8172",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5485,9 +5485,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7553", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7556", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7553",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7556",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5524,9 +5524,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8081", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8084", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8081",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8084",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5563,9 +5563,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7875", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7878", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7875",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7878",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5602,9 +5602,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7919", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7922", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7919",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7922",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5641,9 +5641,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7830", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7833", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7830",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7833",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5680,9 +5680,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8113", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8116", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8113",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8116",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5719,9 +5719,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8003", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8006", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8003",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8006",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5758,9 +5758,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8051", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8054", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8051",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8054",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5797,9 +5797,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7953", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7956", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7953",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7956",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5836,9 +5836,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6342", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6345", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6342",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6345",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5875,9 +5875,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6388", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6391", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6388",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6391",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5914,9 +5914,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6365", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6368", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6365",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6368",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5953,9 +5953,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8393", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8396", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8393",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8396",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -5992,9 +5992,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8410", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8413", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8410",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8413",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6031,9 +6031,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8449", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8452", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8449",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8452",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6070,9 +6070,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8488", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8491", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8488",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8491",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6109,9 +6109,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8509", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8512", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8509",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8512",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6148,9 +6148,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8549", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8552", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8549",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8552",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6187,9 +6187,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6950", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6953", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6950",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6953",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6226,9 +6226,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6976", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6979", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6976",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6979",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6253,7 +6253,7 @@
         "isMutation": false,
         "authRequired": true,
         "permissionRequired": "platform.logs.read",
-        "policyRequired": "unknown",
+        "policyRequired": true,
         "auditRequired": false,
         "auditEvent": "unknown",
         "traceRequired": true,
@@ -6265,9 +6265,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:tenant-observability; logs-usecase tests",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5548", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5549", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5548",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5549",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6304,9 +6304,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6592", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6595", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6592",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6595",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6343,9 +6343,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts; apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7020", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7023", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7020",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7023",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6382,9 +6382,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7035", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7038", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7035",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7038",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6421,9 +6421,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6835", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6838", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6835",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6838",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6460,9 +6460,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7525", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7528", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7525",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7528",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6499,9 +6499,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7378", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7381", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7378",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7381",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6538,9 +6538,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7394", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7397", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7394",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7397",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6577,9 +6577,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7472", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7475", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7472",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7475",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6616,9 +6616,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:provider-config; proof:provider-readiness-contract",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7428", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7431", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7428",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7431",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6655,9 +6655,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:composed-provider-readiness",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7511", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7514", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7511",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7514",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6694,9 +6694,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7082", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7085", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7082",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7085",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6733,9 +6733,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7108", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7111", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7108",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7111",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6772,9 +6772,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7177", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7180", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7177",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7180",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6811,9 +6811,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7142", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7145", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7142",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7145",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6850,9 +6850,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6289", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6292", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6289",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6292",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6889,9 +6889,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6303", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6306", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6303",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6306",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6928,9 +6928,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7241", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7244", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7241",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7244",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -6967,9 +6967,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7264", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7267", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7264",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7267",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7006,9 +7006,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7336", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7339", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7336",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7339",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7045,9 +7045,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7227", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7230", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7227",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7230",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7084,9 +7084,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7300", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7303", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7300",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7303",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7123,9 +7123,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7063", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7066", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7063",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7066",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7318,9 +7318,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "support-mode unit tests; proof:support-approval",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6810", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6813", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6810",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6813",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7357,9 +7357,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "support-mode unit tests; proof:support-approval",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6788", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6791", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6788",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6791",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7396,9 +7396,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "support-mode unit tests; proof:support-approval",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6746", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6749", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6746",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6749",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7435,9 +7435,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/entitlements-routes-runtime-proof.ts; apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts; apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5770", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5773", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5770",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5773",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7513,9 +7513,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:api-keys; proof:api-key-routes",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6722", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6725", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6722",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6725",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7552,9 +7552,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:api-keys; proof:api-key-routes",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6647", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6650", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6647",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6650",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7591,9 +7591,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6157", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6160", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6157",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6160",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7747,9 +7747,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:delegated-admin",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5655", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5658", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5655",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5658",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7786,9 +7786,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:delegated-admin",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5684", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5687", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5684",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5687",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7825,9 +7825,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:delegated-admin",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5736", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5739", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5736",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5739",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7864,9 +7864,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7794", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7797", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7794",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7797",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7903,9 +7903,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5584", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5587", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5584",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5587",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7942,9 +7942,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5603", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5606", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5603",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5606",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -7981,9 +7981,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7628", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7631", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7628",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7631",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8020,9 +8020,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:history",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7600", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7603", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7600",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7603",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8059,9 +8059,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7676", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7679", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7676",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7679",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8098,9 +8098,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5806", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5809", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5806",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5809",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8137,9 +8137,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6606", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6609", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6606",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6609",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8176,9 +8176,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5935", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5938", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5935",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5938",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8215,9 +8215,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5954", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5957", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5954",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5957",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8254,9 +8254,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6176", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6179", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6176",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6179",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8293,9 +8293,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6195", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6198", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6195",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6198",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8332,9 +8332,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7763", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7766", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7763",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7766",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8371,9 +8371,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5897", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5900", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5897",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5900",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8488,9 +8488,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6423", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6426", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6423",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6426",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8527,9 +8527,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts; apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8603", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8606", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8603",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8606",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8566,9 +8566,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8740", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8743", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8740",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8743",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8605,9 +8605,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:workflow-provider-live",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8708", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8711", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8708",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8711",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8644,9 +8644,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:workflow-provider-live",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8669", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8672", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8669",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8672",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8683,9 +8683,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8589", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8592", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8589",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8592",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -8722,9 +8722,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:workflow-provider-live",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8620", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8623", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8620",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8623",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -9892,9 +9892,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6522", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6525", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6522",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6525",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -9931,9 +9931,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6549", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6552", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6549",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6552",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -9970,9 +9970,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6442", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6445", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6442",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6445",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10009,9 +10009,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6473", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6476", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6473",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6476",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10048,9 +10048,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6001", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6004", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6001",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6004",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10087,9 +10087,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6020", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6023", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6020",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6023",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10126,9 +10126,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6075", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6078", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6075",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6078",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10204,9 +10204,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8217", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8220", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:8217",
+          "routeObject": "apps/platform-api/src/server/routes.ts:8220",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10360,9 +10360,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6116", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6119", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6116",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6119",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -10945,9 +10945,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5562", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5565", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5562",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5565",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -11218,9 +11218,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "proof:history",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7573", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7576", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:7573",
+          "routeObject": "apps/platform-api/src/server/routes.ts:7576",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -11647,9 +11647,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5916", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5919", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5916",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5919",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -11686,9 +11686,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6138", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6141", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6138",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6141",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -11764,9 +11764,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6240", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6243", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:6240",
+          "routeObject": "apps/platform-api/src/server/routes.ts:6243",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -12232,9 +12232,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5878", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5881", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5878",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5881",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
@@ -12778,9 +12778,9 @@
         "alertRequired": true,
         "proofRequired": true,
         "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5786", "docs/api/openapi.json"],
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5789", "docs/api/openapi.json"],
         "evidence": {
-          "routeObject": "apps/platform-api/src/server/routes.ts:5786",
+          "routeObject": "apps/platform-api/src/server/routes.ts:5789",
           "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
           "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
           "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",

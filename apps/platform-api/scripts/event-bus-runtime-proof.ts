@@ -13,6 +13,7 @@
  */
 
 import pg from "pg";
+import assert from "node:assert/strict";
 import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { withTenant } from "@platform/adapters-postgres";
 import type { AuditEventPort } from "@platform/audit-events";
@@ -29,6 +30,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 async function reachable(url: string): Promise<boolean> {
   const p = new pg.Pool({ connectionString: url, connectionTimeoutMillis: 2000, max: 1 });
@@ -141,7 +143,11 @@ async function main(): Promise<void> {
     });
     check("RLS hides orgA's events from orgB's tenant context (count = 0)", crossCount === 0);
   } catch (err) {
-    check("live event-bus proof", false, err instanceof Error ? err.message : String(err));
+    failures++;
+    console.log(
+      "FAIL  live event-bus proof" +
+        (err instanceof Error ? ` — ${err.message}` : ` — ${String(err)}`)
+    );
   } finally {
     if (orgA)
       await su.query("DELETE FROM public.organisations WHERE id=$1", [orgA]).catch(() => {});

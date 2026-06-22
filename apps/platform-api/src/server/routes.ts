@@ -5543,14 +5543,17 @@ export const routes: Route[] = [
     handler: handleGraphql,
   },
   // Operator log search (ADR-0035, ADR-ACT-0194). Global-host, system-admin only.
-  // Static RBAC (platform.logs.read) — no UMA resource: log search is a global
-  // platform-admin capability with no per-tenant policy surface.
+  // UMA resource+scope gives the route an explicit PDP boundary; platform.logs.read
+  // remains the fail-closed static fallback when Keycloak is unavailable or the
+  // resource is not yet provisioned.
   {
     method: "GET",
     path: "/api/admin/logs/search",
     operationName: "admin.logs.search",
     requiresAuth: true,
     requiredPermission: "platform.logs.read",
+    resource: "admin:logs",
+    umaScope: "read",
     scope: "global",
     handler: handleSearchLogs,
   },
