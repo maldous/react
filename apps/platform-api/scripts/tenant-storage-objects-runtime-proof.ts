@@ -17,7 +17,7 @@ import {
 } from "../src/usecases/storage-objects.ts";
 import { LegalHoldGuard } from "../src/usecases/legal-hold.ts";
 import { StubAntivirusPort } from "../src/ports/antivirus.ts";
-import { ClamAvAdapter } from "../src/adapters/clamav-antivirus.ts";
+import { ClamAvAdapter, loadClamAvConfig } from "../src/adapters/clamav-antivirus.ts";
 import type {
   CreateStorageObjectInput,
   StorageObjectRecord,
@@ -292,9 +292,13 @@ async function main(): Promise<void> {
   );
 
   const clamav = new ClamAvAdapter({
-    host: process.env["CLAMAV_HOST"] ?? "127.0.0.1",
-    port: Number(process.env["CLAMAV_PORT"] ?? "3310"),
+    ...loadClamAvConfig(),
   });
+  assert.deepEqual(await clamav.healthCheck(), {
+    status: "ready",
+    provider: "clamav-antivirus",
+  });
+  assert.match(clamav.recoveryAction(), /operator recovery/);
   assert.equal(
     (
       await clamav.scan({
@@ -315,6 +319,20 @@ async function main(): Promise<void> {
     ).verdict,
     "rejected"
   );
+  await assert.rejects(
+    () =>
+      new ClamAvAdapter({
+        host: "127.0.0.1",
+        port: 1,
+        timeoutMs: 25,
+        retryAttempts: 0,
+      }).scan({
+        objectKey: `${ORG}/clamav-unavailable.txt`,
+        body: Buffer.from("clean body"),
+        contentType: "text/plain",
+      }),
+    /fail-closed/
+  );
   await checkLiveMinioObjectFlow(clamav);
 
   console.log(
@@ -331,6 +349,8 @@ async function main(): Promise<void> {
           "scan rejects EICAR signature",
           "legal hold blocks deletion",
           "ClamAV adapter returns clean/rejected verdicts",
+          "ClamAV readiness probe returns ready",
+          "ClamAV unavailable provider path fails closed",
           "live MinIO object CRUD + ClamAV scan flow passes",
         ],
       },

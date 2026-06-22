@@ -179,6 +179,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-clamav-antivirus-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
     "file": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
     "level": 4,

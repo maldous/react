@@ -163,7 +163,7 @@ import { PostgresStorageObjectRepository } from "../adapters/postgres-storage-ob
 import { PostgresLegalHoldRepository } from "../adapters/postgres-legal-hold.ts";
 import { LegalHoldGuard } from "../usecases/legal-hold.ts";
 import { StubAntivirusPort } from "../ports/antivirus.ts";
-import { ClamAvAdapter } from "../adapters/clamav-antivirus.ts";
+import { ClamAvAdapter, loadClamAvConfig } from "../adapters/clamav-antivirus.ts";
 
 // ---------------------------------------------------------------------------
 // AuthClientDomainPort over the existing vanity-domain Keycloak plumbing
@@ -520,6 +520,7 @@ async function buildStorageObjectDeps(organisationId: string) {
       platformConfig.storageAvProvider === "stub"
         ? new StubAntivirusPort()
         : new ClamAvAdapter({
+            ...loadClamAvConfig(),
             host: platformConfig.clamavHost,
             port: platformConfig.clamavPort,
           }),

@@ -10652,5 +10652,32 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken; exits zero with explicit SKIP only when live Postgres is unavailable"
+  },
+  {
+    "id": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing live ClamAV and storage-object runtime proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero when ClamAV readiness, clean/rejected verdicts, unavailable fail-closed behaviour, storage quarantine, audit, legal hold, quota, or live MinIO flow is broken",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to tenant-storage-objects-runtime-proof.ts; live proof validates quarantined uploads, quota-before-write, blocked downloads until clean scan, EICAR rejection, legal-hold delete denial, ClamAV readiness, clean and rejected scan verdicts, fail-closed unavailable-provider behaviour, and live MinIO object flow.",
+    "capabilitiesProven": ["Storage objects and malware scanning"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "storageAssurance",
+      "securityModel",
+      "stateModel",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "clamav",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]
