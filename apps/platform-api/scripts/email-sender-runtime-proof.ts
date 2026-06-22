@@ -20,6 +20,7 @@ import {
   loadSmtpEmailProviderConfig,
   SmtpEmailAdapter,
 } from "../src/adapters/smtp-email-adapter.ts";
+import assert from "node:assert/strict";
 import {
   classifyEmailSendError,
   computeEmailSenderReadiness,
@@ -34,6 +35,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function main(): Promise<void> {

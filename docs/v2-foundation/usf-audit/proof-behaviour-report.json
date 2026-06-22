@@ -161,23 +161,6 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -190,40 +173,6 @@
         "assertsFailureMode": true,
         "assertsObservabilityOrAudit": true,
         "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-email-sender-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2831,7 +2780,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts"]
@@ -2913,7 +2862,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts"]
@@ -2924,7 +2873,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"]

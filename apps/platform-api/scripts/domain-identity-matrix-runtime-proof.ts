@@ -18,6 +18,7 @@
  */
 
 import http from "node:http";
+import assert from "node:assert/strict";
 import { requireEnv } from "./lib/local-env.ts";
 import pg from "pg";
 import { classifyHostIdentity } from "@platform/domain-identity";
@@ -34,6 +35,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 function req(headers: Record<string, string>): http.IncomingMessage {
