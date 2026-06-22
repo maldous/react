@@ -1088,6 +1088,44 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -1318,6 +1356,40 @@
         "sourceFileRefs": [
           "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
         ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "message": "proof does not assert failure mode",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": false,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -2978,6 +3050,19 @@
       "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
+      ]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
       "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
       "level": 4,
@@ -3061,6 +3146,17 @@
       "sourceFileRefs": [
         "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
       ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": false,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",

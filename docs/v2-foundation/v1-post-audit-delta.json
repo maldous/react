@@ -4211,6 +4211,39 @@
         "apps/platform-api/tests/unit/operator-config-repositories.test.ts"
       ],
       "decisionRefs": ["ADR-0070", "ADR-ACT-0266"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit unit proof for notification/search repository provider reliability envelope",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts"],
+      "decisionRefs": ["ADR-0060", "ADR-0068", "ADR-ACT-0258", "ADR-ACT-0260"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+        "apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts"
+      ],
+      "decisionRefs": ["ADR-0068", "ADR-ACT-0260"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/search-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/search-runtime-proof.ts",
+        "apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts"
+      ],
+      "decisionRefs": ["ADR-0060", "ADR-ACT-0258"]
     }
   ],
   "deletions": [
@@ -4593,6 +4626,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 447,
+  "additionCount": 450,
   "deletionCount": 54
 }
