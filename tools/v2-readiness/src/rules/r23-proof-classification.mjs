@@ -3,6 +3,12 @@ import { finding } from "../vocab.mjs";
 const PROOF_SCRIPT_RE = /^apps\/platform-api\/scripts\/.*(?:proof|runtime-proof).*\.ts$/;
 const VALID_LEVELS = new Set([0, 1, 2, 3, 4, 5]);
 const MIN_DELIVERED_CAPABILITY_PROOF_LEVEL = 3;
+const MIN_LIVE_PROVIDER_PROOF_LEVEL = 4;
+const LIVE_PROVIDER_TIERS = new Set([
+  "live-substrate",
+  "live-composed-provider",
+  "external-production",
+]);
 
 const present = (v) => v != null && v !== "" && !(Array.isArray(v) && v.length === 0);
 
@@ -87,6 +93,14 @@ export default function r23ProofClassification(ctx) {
           "R23-proof-classification",
           subject,
           `delivered-and-proven capability proof level ${maxLevel} is below required minimum ${MIN_DELIVERED_CAPABILITY_PROOF_LEVEL}`
+        )
+      );
+    if (LIVE_PROVIDER_TIERS.has(capability.proofTier) && maxLevel < MIN_LIVE_PROVIDER_PROOF_LEVEL)
+      out.push(
+        finding(
+          "R23-proof-classification",
+          subject,
+          `provider-backed delivered capability proof level ${maxLevel} is below required minimum ${MIN_LIVE_PROVIDER_PROOF_LEVEL}`
         )
       );
   }

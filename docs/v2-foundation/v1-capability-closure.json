@@ -657,7 +657,7 @@
       "errorModel": "Route errors are validation 400 for bad create bodies and permission denials before handlers; successful creates return 201 with created entity, lists return 200. Evidence: routes.ts.",
       "auditModel": "Catalog mutations carry actorId into the usecase/adapter layer and are recorded as billing.catalog.changed per capability auditAction; route proof is not itself an audit proof. Evidence: capability record and billing-catalog usecase inputs.",
       "readinessModel": "Readiness is migration/catalog-seed backed: route registration proof validates the exposed surface and unit tests validate the in-process catalog behavior; provider billing readiness remains a separate capability. Evidence: proof:billing-catalog and billing-catalog tests.",
-      "proof": "Unit proof: apps/platform-api/tests/unit/billing-catalog.test.ts. Runtime route proof: proof:billing-catalog validates catalog route registration. Proof level: 3 for usecase state behavior, with route-registration proof level 1.",
+      "proof": "Unit proof: apps/platform-api/tests/unit/billing-catalog.test.ts. Runtime route proof: proof:billing-catalog validates catalog route registration. Provider proof: proof:lago-billing-provider validates live HTTP-backed plan sync through the Lago adapter. Proof level: 4 provider substrate validation plus level 3 usecase state behavior.",
       "uiSemanticDefinition": "V2 UI must expose product, plan, and price tables, create forms, product/plan filters, tenant read-only catalog view, operator-only create actions, validation errors, permission-denied states, inactive item display, and currency/period/price typing."
     }
   },
@@ -691,7 +691,7 @@
       "errorModel": "Readiness can be ready/unavailable via provider health; provider failures surface through adapter errors, missing invoices return null, and payment/refund outcomes are explicit rather than inferred from UI state. Evidence: billing-provider ports and runtime proofs.",
       "auditModel": "Billing operations are represented by immutable ledger/provider records plus payment capture/refund records; operator actorId is part of account/plan/subscription inputs. Evidence: billing provider ports and runtime proof inputs.",
       "readinessModel": "Readiness is provider-backed: in-memory provider proof reports ready, Lago proof checks /health or SDK public-key path, and control/readiness route proofs classify adapter availability separately from catalog seed readiness. Evidence: proof:billing-provider and proof:lago-billing-provider.",
-      "proof": "Runtime proofs: proof:billing-provider validates in-memory provider account/payment/refund flow; proof:lago-billing-provider validates Lago customer/plan/subscription/cancel/invoice flow. Unit proof: lago-billing-provider.test.ts. Proof level: 3 behavior/provider seam validation.",
+      "proof": "Runtime proofs: proof:billing-provider validates in-memory provider account/payment/refund flow; proof:lago-billing-provider validates live HTTP-backed Lago customer/plan/subscription/cancel/invoice flow. Unit proof: lago-billing-provider.test.ts. Proof level: 4 provider substrate validation plus level 3 behavior/provider seam validation.",
       "uiSemanticDefinition": "V2 UI must expose account/customer state, plan/subscription/invoice/payment method/dunning status tables, provider readiness states, payment capture/refund outcomes, idempotent submission behavior, tenant read permissions, and operator-only provider actions."
     }
   },
@@ -1007,7 +1007,6 @@
     "readinessCheck": "proof:workflow-provider-live; proof:workflow-engine; proof:approval-workflow",
     "evidence": "ADR-0059",
     "proof": "proof:workflow-provider-live",
-    "proofTier": "live-composed-provider",
     "openAction": null,
     "v2Target": "reuse-and-extend: workflow state machine and approval flow are now proven locally",
     "completionAction": "V1C-16",
@@ -1308,7 +1307,6 @@
     "readinessCheck": "sonarqube probe (status UP)",
     "evidence": "ADR-0016",
     "proof": "semgrep:gate; npm audit; OSV scan",
-    "proofTier": "live-composed-provider",
     "openAction": null,
     "v2Target": "reuse-as-is",
     "completionAction": "V1C-18",

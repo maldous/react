@@ -501,3 +501,18 @@ test("R23 fires when a delivered capability proof level is below the delivered f
     },
   ]);
 });
+
+test("R23 fires when a live-provider delivered capability proof level is below the provider floor", () => {
+  const a = clone(cleanCtx());
+  a.capabilities[0].proofTier = "live-composed-provider";
+  a.capabilities[0].semanticCompleteness.proof =
+    "fixture provider proof. Proof level: 3 state-machine only.";
+  assert.deepEqual(r23(a), [
+    {
+      ruleId: "R23-proof-classification",
+      severity: "error",
+      subject: "C1",
+      message: "provider-backed delivered capability proof level 3 is below required minimum 4",
+    },
+  ]);
+});

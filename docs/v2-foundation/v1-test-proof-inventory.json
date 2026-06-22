@@ -3858,8 +3858,8 @@
     "fixtureEnvDependency": "compose-backed Lago stub via local HTTP proof loader",
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
-    "proofLevel": 3,
-    "proofLevelRationale": "local HTTP-backed Lago adapter proof validates readiness, customer/account, plan sync, subscription create/cancel, invoice fetch, canonical DTO mapping, and cleanup-free fake provider operation"
+    "proofLevel": 4,
+    "proofLevelRationale": "live HTTP-backed Lago adapter proof validates readiness, customer/account, plan sync, subscription create/cancel, invoice fetch, canonical DTO mapping, and cleanup-free provider operation"
   },
   {
     "id": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
@@ -4137,8 +4137,8 @@
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:lago-billing-provider)",
     "failureEvidence": "proof script assertion output",
-    "proofLevel": 3,
-    "proofLevelRationale": "local HTTP-backed Lago adapter proof validates readiness, customer/account, plan sync, subscription create/cancel, invoice fetch, canonical DTO mapping, and cleanup-free fake provider operation"
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts; live HTTP-backed Lago adapter readiness, customer/account, plan sync, subscription create/cancel, invoice fetch, and canonical DTO mapping validation"
   },
   {
     "id": "package.json#proof:observability-control-route",
