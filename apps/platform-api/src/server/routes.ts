@@ -6343,6 +6343,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.notifications.write",
     resource: "admin:notifications",
     umaScope: "write" as const,
+    auditEvent: AuditAction.NotificationTested,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -7438,6 +7439,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.tenants.delete",
     resource: "admin:tenants",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.OrganisationUpdated,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -7468,6 +7470,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.tenants.delete",
     resource: "admin:tenants",
     umaScope: "delete" as const,
+    auditEvent: AuditAction.OrganisationUpdated,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
