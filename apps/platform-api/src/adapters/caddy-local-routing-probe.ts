@@ -24,6 +24,21 @@ import { loadPlatformApiConfig } from "../config/app-config.ts";
 
 const PROBE_TIMEOUT_MS = 4000;
 
+export const caddyLocalRoutingProbeReliabilityEvidence = {
+  secretSource:
+    "local Caddy routing probe sends only Host and Accept headers; no token, apiKey, credential, or cookie is required",
+  retry:
+    "no retry inside the probe: local routing proof is a single bounded read and callers may rerun the proof after proxy recovery",
+  degradedMode:
+    "unreachable Caddy, timeout, parse error, or tenant mismatch returns reachable=false or tenantContextMatched=false",
+  failClosed:
+    "routing is never marked proven unless /api/host-identity returns the expected tenant slug and custom_domain hostSource",
+  fallbackRationale:
+    "no fallback routing source is used because local routing proof must come from the actual Caddy reverse proxy path",
+  operatorRecovery:
+    "operators recover by starting the web profile/Caddy, validating DOMAIN_ROUTING_PROBE_BASE_URL, and rerunning tenant-domains-routing proof",
+};
+
 interface HostIdentityBody {
   tenant?: { slug?: string; hostSource?: string } | null;
 }

@@ -15,7 +15,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | capabilities without ownership  |     0 |
 | semantic orphans                |     7 |
 | runtime orphans                 |     7 |
-| provider reliability gaps       |  2513 |
+| provider reliability gaps       |  2505 |
 | workflow proof gaps             |   102 |
 | storage proof gaps              |   114 |
 | event runtime gaps              |     2 |
@@ -23,7 +23,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |  3866 |
+| must-fix-in-v1 items            |  3860 |
 
 ## Known Gaps Identified
 

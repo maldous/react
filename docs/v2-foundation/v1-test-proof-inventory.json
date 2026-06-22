@@ -10514,5 +10514,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing tenant-domains routing runtime proof",
+    "stageCoverage": "test (provider-ID live-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero; emits proof stdout from the underlying live tenant-domains routing proof",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to tenant-domains-routing-runtime-proof.ts; live local Caddy plus Postgres proof validates tenant FQDN routing to the correct tenant context, custom-domain catch-all routing, unregistered host rejection, and honest TLS/public-routing deferral",
+    "capabilitiesProven": ["Tenant identity (record + FQDN)"],
+    "semanticFacetsProven": ["providerReliability", "routingModel", "securityModel", "proof"],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]

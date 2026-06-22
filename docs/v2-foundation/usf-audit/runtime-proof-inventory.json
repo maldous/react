@@ -168,6 +168,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "level": 0,
+    "classification": "route/file existence only",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
     "file": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
     "level": 4,
