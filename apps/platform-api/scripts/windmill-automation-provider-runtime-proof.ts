@@ -14,7 +14,17 @@ async function main(): Promise<void> {
       res.writeHead(code, { "content-type": "application/json" });
       res.end(JSON.stringify(body));
     };
-    if (req.method === "POST" && url === "/api/run-script") return send({ runId: "run_1" });
+    if (req.method === "GET" && url === "/api/health") return send({ ok: true });
+    if (req.method === "POST" && url === "/api/run-script") {
+      const chunks: Buffer[] = [];
+      req.on("data", (chunk: Buffer) => chunks.push(chunk));
+      req.on("end", () => {
+        const body = Buffer.concat(chunks).toString("utf8");
+        if (body.includes("tenant.missing")) return send({ error: "script not found" }, 404);
+        return send({ runId: "run_1" });
+      });
+      return;
+    }
     if (req.method === "POST" && url === "/api/run-flow") return send({ runId: "run_2" });
     if (req.method === "GET" && url === "/api/runs/run_1")
       return send({ runId: "run_1", status: "succeeded", detail: "script:tenant.export" });
@@ -27,6 +37,7 @@ async function main(): Promise<void> {
   const port = await listen(server);
   const windmill = new WindmillAutomationProviderAdapter(`http://127.0.0.1:${port}`, fetch, {
     preferSdk: false,
+    timeoutMs: 500,
   });
   const scriptRun = await windmill.runScript({
     scriptKey: "tenant.export",
@@ -43,8 +54,46 @@ async function main(): Promise<void> {
   const scriptStatus = await windmill.getRunStatus(scriptRun.runId);
   await windmill.cancelRun(flowRun.runId);
   const cancelledStatus = await windmill.getRunStatus(flowRun.runId);
+  const health = await windmill.healthCheck();
   assert.equal(scriptStatus.status, "succeeded");
   assert.equal(cancelledStatus.status, "running");
+  assert.equal(health.status, "ready");
+
+  const misconfigured = new WindmillAutomationProviderAdapter(`http://127.0.0.1:${port}`, fetch, {
+    preferSdk: false,
+    timeoutMs: 500,
+  });
+  await assert.rejects(
+    () =>
+      misconfigured.runScript({
+        scriptKey: "tenant.missing",
+        tenantId: "org-1",
+        runId: "run_missing",
+        payload: {},
+      }),
+    /http_404/,
+    "non-OK Windmill responses must fail closed"
+  );
+
+  const unavailable = new WindmillAutomationProviderAdapter("http://127.0.0.1:1", fetch, {
+    preferSdk: false,
+    timeoutMs: 50,
+  });
+  await assert.rejects(
+    () =>
+      unavailable.runFlow({
+        scriptKey: "tenant.unavailable",
+        tenantId: "org-1",
+        runId: "run_unavailable",
+        payload: {},
+      }),
+    /fetch failed|ECONNREFUSED|windmill_timeout/,
+    "unavailable Windmill must surface failure instead of fabricating a run"
+  );
+
+  const degradedHealth = await unavailable.healthCheck();
+  assert.equal(degradedHealth.status, "degraded");
+
   console.log(
     JSON.stringify(
       {
@@ -52,6 +101,8 @@ async function main(): Promise<void> {
         result: "PASSED",
         scriptStatus,
         cancelledStatus,
+        health,
+        degradedHealth,
       },
       null,
       2
