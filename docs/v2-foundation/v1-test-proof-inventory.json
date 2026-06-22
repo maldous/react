@@ -11425,5 +11425,53 @@
     "sourceCommand": "tsx apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected in-memory-automation-runner contract is broken"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts",
+    "path": "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts",
+    "kind": "unit",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none (pure/in-process)",
+    "stageCoverage": "test (unit)",
+    "failureEvidence": "node:test assertion failure output when billing provider config source, secret source, idempotent accounts, webhook verification, disabled-provider fail-closed behavior, payment amount validation, health check, or recovery guidance breaks",
+    "proofLevel": 3,
+    "proofLevelRationale": "Validates deterministic billing and payment provider reliability: explicit env config, optional local webhook secret source, retry/timeout declarations, no-fallback fail-closed disabled mode, idempotent account provisioning, webhook signature validation, invalid charge/refund denial, health, and recovery guidance.",
+    "capabilitiesProven": ["Subscriptions, invoices, payment methods, dunning"],
+    "semanticFacetsProven": ["providerReliability", "securityBoundary", "stateModel", "proof"],
+    "environment": "test",
+    "providerClass": "hermetic",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "npm test -- apps/platform-api/tests/unit/in-memory-billing-provider.test.ts",
+    "scriptPath": null,
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected in-memory-billing-provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "local runtime proof plus in-memory billing provider unit reliability test",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when billing readiness/account/charge/refund behavior, unavailable-provider path, or misconfigured-provider path breaks",
+    "proofLevel": 3,
+    "proofLevelRationale": "provider-ID wrapper delegates to billing-provider-runtime-proof.ts; unit proof apps/platform-api/tests/unit/in-memory-billing-provider.test.ts validates config source, secret source, retry/timeout declarations, no-fallback fail-closed disabled mode, webhook validation, invalid payment denial, health check, and recovery guidance",
+    "capabilitiesProven": ["Subscriptions, invoices, payment methods, dunning"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "contracts",
+      "stateModel",
+      "securityBoundary",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "hermetic",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected in-memory-billing-provider contract is broken"
   }
 ]

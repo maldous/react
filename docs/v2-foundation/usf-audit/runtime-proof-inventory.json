@@ -542,6 +542,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "level": 0,
+    "classification": "route/file existence only",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": false,
+    "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts",
     "file": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
     "level": 3,

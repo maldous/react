@@ -499,6 +499,40 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "message": "proof only checks file/contract shape",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -2820,6 +2854,17 @@
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts",

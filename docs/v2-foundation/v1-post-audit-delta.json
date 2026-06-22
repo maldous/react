@@ -4352,6 +4352,27 @@
         "apps/platform-api/tests/unit/in-memory-automation-runner.test.ts"
       ],
       "decisionRefs": ["ADR-0072", "ADR-ACT-0268"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit unit proof for in-memory billing provider reliability envelope",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/in-memory-billing-provider.test.ts"],
+      "decisionRefs": ["ADR-0057", "ADR-ACT-0270"]
+    },
+    {
+      "path": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+        "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts"
+      ],
+      "decisionRefs": ["ADR-0057", "ADR-ACT-0270"]
     }
   ],
   "deletions": [
@@ -4734,6 +4755,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 460,
+  "additionCount": 462,
   "deletionCount": 54
 }
