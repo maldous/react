@@ -1085,7 +1085,174 @@ const GrantDelegationBodySchema = z.object({
   expiresAt: z.iso.datetime({ message: "expiresAt must be an ISO-8601 timestamp" }).nullish(),
 });
 
+async function observeSpaShellRoute(
+  _req: Parameters<Route["handler"]>[0],
+  res: Parameters<Route["handler"]>[1]
+): Promise<void> {
+  res.raw.writeHead(204, {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "X-Content-Type-Options": "nosniff",
+  });
+  res.raw.end();
+}
+
 export const routes: Route[] = [
+  {
+    method: "GET",
+    path: "/",
+    operationName: "spa.shell.index",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin",
+    operationName: "spa.shell.admin",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/account",
+    operationName: "spa.shell.admin.account",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/auth",
+    operationName: "spa.shell.admin.auth",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/clickthrough",
+    operationName: "spa.shell.admin.clickthrough",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/config",
+    operationName: "spa.shell.admin.config",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/developer",
+    operationName: "spa.shell.admin.developer",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/domains",
+    operationName: "spa.shell.admin.domains",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/email",
+    operationName: "spa.shell.admin.email",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/entitlements",
+    operationName: "spa.shell.admin.entitlements",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/events",
+    operationName: "spa.shell.admin.events",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/features",
+    operationName: "spa.shell.admin.features",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/logs",
+    operationName: "spa.shell.admin.logs",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/members",
+    operationName: "spa.shell.admin.members",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/monitoring",
+    operationName: "spa.shell.admin.monitoring",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/observability",
+    operationName: "spa.shell.admin.observability",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/platform",
+    operationName: "spa.shell.admin.platform",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/readiness",
+    operationName: "spa.shell.admin.readiness",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/scheduled-jobs",
+    operationName: "spa.shell.admin.scheduledJobs",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/search",
+    operationName: "spa.shell.admin.search",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/storage",
+    operationName: "spa.shell.admin.storage",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/usage",
+    operationName: "spa.shell.admin.usage",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/admin/webhooks",
+    operationName: "spa.shell.admin.webhooks",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/e2e-harness",
+    operationName: "spa.shell.e2eHarness",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/login",
+    operationName: "spa.shell.login",
+    handler: observeSpaShellRoute,
+  },
+  {
+    method: "GET",
+    path: "/organisation/profile",
+    operationName: "spa.shell.organisation.profile",
+    handler: observeSpaShellRoute,
+  },
   {
     method: "GET",
     path: "/healthz",
