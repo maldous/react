@@ -15,11 +15,13 @@
  */
 
 import { deriveReadinessLifecycle } from "../src/usecases/provider-config.ts";
+import assert from "node:assert/strict";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 function main(): void {

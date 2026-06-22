@@ -21,6 +21,7 @@
  */
 
 import { readFileSync } from "node:fs";
+import assert from "node:assert/strict";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 
@@ -45,6 +46,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 // ── Classification rules (pure; reused by the negative self-tests) ────────────

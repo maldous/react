@@ -20,6 +20,7 @@
  */
 
 import type { AuditEventPort } from "@platform/audit-events";
+import assert from "node:assert/strict";
 import { KeycloakRealmAdminAdapter } from "@platform/adapters-keycloak";
 import { buildCreateRepresentation } from "../src/usecases/idp-management.ts";
 import {
@@ -45,6 +46,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 async function main(): Promise<void> {

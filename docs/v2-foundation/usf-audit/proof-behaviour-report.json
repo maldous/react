@@ -494,23 +494,6 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -591,23 +574,6 @@
         "assertsFailureMode": false,
         "assertsObservabilityOrAudit": false,
         "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -1617,25 +1583,6 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": [
-          "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
-        ]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -1650,40 +1597,6 @@
         "sourceFileRefs": [
           "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts"
         ]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
-        "level": 3,
-        "classification": "state transition behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
-        "level": 4,
-        "classification": "live substrate behaviour",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": true,
-        "assertsObservabilityOrAudit": true,
-        "sourceFileRefs": ["apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -3111,7 +3024,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"]
@@ -3155,7 +3068,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
@@ -3566,7 +3479,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": [
@@ -3605,7 +3518,7 @@
       "level": 3,
       "classification": "state transition behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts"]
@@ -3616,7 +3529,7 @@
       "level": 4,
       "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
+      "assertsSideEffects": true,
       "assertsFailureMode": true,
       "assertsObservabilityOrAudit": true,
       "sourceFileRefs": ["apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts"]
