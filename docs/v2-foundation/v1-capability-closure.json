@@ -6151,7 +6151,37 @@
     "securityOwner": "team-security",
     "dataOwner": "team-data",
     "runtimeOwner": "team-platform",
-    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/src/usecases/tenant-lifecycle.ts; apps/platform-api/src/server/routes.ts; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+        "evidence": "tenant lifecycle classifies lifecycle state, actor roles, export digest/keyRef, storage scan-state quarantine, domain deactivation, and DSR portability/erasure checkpoints as explicit coordinated outcomes"
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "retention proofs validate legal-hold guarded candidates and audit-before-change retention behavior; tenant lifecycle delete marks organisation deletion state and DSR erasure checkpoint instead of bypassing retention controls"
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "tenant lifecycle operates on platform Postgres tenant, storage, domain, DSR, and audit records covered by backup proof for configured pg_dump path, dump integrity, protected-environment refusal, and unavailable database failure"
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "restore proof exercises restoring a platform Postgres backup into a throwaway database and verifying recovered state for the same substrate tenant lifecycle mutates"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "legal-hold proofs validate audit-before-change set/release and active-hold guards; tenant lifecycle delete emits an erasure DSR checkpoint and relies on the shared legal-hold guarded retention substrate for governed records"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "tenant lifecycle export gathers members, domains, and audit/history entries into a portable archive before delete, and history proof proves tenant-scoped lineage projection from audit/event sources"
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/src/server/routes.ts; apps/platform-api/tests/unit/tenant-lifecycle.test.ts; apps/platform-api/scripts/history-runtime-proof.ts",
+        "evidence": "tenant lifecycle route handlers validate tenant UUIDs and every lifecycle SQL operation scopes by organisation_id; history proof verifies tenant A excludes tenant B rows"
+      }
+    }
   },
   {
     "capability": "Support tickets, customer health, announcements",
