@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { type AuditEvent, type AuditEventPort } from "@platform/audit-events";
 import {
+  getScheduledJobWorkflowMetric,
   listScheduledJobs,
   runDueJobs,
   runScheduledJobNow,
@@ -219,6 +220,35 @@ describe("scheduled-jobs usecase", () => {
     assert.equal(second.enqueued, 0, "same-window re-tick must not double-enqueue");
     assert.equal(second.deduplicated, 1);
     assert.equal(bus._published.length, 1);
+    assert.equal(getScheduledJobWorkflowMetric("run-due", "success") > 0, true);
+  });
+
+  it("failed due enqueue stays in failure holding state and does not mark run", async () => {
+    const { deps: d, jobs } = deps();
+    await setScheduledJob(
+      {
+        organisationId: ORG,
+        jobKey: "nightly",
+        eventType: "report.run",
+        intervalSeconds: 3600,
+        actor: ACTOR,
+      },
+      d
+    );
+    const originalNextRunAt = jobs._jobs[0]!.nextRunAt;
+    const failing = {
+      ...d,
+      bus: {
+        ...d.bus,
+        async publish() {
+          throw new Error("event bus unavailable");
+        },
+      },
+    };
+    const result = await runDueJobs(failing);
+    assert.equal(result.failed, 1);
+    assert.equal(result.enqueued, 0);
+    assert.equal(jobs._jobs[0]!.nextRunAt, originalNextRunAt);
   });
 
   it("run-now enqueues an event (audited)", async () => {
