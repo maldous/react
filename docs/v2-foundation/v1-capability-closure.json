@@ -6729,7 +6729,41 @@
         "proof": "unknown",
         "implementation": ["apps/react-enterprise-app/src/routes/admin/clickthrough.tsx"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "retention": {
+        "proof": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+        "evidence": "Clickthrough policy proof preserves denied/global-only/not-exposed decisions without tenant data mutation; retention proofs cover audited retention candidates and legal-hold skipped/deleted outcomes for persisted governance records that feed platform service visibility."
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "Backup proof runs the real Postgres backup script, verifies seeded platform state in the dump, enforces protected-environment refusal, and checks restore guard configuration for service/catalog governance state."
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "PITR restore drill restores a platform database dump into a throwaway Postgres container and verifies recovered marker state without touching the live platform database."
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+        "evidence": "Data-portability proof validates encrypted tenant archive integrity and grouped import rollback, while service-catalog proof keeps catalog entries secret-free with explicit tenant visibility filtering."
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/src/db/migrations/035-legal-holds.sql",
+        "evidence": "Legal-hold proof exercises audit-before-change set/release lifecycle and active hold guards; migration 035 defines tenant-isolated legal_holds over resource_table and row_id for retained platform records."
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+        "evidence": "DSR/export fulfillment evidence is protected by data-governance and portability proofs, and service-catalog proof ensures tenant-visible service metadata contains no secret-bearing fields."
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/clickthrough-services-runtime-proof.ts; apps/platform-api/scripts/history-runtime-proof.ts",
+        "evidence": "Clickthrough proofs exercise service classification, access decisions, Caddy reconciliation, and view rendering; history proof preserves read-only audit/history lineage for platform governance decisions without mutating source rows."
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/platform-services-runtime-proof.ts; apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+        "evidence": "Policy proof denies tenant-admin cross-tenant access and limits tenant-admin to tenant_scoped_safe own-slug services; platform-services proof withholds global-only console links from tenant-operator view and emits only routed tenant-origin Keycloak links."
+      }
+    }
   },
   {
     "capability": "Environment registry + bootstrap",
