@@ -2317,19 +2317,6 @@
       "classification": "must-fix-in-v1"
     },
     {
-      "kind": "route-observability",
-      "subject": "POST /api/graphql",
-      "message": "route without executable proof reference",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:5212",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
       "kind": "route-audit",
       "subject": "POST /api/graphql",
       "message": "mutation route without route-local audit evidence",
@@ -2855,32 +2842,6 @@
       "message": "mutation route without route-local audit evidence",
       "evidence": {
         "routeObject": "apps/platform-api/src/server/routes.ts:4662",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-observability",
-      "subject": "GET /api/organisation/profile",
-      "message": "route without executable proof reference",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:5189",
-        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
-        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-observability",
-      "subject": "PATCH /api/organisation/profile",
-      "message": "route without executable proof reference",
-      "evidence": {
-        "routeObject": "apps/platform-api/src/server/routes.ts:5199",
         "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
         "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
         "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
