@@ -5692,7 +5692,37 @@
     "securityOwner": "team-security",
     "dataOwner": "team-data",
     "runtimeOwner": "team-platform",
-    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+    "dataGovernanceRuntimeProofs": {
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/db/migrations/036-retention-policies.sql",
+        "evidence": "retention policy and candidate tables are tenant-scoped by organisation_id with RLS; runtime proofs validate legal-hold guarded retention candidates and audit-before-change behavior under tenant isolation controls"
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/src/server/dependencies.ts",
+        "evidence": "backup proofs exercise the platform Postgres substrate used by tenant-isolated records, including configured pg_dump path, dump integrity, protected-environment refusal, and unavailable database failure"
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "restore drill proves recovered platform Postgres state in a throwaway database, covering the substrate where tenant-isolated rows, RLS policies, and tenant-scoped indexes live"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/usecases/data-portability.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "portable tenant export is built for one tenantId and route handlers validate tenant UUIDs before exporting tenant members, domains, and audit/history entries"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/src/db/migrations/035-legal-holds.sql",
+        "evidence": "legal holds are tenant-scoped by organisation_id with RLS and uniqueness constraints; runtime proofs validate audit-before-change set/release and active-hold guards"
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "DSR and portability workflows operate on explicit tenant identifiers, emit fulfilled portability/erasure checkpoints, and use tenant-scoped export evidence rather than cross-tenant data"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/server/tenant-resolver.ts",
+        "evidence": "history proof verifies tenant A excludes tenant B rows, and portability export carries tenant-scoped audit/history lineage for the resolved tenant context"
+      }
+    }
   },
   {
     "capability": "Webhooks (developer-facing)",
