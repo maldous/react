@@ -10850,5 +10850,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected delegated-admin provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "local runtime proof plus fake pg durable import substrate test",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when encrypted archive verification, rollback, resume progress, durable Postgres import application, timeout, or fail-closed behavior breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to data-portability-runtime-proof.ts; unit proof apps/platform-api/tests/unit/data-portability.test.ts exercises durable Postgres import group application, rollback on cross-tenant domain conflicts, progress recording, and resume semantics while the adapter supplies timeout/retry/fail-closed/health behavior",
+    "capabilitiesProven": ["Tenant data import / export"],
+    "semanticFacetsProven": ["providerReliability", "storage", "workflow", "stateModel", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected portable tenant import provider contract is broken"
   }
 ]

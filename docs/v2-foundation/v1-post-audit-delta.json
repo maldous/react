@@ -4081,6 +4081,19 @@
         "npm run proof:delegated-admin"
       ],
       "decisionRefs": ["ADR-0063", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "apps/platform-api/tests/unit/data-portability.test.ts",
+        "npm run proof:data-portability"
+      ],
+      "decisionRefs": ["ADR-0063", "ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -4463,6 +4476,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 436,
+  "additionCount": 437,
   "deletionCount": 54
 }

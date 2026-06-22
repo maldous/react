@@ -8,6 +8,14 @@ import type {
 
 type PgClient = pg.PoolClient;
 
+export interface PostgresPortableTenantImportProviderConfig {
+  statementTimeoutMs: number;
+  retryAttempts: number;
+  retryBackoffMs: number;
+  configSource: "POSTGRES_APP_URL";
+  secretSource: "POSTGRES_APP_URL";
+}
+
 interface MemberExport {
   members?: Array<{
     userId?: string;
@@ -53,22 +61,54 @@ interface HistoryExport {
   }>;
 }
 
+export function loadPostgresPortableTenantImportProviderConfig(
+  env: NodeJS.ProcessEnv = process.env
+): PostgresPortableTenantImportProviderConfig {
+  return {
+    statementTimeoutMs: Number(env["PORTABLE_IMPORT_QUERY_TIMEOUT_MS"] ?? "5000"),
+    retryAttempts: Number(env["PORTABLE_IMPORT_RETRY_ATTEMPTS"] ?? "1"),
+    retryBackoffMs: Number(env["PORTABLE_IMPORT_RETRY_BACKOFF_MS"] ?? "100"),
+    configSource: "POSTGRES_APP_URL",
+    secretSource: "POSTGRES_APP_URL",
+  };
+}
+
 export class PostgresPortableTenantImportApplier implements PortableTenantImportApplier {
   private readonly pool: pg.Pool;
   private readonly organisationId: string;
   private readonly archiveDigest: string;
+  private readonly providerConfig: PostgresPortableTenantImportProviderConfig;
   private client: PgClient | null = null;
 
-  constructor(pool: pg.Pool, organisationId: string, archiveDigest: string) {
+  constructor(
+    pool: pg.Pool,
+    organisationId: string,
+    archiveDigest: string,
+    config: Partial<PostgresPortableTenantImportProviderConfig> = {}
+  ) {
     this.pool = pool;
     this.organisationId = organisationId;
     this.archiveDigest = archiveDigest;
+    this.providerConfig = {
+      ...loadPostgresPortableTenantImportProviderConfig(),
+      ...config,
+    };
   }
 
   async beginGroup(): Promise<void> {
     if (this.client) throw new Error("portable import group already open");
-    this.client = await this.pool.connect();
-    await this.client.query("BEGIN");
+    await this.withRetry(async () => {
+      const client = await this.pool.connect();
+      try {
+        await client.query("BEGIN");
+        await this.applyQueryTimeout(client);
+        this.client = client;
+      } catch (err) {
+        await client.query("ROLLBACK").catch(() => undefined);
+        client.release();
+        throw err;
+      }
+    });
   }
 
   async applyEntry(entry: PortableTenantExportEntry): Promise<void> {
@@ -90,9 +130,19 @@ export class PostgresPortableTenantImportApplier implements PortableTenantImport
 
   async commitGroup(): Promise<void> {
     const client = this.assertClient();
-    await client.query("COMMIT");
-    client.release();
-    this.client = null;
+    try {
+      await client.query("COMMIT");
+    } catch (err) {
+      await client.query("ROLLBACK").catch(() => undefined);
+      throw new Error(
+        `postgres-portable-tenant-import-applier unavailable during commit; fail-closed with no fallback for archive ${this.archiveDigest}: ${
+          err instanceof Error ? err.message : String(err)
+        }`
+      );
+    } finally {
+      client.release();
+      this.client = null;
+    }
   }
 
   async rollbackGroup(): Promise<void> {
@@ -103,8 +153,13 @@ export class PostgresPortableTenantImportApplier implements PortableTenantImport
   }
 
   async recordProgress(progress: PortableImportProgress): Promise<void> {
-    await this.pool.query(
-      `INSERT INTO public.portable_import_progress
+    await this.withRetry(async () => {
+      const client = await this.pool.connect();
+      try {
+        await client.query("BEGIN");
+        await this.applyQueryTimeout(client);
+        await client.query(
+          `INSERT INTO public.portable_import_progress
          (organisation_id, archive_digest, completed_orders, failed_order, error, updated_at)
        VALUES ($1, $2, $3, $4, $5, now())
        ON CONFLICT (organisation_id, archive_digest) DO UPDATE SET
@@ -112,14 +167,59 @@ export class PostgresPortableTenantImportApplier implements PortableTenantImport
          failed_order = EXCLUDED.failed_order,
          error = EXCLUDED.error,
          updated_at = now()`,
-      [
-        this.organisationId,
-        this.archiveDigest,
-        progress.completedOrders,
-        progress.failedOrder ?? null,
-        progress.error ?? null,
-      ]
-    );
+          [
+            this.organisationId,
+            this.archiveDigest,
+            progress.completedOrders,
+            progress.failedOrder ?? null,
+            progress.error ?? null,
+          ]
+        );
+        await client.query("COMMIT");
+      } catch (err) {
+        await client.query("ROLLBACK").catch(() => undefined);
+        throw err;
+      } finally {
+        client.release();
+      }
+    });
+  }
+
+  async healthCheck(): Promise<{
+    status: "ready";
+    provider: "postgres-portable-tenant-import-applier";
+  }> {
+    await this.withRetry(async () => {
+      const client = await this.pool.connect();
+      try {
+        await client.query("BEGIN");
+        await this.applyQueryTimeout(client);
+        await client.query(
+          `SELECT 1
+             FROM information_schema.tables
+            WHERE table_schema = 'public'
+              AND table_name IN (
+                'portable_import_progress',
+                'users',
+                'memberships',
+                'tenant_domains',
+                'audit_events'
+              )
+            LIMIT 1`
+        );
+        await client.query("COMMIT");
+      } catch (err) {
+        await client.query("ROLLBACK").catch(() => undefined);
+        throw err;
+      } finally {
+        client.release();
+      }
+    });
+    return { status: "ready", provider: "postgres-portable-tenant-import-applier" };
+  }
+
+  recoveryAction(): string {
+    return "operator recovery: verify POSTGRES_APP_URL secret/config, run migration 044-portable-import-progress.sql and tenant identity/domain/audit migrations, inspect failed portable_import_progress row, then retry the archive import from the last completed order";
   }
 
   private assertClient(): PgClient {
@@ -250,6 +350,30 @@ export class PostgresPortableTenantImportApplier implements PortableTenantImport
         ]
       );
     }
+  }
+
+  private async withRetry<T>(operation: () => Promise<T>): Promise<T> {
+    let lastError: unknown;
+    for (let attempt = 0; attempt <= this.providerConfig.retryAttempts; attempt += 1) {
+      try {
+        return await operation();
+      } catch (err) {
+        lastError = err;
+        if (attempt >= this.providerConfig.retryAttempts) break;
+        await new Promise((resolve) =>
+          setTimeout(resolve, this.providerConfig.retryBackoffMs * (attempt + 1))
+        );
+      }
+    }
+    throw new Error(
+      `postgres-portable-tenant-import-applier unavailable; no fallback is allowed for tenant import application, fail-closed after retry attempts: ${
+        lastError instanceof Error ? lastError.message : String(lastError)
+      }`
+    );
+  }
+
+  private async applyQueryTimeout(client: PgClient): Promise<void> {
+    await client.query(`SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`);
   }
 }
 
