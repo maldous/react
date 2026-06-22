@@ -1,4 +1,5 @@
 import { finding } from "../vocab.mjs";
+import { isGenericOperationalText, present, proofExists } from "./quality.mjs";
 
 const LIVE_PROVIDER_TIERS = new Set([
   "live-substrate",
@@ -6,7 +7,6 @@ const LIVE_PROVIDER_TIERS = new Set([
   "external-production",
 ]);
 
-const present = (v) => v != null && v !== "" && !(Array.isArray(v) && v.length === 0);
 const hasDb = (capability) =>
   /Postgres|pg_|migration|RLS|database|db/i.test(
     `${capability.adapter || ""} ${capability.port || ""} ${capability.category || ""} ${capability.semanticCompleteness?.stateModel || ""}`
@@ -41,15 +41,47 @@ export default function r27OperationalSemantics(ctx) {
     }
     for (const field of [
       "deployBehaviour",
+      "configBehaviour",
+      "migrationBehaviour",
+      "rollbackBehaviour",
+      "backupRestoreRelationship",
       "partialFailureBehaviour",
+      "degradedMode",
       "recoveryAction",
       "observabilitySignals",
+      "metrics",
+      "logs",
+      "traces",
       "alertConditions",
+      "runbookReference",
+      "incidentClass",
+      "dataLossRisk",
+      "securityRisk",
+      "tenantImpact",
+      "operatorAction",
+      "proofReference",
     ])
       if (!present(row[field]))
         out.push(
           finding("R27-operational-semantics", subject, `operational semantics missing "${field}"`)
         );
+    for (const field of [
+      "deployBehaviour",
+      "configBehaviour",
+      "migrationBehaviour",
+      "rollbackBehaviour",
+      "backupRestoreRelationship",
+      "partialFailureBehaviour",
+      "degradedMode",
+      "recoveryAction",
+      "operatorAction",
+    ])
+      if (isGenericOperationalText(row[field], subject))
+        out.push(finding("R27-operational-semantics", subject, `${field} is generic or templated`));
+    if ((row.observabilitySignals || []).some((signal) => /\.generic\b/i.test(signal)))
+      out.push(
+        finding("R27-operational-semantics", subject, "observability signal is category.generic")
+      );
     if (LIVE_PROVIDER_TIERS.has(capability.proofTier) && !present(row.degradedMode))
       out.push(
         finding(
@@ -78,6 +110,8 @@ export default function r27OperationalSemantics(ctx) {
       out.push(
         finding("R27-operational-semantics", subject, "capability has no observability signal")
       );
+    if (present(row.proofReference) && !proofExists(ctx, row.proofReference))
+      out.push(finding("R27-operational-semantics", subject, "proofReference does not exist"));
   }
   return out;
 }

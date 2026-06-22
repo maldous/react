@@ -314,6 +314,7 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
       "semantic-source-of-truth-transition.json": optional(
         "semantic-source-of-truth-transition.json"
       ),
+      "environment-readiness-gates.json": optional("environment-readiness-gates.json"),
     },
     // live repo facts
     gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),

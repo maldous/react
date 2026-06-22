@@ -1,0 +1,63 @@
+{
+  "artefact": "environment-readiness-gates",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "enforcedBy": "tools/v2-readiness/src/rules/r29-environment-readiness-gates.mjs",
+  "dev": {
+    "purpose": "fast local discovery that is complete enough to prove semantics before promotion",
+    "requiredCommands": ["npm run v2:readiness -- --json", "npm test -- tools/v2-readiness"],
+    "requiredProofLevels": [2, 3],
+    "allowedProviders": ["hermetic", "compose-local", "sandbox-external"],
+    "allowedMocks": true,
+    "dataPolicy": "fixture or disposable local tenant data only",
+    "forbiddenProofs": ["production destructive proof", "paid live-only provider dependency"]
+  },
+  "test": {
+    "purpose": "deterministic automated proof of semantic, state, permission, and provider contracts",
+    "requiredCommands": ["npm run v2:readiness -- --strict", "npm test -- tools/v2-readiness"],
+    "requiredProofLevels": [3, 4],
+    "allowedProviders": ["hermetic", "compose-local", "sandbox-external"],
+    "allowedMocks": true,
+    "deterministicDataPolicy": "fixed fixtures and disposable compose data; no production tenant data",
+    "forbiddenProofs": [
+      "paid live-only provider requirement",
+      "non-deterministic external dependency"
+    ]
+  },
+  "staging": {
+    "purpose": "production-shape rehearsal before V2 cut or release promotion",
+    "requiredCommands": ["make stage-staging", "npm run v2:readiness -- --strict"],
+    "requiredProofLevels": [4, 5],
+    "allowedProviders": ["hermetic", "compose-local", "sandbox-external", "live-external"],
+    "allowedMocks": false,
+    "prodShapeChecks": [
+      "topology mirrors production service boundaries",
+      "observability, secret manager, migration, and rollback rehearsal enabled"
+    ],
+    "migrationRehearsal": "ordered SQL migrations and data governance evidence are rehearsed against disposable staging tenant data",
+    "rollbackRehearsal": "rollback/forward-fix path is rehearsed and evidence is retained",
+    "sandboxProviderChecks": "external integrations use sandbox credentials and production-shaped contracts"
+  },
+  "prod": {
+    "purpose": "real tenant operation with only current non-destructive health and smoke evidence",
+    "requiredCommands": ["make stage-prod", "npm run v2:readiness -- --strict"],
+    "requiredProofLevels": [0],
+    "allowedProviders": ["live-external", "compose-local", "hermetic"],
+    "allowedMocks": false,
+    "smokeChecks": ["current health/readiness", "synthetic non-destructive journeys only"],
+    "readinessChecks": [
+      "semantic artefact validators",
+      "service health",
+      "observability signal presence"
+    ],
+    "forbiddenProofs": [
+      "destructive proof",
+      "fixture event emission",
+      "mock provider",
+      "test data insertion"
+    ],
+    "observabilityChecks": [
+      "metrics, logs, traces, alert routing, and incident evidence present before promotion"
+    ]
+  }
+}

@@ -1,6 +1,12 @@
 import { finding } from "../vocab.mjs";
+import {
+  VALID_PROVIDER_CLASSES,
+  present,
+  proofExists,
+  validEnvironmentPolicy,
+} from "./quality.mjs";
 
-const present = (v) => v != null && v !== "" && !(Array.isArray(v) && v.length === 0);
+const envs = ["dev", "test", "staging", "prod"];
 
 export default function r24EnvironmentSemantics(ctx) {
   const out = [];
@@ -25,18 +31,30 @@ export default function r24EnvironmentSemantics(ctx) {
       );
       continue;
     }
-    for (const env of ["dev", "test", "staging", "prod"]) {
+    for (const env of envs) {
       if (!row[env]) {
         out.push(
           finding("R24-environment-semantics", subject, `missing ${env} environment semantics`)
         );
         continue;
       }
-      if (!present(row[env].provider))
-        out.push(finding("R24-environment-semantics", subject, `${env} provider is missing`));
-      if (!present(row[env].requiredProofs))
+      if (!validEnvironmentPolicy(row[env], env))
         out.push(
-          finding("R24-environment-semantics", subject, `${env} required proofs are missing`)
+          finding(
+            "R24-environment-semantics",
+            subject,
+            `${env} environment policy is incomplete or invalid`
+          )
+        );
+      if (!VALID_PROVIDER_CLASSES.has(row[env].providerClass))
+        out.push(finding("R24-environment-semantics", subject, `${env} providerClass is invalid`));
+      if (env !== "prod" && !proofExists(ctx, row[env].requiredProofs))
+        out.push(
+          finding(
+            "R24-environment-semantics",
+            subject,
+            `${env} requiredProofs do not map to proof inventory/capability evidence`
+          )
         );
     }
     if (row.prod?.mocksAllowed === true)
@@ -54,9 +72,12 @@ export default function r24EnvironmentSemantics(ctx) {
       out.push(
         finding("R24-environment-semantics", subject, "destructive proof is marked prod-safe")
       );
-    for (const env of ["dev", "test", "staging", "prod"])
+    for (const env of envs)
       if (!present(row[env]?.promotionGate))
         out.push(finding("R24-environment-semantics", subject, `${env} promotion gate is missing`));
+    for (const env of envs)
+      if (!present(row[env]?.rollbackGate))
+        out.push(finding("R24-environment-semantics", subject, `${env} rollback gate is missing`));
     if (row.prod?.smokeReadinessChecksAllowed !== true)
       out.push(
         finding(
@@ -65,6 +86,20 @@ export default function r24EnvironmentSemantics(ctx) {
           "prod must be limited to current health/smoke readiness checks"
         )
       );
+    if ((row.prod?.requiredProofs || []).some((proof) => /^proof:/.test(proof)))
+      out.push(
+        finding(
+          "R24-environment-semantics",
+          subject,
+          "prod requiredProofs must be limited to readiness/smoke/synthetic checks"
+        )
+      );
+    if (
+      row.prod?.mocksAllowed !== false ||
+      !/mock/i.test(row.prod?.mockPolicy || "") ||
+      !/forbidden/i.test(row.prod?.mockPolicy || "")
+    )
+      out.push(finding("R24-environment-semantics", subject, "prod mock policy is not closed"));
   }
   return out;
 }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "artefact": "capability-proof-definition",
-  "version": 1,
+  "version": 2,
   "mandatoryFoundationAsset": true,
   "coverage": {
     "source": "docs/v2-foundation/v1-capability-closure.json",
@@ -26,6 +26,24 @@
     "runtimeProof": "runtime proof script or explicit n/a with rationale",
     "level": "integer 0-5",
     "deliveredAndProvenMinimumLevel": 3,
-    "liveProviderMinimumLevel": 4
-  }
+    "liveProviderMinimumLevel": 4,
+    "proofLevelRationale": "required for every proof inventory record",
+    "capabilitiesProven": "array of named capabilities or empty only when the proof validates shared tool/runtime infrastructure",
+    "semanticFacetsProven": "array naming the semantic facets the proof can actually support",
+    "environment": "dev, test, staging, or prod",
+    "providerClass": "hermetic, compose-local, sandbox-external, live-external, or none",
+    "liveSubstrateUsed": "boolean",
+    "destructive": "boolean",
+    "prodSafe": "boolean; destructive proofs must be false",
+    "sourceCommand": "command that runs the proof",
+    "scriptPath": "runtime proof script path or null for tests",
+    "expectedFailureMode": "how failure is observed"
+  },
+  "rules": [
+    "Level 0/1 proofs cannot close foundational capability semantics.",
+    "Provider-backed capabilities require Level 4 unless explicitly external-limited in the capability evidence.",
+    "Critical cross-capability journeys require Level 5 or documented rationale.",
+    "Prod-safe proofs must be non-destructive.",
+    "Destructive proofs must be dev/test/staging only."
+  ]
 }

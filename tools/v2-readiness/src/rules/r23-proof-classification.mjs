@@ -1,7 +1,12 @@
 import { finding } from "../vocab.mjs";
+import {
+  VALID_ENVIRONMENTS,
+  VALID_PROOF_LEVELS,
+  VALID_PROVIDER_CLASSES,
+  present,
+} from "./quality.mjs";
 
 const PROOF_SCRIPT_RE = /^apps\/platform-api\/scripts\/.*(?:proof|runtime-proof).*\.ts$/;
-const VALID_LEVELS = new Set([0, 1, 2, 3, 4, 5]);
 const MIN_DELIVERED_CAPABILITY_PROOF_LEVEL = 3;
 const MIN_LIVE_PROVIDER_PROOF_LEVEL = 4;
 const LIVE_PROVIDER_TIERS = new Set([
@@ -9,8 +14,6 @@ const LIVE_PROVIDER_TIERS = new Set([
   "live-composed-provider",
   "external-production",
 ]);
-
-const present = (v) => v != null && v !== "" && !(Array.isArray(v) && v.length === 0);
 
 function proofLevelsFromText(text) {
   if (typeof text !== "string") return [];
@@ -41,10 +44,53 @@ export default function r23ProofClassification(ctx) {
   const classifiedScripts = new Set();
 
   for (const record of ctx.testInventory || []) {
+    const subject = record.path || record.id || "<proof>";
+    for (const field of [
+      "proofLevel",
+      "proofLevelRationale",
+      "capabilitiesProven",
+      "semanticFacetsProven",
+      "environment",
+      "providerClass",
+      "liveSubstrateUsed",
+      "destructive",
+      "prodSafe",
+      "sourceCommand",
+      "expectedFailureMode",
+    ])
+      if (!present(record[field]))
+        out.push(
+          finding("R23-proof-classification", subject, `proof inventory missing "${field}"`)
+        );
+    if (!VALID_PROOF_LEVELS.has(record.proofLevel))
+      out.push(
+        finding(
+          "R23-proof-classification",
+          subject,
+          "proof inventory entry must declare proofLevel 0..5"
+        )
+      );
+    if (present(record.environment) && !VALID_ENVIRONMENTS.has(record.environment))
+      out.push(finding("R23-proof-classification", subject, "proof environment is invalid"));
+    if (present(record.providerClass) && !VALID_PROVIDER_CLASSES.has(record.providerClass))
+      out.push(finding("R23-proof-classification", subject, "proof providerClass is invalid"));
+    if (record.prodSafe === true && record.destructive === true)
+      out.push(
+        finding("R23-proof-classification", subject, "destructive proof cannot be marked prodSafe")
+      );
+    if (record.destructive === true && record.environment === "prod")
+      out.push(
+        finding(
+          "R23-proof-classification",
+          subject,
+          "destructive proof must be dev/test/staging only"
+        )
+      );
+
     const scriptPath = scriptPathForInventoryRecord(record, ctx.packageJsonScripts);
     if (!scriptPath) continue;
     classifiedScripts.add(scriptPath);
-    if (!VALID_LEVELS.has(record.proofLevel))
+    if (!VALID_PROOF_LEVELS.has(record.proofLevel))
       out.push(
         finding(
           "R23-proof-classification",

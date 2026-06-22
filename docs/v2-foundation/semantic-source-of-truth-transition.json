@@ -1,6 +1,6 @@
 {
   "artefact": "semantic-source-of-truth-transition",
-  "version": 1,
+  "version": 2,
   "mandatoryFoundationAsset": true,
   "coverage": {
     "source": "docs/v2-foundation/semantic-source-of-truth-transition.md",
@@ -10,8 +10,38 @@
     "v1Final": "historical evidence after V2 cut; not the live semantic authority",
     "v2SourceOfTruth": "V2 semantic contracts, capability definitions, UI semantics, proofs, and validator rules are the canonical source after cut",
     "driftPolicy": "V2 code must not drift from capability definitions or contracts; drift is a validator failure",
-    "changePolicy": "Any post-V2 behaviour change must update capability definitions, contracts, proofs, readiness, and UI semantics in the same change",
-    "v1ReopenPolicy": "V1 is not reopened except for evidence correction"
+    "changePolicy": "Any post-V2 behaviour change must update capability definitions, contracts, permissions, validation, errors, events, operational semantics, environment semantics, UI semantics, proofs, and validator rules when the semantic class changes in the same change",
+    "v1ReopenPolicy": "V1 is not reopened except for evidence correction",
+    "requiredChangeCoupling": [
+      "capability definition",
+      "contracts",
+      "permissions",
+      "validation",
+      "errors",
+      "events",
+      "operational semantics",
+      "environment semantics",
+      "UI semantics",
+      "proofs",
+      "validator rules when semantic class changes"
+    ],
+    "forbiddenChanges": [
+      "code behaviour changes without semantic artefact updates",
+      "UI behaviour invented from generated components",
+      "event emission without event semantics",
+      "new provider without environment and operational semantics",
+      "new capability without proof level and readiness model"
+    ],
+    "enforcementPath": [
+      "R22 validates capability semantic completeness",
+      "R23 validates proof classification",
+      "R24 validates environment semantics",
+      "R25 validates cross-capability interactions",
+      "R26 validates event semantics",
+      "R27 validates operational semantics",
+      "R28 validates this source-of-truth transition",
+      "R29 validates environment readiness gates"
+    ]
   },
   "requiredChangeSet": [
     "capability definitions",

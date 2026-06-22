@@ -1,211 +1,411 @@
 {
   "artefact": "event-semantics",
-  "version": 1,
+  "version": 2,
   "mandatoryFoundationAsset": true,
   "coverage": {
-    "source": "apps/platform-api/src/usecases/events.ts and webhook-worker.ts",
-    "enforcedBy": ["tools/v2-readiness/src/rules/r26-event-semantics.mjs"]
+    "discoveredEventNames": [
+      "boom",
+      "boom.event",
+      "no.handler",
+      "ok.event",
+      "platform.test",
+      "report.run",
+      "t",
+      "tenant.config.changed",
+      "thing.created",
+      "x"
+    ],
+    "canonicalEvents": ["tenant.config.changed", "report.run"],
+    "testOnlyEvents": [
+      "thing.created",
+      "x",
+      "boom",
+      "no.handler",
+      "t",
+      "ok.event",
+      "boom.event",
+      "platform.test"
+    ],
+    "enforcedBy": "tools/v2-readiness/src/rules/r26-event-semantics.mjs"
   },
   "events": [
     {
-      "eventName": "thing.created",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "x",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "boom",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "no.handler",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "t",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "ok.event",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "boom.event",
-      "owner": "events-workflow",
-      "producer": "Event bus, durable queues, DLQ, redrive",
-      "consumers": ["event workers"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
-      },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
       "eventName": "tenant.config.changed",
-      "owner": "configuration",
-      "producer": "Configuration registry + history",
-      "consumers": ["webhook subscriptions", "event workers"],
+      "category": "integration",
+      "owner": "webhooks",
+      "producer": "Webhook worker and tenant configuration mutation surfaces",
+      "consumers": ["developer webhooks", "webhook delivery worker", "webhook redrive"],
       "schema": {
-        "version": 1,
+        "schemaVersion": "1.0.0",
         "type": "object",
-        "additionalProperties": true
+        "additionalProperties": false,
+        "required": ["key"],
+        "properties": {
+          "key": {
+            "type": "string"
+          }
+        }
       },
+      "schemaVersion": "1.0.0",
       "version": 1,
+      "payloadContract": "Payload contains only key and the platform envelope fields organisationId, eventName, idempotencyKey, createdAt, and source id. Arbitrary payload is not allowed for canonical tenant.config.changed.",
       "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
-    },
-    {
-      "eventName": "platform.test",
-      "owner": "developer-platform",
-      "producer": "Webhooks (developer-facing)",
-      "consumers": ["webhook subscriptions"],
-      "schema": {
-        "version": 1,
-        "type": "object",
-        "additionalProperties": true
+      "orderingExpectation": "ordered per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker/webhook delivery retries with bounded backoff and records exhausted attempts",
+      "dlqPolicy": "dead-letter entry stores tenant, event type, attempts, payload summary, and last error; redrive uses a fresh idempotency key",
+      "retention": "event rows and dead-letter evidence retained according to tenant data retention and audit policy",
+      "privacyClassification": "tenant-operational",
+      "tenantIsolation": "organisationId partitions event persistence, delivery, DLQ, and redrive; consumers must re-check tenant context",
+      "auditRelationship": "tenant.config.changed is linked to producer mutation audit and redrive/delivery audit evidence.",
+      "sourceFileRefs": [
+        "apps/platform-api/src/usecases/webhook-worker.ts",
+        "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+        "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+        "apps/platform-api/tests/unit/webhook-worker.test.ts"
+      ],
+      "proof": "proof:webhooks; proof:webhook-redrive",
+      "environmentBehaviour": {
+        "dev": "local composed event/webhook provider; fixture payloads allowed only in tests",
+        "test": "deterministic event worker and repository proofs run with disposable data",
+        "staging": "prod-shape queue/webhook topology with sandbox endpoints and redrive rehearsal",
+        "prod": "real tenant event delivery only; no fixture/test event emission or destructive redrive proof"
       },
-      "version": 1,
-      "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "WebhookTested audit event for operator test sends",
-      "mutatingEvent": false,
-      "proof": "proof:webhooks; proof:webhook-redrive"
+      "breakingChangePolicy": "Schema changes require a new schemaVersion, backwards-compatible consumers, semantic artefact updates, and migration/redrive compatibility evidence before V2 promotion."
     },
     {
       "eventName": "report.run",
-      "owner": "events-workflow",
-      "producer": "Scheduled jobs (built-in, on the event substrate)",
-      "consumers": ["event workers"],
+      "category": "platform",
+      "owner": "scheduled-jobs",
+      "producer": "Workflow engine and scheduled job use cases",
+      "consumers": ["scheduled job dispatcher", "event substrate"],
       "schema": {
-        "version": 1,
+        "schemaVersion": "1.0.0",
         "type": "object",
-        "additionalProperties": true
+        "additionalProperties": false,
+        "required": ["reportId"],
+        "properties": {
+          "reportId": {
+            "type": "string"
+          }
+        }
       },
+      "schemaVersion": "1.0.0",
       "version": 1,
+      "payloadContract": "Payload contains only reportId and the platform envelope fields organisationId, eventName, idempotencyKey, createdAt, and source id. Arbitrary payload is not allowed for canonical report.run.",
       "idempotencyKey": "organisationId + eventName + caller-supplied idempotencyKey",
-      "orderingExpectation": "per organisation and idempotency key; no cross-tenant ordering guarantee",
-      "retryPolicy": "worker retries until maxAttempts then DLQ; webhook deliveries retry with backoff",
-      "dlqPolicy": "dead-letter row stores event id, tenant, type, attempts, last error; operator redrive creates a new idempotency key",
-      "retention": "platform_events retained for history/readiness according to data retention policy",
-      "auditRelationship": "EventRedriven audit event for redrive; source mutation audit stays with producer capability",
-      "mutatingEvent": true,
-      "proof": "proof:event-bus; proof:event-worker; proof:event-redrive"
+      "orderingExpectation": "ordered per organisation and idempotency key; no cross-tenant ordering guarantee",
+      "retryPolicy": "worker/webhook delivery retries with bounded backoff and records exhausted attempts",
+      "dlqPolicy": "dead-letter entry stores tenant, event type, attempts, payload summary, and last error; redrive uses a fresh idempotency key",
+      "retention": "event rows and dead-letter evidence retained according to tenant data retention and audit policy",
+      "privacyClassification": "tenant-operational",
+      "tenantIsolation": "organisationId partitions event persistence, delivery, DLQ, and redrive; consumers must re-check tenant context",
+      "auditRelationship": "report.run is linked to producer mutation audit and redrive/delivery audit evidence.",
+      "sourceFileRefs": [
+        "apps/platform-api/src/usecases/scheduled-jobs.ts",
+        "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+        "apps/platform-api/tests/unit/scheduled-jobs.test.ts"
+      ],
+      "proof": "proof:scheduled-jobs; proof:scheduled-job-routes",
+      "environmentBehaviour": {
+        "dev": "local composed event/webhook provider; fixture payloads allowed only in tests",
+        "test": "deterministic event worker and repository proofs run with disposable data",
+        "staging": "prod-shape queue/webhook topology with sandbox endpoints and redrive rehearsal",
+        "prod": "real tenant event delivery only; no fixture/test event emission or destructive redrive proof"
+      },
+      "breakingChangePolicy": "Schema changes require a new schemaVersion, backwards-compatible consumers, semantic artefact updates, and migration/redrive compatibility evidence before V2 promotion."
+    },
+    {
+      "eventName": "platform.test",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+        "apps/platform-api/tests/unit/webhooks.test.ts",
+        "apps/platform-api/tests/unit/webhook-worker.test.ts"
+      ],
+      "proof": "proof:webhooks",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "webhook subscription and delivery tests use this synthetic event name",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "thing.created",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+        "apps/platform-api/tests/unit/events.test.ts"
+      ],
+      "proof": "proof:event-bus",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event-bus persistence/idempotency proof fixture",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "x",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+        "apps/platform-api/tests/unit/events.test.ts"
+      ],
+      "proof": "proof:event-bus",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event-bus payload redaction proof fixture",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "boom",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": ["apps/platform-api/tests/unit/events.test.ts"],
+      "proof": "proof:event-worker",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event worker failure/DLQ unit-test fixture",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "no.handler",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": ["apps/platform-api/tests/unit/events.test.ts"],
+      "proof": "proof:event-worker",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event worker no-handler branch fixture",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "t",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": ["apps/platform-api/tests/unit/events.test.ts"],
+      "proof": "proof:event-bus",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event bus tenant isolation unit-test fixture",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "ok.event",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": ["apps/platform-api/scripts/event-worker-runtime-proof.ts"],
+      "proof": "proof:event-worker",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event worker success runtime-proof fixture",
+      "excludedFromProductReadiness": true
+    },
+    {
+      "eventName": "boom.event",
+      "category": "test-only",
+      "owner": "platform-event-tests",
+      "producer": "test or runtime-proof fixture only",
+      "consumers": ["test fixture handler"],
+      "schema": {
+        "schemaVersion": "fixture",
+        "type": "object",
+        "additionalProperties": true,
+        "arbitraryPayloadJustification": "fixture event intentionally exercises generic event-bus storage/retry/DLQ behaviour and is excluded from product/platform readiness semantics"
+      },
+      "schemaVersion": "fixture",
+      "version": 0,
+      "payloadContract": "fixture-only payload; not a product/platform contract and not available to generated UI",
+      "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
+      "orderingExpectation": "fixture ordering only within the event-bus proof under disposable tenant data",
+      "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
+      "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
+      "retention": "discarded with test/proof data",
+      "privacyClassification": "fixture",
+      "tenantIsolation": "disposable proof/test tenant only; never production tenant data",
+      "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+        "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      ],
+      "proof": "proof:event-worker; proof:event-redrive",
+      "environmentBehaviour": {
+        "dev": "allowed only inside local proof/test fixture",
+        "test": "allowed only inside deterministic automated tests",
+        "staging": "forbidden except isolated rehearsal fixture that is excluded from readiness semantics",
+        "prod": "forbidden"
+      },
+      "breakingChangePolicy": "may change with tests because it is not canonical; cannot be promoted to product semantics without a new canonical event record",
+      "fixtureRationale": "event worker and redrive failure runtime-proof fixture",
+      "excludedFromProductReadiness": true
     }
   ]
 }

@@ -1,4 +1,5 @@
 import { finding } from "../vocab.mjs";
+import { capabilityExists, present, proofExists } from "./quality.mjs";
 
 const REQUIRED_INTERACTIONS = [
   "entitlements-billing",
@@ -10,8 +11,6 @@ const REQUIRED_INTERACTIONS = [
   "catalog-provider-readiness",
   "events-workers-dlq",
 ];
-
-const present = (v) => v != null && v !== "" && !(Array.isArray(v) && v.length === 0);
 
 export default function r25CrossCapabilitySemantics(ctx) {
   const out = [];
@@ -25,12 +24,6 @@ export default function r25CrossCapabilitySemantics(ctx) {
       ),
     ];
   }
-  const delivered = new Set(
-    (ctx.capabilities || [])
-      .filter((capability) => capability.status === "delivered-and-proven")
-      .map((capability) => capability.capability)
-  );
-  const shouldCrossCheckCapabilities = delivered.size > REQUIRED_INTERACTIONS.length;
   const byId = new Map(doc.interactions.map((interaction) => [interaction.id, interaction]));
   for (const id of REQUIRED_INTERACTIONS) {
     const interaction = byId.get(id);
@@ -41,21 +34,27 @@ export default function r25CrossCapabilitySemantics(ctx) {
     for (const field of [
       "producerCapability",
       "consumerCapability",
+      "interactionType",
       "sharedContract",
+      "dataOwnershipBoundary",
+      "controlOwnershipBoundary",
       "ownershipBoundary",
       "failureBehaviour",
       "orderingRequirement",
       "retryIdempotencyBehaviour",
+      "consistencyModel",
+      "transactionBoundary",
+      "compensationBehaviour",
+      "environmentBehaviour",
+      "securityBoundary",
+      "auditBoundary",
       "proofReference",
+      "sourceEvidence",
     ])
       if (!present(interaction[field]))
         out.push(finding("R25-cross-capability-semantics", id, `interaction missing "${field}"`));
     for (const field of ["producerCapability", "consumerCapability"])
-      if (
-        shouldCrossCheckCapabilities &&
-        present(interaction[field]) &&
-        !delivered.has(interaction[field])
-      )
+      if (present(interaction[field]) && !capabilityExists(ctx, interaction[field]))
         out.push(
           finding(
             "R25-cross-capability-semantics",
@@ -63,6 +62,28 @@ export default function r25CrossCapabilitySemantics(ctx) {
             `${field} "${interaction[field]}" is not a delivered capability`
           )
         );
+    if (present(interaction.proofReference) && !proofExists(ctx, interaction.proofReference))
+      out.push(
+        finding(
+          "R25-cross-capability-semantics",
+          id,
+          "interaction proofReference does not exist in proof inventory/capability evidence"
+        )
+      );
   }
+  const canonicalEvents = (ctx.foundation?.["event-semantics.json"]?.events || []).filter(
+    (event) => event.category !== "test-only" && event.excludedFromProductReadiness !== true
+  );
+  if (
+    canonicalEvents.length > 0 &&
+    !doc.interactions.some((interaction) => interaction.interactionType === "event")
+  )
+    out.push(
+      finding(
+        "R25-cross-capability-semantics",
+        "canonical-events",
+        "canonical event producer/consumer relationships require at least one event interaction"
+      )
+    );
   return out;
 }

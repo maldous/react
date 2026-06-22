@@ -4,20 +4,281 @@
   "description": "Files introduced or deleted on V1 main AFTER the audit-base commit. R10 proves files@cutCandidate == surviving mapped files + these additions - evidence-backed deletions. Every post-audit file (incl. the validator + these planning docs) MUST appear here or in the path-map before the cut.",
   "additions": [
     {
-      "path": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "path": ".npmrc",
+      "purpose": "post-audit addition (npm registry/config pin for reproducible installs)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": ".npmrc",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/package-lock.json",
+      "purpose": "post-audit addition (Generated npm lockfile (npm ci output))",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/package-lock.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "v2Target": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "path": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "v2Target": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "protectingTests": ["npm run proof:billing-catalog"],
+      "decisionRefs": ["ADR-ACT-0241", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "protectingTests": ["npm run proof:billing-control-route"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "protectingTests": ["npm run proof:billing-provider"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "purpose": "V1C-17b: Grafana dashboard runtime proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "purpose": "V1C-12c: legal-hold runtime-proof script",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "purpose": "V1C-17a: Prometheus metrics runtime proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention runtime-proof script",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -31,12 +292,312 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: tenant lifecycle runtime proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "protectingTests": ["npm run proof:tenant-lifecycle"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 Turn 2: delegated admin roles live runtime-proof script",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/clamav-antivirus.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: antivirus adapter for storage-object scan semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/clamav-antivirus.ts",
+      "protectingTests": ["npm run test:platform-api"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/http-engine-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/http-engine-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/lago-billing-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/lago-billing-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-billing-catalog.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-billing-catalog.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-data-governance.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-data-governance.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
+      "purpose": "V1C-04 Turn 1: Postgres adapter implementing DelegatedAdminRolesPort (withTenant/withSystemAdmin wrappers)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: Postgres adapter implementing LegalHoldRepository",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: durable tenant import application adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+      "protectingTests": ["npm run proof:data-portability"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-retention.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: Postgres adapter implementing RetentionRepository",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-retention.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/prometheus-metrics.ts",
+      "purpose": "V1C-17a: Prometheus prom-client metrics adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/prometheus-metrics.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/windmill-automation-provider.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/windmill-automation-provider.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "apps/platform-api/src/config/app-config.ts",
       "introducingCommit": "458785fbbcc1deb861347a5574b5d31e2ae20ae7",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/src/config/app-config.ts",
       "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/auth-provider-config.ts",
+      "introducingCommit": "c20a7a02820be86c02ade74ce7216d8535d20314",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/auth-provider-config.ts",
+      "protectingTests": [
+        "apps/platform-api/tests/unit/auth-providers.test.ts",
+        "apps/platform-api/tests/unit/auth-provider-config.test.ts"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/bootstrap-secrets.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/bootstrap-secrets.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/health-metadata-config.ts",
+      "introducingCommit": "fad000f51d5805cb580d1860b9dd4bb131175f56",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/health-metadata-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/health-metadata-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/notification-config.ts",
+      "introducingCommit": "aba5e5f4c1f8f2279f98514ab2163ada6676394a",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/notification-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/notification-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/observability-config.ts",
+      "introducingCommit": "5fce6ca53b9542a9a4db6a9bfd9aad687c364d41",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/observability-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/observability.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/observability-probe-config.ts",
+      "introducingCommit": "a98618745b1acecd167a0db61e21f86184fab81c",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/observability-probe-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/observability-probe-config.test.ts"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
@@ -49,11 +610,407 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "apps/platform-api/src/config/bootstrap-secrets.ts",
+      "path": "apps/platform-api/src/config/retention-config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: typed retention worker/tick configuration",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/retention-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/session-config.ts",
+      "introducingCommit": "dbb2bbcbf11a38722552997c34ed7c3788685c6f",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/session-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/session-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/config/stage-config.ts",
+      "introducingCommit": "58cb5b1ff62da361c6e57c37e0fc0611a579001a",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/config/stage-config.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/stage-config.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/035-legal-holds.sql",
+      "purpose": "V1C-12c: legal_holds migration (tenant-scoped legal-hold records blocking retention deletion)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/035-legal-holds.sql",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/036-retention-policies.sql",
+      "purpose": "V1C-12b: retention_policies migration (tenant-scoped retention windows driving the retention tick worker)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/036-retention-policies.sql",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
+      "purpose": "V1C-04 Turn 1: persisted delegated admin roles (ADR-0063 / V1C-04)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/038-support-announcements.sql",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/bootstrap-secrets.ts",
+      "v2Target": "apps/platform-api/src/db/migrations/038-support-announcements.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/039-billing-catalog.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/039-billing-catalog.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/040-tenant-residency.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/040-tenant-residency.sql",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/041-data-governance.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/041-data-governance.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/042-storage-objects.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/042-storage-objects.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/043-support-tickets.sql",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/043-support-tickets.sql",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: portable import progress migration",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+      "protectingTests": ["npm run proof:data-portability"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: DSR fulfillment evidence migration",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
+      "protectingTests": ["npm run proof:data-governance"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/antivirus.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: antivirus scan port for storage-object semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/antivirus.ts",
+      "protectingTests": ["npm run test:platform-api"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/automation-runner.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/automation-runner.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/billing-catalog.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/billing-catalog.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/data-governance.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/data-governance.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/delegated-admin-roles.ts",
+      "purpose": "V1C-04 Turn 1: DelegatedAdminRolesPort (pure-types interface)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/delegated-admin-roles.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"],
+      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
+    },
+    {
+      "path": "apps/platform-api/src/ports/legal-hold.ts",
+      "purpose": "V1C-12c: LegalHoldRepository port (pure-types interface)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/legal-hold.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/ports/retention.ts",
+      "purpose": "V1C-12b: RetentionRepository port (pure-types interface)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/retention.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/src/ports/storage-objects.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/storage-objects.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/workflow-orchestrator.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/workflow-orchestrator.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/server/resource-policies.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/server/resource-policies.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/server/retention-worker-runtime.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention tick worker runtime wiring",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/server/retention-worker-runtime.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/backup-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/backup-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/billing-catalog.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/billing-catalog.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/billing-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/billing-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/billing-readiness.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/billing-readiness.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/compliance-report.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/compliance-report.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/data-governance.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/data-governance.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/data-portability.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/data-portability.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/data-residency.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/data-residency.ts",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/delegations.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 Turn 2: delegated admin roles usecase layer",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/delegations.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/legal-hold.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold usecase layer (set/release/list)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/legal-hold.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/observability-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/observability-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/provider-binding-report.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/provider-binding-report.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/retention.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention usecase layer (policy set/disable/list + tick)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/retention.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/security-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/security-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/storage-objects.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/storage-objects.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/support-announcements.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/support-announcements.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/support-tickets.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/support-tickets.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/tenant-lifecycle.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/tenant-lifecycle.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/workflow-control.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/workflow-control.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/usecases/workflow-readiness.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/usecases/workflow-readiness.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -67,11 +1024,11 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+      "path": "apps/platform-api/tests/unit/billing-catalog.test.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+      "v2Target": "apps/platform-api/tests/unit/billing-catalog.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -81,6 +1038,195 @@
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/data-governance.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/data-governance.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/data-portability.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/data-portability.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/data-residency.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/data-residency.test.ts",
+      "protectingTests": ["npm run proof:data-residency"],
+      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/delegations.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 usecase unit tests (node:test): auth + audit-before-mutation ordering, fail-closed",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/delegations.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
+      "introducingCommit": "fad000f51d5805cb580d1860b9dd4bb131175f56",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/legal-hold.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold usecase/adapter unit tests",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/legal-hold.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/notification-config.test.ts",
+      "introducingCommit": "aba5e5f4c1f8f2279f98514ab2163ada6676394a",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/notification-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
+      "introducingCommit": "a98618745b1acecd167a0db61e21f86184fab81c",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-04 substrate unit tests (node:test): adapter wrapper/capture-index + active-predicate fidelity",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0304"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+      "purpose": "V1C-17a: Prometheus prom-client metrics adapter tests",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "apps/platform-api/tests/unit/retention.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention usecase/adapter unit tests",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/retention.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/session-config.test.ts",
+      "introducingCommit": "dbb2bbcbf11a38722552997c34ed7c3788685c6f",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/session-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/stage-config.test.ts",
+      "introducingCommit": "58cb5b1ff62da361c6e57c37e0fc0611a579001a",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/stage-config.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/storage-objects.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/storage-objects.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/support-announcements.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "carry",
+      "v2Target": "apps/platform-api/tests/unit/support-announcements.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/support-announcements.test.ts"],
+      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/support-tickets.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/support-tickets.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit addition",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -103,94 +1249,40 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "path": "docker/grafana/dashboards/platform-api-red-method.json",
       "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
+      "purpose": "V1C-17b: Grafana RED-method dashboard for platform-api",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "v2Target": "docker/grafana/dashboards/platform-api-red-method.json",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "apps/platform-api/src/db/migrations/040-tenant-residency.sql",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
+      "path": "docker/grafana/dashboards/platform-overview.json",
+      "purpose": "post-audit addition (Grafana dashboard JSON for platform overview)",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/040-tenant-residency.sql",
-      "protectingTests": ["npm run proof:data-residency"],
-      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+      "v2Target": "docker/grafana/dashboards/platform-overview.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
     },
     {
-      "path": "apps/platform-api/tests/unit/data-residency.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
+      "path": "docker/prometheus/prometheus.yml",
+      "purpose": "post-audit addition (Prometheus scrape configuration)",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/data-residency.test.ts",
-      "protectingTests": ["npm run proof:data-residency"],
-      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
+      "v2Target": "docker/prometheus/prometheus.yml",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
     },
     {
-      "path": "apps/platform-api/src/usecases/data-residency.ts",
+      "path": "docker/temporal/dynamicconfig/development.yaml",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
       "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/data-residency.ts",
-      "protectingTests": ["npm run proof:data-residency"],
-      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
-      "protectingTests": ["npm run proof:data-residency"],
-      "decisionRefs": ["ADR-ACT-0248", "ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+      "v2Target": "docker/temporal/dynamicconfig/development.yaml",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/038-support-announcements.sql",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/038-support-announcements.sql",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/support-announcements.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/support-announcements.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/support-announcements.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "carry",
-      "v2Target": "apps/platform-api/tests/unit/support-announcements.test.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/support-announcements.test.ts"],
-      "decisionRefs": ["ADR-ACT-0251", "ADR-ACT-0292"]
     },
     {
       "path": "docs/adr/0076-typed-composition-root-configuration-foundation.md",
@@ -202,6 +1294,168 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/evidence/data/legal-hold-runtime-proof.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold runtime-proof transcript evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/legal-hold-runtime-proof.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/legal-hold.md",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12c: legal-hold evidence narrative",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/legal-hold.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/retention-runtime-proof.json",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention runtime-proof transcript evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/retention-runtime-proof.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/data/retention.md",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-12b: retention evidence narrative",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/data/retention.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package access-control (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package domain-core.",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package feature-workflow.",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package notification-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package observability (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package profile-configuration.",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package queue-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package search-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package security-auth (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json",
+      "introducingCommit": "pending",
+      "purpose": "Structured removal evidence for deprecated package worker-runtime (ADR-0006/ADR-ACT-0289).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0289"]
+    },
+    {
+      "path": "docs/evidence/security/sbom-baseline.lockhash",
+      "purpose": "V1C-18: SBOM baseline SHA-256 lockhash for freshness verification",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/security/sbom-baseline.lockhash",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "docs/evidence/security/sbom-policy-audit.json",
+      "purpose": "V1C-18: SBOM license policy audit evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/security/sbom-policy-audit.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "docs/evidence/security/sbom-verify-report.json",
+      "purpose": "V1C-18: SBOM freshness verification evidence",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/evidence/security/sbom-verify-report.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "docs/evidence/stages/v2-readiness-progress.log",
+      "introducingCommit": "763b26a",
+      "purpose": "v2:readiness append-only run transcript (generated runtime artefact)",
+      "v2Disposition": "regenerate",
+      "v2Target": "docs/evidence/stages/v2-readiness-progress.log",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-0075", "ADR-ACT-0285"]
+    },
+    {
       "path": "docs/v2-foundation/authentication-authorisation-matrix.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -209,6 +1463,73 @@
       "v2Target": "docs/v2-foundation/authentication-authorisation-matrix.json",
       "protectingTests": ["npm v2:readiness"],
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-definition.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory semantic capability definition foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-definition.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-errors.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability validation and error catalogue foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-errors.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-permissions.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability permissions foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-permissions.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-proof-definition.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability proof-level foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-proof-definition.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-state-machine.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability state-machine foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-state-machine.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-ui-contract.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability UI semantic contract foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-ui-contract.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/cross-capability-interactions.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/cross-capability-interactions.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     },
     {
       "path": "docs/v2-foundation/data-and-migration-plan.json",
@@ -229,6 +1550,41 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/environment-capability-matrix.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/environment-capability-matrix.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/environment-readiness-gates.json",
+      "introducingCommit": "pending",
+      "purpose": "dev/test/staging/prod readiness gate semantic artefact and validator",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/environment-readiness-gates.json",
+      "protectingTests": ["npm v2:readiness", "npm test -- tools/v2-readiness"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/event-semantics.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/event-semantics.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/gap-report.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -236,6 +1592,45 @@
       "v2Target": "docs/v2-foundation/gap-report.md",
       "protectingTests": ["npm v2:readiness"],
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/operational-semantics.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/operational-semantics.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/semantic-source-of-truth-transition.json",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/semantic-source-of-truth-transition.json",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/semantic-source-of-truth-transition.md",
+      "introducingCommit": "pending",
+      "purpose": "system-level V2 semantic foundation artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/semantic-source-of-truth-transition.md",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     },
     {
       "path": "docs/v2-foundation/service-and-clickthrough-matrix.json",
@@ -706,6 +2101,15 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/v2-readiness-final-attestation.md",
+      "introducingCommit": "pending",
+      "purpose": "human-reviewable V2 readiness attestation",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/v2-readiness-final-attestation.md",
+      "protectingTests": ["npm v2:readiness", "npm test -- tools/v2-readiness"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/v2-readiness-validator-spec.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -742,6 +2146,15 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
+      "path": "packages/i18n-runtime/tests/react.test.tsx",
+      "purpose": "post-audit addition (React provider/hook tests)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "packages/i18n-runtime/tests/react.test.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
+    },
+    {
       "path": "tools/architecture/_shared/import-edges.mjs",
       "introducingCommit": "103d4697d7f2e6acd4cb28b3f646e550c20c4b89",
       "purpose": "post-audit addition",
@@ -749,6 +2162,294 @@
       "v2Target": "tools/architecture/_shared/import-edges.mjs",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/architecture/validate-i18n/governed-paths.json",
+      "purpose": "V1C-25: governed-paths config for strict i18n raw-literal enforcement",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/architecture/validate-i18n/governed-paths.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-0026"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/run-tests.mjs",
+      "introducingCommit": "pending",
+      "purpose": "root npm test directory-expansion runner for required V2 readiness test command",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/run-tests.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/security/codeql-validate.mjs",
+      "purpose": "V1C-18: CodeQL validation script (graceful skip when codeql missing)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/codeql-validate.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/security/sbom-policy.mjs",
+      "purpose": "V1C-18: SBOM policy script (license audit)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/sbom-policy.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/security/sbom-verify.mjs",
+      "purpose": "V1C-18: SBOM verification script (format, freshness)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/sbom-verify.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/security/tests/sbom-policy.test.mjs",
+      "purpose": "V1C-18: SBOM license policy tests (SPDX expression parsing)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/tests/sbom-policy.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/security/tests/sbom-verify.test.mjs",
+      "purpose": "V1C-18: SBOM freshness verification tests (local vs authoritative)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/security/tests/sbom-verify.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/ui-reference-harness/index.html",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/index.html",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright.config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright.config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Headless journey proving IdP claim-mapping admin UI semantics (V1C-06).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Headless journey proving tenant groups UI semantics (V1C-01).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Headless journey proving sub-organisations (flat list) UI semantics (V1C-02).",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/public/mockServiceWorker.js",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/public/mockServiceWorker.js",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/README.md",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/README.md",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/app.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/app.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/capability-controller.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/capability-controller.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/load-capability.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/load-capability.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/main.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/main.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/msw/browser.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/msw/browser.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/msw/handlers.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/msw/handlers.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/permissions/capability-guard.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/permissions/capability-guard.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Generic full-replace config-collection renderer (V1C-06 claim-mapping; capability-agnostic)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/detail-renderer.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/detail-renderer.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/form-renderer.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/form-renderer.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/state-view.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/state-view.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/renderers/table-renderer.tsx",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/renderers/table-renderer.tsx",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/src/validate-definition.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/src/validate-definition.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/tsconfig.json",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/tsconfig.json",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/ui-reference-harness/vite.config.ts",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/ui-reference-harness/vite.config.ts",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
     },
     {
       "path": "tools/v2-readiness/README.md",
@@ -761,6 +2462,24 @@
         "tools/v2-readiness/tests/golden.test.mjs",
         "tools/v2-readiness/tests/package-status.test.mjs"
       ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/register-v1c-entries.py",
+      "purpose": "post-audit addition (V1C registration helper script)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/register-v1c-entries.py",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "unknown"
+    },
+    {
+      "path": "tools/v2-readiness/scripts/strengthen-semantic-artefacts.mjs",
+      "introducingCommit": "pending",
+      "purpose": "repeatable derivation script for V2 semantic artefact strengthening",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/scripts/strengthen-semantic-artefacts.mjs",
+      "protectingTests": ["npm v2:readiness", "npm test -- tools/v2-readiness"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
@@ -800,6 +2519,15 @@
         "tools/v2-readiness/tests/golden.test.mjs",
         "tools/v2-readiness/tests/package-status.test.mjs"
       ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/quality.mjs",
+      "introducingCommit": "pending",
+      "purpose": "shared semantic quality validator helpers",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/quality.mjs",
+      "protectingTests": ["npm v2:readiness", "npm test -- tools/v2-readiness"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
@@ -956,6 +2684,116 @@
         "tools/v2-readiness/tests/golden.test.mjs",
         "tools/v2-readiness/tests/package-status.test.mjs"
       ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
+      "protectingTests": [],
+      "decisionRefs": ["ADR-ACT-0285"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
+      "introducingCommit": "unknown",
+      "purpose": "V1C-17: readiness rule R21 validating observability artefacts (Prometheus/Grafana)",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/r21-v1c17-observability.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: semantic completeness validator rule",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: runtime proof-level classification validator rule",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r26-event-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r26-event-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs",
+      "introducingCommit": "pending",
+      "purpose": "V2 readiness validator rule for system-level semantic closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs",
+      "protectingTests": [
+        "tools/v2-readiness/tests/rules.test.mjs",
+        "tools/v2-readiness/tests/golden.test.mjs",
+        "tools/v2-readiness/tests/cli.test.mjs"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r29-environment-readiness-gates.mjs",
+      "introducingCommit": "pending",
+      "purpose": "dev/test/staging/prod readiness gate semantic artefact and validator",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r29-environment-readiness-gates.mjs",
+      "protectingTests": ["npm v2:readiness", "npm test -- tools/v2-readiness"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
@@ -1117,756 +2955,6 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "tools/v2-readiness/tests/rules.test.mjs",
-      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
-      "purpose": "V2-readiness validator test",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/tests/rules.test.mjs",
-      "protectingTests": ["tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/observability-config.ts",
-      "introducingCommit": "5fce6ca53b9542a9a4db6a9bfd9aad687c364d41",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/observability-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/observability.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/notification-config.ts",
-      "introducingCommit": "aba5e5f4c1f8f2279f98514ab2163ada6676394a",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/notification-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/notification-config.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/notification-config.test.ts",
-      "introducingCommit": "aba5e5f4c1f8f2279f98514ab2163ada6676394a",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/notification-config.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/stage-config.ts",
-      "introducingCommit": "58cb5b1ff62da361c6e57c37e0fc0611a579001a",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/stage-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/stage-config.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/stage-config.test.ts",
-      "introducingCommit": "58cb5b1ff62da361c6e57c37e0fc0611a579001a",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/stage-config.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/session-config.ts",
-      "introducingCommit": "dbb2bbcbf11a38722552997c34ed7c3788685c6f",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/session-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/session-config.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/session-config.test.ts",
-      "introducingCommit": "dbb2bbcbf11a38722552997c34ed7c3788685c6f",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/session-config.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/auth-provider-config.ts",
-      "introducingCommit": "c20a7a02820be86c02ade74ce7216d8535d20314",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/auth-provider-config.ts",
-      "protectingTests": [
-        "apps/platform-api/tests/unit/auth-providers.test.ts",
-        "apps/platform-api/tests/unit/auth-provider-config.test.ts"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/health-metadata-config.ts",
-      "introducingCommit": "fad000f51d5805cb580d1860b9dd4bb131175f56",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/health-metadata-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/health-metadata-config.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
-      "introducingCommit": "fad000f51d5805cb580d1860b9dd4bb131175f56",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/observability-probe-config.ts",
-      "introducingCommit": "a98618745b1acecd167a0db61e21f86184fab81c",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/observability-probe-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/observability-probe-config.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
-      "introducingCommit": "a98618745b1acecd167a0db61e21f86184fab81c",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/ui-reference-harness/index.html",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/index.html",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/playwright.config.ts",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/playwright.config.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/public/mockServiceWorker.js",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/public/mockServiceWorker.js",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/README.md",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/README.md",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/app.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/app.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/capability-controller.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/capability-controller.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/load-capability.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/load-capability.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/main.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/main.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/msw/browser.ts",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/msw/browser.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/msw/handlers.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/msw/handlers.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/permissions/capability-guard.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/permissions/capability-guard.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/renderers/detail-renderer.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/renderers/detail-renderer.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/renderers/form-renderer.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/renderers/form-renderer.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/renderers/state-view.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/renderers/state-view.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/renderers/table-renderer.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/renderers/table-renderer.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/validate-definition.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/validate-definition.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/tests/harness-model.test.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/tests/harness-model.test.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/tsconfig.json",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/tsconfig.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/vite.config.ts",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/vite.config.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "Semantic Reference Harness (V1C-01/02/06 UI-semantic closure tooling)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r20-harness-semantics.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/playwright/groups.spec.ts",
-      "introducingCommit": "unknown",
-      "purpose": "Headless journey proving tenant groups UI semantics (V1C-01).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/playwright/groups.spec.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
-      "introducingCommit": "unknown",
-      "purpose": "Headless journey proving sub-organisations (flat list) UI semantics (V1C-02).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
-      "introducingCommit": "unknown",
-      "purpose": "Headless journey proving IdP claim-mapping admin UI semantics (V1C-06).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
-      "introducingCommit": "unknown",
-      "purpose": "Generic full-replace config-collection renderer (V1C-06 claim-mapping; capability-agnostic)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/ui-reference-harness/src/renderers/config-collection.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0285"]
-    },
-    {
-      "path": "docker/grafana/dashboards/platform-overview.json",
-      "purpose": "post-audit addition (Grafana dashboard JSON for platform overview)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docker/grafana/dashboards/platform-overview.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
-    },
-    {
-      "path": "docker/prometheus/prometheus.yml",
-      "purpose": "post-audit addition (Prometheus scrape configuration)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docker/prometheus/prometheus.yml",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
-    },
-    {
-      "path": "packages/i18n-runtime/tests/react.test.tsx",
-      "purpose": "post-audit addition (React provider/hook tests)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "packages/i18n-runtime/tests/react.test.tsx",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "2ab7e9c7c8f5a611edbaead02b08ba9a708fc56f"
-    },
-    {
-      "path": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
-      "purpose": "V1C-17b: Grafana dashboard runtime proof",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-      "purpose": "V1C-17a: Prometheus metrics runtime proof",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/security/codeql-validate.mjs",
-      "purpose": "V1C-18: CodeQL validation script (graceful skip when codeql missing)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/security/codeql-validate.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/security/sbom-verify.mjs",
-      "purpose": "V1C-18: SBOM verification script (format, freshness)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/security/sbom-verify.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/security/sbom-policy.mjs",
-      "purpose": "V1C-18: SBOM policy script (license audit)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/security/sbom-policy.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/src/adapters/prometheus-metrics.ts",
-      "purpose": "V1C-17a: Prometheus prom-client metrics adapter",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/prometheus-metrics.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/package-lock.json",
-      "purpose": "post-audit addition (Generated npm lockfile (npm ci output))",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/package-lock.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/v2-readiness/register-v1c-entries.py",
-      "purpose": "post-audit addition (V1C registration helper script)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/register-v1c-entries.py",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/architecture/validate-i18n/governed-paths.json",
-      "purpose": "V1C-25: governed-paths config for strict i18n raw-literal enforcement",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/architecture/validate-i18n/governed-paths.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-0026"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
-      "purpose": "V1C-17a: Prometheus prom-client metrics adapter tests",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "docs/evidence/security/sbom-baseline.lockhash",
-      "purpose": "V1C-18: SBOM baseline SHA-256 lockhash for freshness verification",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/security/sbom-baseline.lockhash",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "docs/evidence/security/sbom-policy-audit.json",
-      "purpose": "V1C-18: SBOM license policy audit evidence",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/security/sbom-policy-audit.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "docs/evidence/security/sbom-verify-report.json",
-      "purpose": "V1C-18: SBOM freshness verification evidence",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/security/sbom-verify-report.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/security/tests/sbom-policy.test.mjs",
-      "purpose": "V1C-18: SBOM license policy tests (SPDX expression parsing)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/security/tests/sbom-policy.test.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "tools/security/tests/sbom-verify.test.mjs",
-      "purpose": "V1C-18: SBOM freshness verification tests (local vs authoritative)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/security/tests/sbom-verify.test.mjs",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
-      "purpose": "V1C-04 Turn 1: persisted delegated admin roles (ADR-0063 / V1C-04)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/037-delegated-admin-roles.sql",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"],
-      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
-    },
-    {
-      "path": "apps/platform-api/src/ports/delegated-admin-roles.ts",
-      "purpose": "V1C-04 Turn 1: DelegatedAdminRolesPort (pure-types interface)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/delegated-admin-roles.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"],
-      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
-      "purpose": "V1C-04 Turn 1: Postgres adapter implementing DelegatedAdminRolesPort (withTenant/withSystemAdmin wrappers)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"],
-      "introducingCommit": "5a1dff09cc1ef3a014f9c1bd0cc6289da55aeaa0"
-    },
-    {
-      "path": ".npmrc",
-      "purpose": "post-audit addition (npm registry/config pin for reproducible installs)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": ".npmrc",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/035-legal-holds.sql",
-      "purpose": "V1C-12c: legal_holds migration (tenant-scoped legal-hold records blocking retention deletion)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/035-legal-holds.sql",
-      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/036-retention-policies.sql",
-      "purpose": "V1C-12b: retention_policies migration (tenant-scoped retention windows driving the retention tick worker)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/036-retention-policies.sql",
-      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/src/ports/legal-hold.ts",
-      "purpose": "V1C-12c: LegalHoldRepository port (pure-types interface)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/legal-hold.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/src/ports/retention.ts",
-      "purpose": "V1C-12b: RetentionRepository port (pure-types interface)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/retention.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
-      "purpose": "V1C-12c: legal-hold runtime-proof script",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"],
-      "introducingCommit": "unknown"
-    },
-    {
-      "path": "apps/platform-api/scripts/retention-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: retention runtime-proof script",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/retention-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-04 Turn 2: delegated admin roles live runtime-proof script",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12c: Postgres adapter implementing LegalHoldRepository",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-retention.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: Postgres adapter implementing RetentionRepository",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-retention.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/config/retention-config.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: typed retention worker/tick configuration",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/config/retention-config.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/server/retention-worker-runtime.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: retention tick worker runtime wiring",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/server/retention-worker-runtime.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/delegations.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-04 Turn 2: delegated admin roles usecase layer",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/delegations.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/legal-hold.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12c: legal-hold usecase layer (set/release/list)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/legal-hold.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/legal-hold.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/retention.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: retention usecase layer (policy set/disable/list + tick)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/retention.ts",
-      "protectingTests": ["apps/platform-api/tests/unit/retention.test.ts"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/legal-hold.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12c: legal-hold usecase/adapter unit tests",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/legal-hold.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/retention.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: retention usecase/adapter unit tests",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/retention.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docker/grafana/dashboards/platform-api-red-method.json",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-17b: Grafana RED-method dashboard for platform-api",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docker/grafana/dashboards/platform-api-red-method.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/evidence/data/legal-hold.md",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12c: legal-hold evidence narrative",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/data/legal-hold.md",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/evidence/data/legal-hold-runtime-proof.json",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12c: legal-hold runtime-proof transcript evidence",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/data/legal-hold-runtime-proof.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/evidence/data/retention.md",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: retention evidence narrative",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/data/retention.md",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/evidence/data/retention-runtime-proof.json",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-12b: retention runtime-proof transcript evidence",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/data/retention-runtime-proof.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-17: readiness rule R21 validating observability artefacts (Prometheus/Grafana)",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r21-v1c17-observability.mjs",
-      "protectingTests": ["tools/v2-readiness/tests/r21-v1c17-observability.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
       "path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
       "introducingCommit": "unknown",
       "purpose": "V1C-17: tests for readiness rule R21",
@@ -1876,1046 +2964,12 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
-      "path": "docs/evidence/stages/v2-readiness-progress.log",
-      "introducingCommit": "763b26a",
-      "purpose": "v2:readiness append-only run transcript (generated runtime artefact)",
-      "v2Disposition": "regenerate",
-      "v2Target": "docs/evidence/stages/v2-readiness-progress.log",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-0075", "ADR-ACT-0285"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/delegations.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-04 usecase unit tests (node:test): auth + audit-before-mutation ordering, fail-closed",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/delegations.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "V1C-04 substrate unit tests (node:test): adapter wrapper/capture-index + active-predicate fidelity",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0304"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package search-runtime (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/search-runtime/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package access-control (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/access-control/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package security-auth (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/security-auth/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package queue-runtime (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/queue-runtime/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package notification-runtime (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/notification-runtime/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package worker-runtime (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/worker-runtime/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package observability (ADR-0006/ADR-ACT-0289).",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/observability/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package domain-core.",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/domain-core/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package feature-workflow.",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/feature-workflow/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
-      "introducingCommit": "pending",
-      "purpose": "Structured removal evidence for deprecated package profile-configuration.",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0289"]
-    },
-    {
-      "path": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
-      "protectingTests": ["npm run proof:billing-control-route"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "protectingTests": ["npm run proof:billing-catalog"],
-      "decisionRefs": ["ADR-ACT-0241", "ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
-      "protectingTests": ["npm run proof:billing-provider"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/http-engine-provider.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/http-engine-provider.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/lago-billing-provider.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/lago-billing-provider.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/windmill-automation-provider.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/windmill-automation-provider.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/ports/automation-runner.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/automation-runner.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/ports/workflow-orchestrator.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/workflow-orchestrator.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/server/resource-policies.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/server/resource-policies.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/backup-control.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/backup-control.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/billing-control.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/billing-control.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/billing-readiness.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/billing-readiness.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/compliance-report.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/compliance-report.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/observability-control.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/observability-control.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/provider-binding-report.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/provider-binding-report.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/security-control.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/security-control.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/workflow-control.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/workflow-control.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/workflow-readiness.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/workflow-readiness.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docker/temporal/dynamicconfig/development.yaml",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docker/temporal/dynamicconfig/development.yaml",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-billing-catalog.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-billing-catalog.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-data-governance.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-data-governance.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/039-billing-catalog.sql",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/039-billing-catalog.sql",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/041-data-governance.sql",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/041-data-governance.sql",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/042-storage-objects.sql",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/042-storage-objects.sql",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/043-support-tickets.sql",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/043-support-tickets.sql",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/ports/billing-catalog.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/billing-catalog.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/ports/data-governance.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/data-governance.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/ports/storage-objects.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/storage-objects.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/billing-catalog.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/billing-catalog.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/data-governance.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/data-governance.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/data-portability.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/data-portability.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/storage-objects.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/storage-objects.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/support-tickets.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/support-tickets.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/usecases/tenant-lifecycle.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/usecases/tenant-lifecycle.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/billing-catalog.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/billing-catalog.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/data-governance.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/data-governance.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/data-portability.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/data-portability.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/storage-objects.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/storage-objects.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/support-tickets.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/support-tickets.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
-      "introducingCommit": "unknown",
-      "purpose": "post-audit addition",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
-      "protectingTests": [],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
-      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
-      "purpose": "post-audit addition: tenant lifecycle runtime proof",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
-      "protectingTests": ["npm run proof:tenant-lifecycle"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/clamav-antivirus.ts",
-      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
-      "purpose": "post-audit addition: antivirus adapter for storage-object scan semantics",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/clamav-antivirus.ts",
-      "protectingTests": ["npm run test:platform-api"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
-      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
-      "purpose": "post-audit addition: durable tenant import application adapter",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
-      "protectingTests": ["npm run proof:data-portability"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
-      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
-      "purpose": "post-audit addition: portable import progress migration",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
-      "protectingTests": ["npm run proof:data-portability"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
-      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
-      "purpose": "post-audit addition: DSR fulfillment evidence migration",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
-      "protectingTests": ["npm run proof:data-governance"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "apps/platform-api/src/ports/antivirus.ts",
-      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
-      "purpose": "post-audit addition: antivirus scan port for storage-object semantics",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "apps/platform-api/src/ports/antivirus.ts",
-      "protectingTests": ["npm run test:platform-api"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/capability-definition.json",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: mandatory semantic capability definition foundation asset",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/capability-definition.json",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/capability-state-machine.json",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: mandatory capability state-machine foundation asset",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/capability-state-machine.json",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/capability-permissions.json",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: mandatory capability permissions foundation asset",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/capability-permissions.json",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/capability-errors.json",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: mandatory capability validation and error catalogue foundation asset",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/capability-errors.json",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/capability-ui-contract.json",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: mandatory capability UI semantic contract foundation asset",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/capability-ui-contract.json",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/capability-proof-definition.json",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: mandatory capability proof-level foundation asset",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/capability-proof-definition.json",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: semantic completeness validator rule",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
-      "introducingCommit": "pending",
-      "purpose": "post-audit addition: runtime proof-level classification validator rule",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
-      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/environment-capability-matrix.json",
-      "introducingCommit": "pending",
-      "purpose": "system-level V2 semantic foundation artefact",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/environment-capability-matrix.json",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/cross-capability-interactions.json",
-      "introducingCommit": "pending",
-      "purpose": "system-level V2 semantic foundation artefact",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/cross-capability-interactions.json",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/event-semantics.json",
-      "introducingCommit": "pending",
-      "purpose": "system-level V2 semantic foundation artefact",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/event-semantics.json",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/operational-semantics.json",
-      "introducingCommit": "pending",
-      "purpose": "system-level V2 semantic foundation artefact",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/operational-semantics.json",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/semantic-source-of-truth-transition.json",
-      "introducingCommit": "pending",
-      "purpose": "system-level V2 semantic foundation artefact",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/semantic-source-of-truth-transition.json",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "docs/v2-foundation/semantic-source-of-truth-transition.md",
-      "introducingCommit": "pending",
-      "purpose": "system-level V2 semantic foundation artefact",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "docs/v2-foundation/semantic-source-of-truth-transition.md",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs",
-      "introducingCommit": "pending",
-      "purpose": "V2 readiness validator rule for system-level semantic closure",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs",
-      "introducingCommit": "pending",
-      "purpose": "V2 readiness validator rule for system-level semantic closure",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r26-event-semantics.mjs",
-      "introducingCommit": "pending",
-      "purpose": "V2 readiness validator rule for system-level semantic closure",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r26-event-semantics.mjs",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs",
-      "introducingCommit": "pending",
-      "purpose": "V2 readiness validator rule for system-level semantic closure",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r27-operational-semantics.mjs",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
-      "decisionRefs": ["ADR-ACT-0292"]
-    },
-    {
-      "path": "tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs",
-      "introducingCommit": "pending",
-      "purpose": "V2 readiness validator rule for system-level semantic closure",
-      "v2Disposition": "reuse-unchanged",
-      "v2Target": "tools/v2-readiness/src/rules/r28-semantic-source-transition.mjs",
-      "protectingTests": [
-        "tools/v2-readiness/tests/rules.test.mjs",
-        "tools/v2-readiness/tests/golden.test.mjs",
-        "tools/v2-readiness/tests/cli.test.mjs"
-      ],
+      "path": "tools/v2-readiness/tests/rules.test.mjs",
+      "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
+      "purpose": "V2-readiness validator test",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/tests/rules.test.mjs",
+      "protectingTests": ["tools/v2-readiness/tests/rules.test.mjs"],
       "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
@@ -3299,6 +3353,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 308,
+  "additionCount": 314,
   "deletionCount": 54
 }

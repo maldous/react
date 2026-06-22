@@ -1,99 +1,317 @@
 {
   "artefact": "cross-capability-interactions",
-  "version": 1,
+  "version": 2,
   "mandatoryFoundationAsset": true,
   "coverage": {
-    "source": "docs/v2-foundation/v1-capability-closure.json",
-    "enforcedBy": ["tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs"]
+    "source": [
+      "docs/v2-foundation/v1-capability-closure.json",
+      "docs/v2-foundation/event-semantics.json",
+      "docs/v2-foundation/environment-capability-matrix.json",
+      "docs/v2-foundation/operational-semantics.json"
+    ],
+    "interactionTypes": [
+      "sync-api",
+      "event",
+      "workflow",
+      "data-reference",
+      "readiness-dependency",
+      "provider-dependency",
+      "audit-dependency",
+      "lifecycle-dependency"
+    ],
+    "enforcedBy": "tools/v2-readiness/src/rules/r25-cross-capability-semantics.mjs"
   },
   "interactions": [
     {
       "id": "entitlements-billing",
       "producerCapability": "Entitlement engine",
       "consumerCapability": "Subscriptions, invoices, payment methods, dunning",
+      "interactionType": "readiness-dependency",
       "sharedContract": "Entitlement/quota grants gate billing account, subscription, usage, and payment behaviour",
-      "ownershipBoundary": "Entitlements owns allow/deny state; billing owns account/invoice/payment state",
-      "failureBehaviour": "billing must fail closed or remain pending when entitlement is absent",
-      "orderingRequirement": "entitlement decision precedes billing mutation",
-      "retryIdempotencyBehaviour": "idempotency keys on meter/billing events; retries never duplicate charges",
-      "proofReference": "proof:entitlement-policy-chain; proof:billing-provider; proof:lago-billing-provider"
+      "dataOwnershipBoundary": "Entitlement engine owns its source state; Subscriptions, invoices, payment methods, dunning may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Entitlement engine controls mutation semantics; Subscriptions, invoices, payment methods, dunning controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Entitlement engine owns producer state; Subscriptions, invoices, payment methods, dunning owns consumer state.",
+      "failureBehaviour": "Subscriptions, invoices, payment methods, dunning fails closed or remains pending when Entitlement engine proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Entitlement engine transaction is not shared with Subscriptions, invoices, payment methods, dunning; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:entitlement-policy-chain; proof:billing-provider; proof:lago-billing-provider",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+        "apps/platform-api/scripts/billing-runtime-proof.ts"
+      ]
     },
     {
       "id": "billing-workflow",
-      "producerCapability": "Subscriptions, invoices, payment methods, dunning",
+      "producerCapability": "Usage metering + meter event ingestion",
       "consumerCapability": "Workflow engine, scheduled jobs, approvals",
-      "sharedContract": "Billing lifecycle may enqueue/coordinate provider workflows for dunning/cancel/export actions",
-      "ownershipBoundary": "Billing owns money state; workflow owns orchestration run state",
-      "failureBehaviour": "workflow unavailable leaves billing action pending/degraded, not silently successful",
-      "orderingRequirement": "billing state mutation records before external workflow side effect when money state changes",
-      "retryIdempotencyBehaviour": "workflow ids/idempotency keys prevent duplicate external runs",
-      "proofReference": "proof:billing-provider; proof:workflow-provider-live; proof:composed-provider-runtime-closure"
+      "interactionType": "workflow",
+      "sharedContract": "Metered usage and scheduled billing jobs share tenant-scoped event/job contracts",
+      "dataOwnershipBoundary": "Usage metering + meter event ingestion owns its source state; Workflow engine, scheduled jobs, approvals may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Usage metering + meter event ingestion controls mutation semantics; Workflow engine, scheduled jobs, approvals controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Usage metering + meter event ingestion owns producer state; Workflow engine, scheduled jobs, approvals owns consumer state.",
+      "failureBehaviour": "Workflow engine, scheduled jobs, approvals fails closed or remains pending when Usage metering + meter event ingestion proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Usage metering + meter event ingestion transaction is not shared with Workflow engine, scheduled jobs, approvals; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:metering; proof:scheduled-jobs",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/metering-runtime-proof.ts",
+        "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"
+      ]
     },
     {
       "id": "workflow-notifications",
       "producerCapability": "Workflow engine, scheduled jobs, approvals",
       "consumerCapability": "Notification delivery + preferences + channels",
-      "sharedContract": "Workflow status changes dispatch notification intents through notification transports",
-      "ownershipBoundary": "Workflow owns state transition; notifications own channel preference and delivery log",
-      "failureBehaviour": "notification failure records suppressed/failed and does not roll back completed workflow unless workflow declares notification-required",
-      "orderingRequirement": "workflow transition occurs before notification dispatch",
-      "retryIdempotencyBehaviour": "notification dispatch is idempotent by event/delivery key and retries through worker policy",
-      "proofReference": "proof:workflow-closure; proof:notification-dispatch; proof:notification-email-transport"
+      "interactionType": "event",
+      "sharedContract": "Workflow events request notifications only after preference/channel checks",
+      "dataOwnershipBoundary": "Workflow engine, scheduled jobs, approvals owns its source state; Notification delivery + preferences + channels may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Workflow engine, scheduled jobs, approvals controls mutation semantics; Notification delivery + preferences + channels controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Workflow engine, scheduled jobs, approvals owns producer state; Notification delivery + preferences + channels owns consumer state.",
+      "failureBehaviour": "Notification delivery + preferences + channels fails closed or remains pending when Workflow engine, scheduled jobs, approvals proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "eventual consistency with idempotent consumer replay",
+      "transactionBoundary": "Workflow engine, scheduled jobs, approvals transaction is not shared with Notification delivery + preferences + channels; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:workflow-provider-live; proof:notification-dispatch",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+        "apps/platform-api/scripts/event-worker-runtime-proof.ts"
+      ]
     },
     {
       "id": "storage-governance",
       "producerCapability": "Object storage + tenant prefixes + signed URLs",
       "consumerCapability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "sharedContract": "Storage objects carry classification/lineage/governance metadata and DSR/export references",
-      "ownershipBoundary": "Storage owns bytes/object lifecycle; governance owns classification/DSR semantics",
-      "failureBehaviour": "governance unavailable blocks classification-sensitive destructive action",
-      "orderingRequirement": "object write/scan precedes governance classification update",
-      "retryIdempotencyBehaviour": "object ids and DSR ids are idempotency keys for repeated governance sync",
-      "proofReference": "proof:tenant-storage-objects; proof:data-governance; proof:object-scan-closure"
+      "interactionType": "data-reference",
+      "sharedContract": "Governance references storage object metadata without taking ownership of bytes",
+      "dataOwnershipBoundary": "Object storage + tenant prefixes + signed URLs owns its source state; Data governance: catalog, lineage, classification, PII, DSR/GDPR may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Object storage + tenant prefixes + signed URLs controls mutation semantics; Data governance: catalog, lineage, classification, PII, DSR/GDPR controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Object storage + tenant prefixes + signed URLs owns producer state; Data governance: catalog, lineage, classification, PII, DSR/GDPR owns consumer state.",
+      "failureBehaviour": "Data governance: catalog, lineage, classification, PII, DSR/GDPR fails closed or remains pending when Object storage + tenant prefixes + signed URLs proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Object storage + tenant prefixes + signed URLs transaction is not shared with Data governance: catalog, lineage, classification, PII, DSR/GDPR; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:tenant-storage-objects; proof:data-governance",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/storage-runtime-proof.ts",
+        "apps/platform-api/tests/unit/data-governance.test.ts"
+      ]
     },
     {
       "id": "governance-tenant-lifecycle",
-      "producerCapability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "consumerCapability": "Tenant lifecycle: provision, suspend, delete, export",
-      "sharedContract": "Tenant lifecycle consumes governance/export/DSR/legal-hold state before destructive tenant actions",
-      "ownershipBoundary": "Governance owns legal/DSR state; lifecycle owns tenant state transitions",
-      "failureBehaviour": "active legal hold or incomplete export blocks delete/suspend destructive steps",
-      "orderingRequirement": "export/DSR/legal-hold checks precede tenant delete coordination",
-      "retryIdempotencyBehaviour": "tenant lifecycle uses tenant id as idempotency key for repeated suspend/delete/export attempts",
-      "proofReference": "proof:data-governance; proof:tenant-lifecycle; proof:data-portability"
+      "producerCapability": "Tenant lifecycle: provision, suspend, delete, export",
+      "consumerCapability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "interactionType": "lifecycle-dependency",
+      "sharedContract": "Lifecycle export/delete/suspend semantics require governance retention, DSR, and legal-hold decisions",
+      "dataOwnershipBoundary": "Tenant lifecycle: provision, suspend, delete, export owns its source state; Data governance: catalog, lineage, classification, PII, DSR/GDPR may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Tenant lifecycle: provision, suspend, delete, export controls mutation semantics; Data governance: catalog, lineage, classification, PII, DSR/GDPR controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Tenant lifecycle: provision, suspend, delete, export owns producer state; Data governance: catalog, lineage, classification, PII, DSR/GDPR owns consumer state.",
+      "failureBehaviour": "Data governance: catalog, lineage, classification, PII, DSR/GDPR fails closed or remains pending when Tenant lifecycle: provision, suspend, delete, export proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Tenant lifecycle: provision, suspend, delete, export transaction is not shared with Data governance: catalog, lineage, classification, PII, DSR/GDPR; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:tenant-lifecycle; proof:data-governance; proof:legal-hold",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+        "apps/platform-api/tests/unit/data-governance.test.ts"
+      ]
     },
     {
       "id": "audit-privileged-access",
-      "producerCapability": "Audit of privileged access",
-      "consumerCapability": "Support-mode / break-glass access",
-      "sharedContract": "Privileged access mutations and support sessions emit audit-before-change records",
-      "ownershipBoundary": "Privileged capability owns mutation; audit owns immutable evidence",
-      "failureBehaviour": "audit failure prevents privileged mutation or records explicit failure",
-      "orderingRequirement": "audit event must be emitted before privileged state mutation",
-      "retryIdempotencyBehaviour": "audit resource id/action deduplicate review evidence and preserve retry safety",
-      "proofReference": "audit unit tests; proof:support-approval; proof:history"
+      "producerCapability": "Support-mode / break-glass access",
+      "consumerCapability": "Audit of privileged access",
+      "interactionType": "audit-dependency",
+      "sharedContract": "Support/break-glass access cannot proceed without privileged audit event evidence",
+      "dataOwnershipBoundary": "Support-mode / break-glass access owns its source state; Audit of privileged access may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Support-mode / break-glass access controls mutation semantics; Audit of privileged access controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Support-mode / break-glass access owns producer state; Audit of privileged access owns consumer state.",
+      "failureBehaviour": "Audit of privileged access fails closed or remains pending when Support-mode / break-glass access proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Support-mode / break-glass access transaction is not shared with Audit of privileged access; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:support-approval; proof:compliance-report",
+      "sourceEvidence": [
+        "apps/platform-api/tests/unit/support-mode.test.ts",
+        "apps/platform-api/tests/unit/audit.test.ts"
+      ]
     },
     {
       "id": "catalog-provider-readiness",
-      "producerCapability": "Service catalog + provider integration model",
+      "producerCapability": "Internal service catalog + readiness",
       "consumerCapability": "Composed provider readiness spine",
-      "sharedContract": "Service catalog displays provider exposure and readiness without granting access by itself",
-      "ownershipBoundary": "Catalog owns source classification; provider readiness owns adapter-confirmed health",
-      "failureBehaviour": "provider unreachable surfaces degraded/not_configured, never hidden healthy",
-      "orderingRequirement": "catalog classification exists before readiness projection",
-      "retryIdempotencyBehaviour": "readiness polling is idempotent and safe to retry",
-      "proofReference": "proof:service-catalog-registry; proof:platform-services; proof:composed-provider-readiness"
+      "interactionType": "provider-dependency",
+      "sharedContract": "Provider readiness entries expose service catalogue status and clickthrough only when capability readiness is true",
+      "dataOwnershipBoundary": "Internal service catalog + readiness owns its source state; Composed provider readiness spine may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Internal service catalog + readiness controls mutation semantics; Composed provider readiness spine controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Internal service catalog + readiness owns producer state; Composed provider readiness spine owns consumer state.",
+      "failureBehaviour": "Composed provider readiness spine fails closed or remains pending when Internal service catalog + readiness proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Internal service catalog + readiness transaction is not shared with Composed provider readiness spine; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:service-catalog-registry; proof:composed-provider-readiness",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+        "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts"
+      ]
     },
     {
       "id": "events-workers-dlq",
       "producerCapability": "Event bus, durable queues, DLQ, redrive",
       "consumerCapability": "Background workers / job runner",
-      "sharedContract": "Events are claimed by workers, retried, dead-lettered, and redriven through explicit operator controls",
-      "ownershipBoundary": "Event bus owns outbox/DLQ; workers own handler execution/liveness",
-      "failureBehaviour": "handler failure retries until max attempts then DLQ; unknown handlers are not dropped",
-      "orderingRequirement": "publish -> claim -> process/retry -> DLQ/redrive ordering",
-      "retryIdempotencyBehaviour": "event idempotency key and redrive generated key prevent duplicate processed effects",
-      "proofReference": "proof:event-bus; proof:event-worker; proof:event-redrive"
+      "interactionType": "event",
+      "sharedContract": "Workers consume event-bus records, apply retry/DLQ/redrive semantics, and keep producer mutation state independent",
+      "dataOwnershipBoundary": "Event bus, durable queues, DLQ, redrive owns its source state; Background workers / job runner may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Event bus, durable queues, DLQ, redrive controls mutation semantics; Background workers / job runner controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Event bus, durable queues, DLQ, redrive owns producer state; Background workers / job runner owns consumer state.",
+      "failureBehaviour": "Background workers / job runner fails closed or remains pending when Event bus, durable queues, DLQ, redrive proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "eventual consistency with idempotent consumer replay",
+      "transactionBoundary": "Event bus, durable queues, DLQ, redrive transaction is not shared with Background workers / job runner; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:event-bus; proof:event-worker; proof:event-redrive",
+      "sourceEvidence": [
+        "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+        "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+        "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      ]
+    },
+    {
+      "id": "webhooks-events",
+      "producerCapability": "Event bus, durable queues, DLQ, redrive",
+      "consumerCapability": "Webhooks (developer-facing)",
+      "interactionType": "event",
+      "sharedContract": "Canonical tenant events are delivered to developer webhooks through subscribed event types and redriveable delivery records",
+      "dataOwnershipBoundary": "Event bus, durable queues, DLQ, redrive owns its source state; Webhooks (developer-facing) may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Event bus, durable queues, DLQ, redrive controls mutation semantics; Webhooks (developer-facing) controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Event bus, durable queues, DLQ, redrive owns producer state; Webhooks (developer-facing) owns consumer state.",
+      "failureBehaviour": "Webhooks (developer-facing) fails closed or remains pending when Event bus, durable queues, DLQ, redrive proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "eventual consistency with idempotent consumer replay",
+      "transactionBoundary": "Event bus, durable queues, DLQ, redrive transaction is not shared with Webhooks (developer-facing); cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:webhooks; proof:webhook-redrive",
+      "sourceEvidence": [
+        "apps/platform-api/src/usecases/webhook-worker.ts",
+        "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"
+      ]
+    },
+    {
+      "id": "tenant-identity-access",
+      "producerCapability": "Tenant identity (record + FQDN)",
+      "consumerCapability": "User identity + tenant membership",
+      "interactionType": "sync-api",
+      "sharedContract": "Request tenant identity scopes membership resolution, session context, and route permission checks",
+      "dataOwnershipBoundary": "Tenant identity (record + FQDN) owns its source state; User identity + tenant membership may read or act only through the shared contract.",
+      "controlOwnershipBoundary": "Tenant identity (record + FQDN) controls mutation semantics; User identity + tenant membership controls its local reaction and must not infer missing producer state.",
+      "ownershipBoundary": "Tenant identity (record + FQDN) owns producer state; User identity + tenant membership owns consumer state.",
+      "failureBehaviour": "User identity + tenant membership fails closed or remains pending when Tenant identity (record + FQDN) proof/readiness is unavailable.",
+      "orderingRequirement": "producer state/readiness is established before consumer mutation or side effect",
+      "retryIdempotencyBehaviour": "retries use tenant-scoped idempotency and must not duplicate side effects",
+      "consistencyModel": "read-committed platform state with explicit readiness dependency",
+      "transactionBoundary": "Tenant identity (record + FQDN) transaction is not shared with User identity + tenant membership; cross-capability work uses explicit handoff and compensation.",
+      "compensationBehaviour": "partial consumer state is retried, redriven, or marked pending; producer-owned state is not silently rolled back by consumer failure",
+      "environmentBehaviour": {
+        "dev": "local composed provider or fixture dependency for discovery",
+        "test": "deterministic proof using disposable tenant data",
+        "staging": "prod-shape rehearsal with sandbox external dependencies where needed",
+        "prod": "real tenant operation with non-destructive smoke/readiness only"
+      },
+      "securityBoundary": "tenant context, permissions, secrets, and provider credentials do not cross the boundary except through the declared contract",
+      "auditBoundary": "producer mutation audit remains producer-owned; consumer audit records its reaction, delivery, or readiness state",
+      "proofReference": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
+      "sourceEvidence": [
+        "apps/platform-api/src/server/tenant-resolver.ts",
+        "apps/platform-api/src/server/pipeline.ts"
+      ]
     }
   ]
 }

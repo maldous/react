@@ -21,6 +21,9 @@ export default function r28SemanticSourceTransition(ctx) {
     "driftPolicy",
     "changePolicy",
     "v1ReopenPolicy",
+    "requiredChangeCoupling",
+    "forbiddenChanges",
+    "enforcementPath",
   ])
     if (!present(policies[field]))
       out.push(
@@ -81,6 +84,48 @@ export default function r28SemanticSourceTransition(ctx) {
         "v2-branch-cut-runbook.md",
         "runbook still implies V1 remains the live semantic authority forever"
       )
+    );
+  const coupling = policies.requiredChangeCoupling || [];
+  for (const item of [
+    "capability definition",
+    "contracts",
+    "permissions",
+    "validation",
+    "errors",
+    "events",
+    "operational semantics",
+    "environment semantics",
+    "UI semantics",
+    "proofs",
+    "validator rules",
+  ])
+    if (!JSON.stringify(coupling).toLowerCase().includes(item.toLowerCase()))
+      out.push(
+        finding(
+          "R28-semantic-source-transition",
+          "requiredChangeCoupling",
+          `change coupling missing ${item}`
+        )
+      );
+  const forbidden = JSON.stringify(policies.forbiddenChanges || "").toLowerCase();
+  for (const item of [
+    "code behaviour",
+    "ui behaviour",
+    "event emission",
+    "new provider",
+    "new capability",
+  ])
+    if (!forbidden.includes(item))
+      out.push(
+        finding(
+          "R28-semantic-source-transition",
+          "forbiddenChanges",
+          `forbidden drift cases missing ${item}`
+        )
+      );
+  if (!/validator|readiness|proof|enforce/i.test(JSON.stringify(policies.enforcementPath || "")))
+    out.push(
+      finding("R28-semantic-source-transition", "enforcementPath", "no enforcement path is defined")
     );
   return out;
 }

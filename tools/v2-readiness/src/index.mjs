@@ -29,6 +29,7 @@ import r25 from "./rules/r25-cross-capability-semantics.mjs";
 import r26 from "./rules/r26-event-semantics.mjs";
 import r27 from "./rules/r27-operational-semantics.mjs";
 import r28 from "./rules/r28-semantic-source-transition.mjs";
+import r29 from "./rules/r29-environment-readiness-gates.mjs";
 
 export const RULES = [
   r1,
@@ -59,6 +60,7 @@ export const RULES = [
   r26,
   r27,
   r28,
+  r29,
 ];
 
 export function runRules(ctx) {
@@ -88,6 +90,7 @@ const AUDIT_SURFACES = {
   "event-semantics": "R26",
   "operational-semantics": "R27",
   "semantic-source-transition": "R28",
+  "environment-readiness-gates": "R29",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -109,6 +112,7 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R26",
   "R27",
   "R28",
+  "R29",
 ];
 
 export function summarize(

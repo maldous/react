@@ -477,6 +477,15 @@ test("R23 accepts a proof script with level and rationale", () => {
     kind: "proof-script",
     proofLevel: 3,
     proofLevelRationale: "state-machine validation",
+    capabilitiesProven: ["C1"],
+    semanticFacetsProven: ["contracts", "stateModel", "readinessModel"],
+    environment: "test",
+    providerClass: "compose-local",
+    liveSubstrateUsed: true,
+    destructive: false,
+    prodSafe: true,
+    sourceCommand: "npm run proof:x",
+    expectedFailureMode: "runtime proof exits non-zero",
   });
   assert.deepEqual(r23(a), []);
 });
