@@ -2641,7 +2641,45 @@
         "proof": "platform-config + config-contracts tests",
         "implementation": ["apps/platform-api/src/server/routes.ts:3359", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/src/config/registry.ts; apps/platform-api/tests/unit/platform-config.test.ts; apps/platform-api/tests/unit/config-contracts.test.ts",
+        "evidence": "registry definitions classify each setting by category, valueType, allowedValues, lifecycle, storageKey, and read/write permissions; tests validate enum/type/category behavior"
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, legal-hold guarded candidates, and route registration for configuration audit/history records"
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "backup proof exercises configured pg_dump path, protected-environment refusal, dump integrity, and unavailable database failure for tenant_settings and audit/history persistence"
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "restore drill restores a platform Postgres backup into a throwaway database and verifies recovered marker state without touching live data"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "tenant export route builds an encrypted archive containing audit/history.json; portability proof verifies encrypted archive, manifest integrity, and durable grouped import progress"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+        "evidence": "legal-hold proof validates audit-before-change hold set/release and active-hold guards over audit_events/configuration history records"
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "evidence": "DSR fulfillment proof records portability-export evidence and portability proof protects exported audit/history payload integrity"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/tests/unit/platform-config.test.ts",
+        "evidence": "config mutation tests emit ConfigValueChanged/ConfigValueCleared audit records and history proof projects tenant audit sources into a read-only lineage/history model"
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/src/usecases/platform-config.ts; apps/platform-api/tests/unit/platform-config.test.ts; apps/platform-api/scripts/history-runtime-proof.ts",
+        "evidence": "usecase reads and writes tenant_settings through withTenant, tests assert tenant-scoped storage keys and permissions, and history proof proves tenant A excludes tenant B rows"
+      }
+    }
   },
   {
     "capability": "Branding + theming",
