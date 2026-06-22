@@ -13,9 +13,39 @@ import type {
 import type { FetchLike } from "./http-engine-provider.ts";
 import { Client as LagoClient, getLagoError } from "lago-javascript-client";
 
-async function request<T>(fetchImpl: FetchLike, url: string, init?: RequestInit): Promise<T> {
+export const lagoBillingProviderReliabilityEvidence = {
+  provider: "lago-billing-provider",
+  configSource:
+    "baseUrl/token are constructed from billing provider configuration and process.env-backed secrets before adapter creation",
+  secretSource:
+    "Lago API token is supplied via constructor options and passed only to the Lago SDK",
+  timeout: "SDK and HTTP fallback calls use AbortSignal.timeout through fetchWithTimeout",
+  retry:
+    "no retry inside the adapter: billing mutations are not replayed here; callers use idempotency keys or retry at the workflow boundary",
+  degradedMode:
+    "readiness returns degraded/unavailable for provider errors instead of claiming ready",
+  failClosed:
+    "non-ready Lago responses throw or return null for lookups; mutating operations do not write local success state",
+  fallbackRationale:
+    "HTTP fallback exists only when preferSdk=false for test/local compatibility; no alternate billing provider is attempted",
+  healthCheck: "readiness probes the SDK public-key endpoint or /health in HTTP fallback mode",
+  operatorRecovery:
+    "operators recover by checking Lago readiness, rotating the Lago token, repairing baseUrl configuration, or replaying idempotent workflow commands",
+  unavailableProof: "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+  misconfiguredProof: "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+} as const;
+
+const DEFAULT_LAGO_TIMEOUT_MS = 5000;
+
+async function request<T>(
+  fetchImpl: FetchLike,
+  url: string,
+  init?: RequestInit,
+  timeoutMs = DEFAULT_LAGO_TIMEOUT_MS
+): Promise<T> {
   const res = await fetchImpl(url, {
     ...init,
+    signal: init?.signal ?? AbortSignal.timeout(timeoutMs),
     headers: { "content-type": "application/json", ...(init?.headers ?? {}) },
   });
   if (!res.ok) throw new Error(`http_${res.status}`);
@@ -26,6 +56,7 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
   private readonly baseUrl: string;
   private readonly token?: string;
   private readonly fetchImpl: FetchLike;
+  private readonly timeoutMs: number;
   private readonly preferSdk: boolean;
   private readonly importLago?: () => Promise<{
     Client: typeof LagoClient;
@@ -39,6 +70,7 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
     fetchImpl: FetchLike = fetch,
     options?: {
       token?: string;
+      timeoutMs?: number;
       preferSdk?: boolean;
       importLago?: () => Promise<{
         Client: typeof LagoClient;
@@ -49,16 +81,23 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
     this.baseUrl = baseUrl;
     this.fetchImpl = fetchImpl;
     this.token = options?.token;
+    this.timeoutMs = options?.timeoutMs ?? DEFAULT_LAGO_TIMEOUT_MS;
     this.preferSdk = options?.preferSdk ?? true;
     this.importLago = options?.importLago;
   }
+
+  private fetchWithTimeout: FetchLike = (input, init) =>
+    this.fetchImpl(input, {
+      ...init,
+      signal: init?.signal ?? AbortSignal.timeout(this.timeoutMs),
+    });
 
   private lago(): ReturnType<typeof LagoClient> | null {
     if (!this.preferSdk) return null;
     if (!this.client) {
       this.client = LagoClient(this.token ?? "", {
         baseUrl: this.baseUrl,
-        customFetch: this.fetchImpl,
+        customFetch: this.fetchWithTimeout,
       });
     }
     return this.client;
@@ -75,7 +114,7 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
       if (!this.client) {
         this.client = mod.Client(this.token ?? "", {
           baseUrl: this.baseUrl,
-          customFetch: this.fetchImpl,
+          customFetch: this.fetchWithTimeout,
         });
       }
       return { client: this.client, getError: this.lagoError };
@@ -96,7 +135,7 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
       }
     }
     try {
-      const res = await this.fetchImpl(`${this.baseUrl}/health`);
+      const res = await this.fetchWithTimeout(`${this.baseUrl}/health`);
       return { status: res.ok ? "ready" : "degraded", detail: `lago:${res.status}` };
     } catch {
       return { status: "unavailable", detail: "lago:unreachable" };
@@ -124,10 +163,15 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
         ),
       };
     }
-    return request<BillingAccount>(this.fetchImpl, `${this.baseUrl}/customers`, {
-      method: "POST",
-      body: JSON.stringify(input),
-    });
+    return request<BillingAccount>(
+      this.fetchWithTimeout,
+      `${this.baseUrl}/customers`,
+      {
+        method: "POST",
+        body: JSON.stringify(input),
+      },
+      this.timeoutMs
+    );
   }
 
   async getAccount(organisationId: string): Promise<BillingAccount | null> {
@@ -150,7 +194,7 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
         return null;
       }
     }
-    const res = await this.fetchImpl(
+    const res = await this.fetchWithTimeout(
       `${this.baseUrl}/customers/${encodeURIComponent(organisationId)}`
     );
     if (res.status === 404) return null;
@@ -204,12 +248,13 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
       };
     }
     return request<{ plan: ProductPlan; price: PlanPrice }>(
-      this.fetchImpl,
+      this.fetchWithTimeout,
       `${this.baseUrl}/plans`,
       {
         method: "POST",
         body: JSON.stringify(input),
-      }
+      },
+      this.timeoutMs
     );
   }
 
@@ -233,10 +278,15 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
         createdAt: String(sub["createdAt"] ?? sub["created_at"] ?? new Date().toISOString()),
       };
     }
-    return request<Subscription>(this.fetchImpl, `${this.baseUrl}/subscriptions`, {
-      method: "POST",
-      body: JSON.stringify(input),
-    });
+    return request<Subscription>(
+      this.fetchWithTimeout,
+      `${this.baseUrl}/subscriptions`,
+      {
+        method: "POST",
+        body: JSON.stringify(input),
+      },
+      this.timeoutMs
+    );
   }
 
   async changeSubscription(
@@ -263,12 +313,13 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
       };
     }
     return request<Subscription>(
-      this.fetchImpl,
+      this.fetchWithTimeout,
       `${this.baseUrl}/subscriptions/${encodeURIComponent(subscriptionId)}`,
       {
         method: "PATCH",
         body: JSON.stringify(input),
-      }
+      },
+      this.timeoutMs
     );
   }
 
@@ -290,12 +341,13 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
       };
     }
     return request<Subscription>(
-      this.fetchImpl,
+      this.fetchWithTimeout,
       `${this.baseUrl}/subscriptions/${encodeURIComponent(subscriptionId)}/cancel`,
       {
         method: "POST",
         body: JSON.stringify({ organisationId }),
-      }
+      },
+      this.timeoutMs
     );
   }
 
@@ -322,7 +374,7 @@ export class LagoBillingProviderAdapter implements BillingProviderPort {
         return null;
       }
     }
-    const res = await this.fetchImpl(
+    const res = await this.fetchWithTimeout(
       `${this.baseUrl}/invoices/${encodeURIComponent(invoiceId)}?organisationId=${encodeURIComponent(organisationId)}`
     );
     if (res.status === 404) return null;
