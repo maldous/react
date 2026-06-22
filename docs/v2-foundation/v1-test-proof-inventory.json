@@ -1673,7 +1673,7 @@
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
     "proofLevel": 4,
-    "proofLevelRationale": "live route-handler proof validates /api/me/profile and /api/me/notification-preferences access-control metadata, own-profile update/read, invalid profile rejection, preference update/read, notification readiness, test send, durable dispatch logging, and secret-free responses"
+    "proofLevelRationale": "live Postgres proof validates alert rule creation, no_data/within/fired evaluation states, incident opening on fired alert, alert_rules secret-free schema, and tenant RLS isolation"
   },
   {
     "id": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
@@ -1684,7 +1684,7 @@
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
     "proofLevel": 4,
-    "proofLevelRationale": "live Postgres proof validates notification preference defaults, write/read round-trip, enabled/disabled flags, no secret-bearing columns, and tenant RLS isolation"
+    "proofLevelRationale": "live Postgres proof validates fired alert notification fan-out through the notification substrate, enabled channel delivery, disabled channel suppression, durable dispatch logging, and secret-free alert payloads"
   },
   {
     "id": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
@@ -1739,7 +1739,7 @@
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
     "proofLevel": 4,
-    "proofLevelRationale": "live Postgres proof validates read-only history projection across audit, notification, meter, and incident sources, tenant isolation, secret/metadata exclusion, pagination, and no mutation of source rows"
+    "proofLevelRationale": "local/runtime proof validates exposed clickthrough service listing, forward-auth-equivalent access gating, global-only denial for tenant/anonymous actors, secret-free response shape, and composed-provider readiness inclusion"
   },
   {
     "id": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
@@ -1750,7 +1750,7 @@
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
     "proofLevel": 4,
-    "proofLevelRationale": "live Keycloak proof mints a tenant-realm service-account credential, validates client_credentials against the tenant realm, rotates through validate-before-store, preserves existing credential on invalid rotation, performs a real MFA write/read-back, and deletes the throwaway client"
+    "proofLevelRationale": "live/honest provider proof validates all composed providers are reported, reachable providers report ready, unreachable wired providers report degraded, unwired providers report not_configured, lifecycle is adapter-confirmed, and payloads are secret-free"
   },
   {
     "id": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
@@ -1781,7 +1781,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates fired alert to incident creation, incident open to acknowledged to resolved lifecycle, persisted incident audit rows, incidents secret-free schema, tenant RLS isolation, and operator listing"
   },
   {
     "id": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
@@ -1834,7 +1836,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "deterministic bootstrap proof validates generated per-environment admin handoff, marker persistence without plaintext password, opaque secretRef metadata, production bootstrap warning, and authorised local re-print"
   },
   {
     "id": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
@@ -1843,7 +1847,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "deterministic environment operation proof validates closed operation enum, argv-only dry runs, allowed-profile checks, mock-profile production rejection, no destructive stop volumes, pattern validation, permission checks, and audit emission"
   },
   {
     "id": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
@@ -1852,7 +1858,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates manifest sync for dev/test/staging/prod, secret-free environment registry rows, no-mock staging/production policy, usecase and DB-check rejection paths, platform.environment permission checks, audit events, and bootstrap timestamping"
   },
   {
     "id": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
@@ -1905,7 +1913,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Keycloak proof validates IdP readiness, create/list/read/update/secret-rotate/disable/re-enable/delete lifecycle, redacted summary shape, Keycloak-masked raw secret, and cleanup of temporary provider"
   },
   {
     "id": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
@@ -1914,7 +1924,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates fired alert incident creation, open-to-acknowledged-to-resolved lifecycle, persisted incident audit rows, tenant RLS isolation, secret-free incident schema, and operator listing"
   },
   {
     "id": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
@@ -1967,7 +1979,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates notification preference defaults, write/read round-trip, enabled and disabled flags, notification_preferences secret-free schema, and tenant RLS isolation"
   },
   {
     "id": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
@@ -2000,7 +2014,7 @@
     "stageCoverage": "test (live-proof stage)",
     "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
     "proofLevel": 4,
-    "proofLevelRationale": "live/degraded provider proof validates built-in Postgres secret-store ready state, unreachable OpenBao degraded state, null resolution on degraded provider, and secret-free readiness payloads"
+    "proofLevelRationale": "live Postgres proof validates metric signal registration, sample recording and latest-value query, metric_signals/metric_samples secret-free schemas, and tenant RLS isolation"
   },
   {
     "id": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
@@ -2009,7 +2023,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Keycloak/OIDC proof validates discovery import, issuer/JWKS validation, issuer mismatch, unreachable endpoint, invalid document classification, callback URL derivation, non-interactive test connection, secret-free metadata, and temporary IdP cleanup"
   },
   {
     "id": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
@@ -2018,7 +2034,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "local registry proof validates complete service/provider classification, environment model, visibility, build/compose/adapter decision, proof refs, secret-free entry fields, production mock-provider rejection, and tenant/operator filtering"
   },
   {
     "id": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
@@ -2027,7 +2045,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "runtime proof validates service clickthrough access matrix, Caddy/web-profile route behavior, apex forward-auth gating, tenant/custom-domain SPA fallback for non-tenant-safe tool routes, and public Keycloak realm route exposure"
   },
   {
     "id": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
@@ -2036,7 +2056,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates provider config put/list/delete, no plaintext secret fields, opaque credentialRef requirement, secret-bearing config rejection, production-forbidden provider rejection, missing-credential degradation, and secret-free audit"
   },
   {
     "id": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
@@ -2045,7 +2067,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "static architecture proof validates per-environment substrate classification, mock-provider production forbiddance, shared-service checklist evidence, Sentry-only internal substrate policy, provider matrix coverage, and negative self-tests"
   },
   {
     "id": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
@@ -2054,7 +2078,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 3,
+    "proofLevelRationale": "pure contract proof validates adapter-confirmed provider lifecycle derivation: ready only with adapter ready, degraded for adapter failure/no result, proposed state remains non-delivered, and disabled remains disabled"
   },
   {
     "id": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
@@ -2063,7 +2089,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live/degraded provider proof validates built-in Postgres secret-store readiness, OpenBao ready/degraded classification, null resolution on degraded provider, and secret-free readiness payloads"
   },
   {
     "id": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
@@ -2282,7 +2310,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres plus local HTTP receiver proof validates dead-letter creation, subscription metrics, redrive requeue to pending, recovered delivery, lastSuccessAt update, and secret-free metrics"
   },
   {
     "id": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
@@ -2291,7 +2321,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres plus local HTTP receiver proof validates HMAC signing, readiness classifier, create with reveal-once secret, signed test delivery, durable delivered log, payload secret exclusion, and cleanup"
   },
   {
     "id": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
@@ -2300,7 +2332,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis/keycloak via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres plus local HTTP receivers proof validates event fan-out, pending delivery processing, retry after receiver failure, successful later delivery, max-attempt dead-lettering, and cleanup"
   },
   {
     "id": "e2e/discovery/browser-bff-trace.spec.ts",
@@ -2948,7 +2982,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:tenant-observability)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/tenant-observability-runtime-proof.ts; live Loki/Grafana/OTel observability readiness, tenant-scoped query, and honest signal classification validation"
   },
   {
     "id": "package.json#proof:webhooks",
@@ -2957,7 +2993,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:webhooks)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/webhooks-runtime-proof.ts; live signed webhook test delivery, readiness, reveal-once secret, delivery log, and cleanup validation"
   },
   {
     "id": "package.json#proof:webhook-worker",
@@ -2966,7 +3004,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:webhook-worker)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/webhook-worker-runtime-proof.ts; live event fan-out, retry, delivery, and dead-letter worker validation"
   },
   {
     "id": "package.json#proof:tenant-domains-routing",
@@ -2986,7 +3026,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:webhook-redrive)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/webhook-redrive-runtime-proof.ts; live dead-letter metrics, redrive requeue, recovered delivery, and secret-free metrics validation"
   },
   {
     "id": "package.json#proof:platform-services",
@@ -2995,7 +3037,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:platform-services)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/platform-services-runtime-proof.ts; live service readiness probes, status classification, worker registry presence, safe console URLs, and tenant/global link filtering validation"
   },
   {
     "id": "package.json#proof:entitlements",
@@ -3125,7 +3169,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:provider-environment-classification)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts; static provider classification, production mock forbiddance, shared-service checklist, matrix coverage, and negative self-test validation"
   },
   {
     "id": "package.json#proof:api-key-routes",
@@ -3244,7 +3290,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:observability-signals)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/observability-signals-runtime-proof.ts; live Postgres signal/sample store, latest-value query, secret-free schema, and tenant RLS validation"
   },
   {
     "id": "package.json#proof:alerting",
@@ -3253,7 +3301,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:alerting)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/alerting-runtime-proof.ts; live Postgres alert rule state, no_data/within/fired evaluation, incident creation, secret-free schema, and tenant RLS validation"
   },
   {
     "id": "package.json#proof:incident-foundation",
@@ -3262,7 +3312,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:incident-foundation)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/incident-foundation-runtime-proof.ts; live Postgres incident lifecycle, audit rows, RLS isolation, and operator listing validation"
   },
   {
     "id": "package.json#proof:alert-notification-bridge",
@@ -3271,7 +3323,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:alert-notification-bridge)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts; live alert notification fan-out, preference suppression, dispatch logging, and secret-free payload validation"
   },
   {
     "id": "package.json#proof:scheduled-jobs",
@@ -3335,7 +3389,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:provider-config)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/provider-config-runtime-proof.ts; live Postgres provider config, opaque credential refs, secret-policy rejection, production forbiddance, lifecycle degradation, audit, and delete validation"
   },
   {
     "id": "package.json#proof:environment-registry",
@@ -3344,7 +3400,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:environment-registry)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/environment-registry-runtime-proof.ts; live environment registry manifest sync, no-mock enforcement, permission checks, audit, secret-free rows, and bootstrap state validation"
   },
   {
     "id": "package.json#proof:environment-operations",
@@ -3353,7 +3411,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:environment-operations)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/environment-operations-runtime-proof.ts; deterministic operation enum, argv-only execution, stage/mock policy, permission, validation, and audit proof"
   },
   {
     "id": "package.json#proof:environment-admin-bootstrap",
@@ -3362,7 +3422,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:environment-admin-bootstrap)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts; deterministic admin bootstrap handoff, opaque marker, no plaintext password persistence, production warning, and re-print validation"
   },
   {
     "id": "package.json#proof:clickthrough",
@@ -3371,7 +3433,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:clickthrough)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/clickthrough-services-runtime-proof.ts; clickthrough service listing, access gating, secret-free response, and composed-provider readiness inclusion validation"
   },
   {
     "id": "package.json#proof:provider-readiness-contract",
@@ -3380,7 +3444,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:provider-readiness-contract)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts; pure adapter-confirmed lifecycle derivation validation"
   },
   {
     "id": "package.json#proof:composed-provider-readiness",
@@ -3389,7 +3455,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:composed-provider-readiness)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts; live/honest composed provider status, lifecycle, and secret-free readiness validation"
   },
   {
     "id": "package.json#proof:history",
@@ -3497,7 +3565,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:service-clickthrough-policy)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; clickthrough access matrix and live web-profile route-gating validation"
   },
   {
     "id": "package.json#proof:tenant-domain-claim-lifecycle",
@@ -3568,7 +3638,9 @@
     "fixtureEnvDependency": "compose Postgres",
     "stageCoverage": "proof script (npm run proof:typed-secret-resolution)",
     "failureEvidence": "assertion output",
-    "note": "V1C-CONF-04 (ADR-0069/0076)"
+    "note": "V1C-CONF-04 (ADR-0069/0076)",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates explicit bootstrap secret provider, bootstrap metadata redaction, managed secret opaque ref, resolution through bootstrap-built store, rotation, fail-closed required secret resolution, optional null semantics, and secret-free audit"
   },
   {
     "id": "apps/platform-api/tests/unit/notification-config.test.ts",
@@ -3729,7 +3801,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: compose postgres/redis via loader + preload-env",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Prometheus proof validates platform-api target health, required metric families, /metrics text output, bounded route labels, counter increase after representative activity, forbidden-label absence, readiness degradation, and external route denial"
   },
   {
     "id": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
@@ -3738,7 +3812,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: requires Grafana on compose network",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Grafana proof validates health, Prometheus/Loki/Tempo datasource UIDs, required dashboard provisioning, parse/load health, required panels, accepted PromQL, real panel data, missing datasource behavior, and Loki/Tempo derived-field correlation"
   },
   {
     "id": "proof:metrics-prometheus",
@@ -3747,7 +3823,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: requires platform-api /metrics endpoint",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts; live Prometheus target, metric family, counter, route-label, forbidden-label, readiness degradation, and external route denial validation"
   },
   {
     "id": "proof:dashboards",
@@ -3756,7 +3834,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "live-runtime: requires Grafana on compose network",
     "stageCoverage": "test (live-proof stage)",
-    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log"
+    "failureEvidence": "proof script exits non-zero; emits docs/evidence runtime-proof JSON/log",
+    "proofLevel": 4,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/dashboards-runtime-proof.ts; live Grafana datasource, dashboard provisioning, panel query, Prometheus data, missing datasource, and Loki/Tempo correlation validation"
   },
   {
     "id": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
@@ -3917,7 +3997,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:compliance-report-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/compliance-report-route-runtime-proof.ts; validates compliance report route registration, operationName, required permission, and admin data resource metadata"
   },
   {
     "id": "package.json#proof:billing-readiness-route",
@@ -4111,7 +4193,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:security-control-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/security-control-route-runtime-proof.ts; validates GET /api/admin/security route registration and operationName"
   },
   {
     "id": "package.json#proof:provider-binding-report-route",
@@ -4120,7 +4204,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:provider-binding-report-route)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 1,
+    "proofLevelRationale": "package alias for apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts; validates GET /api/admin/provider-bindings route registration and operationName"
   },
   {
     "id": "package.json#proof:workflow-readiness-route",

@@ -1172,7 +1172,20 @@
     "evidence": "ADR-0035, ADR-0050",
     "proof": "proof:tenant-observability; logs-usecase tests",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Log lifecycle is emit structured application log, ingest into Loki, search through the admin log query usecase, constrain result count/direction, and surface tenant observability readiness from bounded ingestion plus tenant-scoped query probes. Evidence: logs-usecase tests and tenant-observability runtime proof.",
+      "stateModel": "State model is Loki log entries with low-cardinality service/level labels and high-cardinality ids carried as JSON fields, plus readiness fields status, logIngestion, tenantScopedQuery, traceCorrelation, dashboards, otelCollector, metrics, and errorCapture. Evidence: tenant-observability usecase/tests.",
+      "permissions": "Admin log search is platform.logs.read/operator-oriented; tenant observability readiness is tenant-context scoped and filters by organisationId rather than trusting raw log labels. Evidence: capability route metadata and tenant-observability tests.",
+      "contracts": "Contracts are GET /api/admin/logs/search with normalised LogSearchQuery and GET /api/org/observability/readiness with ObservabilityReadiness signal payload. Evidence: logs usecase tests and tenant-observability runtime proof.",
+      "validation": "Query validation defaults limit to 100, clamps limit to 1..1000, defaults direction to backward unless forward is explicit, preserves request/service filters, and proves tenant query uses organisationId as a JSON filter. Evidence: logs-usecase and tenant-observability tests.",
+      "errorModel": "Loki/backend failure becomes provider_unreachable, tenant-scoped query failure becomes degraded, high-cardinality guard failure becomes degraded, and trace correlation is not_applicable when the substrate is absent rather than faked. Evidence: classifyObservability tests and runtime proof.",
+      "auditModel": "Log search/readiness are read-only and emit no mutation audit; the logs themselves are immutable operational records whose mutation audits are produced by the originating capability. Evidence: capability auditAction null and logs usecase.",
+      "readinessModel": "Readiness distinguishes configured, degraded, provider_unreachable, not_applicable, not_configured, ok, unreachable, and unknown signal states, with live Loki/Grafana/OTel probes reporting honestly. Evidence: tenant-observability runtime proof.",
+      "proof": "Unit proofs: logs-usecase and tenant-observability tests. Runtime proof: proof:tenant-observability validates the high-cardinality guard, pure classifier, live Loki bounded ingestion/query, and infra signal classification. Proof level: 4 live provider validation.",
+      "uiSemanticDefinition": "V2 UI must expose bounded log search filters, direction and limit controls, tenant-scoped readiness states, provider-unreachable/degraded/not-configured displays, service/level labels, request correlation fields, no mutation actions, and no high-cardinality ids as labels."
+    }
   },
   {
     "capability": "Metrics + traces",
@@ -1191,7 +1204,20 @@
     "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-17",
-    "closedBy": "live runtime proofs + compose env-specific scrape target"
+    "closedBy": "live runtime proofs + compose env-specific scrape target",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Metrics lifecycle is platform-api emits Prometheus text, Prometheus scrapes platform-api, Grafana dashboards query Prometheus/Loki/Tempo, representative activity increments counters, and readiness degrades when Prometheus is unavailable. Evidence: metrics-prometheus and dashboards runtime proofs.",
+      "stateModel": "State model includes Prometheus metric families, bounded method/route/status labels, target health, Grafana datasource UIDs for Prometheus/Loki/Tempo, dashboard UIDs, panel queries, and provider readiness signal status. Evidence: metrics and dashboards proofs.",
+      "permissions": "/metrics is internal-only and not externally routed; observability admin surfaces are operator-only through platform.observability.* and global/provider readiness routes. Evidence: metrics-prometheus runtime proof and capability route metadata.",
+      "contracts": "Contracts are /metrics Prometheus text, Prometheus /api/v1/targets and /api/v1/query, Grafana /api/health /api/datasources /api/dashboards/uid, and /api/admin/observability/metrics/readiness summaries. Evidence: runtime proofs.",
+      "validation": "Validation requires Prometheus healthy, platform-api target up, required metric families present, counter increase after activity, forbidden high-cardinality labels absent, dashboard datasource UIDs match config, required dashboards/panels exist, and panel PromQL is accepted. Evidence: metrics-prometheus and dashboards proofs.",
+      "errorModel": "Missing Prometheus, missing target, bad metric families, forbidden labels, dashboard parse/load failures, missing datasource, or rejected panel query fail the proof; /readyz reports degraded when Prometheus is simulated unreachable. Evidence: runtime proof checks.",
+      "auditModel": "Metrics, traces, dashboard reads, and readiness probes are read-only operational signals and produce no mutation audit; incident/alert mutations are covered by the alerting capability. Evidence: capability auditAction null and proofs.",
+      "readinessModel": "Readiness reports live Prometheus target health, Grafana datasource/dashboard availability, Tempo/Loki correlation configuration, degraded Prometheus readiness, and external route denial for /metrics. Evidence: proof:metrics-prometheus and proof:dashboards.",
+      "proof": "Runtime proofs: proof:metrics-prometheus and proof:dashboards validate live Prometheus, Grafana, datasource, dashboard, metric, and route-exposure behavior. Proof level: 4 live composed-provider validation.",
+      "uiSemanticDefinition": "V2 UI must render operator signal status, metric family summaries, dashboard links, provider degraded/unreachable states, no external /metrics link, datasource health, trace/log correlation status, and safe route-level labels without tenant/user/request identifiers."
+    }
   },
   {
     "capability": "Alerting, incident management, on-call, status page",
@@ -1225,7 +1251,20 @@
     "evidence": "ADR-0062",
     "proof": "proof:observability-signals; proof:alerting; proof:incident-foundation; proof:alert-notification-bridge",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Built-in observability lifecycle is register signal, record sample, create threshold alert rule, evaluate no_data/within/fired, open incident on fired alert, update incident open -> acknowledged -> resolved, and optionally dispatch notification through preferences. Evidence: observability runtime proofs.",
+      "stateModel": "State model includes metric_signals, metric_samples, alert_rules with comparator/threshold/severity, alert evaluation state no_data|within|fired, incidents open|acknowledged|resolved, notification dispatch statuses sent|suppressed, and tenant RLS boundaries. Evidence: observability repository proofs.",
+      "permissions": "Operator routes require platform.observability.read/write; mutations require system/operator actor metadata and tenant-scoped organisation id, with RLS isolating tenant rows. Evidence: capability route metadata and alerting/incident proofs.",
+      "contracts": "Contracts are /api/admin/observability/signals, /api/admin/alerts, /api/admin/incidents, /api/admin/observability/readiness, and notification bridge payloads for alert delivery. Evidence: routes and runtime proofs.",
+      "validation": "Validation proves secret-free schemas, signal registration before samples/rules, no_data before samples, threshold comparators, fired alert incident creation, enabled channel delivery, disabled channel suppression, and RLS isolation for signals/rules/incidents. Evidence: proofs.",
+      "errorModel": "Missing live Postgres skips honestly without fake pass; no samples produce no_data; below threshold stays within; disabled notification channels suppress rather than fail; provider errors fail proofs or degrade readiness explicitly. Evidence: runtime proofs.",
+      "auditModel": "Incident opening and updates persist incident.opened and incident.updated audit rows; alert rule mutations carry actor metadata; notification bridge persists durable dispatch logs without secret fields. Evidence: incident-foundation and alert-notification-bridge proofs.",
+      "readinessModel": "Readiness is operator built-in observability readiness backed by live Postgres signal stores plus notification substrate availability; unavailable substrate is skipped/degraded honestly and not marked healthy. Evidence: observability-signals, alerting, incident, and bridge proofs.",
+      "proof": "Runtime proofs: proof:observability-signals, proof:alerting, proof:incident-foundation, and proof:alert-notification-bridge validate live Postgres signal, rule, incident, audit, RLS, and notification behavior. Proof level: 4 live substrate validation.",
+      "uiSemanticDefinition": "V2 UI must expose signal tables, sample latest values, alert rule forms, evaluate/no-data/within/fired states, incident lifecycle actions, audit visibility, notification delivery/suppression outcomes, tenant isolation, and operator-only read/write gates."
+    }
   },
   {
     "capability": "Internal service catalog + readiness",
@@ -1241,7 +1280,20 @@
     "evidence": "ADR-0062",
     "proof": "proof:platform-services; proof:service-clickthrough-policy",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Service readiness lifecycle is build static registry, probe Postgres/HTTP services/Redis wiring/workers, classify each service, filter console links by viewer mode, and expose tenant-safe or system-operator readiness payloads. Evidence: platform-services tests and runtime proof.",
+      "stateModel": "State model is SERVICE_REGISTRY entries with key, name, category, localOnly, consoleAccess, consoleUrlKind, status healthy|configured|degraded|unreachable|not_configured|not_exposed|unknown, checkedAt, detailKey, environment, and worker heartbeats. Evidence: platform-services usecase/tests.",
+      "permissions": "System operators may receive global-only localhost console links; tenant operators on resolved tenant hosts receive only tenant-safe routed links; apex tenant access returns no_tenant. Evidence: resolveReadinessAccess tests and platform-services proof.",
+      "contracts": "Contract is GET /api/org/platform/services/readiness for tenant-safe readiness and platform/admin service summaries for operator mode; payload includes services, workers, environment, and viewerMode. Evidence: platform-services usecase and proof.",
+      "validation": "Validation proves HTTP 500/503 are degraded, network errors are unreachable, structured health bodies must be valid, Redis is configured/not_configured rather than falsely healthy, WireMock is never linked, and no secrets appear in payloads. Evidence: platform-services tests/proof.",
+      "errorModel": "Malformed structured health, failing Grafana DB, LocalStack failed services, non-UP SonarQube, missing Keycloak issuer, and unavailable HTTP services all classify degraded/unreachable explicitly. Evidence: platform-services tests.",
+      "auditModel": "Readiness and clickthrough policy decisions are read-only and produce no mutation audit; service lifecycle mutations happen in the owning provider/config capabilities. Evidence: capability auditAction null.",
+      "readinessModel": "Readiness uses honest per-service statuses, environment metadata, worker registry presence, default-up service counts, and tenant/system viewer filtering, with unavailable profile-gated services never reported healthy. Evidence: proof:platform-services.",
+      "proof": "Unit proofs: platform-services and service-clickthrough tests. Runtime proofs: proof:platform-services and proof:service-clickthrough-policy validate live probes, safe console URLs, viewer filtering, route gating, and tenant fallback behavior. Proof level: 4 for live readiness, 3 for policy matrix.",
+      "uiSemanticDefinition": "V2 UI must render service readiness tables, status chips from the honest vocabulary, worker summaries, environment metadata, direct-local versus routed console links, tenant-safe filtering, no global-only link leakage, and no secret-bearing fields."
+    }
   },
   {
     "capability": "Code quality + secret + dependency scanning",
@@ -1262,7 +1314,20 @@
     "completionAction": "V1C-18",
     "acceptPartialRoute": true,
     "acceptablePartialRouteReason": "The authoritative security gates now run locally and fail closed where expected; the Sonar clickthrough is a CI/global-only control surface, not a product UI gap.",
-    "closedBy": "proof:security-control-route; npm run sbom:verify; npm run sbom:policy; npm run codeql:validate"
+    "closedBy": "proof:security-control-route; npm run sbom:verify; npm run sbom:policy; npm run codeql:validate",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Security gate lifecycle is define static rules/config, run Semgrep error gate, verify SBOM baseline freshness, enforce SBOM policy, validate CodeQL configuration/database behavior, expose security control route, and fail closed in authoritative mode. Evidence: semgrep, SBOM, CodeQL, and security route assets.",
+      "stateModel": "State model includes Semgrep rule severities, SBOM baseline JSON and lock hash, SBOM policy audit output, CodeQL config/database/SARIF state, security route registration, and Sonar/global clickthrough readiness. Evidence: tools/security and package scripts.",
+      "permissions": "Security control UI/API is operator/global-only; Sonar clickthrough is global-only and not tenant-safe. CI/static gates are repository-controlled rather than runtime tenant permissions. Evidence: security-control-route proof and clickthrough policies.",
+      "contracts": "Contracts are npm semgrep:gate, npm sbom:verify, npm sbom:policy, npm codeql:validate, tools/semgrep/rules.yml, .github/codeql/codeql-config.yml, and GET /api/admin/security route registration. Evidence: package.json and proof inventory.",
+      "validation": "Validation checks Semgrep ERROR findings, SBOM file integrity and lock hash, license/security policy, CodeQL binary/config/database behavior with authoritative fail-closed mode, and route registration. Evidence: tools/security tests and proof:security-control-route.",
+      "errorModel": "Semgrep findings, missing/stale SBOM, policy violations, missing CodeQL in authoritative mode, invalid CodeQL config, or absent route fail non-zero; local CodeQL absence can honestly skip where configured. Evidence: tool scripts.",
+      "auditModel": "Static quality gates are build evidence rather than runtime audit rows; route access and provider/security changes are audited by owning runtime capabilities. Evidence: stage evidence and security tool reports.",
+      "readinessModel": "Readiness is gate success plus optional Sonar/service readiness from platform service probes; missing local tools are classified honestly according to script mode. Evidence: semgrep/SBOM/CodeQL scripts and platform services proof.",
+      "proof": "Proofs include semgrep:gate, sbom:verify, sbom:policy, codeql:validate, test:security, and proof:security-control-route. Proof level: 2 static behavior gates plus level 1 route registration.",
+      "uiSemanticDefinition": "V2 UI must expose security gate status, last evidence/report links, global-only Sonar/security route access, pass/fail/skip states, remediation messages, and no tenant-scoped access to global code quality consoles."
+    }
   },
   {
     "capability": "Compliance reports, access reviews, evidence packs",
@@ -1279,7 +1344,20 @@
     "proof": "proof:compliance-report",
     "openAction": null,
     "v2Target": "reuse-and-extend: compliance report semantics are the source; V2 keeps the report contract and hard-fail posture",
-    "completionAction": "V1C-19"
+    "completionAction": "V1C-19",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Compliance lifecycle is collect tenant foundation signals, aggregate metrics/open incidents/legal holds/retention policies/storage readiness, derive ready boolean, stamp generatedAt, and expose the operator report route. Evidence: compliance report and route proofs.",
+      "stateModel": "State model includes organisationId, generatedAt, metricsSignals, openIncidents, legalHoldCount, retentionPolicyCount, storage readiness fields, and ready boolean. Evidence: compliance-report runtime proof.",
+      "permissions": "Compliance report route is operator/admin scoped through platform data/compliance permissions; tenant data is selected explicitly by authorised admin context. Evidence: compliance-report-route proof.",
+      "contracts": "Contract is GET /api/admin/data/compliance-report plus generateComplianceReport usecase input ports for metrics, incidents, legal holds, retention, and storage. Evidence: compliance report proof.",
+      "validation": "Validation proves counts are composed from injected foundation sources, storage configured/isolation fields contribute to readiness, generatedAt is stamped, and route operationName/resource/permission are registered. Evidence: compliance-report and route proofs.",
+      "errorModel": "Missing or unhealthy source data makes ready false or route/usecase failure; the report does not invent policy when a source is unavailable. Evidence: compliance report seam proof.",
+      "auditModel": "Report reads are not mutation audits; review/compliance completion actions are audited by their owning workflows and source audit rows. Evidence: auditAction and source capability records.",
+      "readinessModel": "Readiness is assembled from live foundation signals and route registration; report ready is true only when required source readiness values satisfy the usecase. Evidence: proof:compliance-report.",
+      "proof": "Runtime proof: compliance-report-runtime-proof validates deterministic report composition. Route proof: proof:compliance-report-route validates admin route registration. Proof level: 3 behavior composition plus level 1 route contract.",
+      "uiSemanticDefinition": "V2 UI must expose report generation timestamp, tenant selection, metrics/incidents/legal-hold/retention/storage sections, ready/not-ready state, source drilldowns, permission gates, and evidence export hooks."
+    }
   },
   {
     "capability": "Tenant isolation proof",
@@ -1295,7 +1373,20 @@
     "evidence": "ADR-0029",
     "proof": "proof:domain-identity-matrix; proof:tenant-storage isolation",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Tenant isolation lifecycle is resolve host identity, bind request context to one organisation, enforce tenant-scoped repositories/RLS/prefixes, reject cross-tenant reads/writes, and verify isolation through domain, storage, search, metering, observability, webhook, and secret proofs. Evidence: isolation proof inventory.",
+      "stateModel": "State model includes host classifications apex|slug|reserved|unknown|malformed|custom domain, tenant context organisationId/slug/hostSource, Postgres RLS tenant setting, object storage tenant prefix, and null tenant context for untrusted hosts. Evidence: domain identity and storage proofs.",
+      "permissions": "Permissions are enforced after tenant resolution; unresolved/apex/reserved hosts do not grant tenant context, tenant actors only access their organisation rows/prefixes, and operator bypass requires explicit rls_bypass/system role. Evidence: domain-identity, tenant-storage, and RLS proofs.",
+      "contracts": "Contracts are host-identity resolution, tenant-aware route context, storage prefixes, RLS-backed repository ports, and readiness proofs for tenant-scoped substrates. Evidence: proof:domain-identity-matrix and proof:tenant-storage.",
+      "validation": "Validation proves slug and custom-domain resolution, X-Forwarded-Host precedence, null outcomes for apex/reserved/unknown/malformed hosts, tenant prefix isolation, foreign-key rejection, and cross-tenant RLS counts of zero. Evidence: domain/storage/observability proofs.",
+      "errorModel": "Untrusted hosts resolve to null tenant context, absent/unverified custom domains are rejected, foreign tenant data is hidden or rejected, and provider failures degrade readiness rather than falling back to an unsafe tenant. Evidence: tenant resolver and storage proofs.",
+      "auditModel": "Isolation checks are guard behavior and do not emit mutation audit directly; audited mutations in tenant-scoped capabilities include tenant id/organisation id metadata and fail before cross-tenant writes. Evidence: audit-bearing capability proofs.",
+      "readinessModel": "Isolation readiness is proven by live substrate checks for resolver, RLS, storage prefixes, and tenant-scoped provider probes; an unavailable provider is degraded/unreachable rather than treated as isolated. Evidence: proof inventory.",
+      "proof": "Runtime proofs include proof:domain-identity-matrix and proof:tenant-storage, with additional live RLS isolation in metering, search, observability, webhooks, events, and secret-store proofs. Proof level: 4 live substrate isolation validation.",
+      "uiSemanticDefinition": "V2 UI must never infer tenant from client-side state alone, must display no-tenant/forbidden states for unresolved hosts, must scope every tenant table/action/filter to server-provided tenant context, and must not expose cross-tenant search/storage/log/provider data."
+    }
   },
   {
     "capability": "Webhooks (developer-facing)",
@@ -1311,7 +1402,20 @@
     "evidence": "ADR-0051, ADR-0052",
     "proof": "proof:webhooks; proof:webhook-redrive",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Webhook lifecycle is create subscription with reveal-once secret, list redacted subscriptions, test dispatch signed platform.test, enqueue event fan-out, process pending deliveries, retry with backoff, dead-letter after max attempts, redrive dead deliveries, and delete cleanup. Evidence: webhooks, webhook-worker, and webhook-redrive proofs.",
+      "stateModel": "State model includes subscription id/url/eventTypes/enabled/secret hash, readiness total/enabled/dead-delivery state, delivery pending|delivered|failed|dead, attempts, nextAttemptAt, last status metrics, and redrive pending reset. Evidence: webhooks usecase/tests and runtime proofs.",
+      "permissions": "Tenant webhook routes require tenant.webhooks.* and are tenant-scoped; redrive/test actions require the same tenant context and actor metadata; cross-tenant rows are hidden by tenant organisation id. Evidence: webhook route metadata and Postgres proofs.",
+      "contracts": "Contracts are /api/org/webhooks list/create/update/delete/test, delivery listing/metrics, redrive routes, signed outbound HTTP delivery with X-Platform-Signature and X-Platform-Event, and readiness kind for tenant webhooks. Evidence: ADR-0051/0052 proofs.",
+      "validation": "Validation proves HMAC over timestamp.body, secret reveal once, no secret in payload/list/audit/metrics, enabled event-type fan-out only, retry scheduling, dead-letter after max attempts, idempotent redrive of dead deliveries, and disabled/deleted subscription handling. Evidence: webhooks tests and runtime proofs.",
+      "errorModel": "Non-2xx receiver responses become retry then dead, unknown subscription returns not_found/null metrics, no enabled subscriptions reports no_subscriptions, dead deliveries report has_dead_deliveries, and unavailable seeded org skips honestly in proof. Evidence: webhook worker/redrive proofs.",
+      "auditModel": "Create/rotate/redrive mutations audit safe metadata only; redrive is audit-first and never records the signing secret; delivery attempts are durable operational records. Evidence: webhooks unit tests and redrive runtime proof.",
+      "readinessModel": "Readiness classifies no_subscriptions, configured, and has_dead_deliveries, while worker/redrive proofs validate pending/dead/delivered metrics against live Postgres. Evidence: classifyWebhookReadiness tests and proofs.",
+      "proof": "Runtime proofs: proof:webhooks validates signed test delivery; proof:webhook-worker validates fan-out/retry/dead-letter; proof:webhook-redrive validates dead-letter metrics and redrive. Proof level: 4 live Postgres plus HTTP delivery validation.",
+      "uiSemanticDefinition": "V2 UI must expose webhook list/create/edit/delete/test, reveal-once secret handling, event-type selection, enabled toggle, delivery log, dead-letter metrics, redrive action, readiness states, tenant permission gates, and never display stored secrets."
+    }
   },
   {
     "capability": "API docs, developer portal, SDKs, rate limits",
@@ -1330,7 +1434,20 @@
     "v2Target": "refine-and-complete: the developer-platform core is delivered; V2 can extend portal/SDK/sandbox surfaces without blocking the cut",
     "completionAction": "V1C-20",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "The developer-platform core (API keys, rate limits, portal foundation) is delivered; the remaining external portal/SDK/sandbox work is V2 expansion, not a branch-cut blocker."
+    "acceptablePartialRouteReason": "The developer-platform core (API keys, rate limits, portal foundation) is delivered; the remaining external portal/SDK/sandbox work is V2 expansion, not a branch-cut blocker.",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Developer platform lifecycle is expose OpenAPI/GraphQL contracts, create API key with reveal-once secret, list redacted keys, authenticate requests, revoke keys, show developer portal summary, and evaluate configured rate limits. Evidence: api-keys, api-key-routes, and rate-limit proofs.",
+      "stateModel": "State model includes API key active|revoked with prefix/scopes/created/revoked metadata and no plaintext secret, developer portal summaries, OpenAPI route contract, GraphQL contract, and rate-limit policy/window count/exceeded state. Evidence: API key and rate-limit usecases/proofs.",
+      "permissions": "Tenant developer portal requires tenant.developer.read; API key list/create/revoke require tenant.api_keys.read/write; operator key/rate-limit routes require platform.api_keys.read and platform.rate_limits.read/write. Evidence: api-key-routes runtime proof.",
+      "contracts": "Contracts include docs/api/openapi.json, GraphQL schema/runtime tests, GET /api/org/developer, GET/POST/DELETE /api/org/api-keys, operator tenant API-key reads, and tenant/operator rate-limit routes. Evidence: openapi drift gate and API key route proof.",
+      "validation": "Validation proves entitlement-gated API key creation, sk_ secret returned once, list/operator responses omit secret/hash/salt, valid secret authenticates, stored hash cannot authenticate, revoked key is denied, and route metadata matches scopes. Evidence: api-keys and api-key-routes proofs.",
+      "errorModel": "Missing tenant context returns 400, missing api_access returns not_entitled, revoked/invalid key authenticates null, invalid tenant id returns 400 on operator rate-limit route, and OpenAPI drift fails architecture gates. Evidence: route and architecture tests.",
+      "auditModel": "API key creation/revocation and rate-limit policy changes carry actor metadata and audit-before-change safe metadata; secrets and hashes are not emitted. Evidence: API key and rate-limit usecases/proofs.",
+      "readinessModel": "Developer portal is always-on once built from source contracts; live Postgres/Redis proofs classify provider availability for API keys and rate limits, with Redis degraded falling back to Postgres for counting. Evidence: rate-limits-redis and API key proofs.",
+      "proof": "Runtime proofs: proof:api-keys, proof:api-key-routes, proof:rate-limits, proof:rate-limits-redis. Contract proofs include OpenAPI drift and GraphQL runtime tests. Proof level: 4 live API key/rate-limit substrate validation.",
+      "uiSemanticDefinition": "V2 UI must expose developer portal summary, API key table/create/revoke with reveal-once secret modal, scopes, redacted key prefix, OpenAPI/GraphQL links, rate-limit summaries, entitlement/provider error states, permission gates, and no stored secret or hash fields."
+    }
   },
   {
     "capability": "Rate limiting (API)",
@@ -1423,7 +1540,20 @@
     "openAction": null,
     "v2Target": "reuse-as-is: support/admin semantics are now backed by V1 surface and proofs",
     "completionAction": "V1C-22",
-    "decisionRef": "V1C-22"
+    "decisionRef": "V1C-22",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Support lifecycle is create tenant support ticket, list/update through support route layer, compute customer health from tickets and usage signals, create tenant announcement, list announcements, and expose health/announcement/ticket summaries for operators. Evidence: support tickets and announcements unit tests.",
+      "stateModel": "State model includes support ticket id/subject/body/status/organisation/actor timestamps, customer health signals for tickets and usage, announcement id/subject/message/created_by/created_at, and support-mode approval/session state in the adjacent support approval proof. Evidence: support usecases/tests.",
+      "permissions": "Support and announcement routes are tenant/operator scoped through platform.support.* and actor role metadata; support approval access is gated by the support approval workflow before support session creation. Evidence: route metadata and support approval runtime proof.",
+      "contracts": "Contracts include support ticket create/list/update routes, customer health read route, tenant announcement create/list routes, and support approval request/approve workflow boundary. Evidence: routes, support tests, and proof:support-approval.",
+      "validation": "Validation proves ticket creation returns an id, customer health aggregates ticket count and metered usage, announcement create returns id and list projects subject/message/creator, and support approval only creates support session after approval signal. Evidence: support tests and support approval proof.",
+      "errorModel": "Database/usecase failures surface as route errors; missing approval remains waiting and does not create support access; no ticket/usage rows produce zero-count health signals. Evidence: support approval proof and support health tests.",
+      "auditModel": "Ticket/announcement/support-session mutations emit audit metadata through the injected audit port; support approval records ordered support_session.created audit lifecycle. Evidence: support tests and support approval runtime proof.",
+      "readinessModel": "Readiness is live route/usecase availability over Postgres-backed support tables and metering-derived health signals; support approval proof validates workflow boundary state rather than assuming support access. Evidence: support unit tests and proof:support-approval.",
+      "proof": "Unit proofs: apps/platform-api/tests/unit/support-tickets.test.ts and support-announcements.test.ts. Runtime proof: proof:support-approval validates approval waiting/completed workflow and support-session audit lifecycle. Proof level: 3 state/behavior validation.",
+      "uiSemanticDefinition": "V2 UI must expose ticket list/detail/create/status actions, customer health signals, announcement list/create, approval-required support access state, audit visibility, permission gates, empty/error states, and no direct support access before approval."
+    }
   },
   {
     "capability": "Universal Service Foundation scope + principles",
@@ -1439,7 +1569,20 @@
     "evidence": "ADR-0053",
     "proof": "this matrix + registry + validation test",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "USF lifecycle is define canonical V2 foundation scope, record each capability in the closure matrix, map proof/route/package/migration lineage, validate consistency through v2-readiness rules, and promote only when semantic and proof gates pass. Evidence: this matrix, readiness validator, and universal foundation validator.",
+      "stateModel": "State model is the foundation asset graph: capabilities, status vocabulary, v2Target, completion actions, path map, proof inventory, migration chain, package status, service matrix, and validator findings. Evidence: docs/v2-foundation assets and tools/v2-readiness.",
+      "permissions": "The foundation itself is repository-governed; runtime permissions are represented per capability record, and validator rules reject delivered records whose permission semantics are missing. Evidence: R22 semantic completeness rule and capability records.",
+      "contracts": "Contracts are machine-readable JSON assets under docs/v2-foundation plus validator rule contracts R1-R23 and architecture gates. Evidence: tools/v2-readiness tests and docs/v2-foundation JSON files.",
+      "validation": "Validation rejects placeholders, off-vocabulary states, missing route/proof/migration/package lineage, semantic incompleteness, and unclassified runtime proofs; strict mode additionally checks pinned/current-state consistency. Evidence: v2-readiness focused tests.",
+      "errorModel": "Invalid foundation state is surfaced as rule findings with ruleId, severity, subject, and message; cutReady remains false until all completion blockers and consistency findings are resolved. Evidence: tools/v2-readiness JSON output.",
+      "auditModel": "Foundation changes are audited through git history, generated evidence files, stage evidence, and validator output rather than runtime mutation audit rows. Evidence: docs/evidence/stages and repository commits.",
+      "readinessModel": "Readiness is the strict validator summary: ok, cutReady, totalRules, consistencyFindings, completionBlockerCount, and per-rule findings. Evidence: npm run v2:readiness / tools/v2-readiness.",
+      "proof": "Proof is the validator suite plus live repository run: rules, CLI, golden, package status, import parity, and architecture tests validate the foundation contract. Proof level: 3 for source-state semantic validation.",
+      "uiSemanticDefinition": "V2 UI generation must consume these semantic assets as source of truth, preserving capability identity, lifecycle, permissions, validation, error/readiness states, proof requirements, and route contracts without inferring hidden semantics from code or visual layout."
+    }
   },
   {
     "capability": "Build-versus-compose decision framework",
@@ -1455,7 +1598,20 @@
     "evidence": "ADR-0054",
     "proof": "docs/architecture/build-versus-compose-decision-framework.md",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Decision lifecycle is classify capability need, choose build/compose/adapter/defer/reject, record environment model and isolation notes, attach proof refs, and block production-incompatible providers through registry and validator checks. Evidence: build-versus-compose ADR and service-catalog registry proof.",
+      "stateModel": "State model includes serviceKey, category, environmentModel, visibility, decision, isolationNotes, proofRefs, entitlement linkage, requiresCredential, forbiddenInProduction, and provider lifecycle/readiness state. Evidence: service catalog registry and provider classification matrix.",
+      "permissions": "Decision records do not grant access; visibility and clickthrough decisions are enforced separately by service-clickthrough and platform service readiness policies. Evidence: clickthrough and service-catalog proofs.",
+      "contracts": "Contract is the documented decision framework plus the static provider registry consumed by buildServiceCatalog and provider readiness/config planes. Evidence: docs/architecture/build-versus-compose-decision-framework.md and service-catalog usecase.",
+      "validation": "Validation requires complete classification, valid decision vocabulary, proof refs, entitlement consistency, production rejection of mock-only providers, and tenant filtering of global/not-exposed services. Evidence: service-catalog-registry proof.",
+      "errorModel": "Invalid decisions become registry/proof failures; forbidden production providers are rejected by provider config and environment classification proofs rather than silently downgraded. Evidence: provider-config and provider-environment-classification proofs.",
+      "auditModel": "The framework is read-only architecture state; provider config mutations that instantiate decisions are audited by provider_config.set/delete. Evidence: provider-config proof.",
+      "readinessModel": "A decision alone never implies readiness; composed/provider readiness must be adapter-confirmed and reports ready, degraded, or not_configured independently. Evidence: provider-readiness-contract and composed-provider-readiness proofs.",
+      "proof": "Proofs: service-catalog-registry validates static decisions; provider-environment-classification validates deployment-ladder classification; provider-config validates production/secret policy. Proof level: 3 for policy/state validation.",
+      "uiSemanticDefinition": "V2 UI must expose decision, visibility, environment model, proof refs, provider lifecycle/readiness, entitlement requirements, and production blockers as source-backed fields, not as free-form UI labels."
+    }
   },
   {
     "capability": "Service catalog + provider integration model",
@@ -1472,7 +1628,20 @@
     "proof": "proof:platform-services; proof:service-clickthrough-policy; proof:service-catalog-registry; proof:entitlements-routes",
     "openAction": null,
     "v2Target": "refine-and-complete: the service catalog/provider core is delivered; V2 can generalise the registry and provider model without blocking the cut",
-    "completionAction": "V1C-23"
+    "completionAction": "V1C-23",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Service catalog lifecycle is seed static provider entries, classify every entry, build operator or tenant-filtered catalog views, attach proof refs and entitlement requirements, combine with readiness/clickthrough policy, and expose safe service summaries. Evidence: service-catalog-registry, platform-services, and clickthrough proofs.",
+      "stateModel": "State model includes service key/name/category, environment model, visibility tenant_scoped_safe|global_only|not_exposed, decision build|compose|adapter|defer|reject, entitlement key, proof refs, console access, readiness status, and provider details. Evidence: service-catalog and platform-services usecases.",
+      "permissions": "Operator sees the full catalog; tenants see only tenant-safe, entitlement-permitted services; clickthrough access uses system-admin/tenant-admin decision rules and never exposes not_exposed services. Evidence: service-catalog-registry and clickthrough proofs.",
+      "contracts": "Contracts are GET /api/platform/service-catalog, platform services readiness, and clickthrough service list summaries; entries must be secret-free and source-derived. Evidence: entitlements-routes, platform-services, and clickthrough proofs.",
+      "validation": "Validation proves non-empty catalog, complete classification, valid visibility/decision values, entitlement consistency, no secret-bearing fields, mock-provider production rejection, operator full view, and tenant filtering. Evidence: service-catalog-registry proof.",
+      "errorModel": "Missing/invalid classification, secret-bearing fields, forbidden production providers, or unsafe visibility fail proofs; unavailable providers report degraded/not_configured through readiness rather than hiding catalog entries. Evidence: proofs.",
+      "auditModel": "Catalog reads are read-only; entitlement/provider mutations referenced by entries are audited in their owning capabilities. Evidence: capability auditAction null and provider/entitlement proofs.",
+      "readinessModel": "Readiness is joined from platform-services and composed-provider readiness, with adapter-confirmed status vocabulary and no fake healthy state. Evidence: platform-services and composed-provider-readiness proofs.",
+      "proof": "Runtime/local proofs: proof:service-catalog-registry, proof:platform-services, proof:service-clickthrough-policy, proof:clickthrough, and proof:entitlements-routes. Proof level: 3 for registry filtering and 4 where live readiness is probed.",
+      "uiSemanticDefinition": "V2 UI must render catalog tables, tenant/operator filtered views, service classifications, entitlement gates, readiness state, clickthrough links only when allowed, proof refs, and production blockers without exposing secrets."
+    }
   },
   {
     "capability": "Environment-specific vs shared service model",
@@ -1488,7 +1657,20 @@
     "evidence": "ADR-0056",
     "proof": "docs/architecture/environment-service-classification.md",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Environment service lifecycle is classify each provider as per-environment, shared-cross-environment, mock-only, global-only, or not-exposed, enforce no-mock staging/production policy, and sync environment manifests into the registry. Evidence: provider-environment-classification and environment-registry proofs.",
+      "stateModel": "State model includes environmentId, stage, executor, composeProject, allowedProfiles, allowedMocks, mockPolicy, destructiveAllowed, dataPreservation, secretStoreProvider, providerConfigStatus, bootstrapStatus, and provider environmentModel. Evidence: environment registry and classification proofs.",
+      "permissions": "Environment operations require platform.environment.* permissions; clickthrough/service visibility is separately controlled by service-clickthrough policies. Evidence: environment-registry and environment-operations proofs.",
+      "contracts": "Contracts are config/environments/<stage>.json manifests, environment_registry rows, provider classification matrix, and environment operation requests. Evidence: environment proofs and classification docs.",
+      "validation": "Validation enforces tenant-runtime substrates per environment, mock providers forbidden in production, shared-service checklist evidence, Sentry-only internal substrates, manifest ladder sync, usecase rejection of staging mocks, and DB CHECK rejection of production mocks. Evidence: provider-environment-classification and environment-registry proofs.",
+      "errorModel": "Missing permissions throw Forbidden, illegal mock/stage combinations are rejected, malformed operations are EnvironmentOperationRejected, and secret-looking registry values fail proof checks. Evidence: environment-registry and operations proofs.",
+      "auditModel": "Environment registration and operations emit EnvironmentOperationInvoked/environment.registered audit events with safe metadata; registry records carry no secret material. Evidence: environment-registry and environment-operations proofs.",
+      "readinessModel": "Readiness is represented by bootstrapStatus, providerConfigStatus, lastBootstrappedAt, and composed provider readiness; bootstrap is recorded only after explicit operation. Evidence: environment-registry and admin-bootstrap proofs.",
+      "proof": "Proofs: proof:provider-environment-classification, proof:environment-registry, proof:environment-operations, and proof:environment-admin-bootstrap. Proof level: 4 for live registry/bootstrap and 3 for deterministic operation/classification policy.",
+      "uiSemanticDefinition": "V2 UI must expose environment registry rows, stage policy, allowed profiles/mocks, destructive-operation flags, provider status, bootstrap state, permission gates, audit history, and rejection states for unsafe operations."
+    }
   },
   {
     "capability": "Provider configuration plane",
@@ -1504,7 +1686,20 @@
     "evidence": "ADR-0070",
     "proof": "proof:provider-config; proof:provider-readiness-contract",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Provider config lifecycle is put/list config, reject unsafe secret-bearing data, require opaque credential refs, derive lifecycle from adapter readiness, force missing required credential to degraded, audit mutations, and delete config. Evidence: provider-config and readiness contract proofs.",
+      "stateModel": "State model includes providerKey, capability, environment, instanceLabel, classification, lifecycleState proposed|configured|ready|degraded|disabled, endpoint, config, credentialRef, requiresCredential, and audit metadata. Evidence: provider-config usecase/proof.",
+      "permissions": "Provider config APIs are operator-only and require platform.providers.read/write; provider readiness reads require platform.providers.read. Evidence: capability record and route proof inventory.",
+      "contracts": "Contracts are GET/POST /api/admin/provider-configs, lifecycle/delete actions, ProviderConfigPort, ProviderReadinessPort, and deriveReadinessLifecycle. Evidence: provider-config and provider-readiness-contract proofs.",
+      "validation": "Validation rejects plaintext-looking credential refs, config keys that look secret-bearing, forbidden production providers becoming active, config-only ready assertion, and required-credential providers without refs. Evidence: provider-config proof.",
+      "errorModel": "Invalid config throws validation errors, forbidden production activation rejects, missing credential forces degraded, and adapter-degraded/unreachable keeps lifecycle degraded. Evidence: provider proofs.",
+      "auditModel": "provider_config.set and provider_config.deleted emit audit-before-change metadata without secret values; proof checks captured audit is secret-free. Evidence: provider-config proof.",
+      "readinessModel": "Readiness is adapter-confirmed: configured plus adapter ready becomes ready; degraded/unreachable/no adapter result becomes degraded; disabled remains disabled; proposed state remains non-delivered. Evidence: provider-readiness-contract proof.",
+      "proof": "Runtime proof: proof:provider-config validates live Postgres policy; contract proof: proof:provider-readiness-contract validates lifecycle derivation. Proof level: 4 for live config store and 3 for pure readiness contract.",
+      "uiSemanticDefinition": "V2 UI must expose provider config list/create/update/delete, lifecycle/readiness state, endpoint/config fields, opaque credential ref selection, degraded/missing credential states, operator permission gates, audit links, and no plaintext secret entry except write-only ref creation flows."
+    }
   },
   {
     "capability": "Composed provider readiness spine",
@@ -1520,7 +1715,20 @@
     "evidence": "ADR-0071",
     "proof": "proof:composed-provider-readiness",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Composed readiness lifecycle is discover configured provider endpoints, run bounded health probes, classify each provider ready/degraded/not_configured, derive lifecycle ready/degraded/proposed, and return a secret-free operator payload. Evidence: composed-provider-readiness proof.",
+      "stateModel": "State model includes provider key, capability, endpoint presence, status ready|degraded|not_configured, lifecycleState ready|degraded|proposed, detail, and no credential material. Evidence: composed provider usecase/proof.",
+      "permissions": "Readiness route is operator-only through platform.providers.read; tenant users consume only filtered service readiness where allowed. Evidence: capability record and service catalog/clickthrough policy.",
+      "contracts": "Contract is GET /api/admin/providers/readiness and ProviderReadinessPort output consumed by provider config lifecycle derivation. Evidence: proof:composed-provider-readiness.",
+      "validation": "Validation proves all six composed providers are reported, status enum is honest, reachable light providers report ready, unreachable ones report degraded, unwired providers report not_configured/proposed, and no master key/token appears. Evidence: composed-provider-readiness proof.",
+      "errorModel": "Unreachable wired providers are degraded, absent endpoint providers are not_configured, and none are faked ready; proof reports which providers were live this run. Evidence: proof output behavior.",
+      "auditModel": "Readiness probes are read-only and emit no mutation audit; provider config changes that affect endpoints are audited by provider config. Evidence: auditAction n/a and provider-config proof.",
+      "readinessModel": "Readiness uses adapter-confirmed status and lifecycle mapping; ready requires a successful health probe, degraded means wired but failing, and not_configured means no endpoint. Evidence: composed-provider-readiness proof.",
+      "proof": "Runtime proof: proof:composed-provider-readiness validates honest probe classification for Meilisearch, Prometheus, Alertmanager, Windmill, Temporal, and Tempo/related providers. Proof level: 4 live/honest composed provider readiness validation.",
+      "uiSemanticDefinition": "V2 UI must expose provider readiness table, status/lifecycle badges, endpoint configured/unconfigured state, degraded details, live-proof caveat text, operator gates, and no secret-bearing provider details."
+    }
   },
   {
     "capability": "History read-model (read-only projection)",
@@ -1536,7 +1744,20 @@
     "evidence": "ADR-0063",
     "proof": "proof:history",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "History lifecycle is read existing audit, notification, meter, and incident sources, union them into a tenant-scoped projection, paginate results, redact metadata/payload/secret fields, and leave source rows unchanged. Evidence: history runtime proof.",
+      "stateModel": "State model includes history entries with id, source, type, title, occurredAt, actor/status summary where safe, total, limit, and offset; it deliberately excludes raw metadata, payloads, tokens, and secrets. Evidence: PostgresHistoryRepository proof.",
+      "permissions": "Tenant reads require tenant.audit.read for own history; operator selected-tenant reads require platform.audit.read_all. Evidence: capability record and route contract.",
+      "contracts": "Contracts are GET /api/org/history and GET /api/admin/tenants/:tenantId/history with limit/offset pagination and safe summary entries. Evidence: history proof and route metadata.",
+      "validation": "Validation proves multiple source types are included, tenant A/B isolation, no secret or metadata content in entries, no secret-bearing field names, limit/offset pagination, and source row count unchanged after query. Evidence: history runtime proof.",
+      "errorModel": "Unavailable Postgres skips honestly in runtime proof; route/usecase failures surface as read errors without mutating sources or leaking raw metadata. Evidence: history proof behavior.",
+      "auditModel": "Reading history is not itself audited; history displays already-persisted audit/source rows and never writes source state. Evidence: proof validates no source mutation.",
+      "readinessModel": "Readiness is always-on when Postgres source tables are available; live proof validates projection availability and honest skip when the backend is absent. Evidence: proof:history.",
+      "proof": "Runtime proof: proof:history validates live Postgres union projection, redaction, tenant isolation, pagination, and read-only behavior. Proof level: 4 live substrate validation.",
+      "uiSemanticDefinition": "V2 UI must expose tenant/operator history feeds, source/type filters, pagination controls, safe summaries, no raw metadata/payload/secret display, permission-denied states, and source drilldowns only through owning capability views."
+    }
   },
   {
     "capability": "OIDC discovery / issuer / JWKS validation",
@@ -1552,7 +1773,20 @@
     "evidence": "ADR-0046",
     "proof": "proof:auth-oidc-enterprise",
     "openAction": null,
-    "v2Target": "reuse-as-is"
+    "v2Target": "reuse-as-is",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "OIDC discovery lifecycle is accept issuer or discoveryUrl, derive well-known URL when needed, fetch discovery document, validate issuer, validate JWKS, project safe metadata, classify invalid/unreachable states, and import provider settings without exposing the raw document. Evidence: oidc-discovery tests and auth-oidc-enterprise proof.",
+      "stateModel": "State model includes issuer, discoveryUrl, authorizationEndpoint, tokenEndpoint, userInfoEndpoint, jwksUri, validation result ok|issuer_mismatch|jwks_invalid|unreachable|invalid_document, issuerValid, jwksValid, and jwksKeyCount. Evidence: oidc-discovery usecase/tests.",
+      "permissions": "Discovery import is tenant auth-settings write behavior and requires tenant.auth.settings.write in the tenant realm context. Evidence: route contract and IdP management capability records.",
+      "contracts": "Contract surface is OIDC discovery import under /api/auth/settings/idps discovery settings, accepting issuer or discoveryUrl and returning metadata plus validation projection. Evidence: oidc-discovery tests and runtime proof.",
+      "validation": "Validation allows HTTPS everywhere and HTTP only for local/dev hosts, rejects unsupported schemes, requires issuer or discoveryUrl, rejects incomplete documents, detects issuer mismatch, validates JWKS keys, and never returns raw discovery content. Evidence: oidc-discovery tests.",
+      "errorModel": "Missing body returns invalid_body; network errors become unreachable; non-JSON/incomplete documents become invalid_document; mismatched issuer returns issuer_mismatch; empty JWKS returns jwks_invalid. Evidence: tests and proof.",
+      "auditModel": "Discovery import is read/validation projection and has no mutation audit; later provider create/update actions audit safe metadata in IdP management. Evidence: auditAction null and IdP management tests.",
+      "readinessModel": "Readiness is invariant-ready for local validation, and live proof validates behavior against reachable Keycloak plus negative unreachable/invalid classifications. Evidence: proof:auth-oidc-enterprise.",
+      "proof": "Unit proof: apps/platform-api/tests/unit/oidc-discovery.test.ts. Runtime proof: proof:auth-oidc-enterprise validates live discovery/JWKS and negative classifications. Proof level: 4 live OIDC provider validation.",
+      "uiSemanticDefinition": "V2 UI must expose issuer/discovery URL form fields, import action, validation result, endpoint metadata preview, issuer/JWKS errors, local-only HTTP policy errors, permission gates, and no raw document or secret display."
+    }
   },
   {
     "capability": "OIDC test connection + callback display",
@@ -1568,7 +1802,20 @@
     "evidence": "ADR-0046",
     "proof": "proof:auth-oidc-enterprise",
     "openAction": null,
-    "v2Target": "reuse-as-is"
+    "v2Target": "reuse-as-is",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "OIDC test/callback lifecycle is derive broker callback URL from Keycloak base/realm/alias, read configured IdP, classify missing/not-configured provider, validate issuer discovery/JWKS, audit safe test result, and clean up temporary proof IdP. Evidence: oidc-discovery tests and auth-oidc-enterprise proof.",
+      "stateModel": "State model includes alias, realmName, callbackUrl, stored IdP enabled/config state, issuer, validation result ok|not_configured|not_found|issuer_mismatch|unreachable|invalid_document|jwks_invalid, and audit metadata alias/result only. Evidence: tests and proof.",
+      "permissions": "Callback display/test connection are tenant auth settings operations requiring tenant.auth.settings.write/read according to route metadata and tenant realm context. Evidence: capability record and auth settings route contracts.",
+      "contracts": "Contracts are callback URL derivation for /broker/:alias/endpoint and test-connection action for a stored IdP alias returning validation status without secret material. Evidence: buildIdpCallbackUrl and testIdpConnection tests.",
+      "validation": "Validation proves callback URL contains the broker endpoint, test-connection requires a stored IdP with issuer, validates discovery/JWKS, records audit only on configured test, and keeps clientSecret masked. Evidence: oidc-discovery and idp-management tests.",
+      "errorModel": "Unknown alias returns not_found with no audit; stored IdP without issuer returns not_configured; discovery validation returns the same issuer/JWKS/unreachable/invalid classifications as import. Evidence: tests.",
+      "auditModel": "testIdpConnection emits auth_settings.idp.tested with alias and result only; metadata excludes secret fields and raw provider secrets. Evidence: oidc-discovery tests.",
+      "readinessModel": "Readiness is invariant-ready for callback derivation and live provider-backed for test connection, proven against local Keycloak. Evidence: proof:auth-oidc-enterprise.",
+      "proof": "Unit proof: oidc-discovery and idp-management tests. Runtime proof: proof:auth-oidc-enterprise validates callback derivation and live non-interactive test-connection. Proof level: 4 live provider validation.",
+      "uiSemanticDefinition": "V2 UI must display copyable callback URL, test connection action, test result states, not-found/not-configured/issuer/JWKS/unreachable errors, audit-safe result history, permission gates, and no client secret or raw token display."
+    }
   },
   {
     "capability": "OIDC login simulation",
@@ -1721,7 +1968,20 @@
     "evidence": "ADR-ACT-0233",
     "proof": "proof:service-clickthrough-policy; proof:clickthrough",
     "openAction": null,
-    "v2Target": "reuse-as-is"
+    "v2Target": "reuse-as-is",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Clickthrough lifecycle is classify each service, derive apex/tenant routes, decide access by actor role and requested tenant slug, reconcile Caddy forward-auth routes, render allowed URLs, and live-probe selected web-profile paths. Evidence: service-clickthrough tests and proofs.",
+      "stateModel": "State model includes service id/resource/apexPath/tenantPath/classification, landingPath, devOnly flag, system-admin and tenant-admin resource sets, access decision granted/reason, and clickthrough URL. Evidence: service-clickthrough usecase/tests.",
+      "permissions": "System admins may access every exposed global service; tenant admins may access only tenant-scoped-safe services on their own slug; anonymous users access none; not-exposed services are denied to everyone. Evidence: service-clickthrough tests and runtime proof.",
+      "contracts": "Contracts are derived forward-auth resource sets, Caddy route reconciliation, clickthrough service list, and service-specific URLs with trailing slash/landingPath rules. Evidence: service-clickthrough tests and clickthrough proof.",
+      "validation": "Validation proves tenant-safe set exactly, cross-tenant denial, unknown-resource denial, not-exposed denial, Caddy route reconciliation, pgAdmin OIDC metadata config, LocalStack production URL lockout, ClickHouse landing path, and live web fallback behavior. Evidence: tests and proof scripts.",
+      "errorModel": "Denied access returns explicit reasons such as not_exposed, unknown_resource, global_only, cross_tenant, or unauthenticated; unavailable web profile is skipped honestly in live route checks. Evidence: service-clickthrough usecase and proof.",
+      "auditModel": "Clickthrough policy is read/decision logic and emits no mutation audit; actual service operations are governed by the target service and auth proxy. Evidence: auditAction null.",
+      "readinessModel": "Readiness is invariant for pure policy and reconciler checks; live web-profile checks add route evidence when Caddy is reachable and otherwise report an honest skip. Evidence: proof:service-clickthrough-policy.",
+      "proof": "Unit proof: service-clickthrough.test.ts. Runtime proofs: proof:service-clickthrough-policy and proof:clickthrough validate policy, route behavior, response redaction, and composed readiness inclusion. Proof level: 3 policy validation plus level 4 where live web routes are checked.",
+      "uiSemanticDefinition": "V2 UI must show only allowed clickthrough links, preserve trailing slashes/landing paths, hide dev-only services in production, distinguish global-only and tenant-safe services, show denied reasons where appropriate, and never expose not-exposed services."
+    }
   },
   {
     "capability": "Environment registry + bootstrap",
@@ -1737,7 +1997,20 @@
     "evidence": "ADR-0072",
     "proof": "proof:environment-registry; proof:environment-admin-bootstrap; proof:environment-operations",
     "openAction": null,
-    "v2Target": "reuse-as-is"
+    "v2Target": "reuse-as-is",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Environment lifecycle is sync tracked stage manifests, register dev/test/staging/prod records, enforce mock/destructive policy, run whitelisted operations, record bootstrap status/timestamp, seed admin handoff, and persist opaque admin marker. Evidence: environment registry, operations, and admin bootstrap proofs.",
+      "stateModel": "State model includes environmentId, stage, executor, composeProject, allowedProfiles, allowedMocks, mockPolicy, destructiveAllowed, dataPreservation, secretStoreProvider, providerConfigStatus, bootstrapStatus, lastBootstrappedAt, and admin secretRef marker. Evidence: environment proofs.",
+      "permissions": "Listing, writing, bootstrapping, and operations require platform.environment.* permissions; missing permissions fail before registry mutation or operation execution. Evidence: environment-registry and environment-operations proofs.",
+      "contracts": "Contracts are config/environments/<stage>.json, environment_registry rows, generated .env files, environment operation requests, and seed-admin/print-admin bootstrap commands. Evidence: scripts/env/bootstrap.mjs and environment proofs.",
+      "validation": "Validation proves full ladder sync, secret-free registry values, no-mock staging/prod policy, DB CHECK enforcement, whitelisted argv-only operations, safe stop/restart without volume deletion, pattern-validated secret/proof names, and no plaintext password in admin marker. Evidence: proofs.",
+      "errorModel": "Invalid stage/mock combinations, missing permissions, unknown profiles, malformed secret/proof names, and unsafe production operations reject explicitly; unavailable Postgres skips registry proof honestly. Evidence: environment proofs.",
+      "auditModel": "Environment registration and operation invocation emit audit events with safe metadata; admin bootstrap persists marker metadata only and no plaintext password. Evidence: environment-registry, environment-operations, and admin-bootstrap proofs.",
+      "readinessModel": "Readiness is represented by bootstrapStatus, lastBootstrappedAt, providerConfigStatus, and operation proof results; bootstrap state is recorded only after explicit bootstrap action. Evidence: environment-registry proof.",
+      "proof": "Runtime proofs: proof:environment-registry, proof:environment-admin-bootstrap, and proof:environment-operations. Proof level: 4 for live registry state and 3 for deterministic operation/bootstrap validation.",
+      "uiSemanticDefinition": "V2 UI must expose environment ladder rows, stage policy, allowed profiles/mocks, destructive-operation flags, bootstrap status, provider status, safe operation buttons, permission gates, rejection states, and admin handoff metadata without plaintext secrets."
+    }
   },
   {
     "capability": "Provider environment classification",
@@ -1753,7 +2026,20 @@
     "evidence": "ADR-0070",
     "proof": "proof:provider-environment-classification",
     "openAction": null,
-    "v2Target": "reuse-as-is"
+    "v2Target": "reuse-as-is",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Provider classification lifecycle is read USF registry and environment matrix, classify tenant-runtime substrates, reject production mock usage, verify shared-service checklist evidence, and enforce negative self-tests for unsafe classifications. Evidence: provider-environment-classification proof.",
+      "stateModel": "State model includes capability id/name, environmentModel, sharedPerEnv checklist text, notes, productionBlockers, composeSupport, and matrix rows for per-environment/shared/mock-only providers. Evidence: registry and classification matrix.",
+      "permissions": "Classification data is operator/read-only architecture state surfaced through provider/service catalog views requiring platform.providers.read or platform/service permissions. Evidence: provider and service catalog capability records.",
+      "contracts": "Contracts are docs/evidence/platform/universal-service-foundation-registry.json and docs/evidence/platform/provider-environment-classification.md. Evidence: proof:provider-environment-classification.",
+      "validation": "Validation proves tenant-runtime substrates are per-environment, mock providers state production forbiddance, shared rows include checklist evidence, Sentry internal Kafka/ClickHouse are not reused, and matrix covers composed providers. Evidence: static classification proof.",
+      "errorModel": "Unsafe classification fails proof with explicit reason for tenant-runtime shared use, missing shared checklist evidence, or mock-only rows lacking production forbiddance. Evidence: negative self-tests in proof.",
+      "auditModel": "Classification is source-controlled architecture state; provider config mutations that instantiate provider choices are audited by provider_config actions. Evidence: provider-config proof.",
+      "readinessModel": "Classification does not imply runtime readiness; provider readiness remains adapter-confirmed through composed provider readiness and provider config. Evidence: provider-readiness and composed-provider proofs.",
+      "proof": "Static proof: proof:provider-environment-classification validates registry and matrix classification plus negative self-tests. Proof level: 3 policy/state validation.",
+      "uiSemanticDefinition": "V2 UI must display provider environment model, shared-service checklist evidence, production blockers, mock-only warnings, composed provider coverage, and explicit separation between classification and readiness."
+    }
   },
   {
     "capability": "E2E confidence ladder (stage-aware)",
@@ -1769,7 +2055,20 @@
     "evidence": "ADR-0075",
     "proof": "make all (e2e gates)",
     "openAction": null,
-    "v2Target": "reuse-as-is: V2 E2E suites are the regression contract for AI-generated UI"
+    "v2Target": "reuse-as-is: V2 E2E suites are the regression contract for AI-generated UI",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Confidence ladder lifecycle is run dev/test/staging/prod stages, write evidence per stage, require FULL/passed results in order at one SHA, permit evidence-only attestation commits, and fail closed on stale, missing, degraded, mixed-SHA, or non-ancestor evidence. Evidence: verify-ladder and aggregate-confidence tests.",
+      "stateModel": "State model includes stage evidence result, confidence, gitSha, timestamp, durationSeconds, head SHA, ancestor relation, changedSinceTested, freshness window, group exit classifications OK|DEGRADED|FAIL, and stage result FULL|DEGRADED|FAILED. Evidence: scripts/evidence tests.",
+      "permissions": "The ladder is CI/release-governed repository state, not a runtime permission surface; stage promotion is controlled by make targets and evidence verification. Evidence: stage tests and Makefile gates.",
+      "contracts": "Contracts are docs/evidence/stages/* latest JSON, verify-ladder input/output, aggregate-confidence group classification, and make all promotion stages. Evidence: scripts/evidence/tests and scripts/tests/tests.",
+      "validation": "Validation rejects degraded/failed/missing stages, mixed SHAs, stale evidence, out-of-order timestamps, malicious SHA strings, non-ancestor tested commits, unresolved diffs, and non-evidence changes after tested SHA. Evidence: verify-ladder tests.",
+      "errorModel": "Contract group exit 2 becomes DEGRADED, ordinary exit 2 is FAIL, any required FAIL makes stage FAILED, and any DEGRADED prevents FULL; all violations produce explicit failure messages. Evidence: aggregate-confidence tests.",
+      "auditModel": "Evidence files and git history serve as the audit record for stage promotion; no runtime audit rows are involved. Evidence: docs/evidence/stages and tests.",
+      "readinessModel": "Readiness is FULL only when all required stage groups pass and ladder evidence is current, ordered, single-SHA, and attested; otherwise stage/ladder readiness is degraded or failed. Evidence: verify-ladder and aggregate-confidence tests.",
+      "proof": "Proofs: scripts/evidence/tests/verify-ladder.test.mjs, scripts/tests/tests/aggregate-confidence.test.mjs, stage-exit tests, and make all stage evidence. Proof level: 3 state-machine validation.",
+      "uiSemanticDefinition": "V2 UI must surface stage confidence, evidence freshness, SHA consistency, degraded/failure reasons, group-level status, promotion blocking state, and links to evidence without allowing UI to override validator results."
+    }
   },
   {
     "capability": "OpenAPI drift hard gate",
@@ -1785,7 +2084,20 @@
     "evidence": "ADR-0065",
     "proof": "validate-openapi-drift --strict",
     "openAction": null,
-    "v2Target": "reuse-as-is"
+    "v2Target": "reuse-as-is",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "OpenAPI drift lifecycle is extract routes from routes.ts, load docs/api/openapi.json, compare path/method coverage, collect and resolve local refs, detect schemaless JSON bodies/responses, report drift, and fail strict mode when drift exists. Evidence: validate-openapi-drift tool/tests.",
+      "stateModel": "State model includes route method/path, OpenAPI path/method entries, missing route set, extra documented route set, unresolvedRefs, schemaless operation list, and strict/report-only exit decision. Evidence: tool implementation and tests.",
+      "permissions": "OpenAPI drift is a repository architecture gate and not a runtime permission surface; documented runtime permissions remain in route metadata and schemas. Evidence: architecture tests.",
+      "contracts": "Contract is docs/api/openapi.json matching apps/platform-api/src/server/routes.ts for path/method, local $ref integrity, and schema presence for JSON request/response bodies. Evidence: validate-openapi-drift tests.",
+      "validation": "Validation proves clean repo strict exit 0, missing/extra route detection, unresolved ref detection, schemaless body detection, bodyless status exemptions, and live OpenAPI having no schemaless bodies or dangling refs. Evidence: validate-openapi-drift tests.",
+      "errorModel": "Missing route file/OpenAPI file throws; strict mode exits 1 on drift; report-only exits 0 while warning with explicit drift lists. Evidence: tool implementation.",
+      "auditModel": "OpenAPI drift changes are audited through git and architecture test output; no runtime audit rows are involved. Evidence: test and stage evidence.",
+      "readinessModel": "Readiness is strict drift gate passing with zero missing routes, extra routes, unresolved refs, and schemaless bodies. Evidence: validate-openapi-drift --strict.",
+      "proof": "Proof: tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs plus architecture test target. Proof level: 2 static contract behavior validation.",
+      "uiSemanticDefinition": "V2 UI/API tooling must treat OpenAPI as the generated client/docs contract, surface drift failures, route/method/schema/ref details, strict/report-only mode, and block cut when strict drift is nonzero."
+    }
   },
   {
     "capability": "i18n runtime + validation",
@@ -1802,7 +2114,20 @@
     "proof": "validate-i18n; packages/i18n-runtime/tests/react.test.tsx",
     "openAction": null,
     "v2Target": "reuse-as-is: the runtime provider/hook and hard validation gate are established; V2 keeps the semantics and regenerates UI layers",
-    "completionAction": "V1C-25"
+    "completionAction": "V1C-25",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "i18n lifecycle is define en-GB locale keys, consume keys through t/serverT/provider hooks, scan source for key usage, validate missing/unused/duplicate keys and interpolation, enforce governed raw-literal policy in strict mode, and run runtime/provider tests. Evidence: validate-i18n and i18n-runtime tests.",
+      "stateModel": "State model includes flattened locale key map, duplicate list, used key set, interpolation parameter usage, raw literal findings, governed/exclude/exception config, strictFailOnRawLiteral, and strict/report-only exit state. Evidence: validate-i18n implementation/tests.",
+      "permissions": "i18n is a repository/UI contract rather than runtime permission surface; permission labels and messages must be represented as translation keys in governed UI surfaces. Evidence: governed-path validation.",
+      "contracts": "Contracts are packages/i18n-runtime APIs, packages/i18n-runtime/locales/en-GB.json, governed-paths.json, and validate-i18n strict mode. Evidence: i18n runtime and validator tests.",
+      "validation": "Validation parses nested locales, reports missing keys, handles strict exit, catches raw JSX/aria literals in governed files, honours exceptions/excludes, validates interpolation, and permits translated copy. Evidence: validate-i18n tests.",
+      "errorModel": "Missing locale file, duplicate/missing/unused keys, interpolation mismatch, and raw governed literals become findings; strict mode exits non-zero for enforced violations. Evidence: validator implementation.",
+      "auditModel": "Translation changes are source-controlled and verified by architecture gates; no runtime audit rows are involved. Evidence: repository test output.",
+      "readinessModel": "Readiness is strict i18n validator success plus i18n runtime/provider tests passing; report-only mode is advisory and not cut-ready evidence for governed paths. Evidence: validate-i18n and package tests.",
+      "proof": "Proofs: validate-i18n tests, architecture test target, packages/i18n-runtime tests, and React provider tests. Proof level: 3 runtime/provider plus static validation.",
+      "uiSemanticDefinition": "V2 UI must use translation keys for all governed user-facing copy, preserve interpolation parameters, provide accessible translated labels, support raw-literal exceptions only through config, and expose missing-key/raw-literal failures as build blockers."
+    }
   },
   {
     "capability": "Accessibility (a11y) gate",
@@ -1818,7 +2143,20 @@
     "evidence": "ADR-0075",
     "proof": "e2e accessibility spec",
     "openAction": null,
-    "v2Target": "reuse-as-is: a11y proofs are the semantic source for AI-generated UI"
+    "v2Target": "reuse-as-is: a11y proofs are the semantic source for AI-generated UI",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Accessibility lifecycle is discover safe app routes, emulate default/reduced-motion/high-contrast profiles, run axe WCAG checks, assert structural main and h1 contracts, write JSON/Markdown evidence, and fail on serious/critical violations or missing landmarks. Evidence: accessibility Playwright spec.",
+      "stateModel": "State model includes route, profile, hasMain, hasHeading, axe violation id/impact/node count, failureCount, stage, baseURL, routesTested, result, and generated evidence paths. Evidence: e2e/discovery/accessibility.spec.ts.",
+      "permissions": "The gate uses whatever auth/session a stage provides and skips external/tool routes; it does not grant runtime access. Evidence: accessibility spec safe route filtering.",
+      "contracts": "Contract is e2e/discovery/accessibility.spec.ts plus ui-contract accessibility baseline requiring main landmark, meaningful h1, accessible controls, and WCAG 2.1 A/AA checks. Evidence: spec comments and assertions.",
+      "validation": "Validation checks safe route discovery, three accessibility profiles, axe tags wcag2a/wcag2aa/wcag21a/wcag21aa, serious/critical violations, main landmark, h1, and evidence writing. Evidence: accessibility spec.",
+      "errorModel": "Any serious/critical axe violation or missing main/h1 enters failures and fails the Playwright assertion; unreachable route loads still produce structural/axe results. Evidence: spec.",
+      "auditModel": "Accessibility evidence is persisted under docs/evidence/e2e and git/stage evidence; no runtime audit row is emitted. Evidence: spec evidence output.",
+      "readinessModel": "Readiness is PASSED only when every route/profile result has no serious/critical axe violation and required structural landmarks exist. Evidence: accessibility coverage report.",
+      "proof": "Proof: e2e/discovery/accessibility.spec.ts under Playwright discovery/e2e gates. Proof level: 5 end-to-end semantic UI accessibility validation.",
+      "uiSemanticDefinition": "V2 UI generation must preserve main landmarks, h1 structure, accessible names, reduced-motion/high-contrast behavior, WCAG A/AA constraints, and evidence output compatibility for every generated route."
+    }
   },
   {
     "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
@@ -1834,6 +2172,19 @@
     "evidence": "ADR-0074; docs/evidence/platform/browser-diagnostics-faro.md (ADR-ACT-0274)",
     "proof": "e2e/discovery/browser-bff-trace.spec.ts (react-enterprise-app + platform-api in one Tempo trace, force-flushed); observability-correlation ladder (ADR-ACT-0285)",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 Faro + OTEL browser instrumentation into V2; AI regenerates visual layer only, telemetry wiring preserved"
+    "v2Target": "reuse-as-is: lift V1 Faro + OTEL browser instrumentation into V2; AI regenerates visual layer only, telemetry wiring preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Browser telemetry lifecycle is initialise Faro/OTEL in the React app, propagate W3C traceparent on same-origin API calls, stamp e2e correlation headers, force-flush browser spans before teardown, ingest through Alloy/OTel/Tempo, and assert browser+BFF spans in correlation harness. Evidence: browser-bff-trace spec and observability correlation tooling.",
+      "stateModel": "State model includes scenarioId, testRunId, browser trace id, traceparent header, react-enterprise-app browser span, platform-api BFF span, Faro flush providerFound/flushed booleans, Tempo trace assertion, and readiness/correlation evidence. Evidence: browser-bff trace spec.",
+      "permissions": "Client telemetry itself is not privileged; backend observability signals require platform.observability.read for admin surfaces, and protected API calls still enforce auth/permission before returning 401/403. Evidence: browser-bff trace spec.",
+      "contracts": "Contracts are POST /faro/collect through Caddy/Alloy, OTLP browser_traces to Tempo, W3C traceparent propagation to same-origin /api requests, and observability-correlation scenario manifest assertions. Evidence: ADR-0074 and e2e spec.",
+      "validation": "Validation proves browser tracer provider exists, forceFlush succeeds, same-origin protected fetch returns 401/403 while carrying trace context, and the correlation harness verifies react-enterprise-app plus platform-api in one trace. Evidence: spec and observability-correlation tool.",
+      "errorModel": "Missing provider or flush failure fails the Playwright spec; missing required Tempo/Loki correlation makes observability-correlation degraded/failed according to ladder policy. Evidence: spec and aggregate-confidence tests.",
+      "auditModel": "Telemetry is operational evidence rather than mutation audit; scenario output and correlation evidence files provide traceability for proof runs. Evidence: docs/evidence/e2e outputs.",
+      "readinessModel": "Readiness is the tenant observability/correlation ladder: browser trace production plus Tempo retrieval of both frontend and BFF spans, with unavailable observability services reported honestly. Evidence: browser-bff-trace and observability-correlation harness.",
+      "proof": "Proofs: e2e/discovery/browser-bff-trace.spec.ts and tools/e2e/observability-correlation. Proof level: 5 end-to-end semantic telemetry validation.",
+      "uiSemanticDefinition": "V2 UI must preserve Faro and OTEL initialization, same-origin trace propagation, flush hooks for tests, scenario/correlation headers, protected-route denial telemetry, and admin observability views that can surface browser-to-BFF trace health."
+    }
   }
 ]
