@@ -953,6 +953,25 @@
     },
     {
       "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": false,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -2469,6 +2488,19 @@
       "assertsFailureMode": false,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": false,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts"
+      ]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof-ts",

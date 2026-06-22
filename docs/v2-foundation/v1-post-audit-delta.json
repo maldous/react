@@ -4038,6 +4038,15 @@
       "v2Target": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
       "protectingTests": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"],
       "decisionRefs": ["ADR-0068", "ADR-ACT-0260"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0029", "ADR-0049"]
     }
   ],
   "deletions": [
@@ -4420,6 +4429,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 432,
+  "additionCount": 433,
   "deletionCount": 54
 }

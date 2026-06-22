@@ -10754,5 +10754,32 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing storage object runtime proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero when storage object metadata lifecycle, quota-before-write, quarantine, scan lifecycle, legal hold, or live object flow is broken",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to tenant-storage-objects-runtime-proof.ts; live proof validates storage object metadata lifecycle, quota-before-write, quarantine and download guard, ClamAV clean/rejected scan lifecycle, legal-hold delete denial, and live MinIO object flow. Adapter reliability semantics fail closed on unavailable or misconfigured Postgres.",
+    "capabilitiesProven": ["Object storage + tenant prefixes + signed URLs"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "storageAssurance",
+      "securityModel",
+      "stateModel",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]
