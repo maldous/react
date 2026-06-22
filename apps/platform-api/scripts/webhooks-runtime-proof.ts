@@ -10,6 +10,7 @@
  */
 
 import http from "node:http";
+import assert from "node:assert/strict";
 import { requireEnv } from "./lib/local-env.ts";
 import crypto from "node:crypto";
 import pg from "pg";
@@ -32,6 +33,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 function checkPureHmacAndReadiness(): void {

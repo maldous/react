@@ -14,6 +14,7 @@
  */
 
 import pg from "pg";
+import assert from "node:assert/strict";
 import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import { PostgresHistoryRepository } from "../src/adapters/postgres-history-repository.ts";
 import { getHistory } from "../src/usecases/history.ts";
@@ -28,6 +29,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 async function pgReachable(url: string): Promise<boolean> {
   const p = new pg.Pool({ connectionString: url, connectionTimeoutMillis: 2000, max: 1 });

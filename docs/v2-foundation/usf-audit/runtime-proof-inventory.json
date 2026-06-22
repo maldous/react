@@ -503,7 +503,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/history-runtime-proof.ts"]
@@ -547,7 +547,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts"]
@@ -1453,7 +1453,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"]
@@ -1822,7 +1822,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"]
