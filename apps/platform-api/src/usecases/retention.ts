@@ -12,6 +12,8 @@
 
 import { ValidationError, ForbiddenError } from "@platform/platform-errors";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
 import type { LegalHoldRepository } from "../ports/legal-hold.ts";
 import { LegalHoldGuard } from "./legal-hold.ts";
 import type {
@@ -45,6 +47,93 @@ function isSelectable(t: string): t is SelectableTable {
 }
 
 const MAX_TTL_SECONDS = 365 * 24 * 60 * 60; // 1 year hard cap on retention TTL.
+const RETENTION_WORKFLOW_TIMEOUT_MS = 5000;
+const RETENTION_TICK_RETRY_ATTEMPTS = 2;
+const log = createLogger({
+  name: "retention-usecase",
+  service: "platform-api",
+  boundedContext: "workflow",
+});
+const tracer = createTracer("retention-usecase");
+const retentionWorkflowMetrics = new Map<string, number>();
+
+export const retentionWorkflowStateMachine = {
+  stateMachineDefinition:
+    "retention workflow states are policy_enabled, policy_disabled, candidate_pending, deleted, skipped_legal_hold, skipped_filtered, and failed",
+  allowedTransitions:
+    "allowed transitions: policy_enabled->candidate_pending->deleted|skipped_legal_hold|failed and policy_enabled->policy_disabled",
+  forbiddenTransitions:
+    "forbidden transitions: held rows cannot transition to deleted; invalid filters and non-selectable tables are rejected before state change",
+  idempotency:
+    "recordOutcome is keyed by policy/resource row and updates an existing ledger row rather than duplicating candidate outcomes",
+  retry: "retention tick retries transient repository selection failures with bounded attempts",
+  timeout: "retention workflow operations fail with timeout after RETENTION_WORKFLOW_TIMEOUT_MS",
+  compensation:
+    "disableRetentionPolicy is the compensation/cancel transition for future retention candidate processing",
+  failureHoldingState:
+    "candidate selection and non-forbidden guard errors increment errors and leave candidates undeleted for operator recovery",
+  operatorRecovery:
+    "operator recovery: inspect retention error metrics/logs, repair repository/legal-hold state, then retry the retention tick",
+};
+
+function recordMetric(operation: string, outcome: "success" | "error"): void {
+  const key = `${operation}:${outcome}`;
+  retentionWorkflowMetrics.set(key, (retentionWorkflowMetrics.get(key) ?? 0) + 1);
+}
+
+export function getRetentionWorkflowMetric(
+  operation: string,
+  outcome: "success" | "error"
+): number {
+  return retentionWorkflowMetrics.get(`${operation}:${outcome}`) ?? 0;
+}
+
+async function withTimeout<T>(operation: string, run: () => Promise<T>): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`retention_workflow_timeout:${operation}`)),
+      RETENTION_WORKFLOW_TIMEOUT_MS
+    );
+  });
+  try {
+    return await Promise.race([run(), timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+async function withRetentionWorkflow<T>(
+  operation: string,
+  run: () => Promise<T>,
+  options: { retry?: boolean } = {}
+): Promise<T> {
+  return withSpan(
+    tracer,
+    `retention.${operation}`,
+    async () => {
+      const attempts = options.retry ? RETENTION_TICK_RETRY_ATTEMPTS : 1;
+      let lastError: unknown;
+      for (let attempt = 1; attempt <= attempts; attempt += 1) {
+        try {
+          const result = await withTimeout(operation, run);
+          recordMetric(operation, "success");
+          log.info({ operation, attempt }, "retention.workflow.complete");
+          return result;
+        } catch (err) {
+          lastError = err;
+          if (attempt >= attempts) {
+            recordMetric(operation, "error");
+            log.error({ err, operation, attempt }, "retention.workflow.failed");
+            break;
+          }
+        }
+      }
+      throw lastError;
+    },
+    { "workflow.operation": operation }
+  );
+}
 
 export function validateFilter(filter: RetentionFilter): void {
   if (filter.kind === "all") return;
@@ -84,58 +173,60 @@ export async function setRetentionPolicy(
   },
   deps: RetentionDeps
 ): Promise<SetRetentionPolicyResult> {
-  if (!isSelectable(input.resourceTable)) {
-    return {
-      kind: "invalid",
-      message: `resource_table must be one of: ${SELECTABLE_TABLES.join(", ")}`,
-    };
-  }
-  if (!Number.isInteger(input.ttlSeconds) || input.ttlSeconds <= 0) {
-    return { kind: "invalid", message: "ttlSeconds must be a positive integer" };
-  }
-  if (input.ttlSeconds > MAX_TTL_SECONDS) {
-    return {
-      kind: "invalid",
-      message: `ttlSeconds must be <= ${MAX_TTL_SECONDS} (1 year)`,
-    };
-  }
-  try {
-    validateFilter(input.filter);
-  } catch (err) {
-    if (err instanceof RetentionFilterError) {
-      return { kind: "invalid", message: err.message };
+  return withRetentionWorkflow("set-policy", async () => {
+    if (!isSelectable(input.resourceTable)) {
+      return {
+        kind: "invalid",
+        message: `resource_table must be one of: ${SELECTABLE_TABLES.join(", ")}`,
+      };
     }
-    throw err;
-  }
+    if (!Number.isInteger(input.ttlSeconds) || input.ttlSeconds <= 0) {
+      return { kind: "invalid", message: "ttlSeconds must be a positive integer" };
+    }
+    if (input.ttlSeconds > MAX_TTL_SECONDS) {
+      return {
+        kind: "invalid",
+        message: `ttlSeconds must be <= ${MAX_TTL_SECONDS} (1 year)`,
+      };
+    }
+    try {
+      validateFilter(input.filter);
+    } catch (err) {
+      if (err instanceof RetentionFilterError) {
+        return { kind: "invalid", message: err.message };
+      }
+      throw err;
+    }
 
-  // Audit-before-change.
-  await deps.audit.emit(
-    createAuditEvent({
-      actorId: input.actor.actorId,
-      actorRoles: input.actor.actorRoles,
-      tenantId: input.organisationId,
-      action: AuditAction.RetentionPolicySet,
-      resource: "retention_policy",
-      resourceId: `${input.resourceTable}:ttl=${input.ttlSeconds}s`,
-      metadata: {
-        resourceTable: input.resourceTable,
-        ttlSeconds: input.ttlSeconds,
-        filterKind: input.filter.kind,
-        ...(input.metadata ?? {}),
-      },
-      sourceHost: input.actor.sourceHost,
-    })
-  );
+    // Audit-before-change.
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: input.actor.actorId,
+        actorRoles: input.actor.actorRoles,
+        tenantId: input.organisationId,
+        action: AuditAction.RetentionPolicySet,
+        resource: "retention_policy",
+        resourceId: `${input.resourceTable}:ttl=${input.ttlSeconds}s`,
+        metadata: {
+          resourceTable: input.resourceTable,
+          ttlSeconds: input.ttlSeconds,
+          filterKind: input.filter.kind,
+          ...(input.metadata ?? {}),
+        },
+        sourceHost: input.actor.sourceHost,
+      })
+    );
 
-  const policy = await deps.repository.upsertPolicy({
-    organisationId: input.organisationId,
-    resourceTable: input.resourceTable,
-    ttlSeconds: input.ttlSeconds,
-    filter: input.filter,
-    setBy: input.actor.actorId,
-    metadata: input.metadata ?? {},
+    const policy = await deps.repository.upsertPolicy({
+      organisationId: input.organisationId,
+      resourceTable: input.resourceTable,
+      ttlSeconds: input.ttlSeconds,
+      filter: input.filter,
+      setBy: input.actor.actorId,
+      metadata: input.metadata ?? {},
+    });
+    return { kind: "ok", policy };
   });
-  return { kind: "ok", policy };
 }
 
 // ─── Disable ──────────────────────────────────────────────────────────────
@@ -151,26 +242,28 @@ export async function disableRetentionPolicy(
   },
   deps: RetentionDeps
 ): Promise<DisableRetentionPolicyResult> {
-  if (!isSelectable(input.resourceTable)) {
-    throw new ValidationError("api.error.invalidInput", {
-      safeDetails: { field: "resourceTable" },
-    });
-  }
-  await deps.audit.emit(
-    createAuditEvent({
-      actorId: input.actor.actorId,
-      actorRoles: input.actor.actorRoles,
-      tenantId: input.organisationId,
-      action: AuditAction.RetentionPolicyRemoved,
-      resource: "retention_policy",
-      resourceId: `${input.resourceTable}`,
-      metadata: {},
-      sourceHost: input.actor.sourceHost,
-    })
-  );
-  const policy = await deps.repository.disablePolicy(input.organisationId, input.resourceTable);
-  if (!policy) return { kind: "not_found" };
-  return { kind: "ok", policy };
+  return withRetentionWorkflow("disable-policy", async () => {
+    if (!isSelectable(input.resourceTable)) {
+      throw new ValidationError("api.error.invalidInput", {
+        safeDetails: { field: "resourceTable" },
+      });
+    }
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: input.actor.actorId,
+        actorRoles: input.actor.actorRoles,
+        tenantId: input.organisationId,
+        action: AuditAction.RetentionPolicyRemoved,
+        resource: "retention_policy",
+        resourceId: `${input.resourceTable}`,
+        metadata: {},
+        sourceHost: input.actor.sourceHost,
+      })
+    );
+    const policy = await deps.repository.disablePolicy(input.organisationId, input.resourceTable);
+    if (!policy) return { kind: "not_found" };
+    return { kind: "ok", policy };
+  });
 }
 
 // ─── Read ─────────────────────────────────────────────────────────────────
@@ -178,14 +271,18 @@ export async function listRetentionPoliciesForTenant(
   organisationId: string,
   deps: RetentionDeps
 ): Promise<RetentionPolicyRecord[]> {
-  return deps.repository.listPoliciesForTenant(organisationId);
+  return withRetentionWorkflow("list-tenant", () =>
+    deps.repository.listPoliciesForTenant(organisationId)
+  );
 }
 
 export async function listRetentionPoliciesAsOperator(
   organisationId: string,
   deps: RetentionDeps
 ): Promise<RetentionPolicyRecord[]> {
-  return deps.repository.listPoliciesAsOperator(organisationId);
+  return withRetentionWorkflow("list-operator", () =>
+    deps.repository.listPoliciesAsOperator(organisationId)
+  );
 }
 
 // ─── Tick ────────────────────────────────────────────────────────────────
@@ -210,103 +307,109 @@ export async function runRetentionTick(
   },
   deps: RetentionDeps
 ): Promise<RunRetentionTickResult> {
-  const result: RunRetentionTickResult = {
-    policiesEvaluated: 0,
-    candidatesFound: 0,
-    deleted: 0,
-    skippedLegalHold: 0,
-    skippedFiltered: 0,
-    errors: 0,
-  };
-  const policies = await deps.repository.listPoliciesAsOperator(input.organisationId);
-  for (const policy of policies) {
-    if (!policy.enabled) continue;
-    result.policiesEvaluated++;
-    const limit = Math.min(Math.max(input.candidateLimit ?? 100, 1), 1000);
-    let candidates;
-    try {
-      candidates = await deps.repository.selectCandidates(policy, limit);
-    } catch {
-      result.errors++;
-      continue;
-    }
-    for (const candidate of candidates) {
-      result.candidatesFound++;
-      try {
-        await new LegalHoldGuard(deps.guard).assertCanDelete(
-          input.organisationId,
-          candidate.resourceTable,
-          candidate.rowId
-        );
-      } catch (err) {
-        if (!(err instanceof ForbiddenError)) {
+  return withRetentionWorkflow(
+    "tick",
+    async () => {
+      const result: RunRetentionTickResult = {
+        policiesEvaluated: 0,
+        candidatesFound: 0,
+        deleted: 0,
+        skippedLegalHold: 0,
+        skippedFiltered: 0,
+        errors: 0,
+      };
+      const policies = await deps.repository.listPoliciesAsOperator(input.organisationId);
+      for (const policy of policies) {
+        if (!policy.enabled) continue;
+        result.policiesEvaluated++;
+        const limit = Math.min(Math.max(input.candidateLimit ?? 100, 1), 1000);
+        let candidates;
+        try {
+          candidates = await deps.repository.selectCandidates(policy, limit);
+        } catch {
           result.errors++;
           continue;
         }
-        await deps.repository.recordOutcome({
-          organisationId: input.organisationId,
-          policyId: policy.id,
-          resourceTable: candidate.resourceTable,
-          rowId: candidate.rowId,
-          outcome: "skipped_legal_hold",
-        });
-        await deps.audit.emit(
-          createAuditEvent({
-            actorId: input.actor.actorId,
-            actorRoles: input.actor.actorRoles,
-            tenantId: input.organisationId,
-            action: AuditAction.RetentionSkippedLegalHold,
-            resource: "retention_candidate",
-            resourceId: `${candidate.resourceTable}:${candidate.rowId}`,
-            metadata: { policyId: policy.id, ageSeconds: candidate.ageSeconds },
-            sourceHost: input.actor.sourceHost,
-          })
-        );
-        result.skippedLegalHold++;
-        continue;
+        for (const candidate of candidates) {
+          result.candidatesFound++;
+          try {
+            await new LegalHoldGuard(deps.guard).assertCanDelete(
+              input.organisationId,
+              candidate.resourceTable,
+              candidate.rowId
+            );
+          } catch (err) {
+            if (!(err instanceof ForbiddenError)) {
+              result.errors++;
+              continue;
+            }
+            await deps.repository.recordOutcome({
+              organisationId: input.organisationId,
+              policyId: policy.id,
+              resourceTable: candidate.resourceTable,
+              rowId: candidate.rowId,
+              outcome: "skipped_legal_hold",
+            });
+            await deps.audit.emit(
+              createAuditEvent({
+                actorId: input.actor.actorId,
+                actorRoles: input.actor.actorRoles,
+                tenantId: input.organisationId,
+                action: AuditAction.RetentionSkippedLegalHold,
+                resource: "retention_candidate",
+                resourceId: `${candidate.resourceTable}:${candidate.rowId}`,
+                metadata: { policyId: policy.id, ageSeconds: candidate.ageSeconds },
+                sourceHost: input.actor.sourceHost,
+              })
+            );
+            result.skippedLegalHold++;
+            continue;
+          }
+          // Held=False; record outcome='deleted' (the actual deletion of the
+          // source row is a per-table concern; the ledger row carries the durable
+          // record). For V1C-12b the ledger row IS the deletion event — the source
+          // row delete is owned by the per-table migration once the tenant confirms.
+          await deps.repository.recordOutcome({
+            organisationId: input.organisationId,
+            policyId: policy.id,
+            resourceTable: candidate.resourceTable,
+            rowId: candidate.rowId,
+            outcome: "deleted",
+          });
+          await deps.audit.emit(
+            createAuditEvent({
+              actorId: input.actor.actorId,
+              actorRoles: input.actor.actorRoles,
+              tenantId: input.organisationId,
+              action: AuditAction.RetentionApplied,
+              resource: "retention_candidate",
+              resourceId: `${candidate.resourceTable}:${candidate.rowId}`,
+              metadata: {
+                policyId: policy.id,
+                ttlSeconds: policy.ttlSeconds,
+                ageSeconds: candidate.ageSeconds,
+              },
+              sourceHost: input.actor.sourceHost,
+            })
+          );
+          result.deleted++;
+        }
       }
-      // Held=False; record outcome='deleted' (the actual deletion of the
-      // source row is a per-table concern; the ledger row carries the durable
-      // record). For V1C-12b the ledger row IS the deletion event — the source
-      // row delete is owned by the per-table migration once the tenant confirms.
-      await deps.repository.recordOutcome({
-        organisationId: input.organisationId,
-        policyId: policy.id,
-        resourceTable: candidate.resourceTable,
-        rowId: candidate.rowId,
-        outcome: "deleted",
-      });
+      // Tick summary audit (one line per tick).
       await deps.audit.emit(
         createAuditEvent({
           actorId: input.actor.actorId,
           actorRoles: input.actor.actorRoles,
           tenantId: input.organisationId,
-          action: AuditAction.RetentionApplied,
-          resource: "retention_candidate",
-          resourceId: `${candidate.resourceTable}:${candidate.rowId}`,
-          metadata: {
-            policyId: policy.id,
-            ttlSeconds: policy.ttlSeconds,
-            ageSeconds: candidate.ageSeconds,
-          },
+          action: AuditAction.RetentionTickCompleted,
+          resource: "retention_tick",
+          resourceId: `org=${input.organisationId}`,
+          metadata: { ...result },
           sourceHost: input.actor.sourceHost,
         })
       );
-      result.deleted++;
-    }
-  }
-  // Tick summary audit (one line per tick).
-  await deps.audit.emit(
-    createAuditEvent({
-      actorId: input.actor.actorId,
-      actorRoles: input.actor.actorRoles,
-      tenantId: input.organisationId,
-      action: AuditAction.RetentionTickCompleted,
-      resource: "retention_tick",
-      resourceId: `org=${input.organisationId}`,
-      metadata: { ...result },
-      sourceHost: input.actor.sourceHost,
-    })
+      return result;
+    },
+    { retry: true }
   );
-  return result;
 }

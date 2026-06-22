@@ -14,6 +14,7 @@ import assert from "node:assert/strict";
 
 import {
   disableRetentionPolicy,
+  getRetentionWorkflowMetric,
   listRetentionPoliciesAsOperator,
   listRetentionPoliciesForTenant,
   runRetentionTick,
@@ -414,6 +415,7 @@ describe("retention use case (V1C-12b) — runRetentionTick", () => {
     assert.equal(retentionApplied.length, 2);
     const tickSummary = b.audit.filter((e) => e.action === AuditAction.RetentionTickCompleted);
     assert.equal(tickSummary.length, 1);
+    assert.equal(getRetentionWorkflowMetric("tick", "success") > 0, true);
   });
 
   it("skips_legal_hold: held rows are PRESERVED (consumes V1C-12c LegalHoldGuard)", async () => {
