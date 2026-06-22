@@ -8,6 +8,78 @@
     "deliveredCapabilities": 70,
     "enforcedBy": "tools/v2-readiness/src/rules/r24-environment-semantics.mjs"
   },
+  "runtimeProviderAliases": [
+    {
+      "provider": "clamav-antivirus",
+      "capability": "Tenant storage object antivirus scanning",
+      "adapterFile": "apps/platform-api/src/adapters/clamav-antivirus.ts",
+      "proof": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+      "ownerRef": "docs/adr/0049-tenant-storage-readiness-and-isolation.md"
+    },
+    {
+      "provider": "http-engine-provider",
+      "capability": "Workflow engine HTTP provider binding",
+      "adapterFile": "apps/platform-api/src/adapters/http-engine-provider.ts",
+      "proof": "apps/platform-api/scripts/http-engine-providers-runtime-proof.ts",
+      "ownerRef": "docs/adr/0071-composed-provider-readiness.md"
+    },
+    {
+      "provider": "in-memory-automation-runner",
+      "capability": "Local automation runner fallback",
+      "adapterFile": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
+      "proof": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+      "ownerRef": "docs/adr/0071-composed-provider-readiness.md"
+    },
+    {
+      "provider": "in-memory-billing-provider",
+      "capability": "Local billing provider fallback",
+      "adapterFile": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
+      "proof": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "ownerRef": "docs/adr/0071-composed-provider-readiness.md"
+    },
+    {
+      "provider": "postgres-email-sender-store",
+      "capability": "Tenant email sender secret storage",
+      "adapterFile": "apps/platform-api/src/adapters/postgres-email-sender-store.ts",
+      "proof": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+      "ownerRef": "docs/adr/0047-tenant-email-sender-configuration.md"
+    },
+    {
+      "provider": "postgres-legal-hold",
+      "capability": "Data governance legal hold storage",
+      "adapterFile": "apps/platform-api/src/adapters/postgres-legal-hold.ts",
+      "proof": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+      "ownerRef": "docs/adr/0064-data-governance-retention-and-legal-hold.md"
+    },
+    {
+      "provider": "postgres-rate-limit-repository",
+      "capability": "Tenant API rate limit persistence",
+      "adapterFile": "apps/platform-api/src/adapters/postgres-rate-limit-repository.ts",
+      "proof": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "ownerRef": "docs/adr/0060-developer-api-keys-and-rate-limits.md"
+    },
+    {
+      "provider": "postgres-tenant-credential-store",
+      "capability": "Tenant auth credential storage",
+      "adapterFile": "apps/platform-api/src/adapters/postgres-tenant-credential-store.ts",
+      "proof": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+      "ownerRef": "docs/adr/0044-tenant-auth-settings-credential-readiness.md"
+    },
+    {
+      "provider": "smtp-email-adapter",
+      "capability": "Tenant email sender SMTP delivery",
+      "adapterFile": "apps/platform-api/src/adapters/smtp-email-adapter.ts",
+      "proof": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "ownerRef": "docs/adr/0047-tenant-email-sender-configuration.md"
+    },
+    {
+      "provider": "tenant-secret-crypto",
+      "capability": "Tenant secret encryption",
+      "adapterFile": "apps/platform-api/src/adapters/tenant-secret-crypto.ts",
+      "proof": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+      "ownerRef": "docs/adr/0044-tenant-auth-settings-credential-readiness.md"
+    }
+  ],
   "capabilities": [
     {
       "capability": "Tenant identity (record + FQDN)",

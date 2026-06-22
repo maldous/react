@@ -841,114 +841,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "clamav-antivirus",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "http-engine-provider",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "in-memory-automation-runner",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "in-memory-billing-provider",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "postgres-email-sender-store",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "postgres-legal-hold",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "postgres-rate-limit-repository",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "postgres-tenant-credential-store",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "smtp-email-adapter",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "tenant-secret-crypto",
-      "message": "runtime provider has no semantic/provider matrix link",
-      "evidence": {
-        "source": "runtime-provider-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "clamav-antivirus",
-      "message": "runtime storage operation has no semantic storage link",
-      "evidence": {
-        "source": "runtime-storage-operation-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "postgres-legal-hold",
-      "message": "runtime storage operation has no semantic storage link",
-      "evidence": {
-        "source": "runtime-storage-operation-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "adapters-object-storage.test",
       "message": "runtime storage operation has no semantic storage link",
       "evidence": {
@@ -977,15 +869,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "workflow-readiness",
-      "message": "runtime workflow has no semantic workflow/state-machine link",
-      "evidence": {
-        "source": "runtime-workflow-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "in-memory-automation-runner",
       "message": "runtime workflow has no semantic workflow/state-machine link",
       "evidence": {
         "source": "runtime-workflow-inventory.json"
