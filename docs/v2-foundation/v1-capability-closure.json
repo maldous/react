@@ -22,7 +22,7 @@
       "stateModel": "State model includes organisation id, slug/FQDN, realmName tenant-{organisationId}, hostSource slug|custom_domain|fixture, and tenant_domains registry states for custom FQDNs. Evidence: apps/platform-api/src/server/tenant-resolver.ts.",
       "permissions": "Tenant provisioning is operator-controlled by platform.tenants.read/create; host identity read is deterministic request context and does not grant data access without route permission checks. Evidence: capability record and apps/platform-api/src/server/pipeline.ts tenant resolution flow.",
       "contracts": "Contract surface is POST /api/admin/tenants for provisioning and GET /api/host-identity for request host identity; runtime resolution consumes Host/X-Forwarded-Host. Evidence: capability record, routes, and domain-identity-matrix proof.",
-      "validation": "Host validation classifies apex, slug, local slug, reserved, unknown, malformed, host-with-port, and custom-domain candidates; X-Forwarded-Host precedence is proven. Evidence: packages/domain-identity/tests/domain-identity.test.ts and domain-identity-matrix runtime proof.",
+      "validation": "Host validation classifies apex, slug, local slug, reserved, unknown, malformed, host-with-port, and possible custom-domain hosts; X-Forwarded-Host precedence is proven. Evidence: packages/domain-identity/tests/domain-identity.test.ts and domain-identity-matrix runtime proof.",
       "errorModel": "Invalid, unknown, reserved, apex, inactive custom, pending custom, and disabled custom hosts resolve to null tenant context rather than a partial or fallback tenant. Evidence: tenant-resolver tests and tenant-custom-domain-resolution runtime proof.",
       "auditModel": "Provisioning is audited at the tenant provisioning surface; host identity resolution itself is read-only and has no mutation audit. Evidence: capability auditAction and tenant resolver/pipeline read-only path.",
       "readinessModel": "Readiness is invariant-ready once the resolver and registry are available; proofs skip honestly only when required seeded/local substrate is absent and do not fake tenant resolution. Evidence: domain-identity-matrix and tenant-custom-domain-resolution runtime proofs.",
@@ -379,7 +379,20 @@
     "evidence": "ADR-0022",
     "proof": "auth-routes substrate tests; proof:auth-settings",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Login/session lifecycle is explicit: /auth/login creates a PKCE state and pre-auth nonce, /auth/callback validates state/code/nonce and resolves identity to a Redis session, /api/session reads fixture or real session cookies, and logout destroys/clears host-only plus domain-scoped cookies. Evidence: auth-routes, auth-usecase, session-fixture, and cookie-security tests.",
+      "stateModel": "Session state is SessionRecord with sessionId, userId, tenantId, organisationId, roles, permissions, displayName, expiry, and Redis-backed cookie id; no-membership and system-admin states have empty tenant context by design. Evidence: apps/platform-api/src/usecases/auth.ts and auth-usecase tests.",
+      "permissions": "The capability establishes the actor rather than requiring a permission; resolved roles are converted to explicit permission bundles, with tenant roles sourced from membership and system-admin sourced from realm roles without tenant membership. Evidence: auth-usecase and domain-identity tests.",
+      "contracts": "Contract surface is GET /auth/login, GET /auth/callback, POST/GET /auth/logout, GET /api/session, and GET /internal/auth/forward. Provider selection is surfaced through GET /api/auth/providers. Evidence: apps/platform-api/src/server/routes.ts.",
+      "validation": "Login validates/sanitises returnTo, emits PKCE challenge parameters, binds callback to the pre-auth cookie, rejects missing/unknown state/code and Keycloak error callbacks, and only accepts stored session cookies. Evidence: apps/platform-api/tests/substrate/auth-routes.test.ts.",
+      "errorModel": "Unauthenticated /api/session returns 401 UNAUTHENTICATED; callback failures redirect to /login?authError=signin_failed; logout is idempotent 204; Redis/session lookup failure falls through to unauthenticated without leaking provider detail. Evidence: routes and auth-routes tests.",
+      "auditModel": "Login/session creation is represented by auth events and session store state; logout removes session state. Mutating auth-settings surfaces have separate audit-first records, while read-only session lookup has no mutation audit. Evidence: capability auditAction and auth-settings audit tests.",
+      "readinessModel": "Readiness depends on Keycloak/Redis/session configuration, with fixture mode explicit for deterministic E2E and auth credential readiness used for tenant realm settings. Evidence: keycloak mapper readiness, auth-routes substrate tests, and proof:auth-settings.",
+      "proof": "Substrate/unit proofs: auth-routes, auth-usecase, session-fixture, cookie-security, token-crypto, and session-config tests. Runtime proof: proof:auth-settings validates live Keycloak auth settings round trips adjacent to the session auth substrate. Proof level: 4 for live auth provider substrate plus 3 for session state behavior.",
+      "uiSemanticDefinition": "V2 UI must model login as a browser redirect handoff, expose provider choices from /api/auth/providers, render authenticated/unauthenticated/session-loading states from /api/session, treat callback errors as login-page failures, support logout navigation, and never expose Keycloak secrets or raw tokens."
+    }
   },
   {
     "capability": "IdP brokering + OIDC provider management",
@@ -395,7 +408,20 @@
     "evidence": "ADR-0043, ADR-0046, ADR-0037",
     "proof": "proof:auth-idps; proof:auth-oidc-enterprise",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "IdP lifecycle is list redacted providers, create OIDC/social provider, update non-secret fields or rotate write-only secret, disable/re-enable, delete, import discovery metadata, derive callback URL, and run non-interactive connection test. Evidence: idp-management and oidc-discovery tests plus idp/oidc runtime proofs.",
+      "stateModel": "State model is tenant realm IdentityProvider with alias, displayName, providerId, enabled, trustEmail, clientId, hasClientSecret, scopes, issuer/endpoints/JWKS validation result, and Keycloak-masked clientSecret only inside the adapter. Evidence: idp-management usecase/tests.",
+      "permissions": "All management routes are tenant-scoped and require tenant.auth.settings.read or tenant.auth.settings.write with admin:auth UMA read/write scope; tenant credential is resolved from the FQDN tenant context. Evidence: routes.ts.",
+      "contracts": "API contracts are GET/POST /api/auth/settings/idps, PATCH/DELETE /api/auth/settings/idps/:alias, POST /idps/oidc/discover, GET /idps/:alias/callback-url, and POST /idps/:alias/test-connection. Evidence: routes.ts and docs/api/openapi.json.",
+      "validation": "Create validates alias, provider allowlist, required OIDC URLs, safe URL schemes, reserved aliases, discovery issuer/JWKS, and local-only HTTP exceptions; update preserves secrets when absent/blank and validates the same public fields. Evidence: contracts-admin schemas, idp-management tests, and oidc-discovery tests.",
+      "errorModel": "Failures include VALIDATION_ERROR, NO_TENANT, NO_CREDENTIAL, INVALID_CREDENTIAL, FORBIDDEN_REALM_OPERATION, REALM_UNREACHABLE, NOT_FOUND, conflict, issuer_mismatch, jwks_invalid, unreachable, invalid_document, and not_configured. Evidence: sendAuthSettingsFailure, oidc-discovery tests, and runtime proofs.",
+      "auditModel": "Create/update/delete/test emit auth-settings audit events with alias, operation, changed field names, hasClientSecret/secretChanged booleans, and classified test result only; config values and secret values are never audited. Evidence: idp-management and auth-settings-audit tests.",
+      "readinessModel": "Readiness distinguishes configured/ok, missing credential, invalid credential, forbidden realm operation, realm unreachable, discovery invalid, and externally limited login simulation. Evidence: auth-settings-readiness usecase, idp-runtime-proof, and oidc-enterprise-runtime-proof.",
+      "proof": "Runtime proofs: proof:auth-idps validates live Keycloak IdP CRUD/redaction/secret rotation; proof:auth-oidc-enterprise validates live discovery/JWKS/callback/test-connection against Keycloak. Proof level: 4 live provider validation.",
+      "uiSemanticDefinition": "V2 UI must expose provider list, create/edit/delete/enable toggles, discovery import, callback URL display, connection test status, read/write permission gates, no-tenant/no-credential/realm failure states, write-only secret controls, and redacted summaries only."
+    }
   },
   {
     "capability": "Claim mapping + group/role mapping",
@@ -415,7 +441,20 @@
     "completionAction": "V1C-06",
     "acceptablePartialRoute": true,
     "acceptablePartialRouteReason": "UI semantic gap closed by the Semantic Reference Harness headless journey (proof:ui-semantic-claim-mapping): load/add/edit/remove + full-replace save, conflict/validation, permission and accessibility. The real external-IdP (Google/Azure/Apple) end-to-end mapping proof remains externally limited (ADR-ACT-0220) and is explicitly SEPARATE from these locally-proven UI semantics.",
-    "closedBy": "V1-completion acceleration slice \u2014 Semantic Reference Harness"
+    "closedBy": "V1-completion acceleration slice \u2014 Semantic Reference Harness",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Mapping lifecycle is read managed mappers, project to claimMappings/roleMappings, full-replace desired config, audit before writes, upsert desired managed mappers, delete stale managed mappers, preserve foreign mappers, and return updated config. Evidence: oidc-mapping tests.",
+      "stateModel": "State model is managed Keycloak mapper set named oidc-ent:* projected to claimMappings(upstreamClaim,userAttribute) and roleMappings(upstreamClaim,claimValue,realmRole), with foreign mappers ignored and invalid roles dropped on read. Evidence: idp-mapping usecase/tests.",
+      "permissions": "GET mapping requires tenant.auth.settings.read; PATCH requires tenant.auth.settings.write; both are tenant-scoped admin:auth routes using the tenant realm credential. Evidence: routes.ts.",
+      "contracts": "Contract surface is GET/PATCH /api/auth/settings/idps/:alias/mapping; PATCH is full replacement, not incremental mutation. Evidence: routes.ts and claim-mapping semantic harness.",
+      "validation": "Validation rejects missing/empty dangerous claim names, missing user attributes, duplicate client-side claims in the semantic harness, and realm roles outside the tenant-role allowlist. Evidence: oidc-mapping tests and claim-mapping Playwright journey.",
+      "errorModel": "Typed outcomes include ok, invalid_body, not_found, realm_unreachable, server conflict/failure in UI harness, and permission/read-only persona states. Evidence: oidc-mapping tests and tools/ui-reference-harness/playwright/claim-mapping.spec.ts.",
+      "auditModel": "PATCH emits auth_settings.idp.mapping.changed before Keycloak writes and records counts/alias only; invalid or not_found paths emit no audit and no mapper writes. Evidence: oidc-mapping tests.",
+      "readinessModel": "Readiness is tied to auth-settings tenant credential/provider availability plus Keycloak mapper readiness; external real-IdP login proof remains explicitly externally limited and separate from local semantic mapping proof. Evidence: keycloak-mapper-readiness tests and acceptablePartialRouteReason.",
+      "proof": "Unit proof: apps/platform-api/tests/unit/oidc-mapping.test.ts. UI semantic proof: proof:ui-semantic-claim-mapping. Proof level: 5 for end-to-end semantic UI contract plus 3 for mapper state reconciliation.",
+      "uiSemanticDefinition": "V2 UI must expose mapping table, empty state, add/edit/remove rows, full-replace save, duplicate/validation/server-conflict/server-failure states, read-only/no-access personas, external-IdP limitation notice, keyboard-only operation, and accessible error associations."
+    }
   },
   {
     "capability": "Real IdP login simulation",
@@ -450,7 +489,20 @@
     "openAction": null,
     "v2Target": "refine-and-complete: V1 proven core is the base; close the production-blocker gap in V2 before cut",
     "completionAction": "V1C-07",
-    "closedBy": "auth lockout/recovery surface wired through Keycloak realm brute-force settings"
+    "closedBy": "auth lockout/recovery surface wired through Keycloak realm brute-force settings",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Auth policy lifecycle is read current MFA/lockout/session policy, validate replacement body, resolve tenant credential, audit before realm mutation, write to Keycloak, read back in live proof, and restore original values where runtime proofs mutate live state. Evidence: routes, auth-settings usecase, and proof:auth-settings.",
+      "stateModel": "State model includes MFA required none|optional|required with totp|webauthn and grace period, lockout brute-force thresholds and permanentLockout, and session token/SSO lifespans plus rememberMe. Evidence: routes.ts schemas and Keycloak adapter policy tests.",
+      "permissions": "GET routes require tenant.auth.settings.read; PATCH routes require tenant.auth.settings.write; all are tenant-scoped admin:auth UMA read/write surfaces. Evidence: routes.ts.",
+      "contracts": "Contract surface is GET/PATCH /api/auth/settings/mfa, /api/auth/settings/lockout, and /api/auth/settings/session with typed JSON bodies and 204 mutation success. Evidence: routes.ts.",
+      "validation": "Schemas constrain MFA enum values, lockout positive integer thresholds, and session lifespan min/max bounds; invalid bodies stop before audit and Keycloak mutation. Evidence: routes.ts schemas and auth-settings-audit tests.",
+      "errorModel": "Failures map to VALIDATION_ERROR, NO_TENANT, NO_CREDENTIAL, INVALID_CREDENTIAL, FORBIDDEN_REALM_OPERATION, REALM_UNREACHABLE, and permission denial before the handler. Evidence: sendAuthSettingsFailure and auth-settings usecase.",
+      "auditModel": "MFA, lockout, and session changes emit AuthSettingsMfaChanged, AuthSettingsLockoutChanged, and AuthSettingsSessionChanged with safe policy metadata before adapter mutation; audit failure prevents mutation. Evidence: auth-settings-audit tests.",
+      "readinessModel": "Readiness is credential-derived and provider-backed: configured/ok only when tenant realm credential can mutate/read policies, with invalid/forbidden/unreachable classified rather than hidden. Evidence: auth-settings-runtime-proof and auth-settings-readiness tests.",
+      "proof": "Runtime proof: proof:auth-settings validates live Keycloak readiness, MFA read/write/read-back/restore, and session policy write/read-back/restore. Unit proofs validate audit-first ordering and schemas. Proof level: 4 live provider validation.",
+      "uiSemanticDefinition": "V2 UI must expose MFA, lockout, and session policy forms/tabs, read and write permission gates, validation for enum/numeric bounds, no-credential/invalid/forbidden/unreachable readiness states, save success/failure, and no display of tenant credentials."
+    }
   },
   {
     "capability": "Configuration registry + history",
@@ -466,7 +518,20 @@
     "evidence": "ADR-0039",
     "proof": "platform-config + config-contracts tests",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Config lifecycle is definition active/deprecated/internal, list effective values from default or tenant_override, set tenant override with audit-first upsert, clear override with audit-first delete, and emit tenant.config.changed webhook event best-effort after mutation. Evidence: platform-config usecase/tests and routes.ts.",
+      "stateModel": "State model is PLATFORM_CONFIG_DEFINITIONS plus tenant_settings storageKey values, source default|tenant_override, valueType string|enum|boolean|json, allowedValues, tenantOverridable, per-definition permissions, lifecycle, and feature flag compatibility transforms. Evidence: apps/platform-api/src/config/registry.ts.",
+      "permissions": "GET /api/org/config requires tenant.config.read and additionally filters definitions by requiredPermissionRead; PATCH/DELETE require tenant.config.write and usecase-enforce each definition's requiredPermissionWrite. Feature definitions require tenant.features.*. Evidence: platform-config tests.",
+      "contracts": "Contract surface is GET /api/org/config?category=, PATCH /api/org/config/:key with {value}, and DELETE /api/org/config/:key; response items include serialised definition, value, and source. Evidence: routes.ts and contracts-admin config DTOs.",
+      "validation": "Unknown keys, non-overridable definitions, missing value, enum values outside allowedValues, type mismatches, category filters, and insufficient per-definition permissions are explicit. Evidence: platform-config tests and contracts-admin validateConfigValue.",
+      "errorModel": "Routes map invalid_body to 400, not_found to 404, not_overridable to 422, forbidden to 403, no tenant to 400, and successful writes/deletes to 204; webhook fan-out failure is best-effort and does not roll back config mutation. Evidence: routes.ts.",
+      "auditModel": "Set emits the definition auditAction, clear emits ConfigValueCleared, both before tenant_settings mutation with key/value metadata; audit failure prevents DB writes. Evidence: platform-config tests.",
+      "readinessModel": "Readiness is invariant-ready once tenant_settings/Postgres is available; definition registry is pure and serialisable, and history/audit projection is covered by the live history proof. Evidence: registry.ts and proof:history.",
+      "proof": "Unit proofs: apps/platform-api/tests/unit/platform-config.test.ts and contracts-admin config validation tests. Adjacent runtime proof: proof:history validates live audit/history projection for config changes. Proof level: 3 for state/validation plus 4 for live history projection.",
+      "uiSemanticDefinition": "V2 UI must generate config controls from definition DTOs, render source default vs tenant_override, category filters, allowed enum values, boolean/json/string editors, per-definition permission/read-only states, validation errors, clear override action, and history/audit links."
+    }
   },
   {
     "capability": "Branding + theming",
@@ -485,7 +550,20 @@
     "v2Target": "reuse-as-is: theme contract is proven; richer branding remains a V2 extension, not a cut blocker",
     "completionAction": "V1C-08",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "The /api/theme contract is proven and the richer branding surface stays a V2 extension."
+    "acceptablePartialRouteReason": "The /api/theme contract is proven and the richer branding surface stays a V2 extension.",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Branding lifecycle is default theme -> tenant_settings theme.* overrides -> effective /api/theme response; richer branding edits flow through the configuration registry using branding.app_name and branding.theme overrides. Evidence: /api/theme route and platform-config registry/tests.",
+      "stateModel": "State model is DEFAULT_THEME plus tenant_settings keys theme.* for runtime theme response and config.branding.app_name/config.branding.theme for registry-managed branding definitions. Evidence: routes.ts and config/registry.ts.",
+      "permissions": "/api/theme is unauthenticated and host-derived for SPA bootstrap; registry-based branding edits require tenant.config.read/write and per-definition permission enforcement. Evidence: routes.ts and platform-config tests.",
+      "contracts": "Contracts are GET /api/theme for bootstrap theme and GET/PATCH/DELETE /api/org/config branding.* for managed config semantics. Evidence: routes.ts.",
+      "validation": "Theme reads ignore missing/failed tenant resolution by returning defaults; branding.theme registry value is constrained to system/light/dark and app_name is typed as string. Evidence: routes.ts and registry/tests.",
+      "errorModel": "Theme read failures fall back to DEFAULT_THEME rather than blocking the SPA; registry branding mutations use config error mapping for validation, forbidden, unknown, and not-overridable states. Evidence: routes.ts and platform-config tests.",
+      "auditModel": "GET /api/theme is read-only; branding config mutations emit ConfigValueChanged or ConfigValueCleared before tenant_settings writes. Evidence: platform-config usecase/tests.",
+      "readinessModel": "Theme is degraded-to-default when tenant_settings or tenant resolution is unavailable; config-managed branding is invariant-ready with Postgres tenant_settings. Evidence: /api/theme route comments and platform-config tests.",
+      "proof": "Unit proofs: platform-config tests cover branding definitions, override source, validation, and audit-first writes; theme route is covered through route-level config/theme tests. Proof level: 3 state/contract validation.",
+      "uiSemanticDefinition": "V2 UI must consume /api/theme before auth, apply defaults when tenant theme is absent, generate branding controls from config definitions, distinguish bootstrap theme from editable branding registry, and show read-only/forbidden/default-vs-override states."
+    }
   },
   {
     "capability": "Custom domains, DNS ownership, TLS, canonical",
@@ -534,7 +612,20 @@
     "evidence": "ADR-0043, ADR-0041",
     "proof": "token-crypto + auth-settings-audit tests",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Secret lifecycle is write-only create/rotate/update, validate-before-store where applicable, store encrypted/hashed or provider-masked value, expose only hasSecret/readiness metadata, preserve existing secret when blank/absent, and clear/delete through owning resource lifecycle. Evidence: idp-management, credential-lifecycle, token-crypto, and auth-settings-audit tests.",
+      "stateModel": "State model includes tenant admin credential clientId/clientSecret lifecycle metadata, IdP hasClientSecret and Keycloak-masked clientSecret, SMTP/webhook/API-key secret stores, token crypto encrypted or unenc test prefix state, and readiness classifications without raw secret output. Evidence: relevant secret usecases and proofs.",
+      "permissions": "Secret writes are controlled by the owning surface permissions such as tenant.auth.settings.write, platform provider config permissions, webhook write permissions, and API key create/revoke scopes; reads return redacted metadata only. Evidence: route metadata and proof inventory.",
+      "contracts": "Contracts include IdP create/update clientSecret write-only fields, auth credential lifecycle rotation, email sender/webhook secret write routes, and API-key reveal-once create response; no contract supports later raw secret retrieval. Evidence: routes, usecases, and runtime proofs.",
+      "validation": "Secrets are validated before storage or provider mutation, unsafe URLs/config are rejected, invalid tenant credentials are classified before store, empty IdP clientSecret preserves existing value, and encryption key requirements are enforced for staging/production. Evidence: credential-lifecycle proof and token-crypto tests.",
+      "errorModel": "Typed states include no_credential, invalid_credential, forbidden_realm_operation, realm_unreachable, validation errors, not_found, and provider-specific readiness states; failures never echo secret values. Evidence: auth-settings usecase, sendAuthSettingsFailure, and secret proofs.",
+      "auditModel": "Audit records only safe metadata such as alias, changed field names, hasClientSecret, secretChanged, config key names, and readiness result; audit failure blocks mutation before secret-bearing provider/storage writes. Evidence: auth-settings-audit and idp-management tests.",
+      "readinessModel": "Readiness reports configured/missing/invalid/forbidden/unreachable/provider-unavailable without exposing secret material, and provider-backed secret stores require live substrate validation. Evidence: provider-secrets, auth-settings, and credential-lifecycle runtime proofs.",
+      "proof": "Unit proofs: token-crypto, auth-settings-audit, idp-management. Runtime proofs: proof:auth-credential-lifecycle, proof:auth-idps, proof:api-keys, provider secret proofs. Proof level: 4 for live provider/storage-backed secret validation.",
+      "uiSemanticDefinition": "V2 UI must render secret fields as write-only create/rotate controls, show configured/has-secret/readiness metadata, never prefill or reveal stored secrets, treat blank IdP secret as preserve existing, warn on destructive rotation/clear, and surface validation/provider errors without secret echo."
+    }
   },
   {
     "capability": "Product catalog, plans, prices",
@@ -555,7 +646,20 @@
     "completionAction": "V1C-10",
     "decisionRef": "V1C-10",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "The billing catalogue is implemented, migration-backed, and proven by runtime proof plus route-table coverage; no weaker V1 placeholder remains."
+    "acceptablePartialRouteReason": "The billing catalogue is implemented, migration-backed, and proven by runtime proof plus route-table coverage; no weaker V1 placeholder remains.",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Catalog lifecycle is create/list products, create/list plans optionally filtered by productId, and create/list prices optionally filtered by planId; tenant read returns the combined active catalog view. Evidence: billing-catalog usecase tests and billing catalog routes.",
+      "stateModel": "State model is Product(productId,name,description,isActive,createdAt), Plan(planId,productId,name,currency,billingPeriod,isActive,createdAt), and Price(priceId,planId,version,priceType,unitAmount,currency,billingPeriod,isActive,createdAt). Evidence: apps/platform-api/tests/unit/billing-catalog.test.ts.",
+      "permissions": "Operator catalog list/create routes require platform.billing.* with admin:billing UMA read/write; tenant catalog read requires tenant.billing.read and is tenant-scoped. Evidence: apps/platform-api/src/server/routes.ts.",
+      "contracts": "Contract surface is GET/POST /api/admin/billing/catalog/products, /plans, /prices, plus GET /api/org/billing/catalog; plan and price list routes accept productId/planId filters. Evidence: routes.ts and contracts-admin billing catalog schemas.",
+      "validation": "Create bodies are validated by CreateBillingProductRequestSchema, CreateBillingPlanRequestSchema, and CreateBillingPriceRequestSchema; invalid bodies return VALIDATION_ERROR before adapter calls. Evidence: routes.ts.",
+      "errorModel": "Route errors are validation 400 for bad create bodies and permission denials before handlers; successful creates return 201 with created entity, lists return 200. Evidence: routes.ts.",
+      "auditModel": "Catalog mutations carry actorId into the usecase/adapter layer and are recorded as billing.catalog.changed per capability auditAction; route proof is not itself an audit proof. Evidence: capability record and billing-catalog usecase inputs.",
+      "readinessModel": "Readiness is migration/catalog-seed backed: route registration proof validates the exposed surface and unit tests validate the in-process catalog behavior; provider billing readiness remains a separate capability. Evidence: proof:billing-catalog and billing-catalog tests.",
+      "proof": "Unit proof: apps/platform-api/tests/unit/billing-catalog.test.ts. Runtime route proof: proof:billing-catalog validates catalog route registration. Proof level: 3 for usecase state behavior, with route-registration proof level 1.",
+      "uiSemanticDefinition": "V2 UI must expose product, plan, and price tables, create forms, product/plan filters, tenant read-only catalog view, operator-only create actions, validation errors, permission-denied states, inactive item display, and currency/period/price typing."
+    }
   },
   {
     "capability": "Subscriptions, invoices, payment methods, dunning",
@@ -576,7 +680,20 @@
     "completionAction": "V1C-11",
     "decisionRef": "V1C-11",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "The repository has proven billing provider and Lago adapter seams with subscription/invoice flows and payment capture; the closure now reflects the delivered surface rather than a missing placeholder."
+    "acceptablePartialRouteReason": "The repository has proven billing provider and Lago adapter seams with subscription/invoice flows and payment capture; the closure now reflects the delivered surface rather than a missing placeholder.",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Billing lifecycle is ensure account/customer, sync plan/price, create subscription active, update/pause subscription, cancel subscription, fetch invoice, record usage event into provider, charge payment, and refund payment. Evidence: billing-provider and lago-billing-provider runtime proofs/tests.",
+      "stateModel": "State model includes account/customer externalAccountId, subscriptionId/status active|paused|cancelled, planId, priceId, invoice status/open amounts/currency, payment charge outcome/idempotency key, and refund success state. Evidence: billing-provider ports and Lago adapter tests.",
+      "permissions": "Operator/provider surfaces are gated through billing/provider control permissions; tenant-facing billing reads use tenant.billing.* semantics from capability contract and route metadata. Evidence: capability record and billing control/provider route proofs.",
+      "contracts": "Contracts are BillingProviderPort, PaymentProviderPort, and SubscriptionPort operations for readiness, account, plan, subscription, invoice, usage, payment capture, and refund; Lago adapter maps the same port contract to HTTP/SDK calls. Evidence: apps/platform-api/src/ports/billing-provider.ts and Lago tests.",
+      "validation": "Provider adapters validate readiness before use, map SDK/HTTP responses into canonical DTOs, preserve idempotency keys for payment/usage, and keep amount/currency/status fields explicit. Evidence: billing-provider-runtime-proof and lago-billing-provider tests.",
+      "errorModel": "Readiness can be ready/unavailable via provider health; provider failures surface through adapter errors, missing invoices return null, and payment/refund outcomes are explicit rather than inferred from UI state. Evidence: billing-provider ports and runtime proofs.",
+      "auditModel": "Billing operations are represented by immutable ledger/provider records plus payment capture/refund records; operator actorId is part of account/plan/subscription inputs. Evidence: billing provider ports and runtime proof inputs.",
+      "readinessModel": "Readiness is provider-backed: in-memory provider proof reports ready, Lago proof checks /health or SDK public-key path, and control/readiness route proofs classify adapter availability separately from catalog seed readiness. Evidence: proof:billing-provider and proof:lago-billing-provider.",
+      "proof": "Runtime proofs: proof:billing-provider validates in-memory provider account/payment/refund flow; proof:lago-billing-provider validates Lago customer/plan/subscription/cancel/invoice flow. Unit proof: lago-billing-provider.test.ts. Proof level: 3 behavior/provider seam validation.",
+      "uiSemanticDefinition": "V2 UI must expose account/customer state, plan/subscription/invoice/payment method/dunning status tables, provider readiness states, payment capture/refund outcomes, idempotent submission behavior, tenant read permissions, and operator-only provider actions."
+    }
   },
   {
     "capability": "Usage metering + meter event ingestion",
@@ -592,7 +709,20 @@
     "evidence": "ADR-0067, ADR-0061",
     "proof": "proof:metering; proof:metering-quota-routes",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Metering lifecycle is operator/internal ingestion, validate known meter and quantity, enforce meter entitlement, idempotently insert by tenant+meter+idempotencyKey, allow explicit negative adjustments, aggregate lifetime usage, and expose tenant/operator usage reads. Evidence: metering usecase and runtime proofs.",
+      "stateModel": "State model is METER_CATALOG with meterKey, entitlementKey, displayName, unit, plus meter_events rows containing organisation, meter, quantity, idempotency key, subject/source/metadata, and occurred time. Evidence: metering usecase and repository proof.",
+      "permissions": "Ingestion is global/operator-only via platform.metering.write; tenant self-ingestion is not exposed. Tenant reads require tenant.metering.read; operator reads require platform.metering.read. Evidence: routes.ts and metering-quota route proof.",
+      "contracts": "Contracts are POST /api/admin/tenants/:tenantId/meter-events, GET /api/org/usage, and GET /api/admin/tenants/:tenantId/usage with UsageResponse meter rows. Evidence: routes.ts and contracts-admin metering schemas.",
+      "validation": "Validation rejects invalid tenant ids, invalid request bodies, unknown meter keys, non-finite quantity, and negative quantity unless metadata.adjustment is true; entitlement denial happens before record insertion. Evidence: metering usecase and live metering proof.",
+      "errorModel": "Errors include VALIDATION_ERROR, NOT_FOUND unknown meter, ForbiddenError notEntitled, tenant-context NO_TENANT for tenant reads, 201 recorded, and 200 deduplicated replay. Evidence: routes.ts and metering-quota route proof.",
+      "auditModel": "Individual meter events are the usage data and are not audit events; quota changes that influence enforcement are audited separately. Evidence: metering usecase comments and quota usecase.",
+      "readinessModel": "Readiness is live Postgres-backed with honest skip when Postgres is unavailable; proof validates RLS tenant isolation, operator rls_bypass read, windowed aggregation, and no secret columns. Evidence: apps/platform-api/scripts/metering-runtime-proof.ts.",
+      "proof": "Runtime proofs: proof:metering validates live Postgres idempotency, entitlement gate, aggregation, RLS isolation, and no secret columns; proof:metering-quota-routes validates live route handlers and access-control metadata. Proof level: 4 live substrate/route validation.",
+      "uiSemanticDefinition": "V2 UI must expose read-only usage tables, meter labels/units/windows, tenant/operator views, deduplicated ingestion status only on operator surfaces, entitlement-denied and no-tenant states, no tenant self-ingestion controls, and no secret-bearing fields."
+    }
   },
   {
     "capability": "Quota enforcement",
@@ -608,7 +738,20 @@
     "evidence": "ADR-0067",
     "proof": "proof:quota-enforcement; proof:metering-quota-routes",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Quota lifecycle is no configured quota -> allowed no_quota, operator set quota audit-before-upsert, evaluate entitlement before quota, aggregate usage, return within/exceeded/no_entitlement/no_quota, throw typed errors for denied actions, and include requested byte deltas for upload-size decisions. Evidence: quota usecase/tests and runtime proof.",
+      "stateModel": "State model is QuotaRecord with quotaKey, entitlementKey, meterKey, limit, window, action deny, updatedAt/updatedBy plus computed state within|exceeded|no_entitlement|no_quota, usage, allowed, and projectedUsage for delta checks. Evidence: quota usecase and contracts-admin quota DTOs.",
+      "permissions": "Tenant quota reads use tenant.metering.read; operator reads use platform.quotas.read; operator set uses platform.quotas.write; enforcement runs after pipeline permission and entitlement checks. Evidence: routes.ts and route proof.",
+      "contracts": "Contracts are GET /api/org/quotas, GET /api/admin/tenants/:tenantId/quotas, PATCH /api/admin/tenants/:tenantId/quotas, plus internal assertQuota/assertQuotaWithDelta for guarded operations. Evidence: routes.ts and quota usecase.",
+      "validation": "Routes validate tenant UUIDs and SetQuotaRequestSchema; usecase treats absent quota as opt-in allowed, validates entitlement before usage comparison, and evaluates deltas for operations that add usage. Evidence: routes.ts and quota tests.",
+      "errorModel": "Denials are explicit: no_entitlement yields notEntitled ForbiddenError, exceeded yields quotaExceeded ForbiddenError with safe quota/usage/limit/window details, invalid route bodies return VALIDATION_ERROR, and no_quota remains allowed. Evidence: quota usecase and runtime proof.",
+      "auditModel": "Operator setQuota emits quota.set audit before repository upsert with entitlementKey, meterKey, limit, window, and action; audit failure prevents the quota change. Evidence: quota usecase and unit tests.",
+      "readinessModel": "Readiness is live Postgres-backed with honest skip when unavailable; runtime proof validates set/evaluate/assert across entitlement grant/revoke and metered usage. Evidence: quota-enforcement-runtime-proof.",
+      "proof": "Runtime proofs: proof:quota-enforcement validates live entitlement-before-quota ordering, quota exceeded state, assertQuota typed denial, revoke-denial, and no_quota allow; proof:metering-quota-routes validates live route handlers. Proof level: 4 live substrate/route validation.",
+      "uiSemanticDefinition": "V2 UI must expose quota list with key, entitlement, meter, limit, window, usage, allowed, state, updated metadata, operator set form, tenant read-only view, no_quota/no_entitlement/exceeded states, validation errors, and audit-backed save semantics."
+    }
   },
   {
     "capability": "Relational storage + migrations + RLS",
@@ -624,7 +767,20 @@
     "evidence": "ADR-0014, ADR-0029",
     "proof": "postgres repository substrate tests",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
+      "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
+      "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
+      "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
+      "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
+      "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
+      "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
+      "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
+      "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
+      "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
+    }
   },
   {
     "capability": "Backup + restore",
@@ -640,7 +796,20 @@
     "evidence": "ADR-0064",
     "proof": "proof:backup-local",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Backup lifecycle is seed unique marker, run postgres-backup.sh, produce owner-only gzipped dump, verify dump contains marker without printing contents, clean artifacts, and guard restore so it only runs in dev/test with CONFIRM_RESTORE. Evidence: backup-local-runtime-proof.",
+      "stateModel": "State model is backup artifact path, compressed SQL dump, file mode 0600, environment guard ENV/ALLOW_BACKUP_ENV, restore confirmation guard CONFIRM_RESTORE, and restore execution flags ON_ERROR_STOP plus single transaction. Evidence: scripts/backup and runtime proof.",
+      "permissions": "Backup/restore is an operator script/control surface, not tenant self-service; backup control route is platform/admin scoped and restore is shell-guarded by environment and explicit confirmation. Evidence: routes.ts and backup scripts.",
+      "contracts": "Contracts are scripts/backup/postgres-backup.sh, scripts/backup/postgres-restore.sh, and GET /api/admin/backup control/readiness reporting. There is no tenant data mutation API for restore. Evidence: backup-local proof and backup-control route.",
+      "validation": "Backup refuses protected environments without ALLOW_BACKUP_ENV; restore refuses prod and refuses dev/test without CONFIRM_RESTORE; proof statically verifies restore safety flags and umask 077. Evidence: backup-local-runtime-proof.",
+      "errorModel": "Guard failures are explicit refusal messages and non-zero script exits; proof failures exit non-zero; full restore is intentionally not exercised because it overwrites the DB. Evidence: backup proof comments and script checks.",
+      "auditModel": "Backup/restore operational evidence is produced by proof output and backup artifacts; no tenant mutation audit applies to local script execution. Admin control route is read-only. Evidence: capability auditAction null and backup-control route semantics.",
+      "readinessModel": "Readiness is proof:backup-local and backup control route: live backup integrity is ready only when Postgres and pg_dump are available; restore is guarded rather than automatically run. Evidence: backup-local-runtime-proof.",
+      "proof": "Runtime proof: proof:backup-local validates live Postgres backup integrity, file permissions, environment guards, restore confirmation guards, and restore transaction flags. Proof level: 4 live substrate backup validation.",
+      "uiSemanticDefinition": "V2 UI must expose backup status/control as operator-only evidence, show latest artifact/guard/readiness states, make restore unavailable unless environment and confirmation policy allow it, and never expose dump contents or secrets."
+    }
   },
   {
     "capability": "PITR, retention, legal hold, data residency",
@@ -660,7 +829,20 @@
     "completionAction": "V1C-12",
     "decisionRef": "V1C-12",
     "acceptablePartialRoute": true,
-    "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains."
+    "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
+      "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
+      "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
+      "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
+      "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
+      "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
+      "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
+      "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
+      "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
+      "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
+    }
   },
   {
     "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
@@ -738,7 +920,20 @@
     "evidence": "ADR-0060",
     "proof": "proof:search; proof:search-isolation; proof:search-routes",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Search lifecycle is server-internal index document, reject secret metadata, query tenant-scoped full-text index, filter by caller permission keys, remove document, operator reindex tenant, and report readiness. Evidence: search runtime, isolation, and route proofs.",
+      "stateModel": "State model is search_documents with organisationId, documentId, documentType, title, tsvector, url, metadata without secret fields, optional permissionKey, and readiness engine postgres-fts with status ready/degraded/blocked. Evidence: search usecase and proofs.",
+      "permissions": "Tenant search requires tenant.search.read; readiness requires platform.search.read; reindex requires platform.search.write; indexed documents can additionally require a permissionKey held by the caller. Evidence: routes.ts and search route/isolation proofs.",
+      "contracts": "Contracts are POST /api/org/search, GET /api/admin/search/readiness, and POST /api/admin/search/reindex; indexing itself is server-internal, not a tenant HTTP route. Evidence: routes.ts and search-routes-runtime-proof.",
+      "validation": "Empty query is rejected; secret-bearing metadata is rejected before indexing; invalid reindex tenant id is rejected; result projection excludes body and secret fields. Evidence: search runtime and route proofs.",
+      "errorModel": "Errors include validation failure for empty query/invalid tenant id/secret metadata, NO_TENANT for tenant search without host context, blocked/degraded readiness, and permission-filtered zero results. Evidence: search proofs.",
+      "auditModel": "Operator reindex emits search.reindexed audit-before-change; document indexing/removal are server-internal maintenance operations without user-facing audit. Evidence: capability auditAction and search usecase.",
+      "readinessModel": "Readiness is Postgres FTS live probe with honest skip when Postgres is unavailable; proof validates non-blocked status and route-level readiness response. Evidence: search-runtime-proof and search-routes-runtime-proof.",
+      "proof": "Runtime proofs: proof:search validates live Postgres index/query/remove/reindex/no-secret schema; proof:search-isolation validates RLS tenant isolation and permission filtering; proof:search-routes validates live handlers and access metadata. Proof level: 4 live substrate/route validation.",
+      "uiSemanticDefinition": "V2 UI must expose a tenant search box/results view, empty-query validation, no-results due to permission filtering, operator readiness/reindex controls, readiness states, secret-free result cards, and no user-facing index mutation controls."
+    }
   },
   {
     "capability": "Object storage + tenant prefixes + signed URLs",
@@ -755,7 +950,20 @@
     "proof": "proof:tenant-storage-objects",
     "openAction": null,
     "v2Target": "reuse-and-extend: storage object CRUD, signed URL guard, quota enforcement, legal-hold deletion guard, and ClamAV-backed scan lifecycle are proven",
-    "completionAction": "V1C-15"
+    "completionAction": "V1C-15",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Object lifecycle is quota-check upload -> store under tenant prefix -> create metadata quarantined -> scan clean|rejected|unavailable -> signed download only when clean -> legal-hold checked delete -> metadata/object removal. Evidence: storage-objects tests and tenant-storage proof.",
+      "stateModel": "State model is StorageObjectRecord with objectId, organisationId, objectKey, contentType, sizeBytes, scanState uploaded|quarantined|clean|rejected, timestamps, tenant prefix, and quota meter storage.bytes. Evidence: storage object ports/tests.",
+      "permissions": "Object routes require tenant.storage.read/write; storage readiness/probe are tenant-scoped; quota enforcement requires storage entitlement and legal hold guard enforces preservation before deletion. Evidence: routes.ts and storage-objects tests.",
+      "contracts": "Contracts are /api/org/storage/objects, /api/org/storage/objects/:objectKey, /api/org/storage/objects/:objectKey/scan, /api/org/storage/readiness, and /api/org/storage/probe. Signed URL contract returns a time-bounded URL only for clean objects. Evidence: routes and tests.",
+      "validation": "Upload enforces storage.bytes quota with requested byte delta before write; cross-prefix object keys are rejected by S3 adapter guard; download rejects non-clean objects; scanner unavailability fails closed and leaves object quarantined. Evidence: storage-objects tests and tenant-storage-runtime-proof.",
+      "errorModel": "Errors include quotaExceeded, objectNotClean, objectScanUnavailable, legal hold ForbiddenError, missing object null/not-found states, isolation_failed readiness, and provider_unreachable readiness. Evidence: tests and tenant-storage proof.",
+      "auditModel": "Upload/scan/delete emit storage audit events where implemented; clean scans emit StorageObjectScanClean, rejected scans emit StorageObjectRejected, and legal hold prevents lifecycle deletion before destructive mutation. Evidence: storage-objects tests.",
+      "readinessModel": "Readiness distinguishes configured, isolation_failed, and provider_unreachable using write/read/delete plus foreign-key rejection probes; local proof honestly notes IAM/bucket-policy isolation is not automated locally. Evidence: tenant-storage-runtime-proof.",
+      "proof": "Unit proof: apps/platform-api/tests/unit/storage-objects.test.ts. Runtime proofs: proof:tenant-storage validates live MinIO/in-memory probe and prefix isolation; proof:tenant-storage-objects validates object lifecycle semantics. Proof level: 4 live storage substrate plus 3 object state-machine validation.",
+      "uiSemanticDefinition": "V2 UI must expose object list/upload/delete/download, scan state badges, clean-only download enablement, rejected/quarantined/unavailable states, quota exceeded errors, legal-hold deletion guard, readiness/probe states, and tenant-prefix isolation without exposing raw provider credentials."
+    }
   },
   {
     "capability": "Event bus, durable queues, DLQ, redrive",
@@ -771,7 +979,20 @@
     "evidence": "ADR-0059, ADR-0051, ADR-0052",
     "proof": "proof:event-bus; proof:event-redrive",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Event lifecycle is publish pending event, deduplicate by organisation/type/idempotency key, worker claim, process -> processed, handler failure -> retry until maxAttempts, then dead-letter, and operator redrive -> fresh pending event. Evidence: event-bus, event-worker, and event-redrive runtime proofs.",
+      "stateModel": "State model is platform_events with organisationId, eventType, idempotencyKey, payload, status pending|processing|processed|dead_letter, attempts/maxAttempts, plus worker_heartbeats with alive/stale/stopped liveness. Evidence: event usecases and proofs.",
+      "permissions": "Admin event and dead-letter reads require platform.events.read; redrive requires platform.events.write; worker listing requires platform.workers.read; routes are global/operator-only. Evidence: event-redrive runtime proof.",
+      "contracts": "Contracts are GET /api/admin/events, GET /api/admin/events/dead-letter, POST /api/admin/events/:eventId/redrive, and GET /api/admin/workers. Publishing/processing are server-internal usecase contracts. Evidence: routes.ts and event proofs.",
+      "validation": "Publish rejects secret-bearing payload fields, preserves tenant id, deduplicates repeats, requires organisationId on list routes, rejects invalid redrive ids, and RLS hides foreign tenant events. Evidence: event-bus and event-redrive proofs.",
+      "errorModel": "States and errors include deduplicated publish, dead-letter after max attempts, missing organisationId 400, invalid redrive id 400, handler retry/dead-letter outcomes, and Postgres unavailable honest skip in live proofs. Evidence: runtime proofs.",
+      "auditModel": "Redrive emits event.redriven audit-before-change; event publish/worker processing are durable operational records and worker heartbeats rather than user mutation audit. Evidence: capability auditAction and event-redrive proof.",
+      "readinessModel": "Readiness is operator event/DLQ visibility plus worker heartbeat liveness; live proofs fail on RLS, secret payload, retry, redrive, or heartbeat regressions and skip honestly when Postgres is unavailable. Evidence: event-worker proof.",
+      "proof": "Runtime proofs: proof:event-bus validates live Postgres outbox/RLS/secret rejection; proof:event-worker validates processing/retry/DLQ/heartbeat; proof:event-redrive validates live admin routes and requeue. Proof level: 4 live substrate/route validation.",
+      "uiSemanticDefinition": "V2 UI must expose event list, DLQ list, redrive action, worker liveness, organisation filter, pending/processed/dead-letter states, retry counts, invalid/missing organisation errors, operator-only permission gates, and secret-free payload projection."
+    }
   },
   {
     "capability": "Workflow engine, scheduled jobs, approvals",
@@ -790,7 +1011,20 @@
     "openAction": null,
     "v2Target": "reuse-and-extend: workflow state machine and approval flow are now proven locally",
     "completionAction": "V1C-16",
-    "decisionRef": "V1C-16"
+    "decisionRef": "V1C-16",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Workflow lifecycle is start workflow -> running, signal approval.requested -> waiting, approval.granted -> completed, approval.denied -> failed, cancel -> cancelled, and provider status read. Evidence: in-memory workflow, support approval, workflow closure, and Temporal provider proofs.",
+      "stateModel": "State model includes workflowId, workflowKey, tenantId, payload, status running|waiting|completed|failed|cancelled, detail, provider readiness, and tenant access predicate canAccess(workflowId, tenantId). Evidence: workflow orchestrator tests and workflow-closure proof.",
+      "permissions": "Admin workflow routes require platform.workflow.*; tenant read surfaces use tenant.workflow.read where exposed; workflow ids are tenant-bound and cross-tenant access is denied by orchestrator semantics. Evidence: workflow closure/adapters proofs.",
+      "contracts": "Contracts are /api/admin/workflows, /api/admin/workflows/readiness, /api/admin/workflows/start, /api/admin/workflows/:workflowId, /signal, and /cancel plus WorkflowOrchestratorPort. Evidence: routes and workflow proof scripts.",
+      "validation": "Workflow start requires key/tenant/workflow id; signal names drive explicit transitions; denied approval fails the workflow; provider adapters map Temporal/HTTP status to canonical status values. Evidence: workflow tests/proofs.",
+      "errorModel": "Unknown workflow reads and invalid route ids surface as route/usecase errors; provider unavailable is a readiness/degraded state; denied approval yields failed, cancel yields cancelled, and cross-tenant access returns false. Evidence: workflow proofs/tests.",
+      "auditModel": "Workflow transitions emit workflow.started, workflow.approved, workflow.external_run, workflow.completed, and support-session audit where approval grants access; audit order is part of closure/support proofs. Evidence: workflow-closure and support-approval proofs.",
+      "readinessModel": "Readiness combines in-memory/local workflow closure, Temporal provider adapter/live proof, and workflow readiness route; live provider proof skips honestly when endpoints are unavailable. Evidence: proof:workflow-provider-live and related proof aliases.",
+      "proof": "Proofs: workflow-closure, workflow-engine, approval-workflow, workflow-adapters, temporal-workflow-provider, and workflow-provider-live. Proof level: 3 for hermetic state-machine closure, 4 for live provider validation when workflow-provider profile is available.",
+      "uiSemanticDefinition": "V2 UI must expose workflow list/status/detail, provider readiness, start/signal/cancel actions, approval waiting/completed/failed states, tenant access denial, audit-backed transition history, and operator/tenant permission gates."
+    }
   },
   {
     "capability": "Scheduled jobs (built-in, on the event substrate)",
@@ -806,7 +1040,20 @@
     "evidence": "ADR-0059",
     "proof": "proof:scheduled-jobs; proof:scheduled-job-routes",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Scheduled job lifecycle is create schedule, persist enabled job, due tick enqueues event, same-window tick deduplicates, pause disables due enqueue, run-now enqueues immediately, and operator patch toggles enabled. Evidence: scheduled-jobs and scheduled-job-routes proofs.",
+      "stateModel": "State model includes scheduled_jobs with organisationId, jobKey, eventType, intervalSeconds, enabled, nextRunAt, lastRunAt, and event idempotency window; enqueued jobs become platform_events. Evidence: scheduled-jobs runtime proof.",
+      "permissions": "Scheduled job routes are global/operator-only: list requires platform.jobs.read and create/run/patch require platform.jobs.write. Evidence: scheduled-job-routes proof.",
+      "contracts": "Contracts are GET/POST /api/admin/scheduled-jobs, POST /api/admin/scheduled-jobs/:jobId/run, and PATCH /api/admin/scheduled-jobs/:jobId. Due tick is server-internal. Evidence: routes and proofs.",
+      "validation": "List requires organisationId, invalid job ids are rejected, create validates schedule body, run-now validates job id, and same-window idempotency prevents duplicate event enqueue. Evidence: scheduled job route/runtime proofs.",
+      "errorModel": "Errors include missing organisationId 400, invalid job id 400, disabled jobs not due, deduplicated due tick, and Postgres unavailable honest skip in live proofs. Evidence: proofs.",
+      "auditModel": "scheduled_job.set and scheduled_job.run are audit-before-change operations; due tick operational enqueue is represented by platform event records. Evidence: capability auditAction and scheduled-jobs usecase.",
+      "readinessModel": "Readiness is tick invocable and route-accessible even though daemon loop is not claimed; live proof validates table schema, RLS isolation, enqueue behavior, and route handlers. Evidence: scheduled-jobs proofs.",
+      "proof": "Runtime proofs: proof:scheduled-jobs validates live Postgres schedule persistence/due/run-now/RLS/no-secret schema; proof:scheduled-job-routes validates route handlers and access metadata. Proof level: 4 live substrate/route validation.",
+      "uiSemanticDefinition": "V2 UI must expose scheduled job list, create form, enabled toggle, run-now action, next/last run fields, due/deduplicated states, organisation filter, invalid id/body errors, and operator-only permission gates."
+    }
   },
   {
     "capability": "Notification delivery + preferences + channels",
@@ -822,7 +1069,20 @@
     "evidence": "ADR-0068",
     "proof": "proof:notification-preferences; proof:notification-dispatch; proof:notification-email-transport; proof:notification-webhook-transport; proof:notification-transport-routes",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Notification lifecycle is set user channel/category preferences, dispatch test or domain notification, suppress disabled channels, send enabled channels through local/email/webhook transport, log sent/suppressed/failed, and report channel readiness. Evidence: notification runtime proofs.",
+      "stateModel": "State model includes preferences keyed by organisation/user/channel/category enabled flag, notification log status sent|suppressed|failed, channel transports email|webhook|local, recipient resolution, and readiness channel availability. Evidence: notification repository/usecase tests and proofs.",
+      "permissions": "Self-service preferences use profile.read_self/update_self; operator readiness/test routes require platform.notifications.read/write and are global; tenant context comes from host for self-service. Evidence: notification-dispatch proof.",
+      "contracts": "Contracts are GET/PATCH /api/me/notification-preferences, GET /api/admin/notifications/readiness, and POST /api/admin/tenants/:tenantId/notifications/test, plus NotificationTransportPort. Evidence: routes and proofs.",
+      "validation": "Invalid profile/preference bodies are rejected, invalid tenant id is rejected, secret-bearing notification payloads are rejected before dispatch, disabled preferences suppress delivery, and missing recipients fail rather than fake sent. Evidence: notification proofs.",
+      "errorModel": "States include sent, suppressed, failed, readiness unavailable/degraded, no tenant, validation errors, invalid tenant id, and transport non-2xx failure. Evidence: notification dispatch/email/webhook proofs.",
+      "auditModel": "Preference changes and operator test sends are audit-before-change/action; dispatch logs durable status and audit metadata excludes secret-bearing payloads. Evidence: notification tests and dispatch proof.",
+      "readinessModel": "Readiness reports real local/smtp/webhook transport availability; Mailpit/webhook proofs skip honestly when backing services are absent and never mark a fake send as sent. Evidence: notification transport proofs.",
+      "proof": "Runtime proofs: notification-preferences, notification-dispatch, notification-email-transport, notification-webhook-transport, and notification-transport-routes. Proof level: 4 for live Postgres/Mailpit/webhook route validation.",
+      "uiSemanticDefinition": "V2 UI must expose notification preference toggles by channel/category, profile-linked self-service states, operator readiness/test-send controls, sent/suppressed/failed statuses, missing recipient and transport failure states, validation errors, and no secret payload display."
+    }
   },
   {
     "capability": "Background workers / job runner",
@@ -838,7 +1098,20 @@
     "evidence": "ADR-0059, ADR-0055",
     "proof": "proof:event-worker",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Worker lifecycle is heartbeat alive, claim pending event, process handler, mark processed, skip already processed events, retry failed handler, dead-letter at maxAttempts, and expose worker liveness. Evidence: event-worker proof.",
+      "stateModel": "State model includes workerId, workerKind, heartbeat timestamp, liveness alive|stale|stopped, claimed event status, retry count, and dead-letter transition. Evidence: event worker usecase/proof.",
+      "permissions": "Worker route GET /api/admin/workers is global and requires platform.workers.read; processing itself is server-internal and not callable by tenant UI. Evidence: event-redrive proof.",
+      "contracts": "Contract is GET /api/admin/workers plus internal processNext handler registry; event bus provides pending/dead-letter queues. Evidence: routes and event-worker proof.",
+      "validation": "Worker processing only claims pending events, never reclaims processed events, honors maxAttempts, and records heartbeat for the provided worker id/kind. Evidence: event-worker proof.",
+      "errorModel": "Handler errors become retry or dead-letter outcomes; unavailable Postgres causes honest proof skip/readiness failure; stale/stopped workers are liveness states rather than hidden errors. Evidence: event-worker proof.",
+      "auditModel": "Heartbeats are operational telemetry and not audit events; redrive and operator actions are audited by event capability. Evidence: capability auditAction and event proofs.",
+      "readinessModel": "Readiness is worker heartbeat liveness alive/stale/stopped and event-processing proof; failure to claim/process/dead-letter is a proof/readiness failure. Evidence: proof:event-worker.",
+      "proof": "Runtime proof: proof:event-worker validates live Postgres claim/process/idempotent skip/retry/dead-letter/heartbeat. Proof level: 4 live substrate validation.",
+      "uiSemanticDefinition": "V2 UI must expose worker list, worker kind/id, heartbeat age, alive/stale/stopped state, processed/retry/dead-letter metrics, and operator-only access without direct tenant job execution controls."
+    }
   },
   {
     "capability": "Serverless / function runtime",
@@ -870,7 +1143,20 @@
     "evidence": "ADR-0069, ADR-0055, ADR-0031",
     "proof": "proof:secret-store-contract; proof:secrets-openbao; proof:provider-secrets-readiness",
     "openAction": null,
-    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved"
+    "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+    "semanticCompleteness": {
+      "status": "complete",
+      "lifecycle": "Secret lifecycle is put -> opaque ref metadata, resolve server-internally, rotate version, revoke disables resolution while retaining metadata, delete removes metadata/provider value, and readiness reports built-in/OpenBao health. Evidence: secret-store and OpenBao proofs.",
+      "stateModel": "State model includes secret ref, organisationId, name, provider postgres|openbao, version, revoked flag, backend path, encrypted_value for built-in store or null for OpenBao, created/updated/deleted metadata, and no value in list/getMetadata responses. Evidence: secret store proofs.",
+      "permissions": "Admin secret routes require platform.secrets.read/write and are operator-only; tenant isolation prevents one organisation resolving or reading another organisation's ref. Evidence: secret-store-contract and secrets-openbao proofs.",
+      "contracts": "Contracts are GET/POST /api/admin/secrets, revoke/delete routes, GET /api/admin/secrets/readiness, and SecretStorePort put/list/getMetadata/resolve/revoke/delete/readiness. Evidence: secrets usecase and proofs.",
+      "validation": "Put returns no value, list/getMetadata are value-free, resolve is the only value-returning server path, rotation keeps the opaque ref and increments version, OpenBao stores value outside Postgres, and readiness payloads carry no secret-bearing fields. Evidence: proofs.",
+      "errorModel": "Revoked/deleted/cross-tenant refs resolve null, OpenBao unreachable reports degraded, built-in Postgres unavailable degrades/skips honestly in proof, and no contract echoes secret values on failure. Evidence: provider-secrets-readiness and OpenBao proofs.",
+      "auditModel": "put/revoke/delete emit audit-before-change with name/ref/provider metadata only and never the value; audit failure prevents mutations where usecase wraps store writes. Evidence: secret-store-contract proof.",
+      "readinessModel": "Readiness distinguishes built-in Postgres ready, OpenBao ready, OpenBao degraded/unreachable, and secret-free readiness payloads; no silent fallback upgrades provider readiness. Evidence: provider-secrets-readiness and secrets-openbao proofs.",
+      "proof": "Runtime proofs: proof:secret-store-contract validates live Postgres store contract/encryption/RLS/audit; proof:secrets-openbao validates live OpenBao provider; proof:provider-secrets-readiness validates ready/degraded classification. Proof level: 4 live provider/storage validation.",
+      "uiSemanticDefinition": "V2 UI must expose operator secret metadata list, create/rotate/revoke/delete actions, provider/readiness states, opaque refs, version/revoked status, cross-tenant denial, degraded provider warnings, and write-only value fields that are never prefilled or revealed."
+    }
   },
   {
     "capability": "Logs (aggregation + tenant-scoped search)",
@@ -1318,10 +1604,10 @@
     "semanticCompleteness": {
       "status": "complete",
       "lifecycle": "Host identity lifecycle is classify -> resolve: apex/reserved/invalid/malformed hosts stay global/no-tenant, tenant slug hosts resolve by organisation slug, active custom domains resolve by tenant_domains registry, and inactive/pending/disabled custom domains remain unresolved. Evidence: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts and tenant-custom-domain-resolution-runtime-proof.ts.",
-      "stateModel": "Host identity state uses kind apex|tenant_slug|reserved_subdomain|invalid_subdomain|custom_domain_candidate|malformed plus resolved tenant context containing organisationId, slug, realmName, and hostSource. Evidence: @platform/domain-identity and apps/platform-api/src/server/tenant-resolver.ts.",
+      "stateModel": "Host identity state uses kind apex|tenant_slug|reserved_subdomain|invalid_subdomain|possible_custom_domain|malformed plus resolved tenant context containing organisationId, slug, realmName, and hostSource. Evidence: @platform/domain-identity and apps/platform-api/src/server/tenant-resolver.ts.",
       "permissions": "Host identity is read-only request context; protected route permissions are enforced later by the pipeline, while global routes reject apex subdomains. Evidence: apps/platform-api/src/server/pipeline.ts.",
       "contracts": "Contract is GET /api/host-identity and implicit Host/X-Forwarded-Host request context consumed by the BFF pipeline. Evidence: route table and domain-identity-matrix proof.",
-      "validation": "Classification covers port stripping, reserved slugs, malformed hosts, unknown apex subdomains, custom-domain candidates, and X-Forwarded-Host precedence. Evidence: packages/domain-identity tests and domain-identity-matrix runtime proof.",
+      "validation": "Classification covers port stripping, reserved slugs, malformed hosts, unknown apex subdomains, possible custom-domain hosts, and X-Forwarded-Host precedence. Evidence: packages/domain-identity tests and domain-identity-matrix runtime proof.",
       "errorModel": "Untrusted or unresolved hosts return null tenant context; global routes reject apex subdomains with apex_subdomain detail instead of silently serving global content. Evidence: tenant-resolver and pipeline tests.",
       "auditModel": "No mutation audit applies because host identity resolution is a read-only derivation; failed resolution is logged by tenant-resolver/pipeline warnings. Evidence: apps/platform-api/src/server/tenant-resolver.ts.",
       "readinessModel": "Readiness is invariant-ready when resolver code and registry are available; runtime proof requires local Postgres for live resolution and skips only when no seeded organisation exists. Evidence: domain-identity-matrix runtime proof.",
