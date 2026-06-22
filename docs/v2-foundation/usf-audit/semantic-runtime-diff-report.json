@@ -896,86 +896,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "GET /api/auth/providers",
-      "message": "semantic/runtime route lacks executable proof",
-      "evidence": {
-        "routeId": "route:get-api-auth-providers",
-        "method": "GET",
-        "path": "/api/auth/providers",
-        "handlerFile": "unknown",
-        "handlerSymbol": "getAuthProviders",
-        "capability": "ABAC / Policy Decision Point",
-        "isMutation": false,
-        "authRequired": "unknown",
-        "permissionRequired": "unknown",
-        "policyRequired": "unknown",
-        "auditRequired": false,
-        "auditEvent": "unknown",
-        "traceRequired": true,
-        "traceSpan": "unknown",
-        "logRequired": true,
-        "logEvent": "unknown",
-        "metricRequired": true,
-        "metricName": "unknown",
-        "alertRequired": true,
-        "proofRequired": true,
-        "proofRef": "unknown",
-        "sourceType": "generated-contract",
-        "generatedContract": true,
-        "operationId": "getAuthProviders",
-        "sourceFileRefs": ["docs/api/openapi.json"],
-        "evidence": {
-          "routeObject": "docs/api/openapi.json",
-          "pipelineTrace": "",
-          "pipelineLogs": "",
-          "pipelineMetrics": "",
-          "pipelineCorrelation": ""
-        }
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "GET /api/session",
-      "message": "semantic/runtime route lacks executable proof",
-      "evidence": {
-        "routeId": "route:get-api-session",
-        "method": "GET",
-        "path": "/api/session",
-        "handlerFile": "unknown",
-        "handlerSymbol": "getSession",
-        "capability": "Platform login + session",
-        "isMutation": false,
-        "authRequired": "unknown",
-        "permissionRequired": "unknown",
-        "policyRequired": "unknown",
-        "auditRequired": false,
-        "auditEvent": "unknown",
-        "traceRequired": true,
-        "traceSpan": "unknown",
-        "logRequired": true,
-        "logEvent": "unknown",
-        "metricRequired": true,
-        "metricName": "unknown",
-        "alertRequired": true,
-        "proofRequired": true,
-        "proofRef": "unknown",
-        "sourceType": "generated-contract",
-        "generatedContract": true,
-        "operationId": "getSession",
-        "sourceFileRefs": ["docs/api/openapi.json"],
-        "evidence": {
-          "routeObject": "docs/api/openapi.json",
-          "pipelineTrace": "",
-          "pipelineLogs": "",
-          "pipelineMetrics": "",
-          "pipelineCorrelation": ""
-        }
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "GET /e2e-harness",
       "message": "semantic/runtime route lacks executable proof",
       "evidence": {
@@ -2261,24 +2181,6 @@
     {
       "kind": "semantic-runtime-diff",
       "subject": "GET /admin/webhooks",
-      "message": "runtime observability surface lacks trace/log/metric mapping",
-      "evidence": {
-        "source": "runtime-observability-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "GET /api/auth/providers",
-      "message": "runtime observability surface lacks trace/log/metric mapping",
-      "evidence": {
-        "source": "runtime-observability-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "GET /api/session",
       "message": "runtime observability surface lacks trace/log/metric mapping",
       "evidence": {
         "source": "runtime-observability-inventory.json"

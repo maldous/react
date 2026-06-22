@@ -1144,6 +1144,7 @@ export const routes: Route[] = [
   {
     method: "GET",
     path: "/api/session",
+    operationName: "session.get",
     handler: async (req, res) => {
       // Fixture session takes precedence (Tier 1 E2E determinism)
       const fixtureActor = getFixtureSession();
@@ -1152,7 +1153,7 @@ export const routes: Route[] = [
         return;
       }
       // Real session: read from HTTP-only cookie(s) ? Redis. Try every presented
-      // platform_session so a stale cookie can't shadow a valid one (ADR-ACT-0278).
+      // platform_session so a stale cookie cannot shadow a valid one (ADR-ACT-0278).
       const candidateIds = parseSessionCookies(req.raw.headers["cookie"]);
       if (candidateIds.length > 0) {
         try {
@@ -1238,7 +1239,7 @@ export const routes: Route[] = [
     path: "/api/auth/providers",
     operationName: "auth.providers.list",
     handler: async (req, res) => {
-      // Tenant-aware (ADR-0037): merge the tenant's stored provider config over the
+      // Tenant-aware (ADR-0037): merge the tenant stored provider config over the
       // environment defaults. Unauthenticated + pre-session: tenant resolved from FQDN.
       const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool()).catch(
         () => null
