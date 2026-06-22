@@ -3686,5 +3686,13 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": true,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "v2Path": "apps/platform-api/conformance/postgres-legal-hold.conformance.ts",
+    "migrationType": "promote-to-conformance",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
   }
 ]

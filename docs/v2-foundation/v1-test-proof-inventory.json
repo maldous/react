@@ -10472,5 +10472,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing legal-hold runtime proof",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero; emits proof stdout from the underlying legal-hold runtime proof",
+    "proofLevel": 3,
+    "proofLevelRationale": "provider-ID entrypoint delegates to legal-hold-runtime-proof.ts; proof validates set active hold, audit-before-change, active guard, release to released, list projection, and no-delete invariant for the legal-hold provider contract",
+    "capabilitiesProven": ["PITR, retention, legal hold, data residency"],
+    "semanticFacetsProven": ["providerReliability", "stateModel", "auditModel", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]
