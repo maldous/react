@@ -11364,764 +11364,494 @@
   {
     "id": "USF-GAP-0374",
     "kind": "data-governance",
-    "subject": "Relational storage + migrations + RLS",
+    "subject": "PITR, retention, legal hold, data residency",
     "message": "data-owning capability missing classification runtime proof",
     "evidence": {
-      "capability": "Relational storage + migrations + RLS",
+      "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
       "status": "delivered-and-proven",
-      "route": "pgAdmin (global-only clickthrough)",
-      "permission": "server-only; no direct DB from React",
-      "contract": "all data via BFF/GraphQL",
-      "port": "StoragePort",
-      "adapter": "MinioStorageAdapter",
-      "auditAction": "migrations tracked",
-      "readinessCheck": "postgres probe",
-      "evidence": "ADR-0014, ADR-0029",
-      "proof": "postgres repository substrate tests",
+      "route": "/api/admin/data/legal-holds; /api/admin/data/retention-policies; /api/admin/data/residency",
+      "permission": "platform.data.* ",
+      "contract": "/api/admin/data/pitr; /api/admin/data/retention-policies; /api/admin/data/legal-holds; /api/admin/data/residency; DELETE /api/admin/data/legal-holds; GET /api/admin/data/legal-holds; POST /api/admin/data/legal-holds; POST /api/admin/data/residency; DELETE /api/admin/data/retention-policies; GET /api/admin/data/retention-policies; POST /api/admin/data/retention-policies",
+      "port": "RetentionPort / LegalHoldPort / residency-tag boundary",
+      "adapter": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
+      "auditAction": "restore actions + retention/legal-hold actions + residency changes/rejections",
+      "readinessCheck": "archive health + policy tick + hold guard + residency fail-closed",
+      "evidence": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298",
+      "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
       "openAction": null,
-      "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+      "v2Target": "reuse-and-extend: the data lifecycle surface is now proven and V2 lifts it rather than re-deriving it",
+      "completionAction": "V1C-12",
+      "decisionRef": "V1C-12",
+      "acceptablePartialRoute": true,
+      "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
       "semanticCompleteness": {
         "status": "complete",
-        "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
-        "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
-        "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
-        "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
-        "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
-        "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
-        "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
-        "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
-        "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
-        "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
+        "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
+        "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
+        "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
+        "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
+        "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
+        "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
+        "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
+        "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
+        "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
+        "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
       },
       "ownerType": "team",
       "ownerId": "team-data",
-      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
       "owningDomain": "data-platform",
       "operationalOwner": "team-data",
       "securityOwner": "team-security",
       "dataOwner": "team-data",
       "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+      "routeSemanticContracts": [
+        {
+          "method": "DELETE",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.read",
+          "auditModel": "read-only: no mutation audit required",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7497", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/residency",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.read",
+          "auditModel": "read-only: no mutation audit required",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7627", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
+        }
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0375",
     "kind": "data-governance",
-    "subject": "Relational storage + migrations + RLS",
-    "message": "data-owning capability missing retention runtime proof",
+    "subject": "PITR, retention, legal hold, data residency",
+    "message": "data-owning capability missing export runtime proof",
     "evidence": {
-      "capability": "Relational storage + migrations + RLS",
+      "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
       "status": "delivered-and-proven",
-      "route": "pgAdmin (global-only clickthrough)",
-      "permission": "server-only; no direct DB from React",
-      "contract": "all data via BFF/GraphQL",
-      "port": "StoragePort",
-      "adapter": "MinioStorageAdapter",
-      "auditAction": "migrations tracked",
-      "readinessCheck": "postgres probe",
-      "evidence": "ADR-0014, ADR-0029",
-      "proof": "postgres repository substrate tests",
+      "route": "/api/admin/data/legal-holds; /api/admin/data/retention-policies; /api/admin/data/residency",
+      "permission": "platform.data.* ",
+      "contract": "/api/admin/data/pitr; /api/admin/data/retention-policies; /api/admin/data/legal-holds; /api/admin/data/residency; DELETE /api/admin/data/legal-holds; GET /api/admin/data/legal-holds; POST /api/admin/data/legal-holds; POST /api/admin/data/residency; DELETE /api/admin/data/retention-policies; GET /api/admin/data/retention-policies; POST /api/admin/data/retention-policies",
+      "port": "RetentionPort / LegalHoldPort / residency-tag boundary",
+      "adapter": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
+      "auditAction": "restore actions + retention/legal-hold actions + residency changes/rejections",
+      "readinessCheck": "archive health + policy tick + hold guard + residency fail-closed",
+      "evidence": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298",
+      "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
       "openAction": null,
-      "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+      "v2Target": "reuse-and-extend: the data lifecycle surface is now proven and V2 lifts it rather than re-deriving it",
+      "completionAction": "V1C-12",
+      "decisionRef": "V1C-12",
+      "acceptablePartialRoute": true,
+      "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
       "semanticCompleteness": {
         "status": "complete",
-        "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
-        "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
-        "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
-        "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
-        "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
-        "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
-        "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
-        "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
-        "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
-        "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
+        "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
+        "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
+        "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
+        "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
+        "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
+        "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
+        "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
+        "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
+        "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
+        "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
       },
       "ownerType": "team",
       "ownerId": "team-data",
-      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
       "owningDomain": "data-platform",
       "operationalOwner": "team-data",
       "securityOwner": "team-security",
       "dataOwner": "team-data",
       "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+      "routeSemanticContracts": [
+        {
+          "method": "DELETE",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.read",
+          "auditModel": "read-only: no mutation audit required",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7497", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/residency",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.read",
+          "auditModel": "read-only: no mutation audit required",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7627", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
+        }
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0376",
     "kind": "data-governance",
-    "subject": "Relational storage + migrations + RLS",
-    "message": "data-owning capability missing export runtime proof",
+    "subject": "PITR, retention, legal hold, data residency",
+    "message": "data-owning capability missing DSR runtime proof",
     "evidence": {
-      "capability": "Relational storage + migrations + RLS",
+      "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
       "status": "delivered-and-proven",
-      "route": "pgAdmin (global-only clickthrough)",
-      "permission": "server-only; no direct DB from React",
-      "contract": "all data via BFF/GraphQL",
-      "port": "StoragePort",
-      "adapter": "MinioStorageAdapter",
-      "auditAction": "migrations tracked",
-      "readinessCheck": "postgres probe",
-      "evidence": "ADR-0014, ADR-0029",
-      "proof": "postgres repository substrate tests",
+      "route": "/api/admin/data/legal-holds; /api/admin/data/retention-policies; /api/admin/data/residency",
+      "permission": "platform.data.* ",
+      "contract": "/api/admin/data/pitr; /api/admin/data/retention-policies; /api/admin/data/legal-holds; /api/admin/data/residency; DELETE /api/admin/data/legal-holds; GET /api/admin/data/legal-holds; POST /api/admin/data/legal-holds; POST /api/admin/data/residency; DELETE /api/admin/data/retention-policies; GET /api/admin/data/retention-policies; POST /api/admin/data/retention-policies",
+      "port": "RetentionPort / LegalHoldPort / residency-tag boundary",
+      "adapter": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
+      "auditAction": "restore actions + retention/legal-hold actions + residency changes/rejections",
+      "readinessCheck": "archive health + policy tick + hold guard + residency fail-closed",
+      "evidence": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298",
+      "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
       "openAction": null,
-      "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
+      "v2Target": "reuse-and-extend: the data lifecycle surface is now proven and V2 lifts it rather than re-deriving it",
+      "completionAction": "V1C-12",
+      "decisionRef": "V1C-12",
+      "acceptablePartialRoute": true,
+      "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
       "semanticCompleteness": {
         "status": "complete",
-        "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
-        "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
-        "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
-        "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
-        "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
-        "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
-        "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
-        "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
-        "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
-        "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
+        "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
+        "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
+        "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
+        "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
+        "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
+        "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
+        "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
+        "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
+        "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
+        "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
       },
       "ownerType": "team",
       "ownerId": "team-data",
-      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
+      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
       "owningDomain": "data-platform",
       "operationalOwner": "team-data",
       "securityOwner": "team-security",
       "dataOwner": "team-data",
       "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+      "routeSemanticContracts": [
+        {
+          "method": "DELETE",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.read",
+          "auditModel": "read-only: no mutation audit required",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7497", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/legal-holds",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/residency",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
+        },
+        {
+          "method": "DELETE",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
+        },
+        {
+          "method": "GET",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.read",
+          "auditModel": "read-only: no mutation audit required",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7627", "docs/api/openapi.json"]
+        },
+        {
+          "method": "POST",
+          "path": "/api/admin/data/retention-policies",
+          "capability": "PITR, retention, legal hold, data residency",
+          "contractRef": "docs/api/openapi.json",
+          "permissionModel": "platform.data.write",
+          "auditModel": "unknown",
+          "observabilityModel": {
+            "trace": "pipeline withServerSpan",
+            "log": "http.request.complete/http.request.failed",
+            "metric": "http_requests_total/http_request_duration_seconds",
+            "correlation": "pipeline requestId/X-Request-Id"
+          },
+          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
+          "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
+        }
+      ]
     },
     "classification": "must-fix-in-v1"
   },
   {
     "id": "USF-GAP-0377",
-    "kind": "data-governance",
-    "subject": "Relational storage + migrations + RLS",
-    "message": "data-owning capability missing legal hold runtime proof",
-    "evidence": {
-      "capability": "Relational storage + migrations + RLS",
-      "category": "data-platform",
-      "status": "delivered-and-proven",
-      "route": "pgAdmin (global-only clickthrough)",
-      "permission": "server-only; no direct DB from React",
-      "contract": "all data via BFF/GraphQL",
-      "port": "StoragePort",
-      "adapter": "MinioStorageAdapter",
-      "auditAction": "migrations tracked",
-      "readinessCheck": "postgres probe",
-      "evidence": "ADR-0014, ADR-0029",
-      "proof": "postgres repository substrate tests",
-      "openAction": null,
-      "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
-      "semanticCompleteness": {
-        "status": "complete",
-        "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
-        "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
-        "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
-        "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
-        "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
-        "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
-        "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
-        "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
-        "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
-        "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
-      },
-      "ownerType": "team",
-      "ownerId": "team-data",
-      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
-      "owningDomain": "data-platform",
-      "operationalOwner": "team-data",
-      "securityOwner": "team-security",
-      "dataOwner": "team-data",
-      "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0378",
-    "kind": "data-governance",
-    "subject": "Relational storage + migrations + RLS",
-    "message": "data-owning capability missing DSR runtime proof",
-    "evidence": {
-      "capability": "Relational storage + migrations + RLS",
-      "category": "data-platform",
-      "status": "delivered-and-proven",
-      "route": "pgAdmin (global-only clickthrough)",
-      "permission": "server-only; no direct DB from React",
-      "contract": "all data via BFF/GraphQL",
-      "port": "StoragePort",
-      "adapter": "MinioStorageAdapter",
-      "auditAction": "migrations tracked",
-      "readinessCheck": "postgres probe",
-      "evidence": "ADR-0014, ADR-0029",
-      "proof": "postgres repository substrate tests",
-      "openAction": null,
-      "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
-      "semanticCompleteness": {
-        "status": "complete",
-        "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
-        "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
-        "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
-        "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
-        "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
-        "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
-        "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
-        "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
-        "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
-        "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
-      },
-      "ownerType": "team",
-      "ownerId": "team-data",
-      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
-      "owningDomain": "data-platform",
-      "operationalOwner": "team-data",
-      "securityOwner": "team-security",
-      "dataOwner": "team-data",
-      "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0379",
-    "kind": "data-governance",
-    "subject": "Relational storage + migrations + RLS",
-    "message": "data-owning capability missing tenant isolation runtime proof",
-    "evidence": {
-      "capability": "Relational storage + migrations + RLS",
-      "category": "data-platform",
-      "status": "delivered-and-proven",
-      "route": "pgAdmin (global-only clickthrough)",
-      "permission": "server-only; no direct DB from React",
-      "contract": "all data via BFF/GraphQL",
-      "port": "StoragePort",
-      "adapter": "MinioStorageAdapter",
-      "auditAction": "migrations tracked",
-      "readinessCheck": "postgres probe",
-      "evidence": "ADR-0014, ADR-0029",
-      "proof": "postgres repository substrate tests",
-      "openAction": null,
-      "v2Target": "reuse-as-is: lift V1 behaviour/contract/port/adapter into V2; AI regenerates visual layer only, semantics preserved",
-      "semanticCompleteness": {
-        "status": "complete",
-        "lifecycle": "Relational lifecycle is migration-ordered schema creation, tenant-scoped repository access through withTenant, operator access through explicit rls_bypass/system-admin paths, migration lineage tracking, and backup/restore guard coverage. Evidence: migrations tests, repository substrate tests, and backup-local proof.",
-        "stateModel": "State model is Postgres public and tenant-scoped tables with organisation_id tenant boundary, RLS policies, migration chain entries, and repository DTOs for each bounded context; no React client can connect directly to the database. Evidence: migrations, adapters-postgres, and substrate repository tests.",
-        "permissions": "Database access is server-only. Tenant reads/writes are mediated by BFF route permissions and repository context; operator paths use explicit platform permissions and rls_bypass where proven. pgAdmin is global-only clickthrough, not a tenant data API. Evidence: routes and service-clickthrough policy tests.",
-        "contracts": "The contract is all data through BFF/GraphQL/repository ports; database tables are not a frontend contract. Migration lineage is captured in data-and-migration-plan and migration tests. Evidence: docs/v2-foundation/data-and-migration-plan.json and apps/platform-api/tests/unit/migrations.test.ts.",
-        "validation": "Validation is performed at API/usecase boundaries before repository mutation; repository tests prove tenant filters/RLS behavior and migrations tests prove on-disk migration presence/lineage. Evidence: platform-api substrate/unit tests.",
-        "errorModel": "Relational failures surface as route/usecase typed errors where handled, readiness not-ready/degraded where probed, or test/proof failures for migration/RLS regressions; no UI receives raw database errors as semantic state. Evidence: pipeline error handling and readiness tests.",
-        "auditModel": "Application mutations emit domain audit events before repository writes where required; schema changes are tracked by migrations and backup/restore operational evidence rather than per-row UI audit. Evidence: audit tests, migrations tests, and backup-local proof.",
-        "readinessModel": "Readiness is Postgres probe plus migration/RLS proof: live proofs honestly skip when Postgres is unavailable and fail on RLS, schema, or migration-chain regressions. Evidence: health handlers, metering/search/backup live proofs, and R17 validator coverage.",
-        "proof": "Substrate proofs include Postgres identity/organisation repositories, migrations tests, RLS-backed metering/search proofs, and backup-local live proof. Proof level: 4 where live Postgres/RLS substrate is exercised.",
-        "uiSemanticDefinition": "V2 UI must never model direct database access; it must derive data states from BFF contracts, show database/readiness/migration failures only through explicit readiness and admin surfaces, and treat pgAdmin as global operator clickthrough with no tenant-scoped CRUD semantics."
-      },
-      "ownerType": "team",
-      "ownerId": "team-data",
-      "ownerArtefact": "ADR-0014, ADR-0029; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
-      "owningDomain": "data-platform",
-      "operationalOwner": "team-data",
-      "securityOwner": "team-security",
-      "dataOwner": "team-data",
-      "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0380",
-    "kind": "data-governance",
-    "subject": "PITR, retention, legal hold, data residency",
-    "message": "data-owning capability missing classification runtime proof",
-    "evidence": {
-      "capability": "PITR, retention, legal hold, data residency",
-      "category": "data-platform",
-      "status": "delivered-and-proven",
-      "route": "/api/admin/data/legal-holds; /api/admin/data/retention-policies; /api/admin/data/residency",
-      "permission": "platform.data.* ",
-      "contract": "/api/admin/data/pitr; /api/admin/data/retention-policies; /api/admin/data/legal-holds; /api/admin/data/residency; DELETE /api/admin/data/legal-holds; GET /api/admin/data/legal-holds; POST /api/admin/data/legal-holds; POST /api/admin/data/residency; DELETE /api/admin/data/retention-policies; GET /api/admin/data/retention-policies; POST /api/admin/data/retention-policies",
-      "port": "RetentionPort / LegalHoldPort / residency-tag boundary",
-      "adapter": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
-      "auditAction": "restore actions + retention/legal-hold actions + residency changes/rejections",
-      "readinessCheck": "archive health + policy tick + hold guard + residency fail-closed",
-      "evidence": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298",
-      "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "openAction": null,
-      "v2Target": "reuse-and-extend: the data lifecycle surface is now proven and V2 lifts it rather than re-deriving it",
-      "completionAction": "V1C-12",
-      "decisionRef": "V1C-12",
-      "acceptablePartialRoute": true,
-      "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
-      "semanticCompleteness": {
-        "status": "complete",
-        "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
-        "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
-        "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
-        "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
-        "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
-        "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
-        "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
-        "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
-        "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
-        "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
-      },
-      "ownerType": "team",
-      "ownerId": "team-data",
-      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
-      "owningDomain": "data-platform",
-      "operationalOwner": "team-data",
-      "securityOwner": "team-security",
-      "dataOwner": "team-data",
-      "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
-      "routeSemanticContracts": [
-        {
-          "method": "DELETE",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
-        },
-        {
-          "method": "GET",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.read",
-          "auditModel": "read-only: no mutation audit required",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7497", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/residency",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
-        },
-        {
-          "method": "DELETE",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
-        },
-        {
-          "method": "GET",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.read",
-          "auditModel": "read-only: no mutation audit required",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7627", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
-        }
-      ]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0381",
-    "kind": "data-governance",
-    "subject": "PITR, retention, legal hold, data residency",
-    "message": "data-owning capability missing export runtime proof",
-    "evidence": {
-      "capability": "PITR, retention, legal hold, data residency",
-      "category": "data-platform",
-      "status": "delivered-and-proven",
-      "route": "/api/admin/data/legal-holds; /api/admin/data/retention-policies; /api/admin/data/residency",
-      "permission": "platform.data.* ",
-      "contract": "/api/admin/data/pitr; /api/admin/data/retention-policies; /api/admin/data/legal-holds; /api/admin/data/residency; DELETE /api/admin/data/legal-holds; GET /api/admin/data/legal-holds; POST /api/admin/data/legal-holds; POST /api/admin/data/residency; DELETE /api/admin/data/retention-policies; GET /api/admin/data/retention-policies; POST /api/admin/data/retention-policies",
-      "port": "RetentionPort / LegalHoldPort / residency-tag boundary",
-      "adapter": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
-      "auditAction": "restore actions + retention/legal-hold actions + residency changes/rejections",
-      "readinessCheck": "archive health + policy tick + hold guard + residency fail-closed",
-      "evidence": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298",
-      "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "openAction": null,
-      "v2Target": "reuse-and-extend: the data lifecycle surface is now proven and V2 lifts it rather than re-deriving it",
-      "completionAction": "V1C-12",
-      "decisionRef": "V1C-12",
-      "acceptablePartialRoute": true,
-      "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
-      "semanticCompleteness": {
-        "status": "complete",
-        "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
-        "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
-        "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
-        "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
-        "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
-        "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
-        "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
-        "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
-        "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
-        "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
-      },
-      "ownerType": "team",
-      "ownerId": "team-data",
-      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
-      "owningDomain": "data-platform",
-      "operationalOwner": "team-data",
-      "securityOwner": "team-security",
-      "dataOwner": "team-data",
-      "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
-      "routeSemanticContracts": [
-        {
-          "method": "DELETE",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
-        },
-        {
-          "method": "GET",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.read",
-          "auditModel": "read-only: no mutation audit required",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7497", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/residency",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
-        },
-        {
-          "method": "DELETE",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
-        },
-        {
-          "method": "GET",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.read",
-          "auditModel": "read-only: no mutation audit required",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7627", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
-        }
-      ]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0382",
-    "kind": "data-governance",
-    "subject": "PITR, retention, legal hold, data residency",
-    "message": "data-owning capability missing DSR runtime proof",
-    "evidence": {
-      "capability": "PITR, retention, legal hold, data residency",
-      "category": "data-platform",
-      "status": "delivered-and-proven",
-      "route": "/api/admin/data/legal-holds; /api/admin/data/retention-policies; /api/admin/data/residency",
-      "permission": "platform.data.* ",
-      "contract": "/api/admin/data/pitr; /api/admin/data/retention-policies; /api/admin/data/legal-holds; /api/admin/data/residency; DELETE /api/admin/data/legal-holds; GET /api/admin/data/legal-holds; POST /api/admin/data/legal-holds; POST /api/admin/data/residency; DELETE /api/admin/data/retention-policies; GET /api/admin/data/retention-policies; POST /api/admin/data/retention-policies",
-      "port": "RetentionPort / LegalHoldPort / residency-tag boundary",
-      "adapter": "PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column",
-      "auditAction": "restore actions + retention/legal-hold actions + residency changes/rejections",
-      "readinessCheck": "archive health + policy tick + hold guard + residency fail-closed",
-      "evidence": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298",
-      "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-      "openAction": null,
-      "v2Target": "reuse-and-extend: the data lifecycle surface is now proven and V2 lifts it rather than re-deriving it",
-      "completionAction": "V1C-12",
-      "decisionRef": "V1C-12",
-      "acceptablePartialRoute": true,
-      "acceptablePartialRouteReason": "PITR, retention, legal hold, and residency are implemented and proven locally; no missing placeholder remains.",
-      "semanticCompleteness": {
-        "status": "complete",
-        "lifecycle": "Retention lifecycle is set enabled policy -> select aged rows -> skip held rows -> record deleted outcomes -> disable policy. Legal hold lifecycle is set active idempotently -> guard consumers preserve rows -> release to released idempotently. Residency lifecycle is set tenant tag -> fail closed on non-home placement. Evidence: retention, legal-hold, and data-residency tests.",
-        "stateModel": "State model includes retention policies with resourceTable, ttlSeconds, filter all|by_status, enabled, retention row outcomes pending|deleted|held; legal holds active|released with reason/setBy/releasedBy; residencyTag per organisation. Evidence: retention/legal-hold/data-residency ports and tests.",
-        "permissions": "Admin data lifecycle routes require platform.data.*; retention/legal hold/residency are operator-only and tenant-scoped by target organisation id. Evidence: /api/admin/data/* routes.",
-        "contracts": "Contracts are /api/admin/data/pitr, /api/admin/data/retention-policies, /api/admin/data/retention-policies/tick, /api/admin/data/legal-holds, and /api/admin/data/residency. Evidence: routes.ts.",
-        "validation": "Retention validates holdable resource tables, TTL bounds, and whitelisted filters; legal hold validates holdable table and reason length; residency placement rejects mismatched target region fail-closed. Evidence: unit tests.",
-        "errorModel": "Invalid lifecycle requests return invalid/validation responses without audit or mutation; missing legal hold release is not_found; scanner/storage/retention consumers see active hold as a forbidden preservation guard; residency mismatch throws a residency error. Evidence: tests.",
-        "auditModel": "Set/disable retention, set/release legal hold, and residency changes emit audit-before-change; audit failure prevents writes. Retention evaluation outcomes preserve operational evidence. Evidence: retention and legal-hold tests.",
-        "readinessModel": "Readiness is archive health plus policy tick plus hold guard plus residency fail-closed; local tests and proof scripts validate state transitions without claiming external PITR beyond guarded local backup/restore evidence. Evidence: proof:pitr-restore-drill, proof:retention, proof:legal-hold, proof:data-residency.",
-        "proof": "Unit proofs: retention.test.ts, legal-hold.test.ts, data-residency.test.ts. Runtime/route proofs cover backup/PITR control and data-residency aliases. Proof level: 3 state-machine validation, with backup/PITR substrate evidence at level 4 where live Postgres backup is exercised.",
-        "uiSemanticDefinition": "V2 UI must expose retention policy list/set/disable/tick status, legal hold list/set/release with active/released/idempotent states, residency tag and placement errors, operator-only permission gates, audit-backed mutation states, and preservation warnings on held resources."
-      },
-      "ownerType": "team",
-      "ownerId": "team-data",
-      "ownerArtefact": "ADR-0064, ADR-0063, ADR-ACT-0297, ADR-ACT-0298; package metadata owners in package.json architecture.component.owner; ADR-0002; ADR-0004",
-      "owningDomain": "data-platform",
-      "operationalOwner": "team-data",
-      "securityOwner": "team-security",
-      "dataOwner": "team-data",
-      "runtimeOwner": "team-data",
-      "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
-      "routeSemanticContracts": [
-        {
-          "method": "DELETE",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
-        },
-        {
-          "method": "GET",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.read",
-          "auditModel": "read-only: no mutation audit required",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7497", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/legal-holds",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/residency",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
-        },
-        {
-          "method": "DELETE",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
-        },
-        {
-          "method": "GET",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.read",
-          "auditModel": "read-only: no mutation audit required",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7627", "docs/api/openapi.json"]
-        },
-        {
-          "method": "POST",
-          "path": "/api/admin/data/retention-policies",
-          "capability": "PITR, retention, legal hold, data residency",
-          "contractRef": "docs/api/openapi.json",
-          "permissionModel": "platform.data.write",
-          "auditModel": "unknown",
-          "observabilityModel": {
-            "trace": "pipeline withServerSpan",
-            "log": "http.request.complete/http.request.failed",
-            "metric": "http_requests_total/http_request_duration_seconds",
-            "correlation": "pipeline requestId/X-Request-Id"
-          },
-          "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
-          "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
-        }
-      ]
-    },
-    "classification": "must-fix-in-v1"
-  },
-  {
-    "id": "USF-GAP-0383",
     "kind": "data-governance",
     "subject": "PITR, retention, legal hold, data residency",
     "message": "data-owning capability missing lineage runtime proof",
@@ -12284,7 +12014,7 @@
     "classification": "must-fix-in-v1"
   },
   {
-    "id": "USF-GAP-0384",
+    "id": "USF-GAP-0378",
     "kind": "data-governance",
     "subject": "PITR, retention, legal hold, data residency",
     "message": "data-owning capability missing tenant isolation runtime proof",

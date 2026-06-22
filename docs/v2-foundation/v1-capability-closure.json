@@ -3602,7 +3602,33 @@
     "securityOwner": "team-security",
     "dataOwner": "team-data",
     "runtimeOwner": "team-data",
-    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"]
+    "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/src/db/migrate.ts; apps/platform-api/src/db/migrations; packages/adapters-postgres/tests/adapters-postgres.test.ts; apps/platform-api/tests/unit/migrations.test.ts",
+        "evidence": "relational storage classifies schema state through ordered migration filenames, schema_migrations checksums, public tenant-scoped tables with organisation_id boundaries, platform_app NOBYPASSRLS runtime role, and explicit rls_bypass operator role tests"
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/db/migrations/036-retention-policies.sql",
+        "evidence": "retention policies and candidate ledgers are Postgres-backed, tenant-scoped by organisation_id, RLS-protected, and runtime-proven for policy windows, audit-before-change behavior, and legal-hold guarded candidates"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/usecases/data-portability.ts; apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+        "evidence": "portable tenant export reads relational tenant data into ordered archive entries and the Postgres import applier restores relational rows, tenant_domains, and portable_import_progress by organisation_id and archive digest"
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/src/db/migrations/035-legal-holds.sql",
+        "evidence": "legal holds are implemented as relational rows keyed by organisation_id/resource_table/row_id with RLS and uniqueness constraints; runtime proofs validate set/release audit and active-hold guards used by retention/storage consumers"
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/db/migrations/039-data-governance.sql; apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
+        "evidence": "DSR governance is relationally recorded in data-governance migrations and runtime proof exercises DSR intake/fulfillment evidence with tenant-scoped portability export evidence"
+      },
+      "tenant isolation": {
+        "proof": "packages/adapters-postgres/src/index.ts; packages/adapters-postgres/tests/adapters-postgres.test.ts; apps/platform-api/scripts/search-isolation-runtime-proof.ts; apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts; apps/platform-api/scripts/api-keys-runtime-proof.ts; apps/platform-api/scripts/event-bus-runtime-proof.ts",
+        "evidence": "withTenant sets app.current_tenant_id and tenant schemas, withSystemAdmin uses SET LOCAL ROLE rls_bypass, platform_app is NOBYPASSRLS, and live proofs verify tenant B sees zero of tenant A rows across search, metering, API keys, and events"
+      }
+    }
   },
   {
     "capability": "Backup + restore",
