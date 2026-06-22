@@ -14,6 +14,10 @@ import {
 } from "../../src/usecases/storage-objects.ts";
 import { LegalHoldGuard } from "../../src/usecases/legal-hold.ts";
 import { ClamAvAdapter, getClamAvMetric } from "../../src/adapters/clamav-antivirus.ts";
+import {
+  getPostgresStorageObjectRepositoryMetric,
+  PostgresStorageObjectRepository,
+} from "../../src/adapters/postgres-storage-object-repository.ts";
 import { StubAntivirusPort, type AntivirusPort } from "../../src/ports/antivirus.ts";
 import type {
   CreateStorageObjectInput,
@@ -378,5 +382,118 @@ describe("ClamAvAdapter storage assurance hooks", () => {
       assert.equal(result.verdict, "rejected");
       assert.deepEqual(audit, ["clamav.scan.rejected"]);
     });
+  });
+});
+
+function makeStorageObjectPool() {
+  const queries: Array<{ sql: string; values?: unknown[] }> = [];
+  const row = (state: StorageObjectScanState = "uploaded") => ({
+    object_id: "obj-1",
+    organisation_id: ORG,
+    object_key: `${ORG}/file.txt`,
+    content_type: "text/plain",
+    size_bytes: "3",
+    scan_state: state,
+    created_at: null,
+    updated_at: null,
+  });
+  return {
+    queries,
+    pool: {
+      async query(sql: string, values?: unknown[]) {
+        queries.push({ sql, values });
+        if (/INSERT INTO public\.storage_objects/.test(sql)) return { rows: [row("uploaded")] };
+        if (/UPDATE public\.storage_objects/.test(sql)) {
+          return { rows: [row(values?.[2] as StorageObjectScanState)] };
+        }
+        return { rows: [], rowCount: 0 };
+      },
+    },
+  };
+}
+
+describe("PostgresStorageObjectRepository storage assurance hooks", () => {
+  it("rejects cross-tenant object keys before querying Postgres", async () => {
+    const fixture = makeStorageObjectPool();
+    const repo = new PostgresStorageObjectRepository(fixture.pool as never, {
+      retryAttempts: 0,
+    });
+
+    await assert.rejects(
+      () =>
+        repo.create({
+          organisationId: ORG,
+          objectKey: "other-tenant/file.txt",
+          contentType: "text/plain",
+          sizeBytes: 3,
+          createdBy: "u1",
+        }),
+      /tenantPrefix isolation/
+    );
+    assert.deepEqual(fixture.queries, []);
+  });
+
+  it("checks quota-before-write and audits created/lifecycle states with metrics", async () => {
+    const fixture = makeStorageObjectPool();
+    const audit: string[] = [];
+    let quotaChecked = false;
+    const before = getPostgresStorageObjectRepositoryMetric(
+      "postgres_storage_object_repository_total",
+      { operation: "create", outcome: "success" }
+    );
+    const repo = new PostgresStorageObjectRepository(fixture.pool as never, {
+      retryAttempts: 0,
+      quotaBeforeWrite: async () => {
+        quotaChecked = true;
+      },
+      auditEvent: async (event) => {
+        audit.push(`${event.action}:${event.scanState ?? "none"}`);
+      },
+    });
+
+    const created = await repo.create({
+      organisationId: ORG,
+      objectKey: `${ORG}/file.txt`,
+      contentType: "text/plain",
+      sizeBytes: 3,
+      createdBy: "u1",
+    });
+    const clean = await repo.setScanState(ORG, `${ORG}/file.txt`, "clean");
+
+    assert.equal(created.scanState, "uploaded");
+    assert.equal(clean.scanState, "clean");
+    assert.equal(quotaChecked, true);
+    assert.deepEqual(audit, [
+      "storage-object-metadata.created:uploaded",
+      "storage-object-metadata.lifecycle:clean",
+    ]);
+    assert.equal(
+      getPostgresStorageObjectRepositoryMetric("postgres_storage_object_repository_total", {
+        operation: "create",
+        outcome: "success",
+      }),
+      before + 1
+    );
+  });
+
+  it("checks legal hold before metadata delete and audits deletion", async () => {
+    const fixture = makeStorageObjectPool();
+    const audit: string[] = [];
+    let legalHoldChecked = false;
+    const repo = new PostgresStorageObjectRepository(fixture.pool as never, {
+      retryAttempts: 0,
+      legalHoldDeletionBlock: async () => {
+        legalHoldChecked = true;
+      },
+      auditEvent: async (event) => {
+        audit.push(event.action);
+      },
+    });
+
+    await repo.delete(ORG, `${ORG}/file.txt`);
+
+    assert.equal(legalHoldChecked, true);
+    assert.deepEqual(audit, ["storage-object-metadata.deleted"]);
+    assert.ok(fixture.queries.some((q) => /DELETE FROM public\.storage_objects/.test(q.sql)));
   });
 });
