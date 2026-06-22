@@ -64,6 +64,11 @@ export interface EvaluateQuotaResult {
   window: QuotaWindow | null;
 }
 
+export interface EvaluateQuotaDeltaResult extends EvaluateQuotaResult {
+  requested: number;
+  projectedUsage: number;
+}
+
 async function isEntitled(
   entitlements: EntitlementRepository,
   organisationId: string,
@@ -119,6 +124,60 @@ export async function evaluateQuota(
   };
 }
 
+/**
+ * Evaluate quota for an operation that will add usage atomically after it succeeds.
+ * Storage upload uses this for `storage.bytes`: the current metered usage alone is
+ * insufficient because the candidate object's byte size must be included.
+ */
+export async function evaluateQuotaWithDelta(
+  organisationId: string,
+  quotaKey: string,
+  requested: number,
+  deps: QuotaDeps,
+  opts: { operator?: boolean } = {}
+): Promise<EvaluateQuotaDeltaResult> {
+  const q = await deps.quota.getByKey(organisationId, quotaKey);
+  if (!q) {
+    return {
+      allowed: true,
+      decidedBy: "no_quota",
+      state: "no_quota",
+      usage: 0,
+      requested,
+      projectedUsage: requested,
+      limit: null,
+      window: null,
+    };
+  }
+  if (!(await isEntitled(deps.entitlements, organisationId, q.entitlementKey))) {
+    return {
+      allowed: false,
+      decidedBy: "entitlement",
+      state: "no_entitlement",
+      usage: 0,
+      requested,
+      projectedUsage: requested,
+      limit: q.limit,
+      window: q.window,
+    };
+  }
+  const usage = opts.operator
+    ? await deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window)
+    : await deps.metering.aggregate(organisationId, q.meterKey, q.window);
+  const projectedUsage = usage + requested;
+  const exceeded = q.action === "deny" && projectedUsage > q.limit;
+  return {
+    allowed: !exceeded,
+    decidedBy: "quota",
+    state: exceeded ? "exceeded" : "within",
+    usage,
+    requested,
+    projectedUsage,
+    limit: q.limit,
+    window: q.window,
+  };
+}
+
 /** Throw a typed error when the next action is not allowed (entitlement or quota). */
 export async function assertQuota(
   organisationId: string,
@@ -133,6 +192,30 @@ export async function assertQuota(
   }
   throw new ForbiddenError("api.error.quotaExceeded", {
     safeDetails: { quota: quotaKey, usage: r.usage, limit: r.limit, window: r.window },
+  });
+}
+
+export async function assertQuotaWithDelta(
+  organisationId: string,
+  quotaKey: string,
+  requested: number,
+  deps: QuotaDeps,
+  opts: { operator?: boolean } = {}
+): Promise<void> {
+  const r = await evaluateQuotaWithDelta(organisationId, quotaKey, requested, deps, opts);
+  if (r.allowed) return;
+  if (r.decidedBy === "entitlement") {
+    throw new ForbiddenError("api.error.notEntitled", { safeDetails: { quota: quotaKey } });
+  }
+  throw new ForbiddenError("api.error.quotaExceeded", {
+    safeDetails: {
+      quota: quotaKey,
+      usage: r.usage,
+      requested,
+      projectedUsage: r.projectedUsage,
+      limit: r.limit,
+      window: r.window,
+    },
   });
 }
 

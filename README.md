@@ -222,6 +222,7 @@ proof:tenant-domain-canonical
 proof:tenant-domain-claim-lifecycle
 proof:tenant-domains
 proof:tenant-domains-routing
+proof:tenant-lifecycle
 proof:tenant-observability
 proof:tenant-storage
 proof:tenant-storage-objects

@@ -10,6 +10,7 @@ import type {
   DatasetClassification,
   DsrType,
   DsrState,
+  DsrFulfillmentEvidence,
 } from "../ports/data-governance.ts";
 
 const iso = (d: Date | null) => (d ? d.toISOString() : null);
@@ -27,6 +28,7 @@ type Row = {
   state?: DsrState;
   reason?: string;
   fulfilled_at?: Date | null;
+  fulfillment_evidence?: DsrFulfillmentEvidence | null;
 };
 
 export class PostgresDataGovernanceAdapter implements DataGovernancePort {
@@ -69,7 +71,13 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
     }
     const { rows } = await this.pool.query(
       `INSERT INTO public.data_classifications (dataset_id, column_name, classification, rule, created_by) VALUES ($1,$2,$3,$4,$5) RETURNING classification_id, dataset_id, column_name, classification, rule, created_at`,
-      [input.datasetId, input.columnName, classification, "rules-based", input.actorId]
+      [
+        input.datasetId,
+        input.columnName,
+        input.classification ?? classification,
+        input.rule ?? "rules-based",
+        input.actorId,
+      ]
     );
     const r = rows[0]!;
     return {
@@ -99,8 +107,10 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
   }
   async listDsrs(organisationId: string): Promise<DsrRecord[]> {
     const { rows } = await this.pool.query(
-      `SELECT dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at FROM public.dsr_requests WHERE organisation_id = $1 ORDER BY created_at DESC`,
-      [organisationId]
+      organisationId
+        ? `SELECT dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at, fulfillment_evidence FROM public.dsr_requests WHERE organisation_id = $1 ORDER BY created_at DESC`
+        : `SELECT dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at, fulfillment_evidence FROM public.dsr_requests ORDER BY created_at DESC`,
+      organisationId ? [organisationId] : []
     );
     return rows.map(
       (r: {
@@ -112,6 +122,7 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
         reason: string;
         created_at: Date | null;
         fulfilled_at: Date | null;
+        fulfillment_evidence: DsrFulfillmentEvidence | null;
       }) => ({
         dsrId: r.dsr_id,
         organisationId: r.organisation_id,
@@ -121,12 +132,13 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
         reason: r.reason,
         createdAt: iso(r.created_at),
         fulfilledAt: iso(r.fulfilled_at),
+        fulfillmentEvidence: r.fulfillment_evidence,
       })
     );
   }
   async createDsr(input: CreateDsrInput): Promise<DsrRecord> {
     const { rows } = await this.pool.query(
-      `INSERT INTO public.dsr_requests (organisation_id, subject_id, type, state, reason, created_by) VALUES ($1,$2,$3,'open',$4,$5) RETURNING dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at`,
+      `INSERT INTO public.dsr_requests (organisation_id, subject_id, type, state, reason, created_by) VALUES ($1,$2,$3,'open',$4,$5) RETURNING dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at, fulfillment_evidence`,
       [input.organisationId, input.subjectId, input.type, input.reason, input.actorId]
     );
     const r = rows[0]!;
@@ -139,14 +151,20 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
       reason: r.reason,
       createdAt: iso(r.created_at),
       fulfilledAt: iso(r.fulfilled_at),
+      fulfillmentEvidence: r.fulfillment_evidence,
     };
   }
-  async fulfillDsr(input: { dsrId: string; actorId: string }): Promise<DsrRecord> {
+  async fulfillDsr(input: {
+    dsrId: string;
+    actorId: string;
+    evidence: DsrFulfillmentEvidence;
+  }): Promise<DsrRecord> {
     const { rows } = await this.pool.query(
-      `UPDATE public.dsr_requests SET state='fulfilled', fulfilled_at=now(), fulfilled_by=$2 WHERE dsr_id=$1 RETURNING dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at`,
-      [input.dsrId, input.actorId]
+      `UPDATE public.dsr_requests SET state='fulfilled', fulfilled_at=now(), fulfilled_by=$2, fulfillment_evidence=$3 WHERE dsr_id=$1 AND state='open' RETURNING dsr_id, organisation_id, subject_id, type, state, reason, created_at, fulfilled_at, fulfillment_evidence`,
+      [input.dsrId, input.actorId, JSON.stringify(input.evidence)]
     );
     const r = rows[0]!;
+    if (!r) throw new Error(`DSR ${input.dsrId} not found or already fulfilled`);
     return {
       dsrId: r.dsr_id,
       organisationId: r.organisation_id,
@@ -156,6 +174,7 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
       reason: r.reason,
       createdAt: iso(r.created_at),
       fulfilledAt: iso(r.fulfilled_at),
+      fulfillmentEvidence: r.fulfillment_evidence,
     };
   }
 }

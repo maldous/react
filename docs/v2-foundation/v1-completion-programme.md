@@ -131,7 +131,7 @@ redirect cutover proven locally.
 
 #### Storage
 
-**V1C-15 — Object storage file CRUD / quotas / lifecycle / AV (extend).** Source: ADR-0049/0064,
+**V1C-15 — Object storage file CRUD / quotas / lifecycle / AV (extend). ✅ CLOSED (delivered-and-proven).** Source: ADR-0049/0064,
 ADR-ACT-0223. Selected decision: BUILD file CRUD over the proven `StoragePort`/`MinioStorageAdapter`
 (readiness already live). Add `/api/org/storage/objects*` CRUD + quota routes. **Antivirus (final):
 ClamAV** (`clamd`) behind an `AntivirusPort` (`ClamAvAdapter` prod / `StubAvAdapter` local), driven by
@@ -142,7 +142,9 @@ objects are withheld + audited. **Legal-hold ownership: assigned to the central 
 capability (V1C-12c), NOT storage** — storage only honours the hold flag set by V1C-12c (single
 owner, no duplication). Tests: carry `proof:tenant-storage` + add file-CRUD/quota/AV-lifecycle
 proofs. **Stop:** file CRUD + quotas + the AV lifecycle (`uploaded→…→clean|rejected`) delivered +
-proven on live MinIO.
+proven on live MinIO. Closed by `proof:tenant-storage` plus `proof:tenant-storage-objects`, which
+proves quota-before-write, quarantine/download guard, clean/rejected ClamAV scan lifecycle, signed URL
+generation, and legal-hold deletion blocking.
 
 #### Entitlements & billing (decomposed; decisionRef V1C-10 / V1C-11)
 
@@ -210,23 +212,28 @@ region; the check therefore proves "no write escapes the home region." Contracts
 `/api/admin/data/residency`. Audit residency changes + rejected placements. **Stop:** a write targeting
 a non-home region is rejected fail-closed; proven.
 
-**V1C-13a — Data catalogue + lineage.** **Selected decision:** BUILD a metadata catalogue (no external
-catalog service). Domain `DatasetEntry{owner, classification, lineageEdges}`. Port `DataCatalogPort`;
-persistence `data_catalog`. Contracts `/api/admin/governance/catalog*`. Audit catalogue edits. Proof
-`proof:data-catalog`. **Stop:** catalogue + lineage edges queryable.
+**V1C-13 — Data governance: catalogue, lineage, PII, DSR/GDPR. ✅ CLOSED
+(delivered-and-proven).** Closed by `proof:data-governance` and
+`apps/platform-api/tests/unit/data-governance.test.ts`.
 
-**V1C-13b — PII classification.** **Selected decision:** BUILD rules-based classification (regex/column
-heuristics; no external ML provider). Domain `classification∈{none,pii,sensitive}`. Port extends
-`DataCatalogPort`. Audit classification changes. Proof `proof:pii-classification`. **Stop:** columns
-classified by rules; proven.
+**V1C-13a — Data catalogue + lineage. ✅ CLOSED.** **Selected decision:** BUILD a metadata catalogue
+(no external catalog service). Domain `DatasetEntry{owner, classification, lineageEdges}`. Port
+`DataGovernancePort`; persistence `data_catalog`. Contracts `/api/admin/governance/catalog*`.
+Lineage edges are normalized and queryable. **Stop:** catalogue + lineage edges queryable.
 
-**V1C-13c — DSR / GDPR workflow.** **Selected decision:** BUILD a DSR workflow over the proven audit +
-storage + catalogue. Domain `DSR{type: access|erasure|portability, state: open→fulfilled}`. Port
-`DsrPort`; contracts tenant DSR endpoints + `/api/admin/governance/dsr*`; event `dsr.fulfilled`.
-Permission `tenant DSR` / `platform.governance.*`. Audit DSR fulfilment. Proof `proof:dsr`. **Stop:**
-access + erasure DSR fulfilled + audited.
+**V1C-13b — PII classification. ✅ CLOSED.** **Selected decision:** BUILD rules-based classification
+(regex/column heuristics; no external ML provider). Domain `classification∈{none,pii,sensitive}`.
+Port extends `DataGovernancePort`. SSN, email, phone, secret, and Luhn-valid payment-card rules are
+proven. **Stop:** columns classified by rules; proven.
 
-**V1C-14 — Tenant data import/export.** **Selected decision:** BUILD export/import over `StoragePort`,
+**V1C-13c — DSR / GDPR workflow. ✅ CLOSED.** **Selected decision:** BUILD a DSR workflow over the
+catalogue. Domain `DSR{type: access|erasure|portability, state: open→fulfilled}`. Port
+`DataGovernancePort`; contracts tenant DSR endpoints + `/api/admin/governance/dsr*`; fulfilment stores
+catalogue/classification evidence in `dsr_requests.fulfillment_evidence` and rejects duplicate
+fulfilment. Permission `tenant DSR` / `platform.governance.*`. **Stop:** DSR fulfilled with evidence
+exactly once.
+
+**V1C-14 — Tenant data import/export. ✅ CLOSED (delivered-and-proven).** **Selected decision:** BUILD export/import over `StoragePort`,
 pairing with tenant deletion/portability (V1C-21). **Archive format:** gzip-compressed tar
 (`.tar.gz`). **Manifest:** `manifest.json` at the archive root — `{schemaVersion:1, tenantId,
 exportedAt, sourceCommit, entries:[{path, sha256, bytes, order}], counts}`. **Checksums:** SHA-256 per
@@ -240,7 +247,9 @@ go through a documented upgrader; newer is rejected. **Size limits:** streamed (
 load); per-archive soft cap configurable, enforced at export. **Audit events:** `data.export.requested`,
 `data.export.completed`, `data.import.started`, `data.import.completed|failed`. Contracts
 `/api/org/data/export`,`/import`. Proof `proof:data-portability`. **Stop:** encrypted round-trip
-export→import with checksum verification + partial-failure recovery proven + audited.
+export→import with checksum verification + partial-failure recovery proven + audited. Closed by
+encrypted AES-256-GCM envelope over gzip-compressed tar, root manifest, per-entry checksums,
+SecretStore data-key wrapping, durable Postgres import applier, rollback, and resumable progress proof.
 
 #### Events & workflow (decomposed; decisionRef V1C-16)
 
@@ -313,11 +322,12 @@ portal + SDK + sandbox + runtime conformance suite delivered + proven.
 
 #### Support / admin (decomposed; decisionRef V1C-22)
 
-**V1C-21 — Tenant lifecycle suspend/delete/export (extend).** Source: ADR-0066/0063, ADR-ACT-0251.
-Extend proven provision-only lifecycle. **Selected decision:** BUILD suspend/delete/export coordinating
-data+storage+realm+DSR. Contracts extend `/api/admin/tenants` (suspend/delete/export). Audit lifecycle
-transitions. Proof `proof:tenant-lifecycle`. **Stop:** full lifecycle proven; deletion coordinates all
-subsystems.
+**V1C-21 — Tenant lifecycle suspend/delete/export. ✅ CLOSED (delivered-and-proven).** Source:
+ADR-0066/0063, ADR-ACT-0251. Closed by `proof:tenant-lifecycle` and
+`apps/platform-api/tests/unit/tenant-lifecycle.test.ts`. Suspend/delete/export now coordinate
+data+storage+realm+DSR and deletion first produces a portable export digest. Contracts extend
+`/api/admin/tenants` (suspend/delete/export). Audit lifecycle transitions. **Stop:** full lifecycle
+proven; deletion coordinates all subsystems.
 
 **V1C-22a — Support tickets.** **Selected decision:** BUILD minimal in-house ticketing on Postgres
 (no external helpdesk for V1). Domain `Ticket{open→pending→resolved→closed}`. Port `SupportPort`;

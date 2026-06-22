@@ -26,12 +26,14 @@ test("exit 0 path: clean context produces zero findings", () => {
   assert.deepEqual(runRules(cleanCtx()), []);
 });
 
-test("exit 0 (GREEN) on the live repo with --json shape", () => {
+test("live repo is cut-ready with --json shape", () => {
   const repoRoot = path.join(here, "../../..");
   const r = run(["--strict", "--json", "--repo", repoRoot], repoRoot);
   assert.equal(r.code, 0);
   const report = JSON.parse(r.stdout);
   assert.equal(report.ok, true);
+  assert.equal(report.consistencyFindings, 0);
+  assert.equal(report.completionBlockerCount, 0);
   assert.ok(Array.isArray(report.findings));
   assert.equal(report.auditBaseCommit, AUDITED_V1_COMMIT);
   assert.match(report.cutCandidateCommit, /^[0-9a-f]{7,40}$/);

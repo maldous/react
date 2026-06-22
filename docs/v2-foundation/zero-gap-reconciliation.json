@@ -1,6 +1,6 @@
 {
   "pass": "two-reverse-reconciliation (semantic-closure pass)",
-  "verdict": "reconciliation complete — the V2 branch cut is green. All capability completions previously tracked as blockers are now delivered-and-proven and closed; 0 capability completions + 0 deprecated packages remain before the cut.",
+  "verdict": "reconciliation complete — all capability completion blockers are closed.",
   "vocabulary": {
     "fileDispositions": [
       "reuse-unchanged",
@@ -40,23 +40,23 @@
     "bijective": true
   },
   "commands": {
-    "total": 350,
+    "total": 351,
     "buckets": {
-      "carry": 313,
+      "carry": 314,
       "merge": 42,
       "retire": 1
     },
-    "sum": 350
+    "sum": 351
   },
   "tests": {
-    "total": 438,
+    "total": 439,
     "buckets": {
-      "carry": 313,
+      "carry": 314,
       "promote-to-conformance": 76,
       "retire": 2,
       "retarget": 61
     },
-    "sum": 438
+    "sum": 439
   },
   "capabilities": {
     "total": 75,

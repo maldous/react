@@ -6422,5 +6422,23 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:tenant-lifecycle",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for V1C-21 tenant lifecycle coordination across export, data, storage, realm and DSR.",
+    "inputs": ["none (local-only)"],
+    "outputs": ["proof evidence (stdout)"],
+    "prerequisites": ["platform-api loader"],
+    "sideEffects": ["none (in-process fakes)"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero on proof failure",
+    "idempotent": true,
+    "safetyControls": [],
+    "testCoverage": "tenant-lifecycle.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

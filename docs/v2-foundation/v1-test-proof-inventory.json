@@ -4065,5 +4065,14 @@
     "fixtureEnvDependency": "node:test unit harness",
     "stageCoverage": "unit test",
     "failureEvidence": "assertion output"
+  },
+  {
+    "id": "package.json#proof:tenant-lifecycle",
+    "path": "package.json#proof:tenant-lifecycle",
+    "kind": "proof-script",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader",
+    "stageCoverage": "proof script (npm run proof:tenant-lifecycle)",
+    "failureEvidence": "exit code + proof stdout"
   }
 ]

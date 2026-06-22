@@ -3,5 +3,5 @@
 Generated (ADR-ACT-0285 Phase 5.5). DO NOT EDIT — regenerate via make e2e-sentry-assertion.
 
 - Result: **PASSED**
-- Triggered synthetic failure → HTTP 500 (x-request-id=4345fee3-09c9-4e7b-9a0a-7cca393922a4).
-- Sentry event b98fd08a8dca4ff1bb1af2713c92a977 carries environment + requestId + trace_id + testRunId + scenarioId.
+- Triggered synthetic failure → HTTP 500 (x-request-id=eee13003-d932-4ed6-964e-05d94f69a97b).
+- Sentry event 9fc3563730a04411a578abab562d6b77 carries environment + requestId + trace_id + testRunId + scenarioId.

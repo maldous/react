@@ -244,6 +244,7 @@
     "proof:billing-catalog": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
     "proof:data-governance": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/data-governance-runtime-proof.ts",
     "proof:data-portability": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/data-portability-runtime-proof.ts",
+    "proof:tenant-lifecycle": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
     "proof:billing-provider": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/billing-provider-runtime-proof.ts",
     "proof:lago-billing-provider": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
     "proof:data-residency": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/data-residency-runtime-proof.ts",

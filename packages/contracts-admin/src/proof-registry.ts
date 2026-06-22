@@ -30,6 +30,7 @@ export const PROOF_LADDER = [
   "proof:tenant-custom-domain-auth-origin",
   "proof:service-clickthrough-policy",
   "proof:tenant-domain-claim-lifecycle",
+  "proof:tenant-lifecycle",
   "proof:billing-provider",
   "proof:billing-readiness-route",
   "proof:billing-control-route",

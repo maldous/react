@@ -260,6 +260,28 @@ export const PLATFORM_API_CONFIG_SCHEMA = {
     restartOrReload: "restart-required",
     description: "Base URL the Caddy local routing probe targets.",
   },
+  storageAvProvider: {
+    key: "STORAGE_AV_PROVIDER",
+    type: "string",
+    default: "clamav",
+    restartOrReload: "restart-required",
+    description:
+      "Antivirus provider selector for storage-object scanning. `stub` uses local stub adapter.",
+  },
+  clamavHost: {
+    key: "CLAMAV_HOST",
+    type: "string",
+    default: "127.0.0.1",
+    restartOrReload: "restart-required",
+    description: "ClamAV host when STORAGE_AV_PROVIDER is set to clamav.",
+  },
+  clamavPort: {
+    key: "CLAMAV_PORT",
+    type: "number",
+    default: 3310,
+    restartOrReload: "restart-required",
+    description: "ClamAV port when STORAGE_AV_PROVIDER is set to clamav.",
+  },
   // app secrets (env-loaded; NOT Tier-0 root-of-trust and not store-managed today — typed here for
   // redaction. Promotion to a Tier-1 SecretRef via SecretStorePort is future work, not this slice.)
   apiKeyPepper: {

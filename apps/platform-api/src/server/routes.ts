@@ -70,6 +70,7 @@ import {
 import { loadNotificationConfig } from "../config/notification-config.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
 import { loadObservabilityProbeConfig } from "../config/observability-probe-config.ts";
+import { loadHealthMetadataConfig } from "../config/health-metadata-config.ts";
 import { loadProviderReadinessConfig } from "../config/provider-readiness-config.ts";
 import { loadPlatformApiConfig } from "../config/app-config.ts";
 import { createLogger } from "@platform/platform-logging";
@@ -159,6 +160,10 @@ import { suspendTenant, deleteTenant } from "../usecases/tenant-lifecycle.ts";
 import { z } from "zod";
 import { PostgresDataGovernanceAdapter } from "../adapters/postgres-data-governance.ts";
 import { PostgresStorageObjectRepository } from "../adapters/postgres-storage-object-repository.ts";
+import { PostgresLegalHoldRepository } from "../adapters/postgres-legal-hold.ts";
+import { LegalHoldGuard } from "../usecases/legal-hold.ts";
+import { StubAntivirusPort } from "../ports/antivirus.ts";
+import { ClamAvAdapter } from "../adapters/clamav-antivirus.ts";
 
 // ---------------------------------------------------------------------------
 // AuthClientDomainPort over the existing vanity-domain Keycloak plumbing
@@ -498,6 +503,29 @@ async function buildQuotaDeps() {
   };
 }
 
+async function buildStorageObjectDeps(organisationId: string) {
+  const storageDeps = buildStorageReadinessDeps(organisationId);
+  if (!storageDeps.makeProbe) return null;
+  const platformConfig = loadPlatformApiConfig();
+  const pool = getApplicationPool();
+  return {
+    repository: new PostgresStorageObjectRepository(pool),
+    storage: storageDeps.makeProbe().port,
+    quotas: await buildQuotaDeps(),
+    audit: createPostgresAuditEventPort(pool),
+    legalHoldGuard: new LegalHoldGuard({
+      repository: new PostgresLegalHoldRepository(pool),
+    }),
+    antivirus:
+      platformConfig.storageAvProvider === "stub"
+        ? new StubAntivirusPort()
+        : new ClamAvAdapter({
+            host: platformConfig.clamavHost,
+            port: platformConfig.clamavPort,
+          }),
+  };
+}
+
 // Build the API-keys usecase deps (api-key repo + entitlement repo + audit) — ADR-ACT-0257.
 async function buildApiKeysDeps() {
   const { PostgresApiKeyRepository } = await import("../adapters/postgres-api-key-repository.ts");
@@ -626,6 +654,110 @@ async function buildSecretsDeps() {
 async function buildHistoryDeps() {
   const { PostgresHistoryRepository } = await import("../adapters/postgres-history-repository.ts");
   return { history: new PostgresHistoryRepository(getApplicationPool()) };
+}
+
+async function buildTenantLifecycleCoordinator(pool: ReturnType<typeof getApplicationPool>) {
+  return {
+    exportTenant: async (organisationId: string, actor: { actorId: string }) => {
+      const [
+        { buildPortableTenantExport },
+        { getHistory },
+        { listOrgMembers },
+        { listTenantDomains },
+      ] = await Promise.all([
+        import("../usecases/data-portability.ts"),
+        import("../usecases/history.ts"),
+        import("../usecases/members.ts"),
+        import("../usecases/tenant-domains.ts"),
+      ]);
+      const [history, members, domains] = await Promise.all([
+        getHistory(organisationId, { limit: 200, offset: 0 }, await buildHistoryDeps()),
+        listOrgMembers(organisationId, pool),
+        listTenantDomains(organisationId, pool),
+      ]);
+      const archive = await buildPortableTenantExport(
+        {
+          tenantId: organisationId,
+          sourceCommit: loadHealthMetadataConfig().gitSha || "unknown",
+          entries: [
+            { path: "identity/members.json", content: members, order: 1 },
+            { path: "config/domains.json", content: domains, order: 2 },
+            { path: "audit/history.json", content: history, order: 4 },
+          ],
+        },
+        { secretStore: await selectSecretStore(pool), actorId: actor.actorId }
+      );
+      return { digest: archive.digest, keyRef: archive.keyRef };
+    },
+    suspendData: async (organisationId: string) => {
+      await pool.query(`UPDATE public.organisations SET is_active = false WHERE id = $1`, [
+        organisationId,
+      ]);
+    },
+    suspendStorage: async (organisationId: string) => {
+      await pool.query(
+        `UPDATE public.storage_objects
+            SET scan_state = 'quarantined', updated_at = now()
+          WHERE organisation_id = $1 AND scan_state = 'clean'`,
+        [organisationId]
+      );
+    },
+    suspendRealm: async (organisationId: string) => {
+      await pool.query(
+        `UPDATE public.tenant_domains
+            SET auth_client_status = 'inactive',
+                auth_client_activated_at = NULL,
+                routing_status = 'routing_unknown',
+                routing_local_proven_at = NULL,
+                routing_public_proven_at = NULL,
+                canonical = false,
+                canonical_at = NULL
+          WHERE organisation_id = $1 AND disabled_at IS NULL`,
+        [organisationId]
+      );
+    },
+    suspendDsr: async (organisationId: string, actor: { actorId: string }) => {
+      await pool.query(
+        `INSERT INTO public.dsr_requests
+           (organisation_id, subject_id, type, state, reason, created_by, fulfilled_by, fulfilled_at)
+         VALUES ($1, 'tenant', 'portability', 'fulfilled', 'tenant lifecycle suspend checkpoint', NULL, NULL, now())`,
+        [organisationId, actor.actorId]
+      );
+    },
+    deleteData: async (organisationId: string) => {
+      await pool.query(
+        `UPDATE public.organisations
+            SET is_active = false, deleted_at = COALESCE(deleted_at, now())
+          WHERE id = $1`,
+        [organisationId]
+      );
+    },
+    deleteStorage: async (organisationId: string) => {
+      await pool.query(`DELETE FROM public.storage_objects WHERE organisation_id = $1`, [
+        organisationId,
+      ]);
+    },
+    deleteRealm: async (organisationId: string) => {
+      await pool.query(
+        `UPDATE public.tenant_domains
+            SET disabled_at = COALESCE(disabled_at, now()),
+                auth_client_status = 'inactive',
+                auth_client_activated_at = NULL,
+                canonical = false,
+                canonical_at = NULL
+          WHERE organisation_id = $1 AND disabled_at IS NULL`,
+        [organisationId]
+      );
+    },
+    deleteDsr: async (organisationId: string) => {
+      await pool.query(
+        `INSERT INTO public.dsr_requests
+           (organisation_id, subject_id, type, state, reason, created_by, fulfilled_by, fulfilled_at)
+         VALUES ($1, 'tenant', 'erasure', 'fulfilled', 'tenant lifecycle delete checkpoint', NULL, NULL, now())`,
+        [organisationId]
+      );
+    },
+  };
 }
 
 // Parse history list query params (limit/offset/sources) from a request URL.
@@ -4189,17 +4321,97 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const { createStorageObject } = await import("../usecases/storage-objects.ts");
-      const repo = new PostgresStorageObjectRepository(getApplicationPool());
-      const storageDeps = buildStorageReadinessDeps(tenantCtx.organisationId);
-      if (!storageDeps.makeProbe) {
+      const deps = await buildStorageObjectDeps(tenantCtx.organisationId);
+      if (!deps) {
         res.json(503, { code: "STORAGE_NOT_CONFIGURED", message: "Storage not configured" });
         return;
       }
       const obj = await createStorageObject(
         { organisationId: tenantCtx.organisationId, actorId: req.actor!.userId, ...body.data },
-        { repository: repo, storage: storageDeps.makeProbe().port, quotas: null as never }
+        deps
       );
       res.json(201, obj);
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/org/storage/objects/:objectKey",
+    operationName: "org.storage.objects.downloadUrl",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.read",
+    resource: "admin:storage",
+    umaScope: "read" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) return res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+      const objectKey = decodeURIComponent(req.params["objectKey"] ?? "");
+      const { getStorageObjectDownloadUrl } = await import("../usecases/storage-objects.ts");
+      const deps = await buildStorageObjectDeps(tenantCtx.organisationId);
+      if (!deps) {
+        res.json(503, { code: "STORAGE_NOT_CONFIGURED", message: "Storage not configured" });
+        return;
+      }
+      const result = await getStorageObjectDownloadUrl(
+        tenantCtx.organisationId,
+        objectKey,
+        300,
+        deps
+      );
+      if (!result) return res.json(404, { code: "NOT_FOUND", message: "Object not found" });
+      res.json(200, result);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/org/storage/objects/:objectKey/scan",
+    operationName: "org.storage.objects.scan",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.write",
+    resource: "admin:storage",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) return res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+      const objectKey = decodeURIComponent(req.params["objectKey"] ?? "");
+      const { scanStorageObject } = await import("../usecases/storage-objects.ts");
+      const deps = await buildStorageObjectDeps(tenantCtx.organisationId);
+      if (!deps) {
+        res.json(503, { code: "STORAGE_NOT_CONFIGURED", message: "Storage not configured" });
+        return;
+      }
+      const result = await scanStorageObject(
+        tenantCtx.organisationId,
+        objectKey,
+        req.actor!.userId,
+        deps
+      );
+      if (!result) return res.json(404, { code: "NOT_FOUND", message: "Object not found" });
+      res.json(200, result);
+    },
+  },
+  {
+    method: "DELETE",
+    path: "/api/org/storage/objects/:objectKey",
+    operationName: "org.storage.objects.delete",
+    requiresAuth: true,
+    requiredPermission: "tenant.storage.write",
+    resource: "admin:storage",
+    umaScope: "write" as const,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) return res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+      const objectKey = decodeURIComponent(req.params["objectKey"] ?? "");
+      const { deleteStorageObject } = await import("../usecases/storage-objects.ts");
+      const deps = await buildStorageObjectDeps(tenantCtx.organisationId);
+      if (!deps) {
+        res.json(503, { code: "STORAGE_NOT_CONFIGURED", message: "Storage not configured" });
+        return;
+      }
+      await deleteStorageObject(tenantCtx.organisationId, objectKey, req.actor!.userId, deps);
+      res.json(200, { deleted: true });
     },
   },
   // ---------------------------------------------------------------------------
@@ -7041,12 +7253,25 @@ export const routes: Route[] = [
         listOrgMembers(tenantId, pool),
         listTenantDomains(tenantId, pool),
       ]);
+      const { buildPortableTenantExport } = await import("../usecases/data-portability.ts");
+      const archive = await buildPortableTenantExport(
+        {
+          tenantId,
+          sourceCommit: loadHealthMetadataConfig().gitSha || "unknown",
+          entries: [
+            { path: "identity/members.json", content: members, order: 1 },
+            { path: "config/domains.json", content: domains, order: 2 },
+            { path: "audit/history.json", content: history, order: 4 },
+          ],
+        },
+        { secretStore: await selectSecretStore(pool), actorId: req.actor!.userId }
+      );
       res.json(200, {
         tenantId,
-        exportedAt: new Date().toISOString(),
-        history,
-        members,
-        domains,
+        archive: archive.archive.toString("base64"),
+        digest: archive.digest,
+        keyRef: archive.keyRef,
+        manifest: archive.manifest,
       });
     },
   },
@@ -7070,12 +7295,48 @@ export const routes: Route[] = [
         res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
         return;
       }
-      const { verifyPortableTenantArchive } = await import("../usecases/data-portability.ts");
+      const { applyPortableTenantImport, verifyPortableTenantArchive } =
+        await import("../usecases/data-portability.ts");
+      const { PostgresPortableTenantImportApplier } =
+        await import("../adapters/postgres-portable-tenant-import-applier.ts");
       const archive = Buffer.from(body.data.archive, "base64");
-      const manifest = verifyPortableTenantArchive(archive);
+      const pool = getApplicationPool();
+      const secretStore = await selectSecretStore(pool);
+      const { manifest, digest } = await verifyPortableTenantArchive(archive, {
+        tenantId,
+        secretStore,
+      });
+      const existing = await pool.query<{
+        completed_orders: number[];
+        failed_order: number | null;
+        error: string | null;
+      }>(
+        `SELECT completed_orders, failed_order, error
+           FROM public.portable_import_progress
+          WHERE organisation_id = $1 AND archive_digest = $2`,
+        [tenantId, digest]
+      );
+      const previous = existing.rows[0];
+      const progress = await applyPortableTenantImport(archive, {
+        tenantId,
+        secretStore,
+        applier: new PostgresPortableTenantImportApplier(pool, tenantId, digest),
+        ...(previous
+          ? {
+              resume: {
+                completedOrders: previous.completed_orders,
+                ...(previous.failed_order != null ? { failedOrder: previous.failed_order } : {}),
+                ...(previous.error != null ? { error: previous.error } : {}),
+              },
+            }
+          : {}),
+      });
       res.json(200, {
         tenantId,
-        imported: true,
+        verified: true,
+        imported: progress.failedOrder == null,
+        digest,
+        progress,
         schemaVersion: manifest.schemaVersion,
         entries: manifest.entries.length,
       });
@@ -7102,7 +7363,11 @@ export const routes: Route[] = [
         await suspendTenant(
           tenantId,
           { actorId: req.actor!.userId, actorRoles: req.actor!.roles },
-          { pool, audit: createPostgresAuditEventPort(pool) }
+          {
+            pool,
+            audit: createPostgresAuditEventPort(pool),
+            coordinator: await buildTenantLifecycleCoordinator(pool),
+          }
         )
       );
     },
@@ -7128,7 +7393,11 @@ export const routes: Route[] = [
         await deleteTenant(
           tenantId,
           { actorId: req.actor!.userId, actorRoles: req.actor!.roles },
-          { pool, audit: createPostgresAuditEventPort(pool) }
+          {
+            pool,
+            audit: createPostgresAuditEventPort(pool),
+            coordinator: await buildTenantLifecycleCoordinator(pool),
+          }
         )
       );
     },
@@ -7697,7 +7966,8 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const port = new PostgresDataGovernanceAdapter(getApplicationPool());
-      res.json(201, await port.createDataset({ ...body.data, actorId: req.actor!.userId }));
+      const { createDataset } = await import("../usecases/data-governance.ts");
+      res.json(201, await createDataset({ ...body.data, actorId: req.actor!.userId }, { port }));
     },
   },
   {
@@ -7720,7 +7990,8 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const port = new PostgresDataGovernanceAdapter(getApplicationPool());
-      res.json(201, await port.classifyColumn({ ...body.data, actorId: req.actor!.userId }));
+      const { classifyColumn } = await import("../usecases/data-governance.ts");
+      res.json(201, await classifyColumn({ ...body.data, actorId: req.actor!.userId }, { port }));
     },
   },
   {
@@ -7766,6 +8037,34 @@ export const routes: Route[] = [
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const port = new PostgresDataGovernanceAdapter(getApplicationPool());
       res.json(201, await port.createDsr({ ...body.data, actorId: req.actor!.userId }));
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/governance/dsr/:dsrId/fulfill",
+    operationName: "admin.governance.dsr.fulfill",
+    requiresAuth: true,
+    requiredPermission: "platform.governance.*",
+    resource: "admin:governance",
+    umaScope: "write" as const,
+    scope: "global" as const,
+    handler: async (req, res) => {
+      const params = z.object({ dsrId: z.uuid() }).safeParse(req.params);
+      if (!params.success)
+        return res.json(400, { code: "VALIDATION_ERROR", message: params.error.message });
+      const port = new PostgresDataGovernanceAdapter(getApplicationPool());
+      const { fulfillDsr } = await import("../usecases/data-governance.ts");
+      try {
+        res.json(
+          200,
+          await fulfillDsr({ dsrId: params.data.dsrId, actorId: req.actor!.userId }, { port })
+        );
+      } catch (err) {
+        res.json(409, {
+          code: "DSR_FULFILLMENT_FAILED",
+          message: err instanceof Error ? err.message : "DSR fulfilment failed",
+        });
+      }
     },
   },
   {

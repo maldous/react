@@ -256,6 +256,16 @@
         "file": "043-support-tickets.sql",
         "intent": "V1C-21/V1C-22: public.support_tickets plus organisations.deleted_at soft-state for tenant lifecycle and support operations.",
         "rls": "tenant-scoped read/write; operator-global lifecycle transition"
+      },
+      {
+        "file": "044-portable-import-progress.sql",
+        "intent": "V1C-14: public.portable_import_progress (durable resumable import progress keyed by tenant and archive digest; no payload or secret material).",
+        "rls": "operator-global lifecycle transition"
+      },
+      {
+        "file": "045-data-governance-fulfillment-evidence.sql",
+        "intent": "V1C-13: public.dsr_requests.fulfillment_evidence (JSONB evidence payload captured when DSR workflows are fulfilled, added forward-only to preserve checksum stability for migration 041).",
+        "rls": "global read, operator write"
       }
     ],
     "rls": {

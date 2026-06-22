@@ -1,66 +1,179 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { classifyByRules, createDataset } from "../../src/usecases/data-governance.ts";
+import {
+  classifyByRules,
+  classifyByRulesDetailed,
+  classifyColumn,
+  createDataset,
+  createDsr,
+  fulfillDsr,
+} from "../../src/usecases/data-governance.ts";
+import type {
+  ClassifyColumnInput,
+  CreateDatasetEntryInput,
+  CreateDsrInput,
+  DataClassificationRecord,
+  DataGovernancePort,
+  DatasetEntry,
+  DsrRecord,
+} from "../../src/ports/data-governance.ts";
+
+class InMemoryGovernancePort implements DataGovernancePort {
+  datasets: DatasetEntry[] = [];
+  classifications: DataClassificationRecord[] = [];
+  dsrs: DsrRecord[] = [];
+
+  async listDatasets() {
+    return this.datasets;
+  }
+
+  async createDataset(input: CreateDatasetEntryInput) {
+    const dataset: DatasetEntry = {
+      datasetId: `dataset-${this.datasets.length + 1}`,
+      owner: input.owner,
+      classification: input.classification,
+      lineageEdges: input.lineageEdges ?? [],
+      createdAt: new Date(0).toISOString(),
+    };
+    this.datasets.push(dataset);
+    return dataset;
+  }
+
+  async classifyColumn(input: ClassifyColumnInput) {
+    const record: DataClassificationRecord = {
+      classificationId: `classification-${this.classifications.length + 1}`,
+      datasetId: input.datasetId,
+      columnName: input.columnName,
+      classification: input.classification ?? "none",
+      rule: input.rule ?? "none.no_match",
+      createdAt: new Date(0).toISOString(),
+    };
+    this.classifications.push(record);
+    return record;
+  }
+
+  async listClassifications(datasetId?: string) {
+    return datasetId
+      ? this.classifications.filter((classification) => classification.datasetId === datasetId)
+      : this.classifications;
+  }
+
+  async listDsrs(organisationId: string) {
+    return organisationId
+      ? this.dsrs.filter((dsr) => dsr.organisationId === organisationId)
+      : this.dsrs;
+  }
+
+  async createDsr(input: CreateDsrInput) {
+    const dsr: DsrRecord = {
+      dsrId: `dsr-${this.dsrs.length + 1}`,
+      organisationId: input.organisationId,
+      subjectId: input.subjectId,
+      type: input.type,
+      state: "open",
+      reason: input.reason,
+      createdAt: new Date(0).toISOString(),
+      fulfilledAt: null,
+      fulfillmentEvidence: null,
+    };
+    this.dsrs.push(dsr);
+    return dsr;
+  }
+
+  async fulfillDsr(input: Parameters<DataGovernancePort["fulfillDsr"]>[0]) {
+    const dsr = this.dsrs.find((candidate) => candidate.dsrId === input.dsrId);
+    if (!dsr || dsr.state !== "open") throw new Error("not found or already fulfilled");
+    dsr.state = "fulfilled";
+    dsr.fulfilledAt = input.evidence.fulfilledAt;
+    dsr.fulfillmentEvidence = input.evidence;
+    return dsr;
+  }
+}
 
 describe("data governance", () => {
-  it("classifies samples by rules", () => {
+  it("classifies PII and sensitive samples by deterministic rules", () => {
     assert.equal(classifyByRules("someone@example.com"), "pii");
-    assert.equal(classifyByRules("111-22-3333"), "none");
-    assert.equal(classifyByRules("card 4111 1111 1111 1111"), "sensitive");
-    assert.equal(classifyByRules("hello"), "none");
+    assert.deepEqual(classifyByRulesDetailed("111-22-3333"), {
+      classification: "sensitive",
+      rule: "sensitive.ssn",
+    });
+    assert.deepEqual(classifyByRulesDetailed("4111 1111 1111 1111"), {
+      classification: "sensitive",
+      rule: "sensitive.payment_card_luhn",
+    });
+    assert.equal(classifyByRulesDetailed("hello").classification, "none");
   });
 
-  it("delegates createDataset to the port", async () => {
-    let called = false;
-    const result = await createDataset(
-      { owner: "finance", classification: "pii", actorId: "u1" },
+  it("normalizes catalogue lineage and stores column classification decisions", async () => {
+    const port = new InMemoryGovernancePort();
+    const dataset = await createDataset(
       {
-        port: {
-          listDatasets: async () => [],
-          createDataset: async (input: { owner: string; classification: string }) => {
-            called = true;
-            return {
-              datasetId: "d1",
-              owner: input.owner,
-              classification: input.classification,
-              lineageEdges: [],
-              createdAt: null,
-            };
-          },
-          classifyColumn: async () => ({
-            classificationId: "c1",
-            datasetId: "d1",
-            columnName: "email",
-            classification: "pii",
-            rule: "rules-based",
-            createdAt: null,
-          }),
-          listClassifications: async () => [],
-          listDsrs: async () => [],
-          createDsr: async () => ({
-            dsrId: "x",
-            organisationId: "o",
-            subjectId: "s",
-            type: "access",
-            state: "open",
-            reason: "reason",
-            createdAt: null,
-            fulfilledAt: null,
-          }),
-          fulfillDsr: async () => ({
-            dsrId: "x",
-            organisationId: "o",
-            subjectId: "s",
-            type: "access",
-            state: "fulfilled",
-            reason: "reason",
-            createdAt: null,
-            fulfilledAt: null,
-          }),
-        },
-      }
+        owner: " finance ",
+        classification: "pii",
+        lineageEdges: ["crm.contacts", " billing.accounts ", "crm.contacts"],
+        actorId: "00000000-0000-0000-0000-000000000001",
+      },
+      { port }
     );
-    assert.equal(called, true);
-    assert.equal(result.owner, "finance");
+    assert.equal(dataset.owner, "finance");
+    assert.deepEqual(dataset.lineageEdges, ["billing.accounts", "crm.contacts"]);
+
+    const classification = await classifyColumn(
+      {
+        datasetId: dataset.datasetId,
+        columnName: "customer_ssn",
+        sampleValue: "111-22-3333",
+        actorId: "00000000-0000-0000-0000-000000000001",
+      },
+      { port }
+    );
+    assert.equal(classification.classification, "sensitive");
+    assert.equal(classification.rule, "sensitive.ssn");
+  });
+
+  it("fulfills DSRs with catalogue and classification evidence exactly once", async () => {
+    const port = new InMemoryGovernancePort();
+    const dataset = await createDataset(
+      {
+        owner: "support",
+        classification: "pii",
+        lineageEdges: ["crm.contacts"],
+        actorId: "00000000-0000-0000-0000-000000000001",
+      },
+      { port }
+    );
+    await classifyColumn(
+      {
+        datasetId: dataset.datasetId,
+        columnName: "email",
+        sampleValue: "subject@example.com",
+        actorId: "00000000-0000-0000-0000-000000000001",
+      },
+      { port }
+    );
+    const dsr = await createDsr(
+      {
+        organisationId: "00000000-0000-0000-0000-000000000002",
+        subjectId: "subject-1",
+        type: "access",
+        reason: "subject access request",
+        actorId: "00000000-0000-0000-0000-000000000001",
+      },
+      { port }
+    );
+
+    const fulfilled = await fulfillDsr(
+      { dsrId: dsr.dsrId, actorId: "00000000-0000-0000-0000-000000000003" },
+      { port }
+    );
+    assert.equal(fulfilled.state, "fulfilled");
+    assert.equal(fulfilled.fulfillmentEvidence?.action, "access-package");
+    assert.equal(fulfilled.fulfillmentEvidence?.datasets.length, 1);
+    assert.equal(fulfilled.fulfillmentEvidence?.classifications[0]?.rule, "pii.email");
+
+    await assert.rejects(
+      fulfillDsr({ dsrId: dsr.dsrId, actorId: "00000000-0000-0000-0000-000000000003" }, { port }),
+      /already fulfilled/
+    );
   });
 });
