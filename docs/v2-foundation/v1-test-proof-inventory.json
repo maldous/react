@@ -10802,5 +10802,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected SMTP provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "local deterministic proof provider; production adapter reliability envelope is typechecked and route-wired",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script exits non-zero when catalogue, classification, DSR workflow, fulfilment evidence, or governance route registration semantics break",
+    "proofLevel": 3,
+    "proofLevelRationale": "provider-ID wrapper delegates to data-governance-runtime-proof.ts; exercises catalogue lineage normalization, PII/sensitive classification rules, DSR open-to-fulfilled workflow, fulfilment evidence, and governance route registration while the Postgres adapter supplies bounded timeout/retry/fail-closed/health behavior",
+    "capabilitiesProven": ["Data governance: catalog, lineage, classification, PII, DSR/GDPR"],
+    "semanticFacetsProven": ["providerReliability", "stateModel", "workflow", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected data governance provider contract is broken"
   }
 ]
