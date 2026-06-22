@@ -2330,20 +2330,6 @@ export const routes: Route[] = [
       res.json(200, config);
     },
   },
-  {
-    method: "POST",
-    path: "/api/admin/sub-tenants",
-    operationName: "admin.sub-tenants.create",
-    requiresAuth: true,
-    requiredPermission: "tenant.suborgs.create",
-    resource: "organisation:sub-organisations",
-    umaScope: "create" as const,
-    scope: "tenant" as const,
-    handler: async (_req, res) => {
-      // Redirects to the canonical sub-organisations endpoint
-      res.json(308, { code: "MOVED", message: "Use POST /api/org/sub-organisations" });
-    },
-  },
   // ---------------------------------------------------------------------------
   // Support mode — explicit audited system-admin support session (ADR-ACT-0187)
   // Must be called from the global host (scope: global). Creates a short-lived
@@ -5025,6 +5011,53 @@ export const routes: Route[] = [
     method: "POST",
     path: "/api/org/sub-organisations",
     operationName: "org.sub-organisations.create",
+    requiresAuth: true,
+    requiredPermission: "tenant.suborgs.create",
+    resource: "organisation:sub-organisations",
+    umaScope: "create" as const,
+    auditEvent: AuditAction.SubOrganisationCreated,
+    scope: "tenant" as const,
+    handler: async (req, res) => {
+      const tenantCtx = await resolveTenantFromRequest(req.raw, getApplicationPool());
+      if (!tenantCtx) {
+        res.json(400, { code: "NO_TENANT", message: "No tenant context" });
+        return;
+      }
+      const { createSubOrg } = await import("../usecases/sub-organisations.ts");
+      const result = await createSubOrg(
+        {
+          rawBody: req.body,
+          parentOrgId: tenantCtx.organisationId,
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+        },
+        {
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+          pool: getApplicationPool(),
+        }
+      );
+      if (result.kind === "invalid_body") {
+        res.json(400, { code: "VALIDATION_ERROR", message: result.message });
+        return;
+      }
+      if (result.kind === "reserved_slug") {
+        res.json(422, { code: "VALIDATION_ERROR", message: "This slug is reserved" });
+        return;
+      }
+      if (result.kind === "conflict") {
+        res.json(409, {
+          code: "CONFLICT",
+          message: "An organisation with this slug already exists",
+        });
+        return;
+      }
+      res.json(201, result.subOrg);
+    },
+  },
+  {
+    method: "POST",
+    path: "/api/admin/sub-tenants",
+    operationName: "admin.sub-tenants.create",
     requiresAuth: true,
     requiredPermission: "tenant.suborgs.create",
     resource: "organisation:sub-organisations",

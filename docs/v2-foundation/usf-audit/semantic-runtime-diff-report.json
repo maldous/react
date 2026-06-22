@@ -2062,15 +2062,6 @@
     },
     {
       "kind": "semantic-runtime-diff",
-      "subject": "POST /api/admin/sub-tenants",
-      "message": "runtime audit requirement has no audit event mapping",
-      "evidence": {
-        "source": "runtime-audit-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "semantic-runtime-diff",
       "subject": "POST /api/auth/settings/domains",
       "message": "runtime audit requirement has no audit event mapping",
       "evidence": {
