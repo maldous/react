@@ -26,8 +26,9 @@ assert.ok(
     proofSource.includes("scan promotes clean") &&
     proofSource.includes("scan rejects EICAR signature") &&
     proofSource.includes("live MinIO object CRUD") &&
-    adapterSource.includes("INSERT INTO public.storage_objects"),
-  "storage object proof must assert quota-before-write, quarantine/clean/rejected lifecycle, and live object side effects"
+    adapterSource.includes("INSERT INTO public.storage_objects") &&
+    adapterSource.includes("scan_state"),
+  "storage object proof must assert quota-before-write, quarantine/clean/rejected lifecycle status, and live object side effects"
 );
 assert.ok(
   proofSource.includes("legal hold blocks deletion") &&

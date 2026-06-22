@@ -14,6 +14,10 @@ const i18n = createI18n({
 assert.equal(i18n.t("greeting", { name: "operator" }), "Hello operator");
 assert.equal(i18n.t("nested.ready"), "Ready");
 assert.equal(i18n.t("missing.key"), "missing.key");
+assert.ok(
+  i18n.t("missing.key").includes("missing.key"),
+  "missing translation failure state is visible at runtime"
+);
 
 const reactI18n = createReactI18n({
   locale: "en-GB",
@@ -23,6 +27,7 @@ const reactI18n = createReactI18n({
 });
 
 assert.equal(reactI18n.t("proof"), "Provider ready");
+assert.equal(reactI18n.t("unknown.proof.key"), "unknown.proof.key");
 
 console.log(
   JSON.stringify(

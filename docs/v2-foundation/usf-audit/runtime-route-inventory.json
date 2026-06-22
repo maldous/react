@@ -7657,7 +7657,7 @@
     "metricName": "http_requests_total/http_request_duration_seconds",
     "alertRequired": false,
     "proofRequired": false,
-    "proofRef": "apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+    "proofRef": "apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts; apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
     "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1298", "docs/api/openapi.json"],
     "evidence": {
       "routeObject": "apps/platform-api/src/server/routes.ts:1298",

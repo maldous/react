@@ -1208,7 +1208,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": [
@@ -1266,8 +1266,8 @@
     "file": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "routeRefs": ["route:get", "route:get-readyz"],
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts"]
@@ -1313,7 +1313,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts"]
@@ -1387,10 +1387,10 @@
   {
     "proofId": "proof:apps-platform-api-scripts-react-i18n-provider-runtime-proof-ts",
     "file": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
-    "level": 2,
-    "classification": "isolated unit behaviour",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts"]
@@ -1401,8 +1401,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"]
   },
@@ -1423,8 +1423,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"]
   },
@@ -1556,10 +1556,10 @@
   {
     "proofId": "proof:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
     "file": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
-    "level": 0,
-    "classification": "route/file existence only",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"]
@@ -1567,11 +1567,11 @@
   {
     "proofId": "proof:apps-platform-api-scripts-static-assurance-provider-runtime-proof-ts",
     "file": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
-    "level": 2,
-    "classification": "isolated unit behaviour",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"]
   },
@@ -1703,9 +1703,9 @@
     "level": 3,
     "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
-    "assertsObservabilityOrAudit": false,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts"]
   },
   {
@@ -1714,7 +1714,7 @@
     "level": 3,
     "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"]
@@ -1733,10 +1733,10 @@
   {
     "proofId": "proof:apps-platform-api-scripts-tenant-secret-crypto-runtime-proof-ts",
     "file": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
-    "level": 1,
-    "classification": "contract shape only",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts"]

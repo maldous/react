@@ -58,6 +58,10 @@ async function main(): Promise<void> {
     "delete:data",
   ]);
   assert.deepEqual(deleted.coordinated, ["export", "storage", "realm", "dsr", "data"]);
+  assert.ok(
+    deleted.coordinated.includes("export") && deleted.coordinated.includes("data"),
+    "delete lifecycle state includes export before destructive data side effects"
+  );
   assert.equal(deleted.export.digest, "digest-1");
   assert.equal(auditCalls.length, 2);
 
