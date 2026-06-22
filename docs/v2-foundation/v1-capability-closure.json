@@ -5008,7 +5008,84 @@
         "proof": "proof:tenant-observability; logs-usecase tests",
         "implementation": ["apps/platform-api/src/server/routes.ts:4422", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "retention": {
+        "proof": "Log retention is governed by the observability substrate and bounded query window semantics: tenant readiness probes query only the last five minutes, admin search clamps limits to 1..1000, and durable tenant audit/history records that need platform retention are covered by the retention runtime proof rather than hidden in Loki.",
+        "evidence": [
+          "apps/platform-api/src/usecases/tenant-observability.ts",
+          "apps/platform-api/src/usecases/logs.ts",
+          "packages/adapters-loki/src/index.ts",
+          "apps/platform-api/scripts/retention-runtime-proof.ts"
+        ]
+      },
+      "backup": {
+        "proof": "Operational log search is a read-only Loki-backed surface and does not create additional repository state; durable observability configuration and tenant audit/history records are covered by platform backup scripts, while Loki reachability and query behavior are proven by the tenant-observability runtime proof.",
+        "evidence": [
+          "apps/platform-api/src/usecases/logs.ts",
+          "packages/adapters-loki/src/index.ts",
+          "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        ]
+      },
+      "restore": {
+        "proof": "Restore semantics for this capability are provider-readiness based: after restoring platform state, log search reuses the Loki adapter and bounded query contract; durable tenant audit/history records are restored through the platform PITR and backup-restore proofs.",
+        "evidence": [
+          "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+          "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+          "apps/platform-api/src/usecases/logs.ts",
+          "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        ]
+      },
+      "export": {
+        "proof": "Tenant export covers durable audit/history records that are the governed tenant record; raw Loki lines remain operational logs exposed only through permissioned, bounded search. The data-portability proof exports audit/history, while the log search proof constrains direct operational log retrieval by filters, direction, and limit.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/src/usecases/logs.ts",
+          "packages/adapters-loki/src/index.ts",
+          "apps/platform-api/tests/unit/logs-usecase.test.ts"
+        ]
+      },
+      "legal hold": {
+        "proof": "Legal hold applies to durable tenant audit/history records through the platform legal-hold controls; log search itself is read-only operational retrieval and cannot delete or mutate Loki data. Originating capability mutations remain responsible for legal-hold-aware durable records.",
+        "evidence": [
+          "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+          "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+          "apps/platform-api/src/usecases/logs.ts",
+          "docs/evidence/data/legal-hold.md"
+        ]
+      },
+      "DSR": {
+        "proof": "DSR/data-portability uses the tenant export path for governed audit/history data. Raw operational Loki entries are not exported wholesale; they are accessible only through authorized admin log search with normalized criteria and tenant/request/actor JSON filters.",
+        "evidence": [
+          "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+          "apps/platform-api/src/usecases/logs.ts",
+          "packages/adapters-loki/src/index.ts",
+          "apps/platform-api/tests/substrate/admin-logs.test.ts"
+        ]
+      },
+      "lineage": {
+        "proof": "Log lineage is explicit: runtime code emits structured platform logs with requestId/traceId/actorId/tenantId fields, Loki adapter stores low-cardinality service/level labels and high-cardinality ids as JSON fields, search normalizes limit/direction, parses Loki responses, and returns labels plus parsed fields.",
+        "evidence": [
+          "packages/platform-logging/src/index.ts",
+          "apps/platform-api/src/server/pipeline.ts",
+          "packages/adapters-loki/src/index.ts",
+          "packages/adapters-loki/tests/adapters-loki.test.ts",
+          "apps/platform-api/tests/substrate/observability-smoke.test.ts"
+        ]
+      },
+      "tenant isolation": {
+        "proof": "Tenant isolation is enforced through permissioned route access and tenant-scoped JSON-field filtering: admin log search requires platform.logs.read, tenant readiness queries include organisationId as a JSON filter, and the high-cardinality guard proves tenant/request/actor ids are not promoted to shared Loki labels.",
+        "evidence": [
+          "apps/platform-api/tests/substrate/admin-logs.test.ts",
+          "apps/platform-api/src/usecases/tenant-observability.ts",
+          "packages/adapters-loki/src/index.ts",
+          "packages/adapters-loki/tests/adapters-loki.test.ts",
+          "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        ]
+      }
+    }
   },
   {
     "capability": "Metrics + traces",
