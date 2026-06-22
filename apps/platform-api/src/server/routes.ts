@@ -1096,11 +1096,41 @@ async function observeSpaShellRoute(
   res.raw.end();
 }
 
+export const ROUTE_ALERT_PROFILES = {
+  "admin-api": {
+    owner: "platform-operations",
+    routing: "platform-oncall",
+    runbook: "docs/runbooks/platform-api.md#admin-api-route-alerts",
+  },
+  "tenant-api": {
+    owner: "tenant-platform-operations",
+    routing: "tenant-platform-oncall",
+    runbook: "docs/runbooks/platform-api.md#tenant-api-route-alerts",
+  },
+  "auth-api": {
+    owner: "identity-operations",
+    routing: "identity-oncall",
+    runbook: "docs/runbooks/platform-api.md#auth-api-route-alerts",
+  },
+  "graphql-api": {
+    owner: "api-platform-operations",
+    routing: "api-platform-oncall",
+    runbook: "docs/runbooks/platform-api.md#graphql-route-alerts",
+  },
+  "public-api": {
+    owner: "edge-platform-operations",
+    routing: "edge-platform-oncall",
+    runbook: "docs/runbooks/platform-api.md#public-api-route-alerts",
+  },
+} as const;
+
 export const routes: Route[] = [
   {
     method: "GET",
     path: "/",
     operationName: "spa.shell.index",
+    requiresAuth: false,
+    permissionModel: "public-read",
     handler: observeSpaShellRoute,
   },
   {
@@ -1261,12 +1291,16 @@ export const routes: Route[] = [
     method: "GET",
     path: "/e2e-harness",
     operationName: "spa.shell.e2eHarness",
+    requiresAuth: false,
+    permissionModel: "public-read",
     handler: observeSpaShellRoute,
   },
   {
     method: "GET",
     path: "/login",
     operationName: "spa.shell.login",
+    requiresAuth: false,
+    permissionModel: "public-read",
     handler: observeSpaShellRoute,
   },
   {
@@ -1335,6 +1369,9 @@ export const routes: Route[] = [
     method: "GET",
     path: "/api/session",
     operationName: "session.get",
+    requiresAuth: false,
+    permissionModel: "public-read",
+    alertProfile: "public-api",
     handler: async (req, res) => {
       // Fixture session takes precedence (Tier 1 E2E determinism)
       const fixtureActor = getFixtureSession();
@@ -1381,6 +1418,9 @@ export const routes: Route[] = [
     method: "GET",
     path: "/internal/auth/forward",
     operationName: "internal.auth.forward",
+    requiresAuth: false,
+    permissionModel: "public-read",
+    alertProfile: "public-api",
     handler: handleForwardAuth,
   },
   // ---------------------------------------------------------------------------
@@ -1428,6 +1468,9 @@ export const routes: Route[] = [
     method: "GET",
     path: "/api/auth/providers",
     operationName: "auth.providers.list",
+    requiresAuth: false,
+    permissionModel: "public-read",
+    alertProfile: "auth-api",
     handler: async (req, res) => {
       // Tenant-aware (ADR-0037): merge the tenant stored provider config over the
       // environment defaults. Unauthenticated + pre-session: tenant resolved from FQDN.
@@ -1451,6 +1494,9 @@ export const routes: Route[] = [
   {
     method: "GET",
     path: "/api/theme",
+    requiresAuth: false,
+    permissionModel: "public-read",
+    alertProfile: "public-api",
     handler: async (req, res) => {
       // Resolve per-tenant branding from tenant_settings (ADR-0029 ?4).
       // Uses queryTenantSchema from adapters-postgres ? same UUID validation
@@ -1493,6 +1539,9 @@ export const routes: Route[] = [
     method: "GET",
     path: "/api/host-identity",
     operationName: "host.identity",
+    requiresAuth: false,
+    permissionModel: "public-read",
+    alertProfile: "public-api",
     handler: async (req, res) => {
       const host = requestHostFromHeaders(req.raw);
       const identity = classifyHostIdentity(host, loadPlatformApiConfig().apexDomain);
@@ -5541,6 +5590,7 @@ export const routes: Route[] = [
     requiredPermission: "organisation.read",
     resource: "organisation:profile",
     umaScope: "read" as const,
+    scope: "tenant" as const,
     handler: handleGetOrganisationProfile,
   },
   {
@@ -5551,6 +5601,7 @@ export const routes: Route[] = [
     requiredPermission: "organisation.update",
     resource: "organisation:profile",
     umaScope: "write" as const,
+    scope: "tenant" as const,
     auditEvent: AuditAction.OrganisationUpdated,
     handler: handlePatchOrganisationProfile,
   },
@@ -5562,6 +5613,9 @@ export const routes: Route[] = [
     path: "/api/graphql",
     operationName: "graphql",
     requiresAuth: true,
+    permissionModel: "operation-level",
+    scope: "tenant" as const,
+    alertProfile: "graphql-api",
     auditEvent: AuditAction.GraphqlOperationExecuted,
     handler: handleGraphql,
   },

@@ -85,6 +85,11 @@ export interface Route {
   handler: PipelineHandler;
   requiresAuth?: boolean;
   /**
+   * Explicit permission model for routes where a static route permission is not
+   * the truthful enforcement point.
+   */
+  permissionModel?: "public-read" | "operation-level";
+  /**
    * Static permission backstop — ADR-ACT-0145 (Done).
    *
    * requiredPermission is checked against the actor's pre-resolved permission set
@@ -120,6 +125,8 @@ export interface Route {
    * undefined: no FQDN scope enforcement (public routes, session, health checks).
    */
   scope?: "global" | "tenant";
+  /** Route-level operational alert profile consumed by assurance tooling. */
+  alertProfile?: "admin-api" | "tenant-api" | "auth-api" | "graphql-api" | "public-api";
 }
 
 // ---------------------------------------------------------------------------

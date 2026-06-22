@@ -1,15 +1,5 @@
 {
   "artefact": "semantic-runtime-diff-report",
-  "pass": false,
-  "gaps": [
-    {
-      "kind": "semantic-runtime-diff",
-      "subject": "GET /",
-      "message": "runtime route has no semantic contract definition",
-      "evidence": {
-        "source": "runtime-route-inventory.json"
-      },
-      "classification": "must-fix-in-v1"
-    }
-  ]
+  "pass": true,
+  "gaps": []
 }

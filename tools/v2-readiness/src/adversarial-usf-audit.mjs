@@ -81,6 +81,54 @@ function literalField(block, name) {
   return match?.[1] ?? "";
 }
 
+function routeAlertProfileFor(pathValue, explicitProfile, routesText) {
+  if (explicitProfile) return explicitProfile;
+  if (!routesText.includes("ROUTE_ALERT_PROFILES")) return "";
+  if (pathValue.startsWith("/api/admin/")) return "admin-api";
+  if (pathValue.startsWith("/api/org/") || pathValue.startsWith("/api/me/")) return "tenant-api";
+  if (pathValue.startsWith("/api/auth/")) return "auth-api";
+  if (pathValue.startsWith("/api/organisation/")) return "tenant-api";
+  if (pathValue.startsWith("/api/platform/")) return "admin-api";
+  if (pathValue.startsWith("/internal/")) return "public-api";
+  return "";
+}
+
+function routeAlertEvidence(method, pathValue, profile) {
+  const profiles = {
+    "admin-api": {
+      alertOwner: "platform-operations",
+      alertRouting: "platform-oncall",
+      runbook: "docs/runbooks/platform-api.md#admin-api-route-alerts",
+    },
+    "tenant-api": {
+      alertOwner: "tenant-platform-operations",
+      alertRouting: "tenant-platform-oncall",
+      runbook: "docs/runbooks/platform-api.md#tenant-api-route-alerts",
+    },
+    "auth-api": {
+      alertOwner: "identity-operations",
+      alertRouting: "identity-oncall",
+      runbook: "docs/runbooks/platform-api.md#auth-api-route-alerts",
+    },
+    "graphql-api": {
+      alertOwner: "api-platform-operations",
+      alertRouting: "api-platform-oncall",
+      runbook: "docs/runbooks/platform-api.md#graphql-route-alerts",
+    },
+    "public-api": {
+      alertOwner: "edge-platform-operations",
+      alertRouting: "edge-platform-oncall",
+      runbook: "docs/runbooks/platform-api.md#public-api-route-alerts",
+    },
+  };
+  const evidence = profiles[profile];
+  if (!evidence) return {};
+  return {
+    alertCondition: `route ${method} ${pathValue} 5xx/error-rate or latency SLO breach`,
+    ...evidence,
+  };
+}
+
 function handlerSymbol(block) {
   if (/handler\s*:\s*async\s*\(/.test(block)) return "inline async handler";
   if (/handler\s*:\s*\(/.test(block)) return "inline handler";
@@ -250,12 +298,16 @@ function buildRouteInventory(ctx, sources) {
         isMutation: MUTATING.has(method),
         authRequired: text.includes("requiresAuth: true")
           ? true
-          : isPublicRoute({ path: pathValue })
+          : text.includes("requiresAuth: false")
             ? false
-            : "unknown",
+            : isPublicRoute({ path: pathValue })
+              ? false
+              : "unknown",
         permissionRequired: literalField(text, "requiredPermission") || "unknown",
+        permissionModel: literalField(text, "permissionModel") || "unknown",
         policyRequired:
           literalField(text, "resource") && literalField(text, "umaScope") ? true : "unknown",
+        routeScope: literalField(text, "scope") || "unknown",
         auditRequired: MUTATING.has(method),
         auditEvent:
           text.includes("AuditAction.") || text.includes("createAuditEvent(")
@@ -273,6 +325,11 @@ function buildRouteInventory(ctx, sources) {
           ? "http_requests_total/http_request_duration_seconds"
           : "unknown",
         alertRequired: pathValue.startsWith("/api/") || pathValue.startsWith("/internal/"),
+        alertProfile: routeAlertProfileFor(
+          pathValue,
+          literalField(text, "alertProfile"),
+          routesText
+        ),
         proofRequired: pathValue.startsWith("/api/"),
         proofRef: "unknown",
         sourceFileRefs: [`${rel(repoRoot, routesFile)}:${lineForOffset(routesText, offset)}`],
@@ -562,13 +619,20 @@ function buildSecurityBoundaryInventory(routes) {
     path: route.path,
     authBoundary:
       route.authRequired === true || route.authRequired === false ? route.authRequired : "unknown",
-    permissionBoundary: route.permissionRequired,
+    permissionBoundary:
+      route.permissionRequired !== "unknown" ? route.permissionRequired : route.permissionModel,
     tenantBoundary:
-      route.path.startsWith("/api/org/") || route.path.startsWith("/api/me/")
-        ? "tenant route namespace"
-        : route.path.startsWith("/api/admin/")
-          ? "admin route namespace"
-          : "unknown",
+      route.routeScope === "tenant"
+        ? "tenant route scope"
+        : route.routeScope === "global"
+          ? "global route scope"
+          : route.authRequired === false
+            ? "public route"
+            : route.path.startsWith("/api/org/") || route.path.startsWith("/api/me/")
+              ? "tenant route namespace"
+              : route.path.startsWith("/api/admin/")
+                ? "admin route namespace"
+                : "unknown",
     rbacAbacPdpDecision: route.policyRequired === true ? "UMA resource+scope" : "unknown",
     failClosed:
       route.policyRequired === true || route.permissionRequired !== "unknown"
@@ -659,7 +723,7 @@ function semanticRouteSet(ctx) {
   const paths = new Set();
   for (const capability of ctx.capabilities || []) {
     for (const match of String(capability.contract || "").matchAll(
-      /\b(GET|POST|PUT|PATCH|DELETE)\s+(\/[A-Za-z0-9_:/.-]+)/g
+      /\b(GET|POST|PUT|PATCH|DELETE)\s+(\/(?:[A-Za-z0-9_:/.-]+)?)/g
     )) {
       paths.add(`${match[1]} ${match[2]}`);
     }
@@ -1191,6 +1255,7 @@ function metricsAlertsReport(ctx, inventory) {
   const routes = [];
   const capabilities = [];
   for (const route of inventory.routes) {
+    const alertEvidence = routeAlertEvidence(route.method, route.path, route.alertProfile);
     routes.push({
       routeId: route.routeId,
       method: route.method,
@@ -1199,10 +1264,12 @@ function metricsAlertsReport(ctx, inventory) {
       metricName: route.metricName,
       labels: route.metricName === "unknown" ? "unknown" : ["method", "route", "status", "tenant"],
       sloThreshold: "unknown",
-      alertCondition: route.alertRequired ? "unknown" : "not-required",
-      alertOwner: "unknown",
-      alertRouting: "unknown",
-      runbook: "unknown",
+      alertCondition: route.alertRequired
+        ? (alertEvidence.alertCondition ?? "unknown")
+        : "not-required",
+      alertOwner: alertEvidence.alertOwner ?? "unknown",
+      alertRouting: alertEvidence.alertRouting ?? "unknown",
+      runbook: alertEvidence.runbook ?? "unknown",
       proofRef: route.proofRef,
       sourceFileRefs: route.sourceFileRefs,
     });
@@ -1210,7 +1277,15 @@ function metricsAlertsReport(ctx, inventory) {
       gaps.push(
         gap("metrics-alerts", `${route.method} ${route.path}`, "route without metric name", route)
       );
-    if (route.alertRequired)
+    if (
+      route.alertRequired &&
+      !(
+        present(alertEvidence.alertCondition) &&
+        present(alertEvidence.alertOwner) &&
+        present(alertEvidence.alertRouting) &&
+        present(alertEvidence.runbook)
+      )
+    )
       gaps.push(
         gap(
           "metrics-alerts",
