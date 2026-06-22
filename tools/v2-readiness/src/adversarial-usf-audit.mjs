@@ -668,15 +668,38 @@ function semanticRouteSet(ctx) {
 }
 
 function classifyGap(gap) {
-  if (gap.kind.includes("semantic") || gap.kind.includes("proof")) return "must-fix-in-v1";
+  const kind = String(gap.kind || "").toLowerCase();
+  const message = String(gap.message || "").toLowerCase();
   if (
-    gap.kind.includes("route") ||
-    gap.kind.includes("audit") ||
-    gap.kind.includes("security") ||
-    gap.kind.includes("observability")
+    kind.includes("duplicate") ||
+    message.includes("duplicate") ||
+    message.includes("same subject")
+  )
+    return "duplicate-finding";
+  if (message.includes("stale") || message.includes("obsolete") || message.includes("phantom"))
+    return "obsolete-runtime-artifact";
+  if (
+    kind.includes("semantic") ||
+    kind.includes("proof") ||
+    kind.includes("route") ||
+    kind.includes("audit") ||
+    kind.includes("security") ||
+    kind.includes("observability") ||
+    kind.includes("storage") ||
+    kind.includes("workflow") ||
+    kind.includes("provider") ||
+    kind.includes("event") ||
+    kind.includes("ownership") ||
+    kind.includes("command")
   )
     return "must-fix-in-v1";
-  if (gap.kind.includes("package") || gap.kind.includes("v2")) return "may-fix-in-v2";
+  if (
+    message.includes("external") &&
+    (message.includes("dependency") ||
+      message.includes("provider") ||
+      message.includes("third-party"))
+  )
+    return "external-limited";
   return "must-fix-in-v1";
 }
 

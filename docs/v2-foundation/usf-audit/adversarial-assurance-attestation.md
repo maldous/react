@@ -5,22 +5,25 @@ Status: FAIL
 This attestation is generated from runtime-derived inventories under `docs/v2-foundation/usf-audit/`.
 PASS is not allowed unless runtime/interface-level route, security, ownership, audit, proof, storage, workflow, event, metrics, data-governance, provider, and orphan checks all have zero gaps.
 
-| Measure                        | Count |
-| ------------------------------ | ----: |
-| routes discovered              |   235 |
-| routes without tracing         |    28 |
-| routes without logging         |    28 |
-| routes without metrics         |    28 |
-| mutations without audit        |   101 |
-| capabilities without ownership |   158 |
-| semantic orphans               |     7 |
-| runtime orphans                |    32 |
-| provider reliability gaps      |  2570 |
-| workflow proof gaps            |   106 |
-| storage proof gaps             |   114 |
-| event runtime gaps             |     2 |
-| must-fix-in-v1 items           |  4327 |
-| may-fix-in-v2 items            |     0 |
+| Measure                         | Count |
+| ------------------------------- | ----: |
+| routes discovered               |   235 |
+| routes without tracing          |    28 |
+| routes without logging          |    28 |
+| routes without metrics          |    28 |
+| mutations without audit         |   101 |
+| capabilities without ownership  |   158 |
+| semantic orphans                |     7 |
+| runtime orphans                 |    32 |
+| provider reliability gaps       |  2570 |
+| workflow proof gaps             |   106 |
+| storage proof gaps              |   114 |
+| event runtime gaps              |     2 |
+| false-positive items            |     0 |
+| external-limited items          |     0 |
+| duplicate findings              |     0 |
+| obsolete-runtime-artifact items |     0 |
+| must-fix-in-v1 items            |  4327 |
 
 ## Known Gaps Identified
 
