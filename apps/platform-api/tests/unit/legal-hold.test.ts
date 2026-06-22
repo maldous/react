@@ -8,6 +8,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
+  getLegalHoldUsecaseMetric,
   hasActiveLegalHold,
   type LegalHoldActor,
   type LegalHoldDeps,
@@ -231,6 +232,13 @@ describe("legal hold use case (V1C-12c) — set", () => {
       /audit storage unavailable/
     );
     assert.equal(repo.holds.length, 0, "DB write must NOT happen when audit rejects");
+    assert.equal(
+      getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+        operation: "set",
+        outcome: "error",
+      }) > 0,
+      true
+    );
   });
 });
 
@@ -357,6 +365,66 @@ describe("legal hold use case (V1C-12c) — LegalHoldGuard", () => {
     await assert.rejects(
       () => g.assertCanDelete("org-1", "audit_events", "ev-1"),
       /legalHoldStatusUnavailable|legal/i
+    );
+    assert.equal(
+      getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+        operation: "assert-can-delete",
+        outcome: "error",
+      }) > 0,
+      true
+    );
+  });
+});
+
+describe("legal hold use case (V1C-12c) — observability", () => {
+  it("records trace/log-backed metrics for legal hold storage lifecycle operations", async () => {
+    const { deps } = build();
+    const beforeSet = getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+      operation: "set",
+      outcome: "success",
+    });
+    const beforeList = getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+      operation: "list",
+      outcome: "success",
+    });
+    const beforeCheck = getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+      operation: "is-active",
+      outcome: "success",
+    });
+
+    await setLegalHold(
+      {
+        organisationId: "org-1",
+        resourceTable: "object_storage",
+        rowId: "org-1/uploads/file.txt",
+        reason: "storage deletion litigation hold",
+        actor: actor(),
+      },
+      deps
+    );
+    await listLegalHolds("org-1", deps);
+    await hasActiveLegalHold("org-1", "object_storage", "org-1/uploads/file.txt", deps);
+
+    assert.equal(
+      getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+        operation: "set",
+        outcome: "success",
+      }),
+      beforeSet + 1
+    );
+    assert.equal(
+      getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+        operation: "list",
+        outcome: "success",
+      }),
+      beforeList + 1
+    );
+    assert.equal(
+      getLegalHoldUsecaseMetric("legal_hold_usecase_total", {
+        operation: "is-active",
+        outcome: "success",
+      }),
+      beforeCheck + 1
     );
   });
 });

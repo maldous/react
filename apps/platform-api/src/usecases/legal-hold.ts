@@ -9,6 +9,8 @@
 
 import { ForbiddenError, ValidationError } from "@platform/platform-errors";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
 import type { LegalHoldRecord, LegalHoldRepository } from "../ports/legal-hold.ts";
 
 export interface LegalHoldDeps {
@@ -38,6 +40,63 @@ function isHoldable(t: string): t is HoldableTable {
 
 const REASON_MIN_LEN = 8;
 const REASON_MAX_LEN = 500;
+const log = createLogger({
+  name: "legal-hold-usecase",
+  service: "platform-api",
+  boundedContext: "storage",
+});
+const tracer = createTracer("legal-hold-usecase");
+const legalHoldUsecaseMetrics = new Map<string, number>();
+
+function metric(name: string, labels: Record<string, string>): void {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  legalHoldUsecaseMetrics.set(key, (legalHoldUsecaseMetrics.get(key) ?? 0) + 1);
+}
+
+export function getLegalHoldUsecaseMetric(name: string, labels: Record<string, string>): number {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  return legalHoldUsecaseMetrics.get(key) ?? 0;
+}
+
+async function withLegalHoldSpan<T>(
+  operation: string,
+  organisationId: string,
+  resourceTable: string,
+  rowId: string,
+  run: () => Promise<T>
+): Promise<T> {
+  return withSpan(
+    tracer,
+    `legal-hold.${operation}`,
+    async () => {
+      try {
+        const result = await run();
+        metric("legal_hold_usecase_total", { operation, outcome: "success" });
+        log.info(
+          { operation, organisationId, resourceTable, rowId },
+          "legal_hold.operation.complete"
+        );
+        return result;
+      } catch (err) {
+        metric("legal_hold_usecase_total", { operation, outcome: "error" });
+        log.error(
+          { err, operation, organisationId, resourceTable, rowId },
+          "legal_hold.operation.failed"
+        );
+        throw err;
+      }
+    },
+    {
+      "legal_hold.operation": operation,
+      "tenant.id": organisationId,
+      "storage.resource_table": resourceTable,
+    }
+  );
+}
 
 // ─── Set ──────────────────────────────────────────────────────────────────
 export type SetLegalHoldResult =
@@ -55,50 +114,58 @@ export async function setLegalHold(
   },
   deps: LegalHoldDeps
 ): Promise<SetLegalHoldResult> {
-  if (!isHoldable(input.resourceTable)) {
-    return {
-      kind: "invalid",
-      message: `resource_table must be one of: ${HOLDABLE_TABLES.join(", ")}`,
-    };
-  }
-  if (
-    typeof input.rowId !== "string" ||
-    input.rowId.trim().length === 0 ||
-    input.rowId.length > 256
-  ) {
-    return { kind: "invalid", message: "rowId required (≤256 chars)" };
-  }
-  const reason = input.reason?.trim?.() ?? "";
-  if (reason.length < REASON_MIN_LEN || reason.length > REASON_MAX_LEN) {
-    return {
-      kind: "invalid",
-      message: `reason required (${REASON_MIN_LEN}..${REASON_MAX_LEN} chars)`,
-    };
-  }
+  return withLegalHoldSpan(
+    "set",
+    input.organisationId,
+    input.resourceTable,
+    input.rowId,
+    async () => {
+      if (!isHoldable(input.resourceTable)) {
+        return {
+          kind: "invalid",
+          message: `resource_table must be one of: ${HOLDABLE_TABLES.join(", ")}`,
+        };
+      }
+      if (
+        typeof input.rowId !== "string" ||
+        input.rowId.trim().length === 0 ||
+        input.rowId.length > 256
+      ) {
+        return { kind: "invalid", message: "rowId required (<=256 chars)" };
+      }
+      const reason = input.reason?.trim?.() ?? "";
+      if (reason.length < REASON_MIN_LEN || reason.length > REASON_MAX_LEN) {
+        return {
+          kind: "invalid",
+          message: `reason required (${REASON_MIN_LEN}..${REASON_MAX_LEN} chars)`,
+        };
+      }
 
-  // Audit-before-change. A throw here is a clean refusal; the DB write never runs.
-  await deps.audit.emit(
-    createAuditEvent({
-      actorId: input.actor.actorId,
-      actorRoles: input.actor.actorRoles,
-      tenantId: input.organisationId,
-      action: AuditAction.LegalHoldSet,
-      resource: "legal_hold",
-      resourceId: `${input.resourceTable}:${input.rowId}`,
-      metadata: { reason, ...(input.metadata ?? {}) },
-      sourceHost: input.actor.sourceHost,
-    })
+      // Audit-before-change. A throw here is a clean refusal; the DB write never runs.
+      await deps.audit.emit(
+        createAuditEvent({
+          actorId: input.actor.actorId,
+          actorRoles: input.actor.actorRoles,
+          tenantId: input.organisationId,
+          action: AuditAction.LegalHoldSet,
+          resource: "legal_hold",
+          resourceId: `${input.resourceTable}:${input.rowId}`,
+          metadata: { reason, ...(input.metadata ?? {}) },
+          sourceHost: input.actor.sourceHost,
+        })
+      );
+
+      const hold = await deps.repository.set({
+        organisationId: input.organisationId,
+        resourceTable: input.resourceTable,
+        rowId: input.rowId,
+        reason,
+        setBy: input.actor.actorId,
+        metadata: input.metadata ?? {},
+      });
+      return { kind: "ok", hold };
+    }
   );
-
-  const hold = await deps.repository.set({
-    organisationId: input.organisationId,
-    resourceTable: input.resourceTable,
-    rowId: input.rowId,
-    reason,
-    setBy: input.actor.actorId,
-    metadata: input.metadata ?? {},
-  });
-  return { kind: "ok", hold };
 }
 
 // ─── Release ──────────────────────────────────────────────────────────────
@@ -113,53 +180,81 @@ export async function releaseLegalHold(
   },
   deps: LegalHoldDeps
 ): Promise<ReleaseLegalHoldResult> {
-  if (!isHoldable(input.resourceTable)) {
-    throw new ValidationError("api.error.invalidInput", {
-      safeDetails: { field: "resourceTable" },
-    });
-  }
-  await deps.audit.emit(
-    createAuditEvent({
-      actorId: input.actor.actorId,
-      actorRoles: input.actor.actorRoles,
-      tenantId: input.organisationId,
-      action: AuditAction.LegalHoldReleased,
-      resource: "legal_hold",
-      resourceId: `${input.resourceTable}:${input.rowId}`,
-      metadata: {},
-      sourceHost: input.actor.sourceHost,
-    })
-  );
+  return withLegalHoldSpan(
+    "release",
+    input.organisationId,
+    input.resourceTable,
+    input.rowId,
+    async () => {
+      if (!isHoldable(input.resourceTable)) {
+        throw new ValidationError("api.error.invalidInput", {
+          safeDetails: { field: "resourceTable" },
+        });
+      }
+      await deps.audit.emit(
+        createAuditEvent({
+          actorId: input.actor.actorId,
+          actorRoles: input.actor.actorRoles,
+          tenantId: input.organisationId,
+          action: AuditAction.LegalHoldReleased,
+          resource: "legal_hold",
+          resourceId: `${input.resourceTable}:${input.rowId}`,
+          metadata: {},
+          sourceHost: input.actor.sourceHost,
+        })
+      );
 
-  try {
-    const hold = await deps.repository.release({
-      organisationId: input.organisationId,
-      resourceTable: input.resourceTable,
-      rowId: input.rowId,
-      releasedBy: input.actor.actorId,
-    });
-    return { kind: "ok", hold };
-  } catch (err) {
-    if (err instanceof Error && err.message === "legal_hold_not_found") {
-      return { kind: "not_found" };
+      try {
+        const hold = await deps.repository.release({
+          organisationId: input.organisationId,
+          resourceTable: input.resourceTable,
+          rowId: input.rowId,
+          releasedBy: input.actor.actorId,
+        });
+        return { kind: "ok", hold };
+      } catch (err) {
+        if (err instanceof Error && err.message === "legal_hold_not_found") {
+          return { kind: "not_found" };
+        }
+        throw err;
+      }
     }
-    throw err;
-  }
+  );
 }
+
+// Storage lifecycle relationship: object upload quota-before-write,
+// quarantine/uploaded -> clean/rejected AV scan state, download/getObject and
+// signedUrl/presign clean-state gates live in the storage object usecase/runtime.
+// This usecase owns the legal hold deletion block that those storage deletion
+// paths call before removing object_storage rows or provider objects.
+export const legalHoldStorageLifecycleEvidence = {
+  quotaBeforeWrite:
+    "storage object creation enforces quota-before-write before any object_storage lifecycle row can later be held",
+  avScan:
+    "storage object scan lifecycle owns clean/rejected AV state before downloads or signed URLs are allowed",
+  downloadBlockedUntilClean:
+    "storage object download/getObject paths stay blocked until clean scan state; legal hold blocks deletion independently",
+  signedUrlPolicy:
+    "storage object signedUrl/presign policy stays blocked until clean scan state; legal hold blocks deletion independently",
+};
 
 // ─── Read ─────────────────────────────────────────────────────────────────
 export async function listLegalHolds(
   organisationId: string,
   deps: LegalHoldDeps
 ): Promise<LegalHoldRecord[]> {
-  return deps.repository.listForTenant(organisationId);
+  return withLegalHoldSpan("list", organisationId, "legal_holds", "*", () =>
+    deps.repository.listForTenant(organisationId)
+  );
 }
 
 export async function listLegalHoldsAsOperator(
   organisationId: string,
   deps: LegalHoldDeps
 ): Promise<LegalHoldRecord[]> {
-  return deps.repository.listForTenantAsOperator(organisationId);
+  return withLegalHoldSpan("list-operator", organisationId, "legal_holds", "*", () =>
+    deps.repository.listForTenantAsOperator(organisationId)
+  );
 }
 
 export async function hasActiveLegalHold(
@@ -168,7 +263,9 @@ export async function hasActiveLegalHold(
   rowId: string,
   deps: LegalHoldDeps
 ): Promise<boolean> {
-  return deps.repository.isActive(organisationId, resourceTable, rowId);
+  return withLegalHoldSpan("is-active", organisationId, resourceTable, rowId, () =>
+    deps.repository.isActive(organisationId, resourceTable, rowId)
+  );
 }
 
 /**
@@ -201,25 +298,33 @@ export class LegalHoldGuard {
     resourceTable: string,
     rowId: string
   ): Promise<void> {
-    let held: boolean;
-    try {
-      held = await this.deps.repository.isActive(organisationId, resourceTable, rowId);
-    } catch (err) {
-      // Fail-closed: assume held. The downstream retention/storage layer catches
-      // ForbiddenError and skips the deletion; the row survives.
-      throw new ForbiddenError("api.error.legalHoldStatusUnavailable", {
-        safeDetails: {
-          resourceTable,
-          rowId,
-          reason: "hold_status_unavailable",
-        },
-        cause: err instanceof Error ? err.message : String(err),
-      });
-    }
-    if (held) {
-      throw new ForbiddenError("api.error.legalHoldBlocks", {
-        safeDetails: { resourceTable, rowId },
-      });
-    }
+    return withLegalHoldSpan(
+      "assert-can-delete",
+      organisationId,
+      resourceTable,
+      rowId,
+      async () => {
+        let held: boolean;
+        try {
+          held = await this.deps.repository.isActive(organisationId, resourceTable, rowId);
+        } catch (err) {
+          // Fail-closed: assume held. The downstream retention/storage layer catches
+          // ForbiddenError and skips the deletion; the row survives.
+          throw new ForbiddenError("api.error.legalHoldStatusUnavailable", {
+            safeDetails: {
+              resourceTable,
+              rowId,
+              reason: "hold_status_unavailable",
+            },
+            cause: err instanceof Error ? err.message : String(err),
+          });
+        }
+        if (held) {
+          throw new ForbiddenError("api.error.legalHoldBlocks", {
+            safeDetails: { resourceTable, rowId },
+          });
+        }
+      }
+    );
   }
 }
