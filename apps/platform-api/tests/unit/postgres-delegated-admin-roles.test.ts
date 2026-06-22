@@ -5,10 +5,10 @@
 //   (a) the fake client implements escapeIdentifier (withTenant calls
 //       tenantSchemaIdentifier → client.escapeIdentifier);
 //   (b) capture indices are wrapper-aware, not a naive [0]=BEGIN shift:
-//         withSystemAdmin emits [BEGIN, SET LOCAL ROLE rls_bypass, <SQL>, COMMIT]
-//           → business SQL at index 2
-//         withTenant emits [BEGIN, SET LOCAL search_path…, SELECT set_config…, <SQL>, COMMIT]
-//           → business SQL at index 3
+//         withSystemAdmin emits [BEGIN, SET LOCAL ROLE rls_bypass, SET LOCAL
+//           statement_timeout, <SQL>, COMMIT] → business SQL at index 3
+//         withTenant emits [BEGIN, SET LOCAL search_path…, SELECT set_config…,
+//           SET LOCAL statement_timeout, <SQL>, COMMIT] → business SQL at index 4
 //
 // Asserts each of the 5 port methods runs under the correct auth wrapper, the
 // active-row predicate is applied on the read paths, soft-delete revoke maps
@@ -91,11 +91,12 @@ describe("PostgresDelegatedAdminRoles (V1C-04) — grant", () => {
   it("runs the INSERT under withSystemAdmin and maps the returned row", async () => {
     const { pool, captured } = fakePool({ insertRow: dbRow() });
     const out = await new PostgresDelegatedAdminRoles(pool as never).grantDelegation(grantInput());
-    // withSystemAdmin wrapper: BEGIN, SET LOCAL ROLE rls_bypass, INSERT, COMMIT
+    // withSystemAdmin wrapper: BEGIN, SET LOCAL ROLE rls_bypass, timeout, INSERT, COMMIT
     assert.equal(captured[0]!.text, "BEGIN");
     assert.equal(captured[1]!.text, "SET LOCAL ROLE rls_bypass");
-    assert.match(captured[2]!.text, /^INSERT INTO public\.delegated_admin_roles/);
-    assert.equal(captured[3]!.text, "COMMIT");
+    assert.match(captured[2]!.text, /^SET LOCAL statement_timeout/);
+    assert.match(captured[3]!.text, /^INSERT INTO public\.delegated_admin_roles/);
+    assert.equal(captured[4]!.text, "COMMIT");
     assert.equal(out.id, "del-1");
     assert.equal(out.organisationId, ORG);
     assert.equal(out.revokedBy, null);
@@ -110,8 +111,8 @@ describe("PostgresDelegatedAdminRoles (V1C-04) — revoke", () => {
       "op-1"
     );
     assert.equal(ok, true);
-    assert.match(captured[2]!.text, /UPDATE public\.delegated_admin_roles/);
-    assert.match(captured[2]!.text, /revoked_at IS NULL/, "must only revoke still-active rows");
+    assert.match(captured[3]!.text, /UPDATE public\.delegated_admin_roles/);
+    assert.match(captured[3]!.text, /revoked_at IS NULL/, "must only revoke still-active rows");
   });
 
   it("maps rowCount 0 → false (already revoked / unknown id)", async () => {
@@ -131,7 +132,8 @@ describe("PostgresDelegatedAdminRoles (V1C-04) — listForTenant", () => {
     assert.equal(captured[0]!.text, "BEGIN");
     assert.match(captured[1]!.text, /^SET LOCAL search_path = "tenant_/);
     assert.match(captured[2]!.text, /set_config\('app\.current_tenant_id'/);
-    assert.match(captured[3]!.text, /SELECT id[\s\S]*FROM public\.delegated_admin_roles/);
+    assert.match(captured[3]!.text, /^SET LOCAL statement_timeout/);
+    assert.match(captured[4]!.text, /SELECT id[\s\S]*FROM public\.delegated_admin_roles/);
     assert.equal(rows.length, 2);
     assert.equal(rows[1]!.id, "del-2");
   });
@@ -145,7 +147,7 @@ describe("PostgresDelegatedAdminRoles (V1C-04) — active-only reads", () => {
     );
     assert.equal(captured[1]!.text, "SET LOCAL ROLE rls_bypass");
     assert.match(
-      captured[2]!.text,
+      captured[3]!.text,
       /revoked_at IS NULL AND \(expires_at IS NULL OR expires_at > now\(\)\)/
     );
     assert.equal(rows.length, 1);
@@ -157,7 +159,7 @@ describe("PostgresDelegatedAdminRoles (V1C-04) — active-only reads", () => {
       hit.pool as never
     ).findActiveForGranteeAndScope("grantee-1", "tenant.members.manage");
     assert.equal(found?.id, "del-1");
-    assert.match(hit.captured[2]!.text, /LIMIT 1/);
+    assert.match(hit.captured[3]!.text, /LIMIT 1/);
 
     const miss = fakePool({ selectRows: [] });
     const none = await new PostgresDelegatedAdminRoles(

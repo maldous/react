@@ -4068,6 +4068,19 @@
         "npm run proof:data-governance"
       ],
       "decisionRefs": ["ADR-0063", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+        "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+        "npm run proof:delegated-admin"
+      ],
+      "decisionRefs": ["ADR-0063", "ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -4450,6 +4463,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 435,
+  "additionCount": 436,
   "deletionCount": 54
 }

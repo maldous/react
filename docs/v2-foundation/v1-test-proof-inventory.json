@@ -10823,5 +10823,32 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected data governance provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "local runtime proof plus fake pg substrate test for Postgres auth wrapper/timeout sequencing",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or substrate test exits non-zero when delegated-admin deny/default, audit-before-mutation, tenant isolation, revoke/list, Postgres auth wrapper, timeout, or active predicate behavior breaks",
+    "proofLevel": 3,
+    "proofLevelRationale": "provider-ID wrapper delegates to v1c04-delegated-admin-roles-runtime-proof.ts; substrate test apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts verifies Postgres wrapper context, timeout statement, soft-delete, active predicate, and row mapping",
+    "capabilitiesProven": ["Delegated administration roles"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "stateModel",
+      "audit",
+      "securityBoundary",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected delegated-admin provider contract is broken"
   }
 ]
