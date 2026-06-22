@@ -23,7 +23,7 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |   378 |
+| must-fix-in-v1 items            |   373 |
 
 ## Known Gaps Identified
 

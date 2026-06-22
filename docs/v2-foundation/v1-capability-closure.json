@@ -3822,7 +3822,29 @@
         "proof": "proof:pitr-restore-drill; proof:retention; proof:legal-hold; proof:data-residency",
         "implementation": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "apps/platform-api/src/usecases/retention.ts; apps/platform-api/src/usecases/legal-hold.ts; apps/platform-api/src/usecases/data-residency.ts; apps/platform-api/tests/unit/retention.test.ts; apps/platform-api/tests/unit/legal-hold.test.ts; apps/platform-api/tests/unit/data-residency.test.ts",
+        "evidence": "data lifecycle state is explicitly classified as retention policy/candidate outcomes, legal hold active/released state, holdable resource tables, and organisation residency tags with validation and fail-closed placement checks"
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts",
+        "evidence": "tenant lifecycle data remains exportable through portable tenant export while PITR/backup proofs exercise dump creation, marker integrity, and throwaway restore of the platform Postgres substrate"
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/src/usecases/data-governance.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "DSR governance routes and runtime proof exercise DSR create-to-fulfill workflow with fulfillment evidence, and retention/legal-hold controls preserve deletion eligibility semantics for governed records"
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/src/usecases/data-governance.ts",
+        "evidence": "governance proof normalizes dataset lineage edges and records fulfillment evidence; history proof supplies tenant-scoped operational lineage used by export and governance evidence"
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/src/db/migrations/035-legal-holds.sql; apps/platform-api/src/db/migrations/036-retention-policies.sql; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/scripts/data-residency-runtime-proof.ts",
+        "evidence": "legal holds and retention policies are keyed by organisation_id under RLS, residency tags are stored per organisation and checked before placement, and runtime proofs validate tenant-scoped hold/retention/residency behavior"
+      }
+    }
   },
   {
     "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
