@@ -16,14 +16,14 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | semantic orphans                |     7 |
 | runtime orphans                 |     7 |
 | provider reliability gaps       |     0 |
-| workflow proof gaps             |    20 |
+| workflow proof gaps             |     0 |
 | storage proof gaps              |     0 |
 | event runtime gaps              |     2 |
 | false-positive items            |     0 |
 | external-limited items          |     0 |
 | duplicate findings              |     0 |
 | obsolete-runtime-artifact items |     0 |
-| must-fix-in-v1 items            |  1208 |
+| must-fix-in-v1 items            |  1188 |
 
 ## Known Gaps Identified
 

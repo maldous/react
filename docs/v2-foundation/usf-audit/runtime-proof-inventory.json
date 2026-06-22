@@ -1872,6 +1872,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-route-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-workflow-control-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
+    "level": 3,
+    "classification": "state transition behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-workflow-readiness-route-runtime-proof-ts",
     "file": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
     "level": 3,
@@ -1886,5 +1897,16 @@
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts"]
+  },
+  {
+    "proofId": "proof:apps-platform-api-scripts-workflow-readiness-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-runtime-proof.ts"]
   }
 ]
