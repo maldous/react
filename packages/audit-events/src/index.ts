@@ -87,6 +87,13 @@ export const AuditAction = {
   DelegationGranted: "delegation.granted",
   DelegationRevoked: "delegation.revoked",
   DelegationListed: "delegation.listed",
+  BillingCatalogProductCreated: "billing_catalog.product.created",
+  BillingCatalogPlanCreated: "billing_catalog.plan.created",
+  BillingCatalogPriceCreated: "billing_catalog.price.created",
+  DataGovernanceDatasetCreated: "data_governance.dataset.created",
+  DataGovernanceColumnClassified: "data_governance.column.classified",
+  DataGovernanceDsrCreated: "data_governance.dsr.created",
+  DataGovernanceDsrFulfilled: "data_governance.dsr.fulfilled",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];

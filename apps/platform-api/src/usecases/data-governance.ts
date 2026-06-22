@@ -7,10 +7,22 @@ import type {
   DsrFulfillmentEvidence,
   DsrType,
 } from "../ports/data-governance.ts";
+import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
 
 export interface ClassificationDecision {
   classification: DatasetClassification;
   rule: string;
+}
+
+export interface DataGovernanceActor {
+  actorId: string;
+  actorRoles: string[];
+  sourceHost?: string;
+}
+
+export interface DataGovernanceDeps {
+  port: DataGovernancePort;
+  audit: AuditEventPort;
 }
 
 const onlyDigits = (value: string) => value.replace(/\D/g, "");
@@ -88,22 +100,73 @@ const normalizeLineageEdges = (edges: string[] | undefined): string[] => {
 };
 
 export const createDataset = async (
-  input: CreateDatasetEntryInput,
-  deps: { port: DataGovernancePort }
-) =>
-  deps.port.createDataset({
+  input: CreateDatasetEntryInput & { actor: DataGovernanceActor },
+  deps: DataGovernanceDeps
+) => {
+  const owner = input.owner.trim();
+  const lineageEdges = normalizeLineageEdges(input.lineageEdges);
+  await deps.audit.emit(
+    createAuditEvent({
+      actorId: input.actor.actorId,
+      actorRoles: input.actor.actorRoles,
+      tenantId: input.actor.actorId,
+      action: AuditAction.DataGovernanceDatasetCreated,
+      resource: "data_governance_dataset",
+      resourceId: owner,
+      metadata: { owner, classification: input.classification, lineageEdges },
+      sourceHost: input.actor.sourceHost,
+    })
+  );
+  return deps.port.createDataset({
     ...input,
-    owner: input.owner.trim(),
-    lineageEdges: normalizeLineageEdges(input.lineageEdges),
+    owner,
+    lineageEdges,
   });
+};
 
-export const classifyColumn = (input: ClassifyColumnInput, deps: { port: DataGovernancePort }) => {
+export const classifyColumn = async (
+  input: ClassifyColumnInput & { actor: DataGovernanceActor },
+  deps: DataGovernanceDeps
+) => {
   const decision = classifyByRulesDetailed(input.sampleValue, input.columnName);
+  await deps.audit.emit(
+    createAuditEvent({
+      actorId: input.actor.actorId,
+      actorRoles: input.actor.actorRoles,
+      tenantId: input.actor.actorId,
+      action: AuditAction.DataGovernanceColumnClassified,
+      resource: "data_governance_classification",
+      resourceId: `${input.datasetId}:${input.columnName}`,
+      metadata: {
+        datasetId: input.datasetId,
+        columnName: input.columnName,
+        classification: decision.classification,
+        rule: decision.rule,
+      },
+      sourceHost: input.actor.sourceHost,
+    })
+  );
   return deps.port.classifyColumn({ ...input, ...decision });
 };
 
-export const createDsr = (input: CreateDsrInput, deps: { port: DataGovernancePort }) =>
-  deps.port.createDsr(input);
+export const createDsr = async (
+  input: CreateDsrInput & { actor: DataGovernanceActor },
+  deps: DataGovernanceDeps
+) => {
+  await deps.audit.emit(
+    createAuditEvent({
+      actorId: input.actor.actorId,
+      actorRoles: input.actor.actorRoles,
+      tenantId: input.organisationId,
+      action: AuditAction.DataGovernanceDsrCreated,
+      resource: "data_governance_dsr",
+      resourceId: input.subjectId,
+      metadata: { subjectId: input.subjectId, type: input.type, reason: input.reason },
+      sourceHost: input.actor.sourceHost,
+    })
+  );
+  return deps.port.createDsr(input);
+};
 
 const actionForDsrType = (type: DsrType): DsrFulfillmentEvidence["action"] => {
   if (type === "erasure") return "erasure-completed";
@@ -112,8 +175,8 @@ const actionForDsrType = (type: DsrType): DsrFulfillmentEvidence["action"] => {
 };
 
 export const fulfillDsr = (
-  input: { dsrId: string; actorId: string },
-  deps: { port: DataGovernancePort }
+  input: { dsrId: string; actorId: string; actor: DataGovernanceActor },
+  deps: DataGovernanceDeps
 ) =>
   (async () => {
     const dsrs = await deps.port.listDsrs("");
@@ -123,6 +186,23 @@ export const fulfillDsr = (
     const datasets = await deps.port.listDatasets();
     const classifications = await deps.port.listClassifications();
     const fulfilledAt = new Date().toISOString();
+    await deps.audit.emit(
+      createAuditEvent({
+        actorId: input.actor.actorId,
+        actorRoles: input.actor.actorRoles,
+        tenantId: dsr.organisationId,
+        action: AuditAction.DataGovernanceDsrFulfilled,
+        resource: "data_governance_dsr",
+        resourceId: input.dsrId,
+        metadata: {
+          before: { state: dsr.state },
+          after: { state: "fulfilled", fulfilledAt },
+          type: dsr.type,
+          subjectId: dsr.subjectId,
+        },
+        sourceHost: input.actor.sourceHost,
+      })
+    );
     return deps.port.fulfillDsr({
       ...input,
       evidence: {

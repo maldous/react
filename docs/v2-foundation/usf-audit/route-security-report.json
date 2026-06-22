@@ -4,139 +4,6 @@
   "gaps": [
     {
       "kind": "route-security",
-      "subject": "POST /api/admin/billing/catalog/plans",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-plans",
-        "routeId": "route:post-api-admin-billing-catalog-plans",
-        "method": "POST",
-        "path": "/api/admin/billing/catalog/plans",
-        "authBoundary": true,
-        "permissionBoundary": "platform.billing.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7954", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/billing/catalog/prices",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-prices",
-        "routeId": "route:post-api-admin-billing-catalog-prices",
-        "method": "POST",
-        "path": "/api/admin/billing/catalog/prices",
-        "authBoundary": true,
-        "permissionBoundary": "platform.billing.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8001", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/billing/catalog/products",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-products",
-        "routeId": "route:post-api-admin-billing-catalog-products",
-        "method": "POST",
-        "path": "/api/admin/billing/catalog/products",
-        "authBoundary": true,
-        "permissionBoundary": "platform.billing.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7907", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/governance/catalog",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-governance-catalog",
-        "routeId": "route:post-api-admin-governance-catalog",
-        "method": "POST",
-        "path": "/api/admin/governance/catalog",
-        "authBoundary": true,
-        "permissionBoundary": "platform.governance.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8042", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/governance/catalog/classify",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-governance-catalog-classify",
-        "routeId": "route:post-api-admin-governance-catalog-classify",
-        "method": "POST",
-        "path": "/api/admin/governance/catalog/classify",
-        "authBoundary": true,
-        "permissionBoundary": "platform.governance.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8066", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/governance/dsr",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-governance-dsr",
-        "routeId": "route:post-api-admin-governance-dsr",
-        "method": "POST",
-        "path": "/api/admin/governance/dsr",
-        "authBoundary": true,
-        "permissionBoundary": "platform.governance.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8111", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-governance-dsr-dsrid-fulfill",
-        "routeId": "route:post-api-admin-governance-dsr-dsrid-fulfill",
-        "method": "POST",
-        "path": "/api/admin/governance/dsr/:dsrId/fulfill",
-        "authBoundary": true,
-        "permissionBoundary": "platform.governance.*",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8135", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
       "subject": "GET /api/admin/logs/search",
       "message": "admin route without route-level RBAC/ABAC/PDP evidence",
       "evidence": {
@@ -283,7 +150,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8263", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8357", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -302,7 +169,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8233", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8327", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },
@@ -321,7 +188,7 @@
         "rbacAbacPdpDecision": "UMA resource+scope",
         "failClosed": "source evidence",
         "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8194", "docs/api/openapi.json"]
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8288", "docs/api/openapi.json"]
       },
       "classification": "must-fix-in-v1"
     },

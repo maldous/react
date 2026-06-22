@@ -374,7 +374,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7931", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7943", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-plans",
@@ -386,8 +386,8 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7954", "docs/api/openapi.json"]
+    "securityAudit": "route handler audit evidence",
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7966", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-admin-billing-catalog-prices",
@@ -400,7 +400,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7978", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8002", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-prices",
@@ -412,8 +412,8 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8001", "docs/api/openapi.json"]
+    "securityAudit": "route handler audit evidence",
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8025", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-admin-billing-catalog-products",
@@ -438,7 +438,7 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
+    "securityAudit": "route handler audit evidence",
     "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7907", "docs/api/openapi.json"]
   },
   {
@@ -621,7 +621,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8025", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8061", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-governance-catalog",
@@ -633,8 +633,8 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8042", "docs/api/openapi.json"]
+    "securityAudit": "route handler audit evidence",
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8078", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-governance-catalog-classify",
@@ -646,8 +646,8 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8066", "docs/api/openapi.json"]
+    "securityAudit": "route handler audit evidence",
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8117", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-admin-governance-dsr",
@@ -660,7 +660,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8090", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8156", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-governance-dsr",
@@ -672,8 +672,8 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8111", "docs/api/openapi.json"]
+    "securityAudit": "route handler audit evidence",
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8177", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-governance-dsr-dsrid-fulfill",
@@ -685,8 +685,8 @@
     "tenantBoundary": "admin route namespace",
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
-    "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8135", "docs/api/openapi.json"]
+    "securityAudit": "route handler audit evidence",
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8217", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-admin-incidents",
@@ -1479,7 +1479,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8177", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8271", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-admin-workflows-workflowid",
@@ -1492,7 +1492,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8287", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8381", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-workflows-workflowid-cancel",
@@ -1505,7 +1505,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8263", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8357", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-workflows-workflowid-signal",
@@ -1518,7 +1518,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8233", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8327", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-admin-workflows-readiness",
@@ -1531,7 +1531,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8163", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8257", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-post-api-admin-workflows-start",
@@ -1544,7 +1544,7 @@
     "rbacAbacPdpDecision": "UMA resource+scope",
     "failClosed": "source evidence",
     "securityAudit": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8194", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8288", "docs/api/openapi.json"]
   },
   {
     "boundaryId": "security-boundary:route-get-api-auth-providers",

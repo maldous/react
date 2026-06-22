@@ -17,6 +17,13 @@ import type {
   DatasetEntry,
   DsrRecord,
 } from "../../src/ports/data-governance.ts";
+import { AuditAction, createInMemoryAuditEventPort } from "@platform/audit-events";
+
+const ACTOR = {
+  actorId: "00000000-0000-0000-0000-000000000001",
+  actorRoles: ["system-admin"],
+  sourceHost: "aldous.info",
+};
 
 class InMemoryGovernancePort implements DataGovernancePort {
   datasets: DatasetEntry[] = [];
@@ -106,50 +113,66 @@ describe("data governance", () => {
 
   it("normalizes catalogue lineage and stores column classification decisions", async () => {
     const port = new InMemoryGovernancePort();
+    const audit = createInMemoryAuditEventPort();
     const dataset = await createDataset(
       {
         owner: " finance ",
         classification: "pii",
         lineageEdges: ["crm.contacts", " billing.accounts ", "crm.contacts"],
-        actorId: "00000000-0000-0000-0000-000000000001",
+        actorId: ACTOR.actorId,
+        actor: ACTOR,
       },
-      { port }
+      { port, audit }
     );
     assert.equal(dataset.owner, "finance");
     assert.deepEqual(dataset.lineageEdges, ["billing.accounts", "crm.contacts"]);
+    const [datasetAudit] = await audit.query({
+      tenantId: ACTOR.actorId,
+      action: AuditAction.DataGovernanceDatasetCreated,
+    });
+    assert.equal(datasetAudit?.resourceId, "finance");
 
     const classification = await classifyColumn(
       {
         datasetId: dataset.datasetId,
         columnName: "customer_ssn",
         sampleValue: "111-22-3333",
-        actorId: "00000000-0000-0000-0000-000000000001",
+        actorId: ACTOR.actorId,
+        actor: ACTOR,
       },
-      { port }
+      { port, audit }
     );
     assert.equal(classification.classification, "sensitive");
     assert.equal(classification.rule, "sensitive.ssn");
+    const [classificationAudit] = await audit.query({
+      tenantId: ACTOR.actorId,
+      action: AuditAction.DataGovernanceColumnClassified,
+    });
+    assert.equal(classificationAudit?.resourceId, `${dataset.datasetId}:customer_ssn`);
   });
 
   it("fulfills DSRs with catalogue and classification evidence exactly once", async () => {
     const port = new InMemoryGovernancePort();
+    const audit = createInMemoryAuditEventPort();
     const dataset = await createDataset(
       {
         owner: "support",
         classification: "pii",
         lineageEdges: ["crm.contacts"],
-        actorId: "00000000-0000-0000-0000-000000000001",
+        actorId: ACTOR.actorId,
+        actor: ACTOR,
       },
-      { port }
+      { port, audit }
     );
     await classifyColumn(
       {
         datasetId: dataset.datasetId,
         columnName: "email",
         sampleValue: "subject@example.com",
-        actorId: "00000000-0000-0000-0000-000000000001",
+        actorId: ACTOR.actorId,
+        actor: ACTOR,
       },
-      { port }
+      { port, audit }
     );
     const dsr = await createDsr(
       {
@@ -157,22 +180,44 @@ describe("data governance", () => {
         subjectId: "subject-1",
         type: "access",
         reason: "subject access request",
-        actorId: "00000000-0000-0000-0000-000000000001",
+        actorId: ACTOR.actorId,
+        actor: ACTOR,
       },
-      { port }
+      { port, audit }
     );
+    const [createDsrAudit] = await audit.query({
+      tenantId: "00000000-0000-0000-0000-000000000002",
+      action: AuditAction.DataGovernanceDsrCreated,
+    });
+    assert.equal(createDsrAudit?.resourceId, "subject-1");
 
     const fulfilled = await fulfillDsr(
-      { dsrId: dsr.dsrId, actorId: "00000000-0000-0000-0000-000000000003" },
-      { port }
+      {
+        dsrId: dsr.dsrId,
+        actorId: "00000000-0000-0000-0000-000000000003",
+        actor: { ...ACTOR, actorId: "00000000-0000-0000-0000-000000000003" },
+      },
+      { port, audit }
     );
     assert.equal(fulfilled.state, "fulfilled");
     assert.equal(fulfilled.fulfillmentEvidence?.action, "access-package");
     assert.equal(fulfilled.fulfillmentEvidence?.datasets.length, 1);
     assert.equal(fulfilled.fulfillmentEvidence?.classifications[0]?.rule, "pii.email");
+    const [fulfillAudit] = await audit.query({
+      tenantId: "00000000-0000-0000-0000-000000000002",
+      action: AuditAction.DataGovernanceDsrFulfilled,
+    });
+    assert.equal(fulfillAudit?.resourceId, dsr.dsrId);
 
     await assert.rejects(
-      fulfillDsr({ dsrId: dsr.dsrId, actorId: "00000000-0000-0000-0000-000000000003" }, { port }),
+      fulfillDsr(
+        {
+          dsrId: dsr.dsrId,
+          actorId: "00000000-0000-0000-0000-000000000003",
+          actor: { ...ACTOR, actorId: "00000000-0000-0000-0000-000000000003" },
+        },
+        { port, audit }
+      ),
       /already fulfilled/
     );
   });

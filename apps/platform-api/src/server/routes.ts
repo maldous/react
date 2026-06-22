@@ -7912,6 +7912,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.billing.*",
     resource: "admin:billing",
     umaScope: "write" as const,
+    auditEvent: AuditAction.BillingCatalogProductCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const { CreateBillingProductRequestSchema } = await import("@platform/contracts-admin");
@@ -7922,8 +7923,19 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const product = await createBillingCatalogProduct(
-        { ...body.data, actorId: req.actor!.userId },
-        { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) }
+        {
+          ...body.data,
+          actorId: req.actor!.userId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          catalog: new PostgresBillingCatalogAdapter(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
       );
       res.json(201, { product });
     },
@@ -7959,6 +7971,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.billing.*",
     resource: "admin:billing",
     umaScope: "write" as const,
+    auditEvent: AuditAction.BillingCatalogPlanCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const { CreateBillingPlanRequestSchema } = await import("@platform/contracts-admin");
@@ -7969,8 +7982,19 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const plan = await createBillingCatalogPlan(
-        { ...body.data, actorId: req.actor!.userId },
-        { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) }
+        {
+          ...body.data,
+          actorId: req.actor!.userId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          catalog: new PostgresBillingCatalogAdapter(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
       );
       res.json(201, { plan });
     },
@@ -8006,6 +8030,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.billing.*",
     resource: "admin:billing",
     umaScope: "write" as const,
+    auditEvent: AuditAction.BillingCatalogPriceCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const { CreateBillingPriceRequestSchema } = await import("@platform/contracts-admin");
@@ -8016,8 +8041,19 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const price = await createBillingCatalogPrice(
-        { ...body.data, actorId: req.actor!.userId },
-        { catalog: new PostgresBillingCatalogAdapter(getApplicationPool()) }
+        {
+          ...body.data,
+          actorId: req.actor!.userId,
+          actor: {
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          },
+        },
+        {
+          catalog: new PostgresBillingCatalogAdapter(getApplicationPool()),
+          audit: createPostgresAuditEventPort(getApplicationPool()),
+        }
       );
       res.json(201, { price });
     },
@@ -8047,6 +8083,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.governance.*",
     resource: "admin:governance",
     umaScope: "write" as const,
+    auditEvent: AuditAction.DataGovernanceDatasetCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const body = z
@@ -8060,7 +8097,21 @@ export const routes: Route[] = [
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const port = new PostgresDataGovernanceAdapter(getApplicationPool());
       const { createDataset } = await import("../usecases/data-governance.ts");
-      res.json(201, await createDataset({ ...body.data, actorId: req.actor!.userId }, { port }));
+      res.json(
+        201,
+        await createDataset(
+          {
+            ...body.data,
+            actorId: req.actor!.userId,
+            actor: {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            },
+          },
+          { port, audit: createPostgresAuditEventPort(getApplicationPool()) }
+        )
+      );
     },
   },
   {
@@ -8071,6 +8122,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.governance.*",
     resource: "admin:governance",
     umaScope: "write" as const,
+    auditEvent: AuditAction.DataGovernanceColumnClassified,
     scope: "global" as const,
     handler: async (req, res) => {
       const body = z
@@ -8084,7 +8136,21 @@ export const routes: Route[] = [
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const port = new PostgresDataGovernanceAdapter(getApplicationPool());
       const { classifyColumn } = await import("../usecases/data-governance.ts");
-      res.json(201, await classifyColumn({ ...body.data, actorId: req.actor!.userId }, { port }));
+      res.json(
+        201,
+        await classifyColumn(
+          {
+            ...body.data,
+            actorId: req.actor!.userId,
+            actor: {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            },
+          },
+          { port, audit: createPostgresAuditEventPort(getApplicationPool()) }
+        )
+      );
     },
   },
   {
@@ -8116,6 +8182,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.governance.*",
     resource: "admin:governance",
     umaScope: "write" as const,
+    auditEvent: AuditAction.DataGovernanceDsrCreated,
     scope: "global" as const,
     handler: async (req, res) => {
       const body = z
@@ -8129,7 +8196,22 @@ export const routes: Route[] = [
       if (!body.success)
         return res.json(400, { code: "VALIDATION_ERROR", message: body.error.message });
       const port = new PostgresDataGovernanceAdapter(getApplicationPool());
-      res.json(201, await port.createDsr({ ...body.data, actorId: req.actor!.userId }));
+      const { createDsr } = await import("../usecases/data-governance.ts");
+      res.json(
+        201,
+        await createDsr(
+          {
+            ...body.data,
+            actorId: req.actor!.userId,
+            actor: {
+              actorId: req.actor!.userId,
+              actorRoles: req.actor!.roles,
+              sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+            },
+          },
+          { port, audit: createPostgresAuditEventPort(getApplicationPool()) }
+        )
+      );
     },
   },
   {
@@ -8140,6 +8222,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.governance.*",
     resource: "admin:governance",
     umaScope: "write" as const,
+    auditEvent: AuditAction.DataGovernanceDsrFulfilled,
     scope: "global" as const,
     handler: async (req, res) => {
       const params = z.object({ dsrId: z.uuid() }).safeParse(req.params);
@@ -8150,7 +8233,18 @@ export const routes: Route[] = [
       try {
         res.json(
           200,
-          await fulfillDsr({ dsrId: params.data.dsrId, actorId: req.actor!.userId }, { port })
+          await fulfillDsr(
+            {
+              dsrId: params.data.dsrId,
+              actorId: req.actor!.userId,
+              actor: {
+                actorId: req.actor!.userId,
+                actorRoles: req.actor!.roles,
+                sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+              },
+            },
+            { port, audit: createPostgresAuditEventPort(getApplicationPool()) }
+          )
         );
       } catch (err) {
         res.json(409, {

@@ -26,31 +26,31 @@
     "routeId": "route:post-api-admin-billing-catalog-plans",
     "method": "POST",
     "path": "/api/admin/billing/catalog/plans",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7954", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7966", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-billing-catalog-prices",
     "routeId": "route:post-api-admin-billing-catalog-prices",
     "method": "POST",
     "path": "/api/admin/billing/catalog/prices",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8001", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8025", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-billing-catalog-products",
     "routeId": "route:post-api-admin-billing-catalog-products",
     "method": "POST",
     "path": "/api/admin/billing/catalog/products",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
     "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7907", "docs/api/openapi.json"]
   },
@@ -125,44 +125,44 @@
     "routeId": "route:post-api-admin-governance-catalog",
     "method": "POST",
     "path": "/api/admin/governance/catalog",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8042", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8078", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-catalog-classify",
     "routeId": "route:post-api-admin-governance-catalog-classify",
     "method": "POST",
     "path": "/api/admin/governance/catalog/classify",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8066", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8117", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-dsr",
     "routeId": "route:post-api-admin-governance-dsr",
     "method": "POST",
     "path": "/api/admin/governance/dsr",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8111", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8177", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-governance-dsr-dsrid-fulfill",
     "routeId": "route:post-api-admin-governance-dsr-dsrid-fulfill",
     "method": "POST",
     "path": "/api/admin/governance/dsr/:dsrId/fulfill",
-    "auditEvent": "unknown",
-    "actor": "unknown",
-    "resource": "unknown",
+    "auditEvent": "route handler audit evidence",
+    "actor": "handler audit source",
+    "resource": "handler audit source",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8135", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8217", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-patch-api-admin-incidents-incidentid",
@@ -514,7 +514,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8263", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8357", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-workflows-workflowid-signal",
@@ -525,7 +525,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8233", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8327", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-admin-workflows-start",
@@ -536,7 +536,7 @@
     "actor": "unknown",
     "resource": "unknown",
     "beforeAfter": "unknown",
-    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8194", "docs/api/openapi.json"]
+    "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8288", "docs/api/openapi.json"]
   },
   {
     "auditId": "audit:route-post-api-auth-settings-domains",
