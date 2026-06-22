@@ -465,6 +465,17 @@
     "sourceFileRefs": ["apps/platform-api/scripts/http-engine-provider-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": ["route:get"],
+    "assertsSideEffects": false,
+    "assertsFailureMode": false,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": ["apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts"]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-http-webhook-dispatcher-runtime-proof-ts",
     "file": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "level": 0,

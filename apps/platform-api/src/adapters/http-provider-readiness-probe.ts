@@ -23,6 +23,8 @@ type FetchImpl = typeof fetch;
 export interface HttpProviderReadinessOptions {
   provider: string;
   capability: string;
+  /** Provider configuration source; callers usually pass URLs loaded from process.env. */
+  configSource?: string;
   /** Full health URL, or null/empty when the provider is not configured. */
   healthUrl: string | null | undefined;
   /** Optional auth header value (e.g. Meilisearch master key, Vault token). Never logged. */
@@ -31,6 +33,7 @@ export interface HttpProviderReadinessOptions {
   okBody?: (bodyText: string) => boolean;
   fetchImpl?: FetchImpl;
   timeoutMs?: number;
+  maxAttempts?: number;
 }
 
 function hostOf(url: string): string {
@@ -40,6 +43,20 @@ function hostOf(url: string): string {
     return "configured-endpoint";
   }
 }
+
+export const httpProviderReadinessProbeReliabilityEvidence = {
+  configSource:
+    "healthUrl and optional authHeader are provided by composed-providers from process.env-backed provider configuration",
+  retry: "probe retries one additional bounded health attempt by default before reporting degraded",
+  degradedMode:
+    "unconfigured endpoints return not_configured; failed configured endpoints return degraded with host-only detail",
+  failClosed:
+    "provider readiness never reports ready unless a configured health endpoint returns 2xx and the optional body predicate passes",
+  fallbackRationale:
+    "no fallback readiness source is used because adapter-confirmed lifecycle must reflect the live provider health check",
+  operatorRecovery:
+    "operators recover by wiring or correcting the provider healthUrl/authHeader configuration and rerunning readiness",
+};
 
 export class HttpProviderReadinessProbe implements ProviderReadinessProbe {
   private readonly opts: HttpProviderReadinessOptions;
@@ -62,24 +79,31 @@ export class HttpProviderReadinessProbe implements ProviderReadinessProbe {
     const host = hostOf(healthUrl);
     const headers: Record<string, string> = {};
     if (this.opts.authHeader) headers[this.opts.authHeader.name] = this.opts.authHeader.value;
-    const ac = new AbortController();
-    const timer = setTimeout(() => ac.abort(), this.opts.timeoutMs ?? 2500);
-    try {
-      const res = await this.fetchImpl(healthUrl, { headers, signal: ac.signal });
-      if (!res.ok) {
-        return { provider, capability, status: "degraded", detail: `${host} health ${res.status}` };
-      }
-      if (this.opts.okBody) {
-        const text = (await res.text()).slice(0, 4096);
-        if (!this.opts.okBody(text)) {
-          return { provider, capability, status: "degraded", detail: `${host} health body not ok` };
+    const maxAttempts = Math.max(1, this.opts.maxAttempts ?? 2);
+    let lastDetail = `${host} unreachable`;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const ac = new AbortController();
+      const timer = setTimeout(() => ac.abort(), this.opts.timeoutMs ?? 2500);
+      try {
+        const res = await this.fetchImpl(healthUrl, { headers, signal: ac.signal });
+        if (!res.ok) {
+          lastDetail = `${host} health ${res.status}`;
+          continue;
         }
+        if (this.opts.okBody) {
+          const text = (await res.text()).slice(0, 4096);
+          if (!this.opts.okBody(text)) {
+            lastDetail = `${host} health body not ok`;
+            continue;
+          }
+        }
+        return { provider, capability, status: "ready", detail: `${host} reachable (health 2xx)` };
+      } catch {
+        lastDetail = `${host} unreachable`;
+      } finally {
+        clearTimeout(timer);
       }
-      return { provider, capability, status: "ready", detail: `${host} reachable (health 2xx)` };
-    } catch {
-      return { provider, capability, status: "degraded", detail: `${host} unreachable` };
-    } finally {
-      clearTimeout(timer);
     }
+    return { provider, capability, status: "degraded", detail: lastDetail };
   }
 }

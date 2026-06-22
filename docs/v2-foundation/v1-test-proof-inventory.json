@@ -10451,5 +10451,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "platform-api loader; delegates to existing composed-provider readiness proof",
+    "stageCoverage": "test (provider-ID live-proof entrypoint)",
+    "failureEvidence": "delegated proof script exits non-zero; emits proof stdout from the underlying composed-provider readiness proof",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID entrypoint delegates to composed-provider-readiness-runtime-proof.ts; proof validates ready, degraded, not_configured, adapter-confirmed lifecycle derivation, and secret-free readiness payloads for HTTP health-backed composed providers",
+    "capabilitiesProven": ["Composed provider readiness spine"],
+    "semanticFacetsProven": ["providerReliability", "stateModel", "readinessModel", "proof"],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected provider contract is broken"
   }
 ]
