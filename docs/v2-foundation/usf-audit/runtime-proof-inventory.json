@@ -1537,7 +1537,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts"]
@@ -1548,7 +1548,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get", "route:get-healthz"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"]
@@ -1643,7 +1643,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts"]
@@ -1778,7 +1778,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts"]

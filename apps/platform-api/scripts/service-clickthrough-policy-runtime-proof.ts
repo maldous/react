@@ -16,6 +16,7 @@
  */
 
 import { request as httpRequest } from "node:http";
+import assert from "node:assert/strict";
 import {
   CLICKTHROUGH_SERVICES,
   TENANT_ADMIN_RESOURCES,
@@ -29,6 +30,7 @@ let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 interface ProbeResult {

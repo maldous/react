@@ -12,6 +12,7 @@
  * if unavailable — never fake-PASSes. Usage: npm run proof:typed-secret-resolution
  */
 import pg from "pg";
+import assert from "node:assert/strict";
 import { loadLocalEnv, requireEnv } from "./lib/local-env.ts";
 import type { AuditEvent, AuditEventPort } from "@platform/audit-events";
 import { putSecret } from "../src/usecases/secrets.ts";
@@ -35,6 +36,7 @@ const check = (label: string, ok: boolean, detail = ""): void => {
   const suffix = detail ? ` — ${detail}` : "";
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}${suffix}`);
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 };
 function capturingAudit(): { port: AuditEventPort; events: AuditEvent[] } {
   const events: AuditEvent[] = [];

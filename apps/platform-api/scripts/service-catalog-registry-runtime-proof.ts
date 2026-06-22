@@ -16,11 +16,13 @@ import {
   buildServiceCatalog,
   forbiddenProvidersForEnvironment,
 } from "../src/usecases/service-catalog.ts";
+import assert from "node:assert/strict";
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
   console.log(`${ok ? "PASS" : "FAIL"}  ${label}` + (detail ? ` — ${detail}` : ""));
   if (!ok) failures++;
+  assert.equal(ok, true, detail ? `${label}: ${detail}` : label);
 }
 
 const VISIBILITIES = new Set(["tenant_scoped_safe", "global_only", "not_exposed"]);
