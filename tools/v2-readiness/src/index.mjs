@@ -49,6 +49,17 @@ import r47 from "./rules/r47-dependency-assurance.mjs";
 import r48 from "./rules/r48-reliability-assurance.mjs";
 import r49 from "./rules/r49-capability-coverage.mjs";
 import r50 from "./rules/r50-runtime-alignment.mjs";
+import r51 from "./rules/r51-route-observability-assurance.mjs";
+import r52 from "./rules/r52-route-security-assurance.mjs";
+import r53 from "./rules/r53-ownership-assurance.mjs";
+import r54 from "./rules/r54-proof-behaviour-assurance.mjs";
+import r55 from "./rules/r55-storage-assurance.mjs";
+import r56 from "./rules/r56-workflow-assurance.mjs";
+import r57 from "./rules/r57-event-runtime-assurance.mjs";
+import r58 from "./rules/r58-metrics-alerts-assurance.mjs";
+import r59 from "./rules/r59-data-governance-runtime-assurance.mjs";
+import r60 from "./rules/r60-provider-reliability-runtime-assurance.mjs";
+import r61 from "./rules/r61-semantic-orphan-runtime-assurance.mjs";
 
 export const RULES = [
   r1,
@@ -99,6 +110,17 @@ export const RULES = [
   r48,
   r49,
   r50,
+  r51,
+  r52,
+  r53,
+  r54,
+  r55,
+  r56,
+  r57,
+  r58,
+  r59,
+  r60,
+  r61,
 ];
 
 export function runRules(ctx) {
@@ -148,6 +170,17 @@ const AUDIT_SURFACES = {
   "reliability-assurance": "R48",
   "capability-coverage": "R49",
   "runtime-alignment": "R50",
+  "route-observability-assurance": "R51",
+  "route-security-assurance": "R52",
+  "ownership-assurance": "R53",
+  "proof-behaviour-assurance": "R54",
+  "storage-assurance": "R55",
+  "workflow-assurance": "R56",
+  "event-runtime-assurance": "R57",
+  "metrics-alerts-assurance": "R58",
+  "data-governance-runtime-assurance": "R59",
+  "provider-reliability-runtime-assurance": "R60",
+  "semantic-orphan-runtime-assurance": "R61",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -189,6 +222,17 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R48",
   "R49",
   "R50",
+  "R51",
+  "R52",
+  "R53",
+  "R54",
+  "R55",
+  "R56",
+  "R57",
+  "R58",
+  "R59",
+  "R60",
+  "R61",
 ];
 
 export function summarize(

@@ -1,0 +1,5448 @@
+{
+  "artefact": "semantic-runtime-diff-report",
+  "pass": false,
+  "gaps": [
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/account",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/auth",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/clickthrough",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/config",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/developer",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/domains",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/email",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/entitlements",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/events",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/features",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/logs",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/members",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/monitoring",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/observability",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/platform",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/search",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/storage",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/usage",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/webhooks",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/alerts",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/alerts",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/alerts/:alertId/evaluate",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/backup",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/billing",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/billing/catalog/plans",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/billing/catalog/plans",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/billing/catalog/prices",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/billing/catalog/prices",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/billing/catalog/products",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/billing/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/clickthrough",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/admin/data/legal-holds",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/data/legal-holds",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/data/legal-holds",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/data/residency",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/admin/data/retention-policies",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/data/retention-policies",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/data/retention-policies",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/events",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/events/:eventId/redrive",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/events/dead-letter",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/governance/catalog",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/catalog",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/catalog/classify",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/governance/dsr",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/dsr",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/incidents",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/incidents/:incidentId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/notifications/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/observability",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/observability/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/observability/signals",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/provider-bindings",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/provider-configs",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/scheduled-jobs",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/scheduled-jobs",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/scheduled-jobs/:jobId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/scheduled-jobs/:jobId/run",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/search/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/search/reindex",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/secrets",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/secrets/delete",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/security",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/sub-tenants",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support-session/approval-grant",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support-session/approval-request",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/support/health",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/support/tickets",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support/tickets",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/announcements",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/announcements",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/api-keys",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/auth-settings-credential/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/repair",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/delegations",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/delete",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/entitlements",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/export",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/import",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/notifications/test",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/quotas",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/:tenantId/rate-limits",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/tenants/:tenantId/rate-limits",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/suspend",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/auth-settings-credential",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/tenants/resources",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/workers",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/workflows",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/workflows/:workflowId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/workflows/:workflowId/cancel",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/workflows/:workflowId/signal",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/admin/workflows/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/workflows/start",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/providers",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/domains",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/auth/settings/domains/:domain",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/domains/challenges",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/domains/verify",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/idps",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/idps",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/auth/settings/idps/:alias",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/idps/:alias",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/idps/:alias/callback-url",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/idps/:alias/mapping",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/idps/:alias/mapping",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/idps/:alias/test-connection",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/idps/oidc/discover",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/lockout",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/lockout",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/mfa",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/mfa",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/providers",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/providers",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/resource-policies",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/resource-policies",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/session",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/session",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/settings/sysadmin-brokering",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/sysadmin-brokering",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/graphql",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/me/notification-preferences",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/me/notification-preferences",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/me/profile",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/me/profile",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/api-keys",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/api-keys",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/api-keys/:keyId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/config",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/config/:key",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/config/:key",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/developer",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/domains",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/domains/:domain",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/activate",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/domains/:domain/canonical",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/canonical",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/deactivate",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/probe-routing-local",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/verify",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/domains/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/email-sender",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/email-sender",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/email-sender/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/email-sender/test",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/features",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/features/:featureKey",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/groups",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/groups",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/groups/:groupId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/groups/:groupId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/members",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/members/:userId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/members/:userId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/members/:userId/external-identities",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/members/:userId/status",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/members/:userId/username",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/members/invite",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/members/resend-invite",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/observability/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/rate-limits",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/search",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/storage/objects",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/storage/objects",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/storage/objects/:objectKey",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/storage/objects/:objectKey",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/storage/objects/:objectKey/scan",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/storage/probe",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/storage/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/sub-organisations",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/sub-organisations",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/sub-organisations/:subOrgId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/sub-organisations/:subOrgId",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/webhooks",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/webhooks/:id",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/webhooks/:id",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/webhooks/:id/deliveries",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/webhooks/:id/metrics",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/redrive-dead",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/rotate-secret",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/test",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/org/webhooks/readiness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/organisation/profile",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/organisation/profile",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/session",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /auth/callback",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /auth/login",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /auth/logout",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /e2e-harness",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /healthz",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /internal/auth/forward",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /login",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /organisation/profile",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /readyz",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /version",
+      "message": "runtime route has no semantic contract definition",
+      "evidence": {
+        "source": "runtime-route-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /faro/collect",
+      "message": "semantic route claim has no runtime route implementation",
+      "evidence": {
+        "source": "v1-capability-closure.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get",
+        "method": "GET",
+        "path": "/",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+        "handlerSymbol": "AdminOverviewRoute",
+        "capability": "Tenant identity (record + FQDN)",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "unknown",
+        "policyRequired": "unknown",
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/index.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin",
+        "method": "GET",
+        "path": "/admin",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+        "handlerSymbol": "AdminLayout",
+        "capability": "Tenant identity (record + FQDN)",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "unknown",
+        "policyRequired": "unknown",
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/layout.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/account",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-account",
+        "method": "GET",
+        "path": "/admin/account",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+        "handlerSymbol": "AdminAccountRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "profile.read_self",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/account.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/auth",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-auth",
+        "method": "GET",
+        "path": "/admin/auth",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+        "handlerSymbol": "AdminAuthRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.auth.settings.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/auth.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/clickthrough",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-clickthrough",
+        "method": "GET",
+        "path": "/admin/clickthrough",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+        "handlerSymbol": "AdminClickthroughRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "platform.providers.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/clickthrough.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/config",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-config",
+        "method": "GET",
+        "path": "/admin/config",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+        "handlerSymbol": "AdminConfigRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.config.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/config.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/developer",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-developer",
+        "method": "GET",
+        "path": "/admin/developer",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+        "handlerSymbol": "AdminDeveloperRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.developer.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/developer.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/domains",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-domains",
+        "method": "GET",
+        "path": "/admin/domains",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+        "handlerSymbol": "AdminDomainsRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.domains.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/domains.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/email",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-email",
+        "method": "GET",
+        "path": "/admin/email",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+        "handlerSymbol": "AdminEmailRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.email.settings.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/email.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/entitlements",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-entitlements",
+        "method": "GET",
+        "path": "/admin/entitlements",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+        "handlerSymbol": "AdminEntitlementsRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.entitlements.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/entitlements.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/events",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-events",
+        "method": "GET",
+        "path": "/admin/events",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+        "handlerSymbol": "AdminEventsRoute",
+        "capability": "Event bus, durable queues, DLQ, redrive",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "platform.events.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/events.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/features",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-features",
+        "method": "GET",
+        "path": "/admin/features",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+        "handlerSymbol": "AdminFeaturesRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.features.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/features.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/logs",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-logs",
+        "method": "GET",
+        "path": "/admin/logs",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+        "handlerSymbol": "AdminLogsRoute",
+        "capability": "Logs (aggregation + tenant-scoped search)",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "platform.logs.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/logs.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/members",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-members",
+        "method": "GET",
+        "path": "/admin/members",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+        "handlerSymbol": "AdminMembersRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.members.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/members.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/monitoring",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-monitoring",
+        "method": "GET",
+        "path": "/admin/monitoring",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+        "handlerSymbol": "AdminMonitoringRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "platform.observability.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/monitoring.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/observability",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-observability",
+        "method": "GET",
+        "path": "/admin/observability",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+        "handlerSymbol": "AdminObservabilityRoute",
+        "capability": "Metrics + traces",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.observability.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/observability.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/platform",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-platform",
+        "method": "GET",
+        "path": "/admin/platform",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+        "handlerSymbol": "AdminPlatformRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.platform.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/platform.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/readiness",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-readiness",
+        "method": "GET",
+        "path": "/admin/readiness",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+        "handlerSymbol": "AdminReadinessRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.admin.access",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/readiness.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-scheduled-jobs",
+        "method": "GET",
+        "path": "/admin/scheduled-jobs",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+        "handlerSymbol": "AdminScheduledJobsRoute",
+        "capability": "Scheduled jobs (built-in, on the event substrate)",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "platform.jobs.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/search",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-search",
+        "method": "GET",
+        "path": "/admin/search",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+        "handlerSymbol": "AdminSearchRoute",
+        "capability": "Search + indexing (product search)",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.search.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/search.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/storage",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-storage",
+        "method": "GET",
+        "path": "/admin/storage",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+        "handlerSymbol": "AdminStorageRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.storage.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/storage.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/usage",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-usage",
+        "method": "GET",
+        "path": "/admin/usage",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+        "handlerSymbol": "AdminUsageRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.metering.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/usage.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/webhooks",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-admin-webhooks",
+        "method": "GET",
+        "path": "/admin/webhooks",
+        "handlerFile": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+        "handlerSymbol": "AdminWebhooksRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "tenant.webhooks.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/admin/webhooks.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/providers",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-api-auth-providers",
+        "method": "GET",
+        "path": "/api/auth/providers",
+        "handlerFile": "unknown",
+        "handlerSymbol": "getAuthProviders",
+        "capability": "ABAC / Policy Decision Point",
+        "isMutation": false,
+        "authRequired": "unknown",
+        "permissionRequired": "unknown",
+        "policyRequired": "unknown",
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "generated-contract",
+        "generatedContract": true,
+        "operationId": "getAuthProviders",
+        "sourceFileRefs": ["docs/api/openapi.json"],
+        "evidence": {
+          "routeObject": "docs/api/openapi.json",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/graphql",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:post-api-graphql",
+        "method": "POST",
+        "path": "/api/graphql",
+        "handlerFile": "apps/platform-api/src/server/routes.ts",
+        "handlerSymbol": "handleGraphql",
+        "capability": "unknown",
+        "isMutation": true,
+        "authRequired": true,
+        "permissionRequired": "unknown",
+        "policyRequired": "unknown",
+        "auditRequired": true,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "pipeline withServerSpan",
+        "logRequired": true,
+        "logEvent": "http.request.complete/http.request.failed",
+        "metricRequired": true,
+        "metricName": "http_requests_total/http_request_duration_seconds",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5212", "docs/api/openapi.json"],
+        "evidence": {
+          "routeObject": "apps/platform-api/src/server/routes.ts:5212",
+          "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+        },
+        "generatedContract": true,
+        "operationId": "graphql"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/organisation/profile",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-api-organisation-profile",
+        "method": "GET",
+        "path": "/api/organisation/profile",
+        "handlerFile": "apps/platform-api/src/server/routes.ts",
+        "handlerSymbol": "handleGetOrganisationProfile",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "organisation.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "pipeline withServerSpan",
+        "logRequired": true,
+        "logEvent": "http.request.complete/http.request.failed",
+        "metricRequired": true,
+        "metricName": "http_requests_total/http_request_duration_seconds",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5189", "docs/api/openapi.json"],
+        "evidence": {
+          "routeObject": "apps/platform-api/src/server/routes.ts:5189",
+          "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+        },
+        "generatedContract": true,
+        "operationId": "getOrganisationProfile"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/organisation/profile",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:patch-api-organisation-profile",
+        "method": "PATCH",
+        "path": "/api/organisation/profile",
+        "handlerFile": "apps/platform-api/src/server/routes.ts",
+        "handlerSymbol": "handlePatchOrganisationProfile",
+        "capability": "unknown",
+        "isMutation": true,
+        "authRequired": true,
+        "permissionRequired": "organisation.update",
+        "policyRequired": true,
+        "auditRequired": true,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "pipeline withServerSpan",
+        "logRequired": true,
+        "logEvent": "http.request.complete/http.request.failed",
+        "metricRequired": true,
+        "metricName": "http_requests_total/http_request_duration_seconds",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5199", "docs/api/openapi.json"],
+        "evidence": {
+          "routeObject": "apps/platform-api/src/server/routes.ts:5199",
+          "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+          "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+        },
+        "generatedContract": true,
+        "operationId": "patchOrganisationProfile"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/session",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-api-session",
+        "method": "GET",
+        "path": "/api/session",
+        "handlerFile": "unknown",
+        "handlerSymbol": "getSession",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": "unknown",
+        "permissionRequired": "unknown",
+        "policyRequired": "unknown",
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": true,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "generated-contract",
+        "generatedContract": true,
+        "operationId": "getSession",
+        "sourceFileRefs": ["docs/api/openapi.json"],
+        "evidence": {
+          "routeObject": "docs/api/openapi.json",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /e2e-harness",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-e2e-harness",
+        "method": "GET",
+        "path": "/e2e-harness",
+        "handlerFile": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+        "handlerSymbol": "E2EHarnessPage",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": "unknown",
+        "permissionRequired": "organisation.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": false,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/e2e-harness.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /login",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-login",
+        "method": "GET",
+        "path": "/login",
+        "handlerFile": "apps/react-enterprise-app/src/routes/login.tsx",
+        "handlerSymbol": "LoginPage",
+        "capability": "Platform login + session",
+        "isMutation": false,
+        "authRequired": false,
+        "permissionRequired": "unknown",
+        "policyRequired": "unknown",
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": false,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/login.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/login.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /organisation/profile",
+      "message": "semantic/runtime route lacks executable proof",
+      "evidence": {
+        "routeId": "route:get-organisation-profile",
+        "method": "GET",
+        "path": "/organisation/profile",
+        "handlerFile": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+        "handlerSymbol": "OrganisationProfileRoute",
+        "capability": "unknown",
+        "isMutation": false,
+        "authRequired": true,
+        "permissionRequired": "organisation.read",
+        "policyRequired": true,
+        "auditRequired": false,
+        "auditEvent": "unknown",
+        "traceRequired": true,
+        "traceSpan": "unknown",
+        "logRequired": true,
+        "logEvent": "unknown",
+        "metricRequired": true,
+        "metricName": "unknown",
+        "alertRequired": false,
+        "proofRequired": true,
+        "proofRef": "unknown",
+        "sourceType": "frontend-router",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/organisation/profile.tsx"],
+        "evidence": {
+          "routeObject": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+          "pipelineTrace": "",
+          "pipelineLogs": "",
+          "pipelineMetrics": "",
+          "pipelineCorrelation": ""
+        }
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run api:start",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run api:start:admin",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run api:start:viewer",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run audit:deps",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run build:spa",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run codeql:analyze",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run codeql:db",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run codeql:validate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:cloud",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:down",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:down:volumes",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:external-mocks",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:identity",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:logs",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:ps",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:sentry",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:up",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run compose:up:default",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run coverage:normalize",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run db:reset",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:accessibility",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:coverage:validate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:failure:rootcause",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:observability:correlate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:persona:authz",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:personas:validate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:registry:validate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:scenario:validate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:sentry:assert",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:ui:contract:validate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run e2e:ui:discover",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run format:check",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run format:write",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run frontend:conventions",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run generate:feature",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run license:policy",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run lint:md",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run mcp:governor",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run mcp:governor:selftest",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:alert-incident-closure",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:approval-workflow",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:auth-credential-lifecycle",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:backup-control-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:billing-control-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:billing-readiness-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:composed-provider-runtime-closure",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:email-sender",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:full-observability-contract",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:http-engine-providers",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:observability-control-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:observability-metrics-traces-closure",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:observability-provider-closure",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:observability-readiness-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:provider-binding-report-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:provider-observability-closure",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:provider-observability-contract",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:security-control-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:typed-secret-resolution",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:webhook-worker",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:workflow-adapters",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:workflow-closure",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:workflow-control-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:workflow-engine",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run proof:workflow-readiness-route",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run sbom:generate",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run sbom:policy",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run sbom:verify",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run secrets:scan",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run seed:idps",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run semgrep:json",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:e2e:build",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:e2e:external",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:e2e:internal",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:e2e:report",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:e2e:ui",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:mock-oidc",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:platform-api:unit-safe",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run test:security",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run tsc:check",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run tsc:check:api",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run tsc:check:packages",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run ui:harness",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run ui:harness:e2e",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run ui:harness:test",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run usf:render",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run v2:adversarial-usf-audit",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run v2:formal-assurance",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run v2:readiness:json",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run v2:usf-assurance",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "npm run validate:slices",
+      "message": "runtime command has no semantic catalogue link",
+      "evidence": {
+        "source": "runtime-command-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "retention-tick",
+      "message": "runtime worker has no semantic worker/event link",
+      "evidence": {
+        "source": "runtime-worker-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "caddy-local-routing-probe",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "clamav-antivirus",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "http-engine-provider",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "http-provider-readiness-probe",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "in-memory-automation-runner",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "in-memory-billing-provider",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "in-memory-workflow-orchestrator",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "notification-transports",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-api-key-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-billing-catalog",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-delegated-admin-roles",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-email-sender-store",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-entitlement-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-environment-registry-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-event-bus",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-history-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-legal-hold",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-metering-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-notification-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-observability-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-portable-tenant-import-applier",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-profile-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-provider-config-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-quota-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-rate-limit-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-retention",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-scheduled-job-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-search-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-secret-store",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-storage-object-repository",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-tenant-credential-store",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-tenant-domain-registry",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-webhook-store",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "prometheus-metrics",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "smtp-email-adapter",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "tenant-secret-crypto",
+      "message": "runtime provider has no semantic/provider matrix link",
+      "evidence": {
+        "source": "runtime-provider-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "clamav-antivirus",
+      "message": "runtime storage operation has no semantic storage link",
+      "evidence": {
+        "source": "runtime-storage-operation-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-legal-hold",
+      "message": "runtime storage operation has no semantic storage link",
+      "evidence": {
+        "source": "runtime-storage-operation-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-quota-repository",
+      "message": "runtime storage operation has no semantic storage link",
+      "evidence": {
+        "source": "runtime-storage-operation-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "postgres-storage-object-repository",
+      "message": "runtime storage operation has no semantic storage link",
+      "evidence": {
+        "source": "runtime-storage-operation-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "adapters-object-storage.test",
+      "message": "runtime storage operation has no semantic storage link",
+      "evidence": {
+        "source": "runtime-storage-operation-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "storage-runtime.test",
+      "message": "runtime storage operation has no semantic storage link",
+      "evidence": {
+        "source": "runtime-storage-operation-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "workflow-control",
+      "message": "runtime workflow has no semantic workflow/state-machine link",
+      "evidence": {
+        "source": "runtime-workflow-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "workflow-readiness",
+      "message": "runtime workflow has no semantic workflow/state-machine link",
+      "evidence": {
+        "source": "runtime-workflow-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "in-memory-automation-runner",
+      "message": "runtime workflow has no semantic workflow/state-machine link",
+      "evidence": {
+        "source": "runtime-workflow-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "in-memory-workflow-orchestrator",
+      "message": "runtime workflow has no semantic workflow/state-machine link",
+      "evidence": {
+        "source": "runtime-workflow-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/alerts",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/alerts/:alertId/evaluate",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/billing/catalog/plans",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/billing/catalog/prices",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/billing/catalog/products",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/admin/data/legal-holds",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/data/legal-holds",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/data/residency",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/admin/data/retention-policies",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/data/retention-policies",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/events/:eventId/redrive",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/catalog",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/catalog/classify",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/dsr",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/incidents/:incidentId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/provider-configs",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/provider-configs/:id/delete",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/provider-configs/:id/lifecycle",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/scheduled-jobs",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/scheduled-jobs/:jobId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/scheduled-jobs/:jobId/run",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/search/reindex",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/secrets",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/secrets/delete",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/secrets/revoke",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/sub-tenants",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support-session",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support-session/approval-grant",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support-session/approval-request",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/support/tickets",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/announcements",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/repair",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/delegations",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/admin/tenants/:tenantId/delegations/:delegationId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/delete",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/tenants/:tenantId/entitlements",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/import",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/meter-events",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/notifications/test",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/tenants/:tenantId/quotas",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/admin/tenants/:tenantId/rate-limits",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/:tenantId/suspend",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/tenants/auth-settings-credential",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/workflows/:workflowId/cancel",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/workflows/:workflowId/signal",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/admin/workflows/start",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/domains",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/auth/settings/domains/:domain",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/domains/challenges",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/domains/verify",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/idps/:alias/mapping",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/idps/:alias/test-connection",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/auth/settings/idps/oidc/discover",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/providers",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/auth/settings/resource-policies",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/graphql",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/me/notification-preferences",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/me/profile",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/api-keys",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/api-keys/:keyId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/config/:key",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/config/:key",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/domains/:domain",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/activate",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/domains/:domain/canonical",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/canonical",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/deactivate",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/probe-routing-local",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/domains/:domain/verify",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/email-sender",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/email-sender/test",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/features/:featureKey",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/groups",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/groups/:groupId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/groups/:groupId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/members/:userId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/members/:userId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/members/:userId/status",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/members/:userId/username",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/members/invite",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/members/resend-invite",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/search",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/storage/objects",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/storage/objects/:objectKey",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/storage/objects/:objectKey/scan",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/sub-organisations",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/sub-organisations/:subOrgId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/sub-organisations/:subOrgId",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "DELETE /api/org/webhooks/:id",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/org/webhooks/:id",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/redrive-dead",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/rotate-secret",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /api/org/webhooks/:id/test",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "PATCH /api/organisation/profile",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "POST /auth/logout",
+      "message": "runtime audit requirement has no audit event mapping",
+      "evidence": {
+        "source": "runtime-audit-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/account",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/auth",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/clickthrough",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/config",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/developer",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/domains",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/email",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/entitlements",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/events",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/features",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/logs",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/members",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/monitoring",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/observability",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/platform",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/readiness",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/search",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/storage",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/usage",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /admin/webhooks",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/auth/providers",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /api/session",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /e2e-harness",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /login",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "semantic-runtime-diff",
+      "subject": "GET /organisation/profile",
+      "message": "runtime observability surface lacks trace/log/metric mapping",
+      "evidence": {
+        "source": "runtime-observability-inventory.json"
+      },
+      "classification": "must-fix-in-v1"
+    }
+  ]
+}

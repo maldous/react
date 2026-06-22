@@ -3511,6 +3511,375 @@
       "v2Target": "tools/v2-readiness/tests/rules.test.mjs",
       "protectingTests": ["tools/v2-readiness/tests/rules.test.mjs"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/adversarial-usf-audit.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/adversarial-usf-audit.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/scripts/generate-adversarial-usf-audit.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/scripts/generate-adversarial-usf-audit.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/adversarial-usf-report-rule.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/adversarial-usf-report-rule.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r51-route-observability-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r51-route-observability-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r52-route-security-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r52-route-security-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r53-ownership-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r53-ownership-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r54-proof-behaviour-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r54-proof-behaviour-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r55-storage-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r55-storage-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r56-workflow-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r56-workflow-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r57-event-runtime-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r57-event-runtime-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r58-metrics-alerts-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r58-metrics-alerts-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r59-data-governance-runtime-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r59-data-governance-runtime-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r60-provider-reliability-runtime-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r60-provider-reliability-runtime-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r61-semantic-orphan-runtime-assurance.mjs",
+      "purpose": "post-audit adversarial USF runtime assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r61-semantic-orphan-runtime-assurance.mjs",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/adversarial-assurance-attestation.md",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/adversarial-assurance-attestation.md",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/adversarial-assurance-summary.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/adversarial-assurance-summary.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/data-governance-runtime-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/data-governance-runtime-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/event-runtime-assurance-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/event-runtime-assurance-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/metrics-alerts-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/metrics-alerts-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/ownership-assurance-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/ownership-assurance-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-behaviour-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-behaviour-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/provider-reliability-runtime-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/provider-reliability-runtime-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/route-observability-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/route-observability-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/route-security-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/route-security-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-audit-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-audit-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-command-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-command-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-event-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-event-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-observability-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-observability-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-proof-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-proof-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-provider-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-provider-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-route-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-route-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-security-boundary-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-security-boundary-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-storage-operation-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-storage-operation-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-worker-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-worker-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/runtime-workflow-inventory.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/runtime-workflow-inventory.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/semantic-orphan-runtime-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/semantic-orphan-runtime-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/semantic-runtime-diff-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/semantic-runtime-diff-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/storage-assurance-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/storage-assurance-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/v1-correction-backlog.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/v1-correction-backlog.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/v1-correction-backlog.md",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/v1-correction-backlog.md",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/workflow-assurance-report.json",
+      "purpose": "post-audit adversarial USF runtime inventory/report artefact",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/workflow-assurance-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011"],
+      "introducingCommit": "pending-adversarial-usf-audit-commit"
     }
   ],
   "deletions": [

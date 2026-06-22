@@ -1,0 +1,1811 @@
+{
+  "artefact": "route-security-report",
+  "pass": false,
+  "gaps": [
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/alerts",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-alerts",
+        "routeId": "route:post-api-admin-alerts",
+        "method": "POST",
+        "path": "/api/admin/alerts",
+        "authBoundary": true,
+        "permissionBoundary": "platform.observability.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6513", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/alerts/:alertId/evaluate",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-alerts-alertid-evaluate",
+        "routeId": "route:post-api-admin-alerts-alertid-evaluate",
+        "method": "POST",
+        "path": "/api/admin/alerts/:alertId/evaluate",
+        "authBoundary": true,
+        "permissionBoundary": "platform.observability.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6546", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/billing/catalog/plans",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-plans",
+        "routeId": "route:post-api-admin-billing-catalog-plans",
+        "method": "POST",
+        "path": "/api/admin/billing/catalog/plans",
+        "authBoundary": true,
+        "permissionBoundary": "platform.billing.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7861", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/billing/catalog/prices",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-prices",
+        "routeId": "route:post-api-admin-billing-catalog-prices",
+        "method": "POST",
+        "path": "/api/admin/billing/catalog/prices",
+        "authBoundary": true,
+        "permissionBoundary": "platform.billing.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7908", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/billing/catalog/products",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-billing-catalog-products",
+        "routeId": "route:post-api-admin-billing-catalog-products",
+        "method": "POST",
+        "path": "/api/admin/billing/catalog/products",
+        "authBoundary": true,
+        "permissionBoundary": "platform.billing.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7814", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "DELETE /api/admin/data/legal-holds",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-delete-api-admin-data-legal-holds",
+        "routeId": "route:delete-api-admin-data-legal-holds",
+        "method": "DELETE",
+        "path": "/api/admin/data/legal-holds",
+        "authBoundary": true,
+        "permissionBoundary": "platform.data.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7454", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/data/legal-holds",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-data-legal-holds",
+        "routeId": "route:post-api-admin-data-legal-holds",
+        "method": "POST",
+        "path": "/api/admin/data/legal-holds",
+        "authBoundary": true,
+        "permissionBoundary": "platform.data.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7410", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/data/residency",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-data-residency",
+        "routeId": "route:post-api-admin-data-residency",
+        "method": "POST",
+        "path": "/api/admin/data/residency",
+        "authBoundary": true,
+        "permissionBoundary": "platform.data.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7689", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "DELETE /api/admin/data/retention-policies",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-delete-api-admin-data-retention-policies",
+        "routeId": "route:delete-api-admin-data-retention-policies",
+        "method": "DELETE",
+        "path": "/api/admin/data/retention-policies",
+        "authBoundary": true,
+        "permissionBoundary": "platform.data.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7580", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/data/retention-policies",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-data-retention-policies",
+        "routeId": "route:post-api-admin-data-retention-policies",
+        "method": "POST",
+        "path": "/api/admin/data/retention-policies",
+        "authBoundary": true,
+        "permissionBoundary": "platform.data.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7531", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/events/:eventId/redrive",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-events-eventid-redrive",
+        "routeId": "route:post-api-admin-events-eventid-redrive",
+        "method": "POST",
+        "path": "/api/admin/events/:eventId/redrive",
+        "authBoundary": true,
+        "permissionBoundary": "platform.events.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6026", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/governance/catalog",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-governance-catalog",
+        "routeId": "route:post-api-admin-governance-catalog",
+        "method": "POST",
+        "path": "/api/admin/governance/catalog",
+        "authBoundary": true,
+        "permissionBoundary": "platform.governance.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7949", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/governance/catalog/classify",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-governance-catalog-classify",
+        "routeId": "route:post-api-admin-governance-catalog-classify",
+        "method": "POST",
+        "path": "/api/admin/governance/catalog/classify",
+        "authBoundary": true,
+        "permissionBoundary": "platform.governance.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7973", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/governance/dsr",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-governance-dsr",
+        "routeId": "route:post-api-admin-governance-dsr",
+        "method": "POST",
+        "path": "/api/admin/governance/dsr",
+        "authBoundary": true,
+        "permissionBoundary": "platform.governance.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8018", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-governance-dsr-dsrid-fulfill",
+        "routeId": "route:post-api-admin-governance-dsr-dsrid-fulfill",
+        "method": "POST",
+        "path": "/api/admin/governance/dsr/:dsrId/fulfill",
+        "authBoundary": true,
+        "permissionBoundary": "platform.governance.*",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8042", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/admin/incidents/:incidentId",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-admin-incidents-incidentid",
+        "routeId": "route:patch-api-admin-incidents-incidentid",
+        "method": "PATCH",
+        "path": "/api/admin/incidents/:incidentId",
+        "authBoundary": true,
+        "permissionBoundary": "platform.observability.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6600", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/admin/logs/search",
+      "message": "admin route without route-level RBAC/ABAC/PDP evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-admin-logs-search",
+        "routeId": "route:get-api-admin-logs-search",
+        "method": "GET",
+        "path": "/api/admin/logs/search",
+        "authBoundary": true,
+        "permissionBoundary": "platform.logs.read",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5222", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/provider-configs",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-provider-configs",
+        "routeId": "route:post-api-admin-provider-configs",
+        "method": "POST",
+        "path": "/api/admin/provider-configs",
+        "authBoundary": true,
+        "permissionBoundary": "platform.providers.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7011", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/provider-configs/:id/delete",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-provider-configs-id-delete",
+        "routeId": "route:post-api-admin-provider-configs-id-delete",
+        "method": "POST",
+        "path": "/api/admin/provider-configs/:id/delete",
+        "authBoundary": true,
+        "permissionBoundary": "platform.providers.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7075", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/provider-configs/:id/lifecycle",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-provider-configs-id-lifecycle",
+        "routeId": "route:post-api-admin-provider-configs-id-lifecycle",
+        "method": "POST",
+        "path": "/api/admin/provider-configs/:id/lifecycle",
+        "authBoundary": true,
+        "permissionBoundary": "platform.providers.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7044", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/scheduled-jobs",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-scheduled-jobs",
+        "routeId": "route:post-api-admin-scheduled-jobs",
+        "method": "POST",
+        "path": "/api/admin/scheduled-jobs",
+        "authBoundary": true,
+        "permissionBoundary": "platform.jobs.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6731", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/admin/scheduled-jobs/:jobId",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-admin-scheduled-jobs-jobid",
+        "routeId": "route:patch-api-admin-scheduled-jobs-jobid",
+        "method": "PATCH",
+        "path": "/api/admin/scheduled-jobs/:jobId",
+        "authBoundary": true,
+        "permissionBoundary": "platform.jobs.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6798", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/scheduled-jobs/:jobId/run",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-scheduled-jobs-jobid-run",
+        "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
+        "method": "POST",
+        "path": "/api/admin/scheduled-jobs/:jobId/run",
+        "authBoundary": true,
+        "permissionBoundary": "platform.jobs.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6764", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/search/reindex",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-search-reindex",
+        "routeId": "route:post-api-admin-search-reindex",
+        "method": "POST",
+        "path": "/api/admin/search/reindex",
+        "authBoundary": true,
+        "permissionBoundary": "platform.search.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5942", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/secrets",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-secrets",
+        "routeId": "route:post-api-admin-secrets",
+        "method": "POST",
+        "path": "/api/admin/secrets",
+        "authBoundary": true,
+        "permissionBoundary": "platform.secrets.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6884", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/secrets/delete",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-secrets-delete",
+        "routeId": "route:post-api-admin-secrets-delete",
+        "method": "POST",
+        "path": "/api/admin/secrets/delete",
+        "authBoundary": true,
+        "permissionBoundary": "platform.secrets.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6954", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/secrets/revoke",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-secrets-revoke",
+        "routeId": "route:post-api-admin-secrets-revoke",
+        "method": "POST",
+        "path": "/api/admin/secrets/revoke",
+        "authBoundary": true,
+        "permissionBoundary": "platform.secrets.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6919", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/sub-tenants",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-sub-tenants",
+        "routeId": "route:post-api-admin-sub-tenants",
+        "method": "POST",
+        "path": "/api/admin/sub-tenants",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.suborgs.create",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2287", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/support-session",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-support-session",
+        "routeId": "route:post-api-admin-support-session",
+        "method": "POST",
+        "path": "/api/admin/support-session",
+        "authBoundary": true,
+        "permissionBoundary": "platform.admin.access",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2307", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/support-session/approval-grant",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-support-session-approval-grant",
+        "routeId": "route:post-api-admin-support-session-approval-grant",
+        "method": "POST",
+        "path": "/api/admin/support-session/approval-grant",
+        "authBoundary": true,
+        "permissionBoundary": "platform.admin.access",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2426", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/support-session/approval-request",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-support-session-approval-request",
+        "routeId": "route:post-api-admin-support-session-approval-request",
+        "method": "POST",
+        "path": "/api/admin/support-session/approval-request",
+        "authBoundary": true,
+        "permissionBoundary": "platform.admin.access",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2378", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/support/tickets",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-support-tickets",
+        "routeId": "route:post-api-admin-support-tickets",
+        "method": "POST",
+        "path": "/api/admin/support/tickets",
+        "authBoundary": true,
+        "permissionBoundary": "platform.support.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6378", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants",
+        "routeId": "route:post-api-admin-tenants",
+        "method": "POST",
+        "path": "/api/admin/tenants",
+        "authBoundary": true,
+        "permissionBoundary": "platform.tenants.create",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2055", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/announcements",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-announcements",
+        "routeId": "route:post-api-admin-tenants-tenantid-announcements",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/announcements",
+        "authBoundary": true,
+        "permissionBoundary": "platform.notifications.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6281", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/repair",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-auth-settings-credential-repair",
+        "routeId": "route:post-api-admin-tenants-tenantid-auth-settings-credential-repair",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/auth-settings-credential/repair",
+        "authBoundary": true,
+        "permissionBoundary": "platform.tenants.create",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2215", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-auth-settings-credential-rotate",
+        "routeId": "route:post-api-admin-tenants-tenantid-auth-settings-credential-rotate",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/auth-settings-credential/rotate",
+        "authBoundary": true,
+        "permissionBoundary": "platform.tenants.create",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2170", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/delegations",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-delegations",
+        "routeId": "route:post-api-admin-tenants-tenantid-delegations",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/delegations",
+        "authBoundary": true,
+        "permissionBoundary": "platform.delegations.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5357", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "DELETE /api/admin/tenants/:tenantId/delegations/:delegationId",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-delete-api-admin-tenants-tenantid-delegations-delegationid",
+        "routeId": "route:delete-api-admin-tenants-tenantid-delegations-delegationid",
+        "method": "DELETE",
+        "path": "/api/admin/tenants/:tenantId/delegations/:delegationId",
+        "authBoundary": true,
+        "permissionBoundary": "platform.delegations.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5408", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/delete",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-delete",
+        "routeId": "route:post-api-admin-tenants-tenantid-delete",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/delete",
+        "authBoundary": true,
+        "permissionBoundary": "platform.tenants.delete",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7375", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/admin/tenants/:tenantId/entitlements",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-admin-tenants-tenantid-entitlements",
+        "routeId": "route:patch-api-admin-tenants-tenantid-entitlements",
+        "method": "PATCH",
+        "path": "/api/admin/tenants/:tenantId/entitlements",
+        "authBoundary": true,
+        "permissionBoundary": "platform.entitlements.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5277", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/import",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-import",
+        "routeId": "route:post-api-admin-tenants-tenantid-import",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/import",
+        "authBoundary": true,
+        "permissionBoundary": "platform.audit.read_all",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7278", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/meter-events",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-meter-events",
+        "routeId": "route:post-api-admin-tenants-tenantid-meter-events",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/meter-events",
+        "authBoundary": true,
+        "permissionBoundary": "platform.metering.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5477", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/notifications/test",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-notifications-test",
+        "routeId": "route:post-api-admin-tenants-tenantid-notifications-test",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/notifications/test",
+        "authBoundary": true,
+        "permissionBoundary": "platform.notifications.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6241", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/admin/tenants/:tenantId/quotas",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-admin-tenants-tenantid-quotas",
+        "routeId": "route:patch-api-admin-tenants-tenantid-quotas",
+        "method": "PATCH",
+        "path": "/api/admin/tenants/:tenantId/quotas",
+        "authBoundary": true,
+        "permissionBoundary": "platform.quotas.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5603", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/admin/tenants/:tenantId/rate-limits",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-admin-tenants-tenantid-rate-limits",
+        "routeId": "route:patch-api-admin-tenants-tenantid-rate-limits",
+        "method": "PATCH",
+        "path": "/api/admin/tenants/:tenantId/rate-limits",
+        "authBoundary": true,
+        "permissionBoundary": "platform.rate_limits.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5841", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/:tenantId/suspend",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-suspend",
+        "routeId": "route:post-api-admin-tenants-tenantid-suspend",
+        "method": "POST",
+        "path": "/api/admin/tenants/:tenantId/suspend",
+        "authBoundary": true,
+        "permissionBoundary": "platform.tenants.delete",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7345", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/tenants/auth-settings-credential",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-tenants-auth-settings-credential",
+        "routeId": "route:post-api-admin-tenants-auth-settings-credential",
+        "method": "POST",
+        "path": "/api/admin/tenants/auth-settings-credential",
+        "authBoundary": true,
+        "permissionBoundary": "platform.tenants.create",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2090", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/workflows/:workflowId/cancel",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-workflows-workflowid-cancel",
+        "routeId": "route:post-api-admin-workflows-workflowid-cancel",
+        "method": "POST",
+        "path": "/api/admin/workflows/:workflowId/cancel",
+        "authBoundary": true,
+        "permissionBoundary": "platform.workflow.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8170", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/workflows/:workflowId/signal",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-workflows-workflowid-signal",
+        "routeId": "route:post-api-admin-workflows-workflowid-signal",
+        "method": "POST",
+        "path": "/api/admin/workflows/:workflowId/signal",
+        "authBoundary": true,
+        "permissionBoundary": "platform.workflow.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8140", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/admin/workflows/start",
+      "message": "privileged mutation route without security audit evidence",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-admin-workflows-start",
+        "routeId": "route:post-api-admin-workflows-start",
+        "method": "POST",
+        "path": "/api/admin/workflows/start",
+        "authBoundary": true,
+        "permissionBoundary": "platform.workflow.write",
+        "tenantBoundary": "admin route namespace",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8101", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/providers",
+      "message": "route without auth decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-providers",
+        "routeId": "route:get-api-auth-providers",
+        "method": "GET",
+        "path": "/api/auth/providers",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/providers",
+      "message": "API route without permission decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-providers",
+        "routeId": "route:get-api-auth-providers",
+        "method": "GET",
+        "path": "/api/auth/providers",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/providers",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-providers",
+        "routeId": "route:get-api-auth-providers",
+        "method": "GET",
+        "path": "/api/auth/providers",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/auth/settings/domains",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-auth-settings-domains",
+        "routeId": "route:post-api-auth-settings-domains",
+        "method": "POST",
+        "path": "/api/auth/settings/domains",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2587", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "DELETE /api/auth/settings/domains/:domain",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-delete-api-auth-settings-domains-domain",
+        "routeId": "route:delete-api-auth-settings-domains-domain",
+        "method": "DELETE",
+        "path": "/api/auth/settings/domains/:domain",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2659", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/auth/settings/domains/challenges",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-auth-settings-domains-challenges",
+        "routeId": "route:post-api-auth-settings-domains-challenges",
+        "method": "POST",
+        "path": "/api/auth/settings/domains/challenges",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5083", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/auth/settings/domains/verify",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-auth-settings-domains-verify",
+        "routeId": "route:post-api-auth-settings-domains-verify",
+        "method": "POST",
+        "path": "/api/auth/settings/domains/verify",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5127", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/idps",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-idps",
+        "routeId": "route:get-api-auth-settings-idps",
+        "method": "GET",
+        "path": "/api/auth/settings/idps",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1375", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/auth/settings/idps",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-auth-settings-idps",
+        "routeId": "route:post-api-auth-settings-idps",
+        "method": "POST",
+        "path": "/api/auth/settings/idps",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1409", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "DELETE /api/auth/settings/idps/:alias",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-delete-api-auth-settings-idps-alias",
+        "routeId": "route:delete-api-auth-settings-idps-alias",
+        "method": "DELETE",
+        "path": "/api/auth/settings/idps/:alias",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1500", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/idps/:alias",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-idps-alias",
+        "routeId": "route:patch-api-auth-settings-idps-alias",
+        "method": "PATCH",
+        "path": "/api/auth/settings/idps/:alias",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1451", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/idps/:alias/callback-url",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-idps-alias-callback-url",
+        "routeId": "route:get-api-auth-settings-idps-alias-callback-url",
+        "method": "GET",
+        "path": "/api/auth/settings/idps/:alias/callback-url",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1567", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/idps/:alias/mapping",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-idps-alias-mapping",
+        "routeId": "route:get-api-auth-settings-idps-alias-mapping",
+        "method": "GET",
+        "path": "/api/auth/settings/idps/:alias/mapping",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1646", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/idps/:alias/mapping",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-idps-alias-mapping",
+        "routeId": "route:patch-api-auth-settings-idps-alias-mapping",
+        "method": "PATCH",
+        "path": "/api/auth/settings/idps/:alias/mapping",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1683", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/auth/settings/idps/:alias/test-connection",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-auth-settings-idps-alias-test-connection",
+        "routeId": "route:post-api-auth-settings-idps-alias-test-connection",
+        "method": "POST",
+        "path": "/api/auth/settings/idps/:alias/test-connection",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1595", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/auth/settings/idps/oidc/discover",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-auth-settings-idps-oidc-discover",
+        "routeId": "route:post-api-auth-settings-idps-oidc-discover",
+        "method": "POST",
+        "path": "/api/auth/settings/idps/oidc/discover",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1542", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/lockout",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-lockout",
+        "routeId": "route:get-api-auth-settings-lockout",
+        "method": "GET",
+        "path": "/api/auth/settings/lockout",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1797", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/lockout",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-lockout",
+        "routeId": "route:patch-api-auth-settings-lockout",
+        "method": "PATCH",
+        "path": "/api/auth/settings/lockout",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1828", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/mfa",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-mfa",
+        "routeId": "route:get-api-auth-settings-mfa",
+        "method": "GET",
+        "path": "/api/auth/settings/mfa",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1728", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/mfa",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-mfa",
+        "routeId": "route:patch-api-auth-settings-mfa",
+        "method": "PATCH",
+        "path": "/api/auth/settings/mfa",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1759", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/providers",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-providers",
+        "routeId": "route:get-api-auth-settings-providers",
+        "method": "GET",
+        "path": "/api/auth/settings/providers",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1296", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/providers",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-providers",
+        "routeId": "route:patch-api-auth-settings-providers",
+        "method": "PATCH",
+        "path": "/api/auth/settings/providers",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1324", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/readiness",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-readiness",
+        "routeId": "route:get-api-auth-settings-readiness",
+        "method": "GET",
+        "path": "/api/auth/settings/readiness",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1938", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/resource-policies",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-resource-policies",
+        "routeId": "route:get-api-auth-settings-resource-policies",
+        "method": "GET",
+        "path": "/api/auth/settings/resource-policies",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2486", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/resource-policies",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-resource-policies",
+        "routeId": "route:patch-api-auth-settings-resource-policies",
+        "method": "PATCH",
+        "path": "/api/auth/settings/resource-policies",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2527", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/session",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-session",
+        "routeId": "route:get-api-auth-settings-session",
+        "method": "GET",
+        "path": "/api/auth/settings/session",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1866", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/session",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-session",
+        "routeId": "route:patch-api-auth-settings-session",
+        "method": "PATCH",
+        "path": "/api/auth/settings/session",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1897", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/auth/settings/sysadmin-brokering",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-auth-settings-sysadmin-brokering",
+        "routeId": "route:get-api-auth-settings-sysadmin-brokering",
+        "method": "GET",
+        "path": "/api/auth/settings/sysadmin-brokering",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1969", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/auth/settings/sysadmin-brokering",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-auth-settings-sysadmin-brokering",
+        "routeId": "route:patch-api-auth-settings-sysadmin-brokering",
+        "method": "PATCH",
+        "path": "/api/auth/settings/sysadmin-brokering",
+        "authBoundary": true,
+        "permissionBoundary": "tenant.auth.settings.write",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "route handler audit evidence",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2000", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/graphql",
+      "message": "API route without permission decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-graphql",
+        "routeId": "route:post-api-graphql",
+        "method": "POST",
+        "path": "/api/graphql",
+        "authBoundary": true,
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5212", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "POST /api/graphql",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-post-api-graphql",
+        "routeId": "route:post-api-graphql",
+        "method": "POST",
+        "path": "/api/graphql",
+        "authBoundary": true,
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5212", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/host-identity",
+      "message": "route without auth decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-host-identity",
+        "routeId": "route:get-api-host-identity",
+        "method": "GET",
+        "path": "/api/host-identity",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1263", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/host-identity",
+      "message": "API route without permission decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-host-identity",
+        "routeId": "route:get-api-host-identity",
+        "method": "GET",
+        "path": "/api/host-identity",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1263", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/host-identity",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-host-identity",
+        "routeId": "route:get-api-host-identity",
+        "method": "GET",
+        "path": "/api/host-identity",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1263", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/organisation/profile",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-organisation-profile",
+        "routeId": "route:get-api-organisation-profile",
+        "method": "GET",
+        "path": "/api/organisation/profile",
+        "authBoundary": true,
+        "permissionBoundary": "organisation.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5189", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "PATCH /api/organisation/profile",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-patch-api-organisation-profile",
+        "routeId": "route:patch-api-organisation-profile",
+        "method": "PATCH",
+        "path": "/api/organisation/profile",
+        "authBoundary": true,
+        "permissionBoundary": "organisation.update",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5199", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/platform/service-catalog",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-platform-service-catalog",
+        "routeId": "route:get-api-platform-service-catalog",
+        "method": "GET",
+        "path": "/api/platform/service-catalog",
+        "authBoundary": true,
+        "permissionBoundary": "platform.admin.access",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5457", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/session",
+      "message": "route without auth decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-session",
+        "routeId": "route:get-api-session",
+        "method": "GET",
+        "path": "/api/session",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/session",
+      "message": "API route without permission decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-session",
+        "routeId": "route:get-api-session",
+        "method": "GET",
+        "path": "/api/session",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/session",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-session",
+        "routeId": "route:get-api-session",
+        "method": "GET",
+        "path": "/api/session",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/theme",
+      "message": "route without auth decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-theme",
+        "routeId": "route:get-api-theme",
+        "method": "GET",
+        "path": "/api/theme",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1222", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/theme",
+      "message": "API route without permission decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-theme",
+        "routeId": "route:get-api-theme",
+        "method": "GET",
+        "path": "/api/theme",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1222", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /api/theme",
+      "message": "API route without tenant boundary",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-api-theme",
+        "routeId": "route:get-api-theme",
+        "method": "GET",
+        "path": "/api/theme",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1222", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /e2e-harness",
+      "message": "route without auth decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-e2e-harness",
+        "routeId": "route:get-e2e-harness",
+        "method": "GET",
+        "path": "/e2e-harness",
+        "authBoundary": "unknown",
+        "permissionBoundary": "organisation.read",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "UMA resource+scope",
+        "failClosed": "source evidence",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/react-enterprise-app/src/routes/e2e-harness.tsx"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-security",
+      "subject": "GET /internal/auth/forward",
+      "message": "route without auth decision",
+      "evidence": {
+        "boundaryId": "security-boundary:route-get-internal-auth-forward",
+        "routeId": "route:get-internal-auth-forward",
+        "method": "GET",
+        "path": "/internal/auth/forward",
+        "authBoundary": "unknown",
+        "permissionBoundary": "unknown",
+        "tenantBoundary": "unknown",
+        "rbacAbacPdpDecision": "unknown",
+        "failClosed": "unknown",
+        "securityAudit": "unknown",
+        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1152", "docs/api/openapi.json"]
+      },
+      "classification": "must-fix-in-v1"
+    }
+  ]
+}

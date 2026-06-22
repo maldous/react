@@ -21,3 +21,28 @@ It extends formal semantic assurance into operational, observability, security, 
 | Runtime Alignment Assurance   | PASS   | 70 capabilities checked for semantic definition + proof + runtime evidence alignment. violations=0.                                                               |
 
 The platform can answer assurance questions through the generated graph and report artefacts: unaudited mutations, untraced routes, capabilities without alerts, providers without degraded mode, events without DLQ, capabilities without recovery or ownership, tenant-data capabilities without backup, privileged actions without audit, environment contradictions, semantic orphans, and runtime claims without evidence.
+
+## Adversarial Runtime Assurance
+
+Status: FAIL
+
+The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
+
+## Known Gaps Identified
+
+| Question                                              | Machine-generated answer |
+| ----------------------------------------------------- | -----------------------: |
+| Show every route without tracing.                     |                       28 |
+| Show every route without logging.                     |                       28 |
+| Show every route without metrics.                     |                       28 |
+| Show every mutation without audit.                    |                      101 |
+| Show every route without capability owner.            |                       25 |
+| Show every capability without ownership.              |                      158 |
+| Show every semantic orphan.                           |                        7 |
+| Show every provider without unavailable-path proof.   |                     2570 |
+| Show every workflow without failure-path proof.       |                      106 |
+| Show every storage operation without lifecycle proof. |                      114 |
+| Show every event without DLQ/retry proof.             |                        2 |
+| Show every alert without runbook.                     |                      236 |
+
+See `docs/v2-foundation/usf-audit/v1-correction-backlog.md` for classified gaps.

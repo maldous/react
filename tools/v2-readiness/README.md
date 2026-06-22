@@ -9,6 +9,7 @@ npm run v2:readiness        # human report, exit 1 while blockers remain
 npm run v2:readiness:json   # machine report
 npm run v2:formal-assurance # regenerate formal graph/report artefacts + attestation
 npm run v2:usf-assurance    # regenerate Universal Service Foundation assurance graphs/reports
+npm run v2:adversarial-usf-audit # regenerate runtime-derived USF audit inventories/reports
 node tools/v2-readiness/src/index.mjs --strict --repo . --pinned <freeze-sha>
 ```
 
@@ -128,8 +129,33 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
   environments, operations, security, audit, observability, and governance.
 - **R50 runtime-alignment** — semantic claims must align with proof and runtime evidence: logs,
   metrics, traces, alerts, audit records, and proof execution.
+- **R51 route-observability-assurance** — every discovered route must have route-level trace, log,
+  metric, correlation, proof, and mutation-audit evidence.
+- **R52 route-security-assurance** — every discovered route must prove auth, permission, tenant,
+  RBAC/ABAC/PDP, fail-closed, and privileged audit boundaries at the interface level.
+- **R53 ownership-assurance** — capabilities must have explicit operational/security/data/runtime
+  ownership evidence, not ownership inferred from names.
+- **R54 proof-behaviour-assurance** — runtime proofs are adversarially classified by behaviour
+  exercised and fail when they only prove existence, omit side effects, or omit failure modes.
+- **R55 storage-assurance** — storage operations require tenant isolation, quota-before-write,
+  lifecycle/AV/legal-hold/audit/trace/log/metric/proof evidence.
+- **R56 workflow-assurance** — workflows require state-machine, transition, idempotency, retry,
+  timeout, compensation, failure holding, audit, trace, metric, recovery, and proof evidence.
+- **R57 event-runtime-assurance** — emitted events require semantic definition, typed payload,
+  version, producer/consumer, idempotency, trace/audit correlation, retry, DLQ, retention, privacy,
+  and proof evidence.
+- **R58 metrics-alerts-assurance** — routes and capabilities require named metrics, thresholds,
+  alert owners/routing, runbooks, and proof that metrics can be emitted or observed.
+- **R59 data-governance-runtime-assurance** — data-owning capabilities require runtime proof for
+  ownership, classification, retention, backup/restore/export, legal hold, DSR, lineage, isolation,
+  and audit.
+- **R60 provider-reliability-runtime-assurance** — provider-backed capabilities require adapter,
+  config/secret source, timeout, retry, degraded/fail-closed behaviour, health checks, recovery, and
+  unavailable/misconfiguration proofs.
+- **R61 semantic-orphan-runtime-assurance** — semantic/runtime/proof/route/event/metric/audit/alert/
+  provider/environment orphans fail unless explicitly classified.
 
-R1–R8 + R10–R50 are the consistency validation (must pass); R9 is the fail-closed cut gate.
+R1–R8 + R10–R61 are the consistency validation (must pass); R9 is the fail-closed cut gate.
 
 Tests: `node --test tools/v2-readiness/tests/*.test.mjs` (also run via the canonical `test:architecture`
 gate, ADR-ACT-0292).

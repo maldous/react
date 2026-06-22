@@ -58,12 +58,13 @@ all: clean-all \
      evidence \
      env-status
 
-## v2-foundation-assurance — Regenerate and verify V2 formal + USF semantic assurance
+## v2-foundation-assurance — Regenerate and verify V2 formal + USF semantic/runtime assurance
 v2-foundation-assurance:
 	$(call STEP,v2 foundation assurance)
 	npm run v2:formal-assurance
 	npm run v2:usf-assurance
-	npx prettier --write docs/v2-foundation/formal-model/*.json docs/v2-foundation/mathematical-assurance-attestation.md docs/v2-foundation/usf-graph/*.json docs/v2-foundation/universal-service-foundation-assurance.md
+	npm run v2:adversarial-usf-audit
+	npx prettier --write docs/v2-foundation/formal-model/*.json docs/v2-foundation/mathematical-assurance-attestation.md docs/v2-foundation/usf-graph/*.json docs/v2-foundation/usf-audit/*.json docs/v2-foundation/usf-audit/*.md docs/v2-foundation/universal-service-foundation-assurance.md
 	npm run v2:readiness -- --strict
 	npm run v2:readiness -- --json
 	npm test -- tools/v2-readiness

@@ -1,0 +1,50 @@
+[
+  {
+    "workerId": "worker:retention-tick",
+    "key": "retention-tick",
+    "file": "apps/platform-api/src/server/retention-worker-runtime.ts",
+    "startsFromServer": false,
+    "retryEvidence": false,
+    "dlqEvidence": false,
+    "auditEvidence": true,
+    "traceEvidence": false,
+    "metricEvidence": false,
+    "sourceFileRefs": ["apps/platform-api/src/server/retention-worker-runtime.ts"]
+  },
+  {
+    "workerId": "worker:webhook-delivery",
+    "key": "webhook-delivery",
+    "file": "apps/platform-api/src/server/webhook-worker-runtime.ts",
+    "startsFromServer": false,
+    "retryEvidence": false,
+    "dlqEvidence": false,
+    "auditEvidence": false,
+    "traceEvidence": false,
+    "metricEvidence": false,
+    "sourceFileRefs": ["apps/platform-api/src/server/webhook-worker-runtime.ts"]
+  },
+  {
+    "workerId": "worker:worker-registry",
+    "key": "worker-registry",
+    "file": "apps/platform-api/src/server/worker-registry.ts",
+    "startsFromServer": false,
+    "retryEvidence": false,
+    "dlqEvidence": false,
+    "auditEvidence": false,
+    "traceEvidence": false,
+    "metricEvidence": false,
+    "sourceFileRefs": ["apps/platform-api/src/server/worker-registry.ts"]
+  },
+  {
+    "workerId": "worker:webhook-worker",
+    "key": "webhook-worker",
+    "file": "apps/platform-api/src/usecases/webhook-worker.ts",
+    "startsFromServer": false,
+    "retryEvidence": true,
+    "dlqEvidence": true,
+    "auditEvidence": false,
+    "traceEvidence": false,
+    "metricEvidence": true,
+    "sourceFileRefs": ["apps/platform-api/src/usecases/webhook-worker.ts"]
+  }
+]

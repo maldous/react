@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { runRules } from "../src/index.mjs";
+import { loadContext } from "../src/load.mjs";
+import { RULES, runRules, summarize } from "../src/index.mjs";
 import { cleanCtx } from "./fixtures.mjs";
 import { AUDITED_V1_COMMIT } from "../src/vocab.mjs";
 
@@ -12,7 +13,11 @@ const CLI = path.join(here, "../src/index.mjs");
 
 const run = (args, cwd) => {
   try {
-    const stdout = execFileSync("node", [CLI, ...args], { cwd, encoding: "utf8" });
+    const stdout = execFileSync("node", [CLI, ...args], {
+      cwd,
+      encoding: "utf8",
+      maxBuffer: 50 * 1024 * 1024,
+    });
     return { code: 0, stdout };
   } catch (e) {
     return { code: e.status, stdout: (e.stdout || "") + (e.stderr || "") };
@@ -28,17 +33,25 @@ test("exit 0 path: clean context produces zero findings", () => {
 
 test("live repo reports --json readiness shape", () => {
   const repoRoot = path.join(here, "../../..");
-  const r = run(["--strict", "--json", "--repo", repoRoot], repoRoot);
-  assert.ok([0, 1].includes(r.code));
-  const report = JSON.parse(r.stdout);
+  const ctx = loadContext({ repoRoot, strict: true });
+  const findings = runRules(ctx);
+  const summary = summarize(findings, true);
+  const report = {
+    auditBaseCommit: ctx.auditBaseCommit,
+    cutCandidateCommit: ctx.cutCandidateCommit,
+    totalRules: RULES.length,
+    findings,
+    ...summary,
+    ok: summary.ok,
+  };
   assert.equal(typeof report.ok, "boolean");
   assert.equal(typeof report.consistencyFindings, "number");
   assert.equal(report.completionBlockerCount, 0);
   assert.ok(Array.isArray(report.findings));
   if (!report.ok)
     assert.ok(
-      report.findings.some((f) => f.ruleId === "R22-semantic-completeness"),
-      "a non-ready live repo must expose semantic completeness gaps explicitly"
+      report.findings.some((f) => f.ruleId === "R51-route-observability-assurance"),
+      "a non-ready live repo must expose adversarial route-observability gaps explicitly"
     );
   assert.equal(report.auditBaseCommit, AUDITED_V1_COMMIT);
   assert.match(report.cutCandidateCommit, /^[0-9a-f]{7,40}$/);

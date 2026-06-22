@@ -1,0 +1,1190 @@
+[
+  {
+    "commandId": "npm-script:api-start",
+    "name": "npm run api:start",
+    "command": "node --loader ./apps/platform-api/loader.mjs ./apps/platform-api/src/server/http.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:api-start-admin",
+    "name": "npm run api:start:admin",
+    "command": "LOCAL_FIXTURE_SESSION=tenant-admin node --loader ./apps/platform-api/loader.mjs ./apps/platform-api/src/server/http.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:api-start-viewer",
+    "name": "npm run api:start:viewer",
+    "command": "LOCAL_FIXTURE_SESSION=viewer node --loader ./apps/platform-api/loader.mjs ./apps/platform-api/src/server/http.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:audit-deps",
+    "name": "npm run audit:deps",
+    "command": "npm audit --audit-level=high --omit=dev",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:audit-osv",
+    "name": "npm run audit:osv",
+    "command": "osv-scanner scan --recursive --config=osv-scanner.toml .",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:build-spa",
+    "name": "npm run build:spa",
+    "command": "cd apps/react-enterprise-app && ../../node_modules/.bin/vite build",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:codegen",
+    "name": "npm run codegen",
+    "command": "graphql-codegen --config codegen.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:codegen-check",
+    "name": "npm run codegen:check",
+    "command": "npm run codegen && git diff --exit-code -- packages/contracts-graphql/src/generated",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:codeql",
+    "name": "npm run codeql",
+    "command": "npm run codeql:db && npm run codeql:analyze",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:codeql-analyze",
+    "name": "npm run codeql:analyze",
+    "command": "codeql database analyze .codeql/db codeql/javascript-queries:codeql-suites/javascript-security-and-quality.qls --format=sarif-latest --output=.codeql/react.sarif",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:codeql-db",
+    "name": "npm run codeql:db",
+    "command": "codeql database create .codeql/db --language=javascript-typescript --source-root=. --overwrite --codescanning-config=.github/codeql/codeql-config.yml",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:codeql-validate",
+    "name": "npm run codeql:validate",
+    "command": "node tools/security/codeql-validate.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-cloud",
+    "name": "npm run compose:cloud",
+    "command": "docker compose --profile cloud-mocks up -d localstack",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-config",
+    "name": "npm run compose:config",
+    "command": "docker compose config",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-config-all",
+    "name": "npm run compose:config:all",
+    "command": "docker compose --profile external-sonar --profile identity --profile cloud-mocks --profile external-sentry --profile observability --profile observability-provider --profile web --profile external-mocks --profile external-web --profile workflow-provider --profile pitr-provider --profile antivirus-provider config",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-down",
+    "name": "npm run compose:down",
+    "command": "docker compose down",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-down-volumes",
+    "name": "npm run compose:down:volumes",
+    "command": "docker compose down --volumes",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-external-mocks",
+    "name": "npm run compose:external-mocks",
+    "command": "docker compose --profile external-mocks up -d wiremock",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-identity",
+    "name": "npm run compose:identity",
+    "command": "docker compose --profile identity up -d keycloak",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-logs",
+    "name": "npm run compose:logs",
+    "command": "docker compose logs -f",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-ps",
+    "name": "npm run compose:ps",
+    "command": "docker compose ps",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-sentry",
+    "name": "npm run compose:sentry",
+    "command": "docker compose --profile external-sentry up -d",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-up",
+    "name": "npm run compose:up",
+    "command": "docker compose up -d",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:compose-up-default",
+    "name": "npm run compose:up:default",
+    "command": "docker compose up -d postgres redis clickhouse minio mailpit otel-collector",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:coverage-normalize",
+    "name": "npm run coverage:normalize",
+    "command": "node tools/coverage/normalize-lcov.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:db-migrate",
+    "name": "npm run db:migrate",
+    "command": "node apps/platform-api/src/db/migrate.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:db-reset",
+    "name": "npm run db:reset",
+    "command": "NODE_ENV=test node apps/platform-api/src/db/reset.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:db-seed",
+    "name": "npm run db:seed",
+    "command": "node apps/platform-api/src/db/seed.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:depcruise",
+    "name": "npm run depcruise",
+    "command": "./node_modules/.bin/depcruise --config .dependency-cruiser.cjs apps packages tools/architecture --output-type text",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-accessibility",
+    "name": "npm run e2e:accessibility",
+    "command": "playwright test --config playwright.discovery.config.ts e2e/discovery/accessibility.spec.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-coverage-validate",
+    "name": "npm run e2e:coverage:validate",
+    "command": "node tools/e2e/validate-e2e/src/index.mjs coverage",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-failure-rootcause",
+    "name": "npm run e2e:failure:rootcause",
+    "command": "node tools/e2e/failure-rootcause/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-observability-correlate",
+    "name": "npm run e2e:observability:correlate",
+    "command": "node tools/e2e/observability-correlation/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-persona-authz",
+    "name": "npm run e2e:persona:authz",
+    "command": "playwright test --config playwright.discovery.config.ts e2e/discovery/persona-authz.spec.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-personas-validate",
+    "name": "npm run e2e:personas:validate",
+    "command": "node tools/e2e/validate-e2e/src/index.mjs personas",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-registry-validate",
+    "name": "npm run e2e:registry:validate",
+    "command": "node tools/e2e/validate-e2e/src/index.mjs all",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-scenario-validate",
+    "name": "npm run e2e:scenario:validate",
+    "command": "node tools/e2e/validate-scenario-manifest/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-sentry-assert",
+    "name": "npm run e2e:sentry:assert",
+    "command": "node tools/e2e/sentry-assertion/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-ui-contract-validate",
+    "name": "npm run e2e:ui:contract:validate",
+    "command": "node tools/e2e/validate-e2e/src/index.mjs ui-contract",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:e2e-ui-discover",
+    "name": "npm run e2e:ui:discover",
+    "command": "playwright test --config playwright.discovery.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:format-check",
+    "name": "npm run format:check",
+    "command": "prettier --check .",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:format-write",
+    "name": "npm run format:write",
+    "command": "prettier --write .",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:frontend-conventions",
+    "name": "npm run frontend:conventions",
+    "command": "node tools/architecture/validate-frontend-conventions/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:generate-feature",
+    "name": "npm run generate:feature",
+    "command": "node tools/generate-feature/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:knip",
+    "name": "npm run knip",
+    "command": "./node_modules/.bin/knip",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:license-policy",
+    "name": "npm run license:policy",
+    "command": "license-checker-rseidelsohn --production --excludePrivatePackages --failOn 'GPL-2.0;GPL-3.0;AGPL-3.0;SSPL;Commons Clause' --out /dev/null && echo 'License scan passed — no blocked licenses found'",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:lint",
+    "name": "npm run lint",
+    "command": "eslint .",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:lint-md",
+    "name": "npm run lint:md",
+    "command": "markdownlint-cli2 '**/*.md'",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:mcp-governor",
+    "name": "npm run mcp:governor",
+    "command": "node tools/mcp/platform-governor/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:mcp-governor-selftest",
+    "name": "npm run mcp:governor:selftest",
+    "command": "node tools/mcp/platform-governor/tests/handshake.test.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:openapi-drift",
+    "name": "npm run openapi:drift",
+    "command": "node tools/architecture/validate-openapi-drift/src/index.mjs .",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:openapi-lint",
+    "name": "npm run openapi:lint",
+    "command": "npx --yes @stoplight/spectral-cli@6.16.0 lint docs/api/openapi.json --ruleset .spectral.yaml",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-alert-incident-closure",
+    "name": "npm run proof:alert-incident-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-alert-notification-bridge",
+    "name": "npm run proof:alert-notification-bridge",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-alerting",
+    "name": "npm run proof:alerting",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/alerting-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-api-key-routes",
+    "name": "npm run proof:api-key-routes",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-api-keys",
+    "name": "npm run proof:api-keys",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/api-keys-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-approval-workflow",
+    "name": "npm run proof:approval-workflow",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-auth-credential-lifecycle",
+    "name": "npm run proof:auth-credential-lifecycle",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-auth-idps",
+    "name": "npm run proof:auth-idps",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/idp-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-auth-oidc-enterprise",
+    "name": "npm run proof:auth-oidc-enterprise",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-auth-settings",
+    "name": "npm run proof:auth-settings",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-backup-control-route",
+    "name": "npm run proof:backup-control-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-backup-local",
+    "name": "npm run proof:backup-local",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/backup-local-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-billing-catalog",
+    "name": "npm run proof:billing-catalog",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-billing-control-route",
+    "name": "npm run proof:billing-control-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-billing-provider",
+    "name": "npm run proof:billing-provider",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-billing-readiness-route",
+    "name": "npm run proof:billing-readiness-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-clickthrough",
+    "name": "npm run proof:clickthrough",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-compliance-report-route",
+    "name": "npm run proof:compliance-report-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-composed-provider-readiness",
+    "name": "npm run proof:composed-provider-readiness",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-composed-provider-runtime-closure",
+    "name": "npm run proof:composed-provider-runtime-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-dashboards",
+    "name": "npm run proof:dashboards",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-data-governance",
+    "name": "npm run proof:data-governance",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/data-governance-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-data-portability",
+    "name": "npm run proof:data-portability",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/data-portability-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-data-residency",
+    "name": "npm run proof:data-residency",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/data-residency-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-delegated-admin",
+    "name": "npm run proof:delegated-admin",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-domain-identity-matrix",
+    "name": "npm run proof:domain-identity-matrix",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-email-sender",
+    "name": "npm run proof:email-sender",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-entitlement-policy-chain",
+    "name": "npm run proof:entitlement-policy-chain",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-entitlements",
+    "name": "npm run proof:entitlements",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/entitlements-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-entitlements-postgres",
+    "name": "npm run proof:entitlements-postgres",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-entitlements-routes",
+    "name": "npm run proof:entitlements-routes",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-environment-admin-bootstrap",
+    "name": "npm run proof:environment-admin-bootstrap",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-environment-operations",
+    "name": "npm run proof:environment-operations",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-environment-registry",
+    "name": "npm run proof:environment-registry",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-event-bus",
+    "name": "npm run proof:event-bus",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/event-bus-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-event-redrive",
+    "name": "npm run proof:event-redrive",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-event-worker",
+    "name": "npm run proof:event-worker",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/event-worker-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-full-observability-contract",
+    "name": "npm run proof:full-observability-contract",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-history",
+    "name": "npm run proof:history",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/history-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-http-engine-providers",
+    "name": "npm run proof:http-engine-providers",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-incident-foundation",
+    "name": "npm run proof:incident-foundation",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-lago-billing-provider",
+    "name": "npm run proof:lago-billing-provider",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-metering",
+    "name": "npm run proof:metering",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/metering-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-metering-quota-routes",
+    "name": "npm run proof:metering-quota-routes",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-metrics-prometheus",
+    "name": "npm run proof:metrics-prometheus",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-notification-dispatch",
+    "name": "npm run proof:notification-dispatch",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-notification-email-transport",
+    "name": "npm run proof:notification-email-transport",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-notification-preferences",
+    "name": "npm run proof:notification-preferences",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-notification-transport-routes",
+    "name": "npm run proof:notification-transport-routes",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-notification-webhook-transport",
+    "name": "npm run proof:notification-webhook-transport",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-object-scan-closure",
+    "name": "npm run proof:object-scan-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-observability-control-route",
+    "name": "npm run proof:observability-control-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-observability-metrics-traces-closure",
+    "name": "npm run proof:observability-metrics-traces-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-observability-provider-closure",
+    "name": "npm run proof:observability-provider-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-observability-readiness-route",
+    "name": "npm run proof:observability-readiness-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-observability-signals",
+    "name": "npm run proof:observability-signals",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-pitr-restore-drill",
+    "name": "npm run proof:pitr-restore-drill",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-platform-services",
+    "name": "npm run proof:platform-services",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/platform-services-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-profile-self-service",
+    "name": "npm run proof:profile-self-service",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-binding-report-route",
+    "name": "npm run proof:provider-binding-report-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-config",
+    "name": "npm run proof:provider-config",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-config-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-environment-classification",
+    "name": "npm run proof:provider-environment-classification",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-observability-closure",
+    "name": "npm run proof:provider-observability-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-observability-contract",
+    "name": "npm run proof:provider-observability-contract",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-readiness-contract",
+    "name": "npm run proof:provider-readiness-contract",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-provider-secrets-readiness",
+    "name": "npm run proof:provider-secrets-readiness",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-quota-enforcement",
+    "name": "npm run proof:quota-enforcement",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-rate-limits",
+    "name": "npm run proof:rate-limits",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-rate-limits-redis",
+    "name": "npm run proof:rate-limits-redis",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-scheduled-job-routes",
+    "name": "npm run proof:scheduled-job-routes",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-scheduled-jobs",
+    "name": "npm run proof:scheduled-jobs",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-search",
+    "name": "npm run proof:search",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/search-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-search-isolation",
+    "name": "npm run proof:search-isolation",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-search-routes",
+    "name": "npm run proof:search-routes",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/search-routes-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-secret-store-contract",
+    "name": "npm run proof:secret-store-contract",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-secrets-openbao",
+    "name": "npm run proof:secrets-openbao",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-security-control-route",
+    "name": "npm run proof:security-control-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-service-catalog-registry",
+    "name": "npm run proof:service-catalog-registry",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-service-clickthrough-policy",
+    "name": "npm run proof:service-clickthrough-policy",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-support-approval",
+    "name": "npm run proof:support-approval",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-temporal-workflow-provider",
+    "name": "npm run proof:temporal-workflow-provider",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-custom-domain-auth-origin",
+    "name": "npm run proof:tenant-custom-domain-auth-origin",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-custom-domain-resolution",
+    "name": "npm run proof:tenant-custom-domain-resolution",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-domain-canonical",
+    "name": "npm run proof:tenant-domain-canonical",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-domain-claim-lifecycle",
+    "name": "npm run proof:tenant-domain-claim-lifecycle",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-domains",
+    "name": "npm run proof:tenant-domains",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-domains-routing",
+    "name": "npm run proof:tenant-domains-routing",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-lifecycle",
+    "name": "npm run proof:tenant-lifecycle",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-observability",
+    "name": "npm run proof:tenant-observability",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-storage",
+    "name": "npm run proof:tenant-storage",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-tenant-storage-objects",
+    "name": "npm run proof:tenant-storage-objects",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-typed-secret-resolution",
+    "name": "npm run proof:typed-secret-resolution",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-ui-semantic-claim-mapping",
+    "name": "npm run proof:ui-semantic-claim-mapping",
+    "command": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-ui-semantic-groups",
+    "name": "npm run proof:ui-semantic-groups",
+    "command": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/groups.spec.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-ui-semantic-sub-organisations",
+    "name": "npm run proof:ui-semantic-sub-organisations",
+    "command": "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-webhook-redrive",
+    "name": "npm run proof:webhook-redrive",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-webhook-worker",
+    "name": "npm run proof:webhook-worker",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-webhooks",
+    "name": "npm run proof:webhooks",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/webhooks-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-windmill-automation-provider",
+    "name": "npm run proof:windmill-automation-provider",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-workflow-adapters",
+    "name": "npm run proof:workflow-adapters",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-workflow-closure",
+    "name": "npm run proof:workflow-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-workflow-control-route",
+    "name": "npm run proof:workflow-control-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-workflow-engine",
+    "name": "npm run proof:workflow-engine",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-workflow-provider-live",
+    "name": "npm run proof:workflow-provider-live",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-provider-live-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-workflow-readiness-route",
+    "name": "npm run proof:workflow-readiness-route",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:sbom-generate",
+    "name": "npm run sbom:generate",
+    "command": "./node_modules/.bin/cyclonedx-npm --output-format JSON --output-file docs/evidence/security/sbom-baseline.json --package-lock-only --ignore-npm-errors",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:sbom-policy",
+    "name": "npm run sbom:policy",
+    "command": "node tools/security/sbom-policy.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:sbom-verify",
+    "name": "npm run sbom:verify",
+    "command": "node tools/security/sbom-verify.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:secrets-scan",
+    "name": "npm run secrets:scan",
+    "command": "command -v gitleaks >/dev/null 2>&1 || { echo 'gitleaks not found on PATH ? install from https://github.com/gitleaks/gitleaks/releases or use the gitleaks-action in CI'; exit 0; }; gitleaks detect --source .",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:seed-idps",
+    "name": "npm run seed:idps",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/seed-idps.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:semgrep",
+    "name": "npm run semgrep",
+    "command": "semgrep scan --config tools/semgrep/rules.yml --metrics=off",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:semgrep-gate",
+    "name": "npm run semgrep:gate",
+    "command": "semgrep scan --config tools/semgrep/rules.yml --metrics=off --severity ERROR --error",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:semgrep-json",
+    "name": "npm run semgrep:json",
+    "command": "semgrep scan --config tools/semgrep/rules.yml --metrics=off --json",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test",
+    "name": "npm run test",
+    "command": "node tools/run-tests.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-architecture",
+    "name": "npm run test:architecture",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" --test --import \"$(pwd)/apps/platform-api/tests/lib/preload-env.mjs\" --test-concurrency=1 tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs tools/architecture/validate-i18n/tests/validate-i18n.test.mjs tools/architecture/orchestrator/tests/check-mode.test.mjs tools/architecture/orchestrator/tests/dependency-order.test.mjs tools/architecture/orchestrator/tests/failure-stop.test.mjs tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs tools/architecture/orchestrator/tests/write-mode.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs tools/architecture/_shared/tests/shared-primitives.test.mjs packages/platform-runtime-context/tests/platform-runtime-context.test.ts packages/platform-errors/tests/platform-errors.test.ts packages/platform-errors/tests/platform-errors-auth.test.ts packages/platform-logging/tests/platform-logging.test.ts packages/platform-observability/tests/platform-observability.test.ts packages/api-runtime/tests/health-contract.test.ts packages/contracts-auth/tests/contracts-auth.test.ts packages/domain-identity/tests/domain-identity.test.ts packages/session-runtime/tests/session-runtime.test.ts apps/platform-api/tests/substrate/health-handlers.test.ts apps/platform-api/tests/substrate/session-fixture.test.ts apps/platform-api/tests/substrate/observability-smoke.test.ts apps/platform-api/tests/substrate/api-pipeline.test.ts apps/platform-api/tests/substrate/organisation-profile.test.ts apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts apps/platform-api/tests/unit/organisation-validation.test.ts apps/platform-api/tests/unit/organisation-usecase.test.ts packages/adapters-redis/tests/adapters-redis.test.ts packages/adapters-keycloak/tests/adapters-keycloak.test.ts packages/adapters-postgres/tests/adapters-postgres.test.ts apps/platform-api/tests/substrate/postgres-identity-repository.test.ts apps/platform-api/tests/unit/auth-usecase.test.ts apps/platform-api/tests/substrate/auth-routes.test.ts packages/i18n-runtime/tests/i18n-runtime.test.ts packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts packages/contracts-graphql/tests/contracts-graphql.test.ts packages/adapters-loki/tests/adapters-loki.test.ts packages/adapters-sentry/tests/adapters-sentry.test.ts tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs tools/e2e/result-contract.test.mjs tools/e2e/observability-correlation/tests/classify.test.mjs scripts/tests/tests/aggregate-confidence.test.mjs apps/platform-api/tests/unit/auth-providers.test.ts e2e/identity/redirect-merge.test.ts tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs tools/architecture/validate-action-register/tests/validate-action-register.test.mjs tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs tools/e2e/scenario-manifest.test.mjs tools/e2e/tempo-trace.test.mjs tools/e2e/correlation-headers.test.mjs scripts/evidence/tests/verify-ladder.test.mjs scripts/evidence/tests/deprecation-evidence-facts.test.mjs scripts/tests/tests/stage-exit.test.mjs scripts/tests/tests/release-confidence-contract.test.mjs scripts/tests/tests/sonar-oidc-honesty.test.mjs tools/v2-readiness/tests/rules.test.mjs tools/v2-readiness/tests/cli.test.mjs tools/v2-readiness/tests/golden.test.mjs tools/v2-readiness/tests/package-status.test.mjs tools/v2-readiness/tests/import-parity.test.mjs tools/v2-readiness/tests/osv-exceptions.test.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-compose",
+    "name": "npm run test:compose",
+    "command": "node --loader ./apps/platform-api/loader.mjs --test tests/integration/compose-smoke.test.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-coverage",
+    "name": "npm run test:coverage",
+    "command": "mkdir -p coverage && node --loader \"$(pwd)/apps/platform-api/loader.mjs\" --test --import \"$(pwd)/apps/platform-api/tests/lib/preload-env.mjs\" --experimental-test-coverage --test-reporter=lcov --test-reporter-destination=coverage/lcov.info --test-reporter=spec --test-reporter-destination=stdout tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs tools/architecture/validate-i18n/tests/validate-i18n.test.mjs tools/architecture/orchestrator/tests/check-mode.test.mjs tools/architecture/orchestrator/tests/dependency-order.test.mjs tools/architecture/orchestrator/tests/failure-stop.test.mjs tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs tools/architecture/orchestrator/tests/write-mode.test.mjs tools/architecture/orchestrator/tests/self-evidence.test.mjs tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs tools/architecture/_shared/tests/shared-primitives.test.mjs packages/platform-runtime-context/tests/platform-runtime-context.test.ts packages/platform-errors/tests/platform-errors.test.ts packages/platform-errors/tests/platform-errors-auth.test.ts packages/platform-logging/tests/platform-logging.test.ts packages/platform-observability/tests/platform-observability.test.ts packages/api-runtime/tests/health-contract.test.ts packages/contracts-auth/tests/contracts-auth.test.ts packages/domain-identity/tests/domain-identity.test.ts packages/session-runtime/tests/session-runtime.test.ts apps/platform-api/tests/substrate/health-handlers.test.ts apps/platform-api/tests/substrate/session-fixture.test.ts apps/platform-api/tests/substrate/observability-smoke.test.ts apps/platform-api/tests/substrate/api-pipeline.test.ts apps/platform-api/tests/substrate/organisation-profile.test.ts apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts apps/platform-api/tests/unit/organisation-validation.test.ts apps/platform-api/tests/unit/organisation-usecase.test.ts packages/adapters-redis/tests/adapters-redis.test.ts packages/adapters-keycloak/tests/adapters-keycloak.test.ts packages/adapters-postgres/tests/adapters-postgres.test.ts apps/platform-api/tests/substrate/postgres-identity-repository.test.ts apps/platform-api/tests/unit/auth-usecase.test.ts apps/platform-api/tests/substrate/auth-routes.test.ts packages/i18n-runtime/tests/i18n-runtime.test.ts packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts packages/contracts-graphql/tests/contracts-graphql.test.ts packages/adapters-loki/tests/adapters-loki.test.ts packages/adapters-sentry/tests/adapters-sentry.test.ts tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs tools/e2e/result-contract.test.mjs tools/e2e/observability-correlation/tests/classify.test.mjs scripts/tests/tests/aggregate-confidence.test.mjs apps/platform-api/tests/unit/auth-providers.test.ts e2e/identity/redirect-merge.test.ts tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs tools/architecture/validate-action-register/tests/validate-action-register.test.mjs tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs apps/platform-api/tests/unit/cookie-security.test.ts apps/platform-api/tests/unit/resource-policies.test.ts apps/platform-api/tests/unit/vanity-domain.test.ts apps/platform-api/tests/unit/test-suite-completeness.test.ts apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts tools/e2e/scenario-manifest.test.mjs tools/e2e/tempo-trace.test.mjs tools/e2e/correlation-headers.test.mjs scripts/evidence/tests/verify-ladder.test.mjs scripts/evidence/tests/deprecation-evidence-facts.test.mjs scripts/tests/tests/stage-exit.test.mjs scripts/tests/tests/release-confidence-contract.test.mjs scripts/tests/tests/sonar-oidc-honesty.test.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e",
+    "name": "npm run test:e2e",
+    "command": "playwright test --config playwright.internal.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-build",
+    "name": "npm run test:e2e:build",
+    "command": "playwright test --config playwright.build.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-external",
+    "name": "npm run test:e2e:external",
+    "command": "playwright test --config playwright.external.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-identity",
+    "name": "npm run test:e2e:identity",
+    "command": "playwright test --config playwright.identity.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-internal",
+    "name": "npm run test:e2e:internal",
+    "command": "playwright test --config playwright.internal.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-prod",
+    "name": "npm run test:e2e:prod",
+    "command": "playwright test --config playwright.prod.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-report",
+    "name": "npm run test:e2e:report",
+    "command": "playwright show-report",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-e2e-ui",
+    "name": "npm run test:e2e:ui",
+    "command": "playwright test --ui",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-frontend",
+    "name": "npm run test:frontend",
+    "command": "vitest --config apps/react-enterprise-app/vitest.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-frontend-coverage",
+    "name": "npm run test:frontend:coverage",
+    "command": "vitest --config apps/react-enterprise-app/vitest.config.ts --coverage",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-frontend-run",
+    "name": "npm run test:frontend:run",
+    "command": "vitest run --config apps/react-enterprise-app/vitest.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-mock-oidc",
+    "name": "npm run test:mock-oidc",
+    "command": "cd services/mock-oidc && npm install --no-audit --no-fund --silent && npm test",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-platform-api",
+    "name": "npm run test:platform-api",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" --test --import \"$(pwd)/apps/platform-api/tests/lib/preload-env.mjs\" --test-concurrency=1 apps/platform-api/tests/substrate/health-handlers.test.ts apps/platform-api/tests/substrate/session-fixture.test.ts apps/platform-api/tests/substrate/observability-smoke.test.ts apps/platform-api/tests/substrate/api-pipeline.test.ts apps/platform-api/tests/substrate/organisation-profile.test.ts apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts apps/platform-api/tests/unit/legal-hold.test.ts apps/platform-api/tests/unit/organisation-validation.test.ts apps/platform-api/tests/unit/organisation-usecase.test.ts apps/platform-api/tests/substrate/postgres-identity-repository.test.ts apps/platform-api/tests/unit/auth-usecase.test.ts apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts apps/platform-api/tests/unit/retention.test.ts apps/platform-api/tests/unit/support-mode.test.ts apps/platform-api/tests/unit/tenant-resolver.test.ts apps/platform-api/tests/unit/forward-auth.test.ts apps/platform-api/tests/unit/service-clickthrough.test.ts apps/platform-api/tests/unit/auth-settings-audit.test.ts apps/platform-api/tests/unit/auth-settings-readiness.test.ts apps/platform-api/tests/unit/idp-management.test.ts apps/platform-api/tests/unit/oidc-discovery.test.ts apps/platform-api/tests/unit/oidc-mapping.test.ts apps/platform-api/tests/unit/email-sender.test.ts apps/platform-api/tests/unit/capability-registry.test.ts apps/platform-api/tests/unit/tenant-domains.test.ts apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts apps/platform-api/tests/unit/tenant-storage.test.ts apps/platform-api/tests/unit/tenant-observability.test.ts apps/platform-api/tests/unit/webhooks.test.ts apps/platform-api/tests/unit/webhook-worker.test.ts apps/platform-api/tests/unit/platform-services.test.ts apps/platform-api/tests/unit/prometheus-metrics.test.ts apps/platform-api/tests/unit/proof-registry.test.ts apps/platform-api/tests/unit/tenant-credential.test.ts apps/platform-api/tests/unit/token-crypto.test.ts apps/platform-api/tests/unit/resolve-access-token.test.ts apps/platform-api/tests/unit/members.test.ts apps/platform-api/tests/unit/groups.test.ts apps/platform-api/tests/unit/sub-organisations.test.ts apps/platform-api/tests/unit/features.test.ts apps/platform-api/tests/unit/vanity-domain-challenge.test.ts apps/platform-api/tests/unit/observability.test.ts apps/platform-api/tests/unit/authorize-resource.test.ts apps/platform-api/tests/unit/logs-usecase.test.ts apps/platform-api/tests/substrate/graphql-organisation.test.ts apps/platform-api/tests/substrate/admin-logs.test.ts apps/platform-api/tests/unit/auth-providers.test.ts apps/platform-api/tests/unit/auth-provider-config.test.ts apps/platform-api/tests/unit/contracts-admin-drift.test.ts apps/platform-api/tests/unit/members-v2.test.ts apps/platform-api/tests/unit/config-contracts.test.ts apps/platform-api/tests/unit/platform-config.test.ts apps/platform-api/tests/unit/audit.test.ts apps/platform-api/tests/unit/entitlements.test.ts apps/platform-api/tests/unit/service-catalog.test.ts apps/platform-api/tests/unit/admin-tenants.test.ts apps/platform-api/tests/unit/metering.test.ts apps/platform-api/tests/unit/quota.test.ts apps/platform-api/tests/unit/api-keys.test.ts apps/platform-api/tests/unit/rate-limits.test.ts apps/platform-api/tests/unit/redis-rate-limit-repository.test.ts apps/platform-api/tests/unit/search.test.ts apps/platform-api/tests/unit/events.test.ts apps/platform-api/tests/unit/profile.test.ts apps/platform-api/tests/unit/notifications.test.ts apps/platform-api/tests/unit/observability-alerting.test.ts apps/platform-api/tests/unit/scheduled-jobs.test.ts e2e/identity/redirect-merge.test.ts apps/platform-api/tests/substrate/auth-routes.test.ts apps/platform-api/tests/unit/cookie-security.test.ts apps/platform-api/tests/unit/resource-policies.test.ts apps/platform-api/tests/unit/vanity-domain.test.ts apps/platform-api/tests/unit/test-suite-completeness.test.ts apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts apps/platform-api/tests/unit/migrations.test.ts apps/platform-api/tests/unit/test-env-preload.test.ts apps/platform-api/tests/unit/app-config.test.ts apps/platform-api/tests/unit/notification-config.test.ts apps/platform-api/tests/unit/stage-config.test.ts apps/platform-api/tests/unit/bootstrap-secrets.test.ts apps/platform-api/tests/unit/session-config.test.ts apps/platform-api/tests/unit/health-metadata-config.test.ts apps/platform-api/tests/unit/observability-probe-config.test.ts apps/platform-api/tests/unit/delegations.test.ts apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts apps/platform-api/tests/unit/lago-billing-provider.test.ts apps/platform-api/tests/unit/temporal-workflow-provider.test.ts apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts apps/platform-api/tests/unit/windmill-automation-provider.test.ts apps/platform-api/tests/unit/billing-catalog.test.ts apps/platform-api/tests/unit/data-governance.test.ts apps/platform-api/tests/unit/data-portability.test.ts apps/platform-api/tests/unit/storage-objects.test.ts apps/platform-api/tests/unit/data-residency.test.ts apps/platform-api/tests/unit/support-announcements.test.ts apps/platform-api/tests/unit/support-tickets.test.ts apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-platform-api-unit-safe",
+    "name": "npm run test:platform-api:unit-safe",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" --test --import \"$(pwd)/apps/platform-api/tests/lib/preload-unit-env.mjs\" --test-concurrency=1 apps/platform-api/tests/substrate/health-handlers.test.ts apps/platform-api/tests/substrate/observability-smoke.test.ts apps/platform-api/tests/substrate/api-pipeline.test.ts apps/platform-api/tests/unit/organisation-validation.test.ts apps/platform-api/tests/unit/organisation-usecase.test.ts apps/platform-api/tests/unit/auth-usecase.test.ts apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts apps/platform-api/tests/unit/support-mode.test.ts apps/platform-api/tests/unit/tenant-resolver.test.ts apps/platform-api/tests/unit/forward-auth.test.ts apps/platform-api/tests/unit/service-clickthrough.test.ts apps/platform-api/tests/unit/auth-settings-audit.test.ts apps/platform-api/tests/unit/auth-settings-readiness.test.ts apps/platform-api/tests/unit/idp-management.test.ts apps/platform-api/tests/unit/capability-registry.test.ts apps/platform-api/tests/unit/tenant-domains.test.ts apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts apps/platform-api/tests/unit/tenant-storage.test.ts apps/platform-api/tests/unit/tenant-observability.test.ts apps/platform-api/tests/unit/webhooks.test.ts apps/platform-api/tests/unit/webhook-worker.test.ts apps/platform-api/tests/unit/platform-services.test.ts apps/platform-api/tests/unit/proof-registry.test.ts apps/platform-api/tests/unit/tenant-credential.test.ts apps/platform-api/tests/unit/token-crypto.test.ts apps/platform-api/tests/unit/resolve-access-token.test.ts apps/platform-api/tests/unit/members.test.ts apps/platform-api/tests/unit/groups.test.ts apps/platform-api/tests/unit/sub-organisations.test.ts apps/platform-api/tests/unit/features.test.ts apps/platform-api/tests/unit/vanity-domain-challenge.test.ts apps/platform-api/tests/unit/observability.test.ts apps/platform-api/tests/unit/authorize-resource.test.ts apps/platform-api/tests/unit/logs-usecase.test.ts apps/platform-api/tests/unit/entitlements.test.ts apps/platform-api/tests/unit/service-catalog.test.ts apps/platform-api/tests/unit/admin-tenants.test.ts apps/platform-api/tests/unit/metering.test.ts apps/platform-api/tests/unit/quota.test.ts apps/platform-api/tests/unit/api-keys.test.ts apps/platform-api/tests/unit/rate-limits.test.ts apps/platform-api/tests/unit/redis-rate-limit-repository.test.ts apps/platform-api/tests/unit/search.test.ts apps/platform-api/tests/unit/events.test.ts apps/platform-api/tests/unit/profile.test.ts apps/platform-api/tests/unit/notifications.test.ts apps/platform-api/tests/unit/observability-alerting.test.ts apps/platform-api/tests/unit/scheduled-jobs.test.ts apps/platform-api/tests/unit/migrations.test.ts apps/platform-api/tests/unit/test-env-preload.test.ts apps/platform-api/tests/unit/app-config.test.ts apps/platform-api/tests/unit/notification-config.test.ts apps/platform-api/tests/unit/stage-config.test.ts apps/platform-api/tests/unit/bootstrap-secrets.test.ts apps/platform-api/tests/unit/session-config.test.ts apps/platform-api/tests/unit/health-metadata-config.test.ts apps/platform-api/tests/unit/observability-probe-config.test.ts apps/platform-api/tests/unit/billing-catalog.test.ts apps/platform-api/tests/unit/data-governance.test.ts apps/platform-api/tests/unit/data-portability.test.ts apps/platform-api/tests/unit/storage-objects.test.ts apps/platform-api/tests/unit/data-residency.test.ts apps/platform-api/tests/unit/support-announcements.test.ts apps/platform-api/tests/unit/support-tickets.test.ts apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:test-security",
+    "name": "npm run test:security",
+    "command": "node --test tools/security/tests/sbom-verify.test.mjs tools/security/tests/sbom-policy.test.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:tsc-check",
+    "name": "npm run tsc:check",
+    "command": "tsc --noEmit -p apps/react-enterprise-app/tsconfig.json && npm run tsc:check:api && npm run tsc:check:packages",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:tsc-check-api",
+    "name": "npm run tsc:check:api",
+    "command": "tsc --noEmit -p apps/platform-api/tsconfig.json",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:tsc-check-packages",
+    "name": "npm run tsc:check:packages",
+    "command": "tsc --noEmit -p packages/tsconfig.packages.json",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:ui-harness",
+    "name": "npm run ui:harness",
+    "command": "vite --config tools/ui-reference-harness/vite.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:ui-harness-e2e",
+    "name": "npm run ui:harness:e2e",
+    "command": "playwright test --config tools/ui-reference-harness/playwright.config.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:ui-harness-test",
+    "name": "npm run ui:harness:test",
+    "command": "node --test tools/ui-reference-harness/tests/validate-definition.test.mjs tools/ui-reference-harness/tests/capability-controller.test.mjs tools/ui-reference-harness/tests/harness-model.test.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:usf-render",
+    "name": "npm run usf:render",
+    "command": "node tools/architecture/validate-universal-foundation/src/index.mjs --render",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:usf-validate",
+    "name": "npm run usf:validate",
+    "command": "node tools/architecture/validate-universal-foundation/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:v2-adversarial-usf-audit",
+    "name": "npm run v2:adversarial-usf-audit",
+    "command": "node tools/v2-readiness/scripts/generate-adversarial-usf-audit.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:v2-formal-assurance",
+    "name": "npm run v2:formal-assurance",
+    "command": "node tools/v2-readiness/scripts/generate-formal-assurance.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:v2-readiness",
+    "name": "npm run v2:readiness",
+    "command": "node tools/v2-readiness/src/index.mjs --strict",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:v2-readiness-json",
+    "name": "npm run v2:readiness:json",
+    "command": "node tools/v2-readiness/src/index.mjs --strict --json",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:v2-usf-assurance",
+    "name": "npm run v2:usf-assurance",
+    "command": "node tools/v2-readiness/scripts/generate-usf-assurance.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:validate-slices",
+    "name": "npm run validate:slices",
+    "command": "node tools/architecture/validate-slice-readiness/src/index.mjs",
+    "sourceFileRefs": ["package.json"]
+  }
+]

@@ -6529,5 +6529,27 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm v2:adversarial-usf-audit",
+    "kind": "npm",
+    "purpose": "Generate adversarial runtime-derived USF audit inventories, gap reports, backlog, and attestation.",
+    "inputs": [
+      "docs/v2-foundation/*.json",
+      "apps/platform-api/src/**",
+      "apps/platform-api/scripts/**"
+    ],
+    "outputs": ["docs/v2-foundation/usf-audit/*.json", "docs/v2-foundation/usf-audit/*.md"],
+    "prerequisites": ["node", "npm install"],
+    "sideEffects": ["rewrites generated USF audit artefacts"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-generation-error",
+    "idempotent": true,
+    "safetyControls": ["read-only runtime scan", "unknown evidence becomes a gap"],
+    "testCoverage": "tools/v2-readiness",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

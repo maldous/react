@@ -1,0 +1,3178 @@
+{
+  "artefact": "route-observability-report",
+  "pass": false,
+  "gaps": [
+    {
+      "kind": "route-observability",
+      "subject": "GET /",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/index.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/layout.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/account",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/account",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/account",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/account",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/account",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/account.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/auth",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/auth",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/auth",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/auth",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/auth",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/auth.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/clickthrough",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/clickthrough",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/clickthrough",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/clickthrough",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/clickthrough",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/clickthrough.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/config",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/config",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/config",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/config",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/config",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/config.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/developer",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/developer",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/developer",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/developer",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/developer",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/developer.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/domains",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/domains",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/domains",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/domains",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/domains",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/domains.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/email",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/email",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/email",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/email",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/email",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/email.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/entitlements",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/entitlements",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/entitlements",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/entitlements",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/entitlements",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/entitlements.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/events",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/events",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/events",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/events",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/events",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/events.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/features",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/features",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/features",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/features",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/features",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/features.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/logs",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/logs",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/logs",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/logs",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/logs",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/logs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/members",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/members",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/members",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/members",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/members",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/members.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/monitoring",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/monitoring",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/monitoring",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/monitoring",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/monitoring",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/monitoring.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/observability",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/observability",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/observability",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/observability",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/observability",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/observability.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/platform",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/platform",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/platform",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/platform",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/platform",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/platform.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/readiness",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/readiness",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/readiness",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/readiness",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/readiness",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/readiness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/scheduled-jobs",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/scheduled-jobs.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/search",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/search",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/search",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/search",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/search",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/search.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/storage",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/storage",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/storage",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/storage",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/storage",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/storage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/usage",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/usage",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/usage",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/usage",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/usage",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/usage.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/webhooks",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/webhooks",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/webhooks",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/webhooks",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /admin/webhooks",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/admin/webhooks.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/alerts",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6513",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/alerts/:alertId/evaluate",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6546",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/billing/catalog/plans",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7861",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/billing/catalog/prices",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7908",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/billing/catalog/products",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7814",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/admin/data/legal-holds",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7454",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/data/legal-holds",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7410",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/data/residency",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7689",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/admin/data/retention-policies",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7580",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/data/retention-policies",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7531",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/events/:eventId/redrive",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6026",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/governance/catalog",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7949",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/governance/catalog/classify",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7973",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/governance/dsr",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:8018",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/governance/dsr/:dsrId/fulfill",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:8042",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/admin/incidents/:incidentId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6600",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/provider-configs",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7011",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/provider-configs/:id/delete",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7075",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/provider-configs/:id/lifecycle",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7044",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/scheduled-jobs",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6731",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/admin/scheduled-jobs/:jobId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6798",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/scheduled-jobs/:jobId/run",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6764",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/search/reindex",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5942",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/secrets",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6884",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/secrets/delete",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6954",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/secrets/revoke",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6919",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/sub-tenants",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2287",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/support-session",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2307",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/support-session/approval-grant",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2426",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/support-session/approval-request",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2378",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/support/tickets",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6378",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2055",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/announcements",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6281",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/repair",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2215",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2170",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/delegations",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5357",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/admin/tenants/:tenantId/delegations/:delegationId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5408",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/delete",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7375",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/admin/tenants/:tenantId/entitlements",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5277",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/import",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7278",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/meter-events",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5477",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/notifications/test",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6241",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/admin/tenants/:tenantId/quotas",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5603",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/admin/tenants/:tenantId/rate-limits",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5841",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/:tenantId/suspend",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:7345",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/tenants/auth-settings-credential",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2090",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/workflows/:workflowId/cancel",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:8170",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/workflows/:workflowId/signal",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:8140",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/admin/workflows/start",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:8101",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/auth/providers",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/auth/providers",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/auth/providers",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/auth/providers",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/auth/providers",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/auth/settings/domains",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2587",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/auth/settings/domains/:domain",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2659",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/auth/settings/domains/challenges",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5083",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/auth/settings/domains/verify",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5127",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/auth/settings/idps/:alias/mapping",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:1683",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/auth/settings/idps/:alias/test-connection",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:1595",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/auth/settings/idps/oidc/discover",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:1542",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/auth/settings/providers",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:1324",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/auth/settings/resource-policies",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2527",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "POST /api/graphql",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5212",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/graphql",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5212",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/me/notification-preferences",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6185",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/me/profile",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:6110",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/api-keys",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5668",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/api-keys/:keyId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5722",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/config/:key",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3423",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/config/:key",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3359",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/domains",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3801",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/domains/:domain",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3909",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/domains/:domain/activate",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3972",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/domains/:domain/canonical",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4172",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/domains/:domain/canonical",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4124",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/domains/:domain/deactivate",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4034",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/domains/:domain/probe-routing-local",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4081",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/domains/:domain/verify",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3857",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/email-sender",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3652",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/email-sender/test",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3712",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/features/:featureKey",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3284",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/groups",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3092",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/groups/:groupId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3202",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/groups/:groupId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:3142",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/members/:userId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2836",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/members/:userId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2784",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/members/:userId/status",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2935",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/members/:userId/username",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2889",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/members/invite",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2741",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/members/resend-invite",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:2988",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/search",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5885",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/storage/objects",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4302",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/storage/objects/:objectKey",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4394",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/storage/objects/:objectKey/scan",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4365",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/sub-organisations",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4949",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/sub-organisations/:subOrgId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5040",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/sub-organisations/:subOrgId",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4995",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/webhooks",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4494",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "DELETE /api/org/webhooks/:id",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4582",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/org/webhooks/:id",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4533",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4763",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/webhooks/:id/redrive-dead",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4806",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/webhooks/:id/rotate-secret",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4622",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /api/org/webhooks/:id/test",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:4662",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/organisation/profile",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5189",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "PATCH /api/organisation/profile",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5199",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "PATCH /api/organisation/profile",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:5199",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/session",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/session",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/session",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/session",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /api/session",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "docs/api/openapi.json",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-audit",
+      "subject": "POST /auth/logout",
+      "message": "mutation route without route-local audit evidence",
+      "evidence": {
+        "routeObject": "apps/platform-api/src/server/routes.ts:1173",
+        "pipelineTrace": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineLogs": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineMetrics": "apps/platform-api/src/server/pipeline.ts",
+        "pipelineCorrelation": "apps/platform-api/src/server/pipeline.ts"
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /e2e-harness",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /e2e-harness",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /e2e-harness",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /e2e-harness",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /e2e-harness",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/e2e-harness.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /login",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/login.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /login",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/login.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /login",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/login.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /login",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/login.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /login",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/login.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /organisation/profile",
+      "message": "route without trace span",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /organisation/profile",
+      "message": "route without structured complete/error logs",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /organisation/profile",
+      "message": "route without metric",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /organisation/profile",
+      "message": "route without correlation id evidence",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "route-observability",
+      "subject": "GET /organisation/profile",
+      "message": "route without executable proof reference",
+      "evidence": {
+        "routeObject": "apps/react-enterprise-app/src/routes/organisation/profile.tsx",
+        "pipelineTrace": "",
+        "pipelineLogs": "",
+        "pipelineMetrics": "",
+        "pipelineCorrelation": ""
+      },
+      "classification": "must-fix-in-v1"
+    }
+  ]
+}

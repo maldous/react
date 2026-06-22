@@ -1,0 +1,2272 @@
+{
+  "artefact": "proof-behaviour-report",
+  "pass": false,
+  "gaps": [
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+        "level": 2,
+        "classification": "isolated unit behaviour",
+        "routeRefs": [
+          "route:get",
+          "route:get-admin",
+          "route:get-api-admin-billing",
+          "route:get-api-admin-billing-catalog-plans",
+          "route:post-api-admin-billing-catalog-plans",
+          "route:get-api-admin-billing-catalog-prices",
+          "route:post-api-admin-billing-catalog-prices",
+          "route:get-api-admin-billing-catalog-products",
+          "route:post-api-admin-billing-catalog-products",
+          "route:get-api-org-billing-catalog"
+        ],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/clickthrough-services-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get", "route:get-admin", "route:get-healthz", "route:get-readyz"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-email-sender-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+        "level": 3,
+        "classification": "state transition behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "message": "proof only checks file/contract shape",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+        "level": 0,
+        "classification": "route/file existence only",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/environment-operations-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/environment-registry-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/history-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/history-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/history-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/idp-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/idp-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/incident-foundation-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/metering-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/metering-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get", "route:get-healthz", "route:get-readyz"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/notification-preferences-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": [
+          "route:get",
+          "route:get-admin",
+          "route:get-api-admin-tenants",
+          "route:post-api-admin-tenants",
+          "route:post-api-admin-tenants-tenantid-notifications-test"
+        ],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/observability-signals-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/provider-config-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-provider-observability-closure-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+        "level": 3,
+        "classification": "state transition behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/search-isolation-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/search-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/search-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/search-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/secret-store-contract-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/secrets-openbao-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get", "route:get-healthz"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": [
+          "route:get",
+          "route:get-auth-callback",
+          "route:get-auth-login",
+          "route:get-login"
+        ],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": [
+          "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        ]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": [
+          "route:get",
+          "route:get-api-host-identity",
+          "route:get-api-theme",
+          "route:get-healthz"
+        ],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+        "level": 3,
+        "classification": "state transition behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-tenant-storage-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-typed-secret-resolution-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-webhook-worker-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/webhook-worker-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    },
+    {
+      "kind": "proof-behaviour",
+      "subject": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+      "message": "proof does not assert side effects",
+      "evidence": {
+        "proofId": "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+        "file": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+        "level": 4,
+        "classification": "live substrate behaviour",
+        "routeRefs": ["route:get"],
+        "assertsSideEffects": false,
+        "assertsFailureMode": true,
+        "assertsObservabilityOrAudit": true,
+        "sourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"]
+      },
+      "classification": "must-fix-in-v1"
+    }
+  ],
+  "proofs": [
+    {
+      "proofId": "proof:apps-platform-api-scripts-alert-incident-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-tenants",
+        "route:post-api-admin-tenants",
+        "route:get-api-admin-tenants-tenantid-api-keys",
+        "route:get-api-admin-tenants-tenantid-rate-limits",
+        "route:patch-api-admin-tenants-tenantid-rate-limits",
+        "route:get-api-org-api-keys",
+        "route:post-api-org-api-keys",
+        "route:delete-api-org-api-keys-keyid",
+        "route:get-api-org-developer",
+        "route:get-api-org-rate-limits"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/api-key-routes-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/api-keys-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-backup-control-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-backup"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/backup-control-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-billing",
+        "route:get-api-admin-billing-catalog-plans",
+        "route:post-api-admin-billing-catalog-plans",
+        "route:get-api-admin-billing-catalog-prices",
+        "route:post-api-admin-billing-catalog-prices",
+        "route:get-api-admin-billing-catalog-products",
+        "route:post-api-admin-billing-catalog-products",
+        "route:get-api-org-billing-catalog"
+      ],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-control-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-billing",
+        "route:get-api-admin-billing-catalog-products",
+        "route:post-api-admin-billing-catalog-products",
+        "route:get-api-org-billing-catalog"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/billing-control-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/billing-provider-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-readiness-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-billing",
+        "route:get-api-admin-billing-readiness"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/clickthrough-services-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-compliance-report-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-data-compliance-report"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-compliance-report-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-credential-lifecycle-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get", "route:get-admin"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get", "route:get-admin", "route:get-healthz", "route:get-readyz"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-governance-catalog",
+        "route:post-api-admin-governance-catalog",
+        "route:post-api-admin-governance-catalog-classify",
+        "route:get-api-admin-governance-dsr",
+        "route:post-api-admin-governance-dsr",
+        "route:post-api-admin-governance-dsr-dsrid-fulfill"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/data-governance-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-tenants",
+        "route:post-api-admin-tenants",
+        "route:get-api-admin-tenants-tenantid-export",
+        "route:post-api-admin-tenants-tenantid-import"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/data-portability-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/data-residency-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-email-sender-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-tenants",
+        "route:post-api-admin-tenants",
+        "route:get-api-admin-tenants-tenantid-entitlements",
+        "route:patch-api-admin-tenants-tenantid-entitlements",
+        "route:get-api-org-entitlements",
+        "route:get-api-platform-service-catalog"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/entitlements-routes-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/entitlements-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "level": 0,
+      "classification": "route/file existence only",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/environment-operations-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/environment-registry-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-events",
+        "route:get-api-admin-events",
+        "route:post-api-admin-events-eventid-redrive",
+        "route:get-api-admin-events-dead-letter",
+        "route:get-api-admin-workers"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/event-redrive-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/event-worker-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-full-observability-contract-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/full-observability-contract-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/history-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/history-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-http-engine-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/http-engine-provider-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/idp-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/incident-foundation-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-legal-hold-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/legal-hold-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-tenants",
+        "route:post-api-admin-tenants",
+        "route:post-api-admin-tenants-tenantid-meter-events",
+        "route:get-api-admin-tenants-tenantid-quotas",
+        "route:patch-api-admin-tenants-tenantid-quotas",
+        "route:get-api-admin-tenants-tenantid-usage",
+        "route:get-api-org-quotas",
+        "route:get-api-org-usage"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/metering-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get", "route:get-healthz", "route:get-readyz"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-notifications-readiness",
+        "route:get-api-admin-tenants",
+        "route:post-api-admin-tenants",
+        "route:post-api-admin-tenants-tenantid-notifications-test",
+        "route:get-api-me-notification-preferences",
+        "route:patch-api-me-notification-preferences",
+        "route:get-api-me-profile",
+        "route:patch-api-me-profile"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/notification-dispatch-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/notification-email-transport-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/notification-preferences-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-tenants",
+        "route:post-api-admin-tenants",
+        "route:post-api-admin-tenants-tenantid-notifications-test"
+      ],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-object-scan-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/object-scan-closure-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-control-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-observability",
+        "route:get-api-admin-observability"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/observability-control-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-observability",
+        "route:get-api-admin-observability",
+        "route:get-api-admin-observability-readiness"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-provider-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-observability",
+        "route:get-api-admin-observability",
+        "route:get-api-admin-observability-readiness"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-readiness-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-observability",
+        "route:get-api-admin-observability",
+        "route:get-api-admin-observability-readiness"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/observability-signals-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-binding-report-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-provider-bindings"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/provider-config-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-observability-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-observability-contract-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-retention-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/retention-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-scheduled-jobs",
+        "route:get-api-admin-scheduled-jobs",
+        "route:post-api-admin-scheduled-jobs",
+        "route:patch-api-admin-scheduled-jobs-jobid",
+        "route:post-api-admin-scheduled-jobs-jobid-run"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/search-isolation-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-admin-search",
+        "route:get-api-admin-search-readiness",
+        "route:post-api-admin-search-reindex",
+        "route:post-api-org-search"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/search-routes-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/search-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/search-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/secret-store-contract-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/secrets-openbao-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-security-control-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-security"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/security-control-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get", "route:get-healthz"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/support-approval-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-temporal-workflow-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-auth-callback",
+        "route:get-auth-login",
+        "route:get-login"
+      ],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-api-host-identity",
+        "route:get-api-theme",
+        "route:get-healthz"
+      ],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-api-org-storage-objects",
+        "route:post-api-org-storage-objects",
+        "route:delete-api-org-storage-objects-objectkey",
+        "route:get-api-org-storage-objects-objectkey",
+        "route:post-api-org-storage-objects-objectkey-scan",
+        "route:post-api-org-storage-probe",
+        "route:get-api-org-storage-readiness"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-storage-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-typed-secret-resolution-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-webhook-worker-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/webhook-worker-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": false,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-windmill-automation-provider-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-adapters-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/workflow-adapters-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": ["route:get"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/workflow-closure-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-control-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-workflows"],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-route-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-readiness-route-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "level": 3,
+      "classification": "state transition behaviour",
+      "routeRefs": [
+        "route:get",
+        "route:get-admin",
+        "route:get-api-admin-workflows",
+        "route:get-api-admin-workflows-readiness"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts"]
+    }
+  ]
+}

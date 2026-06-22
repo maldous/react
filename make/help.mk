@@ -91,7 +91,7 @@ help:
 	@printf '$(BOLD)── QUALITY GATES ────────────────────────────────────────────────────$(RESET)\n'
 	@printf '  $(GREEN)%-28s$(RESET) %s\n' \
 	  quality      'Full quality gate (format + lint + typecheck + audit + security + arch)' \
-	  v2-foundation-assurance 'Regenerate + verify V2 formal/USF assurance and readiness' \
+	  v2-foundation-assurance 'Regenerate + verify V2 formal/USF runtime assurance and readiness' \
 	  format       'Prettier — write then verify' \
 	  lint         'Markdown lint + ESLint flat config' \
 	  typecheck    'TypeScript strict (app + all packages)' \
