@@ -22,6 +22,8 @@ import r17 from "../src/rules/r17-migrations.mjs";
 import r18 from "../src/rules/r18-environment-config.mjs";
 import r19 from "../src/rules/r19-executable-assets.mjs";
 import r20 from "../src/rules/r20-harness-semantics.mjs";
+import r22 from "../src/rules/r22-semantic-completeness.mjs";
+import r23 from "../src/rules/r23-proof-classification.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -412,4 +414,64 @@ test("R20 fires on an inconsistent harness definition", () => {
     },
   });
   fires(r20, a, "R20-harness-semantics");
+});
+
+test("R22 fires when a semantic foundation asset is missing", () => {
+  const a = clone(cleanCtx());
+  a.foundation["capability-ui-contract.json"] = null;
+  fires(r22, a, "R22-semantic-completeness");
+});
+
+test("R22 fires when a delivered capability lacks semantic completeness evidence", () => {
+  const a = clone(cleanCtx());
+  delete a.capabilities[0].semanticCompleteness;
+  fires(r22, a, "R22-semantic-completeness");
+});
+
+test("R22 fires when a delivered capability misses one required semantic facet", () => {
+  const a = clone(cleanCtx());
+  delete a.capabilities[0].semanticCompleteness.errorModel;
+  const findings = r22(a);
+  assert.deepEqual(findings, [
+    {
+      ruleId: "R22-semantic-completeness",
+      severity: "error",
+      subject: "C1",
+      message: 'semanticCompleteness missing required facet "errorModel"',
+    },
+  ]);
+});
+
+test("R23 fires when a runtime proof script is not inventoried", () => {
+  const a = clone(cleanCtx());
+  a.candidateTracked.files.push("apps/platform-api/scripts/orphan-runtime-proof.ts");
+  fires(r23, a, "R23-proof-classification");
+});
+
+test("R23 fires when an inventoried runtime proof lacks level classification", () => {
+  const a = clone(cleanCtx());
+  a.packageJsonScripts["proof:x"] =
+    'node --loader "$(pwd)/apps/platform-api/loader.mjs" apps/platform-api/scripts/x-runtime-proof.ts';
+  a.candidateTracked.files.push("apps/platform-api/scripts/x-runtime-proof.ts");
+  a.testInventory.push({
+    id: "package.json#proof:x",
+    path: "package.json#proof:x",
+    kind: "proof-script",
+  });
+  fires(r23, a, "R23-proof-classification");
+});
+
+test("R23 accepts a proof script with level and rationale", () => {
+  const a = clone(cleanCtx());
+  a.packageJsonScripts["proof:x"] =
+    'node --loader "$(pwd)/apps/platform-api/loader.mjs" apps/platform-api/scripts/x-runtime-proof.ts';
+  a.candidateTracked.files.push("apps/platform-api/scripts/x-runtime-proof.ts");
+  a.testInventory.push({
+    id: "package.json#proof:x",
+    path: "package.json#proof:x",
+    kind: "proof-script",
+    proofLevel: 3,
+    proofLevelRationale: "state-machine validation",
+  });
+  assert.deepEqual(r23(a), []);
 });

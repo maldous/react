@@ -42,12 +42,30 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
   records; `retire` justified.
 - **R13 decision-governance** — every V2 decision Accepted + has lineage; referenced V1 ADRs/actions
   exist; `requires-v1-completion` `decisionRef`s resolve.
-- **R14 foundation** — the nine foundation artefacts present/shaped; governed contract roots present
+- **R14 foundation** — foundation artefacts present/shaped; governed contract roots present
   in the tree.
 - **R15 app-path** — tree/maps/contracts/runbook agree on the app roots (`apps/platform-api` +
   `apps/web`); `apps/api` appears nowhere.
+- **R16 services** — compose services reconcile with the service/clickthrough/SSO matrix.
+- **R17 migrations** — on-disk SQL migrations reconcile with the data-and-migration plan, including
+  migration intent and backup/restore decisions for tenant-data services.
+- **R18 environment-config** — live env/config consumption reconciles with generated config
+  catalogues; unsafe prod/staging defaults and mock/destructive flags fail closed.
+- **R19 executable-assets** — shell/node/Terraform/Playwright assets are mapped, inventoried, and
+  attached to resolving command targets.
+- **R20 harness-semantics** — Semantic Reference Harness definitions are internally consistent and
+  backed by the generic harness.
+- **R21 v1c17-observability** — observability dashboards and proof scripts exist for the V1C-17
+  substrate.
+- **R22 semantic-completeness** — the six mandatory semantic foundation assets exist and every
+  `delivered-and-proven` capability carries `semanticCompleteness.status:"complete"` with lifecycle,
+  state model, permissions, contracts, validation, error model, audit model, readiness model, proof,
+  and UI semantic definition.
+- **R23 proof-classification** — every runtime proof script is represented in
+  `v1-test-proof-inventory.json` and every proof inventory entry declares `proofLevel` 0-5 plus a
+  rationale.
 
-R1–R8 + R10–R15 are the consistency validation (must pass); R9 is the fail-closed cut gate.
+R1–R8 + R10–R23 are the consistency validation (must pass); R9 is the fail-closed cut gate.
 
 Tests: `node --test tools/v2-readiness/tests/*.test.mjs` (also run via the canonical `test:architecture`
 gate, ADR-ACT-0292).

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artefact": "capability-proof-definition",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": [
+      "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
+      "tools/v2-readiness/src/rules/r23-proof-classification.mjs"
+    ]
+  },
+  "requiredFacet": "proof",
+  "proofLevels": {
+    "0": "route existence only",
+    "1": "contract existence",
+    "2": "behaviour validation",
+    "3": "state machine validation",
+    "4": "live substrate validation",
+    "5": "end-to-end semantic validation"
+  },
+  "minimumDefinition": {
+    "unitProof": "unit test or explicit n/a with rationale",
+    "integrationProof": "integration/substrate proof or explicit n/a with rationale",
+    "runtimeProof": "runtime proof script or explicit n/a with rationale",
+    "level": "integer 0-5"
+  }
+}

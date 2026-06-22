@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artefact": "capability-ui-contract",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/ui-capability-model.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs"
+  },
+  "requiredFacet": "uiSemanticDefinition",
+  "minimumDefinition": {
+    "forms": "form fields and validation where applicable",
+    "tables": "columns, empty states, and actions where applicable",
+    "actions": "commands and permission gates",
+    "filters": "query/filter semantics where applicable",
+    "validation": "user-visible validation and rejection mapping",
+    "permissions": "allowed, denied, and read-only persona behaviour",
+    "accessibility": "landmarks, headings, accessible names, keyboard behaviour"
+  }
+}

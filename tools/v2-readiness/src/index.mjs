@@ -22,6 +22,8 @@ import r18 from "./rules/r18-environment-config.mjs";
 import r19 from "./rules/r19-executable-assets.mjs";
 import r20 from "./rules/r20-harness-semantics.mjs";
 import r21 from "./rules/r21-v1c17-observability.mjs";
+import r22 from "./rules/r22-semantic-completeness.mjs";
+import r23 from "./rules/r23-proof-classification.mjs";
 
 export const RULES = [
   r1,
@@ -45,6 +47,8 @@ export const RULES = [
   r19,
   r20,
   r21,
+  r22,
+  r23,
 ];
 
 export function runRules(ctx) {
@@ -67,6 +71,8 @@ const AUDIT_SURFACES = {
   "environment-config": "R18",
   "executables-terraform-playwright": "R19",
   "ui-semantic-harness": "R20",
+  "capability-semantic-completeness": "R22",
+  "proof-strength-classification": "R23",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -81,6 +87,8 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R18",
   "R19",
   "R20",
+  "R22",
+  "R23",
 ];
 
 export function summarize(

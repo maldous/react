@@ -70,6 +70,7 @@ export function cleanCtx() {
     capabilities: [
       {
         capability: "C1",
+        category: "fixture",
         status: "delivered-and-proven",
         route: "/admin/x",
         contract: "/api/x",
@@ -77,6 +78,20 @@ export function cleanCtx() {
         readinessCheck: "invariant-ready",
         proof: "proof:x",
         openAction: null,
+        v2Target: "reuse-as-is",
+        semanticCompleteness: {
+          status: "complete",
+          lifecycle: "fixture lifecycle",
+          stateModel: "fixture state model",
+          permissions: "fixture permissions",
+          contracts: "fixture contracts",
+          validation: "fixture validation",
+          errorModel: "fixture error model",
+          auditModel: "fixture audit model",
+          readinessModel: "fixture readiness model",
+          proof: "fixture proof",
+          uiSemanticDefinition: "fixture UI semantics",
+        },
       },
     ],
     decisions: [{ v2AdrId: "V2-ADR-1", status: "Accepted" }],
@@ -174,6 +189,30 @@ export function cleanCtx() {
       "ui-definition.schema.json": { required: ["capabilityId"] },
       "ui-component-contracts.json": [{ ok: 1 }],
       "ui-capability-model.json": { capabilities: [{ capabilityId: "x" }] },
+      "capability-definition.json": {
+        mandatoryFoundationAsset: true,
+        coverage: { statuses: ["delivered-and-proven"] },
+      },
+      "capability-state-machine.json": {
+        mandatoryFoundationAsset: true,
+        coverage: { statuses: ["delivered-and-proven"] },
+      },
+      "capability-permissions.json": {
+        mandatoryFoundationAsset: true,
+        coverage: { statuses: ["delivered-and-proven"] },
+      },
+      "capability-errors.json": {
+        mandatoryFoundationAsset: true,
+        coverage: { statuses: ["delivered-and-proven"] },
+      },
+      "capability-ui-contract.json": {
+        mandatoryFoundationAsset: true,
+        coverage: { statuses: ["delivered-and-proven"] },
+      },
+      "capability-proof-definition.json": {
+        mandatoryFoundationAsset: true,
+        coverage: { statuses: ["delivered-and-proven"] },
+      },
     },
     reconciliation: {
       verdict: "NOT-ZERO-GAPS — honest",

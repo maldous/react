@@ -268,6 +268,12 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
       "ui-definition.schema.json": optional("ui-definition.schema.json"),
       "ui-component-contracts.json": optional("ui-component-contracts.json"),
       "ui-capability-model.json": optional("ui-capability-model.json"),
+      "capability-definition.json": optional("capability-definition.json"),
+      "capability-state-machine.json": optional("capability-state-machine.json"),
+      "capability-permissions.json": optional("capability-permissions.json"),
+      "capability-errors.json": optional("capability-errors.json"),
+      "capability-ui-contract.json": optional("capability-ui-contract.json"),
+      "capability-proof-definition.json": optional("capability-proof-definition.json"),
     },
     // live repo facts
     gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),

@@ -2648,6 +2648,132 @@
       "v2Target": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
       "protectingTests": [],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: tenant lifecycle runtime proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "protectingTests": ["npm run proof:tenant-lifecycle"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/clamav-antivirus.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: antivirus adapter for storage-object scan semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/clamav-antivirus.ts",
+      "protectingTests": ["npm run test:platform-api"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: durable tenant import application adapter",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+      "protectingTests": ["npm run proof:data-portability"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: portable import progress migration",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/044-portable-import-progress.sql",
+      "protectingTests": ["npm run proof:data-portability"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: DSR fulfillment evidence migration",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/db/migrations/045-data-governance-fulfillment-evidence.sql",
+      "protectingTests": ["npm run proof:data-governance"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/src/ports/antivirus.ts",
+      "introducingCommit": "482be4deba413a991e8137d5642444d6334b9ca0",
+      "purpose": "post-audit addition: antivirus scan port for storage-object semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/ports/antivirus.ts",
+      "protectingTests": ["npm run test:platform-api"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-definition.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory semantic capability definition foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-definition.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-state-machine.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability state-machine foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-state-machine.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-permissions.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability permissions foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-permissions.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-errors.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability validation and error catalogue foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-errors.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-ui-contract.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability UI semantic contract foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-ui-contract.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/capability-proof-definition.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: mandatory capability proof-level foundation asset",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/capability-proof-definition.json",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: semantic completeness validator rule",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
+      "introducingCommit": "pending",
+      "purpose": "post-audit addition: runtime proof-level classification validator rule",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r23-proof-classification.mjs",
+      "protectingTests": ["node --test tools/v2-readiness/tests/rules.test.mjs"],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -3030,6 +3156,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 283,
+  "additionCount": 297,
   "deletionCount": 54
 }

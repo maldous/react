@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artefact": "capability-errors",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs"
+  },
+  "requiredFacets": ["validation", "errorModel"],
+  "minimumDefinition": {
+    "input": "field or command input",
+    "rule": "validation rule",
+    "rejectionBehaviour": "HTTP status, typed result, or fail-closed behaviour",
+    "errorCode": "stable machine-readable error code or explicit none with rationale"
+  }
+}

@@ -26,15 +26,20 @@ test("exit 0 path: clean context produces zero findings", () => {
   assert.deepEqual(runRules(cleanCtx()), []);
 });
 
-test("live repo is cut-ready with --json shape", () => {
+test("live repo reports --json readiness shape", () => {
   const repoRoot = path.join(here, "../../..");
   const r = run(["--strict", "--json", "--repo", repoRoot], repoRoot);
-  assert.equal(r.code, 0);
+  assert.ok([0, 1].includes(r.code));
   const report = JSON.parse(r.stdout);
-  assert.equal(report.ok, true);
-  assert.equal(report.consistencyFindings, 0);
+  assert.equal(typeof report.ok, "boolean");
+  assert.equal(typeof report.consistencyFindings, "number");
   assert.equal(report.completionBlockerCount, 0);
   assert.ok(Array.isArray(report.findings));
+  if (!report.ok)
+    assert.ok(
+      report.findings.some((f) => f.ruleId === "R22-semantic-completeness"),
+      "a non-ready live repo must expose semantic completeness gaps explicitly"
+    );
   assert.equal(report.auditBaseCommit, AUDITED_V1_COMMIT);
   assert.match(report.cutCandidateCommit, /^[0-9a-f]{7,40}$/);
   assert.equal(typeof report.totalRules, "number");

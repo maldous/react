@@ -2910,7 +2910,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:entitlements)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "local runtime proof validates deny-by-default, grant/revoke state transitions, audit-before-change, tenant scoping, unknown-key rejection, and secret-free audit metadata"
   },
   {
     "id": "package.json#proof:entitlement-policy-chain",
@@ -2919,7 +2921,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:entitlement-policy-chain)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "local runtime proof validates policy-chain ordering: missing permission denies before entitlement, missing entitlement denies next, granted+permitted reaches quota, quota remains an explicit non-enforcing hook, and revoked re-denies"
   },
   {
     "id": "package.json#proof:service-catalog-registry",
@@ -2937,7 +2941,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:entitlements-postgres)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates migration/table presence, forced RLS, tenant isolation, operator rls_bypass reads, grant/revoke persistence, audit-before-change rollback, and no secret fields"
   },
   {
     "id": "package.json#proof:entitlements-routes",
@@ -2946,7 +2952,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:entitlements-routes)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live route-handler proof validates tenant/operator route metadata, no-tenant rejection, invalid tenant/key rejection, operator grant/revoke/read behaviour, and secret-free service-catalog output"
   },
   {
     "id": "package.json#proof:metering",
@@ -2982,7 +2990,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:api-keys)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates secret reveal-once, hash-only storage, entitlement deny-by-default, valid/revoked authentication, tenant RLS isolation, and operator rls_bypass read semantics"
   },
   {
     "id": "package.json#proof:rate-limits",
@@ -2991,7 +3001,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:rate-limits)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Postgres proof validates audited policy mutation, entitlement-before-counting, allow/deny window transitions, tenant RLS isolation, non-secret schema, and live used-count listing"
   },
   {
     "id": "package.json#proof:rate-limits-redis",
@@ -3000,7 +3012,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:rate-limits-redis)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live Redis plus Postgres proof validates Redis counting, tenant-isolated keys, TTL fixed-window reset, ready/degraded readiness, no secret-bearing keys, and Postgres fallback when Redis is down"
   },
   {
     "id": "package.json#proof:provider-environment-classification",
@@ -3018,7 +3032,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "per-proof (compose-backed where applicable)",
     "stageCoverage": "proof script (npm run proof:api-key-routes)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "live route-handler proof validates tenant and operator route metadata, tenant-context rejection, create/list/revoke behaviour, secret redaction, developer summary, and rate-limit operator route execution"
   },
   {
     "id": "package.json#proof:search",
@@ -3767,7 +3783,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:data-governance)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 3,
+    "proofLevelRationale": "validates route registration, deterministic classification behaviour, catalogue lineage normalization, and DSR open-to-fulfilled state-machine transition with persisted fulfillment evidence"
   },
   {
     "id": "package.json#proof:data-portability",
@@ -3776,7 +3794,9 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "none (local proof script)",
     "stageCoverage": "proof script (npm run proof:data-portability)",
-    "failureEvidence": "proof script assertion output"
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 4,
+    "proofLevelRationale": "validates encrypted archive generation, SecretStore-wrapped data key, manifest/digest verification, tamper rejection, transactional rollback/resume, and durable Postgres import-applier group writes"
   },
   {
     "id": "package.json#proof:tenant-storage-objects",
@@ -4073,6 +4093,8 @@
     "behaviourProtected": true,
     "fixtureEnvDependency": "platform-api loader",
     "stageCoverage": "proof script (npm run proof:tenant-lifecycle)",
-    "failureEvidence": "exit code + proof stdout"
+    "failureEvidence": "exit code + proof stdout",
+    "proofLevel": 3,
+    "proofLevelRationale": "validates audit-before-coordination plus suspend/delete lifecycle ordering, export-before-delete, coordinated subsystem state, and fail-stop destructive sequencing"
   }
 ]

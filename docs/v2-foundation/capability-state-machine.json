@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artefact": "capability-state-machine",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs"
+  },
+  "requiredFacet": "stateModel",
+  "minimumDefinition": {
+    "states": "explicit finite state list, or explicit stateless/invariant-ready classification",
+    "transitions": "allowed transition list, or explicit no-transition invariant",
+    "terminalStates": "terminal lifecycle states where applicable"
+  }
+}

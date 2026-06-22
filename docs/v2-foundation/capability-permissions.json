@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artefact": "capability-permissions",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs"
+  },
+  "requiredFacet": "permissions",
+  "minimumDefinition": {
+    "operation": "named operation or route action",
+    "actor": "persona or service actor",
+    "permission": "permission string or explicit n/a with rationale",
+    "entitlement": "required entitlement or explicit n/a",
+    "policy": "policy/resource/UMA scope or explicit n/a",
+    "failBehaviour": "deny, fail-closed, auth-required, quota-blocked, or explicit equivalent"
+  }
+}

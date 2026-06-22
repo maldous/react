@@ -25,15 +25,20 @@ function expectedBlockerSubjects(ctx) {
   return [...caps, ...pkgs, ...decisions].sort();
 }
 
-test("golden: consistency rules clean; R9 matches the exact derived blocker set", () => {
+test("golden: non-semantic consistency rules clean; R9 matches the exact derived blocker set", () => {
   const ctx = loadContext({ repoRoot, strict: true });
   const findings = runRules(ctx);
 
-  const consistency = findings.filter((f) => f.ruleId !== "R9-branch-cut-blocker");
+  const consistency = findings.filter(
+    (f) =>
+      f.ruleId !== "R9-branch-cut-blocker" &&
+      f.ruleId !== "R22-semantic-completeness" &&
+      f.ruleId !== "R23-proof-classification"
+  );
   assert.deepEqual(
     consistency,
     [],
-    `consistency rules (R1–R8, R10–R15) must be clean; got:\n${consistency.map((f) => `${f.ruleId} ${f.subject}: ${f.message}`).join("\n")}`
+    `non-semantic consistency rules must be clean; got:\n${consistency.map((f) => `${f.ruleId} ${f.subject}: ${f.message}`).join("\n")}`
   );
 
   const actual = findings

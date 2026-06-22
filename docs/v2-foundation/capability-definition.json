@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "artefact": "capability-definition",
+  "version": 1,
+  "mandatoryFoundationAsset": true,
+  "coverage": {
+    "source": "docs/v2-foundation/v1-capability-closure.json",
+    "statuses": ["delivered-and-proven"],
+    "enforcedBy": "tools/v2-readiness/src/rules/r22-semantic-completeness.mjs"
+  },
+  "requiredIdentityFields": ["capability", "category", "status"],
+  "requiredPurposeFields": ["v2Target"],
+  "requiredSemanticCompletenessFacets": [
+    "lifecycle",
+    "stateModel",
+    "permissions",
+    "contracts",
+    "validation",
+    "errorModel",
+    "auditModel",
+    "readinessModel",
+    "proof",
+    "uiSemanticDefinition"
+  ],
+  "statusRule": "A capability may remain delivered-and-proven only when semanticCompleteness.status is complete and every required facet points at authoritative source evidence. Otherwise its status must move to semantic-gap."
+}
