@@ -2041,7 +2041,45 @@
         "proof": "audit unit tests",
         "implementation": ["apps/platform-api/src/server/routes.ts:3473", "docs/api/openapi.json"]
       }
-    ]
+    ],
+    "dataGovernanceRuntimeProofs": {
+      "classification": {
+        "proof": "packages/audit-events/src/index.ts; apps/platform-api/src/usecases/audit.ts; apps/platform-api/tests/unit/audit.test.ts",
+        "evidence": "Audit event records persist actorId, actorRoles, tenantId, action, resource, resourceId, metadata, sourceHost, correlationId, timestamp, ipAddress, and userAgent; contextual audit reads redact secret-like metadata keys before exposure."
+      },
+      "retention": {
+        "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+        "evidence": "Retention proof exercises audit_events candidates, legal-hold skipped outcomes, deleted outcomes, audit-before-change emission, and retention tick completion."
+      },
+      "backup": {
+        "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "Backup proof runs the real Postgres backup script, verifies a seeded marker is present in the dump without printing contents, enforces protected-environment refusal, and checks restore guard configuration."
+      },
+      "restore": {
+        "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+        "evidence": "PITR restore drill captures a platform database dump, restores it into a throwaway Postgres container, and verifies recovered marker state without touching the live platform database."
+      },
+      "export": {
+        "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
+        "evidence": "Tenant export route is registered and data-portability proof verifies encrypted portable archives containing audit/events.json and audit/history.json plus grouped import rollback/integrity behaviour."
+      },
+      "legal hold": {
+        "proof": "apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+        "evidence": "Legal-hold proof exercises audit-before-change set/release lifecycle on audit_events records and proves active holds guard retention/storage deletion until release."
+      },
+      "DSR": {
+        "proof": "apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts",
+        "evidence": "Data-governance and portability proofs cover DSR/export fulfillment evidence and protect exported audit/history payload integrity in the encrypted tenant archive."
+      },
+      "lineage": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts; apps/platform-api/scripts/support-approval-runtime-proof.ts",
+        "evidence": "History proof projects audit rows into the read-only history model, while delegated-admin and support approval proofs assert ordered privileged audit events for grant/revoke and support-access lifecycle actions."
+      },
+      "tenant isolation": {
+        "proof": "apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/tests/unit/audit.test.ts; apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+        "evidence": "Audit unit tests and history proof show tenant A audit/history reads exclude tenant B rows, and delegated-admin proof shows tenant-scoped grants do not leak across organisations."
+      }
+    }
   },
   {
     "capability": "Platform login + session",
