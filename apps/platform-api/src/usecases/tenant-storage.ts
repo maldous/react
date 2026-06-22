@@ -1,10 +1,54 @@
 import crypto from "node:crypto";
-import type { ObjectStoragePort } from "@platform/storage-runtime";
+import { StorageError, type ObjectStoragePort } from "@platform/storage-runtime";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
 import type {
   TenantStorageProbeResult,
   TenantStorageReadinessResponse,
   TenantStorageReadinessStatus,
 } from "@platform/contracts-admin";
+
+const log = createLogger({
+  name: "tenant-storage",
+  service: "platform-api",
+  boundedContext: "storage",
+});
+const tracer = createTracer("tenant-storage");
+const tenantStorageMetrics = new Map<string, number>();
+
+function metric(name: string, labels: Record<string, string>): void {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  tenantStorageMetrics.set(key, (tenantStorageMetrics.get(key) ?? 0) + 1);
+}
+
+export function getTenantStorageMetric(name: string, labels: Record<string, string>): number {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  return tenantStorageMetrics.get(key) ?? 0;
+}
+
+export interface StorageProbeControls {
+  quotaBeforeWrite?: (input: { key: string; sizeBytes: number }) => Promise<void>;
+  antivirusScan?: (input: {
+    key: string;
+    body: string;
+    contentType: string;
+  }) => Promise<"clean" | "rejected">;
+  legalHoldDeletionBlock?: (key: string) => Promise<void>;
+  auditEvent?: (event: {
+    action:
+      | "tenant-storage.probe.uploaded"
+      | "tenant-storage.probe.clean"
+      | "tenant-storage.probe.rejected"
+      | "tenant-storage.probe.download"
+      | "tenant-storage.probe.signedUrl"
+      | "tenant-storage.probe.deleted";
+    key: string;
+  }) => Promise<void>;
+}
 
 // ---------------------------------------------------------------------------
 // Tenant storage readiness + isolation proof (ADR-0049 / ADR-ACT-0218)
@@ -46,6 +90,7 @@ export interface StorageProbeDeps {
   port: ObjectStoragePort;
   /** Returns true if a deliberately foreign cross-prefix key is rejected. */
   assertIsolation: () => Promise<boolean>;
+  controls?: StorageProbeControls;
 }
 
 /**
@@ -61,38 +106,87 @@ export async function probeTenantStorage(
   let wrote = false;
   let read = false;
   let deleted = false;
-  try {
-    await deps.port.put({
-      key: probeKey,
-      body: payload,
-      contentType: "text/plain",
-      metadata: { probe: "readiness" },
-    });
-    wrote = true;
-    const got = await deps.port.get(probeKey);
-    read = !!got && got.size === expectedSize;
-    await deps.port.delete(probeKey);
-    deleted = true;
-  } catch {
-    // Leave the flags reflecting how far the round-trip got; best-effort cleanup.
-    await deps.port.delete(probeKey).catch(() => {});
-  }
+  return withSpan(
+    tracer,
+    "tenant-storage.probe",
+    async () => {
+      try {
+        await deps.controls?.quotaBeforeWrite?.({ key: probeKey, sizeBytes: expectedSize });
+        await deps.port.put({
+          key: probeKey,
+          body: payload,
+          contentType: "text/plain",
+          metadata: { probe: "readiness", lifecycleState: "quarantined" },
+        });
+        wrote = true;
+        await deps.controls?.auditEvent?.({
+          action: "tenant-storage.probe.uploaded",
+          key: probeKey,
+        });
+        const scanVerdict =
+          (await deps.controls?.antivirusScan?.({
+            key: probeKey,
+            body: payload,
+            contentType: "text/plain",
+          })) ?? "clean";
+        await deps.controls?.auditEvent?.({
+          action:
+            scanVerdict === "clean"
+              ? "tenant-storage.probe.clean"
+              : "tenant-storage.probe.rejected",
+          key: probeKey,
+        });
+        if (scanVerdict !== "clean") {
+          throw new StorageError("tenant storage readiness download blocked until clean AV scan");
+        }
+        const got = await deps.port.get(probeKey);
+        read = !!got && got.size === expectedSize;
+        await deps.controls?.auditEvent?.({
+          action: "tenant-storage.probe.download",
+          key: probeKey,
+        });
+        await deps.port.getPresignedUrl({ key: probeKey, expiresInSeconds: 60 });
+        await deps.controls?.auditEvent?.({
+          action: "tenant-storage.probe.signedUrl",
+          key: probeKey,
+        });
+        await deps.controls?.legalHoldDeletionBlock?.(probeKey);
+        await deps.port.delete(probeKey);
+        deleted = true;
+        await deps.controls?.auditEvent?.({
+          action: "tenant-storage.probe.deleted",
+          key: probeKey,
+        });
+      } catch (err) {
+        // Leave the flags reflecting how far the round-trip got; best-effort cleanup.
+        log.error({ err, key: probeKey }, "tenant_storage.probe.failed");
+        await deps.port.delete(probeKey).catch(() => {});
+      }
 
-  let foreignKeyRejected = false;
-  try {
-    foreignKeyRejected = await deps.assertIsolation();
-  } catch {
-    // The adapter threw on the foreign key — that IS the rejection we want.
-    foreignKeyRejected = true;
-  }
+      let foreignKeyRejected = false;
+      try {
+        foreignKeyRejected = await deps.assertIsolation();
+      } catch {
+        // The adapter threw on the foreign key — that IS the rejection we want.
+        foreignKeyRejected = true;
+      }
 
-  return {
-    status: classifyStorageProbe({ wrote, read, deleted, foreignKeyRejected }),
-    wrote,
-    read,
-    deleted,
-    foreignKeyRejected,
-  };
+      const status = classifyStorageProbe({ wrote, read, deleted, foreignKeyRejected });
+      metric("tenant_storage_probe_total", { status });
+      log.info(
+        { key: probeKey, status, tenantPrefix: deps.prefix },
+        "tenant_storage.probe.complete"
+      );
+      return {
+        status,
+        wrote,
+        read,
+        deleted,
+        foreignKeyRejected,
+      };
+    },
+    { "storage.tenantPrefix": deps.prefix }
+  );
 }
 
 export interface StorageReadinessDeps {

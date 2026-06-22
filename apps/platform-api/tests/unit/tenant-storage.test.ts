@@ -9,6 +9,7 @@ import assert from "node:assert/strict";
 import { createInMemoryObjectStoragePort, StorageError } from "@platform/storage-runtime";
 import {
   classifyStorageProbe,
+  getTenantStorageMetric,
   getTenantStorageReadiness,
   probeTenantStorage,
   tenantStoragePrefix,
@@ -48,15 +49,64 @@ describe("tenantStoragePrefix", () => {
 describe("probeTenantStorage (ADR-0049)", () => {
   it("writes, reads back (size-verified), deletes, and confirms isolation → configured", async () => {
     const port = createInMemoryObjectStoragePort();
+    const before = getTenantStorageMetric("tenant_storage_probe_total", { status: "configured" });
+    const audit: string[] = [];
+    let quotaChecked = false;
+    let avScanned = false;
+    let legalHoldChecked = false;
     const result = await probeTenantStorage({
       prefix: "org-1/",
       port,
       assertIsolation: async () => true,
+      controls: {
+        quotaBeforeWrite: async () => {
+          quotaChecked = true;
+        },
+        antivirusScan: async () => {
+          avScanned = true;
+          return "clean";
+        },
+        legalHoldDeletionBlock: async () => {
+          legalHoldChecked = true;
+        },
+        auditEvent: async (event) => {
+          audit.push(event.action);
+        },
+      },
     });
     assert.equal(result.status, "configured");
     assert.ok(result.wrote && result.read && result.deleted && result.foreignKeyRejected);
+    assert.equal(quotaChecked, true);
+    assert.equal(avScanned, true);
+    assert.equal(legalHoldChecked, true);
+    assert.deepEqual(audit, [
+      "tenant-storage.probe.uploaded",
+      "tenant-storage.probe.clean",
+      "tenant-storage.probe.download",
+      "tenant-storage.probe.signedUrl",
+      "tenant-storage.probe.deleted",
+    ]);
+    assert.equal(
+      getTenantStorageMetric("tenant_storage_probe_total", { status: "configured" }),
+      before + 1
+    );
     // self-cleaning: nothing left behind under the prefix.
     assert.equal((await port.list("org-1/")).length, 0);
+  });
+
+  it("reports provider_unreachable when AV rejects so download remains blocked until clean", async () => {
+    const result = await probeTenantStorage({
+      prefix: "org-1/",
+      port: createInMemoryObjectStoragePort(),
+      assertIsolation: async () => true,
+      controls: {
+        antivirusScan: async () => "rejected",
+      },
+    });
+    assert.equal(result.status, "provider_unreachable");
+    assert.equal(result.wrote, true);
+    assert.equal(result.read, false);
+    assert.equal(result.deleted, false);
   });
 
   it("reports isolation_failed when the adapter does not reject a foreign key", async () => {
