@@ -3963,6 +3963,15 @@
       "v2Target": "apps/platform-api/conformance/compose-environment-operation.conformance.ts",
       "protectingTests": ["apps/platform-api/scripts/environment-operations-runtime-proof.ts"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "v2Target": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "protectingTests": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"],
+      "decisionRefs": ["ADR-0059", "ADR-ACT-0259"],
+      "introducingCommit": "unknown",
+      "v2Disposition": "reuse-unchanged"
     }
   ],
   "deletions": [

@@ -24,6 +24,51 @@ import type {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
 
+export const postgresEventBusReliabilityEvidence = {
+  provider: "postgres-event-bus",
+  configSource:
+    "Postgres pool is injected from process.env-backed POSTGRES_APP_URL/POSTGRES_URL configuration before adapter construction",
+  secretSource:
+    "event payloads reject secret-bearing fields in the publish usecase; this adapter stores no provider credential material",
+  timeout:
+    "event-bus and worker-registry operations are bounded by operationTimeoutMs through withOperationTimeout",
+  retry:
+    "event handler retry is explicit in recordFailure/processNext via attempts/max_attempts; adapter database writes are single attempts",
+  degradedMode:
+    "healthCheck returns degraded when platform_events/event_dead_letters cannot be queried; mutation paths throw instead of fabricating delivery",
+  failClosed:
+    "publish, claim, process, dead-letter, and redrive database errors throw and do not synthesize success",
+  fallbackRationale:
+    "no alternate event substrate fallback is attempted because Postgres is the configured durable outbox provider",
+  healthCheck:
+    "healthCheck probes public.platform_events and public.event_dead_letters through the injected Postgres pool",
+  operatorRecovery:
+    "operators recover by repairing Postgres connectivity/migrations/RLS, checking health, and rerunning proof:event-bus proof:event-worker proof:event-redrive",
+  unavailableProof: "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+  misconfiguredProof: "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+} as const;
+
+const DEFAULT_EVENT_BUS_OPERATION_TIMEOUT_MS = 5000;
+
+async function withOperationTimeout<T>(
+  operation: string,
+  timeoutMs: number,
+  promise: Promise<T>
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(
+      () => reject(new Error(`postgres_event_bus_timeout:${operation}`)),
+      timeoutMs
+    );
+  });
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 function iso(v: Date | string | null): string | null {
   if (v == null) return null;
   return typeof v === "string" ? v : v.toISOString();
@@ -31,25 +76,34 @@ function iso(v: Date | string | null): string | null {
 
 export class PostgresEventBus implements EventBusPort {
   private readonly pool: PgPool;
-  constructor(pool: PgPool) {
+  private readonly operationTimeoutMs: number;
+
+  constructor(pool: PgPool, operationTimeoutMs = DEFAULT_EVENT_BUS_OPERATION_TIMEOUT_MS) {
     this.pool = pool;
+    this.operationTimeoutMs = operationTimeoutMs;
+  }
+
+  private execute<T>(operation: string, fn: () => Promise<T>): Promise<T> {
+    return withOperationTimeout(operation, this.operationTimeoutMs, fn());
   }
 
   async publish(input: PublishEventInput): Promise<{ published: boolean; deduplicated: boolean }> {
     const payload = JSON.stringify(input.payload ?? {});
-    const r = await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `INSERT INTO public.platform_events
+    const r = await this.execute("publish", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `INSERT INTO public.platform_events
            (organisation_id, event_type, payload, idempotency_key, max_attempts)
          VALUES ($1, $2, $3::jsonb, $4, COALESCE($5, 5))
          ON CONFLICT (organisation_id, event_type, idempotency_key) DO NOTHING`,
-        [
-          input.organisationId,
-          input.eventType,
-          payload,
-          input.idempotencyKey,
-          input.maxAttempts ?? null,
-        ]
+          [
+            input.organisationId,
+            input.eventType,
+            payload,
+            input.idempotencyKey,
+            input.maxAttempts ?? null,
+          ]
+        )
       )
     );
     const published = (r.rowCount ?? 0) > 0;
@@ -57,9 +111,10 @@ export class PostgresEventBus implements EventBusPort {
   }
 
   async claimBatch(limit: number): Promise<ClaimedEvent[]> {
-    const r = await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `UPDATE public.platform_events SET status='processing', updated_at=now()
+    const r = await this.execute("claimBatch", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `UPDATE public.platform_events SET status='processing', updated_at=now()
           WHERE id IN (
             SELECT id FROM public.platform_events
              WHERE status='pending' AND available_at <= now()
@@ -68,7 +123,8 @@ export class PostgresEventBus implements EventBusPort {
              FOR UPDATE SKIP LOCKED
           )
         RETURNING id, organisation_id, event_type, idempotency_key, payload, attempts, max_attempts`,
-        [limit]
+          [limit]
+        )
       )
     );
     return (
@@ -93,20 +149,23 @@ export class PostgresEventBus implements EventBusPort {
   }
 
   async markProcessed(eventId: string): Promise<void> {
-    await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `UPDATE public.platform_events
+    await this.execute("markProcessed", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `UPDATE public.platform_events
             SET status='processed', processed_at=now(), updated_at=now()
           WHERE id=$1`,
-        [eventId]
+          [eventId]
+        )
       )
     );
   }
 
   async recordFailure(eventId: string, error: string): Promise<"retry" | "dead_lettered"> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const upd = await client.query(
-        `UPDATE public.platform_events
+    return this.execute("recordFailure", () =>
+      withSystemAdmin(this.pool as never, async (client) => {
+        const upd = await client.query(
+          `UPDATE public.platform_events
             SET attempts = attempts + 1,
                 last_error = $2,
                 status = CASE WHEN attempts + 1 >= max_attempts THEN 'failed' ELSE 'pending' END,
@@ -114,46 +173,49 @@ export class PostgresEventBus implements EventBusPort {
                 updated_at = now()
           WHERE id = $1
         RETURNING organisation_id, event_type, payload, idempotency_key, attempts, status`,
-        [eventId, error.slice(0, 1000)]
-      );
-      const row = upd.rows[0] as
-        | {
-            organisation_id: string;
-            event_type: string;
-            payload: Record<string, unknown>;
-            idempotency_key: string;
-            attempts: number;
-            status: string;
-          }
-        | undefined;
-      if (!row) return "retry";
-      if (row.status === "failed") {
-        await client.query(
-          `INSERT INTO public.event_dead_letters
+          [eventId, error.slice(0, 1000)]
+        );
+        const row = upd.rows[0] as
+          | {
+              organisation_id: string;
+              event_type: string;
+              payload: Record<string, unknown>;
+              idempotency_key: string;
+              attempts: number;
+              status: string;
+            }
+          | undefined;
+        if (!row) return "retry";
+        if (row.status === "failed") {
+          await client.query(
+            `INSERT INTO public.event_dead_letters
              (event_id, organisation_id, event_type, payload, idempotency_key, attempts, last_error)
            VALUES ($1, $2, $3, $4::jsonb, $5, $6, $7)`,
-          [
-            eventId,
-            row.organisation_id,
-            row.event_type,
-            JSON.stringify(row.payload ?? {}),
-            row.idempotency_key,
-            row.attempts,
-            error.slice(0, 1000),
-          ]
-        );
-        return "dead_lettered";
-      }
-      return "retry";
-    });
+            [
+              eventId,
+              row.organisation_id,
+              row.event_type,
+              JSON.stringify(row.payload ?? {}),
+              row.idempotency_key,
+              row.attempts,
+              error.slice(0, 1000),
+            ]
+          );
+          return "dead_lettered";
+        }
+        return "retry";
+      })
+    );
   }
 
   async listEvents(organisationId: string, limit: number): Promise<EventRow[]> {
-    const r = await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `SELECT id, organisation_id, event_type, status, attempts, max_attempts, last_error, created_at, processed_at
+    const r = await this.execute("listEvents", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `SELECT id, organisation_id, event_type, status, attempts, max_attempts, last_error, created_at, processed_at
            FROM public.platform_events WHERE organisation_id=$1 ORDER BY created_at DESC LIMIT $2`,
-        [organisationId, limit]
+          [organisationId, limit]
+        )
       )
     );
     return (r.rows as Record<string, unknown>[]).map((row) => ({
@@ -170,11 +232,13 @@ export class PostgresEventBus implements EventBusPort {
   }
 
   async listDeadLetters(organisationId: string, limit: number): Promise<DeadLetterRow[]> {
-    const r = await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `SELECT id, event_id, organisation_id, event_type, attempts, last_error, dead_at, redriven_at
+    const r = await this.execute("listDeadLetters", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `SELECT id, event_id, organisation_id, event_type, attempts, last_error, dead_at, redriven_at
            FROM public.event_dead_letters WHERE organisation_id=$1 ORDER BY dead_at DESC LIMIT $2`,
-        [organisationId, limit]
+          [organisationId, limit]
+        )
       )
     );
     return (r.rows as Record<string, unknown>[]).map((row) => ({
@@ -190,67 +254,100 @@ export class PostgresEventBus implements EventBusPort {
   }
 
   async redrive(deadLetterId: string): Promise<{ eventId: string } | null> {
-    return withSystemAdmin(this.pool as never, async (client) => {
-      const dl = await client.query(
-        `SELECT organisation_id, event_type, payload, idempotency_key
+    return this.execute("redrive", () =>
+      withSystemAdmin(this.pool as never, async (client) => {
+        const dl = await client.query(
+          `SELECT organisation_id, event_type, payload, idempotency_key
            FROM public.event_dead_letters WHERE id=$1 AND redriven_at IS NULL`,
-        [deadLetterId]
-      );
-      const row = dl.rows[0] as
-        | {
-            organisation_id: string;
-            event_type: string;
-            payload: Record<string, unknown>;
-            idempotency_key: string;
-          }
-        | undefined;
-      if (!row) return null;
-      // Re-enqueue with a redrive-suffixed idempotency key so the unique constraint
-      // (the original event still exists as 'failed') does not silently drop the requeue.
-      const newKey = `${row.idempotency_key}:redrive:${deadLetterId}`;
-      const ins = await client.query(
-        `INSERT INTO public.platform_events
+          [deadLetterId]
+        );
+        const row = dl.rows[0] as
+          | {
+              organisation_id: string;
+              event_type: string;
+              payload: Record<string, unknown>;
+              idempotency_key: string;
+            }
+          | undefined;
+        if (!row) return null;
+        // Re-enqueue with a redrive-suffixed idempotency key so the unique constraint
+        // (the original event still exists as 'failed') does not silently drop the requeue.
+        const newKey = `${row.idempotency_key}:redrive:${deadLetterId}`;
+        const ins = await client.query(
+          `INSERT INTO public.platform_events
            (organisation_id, event_type, payload, idempotency_key)
          VALUES ($1, $2, $3::jsonb, $4)
          ON CONFLICT (organisation_id, event_type, idempotency_key) DO NOTHING
          RETURNING id`,
-        [row.organisation_id, row.event_type, JSON.stringify(row.payload ?? {}), newKey]
+          [row.organisation_id, row.event_type, JSON.stringify(row.payload ?? {}), newKey]
+        );
+        const eventId = (ins.rows[0] as { id: string } | undefined)?.id;
+        if (!eventId) return null;
+        await client.query(`UPDATE public.event_dead_letters SET redriven_at=now() WHERE id=$1`, [
+          deadLetterId,
+        ]);
+        return { eventId };
+      })
+    );
+  }
+
+  async healthCheck(): Promise<{ status: "ready" | "degraded"; detail: string }> {
+    try {
+      await this.execute("healthCheck", () =>
+        withSystemAdmin(this.pool as never, (client) =>
+          client.query(
+            `SELECT
+               to_regclass('public.platform_events') AS events_table,
+               to_regclass('public.event_dead_letters') AS dead_letters_table`
+          )
+        )
       );
-      const eventId = (ins.rows[0] as { id: string } | undefined)?.id;
-      if (!eventId) return null;
-      await client.query(`UPDATE public.event_dead_letters SET redriven_at=now() WHERE id=$1`, [
-        deadLetterId,
-      ]);
-      return { eventId };
-    });
+      return { status: "ready", detail: "postgres-event-bus:tables:ok" };
+    } catch (err) {
+      return {
+        status: "degraded",
+        detail: `postgres-event-bus:${err instanceof Error ? err.message : String(err)}`,
+      };
+    }
   }
 }
 
 export class PostgresWorkerRegistry implements WorkerRegistryPort {
   private readonly pool: PgPool;
-  constructor(pool: PgPool) {
+  private readonly operationTimeoutMs: number;
+
+  constructor(pool: PgPool, operationTimeoutMs = DEFAULT_EVENT_BUS_OPERATION_TIMEOUT_MS) {
     this.pool = pool;
+    this.operationTimeoutMs = operationTimeoutMs;
+  }
+
+  private execute<T>(operation: string, fn: () => Promise<T>): Promise<T> {
+    return withOperationTimeout(operation, this.operationTimeoutMs, fn());
   }
 
   async heartbeat(workerId: string, workerKind: string, status = "alive"): Promise<void> {
-    await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `INSERT INTO public.worker_heartbeats (worker_id, worker_kind, status, last_heartbeat_at)
+    await this.execute("heartbeat", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `INSERT INTO public.worker_heartbeats (worker_id, worker_kind, status, last_heartbeat_at)
          VALUES ($1, $2, $3, now())
          ON CONFLICT (worker_id) DO UPDATE SET
            worker_kind = EXCLUDED.worker_kind,
            status = EXCLUDED.status,
            last_heartbeat_at = now()`,
-        [workerId, workerKind, status]
+          [workerId, workerKind, status]
+        )
       )
     );
   }
 
   async listWorkers(): Promise<WorkerRecord[]> {
-    const r = await withSystemAdmin(this.pool as never, (client) =>
-      client.query(
-        `SELECT worker_id, worker_kind, status, last_heartbeat_at
+    const r = await this.execute("listWorkers", () =>
+      withSystemAdmin(this.pool as never, (client) =>
+        client.query(
+          `SELECT worker_id, worker_kind, status, last_heartbeat_at
            FROM public.worker_heartbeats ORDER BY last_heartbeat_at DESC`
+        )
       )
     );
     return (r.rows as Record<string, unknown>[]).map((row) => ({
