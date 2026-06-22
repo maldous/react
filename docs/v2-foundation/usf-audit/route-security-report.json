@@ -42,44 +42,6 @@
     },
     {
       "kind": "route-security",
-      "subject": "POST /api/admin/tenants/:tenantId/import",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-import",
-        "routeId": "route:post-api-admin-tenants-tenantid-import",
-        "method": "POST",
-        "path": "/api/admin/tenants/:tenantId/import",
-        "authBoundary": true,
-        "permissionBoundary": "platform.audit.read_all",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7403", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
-      "subject": "POST /api/admin/tenants/:tenantId/meter-events",
-      "message": "privileged mutation route without security audit evidence",
-      "evidence": {
-        "boundaryId": "security-boundary:route-post-api-admin-tenants-tenantid-meter-events",
-        "routeId": "route:post-api-admin-tenants-tenantid-meter-events",
-        "method": "POST",
-        "path": "/api/admin/tenants/:tenantId/meter-events",
-        "authBoundary": true,
-        "permissionBoundary": "platform.metering.write",
-        "tenantBoundary": "admin route namespace",
-        "rbacAbacPdpDecision": "UMA resource+scope",
-        "failClosed": "source evidence",
-        "securityAudit": "unknown",
-        "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5561", "docs/api/openapi.json"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "route-security",
       "subject": "GET /api/auth/providers",
       "message": "route without auth decision",
       "evidence": {

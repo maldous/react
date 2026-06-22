@@ -5566,6 +5566,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.metering.write",
     resource: "admin:metering",
     umaScope: "write" as const,
+    auditEvent: AuditAction.MeterEventRecorded,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -5583,6 +5584,27 @@ export const routes: Route[] = [
       }
       const { recordMeterEvent } = await import("../usecases/metering.ts");
       try {
+        await createPostgresAuditEventPort(getApplicationPool()).emit(
+          createAuditEvent({
+            actorId: req.actor!.userId,
+            actorRoles: req.actor!.roles,
+            tenantId,
+            action: AuditAction.MeterEventRecorded,
+            resource: "meter_event",
+            resourceId: parsed.data.idempotencyKey,
+            metadata: {
+              meterKey: parsed.data.meterKey,
+              quantity: parsed.data.quantity,
+              subjectId: parsed.data.subjectId,
+              source: parsed.data.source,
+              occurredAt: parsed.data.occurredAt,
+              before: "not_recorded_or_deduplicated",
+              after: "recorded_or_deduplicated",
+            },
+            correlationId: req.requestId,
+            sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+          })
+        );
         const result = await recordMeterEvent(
           { organisationId: tenantId, ...parsed.data },
           await buildMeteringDeps()
@@ -7408,6 +7430,7 @@ export const routes: Route[] = [
     requiredPermission: "platform.audit.read_all",
     resource: "admin:history",
     umaScope: "write" as const,
+    auditEvent: AuditAction.TenantImportApplied,
     scope: "global" as const,
     handler: async (req, res) => {
       const tenantId = req.params["tenantId"] ?? "";
@@ -7431,6 +7454,25 @@ export const routes: Route[] = [
         tenantId,
         secretStore,
       });
+      await createPostgresAuditEventPort(pool).emit(
+        createAuditEvent({
+          actorId: req.actor!.userId,
+          actorRoles: req.actor!.roles,
+          tenantId,
+          action: AuditAction.TenantImportApplied,
+          resource: "tenant_import",
+          resourceId: digest,
+          metadata: {
+            schemaVersion: manifest.schemaVersion,
+            entries: manifest.entries.length,
+            sourceCommit: manifest.sourceCommit,
+            before: "portable_import_not_applied_or_resumable",
+            after: "portable_import_apply_requested",
+          },
+          correlationId: req.requestId,
+          sourceHost: req.raw.headers["x-forwarded-host"] as string | undefined,
+        })
+      );
       const existing = await pool.query<{
         completed_orders: number[];
         failed_order: number | null;

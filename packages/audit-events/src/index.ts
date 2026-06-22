@@ -97,6 +97,8 @@ export const AuditAction = {
   WorkflowStarted: "workflow.started",
   WorkflowSignaled: "workflow.signaled",
   WorkflowCancelled: "workflow.cancelled",
+  MeterEventRecorded: "meter_event.recorded",
+  TenantImportApplied: "tenant_import.applied",
 } as const;
 
 export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction];
