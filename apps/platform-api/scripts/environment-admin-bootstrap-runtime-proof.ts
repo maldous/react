@@ -60,16 +60,16 @@ function main(): void {
     );
 
     const markerPath = join(process.cwd(), ".env", "secrets", `${stage}.admin.json`);
-    check(`${stage}: marker persisted`, existsSync(markerPath));
+    check(`${stage}: marker state persisted`, existsSync(markerPath));
     if (existsSync(markerPath)) {
       const marker = readFileSync(markerPath, "utf8");
       check(
-        `${stage}: marker contains NO plaintext password`,
+        `${stage}: marker state contains NO plaintext password`,
         pw != null && !marker.includes(pw) && !/Bs1-/.test(marker)
       );
       const parsed = JSON.parse(marker);
       check(
-        `${stage}: marker has username + opaque secretRef`,
+        `${stage}: marker state has username + opaque secretRef`,
         typeof parsed.username === "string" && /^secret:/.test(parsed.secretRef)
       );
     }

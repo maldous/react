@@ -206,9 +206,9 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
-    "assertsObservabilityOrAudit": false,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts"]
   },
   {
@@ -250,8 +250,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts"]
   },
@@ -415,10 +415,10 @@
   {
     "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
     "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
-    "level": 2,
-    "classification": "isolated unit behaviour",
+    "level": 3,
+    "classification": "state transition behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"]
@@ -525,8 +525,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts"]
   },
