@@ -985,9 +985,9 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
-    "assertsObservabilityOrAudit": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"]
   },
   {
@@ -996,8 +996,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [
       "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
@@ -1009,8 +1009,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"]
   },
@@ -1020,8 +1020,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"]
   },
@@ -1031,7 +1031,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
+    "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts"]
@@ -1042,8 +1042,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"]
   },
@@ -1053,8 +1053,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"]
   },
@@ -1064,8 +1064,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [
       "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
@@ -1077,8 +1077,8 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [
       "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"
@@ -1090,9 +1090,9 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
-    "assertsObservabilityOrAudit": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [
       "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
     ]
