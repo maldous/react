@@ -10892,5 +10892,26 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected retention provider contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "local runtime proof and unit scheduled job semantics",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script exits non-zero when scheduled job persistence, due enqueue, deduplication, pause, run-now, tenant isolation, or provider reliability semantics break",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to scheduled-jobs-runtime-proof.ts; live scheduled job proof validates persistence, due enqueue, deduplication, pause, run-now, and RLS validation while the Postgres repository supplies timeout/retry/fail-closed/health behavior",
+    "capabilitiesProven": ["Scheduled jobs built-in on the event substrate"],
+    "semanticFacetsProven": ["providerReliability", "workflow", "stateModel", "proof"],
+    "environment": "test",
+    "providerClass": "postgres",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected scheduled job provider contract is broken"
   }
 ]

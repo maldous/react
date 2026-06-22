@@ -4106,6 +4106,18 @@
         "apps/platform-api/tests/unit/retention.test.ts"
       ],
       "decisionRefs": ["ADR-0064", "ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+        "apps/platform-api/tests/unit/scheduled-jobs.test.ts"
+      ],
+      "decisionRefs": ["ADR-0059", "ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -4488,6 +4500,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 438,
+  "additionCount": 439,
   "deletionCount": 54
 }
