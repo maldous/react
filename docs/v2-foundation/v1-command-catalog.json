@@ -6458,5 +6458,27 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm v2:formal-assurance",
+    "kind": "npm",
+    "purpose": "Generate the formal V2 semantic assurance graph, proof reports, traceability matrix, and mathematical assurance attestation.",
+    "inputs": ["docs/v2-foundation/*.json", "tools/v2-readiness/src/formal-assurance.mjs"],
+    "outputs": [
+      "docs/v2-foundation/formal-model/*.json",
+      "docs/v2-foundation/mathematical-assurance-attestation.md"
+    ],
+    "prerequisites": [],
+    "sideEffects": ["rewrites generated formal assurance artefacts"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-invalid-foundation-state",
+    "idempotent": true,
+    "safetyControls": ["readiness rules R30-R37 consume the same source-derived model"],
+    "testCoverage": "tools/v2-readiness/tests/*.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "postAudit": "formal assurance command added for mathematical V2 readiness proof"
   }
 ]

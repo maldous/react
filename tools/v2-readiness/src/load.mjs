@@ -234,6 +234,7 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
   const j = (name) => readJson(path.join(D, name));
   const t = (name) => readText(path.join(D, name));
   const optional = (name) => readJsonSafe(path.join(D, name));
+  const optionalFormal = (name) => readJsonSafe(path.join(D, "formal-model", name));
   const pkg = readJson(path.join(repoRoot, "package.json"));
 
   // inventory shards (docs/v2-foundation/shards/inventory-*.json) concatenated
@@ -315,6 +316,15 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
         "semantic-source-of-truth-transition.json"
       ),
       "environment-readiness-gates.json": optional("environment-readiness-gates.json"),
+    },
+    formalModel: {
+      "capability-graph.json": optionalFormal("capability-graph.json"),
+      "event-graph.json": optionalFormal("event-graph.json"),
+      "interaction-graph.json": optionalFormal("interaction-graph.json"),
+      "proof-graph.json": optionalFormal("proof-graph.json"),
+      "environment-graph.json": optionalFormal("environment-graph.json"),
+      "traceability-graph.json": optionalFormal("traceability-graph.json"),
+      "state-machines.json": optionalFormal("state-machines.json"),
     },
     // live repo facts
     gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),

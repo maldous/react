@@ -30,6 +30,14 @@ import r26 from "./rules/r26-event-semantics.mjs";
 import r27 from "./rules/r27-operational-semantics.mjs";
 import r28 from "./rules/r28-semantic-source-transition.mjs";
 import r29 from "./rules/r29-environment-readiness-gates.mjs";
+import r30 from "./rules/r30-graph-integrity.mjs";
+import r31 from "./rules/r31-state-machine-soundness.mjs";
+import r32 from "./rules/r32-traceability-closure.mjs";
+import r33 from "./rules/r33-environment-completeness.mjs";
+import r34 from "./rules/r34-constraint-satisfaction.mjs";
+import r35 from "./rules/r35-semantic-closure.mjs";
+import r36 from "./rules/r36-regeneration-sufficiency.mjs";
+import r37 from "./rules/r37-semantic-entropy.mjs";
 
 export const RULES = [
   r1,
@@ -61,6 +69,14 @@ export const RULES = [
   r27,
   r28,
   r29,
+  r30,
+  r31,
+  r32,
+  r33,
+  r34,
+  r35,
+  r36,
+  r37,
 ];
 
 export function runRules(ctx) {
@@ -91,6 +107,14 @@ const AUDIT_SURFACES = {
   "operational-semantics": "R27",
   "semantic-source-transition": "R28",
   "environment-readiness-gates": "R29",
+  "graph-integrity": "R30",
+  "state-machine-soundness": "R31",
+  "traceability-closure": "R32",
+  "environment-completeness": "R33",
+  "constraint-satisfaction": "R34",
+  "semantic-closure": "R35",
+  "regeneration-sufficiency": "R36",
+  "semantic-entropy": "R37",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -113,6 +137,14 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R27",
   "R28",
   "R29",
+  "R30",
+  "R31",
+  "R32",
+  "R33",
+  "R34",
+  "R35",
+  "R36",
+  "R37",
 ];
 
 export function summarize(

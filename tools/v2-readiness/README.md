@@ -7,6 +7,7 @@ writes nothing. Spec: `docs/v2-foundation/v2-readiness-validator-spec.md`.
 ```bash
 npm run v2:readiness        # human report, exit 1 while blockers remain
 npm run v2:readiness:json   # machine report
+npm run v2:formal-assurance # regenerate formal graph/report artefacts + attestation
 node tools/v2-readiness/src/index.mjs --strict --repo . --pinned <freeze-sha>
 ```
 
@@ -82,8 +83,28 @@ decision. Until then it is RED, which is the honest cut-gate state (runbook §0)
 - **R29 environment-readiness-gates** — dev/test/staging/prod gates define purpose, commands, proof
   levels, provider/mocking policy, staging rehearsal, prod smoke/readiness, and contradictions with
   the environment-capability matrix are rejected.
+- **R30 graph-integrity** — the formal semantic graph has stable nodes and explicit edges, with no
+  orphan nodes, dangling references, invalid cycles, missing ownership chains, or duplicate semantic
+  identities.
+- **R31 state-machine-soundness** — every formal lifecycle state machine has reachable states, valid
+  transitions, explicit terminal states, and no dead states or impossible bypasses.
+- **R32 traceability-closure** — capabilities, proofs, events, environments, interactions, and UI
+  semantics form a closed traceability matrix, including explicit absence records where a capability
+  has no source-derived event or named cross-capability interaction.
+- **R33 environment-completeness** — the Capability x Environment matrix is complete and enforces dev
+  local execution, test deterministic proof, staging production-shape rehearsal, and prod
+  non-destructive health validation.
+- **R34 constraint-satisfaction** — semantic implications are checked as constraints, including
+  provider-backed degraded mode, mutating-event idempotency, tenant-data backup semantics,
+  delivered semantic completeness, and prod mock prohibition.
+- **R35 semantic-closure** — runtime behaviours discovered from events, proof scripts, state
+  transitions, routes, and commands must have semantic representation.
+- **R36 regeneration-sufficiency** — the semantic artefacts alone must reconstruct the capability
+  graph, interaction graph, event graph, environment matrix, and UI semantic model without invention.
+- **R37 semantic-entropy** — duplicate concepts, owners, event definitions, readiness definitions,
+  state machines, and contradictory definitions are rejected.
 
-R1–R8 + R10–R29 are the consistency validation (must pass); R9 is the fail-closed cut gate.
+R1–R8 + R10–R37 are the consistency validation (must pass); R9 is the fail-closed cut gate.
 
 Tests: `node --test tools/v2-readiness/tests/*.test.mjs` (also run via the canonical `test:architecture`
 gate, ADR-ACT-0292).

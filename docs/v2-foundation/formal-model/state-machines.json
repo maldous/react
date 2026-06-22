@@ -1,0 +1,2047 @@
+{
+  "artefact": "state-machines",
+  "version": 1,
+  "machines": [
+    {
+      "id": "state-machine:tenant-identity-record-plus-fqdn",
+      "capability": "Tenant identity (record + FQDN)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:user-identity-plus-tenant-membership",
+      "capability": "User identity + tenant membership",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:end-user-profile-plus-preferences-self-service",
+      "capability": "End-user profile + preferences self-service",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:api-keys-personal-access-tokens",
+      "capability": "API keys / personal access tokens",
+      "states": [
+        "defined",
+        "domainFailure",
+        "empty",
+        "entitlementUnavailable",
+        "loading",
+        "permissionDenied",
+        "rateLimited",
+        "ready",
+        "success",
+        "validationFailure"
+      ],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "loading",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "domainFailure"
+        },
+        {
+          "from": "defined",
+          "to": "empty"
+        },
+        {
+          "from": "defined",
+          "to": "entitlementUnavailable"
+        },
+        {
+          "from": "defined",
+          "to": "loading"
+        },
+        {
+          "from": "defined",
+          "to": "permissionDenied"
+        },
+        {
+          "from": "defined",
+          "to": "rateLimited"
+        },
+        {
+          "from": "defined",
+          "to": "ready"
+        },
+        {
+          "from": "defined",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "validationFailure"
+        }
+      ],
+      "terminalStates": [
+        "domainFailure",
+        "empty",
+        "permissionDenied",
+        "ready",
+        "success",
+        "validationFailure"
+      ],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "ui-capability-model + semanticCompleteness.stateModel"
+    },
+    {
+      "id": "state-machine:tenant-groups",
+      "capability": "Tenant groups",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:sub-organisations",
+      "capability": "Sub-organisations",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:rbac-roles-plus-permissions",
+      "capability": "RBAC (roles + permissions)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:abac-policy-decision-point",
+      "capability": "ABAC / Policy Decision Point",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:delegated-administration-roles",
+      "capability": "Delegated administration roles",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:entitlement-engine",
+      "capability": "Entitlement engine",
+      "states": [
+        "defined",
+        "domainFailure",
+        "empty",
+        "loading",
+        "permissionDenied",
+        "ready",
+        "success"
+      ],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "loading",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "domainFailure"
+        },
+        {
+          "from": "defined",
+          "to": "empty"
+        },
+        {
+          "from": "defined",
+          "to": "loading"
+        },
+        {
+          "from": "defined",
+          "to": "permissionDenied"
+        },
+        {
+          "from": "defined",
+          "to": "ready"
+        },
+        {
+          "from": "defined",
+          "to": "success"
+        }
+      ],
+      "terminalStates": ["domainFailure", "empty", "permissionDenied", "ready", "success"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "ui-capability-model + semanticCompleteness.stateModel"
+    },
+    {
+      "id": "state-machine:support-mode-break-glass-access",
+      "capability": "Support-mode / break-glass access",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:audit-of-privileged-access",
+      "capability": "Audit of privileged access",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:platform-login-plus-session",
+      "capability": "Platform login + session",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:idp-brokering-plus-oidc-provider-management",
+      "capability": "IdP brokering + OIDC provider management",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:claim-mapping-plus-group-role-mapping",
+      "capability": "Claim mapping + group/role mapping",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:mfa-plus-session-policy-plus-lockout",
+      "capability": "MFA + session policy + lockout",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:configuration-registry-plus-history",
+      "capability": "Configuration registry + history",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:branding-plus-theming",
+      "capability": "Branding + theming",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:custom-domains-dns-ownership-tls-canonical",
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:write-only-secret-settings",
+      "capability": "Write-only secret settings",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:product-catalog-plans-prices",
+      "capability": "Product catalog, plans, prices",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:subscriptions-invoices-payment-methods-dunning",
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:usage-metering-plus-meter-event-ingestion",
+      "capability": "Usage metering + meter event ingestion",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:quota-enforcement",
+      "capability": "Quota enforcement",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:relational-storage-plus-migrations-plus-rls",
+      "capability": "Relational storage + migrations + RLS",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:backup-plus-restore",
+      "capability": "Backup + restore",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:pitr-retention-legal-hold-data-residency",
+      "capability": "PITR, retention, legal hold, data residency",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-data-import-export",
+      "capability": "Tenant data import / export",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:search-plus-indexing-product-search",
+      "capability": "Search + indexing (product search)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:event-bus-durable-queues-dlq-redrive",
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "states": [
+        "defined",
+        "degraded",
+        "domainFailure",
+        "empty",
+        "loading",
+        "permissionDenied",
+        "ready",
+        "success"
+      ],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "loading",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "degraded"
+        },
+        {
+          "from": "defined",
+          "to": "domainFailure"
+        },
+        {
+          "from": "defined",
+          "to": "empty"
+        },
+        {
+          "from": "defined",
+          "to": "loading"
+        },
+        {
+          "from": "defined",
+          "to": "permissionDenied"
+        },
+        {
+          "from": "defined",
+          "to": "ready"
+        },
+        {
+          "from": "defined",
+          "to": "success"
+        }
+      ],
+      "terminalStates": ["domainFailure", "empty", "permissionDenied", "ready", "success"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "ui-capability-model + semanticCompleteness.stateModel"
+    },
+    {
+      "id": "state-machine:workflow-engine-scheduled-jobs-approvals",
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:scheduled-jobs-built-in-on-the-event-substrate",
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "states": [
+        "defined",
+        "degraded",
+        "domainFailure",
+        "empty",
+        "loading",
+        "permissionDenied",
+        "ready",
+        "success"
+      ],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "loading",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "degraded"
+        },
+        {
+          "from": "defined",
+          "to": "domainFailure"
+        },
+        {
+          "from": "defined",
+          "to": "empty"
+        },
+        {
+          "from": "defined",
+          "to": "loading"
+        },
+        {
+          "from": "defined",
+          "to": "permissionDenied"
+        },
+        {
+          "from": "defined",
+          "to": "ready"
+        },
+        {
+          "from": "defined",
+          "to": "success"
+        }
+      ],
+      "terminalStates": ["domainFailure", "empty", "permissionDenied", "ready", "success"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "ui-capability-model + semanticCompleteness.stateModel"
+    },
+    {
+      "id": "state-machine:notification-delivery-plus-preferences-plus-channels",
+      "capability": "Notification delivery + preferences + channels",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:background-workers-job-runner",
+      "capability": "Background workers / job runner",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:runtime-secrets-management",
+      "capability": "Runtime secrets management",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:logs-aggregation-plus-tenant-scoped-search",
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:metrics-plus-traces",
+      "capability": "Metrics + traces",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:observability-built-in-alerting-plus-incidents",
+      "capability": "Observability — built-in alerting + incidents",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:internal-service-catalog-plus-readiness",
+      "capability": "Internal service catalog + readiness",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:code-quality-plus-secret-plus-dependency-scanning",
+      "capability": "Code quality + secret + dependency scanning",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:compliance-reports-access-reviews-evidence-packs",
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-isolation-proof",
+      "capability": "Tenant isolation proof",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:webhooks-developer-facing",
+      "capability": "Webhooks (developer-facing)",
+      "states": [
+        "defined",
+        "domainFailure",
+        "empty",
+        "entitlementUnavailable",
+        "loading",
+        "permissionDenied",
+        "ready",
+        "success"
+      ],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "loading",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "domainFailure"
+        },
+        {
+          "from": "defined",
+          "to": "empty"
+        },
+        {
+          "from": "defined",
+          "to": "entitlementUnavailable"
+        },
+        {
+          "from": "defined",
+          "to": "loading"
+        },
+        {
+          "from": "defined",
+          "to": "permissionDenied"
+        },
+        {
+          "from": "defined",
+          "to": "ready"
+        },
+        {
+          "from": "defined",
+          "to": "success"
+        }
+      ],
+      "terminalStates": ["domainFailure", "empty", "permissionDenied", "ready", "success"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "ui-capability-model + semanticCompleteness.stateModel"
+    },
+    {
+      "id": "state-machine:api-docs-developer-portal-sdks-rate-limits",
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:rate-limiting-api",
+      "capability": "Rate limiting (API)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-lifecycle-provision-suspend-delete-export",
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:support-tickets-customer-health-announcements",
+      "capability": "Support tickets, customer health, announcements",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:universal-service-foundation-scope-plus-principles",
+      "capability": "Universal Service Foundation scope + principles",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:build-versus-compose-decision-framework",
+      "capability": "Build-versus-compose decision framework",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:service-catalog-plus-provider-integration-model",
+      "capability": "Service catalog + provider integration model",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:environment-specific-vs-shared-service-model",
+      "capability": "Environment-specific vs shared service model",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:provider-configuration-plane",
+      "capability": "Provider configuration plane",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:composed-provider-readiness-spine",
+      "capability": "Composed provider readiness spine",
+      "states": ["defined", "degraded", "empty", "loading", "permissionDenied", "ready", "success"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "loading",
+          "to": "success"
+        },
+        {
+          "from": "defined",
+          "to": "degraded"
+        },
+        {
+          "from": "defined",
+          "to": "empty"
+        },
+        {
+          "from": "defined",
+          "to": "loading"
+        },
+        {
+          "from": "defined",
+          "to": "permissionDenied"
+        },
+        {
+          "from": "defined",
+          "to": "ready"
+        },
+        {
+          "from": "defined",
+          "to": "success"
+        }
+      ],
+      "terminalStates": ["empty", "permissionDenied", "ready", "success"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "ui-capability-model + semanticCompleteness.stateModel"
+    },
+    {
+      "id": "state-machine:history-read-model-read-only-projection",
+      "capability": "History read-model (read-only projection)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:oidc-discovery-issuer-jwks-validation",
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:oidc-test-connection-plus-callback-display",
+      "capability": "OIDC test connection + callback display",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-host-identity-resolution",
+      "capability": "Tenant host identity resolution",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-domain-activation-auth-client",
+      "capability": "Tenant domain activation (auth-client)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-canonical-domain-set-unset",
+      "capability": "Tenant canonical domain set/unset",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-custom-domain-auth-callback",
+      "capability": "Tenant custom-domain auth callback",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:tenant-service-clickthrough-policy",
+      "capability": "Tenant service clickthrough policy",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:environment-registry-plus-bootstrap",
+      "capability": "Environment registry + bootstrap",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:provider-environment-classification",
+      "capability": "Provider environment classification",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:e2e-confidence-ladder-stage-aware",
+      "capability": "E2E confidence ladder (stage-aware)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:openapi-drift-hard-gate",
+      "capability": "OpenAPI drift hard gate",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:i18n-runtime-plus-validation",
+      "capability": "i18n runtime + validation",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:accessibility-a11y-gate",
+      "capability": "Accessibility (a11y) gate",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    },
+    {
+      "id": "state-machine:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "states": ["defined", "ready"],
+      "initialState": "defined",
+      "transitions": [
+        {
+          "from": "defined",
+          "to": "ready"
+        }
+      ],
+      "terminalStates": ["ready"],
+      "forbiddenTransitions": [
+        {
+          "from": "clean",
+          "to": "uploaded",
+          "rationale": "terminal clean state cannot re-enter upload without an explicit new lifecycle"
+        },
+        {
+          "from": "rejected",
+          "to": "clean",
+          "rationale": "rejected content cannot become clean unless explicitly rescanned through a defined transition"
+        }
+      ],
+      "source": "semanticCompleteness.lifecycle/stateModel"
+    }
+  ]
+}

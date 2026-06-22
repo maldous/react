@@ -1,0 +1,6003 @@
+{
+  "artefact": "environment-graph",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "capability:abac-policy-decision-point",
+      "kind": "capability",
+      "label": "ABAC / Policy Decision Point",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:accessibility-a11y-gate",
+      "kind": "capability",
+      "label": "Accessibility (a11y) gate",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "capability",
+      "label": "API docs, developer portal, SDKs, rate limits",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:api-keys-personal-access-tokens",
+      "kind": "capability",
+      "label": "API keys / personal access tokens",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:audit-of-privileged-access",
+      "kind": "capability",
+      "label": "Audit of privileged access",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:background-workers-job-runner",
+      "kind": "capability",
+      "label": "Background workers / job runner",
+      "category": "compute-runtime"
+    },
+    {
+      "id": "capability:backup-plus-restore",
+      "kind": "capability",
+      "label": "Backup + restore",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:branding-plus-theming",
+      "kind": "capability",
+      "label": "Branding + theming",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "capability",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:build-versus-compose-decision-framework",
+      "kind": "capability",
+      "label": "Build-versus-compose decision framework",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:claim-mapping-plus-group-role-mapping",
+      "kind": "capability",
+      "label": "Claim mapping + group/role mapping",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "capability",
+      "label": "Code quality + secret + dependency scanning",
+      "category": "security-governance"
+    },
+    {
+      "id": "capability:compliance-reports-access-reviews-evidence-packs",
+      "kind": "capability",
+      "label": "Compliance reports, access reviews, evidence packs",
+      "category": "security-governance"
+    },
+    {
+      "id": "capability:composed-provider-readiness-spine",
+      "kind": "capability",
+      "label": "Composed provider readiness spine",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:configuration-registry-plus-history",
+      "kind": "capability",
+      "label": "Configuration registry + history",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:custom-domains-dns-ownership-tls-canonical",
+      "kind": "capability",
+      "label": "Custom domains, DNS ownership, TLS, canonical",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "kind": "capability",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:delegated-administration-roles",
+      "kind": "capability",
+      "label": "Delegated administration roles",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:e2e-confidence-ladder-stage-aware",
+      "kind": "capability",
+      "label": "E2E confidence ladder (stage-aware)",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:end-user-profile-plus-preferences-self-service",
+      "kind": "capability",
+      "label": "End-user profile + preferences self-service",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:entitlement-engine",
+      "kind": "capability",
+      "label": "Entitlement engine",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:environment-registry-plus-bootstrap",
+      "kind": "capability",
+      "label": "Environment registry + bootstrap",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:environment-specific-vs-shared-service-model",
+      "kind": "capability",
+      "label": "Environment-specific vs shared service model",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:event-bus-durable-queues-dlq-redrive",
+      "kind": "capability",
+      "label": "Event bus, durable queues, DLQ, redrive",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:history-read-model-read-only-projection",
+      "kind": "capability",
+      "label": "History read-model (read-only projection)",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:i18n-runtime-plus-validation",
+      "kind": "capability",
+      "label": "i18n runtime + validation",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:idp-brokering-plus-oidc-provider-management",
+      "kind": "capability",
+      "label": "IdP brokering + OIDC provider management",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:internal-service-catalog-plus-readiness",
+      "kind": "capability",
+      "label": "Internal service catalog + readiness",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "capability",
+      "label": "Logs (aggregation + tenant-scoped search)",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:metrics-plus-traces",
+      "kind": "capability",
+      "label": "Metrics + traces",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:mfa-plus-session-policy-plus-lockout",
+      "kind": "capability",
+      "label": "MFA + session policy + lockout",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:notification-delivery-plus-preferences-plus-channels",
+      "kind": "capability",
+      "label": "Notification delivery + preferences + channels",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "kind": "capability",
+      "label": "Object storage + tenant prefixes + signed URLs",
+      "category": "storage"
+    },
+    {
+      "id": "capability:observability-built-in-alerting-plus-incidents",
+      "kind": "capability",
+      "label": "Observability — built-in alerting + incidents",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:oidc-discovery-issuer-jwks-validation",
+      "kind": "capability",
+      "label": "OIDC discovery / issuer / JWKS validation",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:oidc-test-connection-plus-callback-display",
+      "kind": "capability",
+      "label": "OIDC test connection + callback display",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:openapi-drift-hard-gate",
+      "kind": "capability",
+      "label": "OpenAPI drift hard gate",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:pitr-retention-legal-hold-data-residency",
+      "kind": "capability",
+      "label": "PITR, retention, legal hold, data residency",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:platform-login-plus-session",
+      "kind": "capability",
+      "label": "Platform login + session",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:product-catalog-plans-prices",
+      "kind": "capability",
+      "label": "Product catalog, plans, prices",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:provider-configuration-plane",
+      "kind": "capability",
+      "label": "Provider configuration plane",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:provider-environment-classification",
+      "kind": "capability",
+      "label": "Provider environment classification",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:quota-enforcement",
+      "kind": "capability",
+      "label": "Quota enforcement",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:rate-limiting-api",
+      "kind": "capability",
+      "label": "Rate limiting (API)",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:rbac-roles-plus-permissions",
+      "kind": "capability",
+      "label": "RBAC (roles + permissions)",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:relational-storage-plus-migrations-plus-rls",
+      "kind": "capability",
+      "label": "Relational storage + migrations + RLS",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:runtime-secrets-management",
+      "kind": "capability",
+      "label": "Runtime secrets management",
+      "category": "compute-runtime"
+    },
+    {
+      "id": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "capability",
+      "label": "Scheduled jobs (built-in, on the event substrate)",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:search-plus-indexing-product-search",
+      "kind": "capability",
+      "label": "Search + indexing (product search)",
+      "category": "search"
+    },
+    {
+      "id": "capability:service-catalog-plus-provider-integration-model",
+      "kind": "capability",
+      "label": "Service catalog + provider integration model",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:sub-organisations",
+      "kind": "capability",
+      "label": "Sub-organisations",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:subscriptions-invoices-payment-methods-dunning",
+      "kind": "capability",
+      "label": "Subscriptions, invoices, payment methods, dunning",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:support-mode-break-glass-access",
+      "kind": "capability",
+      "label": "Support-mode / break-glass access",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:support-tickets-customer-health-announcements",
+      "kind": "capability",
+      "label": "Support tickets, customer health, announcements",
+      "category": "support-admin"
+    },
+    {
+      "id": "capability:tenant-canonical-domain-set-unset",
+      "kind": "capability",
+      "label": "Tenant canonical domain set/unset",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:tenant-custom-domain-auth-callback",
+      "kind": "capability",
+      "label": "Tenant custom-domain auth callback",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:tenant-data-import-export",
+      "kind": "capability",
+      "label": "Tenant data import / export",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:tenant-domain-activation-auth-client",
+      "kind": "capability",
+      "label": "Tenant domain activation (auth-client)",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:tenant-groups",
+      "kind": "capability",
+      "label": "Tenant groups",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:tenant-host-identity-resolution",
+      "kind": "capability",
+      "label": "Tenant host identity resolution",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:tenant-identity-record-plus-fqdn",
+      "kind": "capability",
+      "label": "Tenant identity (record + FQDN)",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:tenant-isolation-proof",
+      "kind": "capability",
+      "label": "Tenant isolation proof",
+      "category": "security-governance"
+    },
+    {
+      "id": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "kind": "capability",
+      "label": "Tenant lifecycle: provision, suspend, delete, export",
+      "category": "support-admin"
+    },
+    {
+      "id": "capability:tenant-service-clickthrough-policy",
+      "kind": "capability",
+      "label": "Tenant service clickthrough policy",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:universal-service-foundation-scope-plus-principles",
+      "kind": "capability",
+      "label": "Universal Service Foundation scope + principles",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:usage-metering-plus-meter-event-ingestion",
+      "kind": "capability",
+      "label": "Usage metering + meter event ingestion",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:user-identity-plus-tenant-membership",
+      "kind": "capability",
+      "label": "User identity + tenant membership",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:webhooks-developer-facing",
+      "kind": "capability",
+      "label": "Webhooks (developer-facing)",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:workflow-engine-scheduled-jobs-approvals",
+      "kind": "capability",
+      "label": "Workflow engine, scheduled jobs, approvals",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:write-only-secret-settings",
+      "kind": "capability",
+      "label": "Write-only secret settings",
+      "category": "configuration"
+    },
+    {
+      "id": "environment:abac-policy-decision-point:dev",
+      "kind": "environment",
+      "label": "ABAC / Policy Decision Point dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:abac-policy-decision-point:prod",
+      "kind": "environment",
+      "label": "ABAC / Policy Decision Point prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:abac-policy-decision-point:staging",
+      "kind": "environment",
+      "label": "ABAC / Policy Decision Point staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:abac-policy-decision-point:test",
+      "kind": "environment",
+      "label": "ABAC / Policy Decision Point test",
+      "env": "test"
+    },
+    {
+      "id": "environment:accessibility-a11y-gate:dev",
+      "kind": "environment",
+      "label": "Accessibility (a11y) gate dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:accessibility-a11y-gate:prod",
+      "kind": "environment",
+      "label": "Accessibility (a11y) gate prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:accessibility-a11y-gate:staging",
+      "kind": "environment",
+      "label": "Accessibility (a11y) gate staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:accessibility-a11y-gate:test",
+      "kind": "environment",
+      "label": "Accessibility (a11y) gate test",
+      "env": "test"
+    },
+    {
+      "id": "environment:api-docs-developer-portal-sdks-rate-limits:dev",
+      "kind": "environment",
+      "label": "API docs, developer portal, SDKs, rate limits dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:api-docs-developer-portal-sdks-rate-limits:prod",
+      "kind": "environment",
+      "label": "API docs, developer portal, SDKs, rate limits prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:api-docs-developer-portal-sdks-rate-limits:staging",
+      "kind": "environment",
+      "label": "API docs, developer portal, SDKs, rate limits staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:api-docs-developer-portal-sdks-rate-limits:test",
+      "kind": "environment",
+      "label": "API docs, developer portal, SDKs, rate limits test",
+      "env": "test"
+    },
+    {
+      "id": "environment:api-keys-personal-access-tokens:dev",
+      "kind": "environment",
+      "label": "API keys / personal access tokens dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:api-keys-personal-access-tokens:prod",
+      "kind": "environment",
+      "label": "API keys / personal access tokens prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:api-keys-personal-access-tokens:staging",
+      "kind": "environment",
+      "label": "API keys / personal access tokens staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:api-keys-personal-access-tokens:test",
+      "kind": "environment",
+      "label": "API keys / personal access tokens test",
+      "env": "test"
+    },
+    {
+      "id": "environment:audit-of-privileged-access:dev",
+      "kind": "environment",
+      "label": "Audit of privileged access dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:audit-of-privileged-access:prod",
+      "kind": "environment",
+      "label": "Audit of privileged access prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:audit-of-privileged-access:staging",
+      "kind": "environment",
+      "label": "Audit of privileged access staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:audit-of-privileged-access:test",
+      "kind": "environment",
+      "label": "Audit of privileged access test",
+      "env": "test"
+    },
+    {
+      "id": "environment:background-workers-job-runner:dev",
+      "kind": "environment",
+      "label": "Background workers / job runner dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:background-workers-job-runner:prod",
+      "kind": "environment",
+      "label": "Background workers / job runner prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:background-workers-job-runner:staging",
+      "kind": "environment",
+      "label": "Background workers / job runner staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:background-workers-job-runner:test",
+      "kind": "environment",
+      "label": "Background workers / job runner test",
+      "env": "test"
+    },
+    {
+      "id": "environment:backup-plus-restore:dev",
+      "kind": "environment",
+      "label": "Backup + restore dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:backup-plus-restore:prod",
+      "kind": "environment",
+      "label": "Backup + restore prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:backup-plus-restore:staging",
+      "kind": "environment",
+      "label": "Backup + restore staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:backup-plus-restore:test",
+      "kind": "environment",
+      "label": "Backup + restore test",
+      "env": "test"
+    },
+    {
+      "id": "environment:branding-plus-theming:dev",
+      "kind": "environment",
+      "label": "Branding + theming dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:branding-plus-theming:prod",
+      "kind": "environment",
+      "label": "Branding + theming prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:branding-plus-theming:staging",
+      "kind": "environment",
+      "label": "Branding + theming staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:branding-plus-theming:test",
+      "kind": "environment",
+      "label": "Branding + theming test",
+      "env": "test"
+    },
+    {
+      "id": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:dev",
+      "kind": "environment",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:prod",
+      "kind": "environment",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:staging",
+      "kind": "environment",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:test",
+      "kind": "environment",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:build-versus-compose-decision-framework:dev",
+      "kind": "environment",
+      "label": "Build-versus-compose decision framework dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:build-versus-compose-decision-framework:prod",
+      "kind": "environment",
+      "label": "Build-versus-compose decision framework prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:build-versus-compose-decision-framework:staging",
+      "kind": "environment",
+      "label": "Build-versus-compose decision framework staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:build-versus-compose-decision-framework:test",
+      "kind": "environment",
+      "label": "Build-versus-compose decision framework test",
+      "env": "test"
+    },
+    {
+      "id": "environment:claim-mapping-plus-group-role-mapping:dev",
+      "kind": "environment",
+      "label": "Claim mapping + group/role mapping dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:claim-mapping-plus-group-role-mapping:prod",
+      "kind": "environment",
+      "label": "Claim mapping + group/role mapping prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:claim-mapping-plus-group-role-mapping:staging",
+      "kind": "environment",
+      "label": "Claim mapping + group/role mapping staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:claim-mapping-plus-group-role-mapping:test",
+      "kind": "environment",
+      "label": "Claim mapping + group/role mapping test",
+      "env": "test"
+    },
+    {
+      "id": "environment:code-quality-plus-secret-plus-dependency-scanning:dev",
+      "kind": "environment",
+      "label": "Code quality + secret + dependency scanning dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:code-quality-plus-secret-plus-dependency-scanning:prod",
+      "kind": "environment",
+      "label": "Code quality + secret + dependency scanning prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:code-quality-plus-secret-plus-dependency-scanning:staging",
+      "kind": "environment",
+      "label": "Code quality + secret + dependency scanning staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:code-quality-plus-secret-plus-dependency-scanning:test",
+      "kind": "environment",
+      "label": "Code quality + secret + dependency scanning test",
+      "env": "test"
+    },
+    {
+      "id": "environment:compliance-reports-access-reviews-evidence-packs:dev",
+      "kind": "environment",
+      "label": "Compliance reports, access reviews, evidence packs dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:compliance-reports-access-reviews-evidence-packs:prod",
+      "kind": "environment",
+      "label": "Compliance reports, access reviews, evidence packs prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:compliance-reports-access-reviews-evidence-packs:staging",
+      "kind": "environment",
+      "label": "Compliance reports, access reviews, evidence packs staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:compliance-reports-access-reviews-evidence-packs:test",
+      "kind": "environment",
+      "label": "Compliance reports, access reviews, evidence packs test",
+      "env": "test"
+    },
+    {
+      "id": "environment:composed-provider-readiness-spine:dev",
+      "kind": "environment",
+      "label": "Composed provider readiness spine dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:composed-provider-readiness-spine:prod",
+      "kind": "environment",
+      "label": "Composed provider readiness spine prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:composed-provider-readiness-spine:staging",
+      "kind": "environment",
+      "label": "Composed provider readiness spine staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:composed-provider-readiness-spine:test",
+      "kind": "environment",
+      "label": "Composed provider readiness spine test",
+      "env": "test"
+    },
+    {
+      "id": "environment:configuration-registry-plus-history:dev",
+      "kind": "environment",
+      "label": "Configuration registry + history dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:configuration-registry-plus-history:prod",
+      "kind": "environment",
+      "label": "Configuration registry + history prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:configuration-registry-plus-history:staging",
+      "kind": "environment",
+      "label": "Configuration registry + history staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:configuration-registry-plus-history:test",
+      "kind": "environment",
+      "label": "Configuration registry + history test",
+      "env": "test"
+    },
+    {
+      "id": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "kind": "environment",
+      "label": "Custom domains, DNS ownership, TLS, canonical dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:custom-domains-dns-ownership-tls-canonical:prod",
+      "kind": "environment",
+      "label": "Custom domains, DNS ownership, TLS, canonical prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:custom-domains-dns-ownership-tls-canonical:staging",
+      "kind": "environment",
+      "label": "Custom domains, DNS ownership, TLS, canonical staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "kind": "environment",
+      "label": "Custom domains, DNS ownership, TLS, canonical test",
+      "env": "test"
+    },
+    {
+      "id": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:dev",
+      "kind": "environment",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:prod",
+      "kind": "environment",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:staging",
+      "kind": "environment",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:test",
+      "kind": "environment",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR test",
+      "env": "test"
+    },
+    {
+      "id": "environment:delegated-administration-roles:dev",
+      "kind": "environment",
+      "label": "Delegated administration roles dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:delegated-administration-roles:prod",
+      "kind": "environment",
+      "label": "Delegated administration roles prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:delegated-administration-roles:staging",
+      "kind": "environment",
+      "label": "Delegated administration roles staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:delegated-administration-roles:test",
+      "kind": "environment",
+      "label": "Delegated administration roles test",
+      "env": "test"
+    },
+    {
+      "id": "environment:e2e-confidence-ladder-stage-aware:dev",
+      "kind": "environment",
+      "label": "E2E confidence ladder (stage-aware) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:e2e-confidence-ladder-stage-aware:prod",
+      "kind": "environment",
+      "label": "E2E confidence ladder (stage-aware) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:e2e-confidence-ladder-stage-aware:staging",
+      "kind": "environment",
+      "label": "E2E confidence ladder (stage-aware) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:e2e-confidence-ladder-stage-aware:test",
+      "kind": "environment",
+      "label": "E2E confidence ladder (stage-aware) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:end-user-profile-plus-preferences-self-service:dev",
+      "kind": "environment",
+      "label": "End-user profile + preferences self-service dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:end-user-profile-plus-preferences-self-service:prod",
+      "kind": "environment",
+      "label": "End-user profile + preferences self-service prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:end-user-profile-plus-preferences-self-service:staging",
+      "kind": "environment",
+      "label": "End-user profile + preferences self-service staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:end-user-profile-plus-preferences-self-service:test",
+      "kind": "environment",
+      "label": "End-user profile + preferences self-service test",
+      "env": "test"
+    },
+    {
+      "id": "environment:entitlement-engine:dev",
+      "kind": "environment",
+      "label": "Entitlement engine dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:entitlement-engine:prod",
+      "kind": "environment",
+      "label": "Entitlement engine prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:entitlement-engine:staging",
+      "kind": "environment",
+      "label": "Entitlement engine staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:entitlement-engine:test",
+      "kind": "environment",
+      "label": "Entitlement engine test",
+      "env": "test"
+    },
+    {
+      "id": "environment:environment-registry-plus-bootstrap:dev",
+      "kind": "environment",
+      "label": "Environment registry + bootstrap dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:environment-registry-plus-bootstrap:prod",
+      "kind": "environment",
+      "label": "Environment registry + bootstrap prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:environment-registry-plus-bootstrap:staging",
+      "kind": "environment",
+      "label": "Environment registry + bootstrap staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:environment-registry-plus-bootstrap:test",
+      "kind": "environment",
+      "label": "Environment registry + bootstrap test",
+      "env": "test"
+    },
+    {
+      "id": "environment:environment-specific-vs-shared-service-model:dev",
+      "kind": "environment",
+      "label": "Environment-specific vs shared service model dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:environment-specific-vs-shared-service-model:prod",
+      "kind": "environment",
+      "label": "Environment-specific vs shared service model prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:environment-specific-vs-shared-service-model:staging",
+      "kind": "environment",
+      "label": "Environment-specific vs shared service model staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:environment-specific-vs-shared-service-model:test",
+      "kind": "environment",
+      "label": "Environment-specific vs shared service model test",
+      "env": "test"
+    },
+    {
+      "id": "environment:event-bus-durable-queues-dlq-redrive:dev",
+      "kind": "environment",
+      "label": "Event bus, durable queues, DLQ, redrive dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:event-bus-durable-queues-dlq-redrive:prod",
+      "kind": "environment",
+      "label": "Event bus, durable queues, DLQ, redrive prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:event-bus-durable-queues-dlq-redrive:staging",
+      "kind": "environment",
+      "label": "Event bus, durable queues, DLQ, redrive staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:event-bus-durable-queues-dlq-redrive:test",
+      "kind": "environment",
+      "label": "Event bus, durable queues, DLQ, redrive test",
+      "env": "test"
+    },
+    {
+      "id": "environment:history-read-model-read-only-projection:dev",
+      "kind": "environment",
+      "label": "History read-model (read-only projection) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:history-read-model-read-only-projection:prod",
+      "kind": "environment",
+      "label": "History read-model (read-only projection) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:history-read-model-read-only-projection:staging",
+      "kind": "environment",
+      "label": "History read-model (read-only projection) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:history-read-model-read-only-projection:test",
+      "kind": "environment",
+      "label": "History read-model (read-only projection) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:i18n-runtime-plus-validation:dev",
+      "kind": "environment",
+      "label": "i18n runtime + validation dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:i18n-runtime-plus-validation:prod",
+      "kind": "environment",
+      "label": "i18n runtime + validation prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:i18n-runtime-plus-validation:staging",
+      "kind": "environment",
+      "label": "i18n runtime + validation staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:i18n-runtime-plus-validation:test",
+      "kind": "environment",
+      "label": "i18n runtime + validation test",
+      "env": "test"
+    },
+    {
+      "id": "environment:idp-brokering-plus-oidc-provider-management:dev",
+      "kind": "environment",
+      "label": "IdP brokering + OIDC provider management dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:idp-brokering-plus-oidc-provider-management:prod",
+      "kind": "environment",
+      "label": "IdP brokering + OIDC provider management prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:idp-brokering-plus-oidc-provider-management:staging",
+      "kind": "environment",
+      "label": "IdP brokering + OIDC provider management staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:idp-brokering-plus-oidc-provider-management:test",
+      "kind": "environment",
+      "label": "IdP brokering + OIDC provider management test",
+      "env": "test"
+    },
+    {
+      "id": "environment:internal-service-catalog-plus-readiness:dev",
+      "kind": "environment",
+      "label": "Internal service catalog + readiness dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:internal-service-catalog-plus-readiness:prod",
+      "kind": "environment",
+      "label": "Internal service catalog + readiness prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:internal-service-catalog-plus-readiness:staging",
+      "kind": "environment",
+      "label": "Internal service catalog + readiness staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:internal-service-catalog-plus-readiness:test",
+      "kind": "environment",
+      "label": "Internal service catalog + readiness test",
+      "env": "test"
+    },
+    {
+      "id": "environment:logs-aggregation-plus-tenant-scoped-search:dev",
+      "kind": "environment",
+      "label": "Logs (aggregation + tenant-scoped search) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:logs-aggregation-plus-tenant-scoped-search:prod",
+      "kind": "environment",
+      "label": "Logs (aggregation + tenant-scoped search) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:logs-aggregation-plus-tenant-scoped-search:staging",
+      "kind": "environment",
+      "label": "Logs (aggregation + tenant-scoped search) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:logs-aggregation-plus-tenant-scoped-search:test",
+      "kind": "environment",
+      "label": "Logs (aggregation + tenant-scoped search) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:metrics-plus-traces:dev",
+      "kind": "environment",
+      "label": "Metrics + traces dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:metrics-plus-traces:prod",
+      "kind": "environment",
+      "label": "Metrics + traces prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:metrics-plus-traces:staging",
+      "kind": "environment",
+      "label": "Metrics + traces staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:metrics-plus-traces:test",
+      "kind": "environment",
+      "label": "Metrics + traces test",
+      "env": "test"
+    },
+    {
+      "id": "environment:mfa-plus-session-policy-plus-lockout:dev",
+      "kind": "environment",
+      "label": "MFA + session policy + lockout dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:mfa-plus-session-policy-plus-lockout:prod",
+      "kind": "environment",
+      "label": "MFA + session policy + lockout prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:mfa-plus-session-policy-plus-lockout:staging",
+      "kind": "environment",
+      "label": "MFA + session policy + lockout staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:mfa-plus-session-policy-plus-lockout:test",
+      "kind": "environment",
+      "label": "MFA + session policy + lockout test",
+      "env": "test"
+    },
+    {
+      "id": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "kind": "environment",
+      "label": "Notification delivery + preferences + channels dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:notification-delivery-plus-preferences-plus-channels:prod",
+      "kind": "environment",
+      "label": "Notification delivery + preferences + channels prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "kind": "environment",
+      "label": "Notification delivery + preferences + channels staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "kind": "environment",
+      "label": "Notification delivery + preferences + channels test",
+      "env": "test"
+    },
+    {
+      "id": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:dev",
+      "kind": "environment",
+      "label": "Object storage + tenant prefixes + signed URLs dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:prod",
+      "kind": "environment",
+      "label": "Object storage + tenant prefixes + signed URLs prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:staging",
+      "kind": "environment",
+      "label": "Object storage + tenant prefixes + signed URLs staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:test",
+      "kind": "environment",
+      "label": "Object storage + tenant prefixes + signed URLs test",
+      "env": "test"
+    },
+    {
+      "id": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "kind": "environment",
+      "label": "Observability — built-in alerting + incidents dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:observability-built-in-alerting-plus-incidents:prod",
+      "kind": "environment",
+      "label": "Observability — built-in alerting + incidents prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:observability-built-in-alerting-plus-incidents:staging",
+      "kind": "environment",
+      "label": "Observability — built-in alerting + incidents staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:observability-built-in-alerting-plus-incidents:test",
+      "kind": "environment",
+      "label": "Observability — built-in alerting + incidents test",
+      "env": "test"
+    },
+    {
+      "id": "environment:oidc-discovery-issuer-jwks-validation:dev",
+      "kind": "environment",
+      "label": "OIDC discovery / issuer / JWKS validation dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:oidc-discovery-issuer-jwks-validation:prod",
+      "kind": "environment",
+      "label": "OIDC discovery / issuer / JWKS validation prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:oidc-discovery-issuer-jwks-validation:staging",
+      "kind": "environment",
+      "label": "OIDC discovery / issuer / JWKS validation staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:oidc-discovery-issuer-jwks-validation:test",
+      "kind": "environment",
+      "label": "OIDC discovery / issuer / JWKS validation test",
+      "env": "test"
+    },
+    {
+      "id": "environment:oidc-test-connection-plus-callback-display:dev",
+      "kind": "environment",
+      "label": "OIDC test connection + callback display dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:oidc-test-connection-plus-callback-display:prod",
+      "kind": "environment",
+      "label": "OIDC test connection + callback display prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:oidc-test-connection-plus-callback-display:staging",
+      "kind": "environment",
+      "label": "OIDC test connection + callback display staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:oidc-test-connection-plus-callback-display:test",
+      "kind": "environment",
+      "label": "OIDC test connection + callback display test",
+      "env": "test"
+    },
+    {
+      "id": "environment:openapi-drift-hard-gate:dev",
+      "kind": "environment",
+      "label": "OpenAPI drift hard gate dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:openapi-drift-hard-gate:prod",
+      "kind": "environment",
+      "label": "OpenAPI drift hard gate prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:openapi-drift-hard-gate:staging",
+      "kind": "environment",
+      "label": "OpenAPI drift hard gate staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:openapi-drift-hard-gate:test",
+      "kind": "environment",
+      "label": "OpenAPI drift hard gate test",
+      "env": "test"
+    },
+    {
+      "id": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "kind": "environment",
+      "label": "PITR, retention, legal hold, data residency dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:pitr-retention-legal-hold-data-residency:prod",
+      "kind": "environment",
+      "label": "PITR, retention, legal hold, data residency prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:pitr-retention-legal-hold-data-residency:staging",
+      "kind": "environment",
+      "label": "PITR, retention, legal hold, data residency staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:pitr-retention-legal-hold-data-residency:test",
+      "kind": "environment",
+      "label": "PITR, retention, legal hold, data residency test",
+      "env": "test"
+    },
+    {
+      "id": "environment:platform-login-plus-session:dev",
+      "kind": "environment",
+      "label": "Platform login + session dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:platform-login-plus-session:prod",
+      "kind": "environment",
+      "label": "Platform login + session prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:platform-login-plus-session:staging",
+      "kind": "environment",
+      "label": "Platform login + session staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:platform-login-plus-session:test",
+      "kind": "environment",
+      "label": "Platform login + session test",
+      "env": "test"
+    },
+    {
+      "id": "environment:product-catalog-plans-prices:dev",
+      "kind": "environment",
+      "label": "Product catalog, plans, prices dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:product-catalog-plans-prices:prod",
+      "kind": "environment",
+      "label": "Product catalog, plans, prices prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:product-catalog-plans-prices:staging",
+      "kind": "environment",
+      "label": "Product catalog, plans, prices staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:product-catalog-plans-prices:test",
+      "kind": "environment",
+      "label": "Product catalog, plans, prices test",
+      "env": "test"
+    },
+    {
+      "id": "environment:provider-configuration-plane:dev",
+      "kind": "environment",
+      "label": "Provider configuration plane dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:provider-configuration-plane:prod",
+      "kind": "environment",
+      "label": "Provider configuration plane prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:provider-configuration-plane:staging",
+      "kind": "environment",
+      "label": "Provider configuration plane staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:provider-configuration-plane:test",
+      "kind": "environment",
+      "label": "Provider configuration plane test",
+      "env": "test"
+    },
+    {
+      "id": "environment:provider-environment-classification:dev",
+      "kind": "environment",
+      "label": "Provider environment classification dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:provider-environment-classification:prod",
+      "kind": "environment",
+      "label": "Provider environment classification prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:provider-environment-classification:staging",
+      "kind": "environment",
+      "label": "Provider environment classification staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:provider-environment-classification:test",
+      "kind": "environment",
+      "label": "Provider environment classification test",
+      "env": "test"
+    },
+    {
+      "id": "environment:quota-enforcement:dev",
+      "kind": "environment",
+      "label": "Quota enforcement dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:quota-enforcement:prod",
+      "kind": "environment",
+      "label": "Quota enforcement prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:quota-enforcement:staging",
+      "kind": "environment",
+      "label": "Quota enforcement staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:quota-enforcement:test",
+      "kind": "environment",
+      "label": "Quota enforcement test",
+      "env": "test"
+    },
+    {
+      "id": "environment:rate-limiting-api:dev",
+      "kind": "environment",
+      "label": "Rate limiting (API) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:rate-limiting-api:prod",
+      "kind": "environment",
+      "label": "Rate limiting (API) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:rate-limiting-api:staging",
+      "kind": "environment",
+      "label": "Rate limiting (API) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:rate-limiting-api:test",
+      "kind": "environment",
+      "label": "Rate limiting (API) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:rbac-roles-plus-permissions:dev",
+      "kind": "environment",
+      "label": "RBAC (roles + permissions) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:rbac-roles-plus-permissions:prod",
+      "kind": "environment",
+      "label": "RBAC (roles + permissions) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:rbac-roles-plus-permissions:staging",
+      "kind": "environment",
+      "label": "RBAC (roles + permissions) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:rbac-roles-plus-permissions:test",
+      "kind": "environment",
+      "label": "RBAC (roles + permissions) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:relational-storage-plus-migrations-plus-rls:dev",
+      "kind": "environment",
+      "label": "Relational storage + migrations + RLS dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:relational-storage-plus-migrations-plus-rls:prod",
+      "kind": "environment",
+      "label": "Relational storage + migrations + RLS prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:relational-storage-plus-migrations-plus-rls:staging",
+      "kind": "environment",
+      "label": "Relational storage + migrations + RLS staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:relational-storage-plus-migrations-plus-rls:test",
+      "kind": "environment",
+      "label": "Relational storage + migrations + RLS test",
+      "env": "test"
+    },
+    {
+      "id": "environment:runtime-secrets-management:dev",
+      "kind": "environment",
+      "label": "Runtime secrets management dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:runtime-secrets-management:prod",
+      "kind": "environment",
+      "label": "Runtime secrets management prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:runtime-secrets-management:staging",
+      "kind": "environment",
+      "label": "Runtime secrets management staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:runtime-secrets-management:test",
+      "kind": "environment",
+      "label": "Runtime secrets management test",
+      "env": "test"
+    },
+    {
+      "id": "environment:scheduled-jobs-built-in-on-the-event-substrate:dev",
+      "kind": "environment",
+      "label": "Scheduled jobs (built-in, on the event substrate) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:scheduled-jobs-built-in-on-the-event-substrate:prod",
+      "kind": "environment",
+      "label": "Scheduled jobs (built-in, on the event substrate) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:scheduled-jobs-built-in-on-the-event-substrate:staging",
+      "kind": "environment",
+      "label": "Scheduled jobs (built-in, on the event substrate) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:scheduled-jobs-built-in-on-the-event-substrate:test",
+      "kind": "environment",
+      "label": "Scheduled jobs (built-in, on the event substrate) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:search-plus-indexing-product-search:dev",
+      "kind": "environment",
+      "label": "Search + indexing (product search) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:search-plus-indexing-product-search:prod",
+      "kind": "environment",
+      "label": "Search + indexing (product search) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:search-plus-indexing-product-search:staging",
+      "kind": "environment",
+      "label": "Search + indexing (product search) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:search-plus-indexing-product-search:test",
+      "kind": "environment",
+      "label": "Search + indexing (product search) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:service-catalog-plus-provider-integration-model:dev",
+      "kind": "environment",
+      "label": "Service catalog + provider integration model dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:service-catalog-plus-provider-integration-model:prod",
+      "kind": "environment",
+      "label": "Service catalog + provider integration model prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:service-catalog-plus-provider-integration-model:staging",
+      "kind": "environment",
+      "label": "Service catalog + provider integration model staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:service-catalog-plus-provider-integration-model:test",
+      "kind": "environment",
+      "label": "Service catalog + provider integration model test",
+      "env": "test"
+    },
+    {
+      "id": "environment:sub-organisations:dev",
+      "kind": "environment",
+      "label": "Sub-organisations dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:sub-organisations:prod",
+      "kind": "environment",
+      "label": "Sub-organisations prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:sub-organisations:staging",
+      "kind": "environment",
+      "label": "Sub-organisations staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:sub-organisations:test",
+      "kind": "environment",
+      "label": "Sub-organisations test",
+      "env": "test"
+    },
+    {
+      "id": "environment:subscriptions-invoices-payment-methods-dunning:dev",
+      "kind": "environment",
+      "label": "Subscriptions, invoices, payment methods, dunning dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:subscriptions-invoices-payment-methods-dunning:prod",
+      "kind": "environment",
+      "label": "Subscriptions, invoices, payment methods, dunning prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:subscriptions-invoices-payment-methods-dunning:staging",
+      "kind": "environment",
+      "label": "Subscriptions, invoices, payment methods, dunning staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:subscriptions-invoices-payment-methods-dunning:test",
+      "kind": "environment",
+      "label": "Subscriptions, invoices, payment methods, dunning test",
+      "env": "test"
+    },
+    {
+      "id": "environment:support-mode-break-glass-access:dev",
+      "kind": "environment",
+      "label": "Support-mode / break-glass access dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:support-mode-break-glass-access:prod",
+      "kind": "environment",
+      "label": "Support-mode / break-glass access prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:support-mode-break-glass-access:staging",
+      "kind": "environment",
+      "label": "Support-mode / break-glass access staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:support-mode-break-glass-access:test",
+      "kind": "environment",
+      "label": "Support-mode / break-glass access test",
+      "env": "test"
+    },
+    {
+      "id": "environment:support-tickets-customer-health-announcements:dev",
+      "kind": "environment",
+      "label": "Support tickets, customer health, announcements dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:support-tickets-customer-health-announcements:prod",
+      "kind": "environment",
+      "label": "Support tickets, customer health, announcements prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:support-tickets-customer-health-announcements:staging",
+      "kind": "environment",
+      "label": "Support tickets, customer health, announcements staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:support-tickets-customer-health-announcements:test",
+      "kind": "environment",
+      "label": "Support tickets, customer health, announcements test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-canonical-domain-set-unset:dev",
+      "kind": "environment",
+      "label": "Tenant canonical domain set/unset dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-canonical-domain-set-unset:prod",
+      "kind": "environment",
+      "label": "Tenant canonical domain set/unset prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-canonical-domain-set-unset:staging",
+      "kind": "environment",
+      "label": "Tenant canonical domain set/unset staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-canonical-domain-set-unset:test",
+      "kind": "environment",
+      "label": "Tenant canonical domain set/unset test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-custom-domain-auth-callback:dev",
+      "kind": "environment",
+      "label": "Tenant custom-domain auth callback dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-custom-domain-auth-callback:prod",
+      "kind": "environment",
+      "label": "Tenant custom-domain auth callback prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-custom-domain-auth-callback:staging",
+      "kind": "environment",
+      "label": "Tenant custom-domain auth callback staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-custom-domain-auth-callback:test",
+      "kind": "environment",
+      "label": "Tenant custom-domain auth callback test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-data-import-export:dev",
+      "kind": "environment",
+      "label": "Tenant data import / export dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-data-import-export:prod",
+      "kind": "environment",
+      "label": "Tenant data import / export prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-data-import-export:staging",
+      "kind": "environment",
+      "label": "Tenant data import / export staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-data-import-export:test",
+      "kind": "environment",
+      "label": "Tenant data import / export test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-domain-activation-auth-client:dev",
+      "kind": "environment",
+      "label": "Tenant domain activation (auth-client) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-domain-activation-auth-client:prod",
+      "kind": "environment",
+      "label": "Tenant domain activation (auth-client) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-domain-activation-auth-client:staging",
+      "kind": "environment",
+      "label": "Tenant domain activation (auth-client) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-domain-activation-auth-client:test",
+      "kind": "environment",
+      "label": "Tenant domain activation (auth-client) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-groups:dev",
+      "kind": "environment",
+      "label": "Tenant groups dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-groups:prod",
+      "kind": "environment",
+      "label": "Tenant groups prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-groups:staging",
+      "kind": "environment",
+      "label": "Tenant groups staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-groups:test",
+      "kind": "environment",
+      "label": "Tenant groups test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-host-identity-resolution:dev",
+      "kind": "environment",
+      "label": "Tenant host identity resolution dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-host-identity-resolution:prod",
+      "kind": "environment",
+      "label": "Tenant host identity resolution prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-host-identity-resolution:staging",
+      "kind": "environment",
+      "label": "Tenant host identity resolution staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-host-identity-resolution:test",
+      "kind": "environment",
+      "label": "Tenant host identity resolution test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-identity-record-plus-fqdn:dev",
+      "kind": "environment",
+      "label": "Tenant identity (record + FQDN) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-identity-record-plus-fqdn:prod",
+      "kind": "environment",
+      "label": "Tenant identity (record + FQDN) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-identity-record-plus-fqdn:staging",
+      "kind": "environment",
+      "label": "Tenant identity (record + FQDN) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-identity-record-plus-fqdn:test",
+      "kind": "environment",
+      "label": "Tenant identity (record + FQDN) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-isolation-proof:dev",
+      "kind": "environment",
+      "label": "Tenant isolation proof dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-isolation-proof:prod",
+      "kind": "environment",
+      "label": "Tenant isolation proof prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-isolation-proof:staging",
+      "kind": "environment",
+      "label": "Tenant isolation proof staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-isolation-proof:test",
+      "kind": "environment",
+      "label": "Tenant isolation proof test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-lifecycle-provision-suspend-delete-export:dev",
+      "kind": "environment",
+      "label": "Tenant lifecycle: provision, suspend, delete, export dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-lifecycle-provision-suspend-delete-export:prod",
+      "kind": "environment",
+      "label": "Tenant lifecycle: provision, suspend, delete, export prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-lifecycle-provision-suspend-delete-export:staging",
+      "kind": "environment",
+      "label": "Tenant lifecycle: provision, suspend, delete, export staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-lifecycle-provision-suspend-delete-export:test",
+      "kind": "environment",
+      "label": "Tenant lifecycle: provision, suspend, delete, export test",
+      "env": "test"
+    },
+    {
+      "id": "environment:tenant-service-clickthrough-policy:dev",
+      "kind": "environment",
+      "label": "Tenant service clickthrough policy dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:tenant-service-clickthrough-policy:prod",
+      "kind": "environment",
+      "label": "Tenant service clickthrough policy prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:tenant-service-clickthrough-policy:staging",
+      "kind": "environment",
+      "label": "Tenant service clickthrough policy staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:tenant-service-clickthrough-policy:test",
+      "kind": "environment",
+      "label": "Tenant service clickthrough policy test",
+      "env": "test"
+    },
+    {
+      "id": "environment:universal-service-foundation-scope-plus-principles:dev",
+      "kind": "environment",
+      "label": "Universal Service Foundation scope + principles dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:universal-service-foundation-scope-plus-principles:prod",
+      "kind": "environment",
+      "label": "Universal Service Foundation scope + principles prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:universal-service-foundation-scope-plus-principles:staging",
+      "kind": "environment",
+      "label": "Universal Service Foundation scope + principles staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:universal-service-foundation-scope-plus-principles:test",
+      "kind": "environment",
+      "label": "Universal Service Foundation scope + principles test",
+      "env": "test"
+    },
+    {
+      "id": "environment:usage-metering-plus-meter-event-ingestion:dev",
+      "kind": "environment",
+      "label": "Usage metering + meter event ingestion dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:usage-metering-plus-meter-event-ingestion:prod",
+      "kind": "environment",
+      "label": "Usage metering + meter event ingestion prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:usage-metering-plus-meter-event-ingestion:staging",
+      "kind": "environment",
+      "label": "Usage metering + meter event ingestion staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:usage-metering-plus-meter-event-ingestion:test",
+      "kind": "environment",
+      "label": "Usage metering + meter event ingestion test",
+      "env": "test"
+    },
+    {
+      "id": "environment:user-identity-plus-tenant-membership:dev",
+      "kind": "environment",
+      "label": "User identity + tenant membership dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:user-identity-plus-tenant-membership:prod",
+      "kind": "environment",
+      "label": "User identity + tenant membership prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:user-identity-plus-tenant-membership:staging",
+      "kind": "environment",
+      "label": "User identity + tenant membership staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:user-identity-plus-tenant-membership:test",
+      "kind": "environment",
+      "label": "User identity + tenant membership test",
+      "env": "test"
+    },
+    {
+      "id": "environment:webhooks-developer-facing:dev",
+      "kind": "environment",
+      "label": "Webhooks (developer-facing) dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:webhooks-developer-facing:prod",
+      "kind": "environment",
+      "label": "Webhooks (developer-facing) prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:webhooks-developer-facing:staging",
+      "kind": "environment",
+      "label": "Webhooks (developer-facing) staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:webhooks-developer-facing:test",
+      "kind": "environment",
+      "label": "Webhooks (developer-facing) test",
+      "env": "test"
+    },
+    {
+      "id": "environment:workflow-engine-scheduled-jobs-approvals:dev",
+      "kind": "environment",
+      "label": "Workflow engine, scheduled jobs, approvals dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:workflow-engine-scheduled-jobs-approvals:prod",
+      "kind": "environment",
+      "label": "Workflow engine, scheduled jobs, approvals prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:workflow-engine-scheduled-jobs-approvals:staging",
+      "kind": "environment",
+      "label": "Workflow engine, scheduled jobs, approvals staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:workflow-engine-scheduled-jobs-approvals:test",
+      "kind": "environment",
+      "label": "Workflow engine, scheduled jobs, approvals test",
+      "env": "test"
+    },
+    {
+      "id": "environment:write-only-secret-settings:dev",
+      "kind": "environment",
+      "label": "Write-only secret settings dev",
+      "env": "dev"
+    },
+    {
+      "id": "environment:write-only-secret-settings:prod",
+      "kind": "environment",
+      "label": "Write-only secret settings prod",
+      "env": "prod"
+    },
+    {
+      "id": "environment:write-only-secret-settings:staging",
+      "kind": "environment",
+      "label": "Write-only secret settings staging",
+      "env": "staging"
+    },
+    {
+      "id": "environment:write-only-secret-settings:test",
+      "kind": "environment",
+      "label": "Write-only secret settings test",
+      "env": "test"
+    },
+    {
+      "id": "proof:alert-notification-bridge",
+      "kind": "proof",
+      "label": "proof:alert-notification-bridge"
+    },
+    {
+      "id": "proof:alerting",
+      "kind": "proof",
+      "label": "proof:alerting"
+    },
+    {
+      "id": "proof:api-key-routes",
+      "kind": "proof",
+      "label": "proof:api-key-routes"
+    },
+    {
+      "id": "proof:api-keys",
+      "kind": "proof",
+      "label": "proof:api-keys"
+    },
+    {
+      "id": "proof:auth-idps",
+      "kind": "proof",
+      "label": "proof:auth-idps"
+    },
+    {
+      "id": "proof:auth-oidc-enterprise",
+      "kind": "proof",
+      "label": "proof:auth-oidc-enterprise"
+    },
+    {
+      "id": "proof:auth-settings",
+      "kind": "proof",
+      "label": "proof:auth-settings"
+    },
+    {
+      "id": "proof:backup-local",
+      "kind": "proof",
+      "label": "proof:backup-local"
+    },
+    {
+      "id": "proof:billing-catalog",
+      "kind": "proof",
+      "label": "proof:billing-catalog"
+    },
+    {
+      "id": "proof:billing-provider",
+      "kind": "proof",
+      "label": "proof:billing-provider"
+    },
+    {
+      "id": "proof:clickthrough",
+      "kind": "proof",
+      "label": "proof:clickthrough"
+    },
+    {
+      "id": "proof:compliance-report",
+      "kind": "proof",
+      "label": "proof:compliance-report"
+    },
+    {
+      "id": "proof:composed-provider-readiness",
+      "kind": "proof",
+      "label": "proof:composed-provider-readiness"
+    },
+    {
+      "id": "proof:dashboards",
+      "kind": "proof",
+      "label": "proof:dashboards"
+    },
+    {
+      "id": "proof:data-governance",
+      "kind": "proof",
+      "label": "proof:data-governance"
+    },
+    {
+      "id": "proof:data-portability",
+      "kind": "proof",
+      "label": "proof:data-portability"
+    },
+    {
+      "id": "proof:data-residency",
+      "kind": "proof",
+      "label": "proof:data-residency"
+    },
+    {
+      "id": "proof:delegated-admin",
+      "kind": "proof",
+      "label": "proof:delegated-admin"
+    },
+    {
+      "id": "proof:domain-identity-matrix",
+      "kind": "proof",
+      "label": "proof:domain-identity-matrix"
+    },
+    {
+      "id": "proof:entitlement-policy-chain",
+      "kind": "proof",
+      "label": "proof:entitlement-policy-chain"
+    },
+    {
+      "id": "proof:entitlements",
+      "kind": "proof",
+      "label": "proof:entitlements"
+    },
+    {
+      "id": "proof:entitlements-postgres",
+      "kind": "proof",
+      "label": "proof:entitlements-postgres"
+    },
+    {
+      "id": "proof:entitlements-routes",
+      "kind": "proof",
+      "label": "proof:entitlements-routes"
+    },
+    {
+      "id": "proof:environment-admin-bootstrap",
+      "kind": "proof",
+      "label": "proof:environment-admin-bootstrap"
+    },
+    {
+      "id": "proof:environment-operations",
+      "kind": "proof",
+      "label": "proof:environment-operations"
+    },
+    {
+      "id": "proof:environment-registry",
+      "kind": "proof",
+      "label": "proof:environment-registry"
+    },
+    {
+      "id": "proof:event-bus",
+      "kind": "proof",
+      "label": "proof:event-bus"
+    },
+    {
+      "id": "proof:event-redrive",
+      "kind": "proof",
+      "label": "proof:event-redrive"
+    },
+    {
+      "id": "proof:event-worker",
+      "kind": "proof",
+      "label": "proof:event-worker"
+    },
+    {
+      "id": "proof:history",
+      "kind": "proof",
+      "label": "proof:history"
+    },
+    {
+      "id": "proof:incident-foundation",
+      "kind": "proof",
+      "label": "proof:incident-foundation"
+    },
+    {
+      "id": "proof:lago-billing-provider",
+      "kind": "proof",
+      "label": "proof:lago-billing-provider"
+    },
+    {
+      "id": "proof:legal-hold",
+      "kind": "proof",
+      "label": "proof:legal-hold"
+    },
+    {
+      "id": "proof:metering",
+      "kind": "proof",
+      "label": "proof:metering"
+    },
+    {
+      "id": "proof:metering-quota-routes",
+      "kind": "proof",
+      "label": "proof:metering-quota-routes"
+    },
+    {
+      "id": "proof:metrics-prometheus",
+      "kind": "proof",
+      "label": "proof:metrics-prometheus"
+    },
+    {
+      "id": "proof:notification-dispatch",
+      "kind": "proof",
+      "label": "proof:notification-dispatch"
+    },
+    {
+      "id": "proof:notification-email-transport",
+      "kind": "proof",
+      "label": "proof:notification-email-transport"
+    },
+    {
+      "id": "proof:notification-preferences",
+      "kind": "proof",
+      "label": "proof:notification-preferences"
+    },
+    {
+      "id": "proof:notification-transport-routes",
+      "kind": "proof",
+      "label": "proof:notification-transport-routes"
+    },
+    {
+      "id": "proof:notification-webhook-transport",
+      "kind": "proof",
+      "label": "proof:notification-webhook-transport"
+    },
+    {
+      "id": "proof:observability-signals",
+      "kind": "proof",
+      "label": "proof:observability-signals"
+    },
+    {
+      "id": "proof:pitr-restore-drill",
+      "kind": "proof",
+      "label": "proof:pitr-restore-drill"
+    },
+    {
+      "id": "proof:platform-services",
+      "kind": "proof",
+      "label": "proof:platform-services"
+    },
+    {
+      "id": "proof:profile-self-service",
+      "kind": "proof",
+      "label": "proof:profile-self-service"
+    },
+    {
+      "id": "proof:provider-config",
+      "kind": "proof",
+      "label": "proof:provider-config"
+    },
+    {
+      "id": "proof:provider-environment-classification",
+      "kind": "proof",
+      "label": "proof:provider-environment-classification"
+    },
+    {
+      "id": "proof:provider-readiness-contract",
+      "kind": "proof",
+      "label": "proof:provider-readiness-contract"
+    },
+    {
+      "id": "proof:provider-secrets-readiness",
+      "kind": "proof",
+      "label": "proof:provider-secrets-readiness"
+    },
+    {
+      "id": "proof:quota-enforcement",
+      "kind": "proof",
+      "label": "proof:quota-enforcement"
+    },
+    {
+      "id": "proof:rate-limits",
+      "kind": "proof",
+      "label": "proof:rate-limits"
+    },
+    {
+      "id": "proof:rate-limits-redis",
+      "kind": "proof",
+      "label": "proof:rate-limits-redis"
+    },
+    {
+      "id": "proof:retention",
+      "kind": "proof",
+      "label": "proof:retention"
+    },
+    {
+      "id": "proof:scheduled-job-routes",
+      "kind": "proof",
+      "label": "proof:scheduled-job-routes"
+    },
+    {
+      "id": "proof:scheduled-jobs",
+      "kind": "proof",
+      "label": "proof:scheduled-jobs"
+    },
+    {
+      "id": "proof:search",
+      "kind": "proof",
+      "label": "proof:search"
+    },
+    {
+      "id": "proof:search-isolation",
+      "kind": "proof",
+      "label": "proof:search-isolation"
+    },
+    {
+      "id": "proof:search-routes",
+      "kind": "proof",
+      "label": "proof:search-routes"
+    },
+    {
+      "id": "proof:secret-store-contract",
+      "kind": "proof",
+      "label": "proof:secret-store-contract"
+    },
+    {
+      "id": "proof:secrets-openbao",
+      "kind": "proof",
+      "label": "proof:secrets-openbao"
+    },
+    {
+      "id": "proof:semantic-proof-accessibility-a11y-gate",
+      "kind": "proof",
+      "label": "Accessibility (a11y) gate semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-api-docs-developer-portal-sdks-rate-limits",
+      "kind": "proof",
+      "label": "API docs, developer portal, SDKs, rate limits semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-audit-of-privileged-access",
+      "kind": "proof",
+      "label": "Audit of privileged access semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-branding-plus-theming",
+      "kind": "proof",
+      "label": "Branding + theming semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "proof",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-build-versus-compose-decision-framework",
+      "kind": "proof",
+      "label": "Build-versus-compose decision framework semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "proof",
+      "label": "Code quality + secret + dependency scanning semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-configuration-registry-plus-history",
+      "kind": "proof",
+      "label": "Configuration registry + history semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-e2e-confidence-ladder-stage-aware",
+      "kind": "proof",
+      "label": "E2E confidence ladder (stage-aware) semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-environment-specific-vs-shared-service-model",
+      "kind": "proof",
+      "label": "Environment-specific vs shared service model semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-i18n-runtime-plus-validation",
+      "kind": "proof",
+      "label": "i18n runtime + validation semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-openapi-drift-hard-gate",
+      "kind": "proof",
+      "label": "OpenAPI drift hard gate semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-rbac-roles-plus-permissions",
+      "kind": "proof",
+      "label": "RBAC (roles + permissions) semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-relational-storage-plus-migrations-plus-rls",
+      "kind": "proof",
+      "label": "Relational storage + migrations + RLS semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-support-tickets-customer-health-announcements",
+      "kind": "proof",
+      "label": "Support tickets, customer health, announcements semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-universal-service-foundation-scope-plus-principles",
+      "kind": "proof",
+      "label": "Universal Service Foundation scope + principles semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-user-identity-plus-tenant-membership",
+      "kind": "proof",
+      "label": "User identity + tenant membership semantic proof"
+    },
+    {
+      "id": "proof:semantic-proof-write-only-secret-settings",
+      "kind": "proof",
+      "label": "Write-only secret settings semantic proof"
+    },
+    {
+      "id": "proof:service-catalog-registry",
+      "kind": "proof",
+      "label": "proof:service-catalog-registry"
+    },
+    {
+      "id": "proof:service-clickthrough-policy",
+      "kind": "proof",
+      "label": "proof:service-clickthrough-policy"
+    },
+    {
+      "id": "proof:support-approval",
+      "kind": "proof",
+      "label": "proof:support-approval"
+    },
+    {
+      "id": "proof:tenant-custom-domain-auth-origin",
+      "kind": "proof",
+      "label": "proof:tenant-custom-domain-auth-origin"
+    },
+    {
+      "id": "proof:tenant-custom-domain-resolution",
+      "kind": "proof",
+      "label": "proof:tenant-custom-domain-resolution"
+    },
+    {
+      "id": "proof:tenant-domain-canonical",
+      "kind": "proof",
+      "label": "proof:tenant-domain-canonical"
+    },
+    {
+      "id": "proof:tenant-domain-canonical-local-routing-only",
+      "kind": "proof",
+      "label": "proof:tenant-domain-canonical (local routing only)"
+    },
+    {
+      "id": "proof:tenant-domain-claim-lifecycle",
+      "kind": "proof",
+      "label": "proof:tenant-domain-claim-lifecycle"
+    },
+    {
+      "id": "proof:tenant-domains",
+      "kind": "proof",
+      "label": "proof:tenant-domains"
+    },
+    {
+      "id": "proof:tenant-domains-routing",
+      "kind": "proof",
+      "label": "proof:tenant-domains-routing"
+    },
+    {
+      "id": "proof:tenant-lifecycle",
+      "kind": "proof",
+      "label": "proof:tenant-lifecycle"
+    },
+    {
+      "id": "proof:tenant-observability",
+      "kind": "proof",
+      "label": "proof:tenant-observability"
+    },
+    {
+      "id": "proof:tenant-storage-isolation",
+      "kind": "proof",
+      "label": "proof:tenant-storage isolation"
+    },
+    {
+      "id": "proof:tenant-storage-objects",
+      "kind": "proof",
+      "label": "proof:tenant-storage-objects"
+    },
+    {
+      "id": "proof:ui-semantic-claim-mapping",
+      "kind": "proof",
+      "label": "proof:ui-semantic-claim-mapping"
+    },
+    {
+      "id": "proof:ui-semantic-claim-mapping-headless-journey",
+      "kind": "proof",
+      "label": "proof:ui-semantic-claim-mapping (headless journey)"
+    },
+    {
+      "id": "proof:ui-semantic-groups",
+      "kind": "proof",
+      "label": "proof:ui-semantic-groups"
+    },
+    {
+      "id": "proof:ui-semantic-groups-headless-journey",
+      "kind": "proof",
+      "label": "proof:ui-semantic-groups (headless journey)"
+    },
+    {
+      "id": "proof:ui-semantic-sub-organisations",
+      "kind": "proof",
+      "label": "proof:ui-semantic-sub-organisations"
+    },
+    {
+      "id": "proof:ui-semantic-sub-organisations-headless-journey",
+      "kind": "proof",
+      "label": "proof:ui-semantic-sub-organisations (headless journey)"
+    },
+    {
+      "id": "proof:webhook-redrive",
+      "kind": "proof",
+      "label": "proof:webhook-redrive"
+    },
+    {
+      "id": "proof:webhooks",
+      "kind": "proof",
+      "label": "proof:webhooks"
+    },
+    {
+      "id": "proof:workflow-provider-live",
+      "kind": "proof",
+      "label": "proof:workflow-provider-live"
+    }
+  ],
+  "edges": [
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "environment:abac-policy-decision-point:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "environment:abac-policy-decision-point:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "environment:abac-policy-decision-point:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "environment:abac-policy-decision-point:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "environment:accessibility-a11y-gate:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "environment:accessibility-a11y-gate:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "environment:accessibility-a11y-gate:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "environment:accessibility-a11y-gate:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "environment:api-docs-developer-portal-sdks-rate-limits:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "environment:api-docs-developer-portal-sdks-rate-limits:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "environment:api-docs-developer-portal-sdks-rate-limits:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "environment:api-docs-developer-portal-sdks-rate-limits:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "environment:api-keys-personal-access-tokens:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "environment:api-keys-personal-access-tokens:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "environment:api-keys-personal-access-tokens:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "environment:api-keys-personal-access-tokens:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "environment:audit-of-privileged-access:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "environment:audit-of-privileged-access:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "environment:audit-of-privileged-access:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "environment:audit-of-privileged-access:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "environment:background-workers-job-runner:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "environment:background-workers-job-runner:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "environment:background-workers-job-runner:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "environment:background-workers-job-runner:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "environment:backup-plus-restore:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "environment:backup-plus-restore:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "environment:backup-plus-restore:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "environment:backup-plus-restore:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "environment:branding-plus-theming:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "environment:branding-plus-theming:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "environment:branding-plus-theming:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "environment:branding-plus-theming:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "environment:build-versus-compose-decision-framework:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "environment:build-versus-compose-decision-framework:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "environment:build-versus-compose-decision-framework:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "environment:build-versus-compose-decision-framework:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "environment:claim-mapping-plus-group-role-mapping:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "environment:claim-mapping-plus-group-role-mapping:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "environment:claim-mapping-plus-group-role-mapping:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "environment:claim-mapping-plus-group-role-mapping:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "environment:code-quality-plus-secret-plus-dependency-scanning:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "environment:code-quality-plus-secret-plus-dependency-scanning:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "environment:code-quality-plus-secret-plus-dependency-scanning:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "environment:code-quality-plus-secret-plus-dependency-scanning:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "environment:compliance-reports-access-reviews-evidence-packs:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "environment:compliance-reports-access-reviews-evidence-packs:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "environment:compliance-reports-access-reviews-evidence-packs:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "environment:compliance-reports-access-reviews-evidence-packs:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "environment:composed-provider-readiness-spine:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "environment:composed-provider-readiness-spine:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "environment:composed-provider-readiness-spine:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "environment:composed-provider-readiness-spine:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "environment:configuration-registry-plus-history:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "environment:configuration-registry-plus-history:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "environment:configuration-registry-plus-history:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "environment:configuration-registry-plus-history:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "environment:custom-domains-dns-ownership-tls-canonical:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "environment:custom-domains-dns-ownership-tls-canonical:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "environment:delegated-administration-roles:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "environment:delegated-administration-roles:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "environment:delegated-administration-roles:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "environment:delegated-administration-roles:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "environment:e2e-confidence-ladder-stage-aware:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "environment:e2e-confidence-ladder-stage-aware:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "environment:e2e-confidence-ladder-stage-aware:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "environment:e2e-confidence-ladder-stage-aware:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "environment:end-user-profile-plus-preferences-self-service:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "environment:end-user-profile-plus-preferences-self-service:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "environment:end-user-profile-plus-preferences-self-service:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "environment:end-user-profile-plus-preferences-self-service:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "environment:entitlement-engine:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "environment:entitlement-engine:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "environment:entitlement-engine:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "environment:entitlement-engine:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "environment:environment-registry-plus-bootstrap:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "environment:environment-registry-plus-bootstrap:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "environment:environment-registry-plus-bootstrap:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "environment:environment-registry-plus-bootstrap:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "environment:environment-specific-vs-shared-service-model:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "environment:environment-specific-vs-shared-service-model:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "environment:environment-specific-vs-shared-service-model:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "environment:environment-specific-vs-shared-service-model:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "environment:event-bus-durable-queues-dlq-redrive:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "environment:event-bus-durable-queues-dlq-redrive:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "environment:event-bus-durable-queues-dlq-redrive:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "environment:event-bus-durable-queues-dlq-redrive:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "environment:history-read-model-read-only-projection:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "environment:history-read-model-read-only-projection:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "environment:history-read-model-read-only-projection:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "environment:history-read-model-read-only-projection:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "environment:i18n-runtime-plus-validation:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "environment:i18n-runtime-plus-validation:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "environment:i18n-runtime-plus-validation:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "environment:i18n-runtime-plus-validation:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "environment:idp-brokering-plus-oidc-provider-management:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "environment:idp-brokering-plus-oidc-provider-management:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "environment:idp-brokering-plus-oidc-provider-management:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "environment:idp-brokering-plus-oidc-provider-management:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "environment:internal-service-catalog-plus-readiness:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "environment:internal-service-catalog-plus-readiness:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "environment:internal-service-catalog-plus-readiness:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "environment:internal-service-catalog-plus-readiness:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "environment:logs-aggregation-plus-tenant-scoped-search:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "environment:logs-aggregation-plus-tenant-scoped-search:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "environment:logs-aggregation-plus-tenant-scoped-search:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "environment:logs-aggregation-plus-tenant-scoped-search:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "environment:metrics-plus-traces:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "environment:metrics-plus-traces:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "environment:metrics-plus-traces:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "environment:metrics-plus-traces:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "environment:mfa-plus-session-policy-plus-lockout:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "environment:mfa-plus-session-policy-plus-lockout:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "environment:mfa-plus-session-policy-plus-lockout:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "environment:mfa-plus-session-policy-plus-lockout:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "environment:notification-delivery-plus-preferences-plus-channels:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "environment:observability-built-in-alerting-plus-incidents:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "environment:observability-built-in-alerting-plus-incidents:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "environment:observability-built-in-alerting-plus-incidents:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "environment:oidc-discovery-issuer-jwks-validation:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "environment:oidc-discovery-issuer-jwks-validation:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "environment:oidc-discovery-issuer-jwks-validation:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "environment:oidc-discovery-issuer-jwks-validation:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "environment:oidc-test-connection-plus-callback-display:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "environment:oidc-test-connection-plus-callback-display:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "environment:oidc-test-connection-plus-callback-display:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "environment:oidc-test-connection-plus-callback-display:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "environment:openapi-drift-hard-gate:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "environment:openapi-drift-hard-gate:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "environment:openapi-drift-hard-gate:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "environment:openapi-drift-hard-gate:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "environment:pitr-retention-legal-hold-data-residency:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "environment:pitr-retention-legal-hold-data-residency:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "environment:pitr-retention-legal-hold-data-residency:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "environment:platform-login-plus-session:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "environment:platform-login-plus-session:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "environment:platform-login-plus-session:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "environment:platform-login-plus-session:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "environment:product-catalog-plans-prices:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "environment:product-catalog-plans-prices:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "environment:product-catalog-plans-prices:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "environment:product-catalog-plans-prices:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "environment:provider-configuration-plane:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "environment:provider-configuration-plane:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "environment:provider-configuration-plane:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "environment:provider-configuration-plane:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "environment:provider-environment-classification:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "environment:provider-environment-classification:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "environment:provider-environment-classification:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "environment:provider-environment-classification:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "environment:quota-enforcement:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "environment:quota-enforcement:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "environment:quota-enforcement:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "environment:quota-enforcement:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "environment:rate-limiting-api:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "environment:rate-limiting-api:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "environment:rate-limiting-api:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "environment:rate-limiting-api:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "environment:rbac-roles-plus-permissions:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "environment:rbac-roles-plus-permissions:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "environment:rbac-roles-plus-permissions:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "environment:rbac-roles-plus-permissions:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "environment:relational-storage-plus-migrations-plus-rls:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "environment:relational-storage-plus-migrations-plus-rls:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "environment:relational-storage-plus-migrations-plus-rls:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "environment:relational-storage-plus-migrations-plus-rls:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "environment:runtime-secrets-management:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "environment:runtime-secrets-management:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "environment:runtime-secrets-management:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "environment:runtime-secrets-management:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "environment:scheduled-jobs-built-in-on-the-event-substrate:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "environment:scheduled-jobs-built-in-on-the-event-substrate:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "environment:scheduled-jobs-built-in-on-the-event-substrate:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "environment:scheduled-jobs-built-in-on-the-event-substrate:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "environment:search-plus-indexing-product-search:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "environment:search-plus-indexing-product-search:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "environment:search-plus-indexing-product-search:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "environment:search-plus-indexing-product-search:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "environment:service-catalog-plus-provider-integration-model:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "environment:service-catalog-plus-provider-integration-model:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "environment:service-catalog-plus-provider-integration-model:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "environment:service-catalog-plus-provider-integration-model:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "environment:sub-organisations:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "environment:sub-organisations:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "environment:sub-organisations:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "environment:sub-organisations:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "environment:subscriptions-invoices-payment-methods-dunning:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "environment:subscriptions-invoices-payment-methods-dunning:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "environment:subscriptions-invoices-payment-methods-dunning:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "environment:subscriptions-invoices-payment-methods-dunning:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "environment:support-mode-break-glass-access:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "environment:support-mode-break-glass-access:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "environment:support-mode-break-glass-access:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "environment:support-mode-break-glass-access:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "environment:support-tickets-customer-health-announcements:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "environment:support-tickets-customer-health-announcements:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "environment:support-tickets-customer-health-announcements:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "environment:support-tickets-customer-health-announcements:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "environment:tenant-canonical-domain-set-unset:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "environment:tenant-canonical-domain-set-unset:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "environment:tenant-canonical-domain-set-unset:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "environment:tenant-canonical-domain-set-unset:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "environment:tenant-custom-domain-auth-callback:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "environment:tenant-custom-domain-auth-callback:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "environment:tenant-custom-domain-auth-callback:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "environment:tenant-custom-domain-auth-callback:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "environment:tenant-data-import-export:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "environment:tenant-data-import-export:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "environment:tenant-data-import-export:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "environment:tenant-data-import-export:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "environment:tenant-domain-activation-auth-client:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "environment:tenant-domain-activation-auth-client:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "environment:tenant-domain-activation-auth-client:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "environment:tenant-domain-activation-auth-client:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "environment:tenant-groups:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "environment:tenant-groups:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "environment:tenant-groups:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "environment:tenant-groups:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "environment:tenant-host-identity-resolution:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "environment:tenant-host-identity-resolution:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "environment:tenant-host-identity-resolution:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "environment:tenant-host-identity-resolution:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "environment:tenant-identity-record-plus-fqdn:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "environment:tenant-identity-record-plus-fqdn:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "environment:tenant-identity-record-plus-fqdn:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "environment:tenant-identity-record-plus-fqdn:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "environment:tenant-isolation-proof:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "environment:tenant-isolation-proof:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "environment:tenant-isolation-proof:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "environment:tenant-isolation-proof:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "environment:tenant-lifecycle-provision-suspend-delete-export:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "environment:tenant-lifecycle-provision-suspend-delete-export:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "environment:tenant-lifecycle-provision-suspend-delete-export:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "environment:tenant-lifecycle-provision-suspend-delete-export:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "environment:tenant-service-clickthrough-policy:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "environment:tenant-service-clickthrough-policy:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "environment:tenant-service-clickthrough-policy:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "environment:tenant-service-clickthrough-policy:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "environment:universal-service-foundation-scope-plus-principles:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "environment:universal-service-foundation-scope-plus-principles:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "environment:universal-service-foundation-scope-plus-principles:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "environment:universal-service-foundation-scope-plus-principles:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "environment:usage-metering-plus-meter-event-ingestion:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "environment:usage-metering-plus-meter-event-ingestion:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "environment:usage-metering-plus-meter-event-ingestion:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "environment:usage-metering-plus-meter-event-ingestion:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "environment:user-identity-plus-tenant-membership:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "environment:user-identity-plus-tenant-membership:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "environment:user-identity-plus-tenant-membership:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "environment:user-identity-plus-tenant-membership:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "environment:webhooks-developer-facing:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "environment:webhooks-developer-facing:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "environment:webhooks-developer-facing:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "environment:webhooks-developer-facing:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "environment:workflow-engine-scheduled-jobs-approvals:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "environment:workflow-engine-scheduled-jobs-approvals:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "environment:workflow-engine-scheduled-jobs-approvals:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "environment:workflow-engine-scheduled-jobs-approvals:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "environment:write-only-secret-settings:dev",
+      "type": "has-environment-policy",
+      "env": "dev"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "environment:write-only-secret-settings:prod",
+      "type": "has-environment-policy",
+      "env": "prod"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "environment:write-only-secret-settings:staging",
+      "type": "has-environment-policy",
+      "env": "staging"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "environment:write-only-secret-settings:test",
+      "type": "has-environment-policy",
+      "env": "test"
+    },
+    {
+      "from": "environment:abac-policy-decision-point:dev",
+      "to": "proof:entitlement-policy-chain",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:abac-policy-decision-point:staging",
+      "to": "proof:entitlement-policy-chain",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:abac-policy-decision-point:test",
+      "to": "proof:entitlement-policy-chain",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:dev",
+      "to": "proof:api-key-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:dev",
+      "to": "proof:api-keys",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:staging",
+      "to": "proof:api-key-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:staging",
+      "to": "proof:api-keys",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:test",
+      "to": "proof:api-key-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:test",
+      "to": "proof:api-keys",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:background-workers-job-runner:dev",
+      "to": "proof:event-worker",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:background-workers-job-runner:staging",
+      "to": "proof:event-worker",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:background-workers-job-runner:test",
+      "to": "proof:event-worker",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:backup-plus-restore:dev",
+      "to": "proof:backup-local",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:backup-plus-restore:staging",
+      "to": "proof:backup-local",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:backup-plus-restore:test",
+      "to": "proof:backup-local",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:claim-mapping-plus-group-role-mapping:dev",
+      "to": "proof:ui-semantic-claim-mapping",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:claim-mapping-plus-group-role-mapping:staging",
+      "to": "proof:ui-semantic-claim-mapping",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:claim-mapping-plus-group-role-mapping:test",
+      "to": "proof:ui-semantic-claim-mapping",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:compliance-reports-access-reviews-evidence-packs:dev",
+      "to": "proof:compliance-report",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:compliance-reports-access-reviews-evidence-packs:staging",
+      "to": "proof:compliance-report",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:compliance-reports-access-reviews-evidence-packs:test",
+      "to": "proof:compliance-report",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:composed-provider-readiness-spine:dev",
+      "to": "proof:composed-provider-readiness",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:composed-provider-readiness-spine:staging",
+      "to": "proof:composed-provider-readiness",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:composed-provider-readiness-spine:test",
+      "to": "proof:composed-provider-readiness",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "to": "proof:tenant-domain-claim-lifecycle",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "to": "proof:tenant-domains",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "to": "proof:tenant-domains-routing",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:staging",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:staging",
+      "to": "proof:tenant-domain-claim-lifecycle",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:staging",
+      "to": "proof:tenant-domains",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:staging",
+      "to": "proof:tenant-domains-routing",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "to": "proof:tenant-domain-claim-lifecycle",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "to": "proof:tenant-domains",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "to": "proof:tenant-domains-routing",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:dev",
+      "to": "proof:data-governance",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:staging",
+      "to": "proof:data-governance",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:test",
+      "to": "proof:data-governance",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:delegated-administration-roles:dev",
+      "to": "proof:delegated-admin",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:delegated-administration-roles:staging",
+      "to": "proof:delegated-admin",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:delegated-administration-roles:test",
+      "to": "proof:delegated-admin",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:dev",
+      "to": "proof:notification-dispatch",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:dev",
+      "to": "proof:profile-self-service",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:staging",
+      "to": "proof:notification-dispatch",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:staging",
+      "to": "proof:profile-self-service",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:test",
+      "to": "proof:notification-dispatch",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:test",
+      "to": "proof:profile-self-service",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:entitlement-engine:dev",
+      "to": "proof:entitlement-policy-chain",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:entitlement-engine:dev",
+      "to": "proof:entitlements",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:entitlement-engine:dev",
+      "to": "proof:entitlements-postgres",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:entitlement-engine:dev",
+      "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:entitlement-engine:staging",
+      "to": "proof:entitlement-policy-chain",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:entitlement-engine:staging",
+      "to": "proof:entitlements",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:entitlement-engine:staging",
+      "to": "proof:entitlements-postgres",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:entitlement-engine:staging",
+      "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:entitlement-engine:test",
+      "to": "proof:entitlement-policy-chain",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:entitlement-engine:test",
+      "to": "proof:entitlements",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:entitlement-engine:test",
+      "to": "proof:entitlements-postgres",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:entitlement-engine:test",
+      "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:dev",
+      "to": "proof:environment-admin-bootstrap",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:dev",
+      "to": "proof:environment-operations",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:dev",
+      "to": "proof:environment-registry",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:staging",
+      "to": "proof:environment-admin-bootstrap",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:staging",
+      "to": "proof:environment-operations",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:staging",
+      "to": "proof:environment-registry",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:test",
+      "to": "proof:environment-admin-bootstrap",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:test",
+      "to": "proof:environment-operations",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:test",
+      "to": "proof:environment-registry",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:dev",
+      "to": "proof:event-bus",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:dev",
+      "to": "proof:event-redrive",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:staging",
+      "to": "proof:event-bus",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:staging",
+      "to": "proof:event-redrive",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:test",
+      "to": "proof:event-bus",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:test",
+      "to": "proof:event-redrive",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:history-read-model-read-only-projection:dev",
+      "to": "proof:history",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:history-read-model-read-only-projection:staging",
+      "to": "proof:history",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:history-read-model-read-only-projection:test",
+      "to": "proof:history",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:dev",
+      "to": "proof:auth-idps",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:dev",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:staging",
+      "to": "proof:auth-idps",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:staging",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:test",
+      "to": "proof:auth-idps",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:test",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:dev",
+      "to": "proof:platform-services",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:dev",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:staging",
+      "to": "proof:platform-services",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:staging",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:test",
+      "to": "proof:platform-services",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:test",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:logs-aggregation-plus-tenant-scoped-search:dev",
+      "to": "proof:tenant-observability",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:logs-aggregation-plus-tenant-scoped-search:staging",
+      "to": "proof:tenant-observability",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:logs-aggregation-plus-tenant-scoped-search:test",
+      "to": "proof:tenant-observability",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:metrics-plus-traces:dev",
+      "to": "proof:dashboards",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:metrics-plus-traces:dev",
+      "to": "proof:metrics-prometheus",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:metrics-plus-traces:staging",
+      "to": "proof:dashboards",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:metrics-plus-traces:staging",
+      "to": "proof:metrics-prometheus",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:metrics-plus-traces:test",
+      "to": "proof:dashboards",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:metrics-plus-traces:test",
+      "to": "proof:metrics-prometheus",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:mfa-plus-session-policy-plus-lockout:dev",
+      "to": "proof:auth-settings",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:mfa-plus-session-policy-plus-lockout:staging",
+      "to": "proof:auth-settings",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:mfa-plus-session-policy-plus-lockout:test",
+      "to": "proof:auth-settings",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "to": "proof:notification-dispatch",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "to": "proof:notification-email-transport",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "to": "proof:notification-preferences",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "to": "proof:notification-transport-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "to": "proof:notification-webhook-transport",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "to": "proof:notification-dispatch",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "to": "proof:notification-email-transport",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "to": "proof:notification-preferences",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "to": "proof:notification-transport-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:staging",
+      "to": "proof:notification-webhook-transport",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "to": "proof:notification-dispatch",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "to": "proof:notification-email-transport",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "to": "proof:notification-preferences",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "to": "proof:notification-transport-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "to": "proof:notification-webhook-transport",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:dev",
+      "to": "proof:tenant-storage-objects",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:staging",
+      "to": "proof:tenant-storage-objects",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:test",
+      "to": "proof:tenant-storage-objects",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "to": "proof:alert-notification-bridge",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "to": "proof:alerting",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "to": "proof:incident-foundation",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "to": "proof:observability-signals",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:staging",
+      "to": "proof:alert-notification-bridge",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:staging",
+      "to": "proof:alerting",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:staging",
+      "to": "proof:incident-foundation",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:staging",
+      "to": "proof:observability-signals",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:test",
+      "to": "proof:alert-notification-bridge",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:test",
+      "to": "proof:alerting",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:test",
+      "to": "proof:incident-foundation",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:test",
+      "to": "proof:observability-signals",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:oidc-discovery-issuer-jwks-validation:dev",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:oidc-discovery-issuer-jwks-validation:staging",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:oidc-discovery-issuer-jwks-validation:test",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:oidc-test-connection-plus-callback-display:dev",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:oidc-test-connection-plus-callback-display:staging",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:oidc-test-connection-plus-callback-display:test",
+      "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "to": "proof:data-residency",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "to": "proof:legal-hold",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "to": "proof:pitr-restore-drill",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "to": "proof:retention",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:staging",
+      "to": "proof:data-residency",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:staging",
+      "to": "proof:legal-hold",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:staging",
+      "to": "proof:pitr-restore-drill",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:staging",
+      "to": "proof:retention",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:test",
+      "to": "proof:data-residency",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:test",
+      "to": "proof:legal-hold",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:test",
+      "to": "proof:pitr-restore-drill",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:test",
+      "to": "proof:retention",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:platform-login-plus-session:dev",
+      "to": "proof:auth-settings",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:platform-login-plus-session:staging",
+      "to": "proof:auth-settings",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:platform-login-plus-session:test",
+      "to": "proof:auth-settings",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:product-catalog-plans-prices:dev",
+      "to": "proof:billing-catalog",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:product-catalog-plans-prices:staging",
+      "to": "proof:billing-catalog",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:product-catalog-plans-prices:test",
+      "to": "proof:billing-catalog",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:provider-configuration-plane:dev",
+      "to": "proof:provider-config",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:provider-configuration-plane:dev",
+      "to": "proof:provider-readiness-contract",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:provider-configuration-plane:staging",
+      "to": "proof:provider-config",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:provider-configuration-plane:staging",
+      "to": "proof:provider-readiness-contract",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:provider-configuration-plane:test",
+      "to": "proof:provider-config",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:provider-configuration-plane:test",
+      "to": "proof:provider-readiness-contract",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:provider-environment-classification:dev",
+      "to": "proof:provider-environment-classification",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:provider-environment-classification:staging",
+      "to": "proof:provider-environment-classification",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:provider-environment-classification:test",
+      "to": "proof:provider-environment-classification",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:quota-enforcement:dev",
+      "to": "proof:metering-quota-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:quota-enforcement:dev",
+      "to": "proof:quota-enforcement",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:quota-enforcement:staging",
+      "to": "proof:metering-quota-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:quota-enforcement:staging",
+      "to": "proof:quota-enforcement",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:quota-enforcement:test",
+      "to": "proof:metering-quota-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:quota-enforcement:test",
+      "to": "proof:quota-enforcement",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:rate-limiting-api:dev",
+      "to": "proof:api-key-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:rate-limiting-api:dev",
+      "to": "proof:rate-limits",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:rate-limiting-api:dev",
+      "to": "proof:rate-limits-redis",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:rate-limiting-api:staging",
+      "to": "proof:api-key-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:rate-limiting-api:staging",
+      "to": "proof:rate-limits",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:rate-limiting-api:staging",
+      "to": "proof:rate-limits-redis",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:rate-limiting-api:test",
+      "to": "proof:api-key-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:rate-limiting-api:test",
+      "to": "proof:rate-limits",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:rate-limiting-api:test",
+      "to": "proof:rate-limits-redis",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:runtime-secrets-management:dev",
+      "to": "proof:provider-secrets-readiness",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:runtime-secrets-management:dev",
+      "to": "proof:secret-store-contract",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:runtime-secrets-management:dev",
+      "to": "proof:secrets-openbao",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:runtime-secrets-management:staging",
+      "to": "proof:provider-secrets-readiness",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:runtime-secrets-management:staging",
+      "to": "proof:secret-store-contract",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:runtime-secrets-management:staging",
+      "to": "proof:secrets-openbao",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:runtime-secrets-management:test",
+      "to": "proof:provider-secrets-readiness",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:runtime-secrets-management:test",
+      "to": "proof:secret-store-contract",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:runtime-secrets-management:test",
+      "to": "proof:secrets-openbao",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:dev",
+      "to": "proof:scheduled-job-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:dev",
+      "to": "proof:scheduled-jobs",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:staging",
+      "to": "proof:scheduled-job-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:staging",
+      "to": "proof:scheduled-jobs",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:test",
+      "to": "proof:scheduled-job-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:test",
+      "to": "proof:scheduled-jobs",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:dev",
+      "to": "proof:search",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:dev",
+      "to": "proof:search-isolation",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:dev",
+      "to": "proof:search-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:staging",
+      "to": "proof:search",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:staging",
+      "to": "proof:search-isolation",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:staging",
+      "to": "proof:search-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:test",
+      "to": "proof:search",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:test",
+      "to": "proof:search-isolation",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:test",
+      "to": "proof:search-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:dev",
+      "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:dev",
+      "to": "proof:platform-services",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:dev",
+      "to": "proof:service-catalog-registry",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:dev",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:staging",
+      "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:staging",
+      "to": "proof:platform-services",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:staging",
+      "to": "proof:service-catalog-registry",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:staging",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:test",
+      "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:test",
+      "to": "proof:platform-services",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:test",
+      "to": "proof:service-catalog-registry",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:test",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:sub-organisations:dev",
+      "to": "proof:ui-semantic-sub-organisations",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:sub-organisations:staging",
+      "to": "proof:ui-semantic-sub-organisations",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:sub-organisations:test",
+      "to": "proof:ui-semantic-sub-organisations",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:dev",
+      "to": "proof:billing-provider",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:dev",
+      "to": "proof:lago-billing-provider",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:staging",
+      "to": "proof:billing-provider",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:staging",
+      "to": "proof:lago-billing-provider",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:test",
+      "to": "proof:billing-provider",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:test",
+      "to": "proof:lago-billing-provider",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:support-mode-break-glass-access:dev",
+      "to": "proof:support-approval",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:support-mode-break-glass-access:staging",
+      "to": "proof:support-approval",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:support-mode-break-glass-access:test",
+      "to": "proof:support-approval",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-canonical-domain-set-unset:dev",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-canonical-domain-set-unset:staging",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-canonical-domain-set-unset:test",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-custom-domain-auth-callback:dev",
+      "to": "proof:tenant-custom-domain-auth-origin",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-custom-domain-auth-callback:staging",
+      "to": "proof:tenant-custom-domain-auth-origin",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-custom-domain-auth-callback:test",
+      "to": "proof:tenant-custom-domain-auth-origin",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-data-import-export:dev",
+      "to": "proof:data-portability",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-data-import-export:staging",
+      "to": "proof:data-portability",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-data-import-export:test",
+      "to": "proof:data-portability",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-domain-activation-auth-client:dev",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-domain-activation-auth-client:staging",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-domain-activation-auth-client:test",
+      "to": "proof:tenant-domain-canonical",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-groups:dev",
+      "to": "proof:ui-semantic-groups",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-groups:staging",
+      "to": "proof:ui-semantic-groups",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-groups:test",
+      "to": "proof:ui-semantic-groups",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:dev",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:dev",
+      "to": "proof:tenant-custom-domain-resolution",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:staging",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:staging",
+      "to": "proof:tenant-custom-domain-resolution",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:test",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:test",
+      "to": "proof:tenant-custom-domain-resolution",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:dev",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:dev",
+      "to": "proof:tenant-custom-domain-resolution",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:staging",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:staging",
+      "to": "proof:tenant-custom-domain-resolution",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:test",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:test",
+      "to": "proof:tenant-custom-domain-resolution",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:dev",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:dev",
+      "to": "proof:tenant-storage-isolation",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:staging",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:staging",
+      "to": "proof:tenant-storage-isolation",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:test",
+      "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:test",
+      "to": "proof:tenant-storage-isolation",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-lifecycle-provision-suspend-delete-export:dev",
+      "to": "proof:tenant-lifecycle",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-lifecycle-provision-suspend-delete-export:staging",
+      "to": "proof:tenant-lifecycle",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-lifecycle-provision-suspend-delete-export:test",
+      "to": "proof:tenant-lifecycle",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:dev",
+      "to": "proof:clickthrough",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:dev",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:staging",
+      "to": "proof:clickthrough",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:staging",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:test",
+      "to": "proof:clickthrough",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:test",
+      "to": "proof:service-clickthrough-policy",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:dev",
+      "to": "proof:metering",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:dev",
+      "to": "proof:metering-quota-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:staging",
+      "to": "proof:metering",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:staging",
+      "to": "proof:metering-quota-routes",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:test",
+      "to": "proof:metering",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:test",
+      "to": "proof:metering-quota-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:dev",
+      "to": "proof:webhook-redrive",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:dev",
+      "to": "proof:webhooks",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:staging",
+      "to": "proof:webhook-redrive",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:staging",
+      "to": "proof:webhooks",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:test",
+      "to": "proof:webhook-redrive",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:test",
+      "to": "proof:webhooks",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:workflow-engine-scheduled-jobs-approvals:dev",
+      "to": "proof:workflow-provider-live",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:workflow-engine-scheduled-jobs-approvals:staging",
+      "to": "proof:workflow-provider-live",
+      "type": "requires-proof",
+      "env": "staging"
+    },
+    {
+      "from": "environment:workflow-engine-scheduled-jobs-approvals:test",
+      "to": "proof:workflow-provider-live",
+      "type": "requires-proof",
+      "env": "test"
+    }
+  ]
+}

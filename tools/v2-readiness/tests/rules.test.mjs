@@ -29,6 +29,14 @@ import r25 from "../src/rules/r25-cross-capability-semantics.mjs";
 import r26 from "../src/rules/r26-event-semantics.mjs";
 import r27 from "../src/rules/r27-operational-semantics.mjs";
 import r28 from "../src/rules/r28-semantic-source-transition.mjs";
+import r30 from "../src/rules/r30-graph-integrity.mjs";
+import r31 from "../src/rules/r31-state-machine-soundness.mjs";
+import r32 from "../src/rules/r32-traceability-closure.mjs";
+import r33 from "../src/rules/r33-environment-completeness.mjs";
+import r34 from "../src/rules/r34-constraint-satisfaction.mjs";
+import r35 from "../src/rules/r35-semantic-closure.mjs";
+import r36 from "../src/rules/r36-regeneration-sufficiency.mjs";
+import r37 from "../src/rules/r37-semantic-entropy.mjs";
 
 const fires = (rule, ctx, ruleId) => {
   const f = rule(ctx);
@@ -582,4 +590,73 @@ test("R28 fires when capability behaviour changes are not tied to semantic artef
   a.foundation["semantic-source-of-truth-transition.json"].policies.changePolicy =
     "update code eventually";
   fires(r28, a, "R28-semantic-source-transition");
+});
+
+test("R30 fires on an orphan committed formal graph node", () => {
+  const a = clone(cleanCtx());
+  a.formalModel = {
+    "traceability-graph.json": {
+      artefact: "traceability-graph",
+      nodes: [{ id: "capability:orphan", kind: "capability", label: "orphan" }],
+      edges: [],
+    },
+  };
+  fires(r30, a, "R30-graph-integrity");
+});
+
+test("R31 fires on an unreachable committed state machine state", () => {
+  const a = clone(cleanCtx());
+  a.formalModel = {
+    "state-machines.json": {
+      machines: [
+        {
+          id: "state-machine:c1",
+          capability: "C1",
+          states: ["defined", "ready", "dead"],
+          initialState: "defined",
+          transitions: [{ from: "defined", to: "ready" }],
+          terminalStates: ["ready"],
+        },
+      ],
+    },
+  };
+  fires(r31, a, "R31-state-machine-soundness");
+});
+
+test("R32 fires when a capability loses traceability to contract", () => {
+  const a = clone(cleanCtx());
+  a.capabilities[0].contract = "";
+  fires(r32, a, "R32-traceability-closure");
+});
+
+test("R33 fires when a delivered capability is missing a prod environment cell", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["environment-capability-matrix.json"].capabilities[0].prod;
+  fires(r33, a, "R33-environment-completeness");
+});
+
+test("R34 fires when a mutating event lacks idempotency", () => {
+  const a = clone(cleanCtx());
+  delete a.foundation["event-semantics.json"].events[0].idempotencyKey;
+  fires(r34, a, "R34-constraint-satisfaction");
+});
+
+test("R35 fires when runtime event behaviour lacks semantic definition", () => {
+  const a = clone(cleanCtx());
+  a.platformEventNames = ["missing.event"];
+  fires(r35, a, "R35-semantic-closure");
+});
+
+test("R36 fires when regeneration lacks an operational row", () => {
+  const a = clone(cleanCtx());
+  a.foundation["operational-semantics.json"].capabilities = [];
+  fires(r36, a, "R36-regeneration-sufficiency");
+});
+
+test("R37 fires on duplicate event definitions", () => {
+  const a = clone(cleanCtx());
+  a.foundation["event-semantics.json"].events.push({
+    ...a.foundation["event-semantics.json"].events[0],
+  });
+  fires(r37, a, "R37-semantic-entropy");
 });

@@ -1,0 +1,1208 @@
+{
+  "artefact": "interaction-graph",
+  "version": 1,
+  "nodes": [
+    {
+      "id": "capability:abac-policy-decision-point",
+      "kind": "capability",
+      "label": "ABAC / Policy Decision Point",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:accessibility-a11y-gate",
+      "kind": "capability",
+      "label": "Accessibility (a11y) gate",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "capability",
+      "label": "API docs, developer portal, SDKs, rate limits",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:api-keys-personal-access-tokens",
+      "kind": "capability",
+      "label": "API keys / personal access tokens",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:audit-of-privileged-access",
+      "kind": "capability",
+      "label": "Audit of privileged access",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:background-workers-job-runner",
+      "kind": "capability",
+      "label": "Background workers / job runner",
+      "category": "compute-runtime"
+    },
+    {
+      "id": "capability:backup-plus-restore",
+      "kind": "capability",
+      "label": "Backup + restore",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:branding-plus-theming",
+      "kind": "capability",
+      "label": "Branding + theming",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "capability",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:build-versus-compose-decision-framework",
+      "kind": "capability",
+      "label": "Build-versus-compose decision framework",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:claim-mapping-plus-group-role-mapping",
+      "kind": "capability",
+      "label": "Claim mapping + group/role mapping",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "capability",
+      "label": "Code quality + secret + dependency scanning",
+      "category": "security-governance"
+    },
+    {
+      "id": "capability:compliance-reports-access-reviews-evidence-packs",
+      "kind": "capability",
+      "label": "Compliance reports, access reviews, evidence packs",
+      "category": "security-governance"
+    },
+    {
+      "id": "capability:composed-provider-readiness-spine",
+      "kind": "capability",
+      "label": "Composed provider readiness spine",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:configuration-registry-plus-history",
+      "kind": "capability",
+      "label": "Configuration registry + history",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:custom-domains-dns-ownership-tls-canonical",
+      "kind": "capability",
+      "label": "Custom domains, DNS ownership, TLS, canonical",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "kind": "capability",
+      "label": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:delegated-administration-roles",
+      "kind": "capability",
+      "label": "Delegated administration roles",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:e2e-confidence-ladder-stage-aware",
+      "kind": "capability",
+      "label": "E2E confidence ladder (stage-aware)",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:end-user-profile-plus-preferences-self-service",
+      "kind": "capability",
+      "label": "End-user profile + preferences self-service",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:entitlement-engine",
+      "kind": "capability",
+      "label": "Entitlement engine",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:environment-registry-plus-bootstrap",
+      "kind": "capability",
+      "label": "Environment registry + bootstrap",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:environment-specific-vs-shared-service-model",
+      "kind": "capability",
+      "label": "Environment-specific vs shared service model",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:event-bus-durable-queues-dlq-redrive",
+      "kind": "capability",
+      "label": "Event bus, durable queues, DLQ, redrive",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:history-read-model-read-only-projection",
+      "kind": "capability",
+      "label": "History read-model (read-only projection)",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:i18n-runtime-plus-validation",
+      "kind": "capability",
+      "label": "i18n runtime + validation",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:idp-brokering-plus-oidc-provider-management",
+      "kind": "capability",
+      "label": "IdP brokering + OIDC provider management",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:internal-service-catalog-plus-readiness",
+      "kind": "capability",
+      "label": "Internal service catalog + readiness",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "capability",
+      "label": "Logs (aggregation + tenant-scoped search)",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:metrics-plus-traces",
+      "kind": "capability",
+      "label": "Metrics + traces",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:mfa-plus-session-policy-plus-lockout",
+      "kind": "capability",
+      "label": "MFA + session policy + lockout",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:notification-delivery-plus-preferences-plus-channels",
+      "kind": "capability",
+      "label": "Notification delivery + preferences + channels",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "kind": "capability",
+      "label": "Object storage + tenant prefixes + signed URLs",
+      "category": "storage"
+    },
+    {
+      "id": "capability:observability-built-in-alerting-plus-incidents",
+      "kind": "capability",
+      "label": "Observability — built-in alerting + incidents",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:oidc-discovery-issuer-jwks-validation",
+      "kind": "capability",
+      "label": "OIDC discovery / issuer / JWKS validation",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:oidc-test-connection-plus-callback-display",
+      "kind": "capability",
+      "label": "OIDC test connection + callback display",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:openapi-drift-hard-gate",
+      "kind": "capability",
+      "label": "OpenAPI drift hard gate",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:pitr-retention-legal-hold-data-residency",
+      "kind": "capability",
+      "label": "PITR, retention, legal hold, data residency",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:platform-login-plus-session",
+      "kind": "capability",
+      "label": "Platform login + session",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:product-catalog-plans-prices",
+      "kind": "capability",
+      "label": "Product catalog, plans, prices",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:provider-configuration-plane",
+      "kind": "capability",
+      "label": "Provider configuration plane",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:provider-environment-classification",
+      "kind": "capability",
+      "label": "Provider environment classification",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:quota-enforcement",
+      "kind": "capability",
+      "label": "Quota enforcement",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:rate-limiting-api",
+      "kind": "capability",
+      "label": "Rate limiting (API)",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:rbac-roles-plus-permissions",
+      "kind": "capability",
+      "label": "RBAC (roles + permissions)",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:relational-storage-plus-migrations-plus-rls",
+      "kind": "capability",
+      "label": "Relational storage + migrations + RLS",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:runtime-secrets-management",
+      "kind": "capability",
+      "label": "Runtime secrets management",
+      "category": "compute-runtime"
+    },
+    {
+      "id": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "capability",
+      "label": "Scheduled jobs (built-in, on the event substrate)",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:search-plus-indexing-product-search",
+      "kind": "capability",
+      "label": "Search + indexing (product search)",
+      "category": "search"
+    },
+    {
+      "id": "capability:service-catalog-plus-provider-integration-model",
+      "kind": "capability",
+      "label": "Service catalog + provider integration model",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:sub-organisations",
+      "kind": "capability",
+      "label": "Sub-organisations",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:subscriptions-invoices-payment-methods-dunning",
+      "kind": "capability",
+      "label": "Subscriptions, invoices, payment methods, dunning",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:support-mode-break-glass-access",
+      "kind": "capability",
+      "label": "Support-mode / break-glass access",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:support-tickets-customer-health-announcements",
+      "kind": "capability",
+      "label": "Support tickets, customer health, announcements",
+      "category": "support-admin"
+    },
+    {
+      "id": "capability:tenant-canonical-domain-set-unset",
+      "kind": "capability",
+      "label": "Tenant canonical domain set/unset",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:tenant-custom-domain-auth-callback",
+      "kind": "capability",
+      "label": "Tenant custom-domain auth callback",
+      "category": "authentication"
+    },
+    {
+      "id": "capability:tenant-data-import-export",
+      "kind": "capability",
+      "label": "Tenant data import / export",
+      "category": "data-platform"
+    },
+    {
+      "id": "capability:tenant-domain-activation-auth-client",
+      "kind": "capability",
+      "label": "Tenant domain activation (auth-client)",
+      "category": "configuration"
+    },
+    {
+      "id": "capability:tenant-groups",
+      "kind": "capability",
+      "label": "Tenant groups",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:tenant-host-identity-resolution",
+      "kind": "capability",
+      "label": "Tenant host identity resolution",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:tenant-identity-record-plus-fqdn",
+      "kind": "capability",
+      "label": "Tenant identity (record + FQDN)",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:tenant-isolation-proof",
+      "kind": "capability",
+      "label": "Tenant isolation proof",
+      "category": "security-governance"
+    },
+    {
+      "id": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "kind": "capability",
+      "label": "Tenant lifecycle: provision, suspend, delete, export",
+      "category": "support-admin"
+    },
+    {
+      "id": "capability:tenant-service-clickthrough-policy",
+      "kind": "capability",
+      "label": "Tenant service clickthrough policy",
+      "category": "observability-ops"
+    },
+    {
+      "id": "capability:universal-service-foundation-scope-plus-principles",
+      "kind": "capability",
+      "label": "Universal Service Foundation scope + principles",
+      "category": "foundation"
+    },
+    {
+      "id": "capability:usage-metering-plus-meter-event-ingestion",
+      "kind": "capability",
+      "label": "Usage metering + meter event ingestion",
+      "category": "entitlements-billing"
+    },
+    {
+      "id": "capability:user-identity-plus-tenant-membership",
+      "kind": "capability",
+      "label": "User identity + tenant membership",
+      "category": "identity-access"
+    },
+    {
+      "id": "capability:webhooks-developer-facing",
+      "kind": "capability",
+      "label": "Webhooks (developer-facing)",
+      "category": "developer-platform"
+    },
+    {
+      "id": "capability:workflow-engine-scheduled-jobs-approvals",
+      "kind": "capability",
+      "label": "Workflow engine, scheduled jobs, approvals",
+      "category": "events-workflow"
+    },
+    {
+      "id": "capability:write-only-secret-settings",
+      "kind": "capability",
+      "label": "Write-only secret settings",
+      "category": "configuration"
+    },
+    {
+      "id": "interaction-absence:abac-policy-decision-point",
+      "kind": "interaction-absence",
+      "label": "ABAC / Policy Decision Point has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:accessibility-a11y-gate",
+      "kind": "interaction-absence",
+      "label": "Accessibility (a11y) gate has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:api-docs-developer-portal-sdks-rate-limits",
+      "kind": "interaction-absence",
+      "label": "API docs, developer portal, SDKs, rate limits has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:api-keys-personal-access-tokens",
+      "kind": "interaction-absence",
+      "label": "API keys / personal access tokens has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:backup-plus-restore",
+      "kind": "interaction-absence",
+      "label": "Backup + restore has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:branding-plus-theming",
+      "kind": "interaction-absence",
+      "label": "Branding + theming has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "kind": "interaction-absence",
+      "label": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:build-versus-compose-decision-framework",
+      "kind": "interaction-absence",
+      "label": "Build-versus-compose decision framework has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:claim-mapping-plus-group-role-mapping",
+      "kind": "interaction-absence",
+      "label": "Claim mapping + group/role mapping has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:code-quality-plus-secret-plus-dependency-scanning",
+      "kind": "interaction-absence",
+      "label": "Code quality + secret + dependency scanning has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:compliance-reports-access-reviews-evidence-packs",
+      "kind": "interaction-absence",
+      "label": "Compliance reports, access reviews, evidence packs has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:configuration-registry-plus-history",
+      "kind": "interaction-absence",
+      "label": "Configuration registry + history has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:custom-domains-dns-ownership-tls-canonical",
+      "kind": "interaction-absence",
+      "label": "Custom domains, DNS ownership, TLS, canonical has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:delegated-administration-roles",
+      "kind": "interaction-absence",
+      "label": "Delegated administration roles has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:e2e-confidence-ladder-stage-aware",
+      "kind": "interaction-absence",
+      "label": "E2E confidence ladder (stage-aware) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:end-user-profile-plus-preferences-self-service",
+      "kind": "interaction-absence",
+      "label": "End-user profile + preferences self-service has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:environment-registry-plus-bootstrap",
+      "kind": "interaction-absence",
+      "label": "Environment registry + bootstrap has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:environment-specific-vs-shared-service-model",
+      "kind": "interaction-absence",
+      "label": "Environment-specific vs shared service model has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:history-read-model-read-only-projection",
+      "kind": "interaction-absence",
+      "label": "History read-model (read-only projection) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:i18n-runtime-plus-validation",
+      "kind": "interaction-absence",
+      "label": "i18n runtime + validation has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:idp-brokering-plus-oidc-provider-management",
+      "kind": "interaction-absence",
+      "label": "IdP brokering + OIDC provider management has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:logs-aggregation-plus-tenant-scoped-search",
+      "kind": "interaction-absence",
+      "label": "Logs (aggregation + tenant-scoped search) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:metrics-plus-traces",
+      "kind": "interaction-absence",
+      "label": "Metrics + traces has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:mfa-plus-session-policy-plus-lockout",
+      "kind": "interaction-absence",
+      "label": "MFA + session policy + lockout has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:observability-built-in-alerting-plus-incidents",
+      "kind": "interaction-absence",
+      "label": "Observability — built-in alerting + incidents has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:oidc-discovery-issuer-jwks-validation",
+      "kind": "interaction-absence",
+      "label": "OIDC discovery / issuer / JWKS validation has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:oidc-test-connection-plus-callback-display",
+      "kind": "interaction-absence",
+      "label": "OIDC test connection + callback display has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:openapi-drift-hard-gate",
+      "kind": "interaction-absence",
+      "label": "OpenAPI drift hard gate has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:pitr-retention-legal-hold-data-residency",
+      "kind": "interaction-absence",
+      "label": "PITR, retention, legal hold, data residency has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:platform-login-plus-session",
+      "kind": "interaction-absence",
+      "label": "Platform login + session has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:product-catalog-plans-prices",
+      "kind": "interaction-absence",
+      "label": "Product catalog, plans, prices has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:provider-configuration-plane",
+      "kind": "interaction-absence",
+      "label": "Provider configuration plane has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:provider-environment-classification",
+      "kind": "interaction-absence",
+      "label": "Provider environment classification has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:quota-enforcement",
+      "kind": "interaction-absence",
+      "label": "Quota enforcement has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:rate-limiting-api",
+      "kind": "interaction-absence",
+      "label": "Rate limiting (API) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:rbac-roles-plus-permissions",
+      "kind": "interaction-absence",
+      "label": "RBAC (roles + permissions) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:relational-storage-plus-migrations-plus-rls",
+      "kind": "interaction-absence",
+      "label": "Relational storage + migrations + RLS has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:runtime-secrets-management",
+      "kind": "interaction-absence",
+      "label": "Runtime secrets management has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:scheduled-jobs-built-in-on-the-event-substrate",
+      "kind": "interaction-absence",
+      "label": "Scheduled jobs (built-in, on the event substrate) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:search-plus-indexing-product-search",
+      "kind": "interaction-absence",
+      "label": "Search + indexing (product search) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:service-catalog-plus-provider-integration-model",
+      "kind": "interaction-absence",
+      "label": "Service catalog + provider integration model has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:sub-organisations",
+      "kind": "interaction-absence",
+      "label": "Sub-organisations has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:support-tickets-customer-health-announcements",
+      "kind": "interaction-absence",
+      "label": "Support tickets, customer health, announcements has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-canonical-domain-set-unset",
+      "kind": "interaction-absence",
+      "label": "Tenant canonical domain set/unset has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-custom-domain-auth-callback",
+      "kind": "interaction-absence",
+      "label": "Tenant custom-domain auth callback has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-data-import-export",
+      "kind": "interaction-absence",
+      "label": "Tenant data import / export has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-domain-activation-auth-client",
+      "kind": "interaction-absence",
+      "label": "Tenant domain activation (auth-client) has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-groups",
+      "kind": "interaction-absence",
+      "label": "Tenant groups has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-host-identity-resolution",
+      "kind": "interaction-absence",
+      "label": "Tenant host identity resolution has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-isolation-proof",
+      "kind": "interaction-absence",
+      "label": "Tenant isolation proof has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:tenant-service-clickthrough-policy",
+      "kind": "interaction-absence",
+      "label": "Tenant service clickthrough policy has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:universal-service-foundation-scope-plus-principles",
+      "kind": "interaction-absence",
+      "label": "Universal Service Foundation scope + principles has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction-absence:write-only-secret-settings",
+      "kind": "interaction-absence",
+      "label": "Write-only secret settings has no named cross-capability interaction"
+    },
+    {
+      "id": "interaction:audit-privileged-access",
+      "kind": "interaction",
+      "label": "audit-privileged-access"
+    },
+    {
+      "id": "interaction:billing-workflow",
+      "kind": "interaction",
+      "label": "billing-workflow"
+    },
+    {
+      "id": "interaction:catalog-provider-readiness",
+      "kind": "interaction",
+      "label": "catalog-provider-readiness"
+    },
+    {
+      "id": "interaction:entitlements-billing",
+      "kind": "interaction",
+      "label": "entitlements-billing"
+    },
+    {
+      "id": "interaction:events-workers-dlq",
+      "kind": "interaction",
+      "label": "events-workers-dlq"
+    },
+    {
+      "id": "interaction:governance-tenant-lifecycle",
+      "kind": "interaction",
+      "label": "governance-tenant-lifecycle"
+    },
+    {
+      "id": "interaction:storage-governance",
+      "kind": "interaction",
+      "label": "storage-governance"
+    },
+    {
+      "id": "interaction:tenant-identity-access",
+      "kind": "interaction",
+      "label": "tenant-identity-access"
+    },
+    {
+      "id": "interaction:webhooks-events",
+      "kind": "interaction",
+      "label": "webhooks-events"
+    },
+    {
+      "id": "interaction:workflow-notifications",
+      "kind": "interaction",
+      "label": "workflow-notifications"
+    }
+  ],
+  "edges": [
+    {
+      "from": "capability:abac-policy-decision-point",
+      "to": "interaction-absence:abac-policy-decision-point",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:accessibility-a11y-gate",
+      "to": "interaction-absence:accessibility-a11y-gate",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:api-docs-developer-portal-sdks-rate-limits",
+      "to": "interaction-absence:api-docs-developer-portal-sdks-rate-limits",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:api-keys-personal-access-tokens",
+      "to": "interaction-absence:api-keys-personal-access-tokens",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "interaction:audit-privileged-access",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:audit-of-privileged-access",
+      "to": "interaction:audit-privileged-access",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "interaction:events-workers-dlq",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:background-workers-job-runner",
+      "to": "interaction:events-workers-dlq",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:backup-plus-restore",
+      "to": "interaction-absence:backup-plus-restore",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:branding-plus-theming",
+      "to": "interaction-absence:branding-plus-theming",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "to": "interaction-absence:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:build-versus-compose-decision-framework",
+      "to": "interaction-absence:build-versus-compose-decision-framework",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:claim-mapping-plus-group-role-mapping",
+      "to": "interaction-absence:claim-mapping-plus-group-role-mapping",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:code-quality-plus-secret-plus-dependency-scanning",
+      "to": "interaction-absence:code-quality-plus-secret-plus-dependency-scanning",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:compliance-reports-access-reviews-evidence-packs",
+      "to": "interaction-absence:compliance-reports-access-reviews-evidence-packs",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "interaction:catalog-provider-readiness",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:composed-provider-readiness-spine",
+      "to": "interaction:catalog-provider-readiness",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:configuration-registry-plus-history",
+      "to": "interaction-absence:configuration-registry-plus-history",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:custom-domains-dns-ownership-tls-canonical",
+      "to": "interaction-absence:custom-domains-dns-ownership-tls-canonical",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "interaction:governance-tenant-lifecycle",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "interaction:storage-governance",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "interaction:governance-tenant-lifecycle",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:data-governance-catalog-lineage-classification-pii-dsr-gdpr",
+      "to": "interaction:storage-governance",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:delegated-administration-roles",
+      "to": "interaction-absence:delegated-administration-roles",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:e2e-confidence-ladder-stage-aware",
+      "to": "interaction-absence:e2e-confidence-ladder-stage-aware",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:end-user-profile-plus-preferences-self-service",
+      "to": "interaction-absence:end-user-profile-plus-preferences-self-service",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "interaction:entitlements-billing",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:entitlement-engine",
+      "to": "interaction:entitlements-billing",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:environment-registry-plus-bootstrap",
+      "to": "interaction-absence:environment-registry-plus-bootstrap",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:environment-specific-vs-shared-service-model",
+      "to": "interaction-absence:environment-specific-vs-shared-service-model",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "interaction:events-workers-dlq",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "interaction:webhooks-events",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "interaction:events-workers-dlq",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:event-bus-durable-queues-dlq-redrive",
+      "to": "interaction:webhooks-events",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:history-read-model-read-only-projection",
+      "to": "interaction-absence:history-read-model-read-only-projection",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:i18n-runtime-plus-validation",
+      "to": "interaction-absence:i18n-runtime-plus-validation",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:idp-brokering-plus-oidc-provider-management",
+      "to": "interaction-absence:idp-brokering-plus-oidc-provider-management",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "interaction:catalog-provider-readiness",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:internal-service-catalog-plus-readiness",
+      "to": "interaction:catalog-provider-readiness",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:logs-aggregation-plus-tenant-scoped-search",
+      "to": "interaction-absence:logs-aggregation-plus-tenant-scoped-search",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:metrics-plus-traces",
+      "to": "interaction-absence:metrics-plus-traces",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:mfa-plus-session-policy-plus-lockout",
+      "to": "interaction-absence:mfa-plus-session-policy-plus-lockout",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "interaction:workflow-notifications",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:notification-delivery-plus-preferences-plus-channels",
+      "to": "interaction:workflow-notifications",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "interaction:storage-governance",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:object-storage-plus-tenant-prefixes-plus-signed-urls",
+      "to": "interaction:storage-governance",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:observability-built-in-alerting-plus-incidents",
+      "to": "interaction-absence:observability-built-in-alerting-plus-incidents",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:oidc-discovery-issuer-jwks-validation",
+      "to": "interaction-absence:oidc-discovery-issuer-jwks-validation",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:oidc-test-connection-plus-callback-display",
+      "to": "interaction-absence:oidc-test-connection-plus-callback-display",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:openapi-drift-hard-gate",
+      "to": "interaction-absence:openapi-drift-hard-gate",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:pitr-retention-legal-hold-data-residency",
+      "to": "interaction-absence:pitr-retention-legal-hold-data-residency",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:platform-login-plus-session",
+      "to": "interaction-absence:platform-login-plus-session",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:product-catalog-plans-prices",
+      "to": "interaction-absence:product-catalog-plans-prices",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:provider-configuration-plane",
+      "to": "interaction-absence:provider-configuration-plane",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:provider-environment-classification",
+      "to": "interaction-absence:provider-environment-classification",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:quota-enforcement",
+      "to": "interaction-absence:quota-enforcement",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:rate-limiting-api",
+      "to": "interaction-absence:rate-limiting-api",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:rbac-roles-plus-permissions",
+      "to": "interaction-absence:rbac-roles-plus-permissions",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:relational-storage-plus-migrations-plus-rls",
+      "to": "interaction-absence:relational-storage-plus-migrations-plus-rls",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:runtime-secrets-management",
+      "to": "interaction-absence:runtime-secrets-management",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:scheduled-jobs-built-in-on-the-event-substrate",
+      "to": "interaction-absence:scheduled-jobs-built-in-on-the-event-substrate",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:search-plus-indexing-product-search",
+      "to": "interaction-absence:search-plus-indexing-product-search",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:service-catalog-plus-provider-integration-model",
+      "to": "interaction-absence:service-catalog-plus-provider-integration-model",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:sub-organisations",
+      "to": "interaction-absence:sub-organisations",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "interaction:entitlements-billing",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:subscriptions-invoices-payment-methods-dunning",
+      "to": "interaction:entitlements-billing",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "interaction:audit-privileged-access",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:support-mode-break-glass-access",
+      "to": "interaction:audit-privileged-access",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:support-tickets-customer-health-announcements",
+      "to": "interaction-absence:support-tickets-customer-health-announcements",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-canonical-domain-set-unset",
+      "to": "interaction-absence:tenant-canonical-domain-set-unset",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-custom-domain-auth-callback",
+      "to": "interaction-absence:tenant-custom-domain-auth-callback",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-data-import-export",
+      "to": "interaction-absence:tenant-data-import-export",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-domain-activation-auth-client",
+      "to": "interaction-absence:tenant-domain-activation-auth-client",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-groups",
+      "to": "interaction-absence:tenant-groups",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-host-identity-resolution",
+      "to": "interaction-absence:tenant-host-identity-resolution",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "interaction:tenant-identity-access",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:tenant-identity-record-plus-fqdn",
+      "to": "interaction:tenant-identity-access",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:tenant-isolation-proof",
+      "to": "interaction-absence:tenant-isolation-proof",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "interaction:governance-tenant-lifecycle",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:tenant-lifecycle-provision-suspend-delete-export",
+      "to": "interaction:governance-tenant-lifecycle",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:tenant-service-clickthrough-policy",
+      "to": "interaction-absence:tenant-service-clickthrough-policy",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:universal-service-foundation-scope-plus-principles",
+      "to": "interaction-absence:universal-service-foundation-scope-plus-principles",
+      "type": "explicit-no-interaction-semantics"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "interaction:billing-workflow",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:usage-metering-plus-meter-event-ingestion",
+      "to": "interaction:billing-workflow",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "interaction:tenant-identity-access",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:user-identity-plus-tenant-membership",
+      "to": "interaction:tenant-identity-access",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "interaction:webhooks-events",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:webhooks-developer-facing",
+      "to": "interaction:webhooks-events",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "interaction:billing-workflow",
+      "type": "consumes-interaction"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "interaction:billing-workflow",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "interaction:workflow-notifications",
+      "type": "participates-in"
+    },
+    {
+      "from": "capability:workflow-engine-scheduled-jobs-approvals",
+      "to": "interaction:workflow-notifications",
+      "type": "produces-interaction"
+    },
+    {
+      "from": "capability:write-only-secret-settings",
+      "to": "interaction-absence:write-only-secret-settings",
+      "type": "explicit-no-interaction-semantics"
+    }
+  ]
+}

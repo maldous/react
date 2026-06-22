@@ -1585,6 +1585,141 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/formal-model/capability-graph.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/capability-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/constraint-satisfaction-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/constraint-satisfaction-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/environment-completeness-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/environment-completeness-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/environment-graph.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/environment-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/event-graph.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/event-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/graph-integrity-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/graph-integrity-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/interaction-graph.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/interaction-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/proof-graph.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/proof-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/regeneration-sufficiency-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/regeneration-sufficiency-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/semantic-closure-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/semantic-closure-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/semantic-entropy-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/semantic-entropy-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/state-machine-soundness-report.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/state-machine-soundness-report.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/state-machines.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/state-machines.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/traceability-graph.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/traceability-graph.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "docs/v2-foundation/formal-model/traceability-matrix.json",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/formal-model/traceability-matrix.json",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
       "path": "docs/v2-foundation/gap-report.md",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -1592,6 +1727,15 @@
       "v2Target": "docs/v2-foundation/gap-report.md",
       "protectingTests": ["npm v2:readiness"],
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/mathematical-assurance-attestation.md",
+      "purpose": "post-audit formal mathematical assurance artefact for V2 semantic regeneration proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/mathematical-assurance-attestation.md",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
     },
     {
       "path": "docs/v2-foundation/operational-semantics.json",
@@ -2474,6 +2618,15 @@
       "introducingCommit": "unknown"
     },
     {
+      "path": "tools/v2-readiness/scripts/generate-formal-assurance.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/scripts/generate-formal-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
       "path": "tools/v2-readiness/scripts/strengthen-semantic-artefacts.mjs",
       "introducingCommit": "pending",
       "purpose": "repeatable derivation script for V2 semantic artefact strengthening",
@@ -2481,6 +2634,15 @@
       "v2Target": "tools/v2-readiness/scripts/strengthen-semantic-artefacts.mjs",
       "protectingTests": ["npm v2:readiness", "npm test -- tools/v2-readiness"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/formal-assurance.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/formal-assurance.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
     },
     {
       "path": "tools/v2-readiness/src/index.mjs",
@@ -2808,6 +2970,78 @@
         "tools/v2-readiness/tests/package-status.test.mjs"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r30-graph-integrity.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r30-graph-integrity.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r31-state-machine-soundness.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r31-state-machine-soundness.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r32-traceability-closure.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r32-traceability-closure.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r33-environment-completeness.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r33-environment-completeness.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r34-constraint-satisfaction.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r34-constraint-satisfaction.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r35-semantic-closure.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r35-semantic-closure.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r36-regeneration-sufficiency.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r36-regeneration-sufficiency.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r37-semantic-entropy.mjs",
+      "purpose": "post-audit V2 readiness formal assurance implementation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r37-semantic-entropy.mjs",
+      "protectingTests": ["npm test -- tools/v2-readiness", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"],
+      "introducingCommit": "pending-formal-assurance-commit"
     },
     {
       "path": "tools/v2-readiness/src/rules/r4-vocabulary.mjs",
@@ -3353,6 +3587,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 314,
+  "additionCount": 340,
   "deletionCount": 54
 }
