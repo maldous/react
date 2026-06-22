@@ -11243,5 +11243,53 @@
     "sourceCommand": "tsx apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected postgres-observability-repository contract is broken"
+  },
+  {
+    "id": "apps/platform-api/tests/unit/notification-transports.test.ts",
+    "path": "apps/platform-api/tests/unit/notification-transports.test.ts",
+    "kind": "unit-test",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "fake email/webhook transports for bounded retry/fail-closed sequencing",
+    "stageCoverage": "test (unit)",
+    "failureEvidence": "unit test exits non-zero when notification transport retry, timeout, signing, no-destination fail-closed, health, or recovery behavior breaks",
+    "proofLevel": 3,
+    "proofLevelRationale": "unit-level provider reliability proof for notification transport closures; live route and delivery behavior is covered by provider-ID runtime proof wrapper",
+    "capabilitiesProven": ["Notification preferences and dispatch"],
+    "semanticFacetsProven": ["providerReliability", "contracts", "securityBoundary", "proof"],
+    "environment": "test",
+    "providerClass": "sandbox-external",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "node --loader apps/platform-api/loader.mjs --test --import apps/platform-api/tests/lib/preload-unit-env.mjs apps/platform-api/tests/unit/notification-transports.test.ts",
+    "scriptPath": "apps/platform-api/tests/unit/notification-transports.test.ts",
+    "expectedFailureMode": "test exits non-zero when the protected notification transport provider reliability contract is broken"
+  },
+  {
+    "id": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "path": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "kind": "runtime-proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "live-runtime: Mailpit route-wired notification transport proof plus unit bounded retry/fail-closed test",
+    "stageCoverage": "test (provider-ID runtime-proof entrypoint)",
+    "failureEvidence": "proof script or unit test exits non-zero when route-wired SMTP transport selection, Mailpit delivery, preference delivery, environment-gated transport selection, retry, timeout, health, or fail-closed behavior breaks",
+    "proofLevel": 4,
+    "proofLevelRationale": "provider-ID wrapper delegates to notification-transport-routes-runtime-proof.ts; live proof validates route-wired SMTP transport selection, Mailpit delivery, preference delivery, and environment-gated transport selection while apps/platform-api/tests/unit/notification-transports.test.ts exercises bounded retry, fail-closed no fallback behavior, webhook signing, health, and recovery guidance",
+    "capabilitiesProven": ["Notification preferences and dispatch"],
+    "semanticFacetsProven": [
+      "providerReliability",
+      "contracts",
+      "securityBoundary",
+      "stateModel",
+      "proof"
+    ],
+    "environment": "test",
+    "providerClass": "sandbox-external",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "tsx apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "scriptPath": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected notification-transports contract is broken"
   }
 ]

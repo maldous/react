@@ -4265,6 +4265,27 @@
         "apps/platform-api/tests/unit/postgres-observability-repository.test.ts"
       ],
       "decisionRefs": ["ADR-0062", "ADR-ACT-0261"]
+    },
+    {
+      "path": "apps/platform-api/tests/unit/notification-transports.test.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit unit proof for notification transport provider reliability envelope",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/tests/unit/notification-transports.test.ts",
+      "protectingTests": ["apps/platform-api/tests/unit/notification-transports.test.ts"],
+      "decisionRefs": ["ADR-0068", "ADR-ACT-0273"]
+    },
+    {
+      "path": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "introducingCommit": "unknown",
+      "purpose": "post-audit provider-ID proof entrypoint delegating to apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "protectingTests": [
+        "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+        "apps/platform-api/tests/unit/notification-transports.test.ts"
+      ],
+      "decisionRefs": ["ADR-0068", "ADR-ACT-0273"]
     }
   ],
   "deletions": [
@@ -4647,6 +4668,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 452,
+  "additionCount": 454,
   "deletionCount": 54
 }

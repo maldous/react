@@ -25,6 +25,26 @@ import type { NotificationTransport } from "../ports/notification-repository.ts"
 import type { NotificationRecipientResolver } from "../ports/notification-recipient-resolver.ts";
 import { webhookSignatureHeader, type WebhookDispatchPort } from "../usecases/webhooks.ts";
 
+export interface NotificationTransportsProviderConfig {
+  timeoutMs: number;
+  retryAttempts: number;
+  retryBackoffMs: number;
+  configSource: "NOTIFICATION_EMAIL_DOMAIN|NOTIFICATION_EMAIL_OVERRIDE|NOTIFICATION_WEBHOOK_URL";
+  secretSource: "NOTIFICATION_WEBHOOK_SECRET";
+}
+
+export function loadNotificationTransportsProviderConfig(
+  env: NodeJS.ProcessEnv = process.env
+): NotificationTransportsProviderConfig {
+  return {
+    timeoutMs: Number(env["NOTIFICATION_TRANSPORT_TIMEOUT_MS"] ?? "5000"),
+    retryAttempts: Number(env["NOTIFICATION_TRANSPORT_RETRY_ATTEMPTS"] ?? "1"),
+    retryBackoffMs: Number(env["NOTIFICATION_TRANSPORT_RETRY_BACKOFF_MS"] ?? "100"),
+    configSource: "NOTIFICATION_EMAIL_DOMAIN|NOTIFICATION_EMAIL_OVERRIDE|NOTIFICATION_WEBHOOK_URL",
+    secretSource: "NOTIFICATION_WEBHOOK_SECRET",
+  };
+}
+
 /**
  * Configured recipient resolver (this pass): resolves destinations from operator/env
  * config, server-side. Email = `<localPrefix>+<userId>@<emailDomain>` (or a fixed
@@ -61,16 +81,62 @@ interface TransportMsg {
   subject: string;
 }
 
+async function withTimeout<T>(
+  operation: () => Promise<T>,
+  timeoutMs: number,
+  unavailableMessage: string
+): Promise<T> {
+  let timeout: NodeJS.Timeout | undefined;
+  try {
+    return await Promise.race([
+      operation(),
+      new Promise<never>((_, reject) => {
+        timeout = setTimeout(() => reject(new Error(unavailableMessage)), timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timeout) clearTimeout(timeout);
+  }
+}
+
+async function withRetry<T>(
+  operation: () => Promise<T>,
+  config: NotificationTransportsProviderConfig,
+  unavailableMessage: string
+): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt <= config.retryAttempts; attempt += 1) {
+    try {
+      return await withTimeout(operation, config.timeoutMs, unavailableMessage);
+    } catch (err) {
+      lastError = err;
+      if (attempt >= config.retryAttempts) break;
+      await new Promise((resolve) => setTimeout(resolve, config.retryBackoffMs * (attempt + 1)));
+    }
+  }
+  throw new Error(
+    `${unavailableMessage}; no fallback is allowed for notification transport delivery, fail-closed after retry attempts: ${
+      lastError instanceof Error ? lastError.message : String(lastError)
+    }`
+  );
+}
+
 /** Email transport: resolve recipient → send via SMTP (Mailpit locally). */
 export function createEmailTransport(deps: {
   resolver: NotificationRecipientResolver;
   email: EmailPort;
   from: EmailAddress;
+  config?: Partial<NotificationTransportsProviderConfig>;
   warn?: (message: string, meta: Record<string, unknown>) => void;
 }): NotificationTransport {
   const warn = deps.warn ?? (() => {});
+  const config = { ...loadNotificationTransportsProviderConfig(), ...deps.config };
   return async (msg: TransportMsg): Promise<NotificationDispatchStatus> => {
-    const to = await deps.resolver.resolveEmail(msg.organisationId, msg.userId);
+    const to = await withRetry(
+      () => deps.resolver.resolveEmail(msg.organisationId, msg.userId),
+      config,
+      "notification-transports email resolver unavailable"
+    );
     if (!to) {
       warn("notification email transport: no recipient resolved", {
         organisationId: msg.organisationId,
@@ -79,12 +145,17 @@ export function createEmailTransport(deps: {
       return "failed";
     }
     try {
-      await deps.email.send({
-        from: deps.from,
-        to: [{ address: to }],
-        subject: msg.subject,
-        text: `[${msg.category}] ${msg.subject}`,
-      });
+      await withRetry(
+        () =>
+          deps.email.send({
+            from: deps.from,
+            to: [{ address: to }],
+            subject: msg.subject,
+            text: `[${msg.category}] ${msg.subject}`,
+          }),
+        config,
+        "notification-transports email provider unavailable"
+      );
       return "sent";
     } catch (err) {
       warn("notification email transport: send failed", {
@@ -103,13 +174,19 @@ export function createWebhookTransport(deps: {
   dispatch: WebhookDispatchPort;
   /** Signing secret; when set, a replay-protected X-Platform-Signature is attached. */
   secret?: string;
+  config?: Partial<NotificationTransportsProviderConfig>;
   now?: () => number;
   warn?: (message: string, meta: Record<string, unknown>) => void;
 }): NotificationTransport {
   const warn = deps.warn ?? (() => {});
   const now = deps.now ?? (() => Math.floor(Date.now() / 1000));
+  const config = { ...loadNotificationTransportsProviderConfig(), ...deps.config };
   return async (msg: TransportMsg): Promise<NotificationDispatchStatus> => {
-    const url = await deps.resolver.resolveWebhookUrl(msg.organisationId, msg.userId);
+    const url = await withRetry(
+      () => deps.resolver.resolveWebhookUrl(msg.organisationId, msg.userId),
+      config,
+      "notification-transports webhook resolver unavailable"
+    );
     if (!url) {
       warn("notification webhook transport: no destination resolved", {
         organisationId: msg.organisationId,
@@ -134,10 +211,51 @@ export function createWebhookTransport(deps: {
         : {}),
     };
     try {
-      const res = await deps.dispatch.dispatch({ url, headers, body });
+      const res = await withRetry(
+        () => deps.dispatch.dispatch({ url, headers, body }),
+        config,
+        "notification-transports webhook provider unavailable"
+      );
       return res.ok ? "sent" : "failed";
-    } catch {
+    } catch (err) {
+      warn("notification webhook transport: dispatch failed", {
+        organisationId: msg.organisationId,
+        category: msg.category,
+        error: err instanceof Error ? err.message : String(err),
+      });
       return "failed";
     }
   };
+}
+
+export async function notificationTransportsHealthCheck(deps: {
+  resolver: NotificationRecipientResolver;
+  channel: "email" | "webhook";
+  organisationId: string;
+  userId: string;
+  config?: Partial<NotificationTransportsProviderConfig>;
+}): Promise<{
+  status: "ready";
+  provider: "notification-transports";
+  channel: "email" | "webhook";
+}> {
+  const config = { ...loadNotificationTransportsProviderConfig(), ...deps.config };
+  const destination = await withRetry(
+    () =>
+      deps.channel === "email"
+        ? deps.resolver.resolveEmail(deps.organisationId, deps.userId)
+        : deps.resolver.resolveWebhookUrl(deps.organisationId, deps.userId),
+    config,
+    `notification-transports ${deps.channel} health resolver unavailable`
+  );
+  if (!destination) {
+    throw new Error(
+      `notification-transports ${deps.channel} unavailable; no fallback is allowed for notification delivery, fail-closed because no destination is configured`
+    );
+  }
+  return { status: "ready", provider: "notification-transports", channel: deps.channel };
+}
+
+export function notificationTransportsRecoveryAction(): string {
+  return "operator recovery: verify NOTIFICATION_EMAIL_DOMAIN/NOTIFICATION_EMAIL_OVERRIDE/NOTIFICATION_WEBHOOK_URL config, NOTIFICATION_WEBHOOK_SECRET when webhook signing is required, SMTP/Webhook provider readiness, recipient resolver data, then retry notification transport dispatch";
 }
