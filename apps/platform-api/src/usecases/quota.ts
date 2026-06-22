@@ -10,6 +10,8 @@
 
 import { ForbiddenError } from "@platform/platform-errors";
 import { AuditAction, createAuditEvent, type AuditEventPort } from "@platform/audit-events";
+import { createLogger } from "@platform/platform-logging";
+import { createTracer, withSpan } from "@platform/platform-observability";
 import type {
   QuotaAction,
   QuotaListResponse,
@@ -19,6 +21,53 @@ import type {
 import type { MeteringRepository } from "../ports/metering-repository.ts";
 import type { QuotaRecord, QuotaRepository } from "../ports/quota-repository.ts";
 import type { EntitlementRepository } from "../ports/entitlement-repository.ts";
+
+const log = createLogger({
+  name: "quota-usecase",
+  service: "platform-api",
+  boundedContext: "storage",
+});
+const tracer = createTracer("quota-usecase");
+const quotaUsecaseMetrics = new Map<string, number>();
+
+function metric(name: string, labels: Record<string, string>): void {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  quotaUsecaseMetrics.set(key, (quotaUsecaseMetrics.get(key) ?? 0) + 1);
+}
+
+export function getQuotaUsecaseMetric(name: string, labels: Record<string, string>): number {
+  const key = `${name}:${Object.entries(labels)
+    .map(([k, v]) => `${k}=${v}`)
+    .join(",")}`;
+  return quotaUsecaseMetrics.get(key) ?? 0;
+}
+
+async function withQuotaUsecaseSpan<T>(
+  operation: string,
+  organisationId: string,
+  quotaKey: string,
+  run: () => Promise<T>
+): Promise<T> {
+  return withSpan(
+    tracer,
+    `quota.${operation}`,
+    async () => {
+      try {
+        const result = await run();
+        metric("quota_usecase_total", { operation, outcome: "success" });
+        log.info({ operation, organisationId, quotaKey }, "quota.operation.complete");
+        return result;
+      } catch (err) {
+        metric("quota_usecase_total", { operation, outcome: "error" });
+        log.error({ err, operation, organisationId, quotaKey }, "quota.operation.failed");
+        throw err;
+      }
+    },
+    { "storage.operation": operation, "storage.tenant": organisationId }
+  );
+}
 
 /** Aggregate usage for a quota: zero when not entitled, else operator vs tenant aggregate. */
 async function resolveUsage(
@@ -89,39 +138,41 @@ export async function evaluateQuota(
   deps: QuotaDeps,
   opts: { operator?: boolean } = {}
 ): Promise<EvaluateQuotaResult> {
-  const q = await deps.quota.getByKey(organisationId, quotaKey);
-  if (!q) {
+  return withQuotaUsecaseSpan("evaluate", organisationId, quotaKey, async () => {
+    const q = await deps.quota.getByKey(organisationId, quotaKey);
+    if (!q) {
+      return {
+        allowed: true,
+        decidedBy: "no_quota",
+        state: "no_quota",
+        usage: 0,
+        limit: null,
+        window: null,
+      };
+    }
+    if (!(await isEntitled(deps.entitlements, organisationId, q.entitlementKey))) {
+      return {
+        allowed: false,
+        decidedBy: "entitlement",
+        state: "no_entitlement",
+        usage: 0,
+        limit: q.limit,
+        window: q.window,
+      };
+    }
+    const usage = opts.operator
+      ? await deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window)
+      : await deps.metering.aggregate(organisationId, q.meterKey, q.window);
+    const exceeded = q.action === "deny" && usage >= q.limit;
     return {
-      allowed: true,
-      decidedBy: "no_quota",
-      state: "no_quota",
-      usage: 0,
-      limit: null,
-      window: null,
-    };
-  }
-  if (!(await isEntitled(deps.entitlements, organisationId, q.entitlementKey))) {
-    return {
-      allowed: false,
-      decidedBy: "entitlement",
-      state: "no_entitlement",
-      usage: 0,
+      allowed: !exceeded,
+      decidedBy: "quota",
+      state: exceeded ? "exceeded" : "within",
+      usage,
       limit: q.limit,
       window: q.window,
     };
-  }
-  const usage = opts.operator
-    ? await deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window)
-    : await deps.metering.aggregate(organisationId, q.meterKey, q.window);
-  const exceeded = q.action === "deny" && usage >= q.limit;
-  return {
-    allowed: !exceeded,
-    decidedBy: "quota",
-    state: exceeded ? "exceeded" : "within",
-    usage,
-    limit: q.limit,
-    window: q.window,
-  };
+  });
 }
 
 /**
@@ -136,46 +187,48 @@ export async function evaluateQuotaWithDelta(
   deps: QuotaDeps,
   opts: { operator?: boolean } = {}
 ): Promise<EvaluateQuotaDeltaResult> {
-  const q = await deps.quota.getByKey(organisationId, quotaKey);
-  if (!q) {
+  return withQuotaUsecaseSpan("evaluate-delta", organisationId, quotaKey, async () => {
+    const q = await deps.quota.getByKey(organisationId, quotaKey);
+    if (!q) {
+      return {
+        allowed: true,
+        decidedBy: "no_quota",
+        state: "no_quota",
+        usage: 0,
+        requested,
+        projectedUsage: requested,
+        limit: null,
+        window: null,
+      };
+    }
+    if (!(await isEntitled(deps.entitlements, organisationId, q.entitlementKey))) {
+      return {
+        allowed: false,
+        decidedBy: "entitlement",
+        state: "no_entitlement",
+        usage: 0,
+        requested,
+        projectedUsage: requested,
+        limit: q.limit,
+        window: q.window,
+      };
+    }
+    const usage = opts.operator
+      ? await deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window)
+      : await deps.metering.aggregate(organisationId, q.meterKey, q.window);
+    const projectedUsage = usage + requested;
+    const exceeded = q.action === "deny" && projectedUsage > q.limit;
     return {
-      allowed: true,
-      decidedBy: "no_quota",
-      state: "no_quota",
-      usage: 0,
+      allowed: !exceeded,
+      decidedBy: "quota",
+      state: exceeded ? "exceeded" : "within",
+      usage,
       requested,
-      projectedUsage: requested,
-      limit: null,
-      window: null,
-    };
-  }
-  if (!(await isEntitled(deps.entitlements, organisationId, q.entitlementKey))) {
-    return {
-      allowed: false,
-      decidedBy: "entitlement",
-      state: "no_entitlement",
-      usage: 0,
-      requested,
-      projectedUsage: requested,
+      projectedUsage,
       limit: q.limit,
       window: q.window,
     };
-  }
-  const usage = opts.operator
-    ? await deps.metering.aggregateAsOperator(organisationId, q.meterKey, q.window)
-    : await deps.metering.aggregate(organisationId, q.meterKey, q.window);
-  const projectedUsage = usage + requested;
-  const exceeded = q.action === "deny" && projectedUsage > q.limit;
-  return {
-    allowed: !exceeded,
-    decidedBy: "quota",
-    state: exceeded ? "exceeded" : "within",
-    usage,
-    requested,
-    projectedUsage,
-    limit: q.limit,
-    window: q.window,
-  };
+  });
 }
 
 /** Throw a typed error when the next action is not allowed (entitlement or quota). */
@@ -185,13 +238,15 @@ export async function assertQuota(
   deps: QuotaDeps,
   opts: { operator?: boolean } = {}
 ): Promise<void> {
-  const r = await evaluateQuota(organisationId, quotaKey, deps, opts);
-  if (r.allowed) return;
-  if (r.decidedBy === "entitlement") {
-    throw new ForbiddenError("api.error.notEntitled", { safeDetails: { quota: quotaKey } });
-  }
-  throw new ForbiddenError("api.error.quotaExceeded", {
-    safeDetails: { quota: quotaKey, usage: r.usage, limit: r.limit, window: r.window },
+  return withQuotaUsecaseSpan("assert", organisationId, quotaKey, async () => {
+    const r = await evaluateQuota(organisationId, quotaKey, deps, opts);
+    if (r.allowed) return;
+    if (r.decidedBy === "entitlement") {
+      throw new ForbiddenError("api.error.notEntitled", { safeDetails: { quota: quotaKey } });
+    }
+    throw new ForbiddenError("api.error.quotaExceeded", {
+      safeDetails: { quota: quotaKey, usage: r.usage, limit: r.limit, window: r.window },
+    });
   });
 }
 
@@ -202,20 +257,25 @@ export async function assertQuotaWithDelta(
   deps: QuotaDeps,
   opts: { operator?: boolean } = {}
 ): Promise<void> {
-  const r = await evaluateQuotaWithDelta(organisationId, quotaKey, requested, deps, opts);
-  if (r.allowed) return;
-  if (r.decidedBy === "entitlement") {
-    throw new ForbiddenError("api.error.notEntitled", { safeDetails: { quota: quotaKey } });
-  }
-  throw new ForbiddenError("api.error.quotaExceeded", {
-    safeDetails: {
-      quota: quotaKey,
-      usage: r.usage,
-      requested,
-      projectedUsage: r.projectedUsage,
-      limit: r.limit,
-      window: r.window,
-    },
+  return withQuotaUsecaseSpan("assert-delta", organisationId, quotaKey, async () => {
+    // Storage quota-before-write: this runs before uploaded/quarantined object lifecycle begins.
+    // The storage-objects usecase owns AV scan, clean/rejected state, signedUrl/download
+    // blocked until clean, and legal hold deletion block after this quota gate passes.
+    const r = await evaluateQuotaWithDelta(organisationId, quotaKey, requested, deps, opts);
+    if (r.allowed) return;
+    if (r.decidedBy === "entitlement") {
+      throw new ForbiddenError("api.error.notEntitled", { safeDetails: { quota: quotaKey } });
+    }
+    throw new ForbiddenError("api.error.quotaExceeded", {
+      safeDetails: {
+        quota: quotaKey,
+        usage: r.usage,
+        requested,
+        projectedUsage: r.projectedUsage,
+        limit: r.limit,
+        window: r.window,
+      },
+    });
   });
 }
 

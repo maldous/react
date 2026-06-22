@@ -5,7 +5,14 @@ import {
   getPostgresQuotaRepositoryMetric,
   PostgresQuotaRepository,
 } from "../../src/adapters/postgres-quota-repository.ts";
-import { assertQuota, evaluateQuota, listQuotas, setQuota } from "../../src/usecases/quota.ts";
+import {
+  assertQuota,
+  assertQuotaWithDelta,
+  evaluateQuota,
+  getQuotaUsecaseMetric,
+  listQuotas,
+  setQuota,
+} from "../../src/usecases/quota.ts";
 import type { MeteringRepository } from "../../src/ports/metering-repository.ts";
 import type {
   QuotaRecord,
@@ -142,6 +149,46 @@ describe("quota usecase", () => {
       audit: capturingAudit().port,
     };
     await assert.rejects(assertQuota(ORG, "webhooks.deliveries", deps));
+  });
+
+  it("assertQuotaWithDelta records quota-before-write success and failure metrics", async () => {
+    const allowedDeps = {
+      quota: fakeQuota({ ...quota(), quotaKey: "storage.bytes", meterKey: "storage.bytes" }),
+      metering: fakeMetering(1),
+      entitlements: fakeEntitlements(true),
+      audit: capturingAudit().port,
+    };
+    const successBefore = getQuotaUsecaseMetric("quota_usecase_total", {
+      operation: "assert-delta",
+      outcome: "success",
+    });
+    await assertQuotaWithDelta(ORG, "storage.bytes", 1, allowedDeps);
+    assert.equal(
+      getQuotaUsecaseMetric("quota_usecase_total", {
+        operation: "assert-delta",
+        outcome: "success",
+      }),
+      successBefore + 1
+    );
+
+    const deniedDeps = {
+      quota: fakeQuota({ ...quota(), quotaKey: "storage.bytes", meterKey: "storage.bytes" }),
+      metering: fakeMetering(3),
+      entitlements: fakeEntitlements(true),
+      audit: capturingAudit().port,
+    };
+    const errorBefore = getQuotaUsecaseMetric("quota_usecase_total", {
+      operation: "assert-delta",
+      outcome: "error",
+    });
+    await assert.rejects(() => assertQuotaWithDelta(ORG, "storage.bytes", 1, deniedDeps));
+    assert.equal(
+      getQuotaUsecaseMetric("quota_usecase_total", {
+        operation: "assert-delta",
+        outcome: "error",
+      }),
+      errorBefore + 1
+    );
   });
 
   it("setQuota audits before the write (failure aborts)", async () => {
