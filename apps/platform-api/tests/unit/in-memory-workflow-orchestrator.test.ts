@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
+  getInMemoryWorkflowMetric,
   InMemoryWorkflowOrchestrator,
   loadInMemoryWorkflowOrchestratorConfig,
 } from "../../src/adapters/in-memory-workflow-orchestrator.ts";
@@ -31,6 +32,15 @@ describe("InMemoryWorkflowOrchestrator approval transitions", () => {
       workflowId: "wf-support-1",
       payload: { supportAccessReason: "investigation" },
     });
+    assert.deepEqual(
+      await orch.startWorkflow({
+        workflowKey: "support.approval",
+        tenantId: "tenant-a",
+        workflowId: "wf-support-1",
+        payload: { supportAccessReason: "duplicate idempotency check" },
+      }),
+      { workflowId: "wf-support-1" }
+    );
 
     assert.deepEqual(await orch.getWorkflowStatus("wf-support-1"), {
       workflowId: "wf-support-1",
@@ -62,6 +72,9 @@ describe("InMemoryWorkflowOrchestrator approval transitions", () => {
       workflowId: "wf-support-2",
       payload: {},
     });
+    await orch.signalWorkflow("wf-support-2", "approval.requested", {
+      requestedBy: "user-1",
+    });
     await orch.signalWorkflow("wf-support-2", "approval.denied", {
       deniedBy: "user-3",
     });
@@ -70,6 +83,10 @@ describe("InMemoryWorkflowOrchestrator approval transitions", () => {
       status: "failed",
       detail: "denied:user-3",
     });
+    assert.equal(
+      orch.getAuditEvents().some((event) => event.action === "workflow.approval_denied"),
+      true
+    );
   });
 
   it("enforces tenant access, cancellation and health state", async () => {
@@ -111,6 +128,11 @@ describe("InMemoryWorkflowOrchestrator approval transitions", () => {
       () => orch.signalWorkflow("wf-support-unsupported", "approval.escalated", {}),
       /unsupported_workflow_signal/
     );
+    await assert.rejects(
+      () => orch.signalWorkflow("wf-support-unsupported", "approval.granted", {}),
+      /invalid workflow transition/
+    );
+    assert.equal(getInMemoryWorkflowMetric("signal", "error") > 0, true);
 
     const disabled = new InMemoryWorkflowOrchestrator({
       ...loadInMemoryWorkflowOrchestratorConfig({}),

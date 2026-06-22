@@ -21,9 +21,14 @@ async function main(): Promise<void> {
   });
   assert.equal(workflow.canAccess(workflowId, "tenant-a"), true);
   assert.equal(workflow.canAccess(workflowId, "tenant-b"), false);
+  await workflow.signalWorkflow(workflowId, "approval.requested", { requestedBy: "op" });
   await workflow.signalWorkflow(workflowId, "approval.granted", { approvedBy: "op" });
   const status = await workflow.getWorkflowStatus(workflowId);
-  assert.equal(status.status, "waiting");
+  assert.equal(status.status, "completed");
+  assert.equal(
+    workflow.getAuditEvents().some((event) => event.action === "workflow.approval_granted"),
+    true
+  );
   await automation.runScript({
     scriptKey: "tenant.export",
     tenantId: "tenant-a",
@@ -45,7 +50,9 @@ async function main(): Promise<void> {
     return send({ error: "not found" }, 404);
   });
   const port = await listen(server);
-  const windmill = new WindmillAutomationProviderAdapter(`http://127.0.0.1:${port}`);
+  const windmill = new WindmillAutomationProviderAdapter(`http://127.0.0.1:${port}`, fetch, {
+    preferSdk: false,
+  });
   const remoteRun = await windmill.runScript({
     scriptKey: "tenant.export",
     tenantId: "tenant-a",

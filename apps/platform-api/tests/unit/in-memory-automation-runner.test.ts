@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
+  getInMemoryAutomationMetric,
   InMemoryAutomationRunner,
   loadInMemoryAutomationRunnerConfig,
 } from "../../src/adapters/in-memory-automation-runner.ts";
@@ -34,6 +35,15 @@ describe("InMemoryAutomationRunner provider reliability", () => {
       }),
       { runId: "script-run-1" }
     );
+    assert.deepEqual(
+      await runner.runScript({
+        scriptKey: "tenant.export",
+        tenantId: "tenant-a",
+        runId: "script-run-1",
+        payload: { reason: "duplicate idempotency check" },
+      }),
+      { runId: "script-run-1" }
+    );
     assert.deepEqual(await runner.getRunStatus("script-run-1"), {
       runId: "script-run-1",
       status: "succeeded",
@@ -62,11 +72,16 @@ describe("InMemoryAutomationRunner provider reliability", () => {
       status: "cancelled",
       detail: "cancelled",
     });
+    assert.equal(
+      runner.getAuditEvents().some((event) => event.action === "automation.cancelled"),
+      true
+    );
   });
 
   it("fails closed when disabled or run id is unknown", async () => {
     const runner = new InMemoryAutomationRunner();
     await assert.rejects(() => runner.getRunStatus("missing-run"), /run_not_found/);
+    assert.equal(getInMemoryAutomationMetric("status", "error") > 0, true);
 
     const disabled = new InMemoryAutomationRunner({
       ...loadInMemoryAutomationRunnerConfig({}),
