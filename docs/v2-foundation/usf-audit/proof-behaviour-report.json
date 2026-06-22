@@ -460,57 +460,6 @@
     },
     {
       "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-      "message": "proof only checks file/contract shape",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-        "level": 0,
-        "classification": "route/file existence only",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": false,
-        "assertsObservabilityOrAudit": false,
-        "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-      "message": "proof does not assert side effects",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-        "level": 0,
-        "classification": "route/file existence only",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": false,
-        "assertsObservabilityOrAudit": false,
-        "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
-      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-      "message": "proof does not assert failure mode",
-      "evidence": {
-        "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
-        "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-        "level": 0,
-        "classification": "route/file existence only",
-        "routeRefs": ["route:get"],
-        "assertsSideEffects": false,
-        "assertsFailureMode": false,
-        "assertsObservabilityOrAudit": false,
-        "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
-      },
-      "classification": "must-fix-in-v1"
-    },
-    {
-      "kind": "proof-behaviour",
       "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
       "message": "proof does not assert side effects",
       "evidence": {
@@ -2636,11 +2585,11 @@
     {
       "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
       "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-      "level": 0,
-      "classification": "route/file existence only",
+      "level": 4,
+      "classification": "live substrate behaviour",
       "routeRefs": ["route:get"],
-      "assertsSideEffects": false,
-      "assertsFailureMode": false,
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
       "assertsObservabilityOrAudit": false,
       "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
     },

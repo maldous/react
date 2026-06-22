@@ -872,11 +872,11 @@
   {
     "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
     "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-    "level": 0,
-    "classification": "route/file existence only",
+    "level": 4,
+    "classification": "live substrate behaviour",
     "routeRefs": ["route:get"],
-    "assertsSideEffects": false,
-    "assertsFailureMode": false,
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
     "sourceFileRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"]
   },
