@@ -28,12 +28,6 @@ Status: PASS
 
 The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
 
-## Adversarial Runtime Assurance
-
-Status: PASS
-
-The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
-
 ## Known Gaps Identified
 
 | Question                                              | Machine-generated answer |
