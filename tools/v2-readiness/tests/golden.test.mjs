@@ -65,7 +65,7 @@ test("golden: base consistency clean; formal proof gaps truthfully reported; R9 
   assert.ok(
     formalProof.some(
       (f) =>
-        f.subject === "in-memory-antivirus" &&
+        f.subject === "in-memory-identity-repository" &&
         f.message.includes(
           "in-memory provider lacks complete emitted real-provider parity evidence"
         )

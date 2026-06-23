@@ -10,6 +10,7 @@
     "provider:in-memory-secret-store",
     "provider:in-memory-search-repository",
     "provider:in-memory-automation-runner",
+    "provider:in-memory-billing-provider",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
     "provider:in-memory-antivirus",
@@ -18,11 +19,14 @@
     "in-memory-secret-store",
     "in-memory-search-repository",
     "in-memory-automation-runner",
+    "in-memory-billing-provider",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
     "in-memory-antivirus",
     "provider:windmill-automation-provider",
     "windmill-automation-provider",
+    "provider:lago-billing-provider",
+    "lago-billing-provider",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
@@ -41,10 +45,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T09:27:20.158Z",
-  "endedAt": "2026-06-23T09:27:20.421Z",
+  "startedAt": "2026-06-23T09:36:54.265Z",
+  "endedAt": "2026-06-23T09:36:54.543Z",
   "exitStatus": 0,
-  "commit": "5eb6b2c930e2246ec5a3fbb24b6864070804bb72",
+  "commit": "ad45e624a085e736de1be268f551bc03b213490b",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -57,6 +61,7 @@
     "tenantB": "tenant-b",
     "indexedDocuments": 0,
     "automationRuns": 0,
+    "billingAccounts": 0,
     "storageObjects": 0,
     "webhookDeliveries": 0,
     "antivirusScans": 0,
@@ -71,6 +76,35 @@
     "tenantBSearchResults": 0,
     "secretResolvedForTenantA": true,
     "secretReadableAcrossTenant": false,
+    "billingContractMethods": 4,
+    "inMemoryBillingReadiness": {
+      "status": "ready",
+      "detail": "in-memory billing adapter ready"
+    },
+    "fakeLagoBillingReadiness": {
+      "status": "ready",
+      "detail": "lago:200"
+    },
+    "inMemoryBillingAccount": {
+      "externalAccountId": "acct_tenant-a",
+      "organisationId": "tenant-a",
+      "currency": "USD",
+      "createdAt": "2026-06-23T09:36:54.471Z"
+    },
+    "fakeLagoBillingAccount": {
+      "externalAccountId": "acct_tenant-a",
+      "organisationId": "tenant-a",
+      "currency": "USD",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    "inMemoryBillingInjectedFailure": "in-memory-billing-provider unavailable after retry attempts; fail closed: Error: in-memory-billing-provider injected failure for getAccount; fail closed",
+    "inMemoryBillingHealth": {
+      "ok": true,
+      "accountCount": 1
+    },
+    "fakeLagoRequests": 4,
+    "fakeLagoCustomers": 0,
+    "inMemoryBillingEventsAfterCleanup": 0,
     "automationContractMethods": 4,
     "inMemoryAutomationScriptStatus": "succeeded",
     "fakeWindmillScriptStatus": "succeeded",
@@ -161,6 +195,12 @@
     "automationCancelStatusParity": true,
     "automationFailurePathParity": true,
     "fakeWindmillHealthReady": true,
+    "billingPortMethodsMatch": true,
+    "billingReadinessParity": true,
+    "billingAccountCreateParity": true,
+    "billingTenantBoundaryParity": true,
+    "billingWebhookInvalidSignatureParity": true,
+    "billingCleanupParity": true,
     "objectStoragePortMethodsMatch": true,
     "objectStorageLifecycleParity": true,
     "objectStorageTenantIsolationParity": true,
@@ -190,6 +230,10 @@
     "fake-windmill:automation.flow_started:2",
     "fake-windmill:automation.cancelled:3",
     "fake-windmill:automation.status_observed:4",
+    "in-memory-billing:billing.account.ensure:tenant-a:0",
+    "in-memory-billing:billing.account.get:tenant-a:1",
+    "in-memory-billing:billing.account.get:tenant-b:2",
+    "in-memory-billing:billing.webhook.validate:global:3",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
     "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
     "in-memory:storage.object.download:clean:tenant-a/object.txt",
@@ -207,6 +251,11 @@
     "trace:automation-parity-script-run",
     "trace:automation-parity-flow-run",
     "trace:automation-parity-missing-run",
+    "trace:billing-parity-readiness",
+    "trace:billing-parity-account-create",
+    "trace:billing-parity-account-read",
+    "trace:billing-parity-tenant-miss",
+    "trace:billing-parity-injected-failure",
     "trace:in-memory:storage.put",
     "trace:fake-s3:storage.put",
     "trace:in-memory:storage.download",
@@ -239,6 +288,18 @@
     {
       "name": "windmill_automation_status_error_total",
       "value": 1
+    },
+    {
+      "name": "in_memory_billing_account_ensure_created_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_billing_account_get_hit_total",
+      "value": 1
+    },
+    {
+      "name": "fake_lago_billing_http_request_total",
+      "value": 4
     },
     {
       "name": "s3_object_storage_put_success_total",
@@ -313,6 +374,11 @@
     "log:automation-parity-script-run",
     "log:automation-parity-flow-run",
     "log:automation-parity-missing-run",
+    "log:billing-parity-readiness",
+    "log:billing-parity-account-create",
+    "log:billing-parity-account-read",
+    "log:billing-parity-tenant-miss",
+    "log:billing-parity-injected-failure",
     "log:in-memory:info:put:storage.operation.complete",
     "log:fake-s3:info:put:storage.operation.complete",
     "log:in-memory:info:download:storage.operation.complete",
@@ -336,18 +402,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T09:27:20.421Z",
+  "generatedAt": "2026-06-23T09:36:54.543Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782206823725-3126871",
+  "collectorRunId": "proof-run-1782207397770-3181021",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T09:27:20.158Z",
-  "endTime": "2026-06-23T09:27:20.421Z",
-  "gitCommit": "5eb6b2c930e2246ec5a3fbb24b6864070804bb72",
-  "executionTimestamp": "2026-06-23T09:27:20.421Z",
+  "startTime": "2026-06-23T09:36:54.265Z",
+  "endTime": "2026-06-23T09:36:54.543Z",
+  "gitCommit": "ad45e624a085e736de1be268f551bc03b213490b",
+  "executionTimestamp": "2026-06-23T09:36:54.543Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -356,6 +422,12 @@
     "automationCancelStatusParity": true,
     "automationFailurePathParity": true,
     "fakeWindmillHealthReady": true,
+    "billingPortMethodsMatch": true,
+    "billingReadinessParity": true,
+    "billingAccountCreateParity": true,
+    "billingTenantBoundaryParity": true,
+    "billingWebhookInvalidSignatureParity": true,
+    "billingCleanupParity": true,
     "objectStoragePortMethodsMatch": true,
     "objectStorageLifecycleParity": true,
     "objectStorageTenantIsolationParity": true,
@@ -382,6 +454,10 @@
     "fake-windmill:automation.flow_started:2",
     "fake-windmill:automation.cancelled:3",
     "fake-windmill:automation.status_observed:4",
+    "in-memory-billing:billing.account.ensure:tenant-a:0",
+    "in-memory-billing:billing.account.get:tenant-a:1",
+    "in-memory-billing:billing.account.get:tenant-b:2",
+    "in-memory-billing:billing.webhook.validate:global:3",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
     "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
     "in-memory:storage.object.download:clean:tenant-a/object.txt",
@@ -411,6 +487,18 @@
     {
       "name": "windmill_automation_status_error_total",
       "value": 1
+    },
+    {
+      "name": "in_memory_billing_account_ensure_created_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_billing_account_get_hit_total",
+      "value": 1
+    },
+    {
+      "name": "fake_lago_billing_http_request_total",
+      "value": 4
     },
     {
       "name": "s3_object_storage_put_success_total",
@@ -485,6 +573,11 @@
     "log:automation-parity-script-run",
     "log:automation-parity-flow-run",
     "log:automation-parity-missing-run",
+    "log:billing-parity-readiness",
+    "log:billing-parity-account-create",
+    "log:billing-parity-account-read",
+    "log:billing-parity-tenant-miss",
+    "log:billing-parity-injected-failure",
     "log:in-memory:info:put:storage.operation.complete",
     "log:fake-s3:info:put:storage.operation.complete",
     "log:in-memory:info:download:storage.operation.complete",
@@ -501,5 +594,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "78daeca45befff132066405ec4bb8b579f929bfe0d91c40de25358894e2f5bcb"
+  "evidenceSignature": "748d3ffeacbf80a77222d88f72c840025bddc77bd3688d0d979026af0bcd47ae"
 }

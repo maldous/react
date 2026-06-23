@@ -4,7 +4,9 @@
   "subjectIds": [
     "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
     "provider:in-memory-billing-provider",
-    "in-memory-billing-provider"
+    "in-memory-billing-provider",
+    "provider:in-memory-payment-provider",
+    "in-memory-payment-provider"
   ],
   "subjectId": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
   "capabilityId": "unknown",
@@ -15,12 +17,12 @@
   "storageIds": [],
   "environmentMode": "dev",
   "providerMode": "semantic-dev",
-  "proofLevelClaimed": "L1",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T09:27:19.609Z",
-  "endedAt": "2026-06-23T09:27:19.648Z",
+  "startedAt": "2026-06-23T09:36:53.716Z",
+  "endedAt": "2026-06-23T09:36:53.759Z",
   "exitStatus": 0,
-  "commit": "5eb6b2c930e2246ec5a3fbb24b6864070804bb72",
+  "commit": "ad45e624a085e736de1be268f551bc03b213490b",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +30,194 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "tenantA": "org-billing-proof-a",
+    "tenantB": "org-billing-proof-b",
+    "tenantAAccountExists": false,
+    "tenantBAccountVisibleFromTenantAProof": false,
+    "auditEvents": 0,
+    "paymentCharges": 0,
+    "paymentRefunds": 0
+  },
+  "afterState": {
+    "tenantA": "org-billing-proof-a",
+    "tenantB": "org-billing-proof-b",
+    "accountCreated": "acct_org-billing-proof-a",
+    "accountIdempotent": true,
+    "tenantAAccountVisible": true,
+    "tenantBAccountVisible": false,
+    "validWebhook": true,
+    "invalidWebhook": false,
+    "chargeOutcome": "succeeded",
+    "failedChargeOutcome": "failed",
+    "refundSucceeded": true,
+    "injectedBillingFailure": "in-memory-billing-provider unavailable after retry attempts; fail closed: Error: in-memory-billing-provider injected failure for getAccount; fail closed",
+    "injectedPaymentFailure": "in-memory-billing-provider unavailable after retry attempts; fail closed: Error: in-memory-payment-provider injected failure for refund; fail closed",
+    "unavailableBillingReadiness": "unavailable",
+    "unavailablePaymentReadiness": "degraded",
+    "unavailableFailure": "in-memory-billing-provider unavailable: disabled; fail closed",
+    "healthBeforeReset": {
+      "ok": true,
+      "accountCount": 1
+    },
+    "healthAfterReset": {
+      "ok": true,
+      "accountCount": 0
+    },
+    "auditEventsAfterReset": 0,
+    "paymentChargeMetricAfterReset": 0
+  },
+  "assertedStateDiff": {
+    "accountCreated": true,
+    "accountReadBack": true,
+    "accountIdempotency": true,
+    "tenantBoundary": true,
+    "validWebhookAccepted": true,
+    "invalidWebhookRejected": true,
+    "chargeSucceeded": true,
+    "invalidChargeFailed": true,
+    "refundSucceeded": true,
+    "injectedBillingFailureObserved": true,
+    "injectedPaymentFailureObserved": true,
+    "unavailableModeFailsClosed": true,
+    "resetClearsState": true
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "in-memory-billing:billing.account.ensure:org-billing-proof-a:0",
+    "in-memory-billing:billing.account.ensure:org-billing-proof-a:1",
+    "in-memory-billing:billing.account.get:org-billing-proof-a:2",
+    "in-memory-billing:billing.account.get:org-billing-proof-b:3",
+    "in-memory-billing:billing.webhook.validate:global:4",
+    "in-memory-billing:billing.webhook.validate:global:5"
+  ],
+  "traceIds": [
+    "trace:in-memory-billing-readiness",
+    "trace:in-memory-billing-account-create",
+    "trace:in-memory-billing-account-idempotent",
+    "trace:in-memory-billing-webhook-signature",
+    "trace:in-memory-payment-charge",
+    "trace:in-memory-payment-refund",
+    "trace:in-memory-billing-injected-failure",
+    "trace:in-memory-billing-unavailable"
+  ],
+  "metricSamples": [
+    {
+      "name": "billing_readiness_total",
+      "value": 1
+    },
+    {
+      "name": "billing_account_ensure_created_total",
+      "value": 1
+    },
+    {
+      "name": "billing_account_ensure_idempotent_total",
+      "value": 1
+    },
+    {
+      "name": "billing_webhook_signature_validation_total",
+      "value": 2
+    },
+    {
+      "name": "payment_charge_total",
+      "value": 2
+    },
+    {
+      "name": "payment_refund_total",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log:in-memory-billing-readiness",
+    "log:in-memory-billing-account-create",
+    "log:in-memory-billing-webhook-signature",
+    "log:in-memory-payment-charge",
+    "log:in-memory-payment-refund",
+    "log:in-memory-billing-injected-failure",
+    "log:in-memory-billing-unavailable"
+  ],
   "cleanupResult": {
-    "status": "delegated-proof-imported"
+    "status": "verified",
+    "resetSupported": true,
+    "accountCountAfterReset": 0,
+    "auditEventsAfterReset": 0
   },
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T09:27:19.648Z",
+  "generatedAt": "2026-06-23T09:36:53.759Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782206823725-3126871",
+  "collectorRunId": "proof-run-1782207397770-3181021",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T09:27:19.609Z",
-  "endTime": "2026-06-23T09:27:19.648Z",
-  "gitCommit": "5eb6b2c930e2246ec5a3fbb24b6864070804bb72",
-  "executionTimestamp": "2026-06-23T09:27:19.648Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "1a15c9339bfe0bd05f2269e85c858386495cbc6969ab2cedfe6a786ea2294e6d"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T09:36:53.716Z",
+  "endTime": "2026-06-23T09:36:53.759Z",
+  "gitCommit": "ad45e624a085e736de1be268f551bc03b213490b",
+  "executionTimestamp": "2026-06-23T09:36:53.759Z",
+  "stateDiff": {
+    "accountCreated": true,
+    "accountReadBack": true,
+    "accountIdempotency": true,
+    "tenantBoundary": true,
+    "validWebhookAccepted": true,
+    "invalidWebhookRejected": true,
+    "chargeSucceeded": true,
+    "invalidChargeFailed": true,
+    "refundSucceeded": true,
+    "injectedBillingFailureObserved": true,
+    "injectedPaymentFailureObserved": true,
+    "unavailableModeFailsClosed": true,
+    "resetClearsState": true
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "in-memory-billing:billing.account.ensure:org-billing-proof-a:0",
+    "in-memory-billing:billing.account.ensure:org-billing-proof-a:1",
+    "in-memory-billing:billing.account.get:org-billing-proof-a:2",
+    "in-memory-billing:billing.account.get:org-billing-proof-b:3",
+    "in-memory-billing:billing.webhook.validate:global:4",
+    "in-memory-billing:billing.webhook.validate:global:5"
+  ],
+  "metricEvidence": [
+    {
+      "name": "billing_readiness_total",
+      "value": 1
+    },
+    {
+      "name": "billing_account_ensure_created_total",
+      "value": 1
+    },
+    {
+      "name": "billing_account_ensure_idempotent_total",
+      "value": 1
+    },
+    {
+      "name": "billing_webhook_signature_validation_total",
+      "value": 2
+    },
+    {
+      "name": "payment_charge_total",
+      "value": 2
+    },
+    {
+      "name": "payment_refund_total",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log:in-memory-billing-readiness",
+    "log:in-memory-billing-account-create",
+    "log:in-memory-billing-webhook-signature",
+    "log:in-memory-payment-charge",
+    "log:in-memory-payment-refund",
+    "log:in-memory-billing-injected-failure",
+    "log:in-memory-billing-unavailable"
+  ],
+  "evidenceSignature": "a15511fab58261a5267ebe9ba8fd8655e5f0f5adccc3e71d928077bf3e374e9f"
 }

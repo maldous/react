@@ -5,6 +5,7 @@ import {
   getInMemoryAutomationMetric,
   InMemoryAutomationRunner,
 } from "../src/adapters/in-memory-automation-runner.ts";
+import { InMemoryBillingProvider } from "../src/adapters/in-memory-billing-provider.ts";
 import {
   InMemoryAntivirus,
   InMemoryEventBus,
@@ -27,6 +28,7 @@ import {
 } from "../src/adapters/windmill-automation-provider.ts";
 import { HttpWebhookDispatcher } from "../src/adapters/http-webhook-dispatcher.ts";
 import { ClamAvAdapter, getClamAvMetric } from "../src/adapters/clamav-antivirus.ts";
+import { LagoBillingProviderAdapter } from "../src/adapters/lago-billing-provider.ts";
 import { emitRuntimeProofEvidence } from "./lib/runtime-evidence.ts";
 
 const requiredMethods = {
@@ -70,6 +72,7 @@ const beforeState = {
   tenantB,
   indexedDocuments: 0,
   automationRuns: 0,
+  billingAccounts: 0,
   storageObjects: 0,
   webhookDeliveries: 0,
   antivirusScans: 0,
@@ -125,6 +128,114 @@ assert.equal(await secrets.resolve(tenantB, meta.ref), null);
 secrets.injectFailure("resolve");
 await assert.rejects(() => secrets.resolve(tenantA, meta.ref), /injected failure/);
 secrets.clearFailure("resolve");
+
+const billingMethods = [
+  "readiness",
+  "ensureAccount",
+  "getAccount",
+  "validateWebhookSignature",
+] as const;
+const inMemoryBilling = new InMemoryBillingProvider();
+const fakeLagoRequests: Array<{ method: string; url: string; status: number }> = [];
+const fakeLagoCustomers = new Map<string, { externalAccountId: string; currency: string }>();
+const fakeLagoServer = http.createServer((req, res) => {
+  const url = req.url ?? "/";
+  const send = (body: unknown, code = 200) => {
+    fakeLagoRequests.push({ method: req.method ?? "GET", url, status: code });
+    res.writeHead(code, { "content-type": "application/json" });
+    res.end(JSON.stringify(body));
+  };
+  const readBody = async () => {
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) chunks.push(Buffer.from(chunk));
+    return JSON.parse(Buffer.concat(chunks).toString("utf8") || "{}") as {
+      organisationId?: string;
+      currency?: string;
+      name?: string;
+      actorId?: string;
+    };
+  };
+  void (async () => {
+    if (req.method === "GET" && url === "/health") return send({ ok: true });
+    if (req.method === "POST" && url === "/customers") {
+      const body = await readBody();
+      const organisationId = body.organisationId ?? "unknown";
+      const existing = fakeLagoCustomers.get(organisationId);
+      const account = existing ?? {
+        externalAccountId: `acct_${organisationId}`,
+        currency: body.currency ?? "USD",
+      };
+      fakeLagoCustomers.set(organisationId, account);
+      return send({
+        externalAccountId: account.externalAccountId,
+        organisationId,
+        currency: account.currency,
+        createdAt: "2026-01-01T00:00:00.000Z",
+      });
+    }
+    const customerMatch = /^\/customers\/([^/?]+)$/.exec(url);
+    if (req.method === "GET" && customerMatch) {
+      const organisationId = decodeURIComponent(customerMatch[1]);
+      const account = fakeLagoCustomers.get(organisationId);
+      if (!account) return send({ error: "not found" }, 404);
+      return send({
+        externalAccountId: account.externalAccountId,
+        organisationId,
+        currency: account.currency,
+        createdAt: "2026-01-01T00:00:00.000Z",
+      });
+    }
+    return send({ error: "not found" }, 404);
+  })().catch((err) => send({ error: String(err) }, 500));
+});
+const fakeLagoPort = await listen(fakeLagoServer);
+const fakeLagoBilling = new LagoBillingProviderAdapter(`http://127.0.0.1:${fakeLagoPort}`, fetch, {
+  preferSdk: false,
+  timeoutMs: 1000,
+});
+for (const method of billingMethods) {
+  assert.equal(typeof inMemoryBilling[method], "function", `in-memory billing.${method}`);
+  assert.equal(typeof fakeLagoBilling[method], "function", `fake lago billing.${method}`);
+}
+const inMemoryBillingReadiness = await inMemoryBilling.readiness();
+const fakeLagoBillingReadiness = await fakeLagoBilling.readiness();
+assert.equal(inMemoryBillingReadiness.status, "ready");
+assert.equal(fakeLagoBillingReadiness.status, "ready");
+const billingAccountInput = {
+  organisationId: tenantA,
+  currency: "USD",
+  name: "Parity Tenant",
+  actorId: "billing-parity-proof",
+};
+const inMemoryBillingAccount = await inMemoryBilling.ensureAccount(billingAccountInput);
+const fakeLagoBillingAccount = await fakeLagoBilling.ensureAccount(billingAccountInput);
+assert.equal(inMemoryBillingAccount.organisationId, tenantA);
+assert.equal(fakeLagoBillingAccount.organisationId, tenantA);
+assert.equal(inMemoryBillingAccount.externalAccountId, fakeLagoBillingAccount.externalAccountId);
+assert.equal((await inMemoryBilling.getAccount(tenantA))?.externalAccountId, "acct_tenant-a");
+assert.equal((await fakeLagoBilling.getAccount(tenantA))?.externalAccountId, "acct_tenant-a");
+assert.equal(await inMemoryBilling.getAccount(tenantB), null);
+assert.equal(await fakeLagoBilling.getAccount(tenantB), null);
+assert.equal(
+  await inMemoryBilling.validateWebhookSignature(Buffer.from("billing"), "wrong"),
+  false
+);
+assert.equal(
+  await fakeLagoBilling.validateWebhookSignature(Buffer.from("billing"), "wrong"),
+  false
+);
+inMemoryBilling.injectFailure("getAccount");
+let inMemoryBillingInjectedFailure = "";
+await assert.rejects(
+  async () => inMemoryBilling.getAccount(tenantA),
+  (err) => {
+    inMemoryBillingInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryBillingInjectedFailure);
+  }
+);
+inMemoryBilling.clearFailure("getAccount");
+const inMemoryBillingHealth = await inMemoryBilling.healthCheck();
+assert.equal(inMemoryBillingHealth.ok, true);
 
 const automationMethods = ["runScript", "runFlow", "getRunStatus", "cancelRun"] as const;
 const inMemoryAutomation = new InMemoryAutomationRunner();
@@ -626,6 +737,11 @@ const automationAuditEvents = [
     .map((event, index) => `in-memory:${event.action}:${index}`),
   ...fakeWindmill.getAuditEvents().map((event, index) => `fake-windmill:${event.action}:${index}`),
 ];
+const billingAuditEvents = inMemoryBilling
+  .getAuditEvents()
+  .map(
+    (event, index) => `in-memory-billing:${event.action}:${event.tenantId ?? "global"}:${index}`
+  );
 const webhookAuditEvents = inMemoryWebhookDispatcher
   .getAuditEvents()
   .map((event, index) => `in-memory-webhook:${event.action}:${index}`);
@@ -651,6 +767,18 @@ const automationMetricSamples = [
   {
     name: "windmill_automation_status_error_total",
     value: getWindmillAutomationProviderMetric("status", "error"),
+  },
+  {
+    name: "in_memory_billing_account_ensure_created_total",
+    value: inMemoryBilling.getMetric("billing_account_ensure_created_total"),
+  },
+  {
+    name: "in_memory_billing_account_get_hit_total",
+    value: inMemoryBilling.getMetric("billing_account_get_hit_total"),
+  },
+  {
+    name: "fake_lago_billing_http_request_total",
+    value: fakeLagoRequests.length,
   },
   {
     name: "s3_object_storage_put_success_total",
@@ -703,8 +831,13 @@ for (const [name, provider] of Object.entries(providers)) {
   assert.equal((await provider.healthCheck()).status, "ready", `${name} must be ready after reset`);
 }
 await new Promise<void>((resolve) => windmillServer.close(() => resolve()));
+await new Promise<void>((resolve) => fakeLagoServer.close(() => resolve()));
 await new Promise<void>((resolve) => webhookReceiver.close(() => resolve()));
 await new Promise<void>((resolve) => fakeClamAvServer.close(() => resolve()));
+fakeLagoCustomers.clear();
+assert.equal(fakeLagoCustomers.size, 0);
+inMemoryBilling.reset();
+assert.equal(inMemoryBilling.getAuditEvents().length, 0);
 inMemoryWebhookDispatcher.reset();
 assert.equal(inMemoryWebhookDispatcher.deliveries.length, 0);
 inMemoryAntivirus.reset();
@@ -717,6 +850,7 @@ emitRuntimeProofEvidence({
     "provider:in-memory-secret-store",
     "provider:in-memory-search-repository",
     "provider:in-memory-automation-runner",
+    "provider:in-memory-billing-provider",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
     "provider:in-memory-antivirus",
@@ -725,11 +859,14 @@ emitRuntimeProofEvidence({
     "in-memory-secret-store",
     "in-memory-search-repository",
     "in-memory-automation-runner",
+    "in-memory-billing-provider",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
     "in-memory-antivirus",
     "provider:windmill-automation-provider",
     "windmill-automation-provider",
+    "provider:lago-billing-provider",
+    "lago-billing-provider",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
@@ -754,6 +891,16 @@ emitRuntimeProofEvidence({
     tenantBSearchResults: 0,
     secretResolvedForTenantA: true,
     secretReadableAcrossTenant: false,
+    billingContractMethods: billingMethods.length,
+    inMemoryBillingReadiness,
+    fakeLagoBillingReadiness,
+    inMemoryBillingAccount,
+    fakeLagoBillingAccount,
+    inMemoryBillingInjectedFailure,
+    inMemoryBillingHealth,
+    fakeLagoRequests: fakeLagoRequests.length,
+    fakeLagoCustomers: fakeLagoCustomers.size,
+    inMemoryBillingEventsAfterCleanup: inMemoryBilling.getAuditEvents().length,
     automationContractMethods: automationMethods.length,
     inMemoryAutomationScriptStatus: "succeeded",
     fakeWindmillScriptStatus: "succeeded",
@@ -807,6 +954,12 @@ emitRuntimeProofEvidence({
     automationCancelStatusParity: true,
     automationFailurePathParity: true,
     fakeWindmillHealthReady: fakeWindmillHealth.status === "ready",
+    billingPortMethodsMatch: true,
+    billingReadinessParity: true,
+    billingAccountCreateParity: true,
+    billingTenantBoundaryParity: true,
+    billingWebhookInvalidSignatureParity: true,
+    billingCleanupParity: true,
     objectStoragePortMethodsMatch: true,
     objectStorageLifecycleParity: true,
     objectStorageTenantIsolationParity: true,
@@ -827,6 +980,7 @@ emitRuntimeProofEvidence({
   securityBoundaryAsserted: true,
   auditEventIds: [
     ...automationAuditEvents,
+    ...billingAuditEvents,
     ...storageEvents.audit,
     ...webhookAuditEvents,
     ...antivirusAuditEvents,
@@ -835,6 +989,11 @@ emitRuntimeProofEvidence({
     "trace:automation-parity-script-run",
     "trace:automation-parity-flow-run",
     "trace:automation-parity-missing-run",
+    "trace:billing-parity-readiness",
+    "trace:billing-parity-account-create",
+    "trace:billing-parity-account-read",
+    "trace:billing-parity-tenant-miss",
+    "trace:billing-parity-injected-failure",
     ...storageEvents.trace,
     "trace:webhook-parity-dispatch-success",
     "trace:webhook-parity-dispatch-failure",
@@ -848,6 +1007,11 @@ emitRuntimeProofEvidence({
     "log:automation-parity-script-run",
     "log:automation-parity-flow-run",
     "log:automation-parity-missing-run",
+    "log:billing-parity-readiness",
+    "log:billing-parity-account-create",
+    "log:billing-parity-account-read",
+    "log:billing-parity-tenant-miss",
+    "log:billing-parity-injected-failure",
     ...storageEvents.log,
     "log:webhook-parity-dispatch-success",
     "log:webhook-parity-dispatch-failure",
