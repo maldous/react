@@ -1,0 +1,90 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "package.json#proof:approval-workflow",
+    "proof:approval-workflow",
+    "proof:support-approval",
+    "route:post-api-admin-support-session",
+    "route:post-api-admin-support-session-approval-grant",
+    "route:post-api-admin-support-session-approval-request",
+    "route:get-api-admin-support-health",
+    "route:get-api-admin-support-tickets",
+    "route:post-api-admin-support-tickets"
+  ],
+  "subjectId": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+  "capabilityId": "capability:approval-workflow,capability:support-approval",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:post-api-admin-support-session",
+    "route:post-api-admin-support-session-approval-grant",
+    "route:post-api-admin-support-session-approval-request",
+    "route:get-api-admin-support-health",
+    "route:get-api-admin-support-tickets",
+    "route:post-api-admin-support-tickets"
+  ],
+  "workflowIds": ["package.json#proof:approval-workflow", "proof:approval-workflow"],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:approval-workflow",
+  "startedAt": "2026-06-23T06:45:51.080Z",
+  "endedAt": "2026-06-23T06:45:52.080Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "routeCount": 6,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphcHBy"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "routeCount": 6,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphcHBy"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "command": "npm run proof:approval-workflow",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:post-api-admin-support-session",
+      "route:post-api-admin-support-session-approval-grant",
+      "route:post-api-admin-support-session-approval-request",
+      "route:get-api-admin-support-health",
+      "route:get-api-admin-support-tickets",
+      "route:post-api-admin-support-tickets"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-support-approval-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-support-approval-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-support-approval-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.080Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/support-approval-runtime-proof.ts"],
+  "evidenceSignature": "a9d69ddaefc3956f4d6c76eeed3a45f4f50096e57c3f977c22f2240ed5152790"
+}

@@ -1,0 +1,62 @@
+{
+  "proofId": "route-proof:route:delete-api-admin-data-retention-policies",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:delete-api-admin-data-retention-policies",
+    "proof:pitr-restore-drill",
+    "proof:retention",
+    "proof:legal-hold",
+    "proof:data-residency"
+  ],
+  "subjectId": "route:delete-api-admin-data-retention-policies",
+  "capabilityId": "PITR, retention, legal hold, data residency",
+  "providerId": "not-applicable",
+  "routeIds": ["route:delete-api-admin-data-retention-policies"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for DELETE /api/admin/data/retention-policies",
+  "startedAt": "2026-06-23T06:45:51.158Z",
+  "endedAt": "2026-06-23T06:45:52.158Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8085",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:delete-api-admin-data-retention-policies",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:delete-api-admin-data-retention-policies",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:delete-api-admin-data-retention-policies",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a64656c6574652d617069"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.158Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8085", "docs/api/openapi.json"],
+  "evidenceSignature": "e4355cb11292889b311f65f2308b4fae0eb73b2c74e6390d529b44e1a2a27b4f"
+}

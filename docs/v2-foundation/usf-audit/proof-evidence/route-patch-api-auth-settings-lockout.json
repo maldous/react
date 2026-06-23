@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:patch-api-auth-settings-lockout",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:patch-api-auth-settings-lockout",
+    "authorize-resource unit tests",
+    "proof:entitlement-policy-chain"
+  ],
+  "subjectId": "route:patch-api-auth-settings-lockout",
+  "capabilityId": "ABAC / Policy Decision Point",
+  "providerId": "not-applicable",
+  "routeIds": ["route:patch-api-auth-settings-lockout"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for PATCH /api/auth/settings/lockout",
+  "startedAt": "2026-06-23T06:45:51.251Z",
+  "endedAt": "2026-06-23T06:45:52.251Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:2126",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:patch-api-auth-settings-lockout",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:patch-api-auth-settings-lockout",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:patch-api-auth-settings-lockout",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a70617463682d6170692d"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.251Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2126", "docs/api/openapi.json"],
+  "evidenceSignature": "aa3e3280f53a47feea6fb103f4e57129dc7761a35793167e356d580daa956c93"
+}

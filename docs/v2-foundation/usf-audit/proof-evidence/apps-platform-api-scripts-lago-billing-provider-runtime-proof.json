@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "package.json#proof:lago-billing-provider",
+    "proof:lago-billing-provider"
+  ],
+  "subjectId": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+  "capabilityId": "capability:lago-billing-provider",
+  "providerId": "lago-billing-provider",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "npm run proof:lago-billing-provider",
+  "startedAt": "2026-06-23T06:45:50.984Z",
+  "endedAt": "2026-06-23T06:45:51.984Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpsYWdv"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpsYWdv"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+    "command": "npm run proof:lago-billing-provider",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-lago-billing-provider-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-lago-billing-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-lago-billing-provider-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.984Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts"],
+  "evidenceSignature": "f5e2a22828cbaf886e05d57b61dc11487dbac5cb82e99409b63b42a410681519"
+}

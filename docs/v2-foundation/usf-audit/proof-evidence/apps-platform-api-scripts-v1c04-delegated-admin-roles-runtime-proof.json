@@ -1,0 +1,83 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+    "package.json#proof:delegated-admin",
+    "proof:delegated-admin",
+    "route:get-api-admin-tenants-tenantid-delegations",
+    "route:post-api-admin-tenants-tenantid-delegations",
+    "route:delete-api-admin-tenants-tenantid-delegations-delegationid"
+  ],
+  "subjectId": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+  "capabilityId": "capability:delegated-admin",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-api-admin-tenants-tenantid-delegations",
+    "route:post-api-admin-tenants-tenantid-delegations",
+    "route:delete-api-admin-tenants-tenantid-delegations-delegationid"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:delegated-admin",
+  "startedAt": "2026-06-23T06:45:51.099Z",
+  "endedAt": "2026-06-23T06:45:52.099Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpkZWxl"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpkZWxl"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+    "command": "npm run proof:delegated-admin",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-delegations",
+      "route:post-api-admin-tenants-tenantid-delegations",
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.099Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
+  "evidenceSignature": "1e51d6c614ebb295244bfc2691d47eb43949a8de30f1d665b1fa83e321525a36"
+}

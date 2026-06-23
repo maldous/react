@@ -5177,6 +5177,50 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm run v2:collect-proof-evidence",
+    "kind": "npm",
+    "purpose": "Exact package-manager invocation for collecting fresh structured runtime proof evidence JSON records.",
+    "inputs": [
+      "docs/v2-foundation/**",
+      "apps/platform-api/scripts/*runtime-proof.ts",
+      "tools/v2-readiness/src/**"
+    ],
+    "outputs": ["docs/v2-foundation/usf-audit/proof-evidence/*.json"],
+    "prerequisites": ["node", "npm"],
+    "sideEffects": ["rewrites docs/v2-foundation/usf-audit/proof-evidence/"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-collection-or-validation-failure",
+    "idempotent": true,
+    "safetyControls": ["R62 formal proof evidence assurance"],
+    "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "duplicateOf": "npm v2:collect-proof-evidence",
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm v2:collect-proof-evidence",
+    "kind": "npm",
+    "purpose": "Collect fresh structured runtime proof evidence JSON records for every required V2 proof subject before proof-strength validation.",
+    "inputs": [
+      "docs/v2-foundation/**",
+      "apps/platform-api/scripts/*runtime-proof.ts",
+      "tools/v2-readiness/src/**"
+    ],
+    "outputs": ["docs/v2-foundation/usf-audit/proof-evidence/*.json"],
+    "prerequisites": ["node", "npm"],
+    "sideEffects": ["rewrites docs/v2-foundation/usf-audit/proof-evidence/"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-collection-or-validation-failure",
+    "idempotent": true,
+    "safetyControls": ["R62 formal proof evidence assurance"],
+    "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
     "name": "npm v2:proof-strength",
     "kind": "npm",
     "purpose": "Regenerate adversarial USF proof evidence reports and run strict V2 readiness, including R62 formal proof-strength assurance.",
@@ -5880,13 +5924,13 @@
   {
     "name": "npm v2:readiness",
     "kind": "npm",
-    "purpose": "Run the read-only V2-readiness validator (semantic closure + branch-cut blockers).",
+    "purpose": "Collect fresh runtime proof evidence, then run the V2-readiness validator (semantic closure + branch-cut blockers).",
     "inputs": [],
-    "outputs": [],
+    "outputs": ["docs/v2-foundation/usf-audit/proof-evidence/*.json"],
     "prerequisites": [],
-    "sideEffects": [],
+    "sideEffects": ["refreshes emitted proof evidence for the current commit"],
     "envScope": "all",
-    "failureSemantics": "read-only / exit-nonzero on finding",
+    "failureSemantics": "evidence refresh followed by exit-nonzero on finding",
     "idempotent": true,
     "safetyControls": [],
     "testCoverage": "tools/v2-readiness/tests/*.test.mjs",

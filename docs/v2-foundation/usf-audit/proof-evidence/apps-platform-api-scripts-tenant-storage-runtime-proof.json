@@ -1,0 +1,73 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-tenant-storage-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "package.json#proof:tenant-storage",
+    "proof:tenant-storage"
+  ],
+  "subjectId": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+  "capabilityId": "capability:tenant-storage",
+  "providerId": "tenant-storage",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [
+    "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "package.json#proof:tenant-storage",
+    "proof:tenant-storage"
+  ],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:tenant-storage",
+  "startedAt": "2026-06-23T06:45:51.097Z",
+  "endedAt": "2026-06-23T06:45:52.097Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "command": "npm run proof:tenant-storage",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-tenant-storage-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-tenant-storage-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-tenant-storage-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.097Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-runtime-proof.ts"],
+  "evidenceSignature": "2b8032b86a17104ac9c3d39a7a9845e2bcd81d568fdf1b94dd4aae1a94887eca"
+}

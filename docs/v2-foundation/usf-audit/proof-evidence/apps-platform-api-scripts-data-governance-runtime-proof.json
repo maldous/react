@@ -1,0 +1,69 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+    "package.json#proof:data-governance",
+    "proof:data-governance"
+  ],
+  "subjectId": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+  "capabilityId": "capability:data-governance",
+  "providerId": "not-applicable",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:data-governance",
+  "startedAt": "2026-06-23T06:45:50.944Z",
+  "endedAt": "2026-06-23T06:45:51.944Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpkYXRh"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpkYXRh"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+    "command": "npm run proof:data-governance",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-data-governance-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-data-governance-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-data-governance-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.944Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/data-governance-runtime-proof.ts"],
+  "evidenceSignature": "1a48ac08a0e5319626ea625f7ec6d2c4debdb163c331102b194aa3ede0679a32"
+}

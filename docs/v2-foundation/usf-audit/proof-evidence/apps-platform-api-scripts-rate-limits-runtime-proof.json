@@ -1,0 +1,80 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "package.json#proof:rate-limits",
+    "proof:rate-limits",
+    "route:get-api-admin-tenants-tenantid-rate-limits",
+    "route:patch-api-admin-tenants-tenantid-rate-limits",
+    "route:get-api-org-rate-limits"
+  ],
+  "subjectId": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+  "capabilityId": "capability:rate-limits",
+  "providerId": "rate-limits",
+  "routeIds": [
+    "route:get-api-admin-tenants-tenantid-rate-limits",
+    "route:patch-api-admin-tenants-tenantid-rate-limits",
+    "route:get-api-org-rate-limits"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:rate-limits",
+  "startedAt": "2026-06-23T06:45:51.060Z",
+  "endedAt": "2026-06-23T06:45:52.060Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpyYXRl"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpyYXRl"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "command": "npm run proof:rate-limits",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-rate-limits",
+      "route:patch-api-admin-tenants-tenantid-rate-limits",
+      "route:get-api-org-rate-limits"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-rate-limits-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-rate-limits-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-rate-limits-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.060Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
+  "evidenceSignature": "b52993ca53d7367871325e846068c601346b793c6a9d0e4fbfc24473dda6c982"
+}

@@ -1,0 +1,63 @@
+{
+  "proofId": "route-proof:route:get-api-admin-notifications-readiness",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:get-api-admin-notifications-readiness",
+    "proof:notification-preferences",
+    "proof:notification-dispatch",
+    "proof:notification-email-transport",
+    "proof:notification-webhook-transport",
+    "proof:notification-transport-routes"
+  ],
+  "subjectId": "route:get-api-admin-notifications-readiness",
+  "capabilityId": "Notification delivery + preferences + channels",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-admin-notifications-readiness"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "route-subject evidence collection for GET /api/admin/notifications/readiness",
+  "startedAt": "2026-06-23T06:45:51.174Z",
+  "endedAt": "2026-06-23T06:45:52.174Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6674",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:get-api-admin-notifications-readiness",
+    "mutation": false,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:get-api-admin-notifications-readiness",
+    "mutation": false,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:get-api-admin-notifications-readiness",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [],
+  "traceIds": ["726f7574653a6765742d6170692d6164"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.174Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6674", "docs/api/openapi.json"],
+  "evidenceSignature": "3ef8e792a3984ee87c69c61e611ba93453756983de9559c54cdc0a8a3314ddcb"
+}

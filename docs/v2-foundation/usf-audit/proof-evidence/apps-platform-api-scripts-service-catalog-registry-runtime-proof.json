@@ -1,0 +1,74 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "package.json#proof:service-catalog-registry",
+    "proof:service-catalog-registry",
+    "route:get-admin-platform",
+    "route:get-api-platform-service-catalog"
+  ],
+  "subjectId": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+  "capabilityId": "capability:service-catalog-registry",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-admin-platform", "route:get-api-platform-service-catalog"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:service-catalog-registry",
+  "startedAt": "2026-06-23T06:45:51.075Z",
+  "endedAt": "2026-06-23T06:45:52.075Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "routeCount": 2,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpzZXJ2"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "routeCount": 2,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpzZXJ2"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+    "command": "npm run proof:service-catalog-registry",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-admin-platform", "route:get-api-platform-service-catalog"],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-service-catalog-registry-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-service-catalog-registry-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-service-catalog-registry-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.075Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts"],
+  "evidenceSignature": "e0eb69627bac847a7ba3d55b621da9959f7c36165c28e57803d713d585a3465f"
+}

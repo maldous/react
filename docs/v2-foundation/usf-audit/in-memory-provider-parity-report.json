@@ -1,7 +1,7 @@
 {
   "artefact": "in-memory-provider-parity-report",
-  "schemaVersion": 1,
-  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-23T04:40:54.021Z",
   "status": "PASS",
   "providers": [
     {
@@ -9,225 +9,180 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-antivirus.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "clamav-antivirus",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "unknown",
-      "prodProviderClass": "unknown",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-automation-runner",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
       "proof": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "correspondingRealProvider": "windmill-automation-provider",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "unknown",
-      "prodProviderClass": "unknown",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-backup-restore-provider",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-backup-restore-provider.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "backup-restore-scripts",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "compose-local",
-      "prodProviderClass": "compose-local",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-billing-provider",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-billing-provider.ts",
       "proof": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
       "correspondingRealProvider": "lago-billing-provider",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "sandbox-external",
-      "prodProviderClass": "live-external",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-event-bus",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-event-bus.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-event-bus",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "compose-local",
-      "prodProviderClass": "compose-local",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-identity-repository",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-identity-repository.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-identity-repository",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "compose-local",
-      "prodProviderClass": "compose-local",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-notification-transport",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-notification-transport.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "postgres-notification-repository",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "compose-local",
-      "prodProviderClass": "compose-local",
+      "correspondingRealProvider": "smtp-email-adapter",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-object-storage",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-object-storage.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "postgres-migration-storage-provider",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "compose-local",
-      "prodProviderClass": "compose-local",
+      "correspondingRealProvider": "s3-object-storage-adapter",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-observability-repository",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-observability-repository.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "browser-telemetry-provider",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "sandbox-external",
-      "prodProviderClass": "live-external",
+      "correspondingRealProvider": "postgres-observability-repository",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-rate-limit-repository",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-rate-limit-repository.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "redis-rate-limit-repository",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "sandbox-external",
-      "prodProviderClass": "live-external",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-search-repository",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-search-repository.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-search-repository",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "compose-local",
-      "prodProviderClass": "compose-local",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-secret-store",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-secret-store.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "openbao-secret-store",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "sandbox-external",
-      "prodProviderClass": "live-external",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-semantic-provider",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-semantic-provider.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "playwright-axe-adapter",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "hermetic",
-      "prodProviderClass": "hermetic",
+      "correspondingRealProvider": "not-runtime-static-provider-factory",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-semantic-providers",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-semantic-providers.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-shared-provider-substrate",
-      "realProviderClass": "none",
-      "stagingProviderClass": "unknown",
-      "prodProviderClass": "unknown",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "not-runtime-static"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-webhook-dispatcher",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-webhook-dispatcher.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "postgres-webhook-store",
-      "realProviderClass": "compose-local",
-      "stagingProviderClass": "sandbox-external",
-      "prodProviderClass": "live-external",
+      "correspondingRealProvider": "http-webhook-dispatcher",
       "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "testProofMode": "local-real-provider-proof"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     }
   ],
   "gaps": []

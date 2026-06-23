@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": ["apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts"],
+  "subjectId": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+  "capabilityId": "unknown",
+  "providerId": "in-memory-workflow-orchestrator",
+  "routeIds": [],
+  "workflowIds": ["apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts"],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "dev",
+  "providerMode": "semantic-dev",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+  "startedAt": "2026-06-23T06:45:50.980Z",
+  "endedAt": "2026-06-23T06:45:51.980Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": true,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit-apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof"
+  ],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log-apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof"
+  ],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.980Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts"],
+  "evidenceSignature": "d4576b1b8a456c7539f82d9fb7c84a138d2465c907012d9f6c4668db5df69030"
+}

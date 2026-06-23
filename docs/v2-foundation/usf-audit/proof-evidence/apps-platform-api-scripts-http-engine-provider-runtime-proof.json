@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-http-engine-provider-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+    "package.json#proof:http-engine-providers",
+    "proof:http-engine-providers"
+  ],
+  "subjectId": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+  "capabilityId": "capability:http-engine-providers",
+  "providerId": "http-engine-provider",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:http-engine-providers",
+  "startedAt": "2026-06-23T06:45:50.969Z",
+  "endedAt": "2026-06-23T06:45:51.969Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpodHRw"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpodHRw"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+    "command": "npm run proof:http-engine-providers",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-http-engine-provider-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-http-engine-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-http-engine-provider-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.969Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/http-engine-provider-runtime-proof.ts"],
+  "evidenceSignature": "628bd110017e9a196da5edef9443d826630fa3b59d4968162c2c66a6dd23b9af"
+}

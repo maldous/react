@@ -1,0 +1,59 @@
+{
+  "proofId": "route-proof:route:post-api-admin-workflows-workflowid-signal",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-workflows-workflowid-signal",
+    "proof:workflow-provider-live"
+  ],
+  "subjectId": "route:post-api-admin-workflows-workflowid-signal",
+  "capabilityId": "Workflow engine, scheduled jobs, approvals",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-workflows-workflowid-signal"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/workflows/:workflowId/signal",
+  "startedAt": "2026-06-23T06:45:51.233Z",
+  "endedAt": "2026-06-23T06:45:52.233Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8751",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-workflows-workflowid-signal",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-workflows-workflowid-signal",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-workflows-workflowid-signal",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.233Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8751", "docs/api/openapi.json"],
+  "evidenceSignature": "a400c6ab0e67825a697f162efcae7b6df0359c0b2fef13b2bd6651d35d65773b"
+}

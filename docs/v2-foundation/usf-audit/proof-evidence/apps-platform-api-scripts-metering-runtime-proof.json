@@ -1,0 +1,83 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "package.json#proof:metering",
+    "proof:metering",
+    "route:get-admin-usage",
+    "route:post-api-admin-tenants-tenantid-meter-events",
+    "route:get-api-admin-tenants-tenantid-usage",
+    "route:get-api-org-usage"
+  ],
+  "subjectId": "apps/platform-api/scripts/metering-runtime-proof.ts",
+  "capabilityId": "capability:metering",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-admin-usage",
+    "route:post-api-admin-tenants-tenantid-meter-events",
+    "route:get-api-admin-tenants-tenantid-usage",
+    "route:get-api-org-usage"
+  ],
+  "workflowIds": [],
+  "eventIds": ["route:post-api-admin-tenants-tenantid-meter-events"],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:metering",
+  "startedAt": "2026-06-23T06:45:50.988Z",
+  "endedAt": "2026-06-23T06:45:51.988Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/metering-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "routeCount": 4,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjptZXRl"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "routeCount": 4,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjptZXRl"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "command": "npm run proof:metering",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-usage",
+      "route:post-api-admin-tenants-tenantid-meter-events",
+      "route:get-api-admin-tenants-tenantid-usage",
+      "route:get-api-org-usage"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-metering-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-metering-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-metering-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.988Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"],
+  "evidenceSignature": "819ae11281e66ad46794012a9a29d894a549d58ba24f4b048c25099ffa4ebf7c"
+}

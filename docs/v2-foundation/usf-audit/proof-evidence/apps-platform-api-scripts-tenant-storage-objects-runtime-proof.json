@@ -1,0 +1,110 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "package.json#proof:tenant-storage-objects",
+    "proof:tenant-storage-objects",
+    "route:get-admin-storage",
+    "route:get-api-org-storage-objects",
+    "route:post-api-org-storage-objects",
+    "route:delete-api-org-storage-objects-objectkey",
+    "route:get-api-org-storage-objects-objectkey",
+    "route:post-api-org-storage-objects-objectkey-scan",
+    "route:post-api-org-storage-probe",
+    "route:get-api-org-storage-readiness"
+  ],
+  "subjectId": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+  "capabilityId": "capability:tenant-storage-objects",
+  "providerId": "tenant-storage-objects",
+  "routeIds": [
+    "route:get-admin-storage",
+    "route:get-api-org-storage-objects",
+    "route:post-api-org-storage-objects",
+    "route:delete-api-org-storage-objects-objectkey",
+    "route:get-api-org-storage-objects-objectkey",
+    "route:post-api-org-storage-objects-objectkey-scan",
+    "route:post-api-org-storage-probe",
+    "route:get-api-org-storage-readiness"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [
+    "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "package.json#proof:tenant-storage-objects",
+    "proof:tenant-storage-objects",
+    "route:get-admin-storage",
+    "route:get-api-org-storage-objects",
+    "route:post-api-org-storage-objects",
+    "route:delete-api-org-storage-objects-objectkey",
+    "route:get-api-org-storage-objects-objectkey",
+    "route:post-api-org-storage-objects-objectkey-scan",
+    "route:post-api-org-storage-probe",
+    "route:get-api-org-storage-readiness"
+  ],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:tenant-storage-objects",
+  "startedAt": "2026-06-23T06:45:51.096Z",
+  "endedAt": "2026-06-23T06:45:52.096Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "routeCount": 8,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "routeCount": 8,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "command": "npm run proof:tenant-storage-objects",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-storage",
+      "route:get-api-org-storage-objects",
+      "route:post-api-org-storage-objects",
+      "route:delete-api-org-storage-objects-objectkey",
+      "route:get-api-org-storage-objects-objectkey",
+      "route:post-api-org-storage-objects-objectkey-scan",
+      "route:post-api-org-storage-probe",
+      "route:get-api-org-storage-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-tenant-storage-objects-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-storage-objects-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-tenant-storage-objects-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.096Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+  "evidenceSignature": "68354975879a90e703bea855b284047e4436b32360edf6e2ca377693bfda82b5"
+}

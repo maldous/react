@@ -1,0 +1,62 @@
+{
+  "proofId": "route-proof:route:post-api-org-domains-domain-probe-routing-local",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-org-domains-domain-probe-routing-local",
+    "proof:tenant-domains",
+    "proof:tenant-domain-canonical",
+    "proof:tenant-domain-claim-lifecycle",
+    "proof:tenant-domains-routing"
+  ],
+  "subjectId": "route:post-api-org-domains-domain-probe-routing-local",
+  "capabilityId": "Custom domains, DNS ownership, TLS, canonical",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-org-domains-domain-probe-routing-local"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/org/domains/:domain/probe-routing-local",
+  "startedAt": "2026-06-23T06:45:51.284Z",
+  "endedAt": "2026-06-23T06:45:52.284Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:4413",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-org-domains-domain-probe-routing-local",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-org-domains-domain-probe-routing-local",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-org-domains-domain-probe-routing-local",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d6f"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.284Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4413", "docs/api/openapi.json"],
+  "evidenceSignature": "fd3c959fdc4fe8b406e718cd4a3e8b09ec314d4a82c0488463fd38c042a881a1"
+}

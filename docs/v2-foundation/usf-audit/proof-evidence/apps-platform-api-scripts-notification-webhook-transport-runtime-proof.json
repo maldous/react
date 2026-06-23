@@ -1,0 +1,91 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "package.json#proof:notification-webhook-transport",
+    "proof:notification-webhook-transport",
+    "route:get-admin-email",
+    "route:get-api-admin-notifications-readiness",
+    "route:post-api-admin-tenants-tenantid-notifications-test",
+    "route:get-api-me-notification-preferences",
+    "route:patch-api-me-notification-preferences"
+  ],
+  "subjectId": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+  "capabilityId": "capability:notification-webhook-transport",
+  "providerId": "notification-webhook-transport",
+  "routeIds": [
+    "route:get-admin-email",
+    "route:get-api-admin-notifications-readiness",
+    "route:post-api-admin-tenants-tenantid-notifications-test",
+    "route:get-api-me-notification-preferences",
+    "route:patch-api-me-notification-preferences"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:notification-webhook-transport",
+  "startedAt": "2026-06-23T06:45:50.997Z",
+  "endedAt": "2026-06-23T06:45:51.997Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "routeCount": 5,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpub3Rp"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "routeCount": 5,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpub3Rp"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "command": "npm run proof:notification-webhook-transport",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-notification-webhook-transport-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-notification-webhook-transport-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log-apps-platform-api-scripts-notification-webhook-transport-runtime-proof"
+  ],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.997Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts"],
+  "evidenceSignature": "34646041e3b2b692a378065667ab1367eb053af8a0e819e751169235cee49966"
+}

@@ -1,0 +1,92 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "package.json#proof:alert-notification-bridge",
+    "proof:alert-notification-bridge",
+    "route:get-api-admin-alerts",
+    "route:post-api-admin-alerts",
+    "route:post-api-admin-alerts-alertid-evaluate",
+    "route:get-api-admin-incidents",
+    "route:patch-api-admin-incidents-incidentid",
+    "route:get-api-admin-observability-signals"
+  ],
+  "subjectId": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+  "capabilityId": "capability:alert-notification-bridge",
+  "providerId": "alert-notification-bridge",
+  "routeIds": [
+    "route:get-api-admin-alerts",
+    "route:post-api-admin-alerts",
+    "route:post-api-admin-alerts-alertid-evaluate",
+    "route:get-api-admin-incidents",
+    "route:patch-api-admin-incidents-incidentid",
+    "route:get-api-admin-observability-signals"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:alert-notification-bridge",
+  "startedAt": "2026-06-23T06:45:50.891Z",
+  "endedAt": "2026-06-23T06:45:51.891Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "routeCount": 6,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphbGVy"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "routeCount": 6,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphbGVy"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "command": "npm run proof:alert-notification-bridge",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-alert-notification-bridge-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-alert-notification-bridge-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-alert-notification-bridge-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.891Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
+  "evidenceSignature": "4768462173f217110837f665ee61ed6e018d866e57310fae2f11c730aebbdd6e"
+}

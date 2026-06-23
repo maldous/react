@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:get-api-admin-workflows-workflowid",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:get-api-admin-workflows-workflowid",
+    "proof:workflow-provider-live",
+    "proof:workflow-readiness-route"
+  ],
+  "subjectId": "route:get-api-admin-workflows-workflowid",
+  "capabilityId": "Workflow engine, scheduled jobs, approvals",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-admin-workflows-workflowid"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "route-subject evidence collection for GET /api/admin/workflows/:workflowId",
+  "startedAt": "2026-06-23T06:45:51.231Z",
+  "endedAt": "2026-06-23T06:45:52.231Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8822",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:get-api-admin-workflows-workflowid",
+    "mutation": false,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:get-api-admin-workflows-workflowid",
+    "mutation": false,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:get-api-admin-workflows-workflowid",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [],
+  "traceIds": ["726f7574653a6765742d6170692d6164"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.231Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8822", "docs/api/openapi.json"],
+  "evidenceSignature": "3a433cf77d0eb1e9f48dd707d3cb52c9373299a68abe6e0fe095ad7145c542df"
+}

@@ -1032,7 +1032,11 @@ function semanticRuntimeDiffReport(ctx, inventory) {
   const semanticRoutes = semanticRouteSet(ctx);
   const runtimeRoutes = new Set(inventory.routes.map((route) => `${route.method} ${route.path}`));
   const gaps = [];
-  const semanticText = JSON.stringify(ctx.foundation || {}).toLowerCase();
+  const semanticText = JSON.stringify({
+    foundation: ctx.foundation || {},
+    commandCatalog: ctx.commandCatalog || [],
+    commandMap: ctx.commandMap || [],
+  }).toLowerCase();
   for (const route of runtimeRoutes) {
     if (!semanticRoutes.has(route))
       gaps.push(

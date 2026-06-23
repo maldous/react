@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-postgres-email-sender-store-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "postgres-email-sender-store",
+    "provider:postgres-email-sender-store"
+  ],
+  "subjectId": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+  "capabilityId": "unknown",
+  "providerId": "postgres-email-sender-store",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+  "startedAt": "2026-06-23T06:45:51.019Z",
+  "endedAt": "2026-06-23T06:45:52.019Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": ["postgres-email-sender-store"],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": ["postgres-email-sender-store"],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["postgres-email-sender-store"]
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-postgres-email-sender-store-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-email-sender-store-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-postgres-email-sender-store-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.019Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
+  "evidenceSignature": "6d3f29f615c5f3d04b31eec698313b6ca29c8a8a3af0a606a84169adba34a1d5"
+}

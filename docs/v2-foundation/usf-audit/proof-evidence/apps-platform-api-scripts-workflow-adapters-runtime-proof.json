@@ -1,0 +1,73 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-workflow-adapters-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "package.json#proof:workflow-adapters",
+    "proof:workflow-adapters"
+  ],
+  "subjectId": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+  "capabilityId": "capability:workflow-adapters",
+  "providerId": "workflow-adapters",
+  "routeIds": [],
+  "workflowIds": [
+    "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "package.json#proof:workflow-adapters",
+    "proof:workflow-adapters"
+  ],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:workflow-adapters",
+  "startedAt": "2026-06-23T06:45:51.106Z",
+  "endedAt": "2026-06-23T06:45:52.106Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp3b3Jr"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp3b3Jr"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "command": "npm run proof:workflow-adapters",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-workflow-adapters-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-workflow-adapters-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-workflow-adapters-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.106Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/workflow-adapters-runtime-proof.ts"],
+  "evidenceSignature": "e2f1a3ba530915df7c9621124c660ab6fb6d7915e2161df4a1412f962cdc0cb1"
+}

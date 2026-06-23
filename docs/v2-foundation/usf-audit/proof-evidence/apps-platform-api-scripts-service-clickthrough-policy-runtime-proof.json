@@ -1,0 +1,95 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "package.json#proof:service-clickthrough-policy",
+    "proof:service-clickthrough-policy",
+    "route:get-admin-platform",
+    "route:get-admin-readiness",
+    "route:get-api-org-platform-services-readiness",
+    "route:get-api-platform-service-catalog",
+    "route:get-healthz",
+    "route:get-readyz",
+    "route:get-version"
+  ],
+  "subjectId": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+  "capabilityId": "capability:service-clickthrough-policy",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-admin-platform",
+    "route:get-admin-readiness",
+    "route:get-api-org-platform-services-readiness",
+    "route:get-api-platform-service-catalog",
+    "route:get-healthz",
+    "route:get-readyz",
+    "route:get-version"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:service-clickthrough-policy",
+  "startedAt": "2026-06-23T06:45:51.076Z",
+  "endedAt": "2026-06-23T06:45:52.076Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "routeCount": 7,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpzZXJ2"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "routeCount": 7,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpzZXJ2"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "command": "npm run proof:service-clickthrough-policy",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-platform",
+      "route:get-admin-readiness",
+      "route:get-api-org-platform-services-readiness",
+      "route:get-api-platform-service-catalog",
+      "route:get-healthz",
+      "route:get-readyz",
+      "route:get-version"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-service-clickthrough-policy-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-service-clickthrough-policy-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-service-clickthrough-policy-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.076Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"],
+  "evidenceSignature": "1f2147e2d680c0c168d5340a71027b6adf28ce85c81ae50ea73d64a6b0766640"
+}

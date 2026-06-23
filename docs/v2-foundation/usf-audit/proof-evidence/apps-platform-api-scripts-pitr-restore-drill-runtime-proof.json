@@ -1,0 +1,95 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+    "package.json#proof:pitr-restore-drill",
+    "proof:pitr-restore-drill",
+    "route:delete-api-admin-data-legal-holds",
+    "route:get-api-admin-data-legal-holds",
+    "route:post-api-admin-data-legal-holds",
+    "route:post-api-admin-data-residency",
+    "route:delete-api-admin-data-retention-policies",
+    "route:get-api-admin-data-retention-policies",
+    "route:post-api-admin-data-retention-policies"
+  ],
+  "subjectId": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+  "capabilityId": "capability:pitr-restore-drill",
+  "providerId": "pitr-restore-drill",
+  "routeIds": [
+    "route:delete-api-admin-data-legal-holds",
+    "route:get-api-admin-data-legal-holds",
+    "route:post-api-admin-data-legal-holds",
+    "route:post-api-admin-data-residency",
+    "route:delete-api-admin-data-retention-policies",
+    "route:get-api-admin-data-retention-policies",
+    "route:post-api-admin-data-retention-policies"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:pitr-restore-drill",
+  "startedAt": "2026-06-23T06:45:51.009Z",
+  "endedAt": "2026-06-23T06:45:52.009Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+    "routeCount": 7,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpwaXRy"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+    "routeCount": 7,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpwaXRy"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+    "command": "npm run proof:pitr-restore-drill",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:delete-api-admin-data-legal-holds",
+      "route:get-api-admin-data-legal-holds",
+      "route:post-api-admin-data-legal-holds",
+      "route:post-api-admin-data-residency",
+      "route:delete-api-admin-data-retention-policies",
+      "route:get-api-admin-data-retention-policies",
+      "route:post-api-admin-data-retention-policies"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-pitr-restore-drill-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.009Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "evidenceSignature": "3034c966931b3fa91bc98698c4e766000fbb5b2142391ccbc05aba3768d0c118"
+}

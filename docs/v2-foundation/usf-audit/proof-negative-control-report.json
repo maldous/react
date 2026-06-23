@@ -1,0 +1,83 @@
+{
+  "artefact": "proof-negative-control-report",
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-23T04:40:54.023Z",
+  "status": "PASS",
+  "controls": [
+    {
+      "id": "fake-http-labelled-l4",
+      "expectedKinds": ["fake-http-labelled-l4", "proof-claim-overstated"],
+      "observedKinds": ["fake-http-labelled-l4", "proof-claim-overstated"],
+      "passed": true
+    },
+    {
+      "id": "in-memory-labelled-real-provider",
+      "expectedKinds": ["in-memory-provider-mode", "in-memory-labelled-real-provider"],
+      "observedKinds": ["in-memory-labelled-real-provider", "in-memory-provider-mode"],
+      "passed": true
+    },
+    {
+      "id": "missing-audit-evidence",
+      "expectedKinds": ["missing-l6-correlation"],
+      "observedKinds": [
+        "missing-external-sandbox-request",
+        "missing-l6-correlation",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-trace-evidence",
+      "expectedKinds": ["missing-l6-correlation"],
+      "observedKinds": [
+        "missing-external-sandbox-request",
+        "missing-l6-correlation",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-before-after-state",
+      "expectedKinds": ["missing-before-after-state", "proof-claim-overstated"],
+      "observedKinds": ["missing-before-after-state", "proof-claim-overstated"],
+      "passed": true
+    },
+    {
+      "id": "stale-evidence",
+      "expectedKinds": ["stale-evidence"],
+      "observedKinds": ["stale-evidence"],
+      "passed": true
+    },
+    {
+      "id": "overclaimed-proof-level",
+      "expectedKinds": ["proof-claim-overstated", "missing-l6-correlation"],
+      "observedKinds": [
+        "missing-external-sandbox-request",
+        "missing-l6-correlation",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "broad-route-mapping",
+      "expectedKinds": ["broad-route-mapping"],
+      "observedKinds": ["broad-route-mapping"],
+      "passed": true
+    },
+    {
+      "id": "skipped-proof-marked-pass",
+      "expectedKinds": [
+        "skipped-without-reason",
+        "skipped-proof-marked-pass",
+        "proof-claim-overstated"
+      ],
+      "observedKinds": [
+        "proof-claim-overstated",
+        "skipped-proof-marked-pass",
+        "skipped-without-reason"
+      ],
+      "passed": true
+    }
+  ],
+  "failed": []
+}

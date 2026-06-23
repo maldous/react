@@ -1,0 +1,73 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-billing-readiness-route-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+    "package.json#proof:billing-readiness-route",
+    "proof:billing-readiness-route",
+    "route:get-api-admin-billing-readiness"
+  ],
+  "subjectId": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+  "capabilityId": "capability:billing-readiness-route",
+  "providerId": "billing-readiness-route",
+  "routeIds": ["route:get-api-admin-billing-readiness"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "npm run proof:billing-readiness-route",
+  "startedAt": "2026-06-23T06:45:50.926Z",
+  "endedAt": "2026-06-23T06:45:51.926Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+    "routeCount": 1,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpiaWxs"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+    "routeCount": 1,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpiaWxs"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+    "command": "npm run proof:billing-readiness-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-billing-readiness"],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-billing-readiness-route-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-billing-readiness-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-billing-readiness-route-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.926Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts"],
+  "evidenceSignature": "64d16c272c9d4ae65f36be5da7c9f60d64ad98f1ad3b1df550b0f7a35c809546"
+}

@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:get-api-admin-events-dead-letter",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:get-api-admin-events-dead-letter",
+    "proof:event-bus",
+    "proof:event-redrive"
+  ],
+  "subjectId": "route:get-api-admin-events-dead-letter",
+  "capabilityId": "Event bus, durable queues, DLQ, redrive",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-admin-events-dead-letter"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "route-subject evidence collection for GET /api/admin/events/dead-letter",
+  "startedAt": "2026-06-23T06:45:51.163Z",
+  "endedAt": "2026-06-23T06:45:52.163Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6447",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:get-api-admin-events-dead-letter",
+    "mutation": false,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:get-api-admin-events-dead-letter",
+    "mutation": false,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:get-api-admin-events-dead-letter",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [],
+  "traceIds": ["726f7574653a6765742d6170692d6164"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.163Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6447", "docs/api/openapi.json"],
+  "evidenceSignature": "fa4b7108e7afecec60c2907cc46aaf55e423f6c158f622d27b0e2223237059d6"
+}

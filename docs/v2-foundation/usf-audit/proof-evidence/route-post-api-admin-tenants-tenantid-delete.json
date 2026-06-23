@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-admin-tenants-tenantid-delete",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-tenants-tenantid-delete",
+    "proof:tenant-lifecycle",
+    "apps/platform-api/tests/unit/tenant-lifecycle.test.ts"
+  ],
+  "subjectId": "route:post-api-admin-tenants-tenantid-delete",
+  "capabilityId": "Tenant lifecycle: provision, suspend, delete, export",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-tenants-tenantid-delete"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/tenants/:tenantId/delete",
+  "startedAt": "2026-06-23T06:45:51.214Z",
+  "endedAt": "2026-06-23T06:45:52.214Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:7876",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-tenants-tenantid-delete",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-tenants-tenantid-delete",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-tenants-tenantid-delete",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.214Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7876", "docs/api/openapi.json"],
+  "evidenceSignature": "89a3baae799e48c873493ae7329a68e35f2348007725ef56d76bf7240ba2ac4e"
+}

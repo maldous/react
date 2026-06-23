@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:get-api-org-webhooks-id-metrics",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:get-api-org-webhooks-id-metrics",
+    "proof:webhooks",
+    "proof:webhook-redrive"
+  ],
+  "subjectId": "route:get-api-org-webhooks-id-metrics",
+  "capabilityId": "Webhooks (developer-facing)",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-org-webhooks-id-metrics"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "route-subject evidence collection for GET /api/org/webhooks/:id/metrics",
+  "startedAt": "2026-06-23T06:45:51.330Z",
+  "endedAt": "2026-06-23T06:45:52.330Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:5077",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:get-api-org-webhooks-id-metrics",
+    "mutation": false,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:get-api-org-webhooks-id-metrics",
+    "mutation": false,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:get-api-org-webhooks-id-metrics",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [],
+  "traceIds": ["726f7574653a6765742d6170692d6f72"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.330Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5077", "docs/api/openapi.json"],
+  "evidenceSignature": "1164ea237fe5143e1d0aa997b3ab5ac3a2f327331fbf695764c5070588da8b4e"
+}

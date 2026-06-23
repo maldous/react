@@ -1,0 +1,70 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": ["apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts"],
+  "subjectId": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+  "capabilityId": "unknown",
+  "providerId": "http-provider-readiness-probe",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+  "startedAt": "2026-06-23T06:45:50.971Z",
+  "endedAt": "2026-06-23T06:45:51.971Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log-apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof"
+  ],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.971Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts"],
+  "evidenceSignature": "ef3a553084b0ca46628e655cf9ddd0e6913a715ef386f36324dbb6a5156747b8"
+}

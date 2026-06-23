@@ -46,6 +46,8 @@ writeJson("proof-strength-matrix.json", proofEvidence.strengthMatrix);
 writeJson("proof-claim-vs-observed-report.json", proofEvidence.claimVsObserved);
 writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity);
 writeJson("route-proof-subject-map.json", proofEvidence.routeSubjectMap);
+writeJson("weak-proof-backlog.json", proofEvidence.weakProofBacklog);
+writeJson("proof-negative-control-report.json", proofEvidence.negativeControls);
 writeJson("v2-formal-proof-readiness-report.json", proofEvidence.formalReadiness);
 
 const semanticDevProviders = [

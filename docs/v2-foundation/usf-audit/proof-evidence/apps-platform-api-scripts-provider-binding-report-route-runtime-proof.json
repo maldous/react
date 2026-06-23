@@ -1,0 +1,75 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-provider-binding-report-route-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+    "package.json#proof:provider-binding-report-route",
+    "proof:provider-binding-report-route",
+    "route:get-api-admin-provider-bindings"
+  ],
+  "subjectId": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+  "capabilityId": "capability:provider-binding-report-route",
+  "providerId": "provider-binding-report-route",
+  "routeIds": ["route:get-api-admin-provider-bindings"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "npm run proof:provider-binding-report-route",
+  "startedAt": "2026-06-23T06:45:51.049Z",
+  "endedAt": "2026-06-23T06:45:52.049Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+    "routeCount": 1,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+    "routeCount": 1,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+    "command": "npm run proof:provider-binding-report-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-provider-bindings"],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-provider-binding-report-route-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-provider-binding-report-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log-apps-platform-api-scripts-provider-binding-report-route-runtime-proof"
+  ],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.049Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts"],
+  "evidenceSignature": "d9df57d669f304cf1b1d75a9e1432a7b512dca2948ef7668e35ec58a60d622ec"
+}

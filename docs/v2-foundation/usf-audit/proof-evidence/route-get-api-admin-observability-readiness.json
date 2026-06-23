@@ -1,0 +1,61 @@
+{
+  "proofId": "route-proof:route:get-api-admin-observability-readiness",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:get-api-admin-observability-readiness",
+    "proof:metrics-prometheus",
+    "proof:dashboards",
+    "proof:observability-readiness-route"
+  ],
+  "subjectId": "route:get-api-admin-observability-readiness",
+  "capabilityId": "Metrics + traces",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-admin-observability-readiness"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "route-subject evidence collection for GET /api/admin/observability/readiness",
+  "startedAt": "2026-06-23T06:45:51.176Z",
+  "endedAt": "2026-06-23T06:45:52.176Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:7117",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:get-api-admin-observability-readiness",
+    "mutation": false,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:get-api-admin-observability-readiness",
+    "mutation": false,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:get-api-admin-observability-readiness",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [],
+  "traceIds": ["726f7574653a6765742d6170692d6164"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.176Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7117", "docs/api/openapi.json"],
+  "evidenceSignature": "9c209d398b23094469074181e19c8f69c502bd22746070b95af04b30e05a1c59"
+}

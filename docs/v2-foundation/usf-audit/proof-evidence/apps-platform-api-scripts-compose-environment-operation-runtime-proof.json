@@ -1,0 +1,70 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-compose-environment-operation-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": ["apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts"],
+  "subjectId": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+  "capabilityId": "unknown",
+  "providerId": "not-applicable",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+  "startedAt": "2026-06-23T06:45:50.937Z",
+  "endedAt": "2026-06-23T06:45:51.937Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-compose-environment-operation-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-compose-environment-operation-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log-apps-platform-api-scripts-compose-environment-operation-runtime-proof"
+  ],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.937Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts"],
+  "evidenceSignature": "bdcc8cf62572a880cf99b4e2ef07cf97dafa9c315f79fc90417dc0d0710d42be"
+}

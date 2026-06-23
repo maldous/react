@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-admin-events-eventid-redrive",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-events-eventid-redrive",
+    "proof:event-bus",
+    "proof:event-redrive"
+  ],
+  "subjectId": "route:post-api-admin-events-eventid-redrive",
+  "capabilityId": "Event bus, durable queues, DLQ, redrive",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-events-eventid-redrive"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/events/:eventId/redrive",
+  "startedAt": "2026-06-23T06:45:51.162Z",
+  "endedAt": "2026-06-23T06:45:52.162Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6470",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-events-eventid-redrive",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-events-eventid-redrive",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-events-eventid-redrive",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.162Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6470", "docs/api/openapi.json"],
+  "evidenceSignature": "c32fe07559c224414c41108929d72ac25624af2054b62af688ec3073aa47951f"
+}

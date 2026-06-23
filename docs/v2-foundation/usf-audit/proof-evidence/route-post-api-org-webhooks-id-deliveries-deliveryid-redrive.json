@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+    "proof:webhooks",
+    "proof:webhook-redrive"
+  ],
+  "subjectId": "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+  "capabilityId": "Webhooks (developer-facing)",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-org-webhooks-id-deliveries-deliveryid-redrive"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive",
+  "startedAt": "2026-06-23T06:45:51.329Z",
+  "endedAt": "2026-06-23T06:45:52.329Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:5107",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d6f"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.329Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5107", "docs/api/openapi.json"],
+  "evidenceSignature": "aae87af61b18f1cb4cb606832f766bccd1a407afddd65799b881f5054f8f161a"
+}

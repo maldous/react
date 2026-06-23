@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-full-observability-contract-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+    "package.json#proof:full-observability-contract",
+    "proof:full-observability-contract"
+  ],
+  "subjectId": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+  "capabilityId": "capability:full-observability-contract",
+  "providerId": "not-applicable",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:full-observability-contract",
+  "startedAt": "2026-06-23T06:45:50.966Z",
+  "endedAt": "2026-06-23T06:45:51.966Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpmdWxs"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpmdWxs"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+    "command": "npm run proof:full-observability-contract",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-full-observability-contract-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-full-observability-contract-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-full-observability-contract-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.966Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/full-observability-contract-runtime-proof.ts"],
+  "evidenceSignature": "b84fd202e3d4c5c22b66f53b859350e4cca77cd1de98cfe2207aebb9440416cf"
+}

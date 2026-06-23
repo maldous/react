@@ -1,0 +1,71 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "package.json#proof:auth-idps",
+    "proof:auth-idps",
+    "route:get-api-auth-settings-idps",
+    "route:post-api-auth-settings-idps"
+  ],
+  "subjectId": "apps/platform-api/scripts/idp-runtime-proof.ts",
+  "capabilityId": "capability:auth-idps",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-auth-settings-idps", "route:post-api-auth-settings-idps"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:auth-idps",
+  "startedAt": "2026-06-23T06:45:50.973Z",
+  "endedAt": "2026-06-23T06:45:51.973Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/idp-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "routeCount": 2,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphdXRo"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "routeCount": 2,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphdXRo"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/idp-runtime-proof.ts",
+    "command": "npm run proof:auth-idps",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-auth-settings-idps", "route:post-api-auth-settings-idps"],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-idp-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-idp-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-idp-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.973Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts"],
+  "evidenceSignature": "5d3f4cbe8a065f00b0f80f945da9e16e573fe94312bcf1a26c2acd96893c4cfc"
+}

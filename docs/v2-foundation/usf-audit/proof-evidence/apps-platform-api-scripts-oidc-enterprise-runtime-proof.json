@@ -1,0 +1,86 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "package.json#proof:auth-oidc-enterprise",
+    "proof:auth-oidc-enterprise",
+    "route:get-api-auth-settings-idps",
+    "route:post-api-auth-settings-idps",
+    "route:get-api-auth-settings-idps-alias-callback-url",
+    "route:post-api-auth-settings-idps-alias-test-connection",
+    "route:post-api-auth-settings-idps-oidc-discover"
+  ],
+  "subjectId": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+  "capabilityId": "capability:auth-oidc-enterprise",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-api-auth-settings-idps",
+    "route:post-api-auth-settings-idps",
+    "route:get-api-auth-settings-idps-alias-callback-url",
+    "route:post-api-auth-settings-idps-alias-test-connection",
+    "route:post-api-auth-settings-idps-oidc-discover"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:auth-oidc-enterprise",
+  "startedAt": "2026-06-23T06:45:51.006Z",
+  "endedAt": "2026-06-23T06:45:52.006Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "routeCount": 5,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphdXRo"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "routeCount": 5,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjphdXRo"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+    "command": "npm run proof:auth-oidc-enterprise",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-auth-settings-idps",
+      "route:post-api-auth-settings-idps",
+      "route:get-api-auth-settings-idps-alias-callback-url",
+      "route:post-api-auth-settings-idps-alias-test-connection",
+      "route:post-api-auth-settings-idps-oidc-discover"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-oidc-enterprise-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-oidc-enterprise-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-oidc-enterprise-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.006Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
+  "evidenceSignature": "d89bc7258b933d2b5cfd89607ff80da5f5f5c3932973cd9f5ea31e8cbf7d5a9a"
+}

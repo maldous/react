@@ -1,0 +1,83 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/search-runtime-proof.ts",
+    "package.json#proof:search",
+    "proof:search",
+    "route:get-admin-search",
+    "route:get-api-admin-search-readiness",
+    "route:post-api-admin-search-reindex",
+    "route:post-api-org-search"
+  ],
+  "subjectId": "apps/platform-api/scripts/search-runtime-proof.ts",
+  "capabilityId": "capability:search",
+  "providerId": "search",
+  "routeIds": [
+    "route:get-admin-search",
+    "route:get-api-admin-search-readiness",
+    "route:post-api-admin-search-reindex",
+    "route:post-api-org-search"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:search",
+  "startedAt": "2026-06-23T06:45:51.070Z",
+  "endedAt": "2026-06-23T06:45:52.070Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/search-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "routeCount": 4,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpzZWFy"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "routeCount": 4,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpzZWFy"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "command": "npm run proof:search",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-search",
+      "route:get-api-admin-search-readiness",
+      "route:post-api-admin-search-reindex",
+      "route:post-api-org-search"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-search-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-search-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-search-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.070Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/search-runtime-proof.ts"],
+  "evidenceSignature": "334783e82eed733d957883617628b5c4e402fc6e9c8003b4b75ac120eaf6df09"
+}

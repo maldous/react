@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-admin-provider-configs-id-lifecycle",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-provider-configs-id-lifecycle",
+    "proof:provider-config",
+    "proof:provider-readiness-contract"
+  ],
+  "subjectId": "route:post-api-admin-provider-configs-id-lifecycle",
+  "capabilityId": "Provider configuration plane",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-provider-configs-id-lifecycle"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/provider-configs/:id/lifecycle",
+  "startedAt": "2026-06-23T06:45:51.182Z",
+  "endedAt": "2026-06-23T06:45:52.182Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:7510",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-provider-configs-id-lifecycle",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-provider-configs-id-lifecycle",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-provider-configs-id-lifecycle",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.182Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7510", "docs/api/openapi.json"],
+  "evidenceSignature": "752c7415236fd63a2c815fc2314c921350b16b52c3ef05d85328b1f96206215e"
+}

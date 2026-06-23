@@ -1,0 +1,63 @@
+{
+  "proofId": "route-proof:route:post-api-admin-tenants-tenantid-notifications-test",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-tenants-tenantid-notifications-test",
+    "proof:notification-preferences",
+    "proof:notification-dispatch",
+    "proof:notification-email-transport",
+    "proof:notification-webhook-transport",
+    "proof:notification-transport-routes"
+  ],
+  "subjectId": "route:post-api-admin-tenants-tenantid-notifications-test",
+  "capabilityId": "Notification delivery + preferences + channels",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-tenants-tenantid-notifications-test"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/tenants/:tenantId/notifications/test",
+  "startedAt": "2026-06-23T06:45:51.220Z",
+  "endedAt": "2026-06-23T06:45:52.220Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6688",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-tenants-tenantid-notifications-test",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-tenants-tenantid-notifications-test",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-tenants-tenantid-notifications-test",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.220Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6688", "docs/api/openapi.json"],
+  "evidenceSignature": "e404347317d37d0f484f338bdf334714528963ef9178ed4a97dbdd39fa256f37"
+}

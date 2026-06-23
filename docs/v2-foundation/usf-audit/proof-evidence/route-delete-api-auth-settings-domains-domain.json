@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:delete-api-auth-settings-domains-domain",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:delete-api-auth-settings-domains-domain",
+    "authorize-resource unit tests",
+    "proof:entitlement-policy-chain"
+  ],
+  "subjectId": "route:delete-api-auth-settings-domains-domain",
+  "capabilityId": "ABAC / Policy Decision Point",
+  "providerId": "not-applicable",
+  "routeIds": ["route:delete-api-auth-settings-domains-domain"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for DELETE /api/auth/settings/domains/:domain",
+  "startedAt": "2026-06-23T06:45:51.238Z",
+  "endedAt": "2026-06-23T06:45:52.238Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:2953",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:delete-api-auth-settings-domains-domain",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:delete-api-auth-settings-domains-domain",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:delete-api-auth-settings-domains-domain",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a64656c6574652d617069"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.238Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2953", "docs/api/openapi.json"],
+  "evidenceSignature": "13ed15068a01aeb53ee4411a47994d5e0a0884b31b92be36f016b8d7d1fc11af"
+}

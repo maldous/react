@@ -1,0 +1,71 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/history-runtime-proof.ts",
+    "package.json#proof:history",
+    "proof:history",
+    "route:get-api-admin-tenants-tenantid-history",
+    "route:get-api-org-history"
+  ],
+  "subjectId": "apps/platform-api/scripts/history-runtime-proof.ts",
+  "capabilityId": "capability:history",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-admin-tenants-tenantid-history", "route:get-api-org-history"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:history",
+  "startedAt": "2026-06-23T06:45:50.968Z",
+  "endedAt": "2026-06-23T06:45:51.968Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/history-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "routeCount": 2,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpoaXN0"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "routeCount": 2,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpoaXN0"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "command": "npm run proof:history",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-tenants-tenantid-history", "route:get-api-org-history"],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-history-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-history-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-history-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.968Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/history-runtime-proof.ts"],
+  "evidenceSignature": "fc759f37c09459404bf6549638ea7857997d8ed527ef32e3bef20ae706d69825"
+}

@@ -1,0 +1,76 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-provider-observability-contract-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+    "package.json#proof:provider-observability-contract",
+    "proof:provider-observability-contract"
+  ],
+  "subjectId": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+  "capabilityId": "capability:provider-observability-contract",
+  "providerId": "provider-observability-contract",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:provider-observability-contract",
+  "startedAt": "2026-06-23T06:45:51.053Z",
+  "endedAt": "2026-06-23T06:45:52.053Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+    "command": "npm run proof:provider-observability-contract",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit-apps-platform-api-scripts-provider-observability-contract-runtime-proof"
+  ],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-provider-observability-contract-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log-apps-platform-api-scripts-provider-observability-contract-runtime-proof"
+  ],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.053Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"],
+  "evidenceSignature": "48b16fa3bee1a15d0024325888fa12d77ce3040c903889266f9c6555c665527d"
+}

@@ -1,0 +1,80 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "package.json#proof:quota-enforcement",
+    "proof:quota-enforcement",
+    "route:get-api-admin-tenants-tenantid-quotas",
+    "route:patch-api-admin-tenants-tenantid-quotas",
+    "route:get-api-org-quotas"
+  ],
+  "subjectId": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+  "capabilityId": "capability:quota-enforcement",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-api-admin-tenants-tenantid-quotas",
+    "route:patch-api-admin-tenants-tenantid-quotas",
+    "route:get-api-org-quotas"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:quota-enforcement",
+  "startedAt": "2026-06-23T06:45:51.057Z",
+  "endedAt": "2026-06-23T06:45:52.057Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpxdW90"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpxdW90"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "command": "npm run proof:quota-enforcement",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-quotas",
+      "route:patch-api-admin-tenants-tenantid-quotas",
+      "route:get-api-org-quotas"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-quota-enforcement-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-quota-enforcement-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-quota-enforcement-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.057Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
+  "evidenceSignature": "8875e9f88dfcb3175c6276b698fe9523cec9adc28d0116b7fc8ae59dc27cc6ed"
+}

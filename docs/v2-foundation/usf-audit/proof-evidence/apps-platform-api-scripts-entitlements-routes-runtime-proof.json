@@ -1,0 +1,92 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "package.json#proof:entitlements-routes",
+    "proof:entitlements-routes",
+    "route:get-admin-entitlements",
+    "route:get-admin-platform",
+    "route:get-api-admin-tenants-tenantid-entitlements",
+    "route:patch-api-admin-tenants-tenantid-entitlements",
+    "route:get-api-org-entitlements",
+    "route:get-api-platform-service-catalog"
+  ],
+  "subjectId": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+  "capabilityId": "capability:entitlements-routes",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-admin-entitlements",
+    "route:get-admin-platform",
+    "route:get-api-admin-tenants-tenantid-entitlements",
+    "route:patch-api-admin-tenants-tenantid-entitlements",
+    "route:get-api-org-entitlements",
+    "route:get-api-platform-service-catalog"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:entitlements-routes",
+  "startedAt": "2026-06-23T06:45:50.955Z",
+  "endedAt": "2026-06-23T06:45:51.955Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "routeCount": 6,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjplbnRp"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "routeCount": 6,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjplbnRp"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "command": "npm run proof:entitlements-routes",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-entitlements",
+      "route:get-admin-platform",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-org-entitlements",
+      "route:get-api-platform-service-catalog"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-entitlements-routes-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-entitlements-routes-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-entitlements-routes-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.955Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/entitlements-routes-runtime-proof.ts"],
+  "evidenceSignature": "22704c64191ade63bb48f2f9dae1fa7d7d52af951e632044f81a13a0b6f16420"
+}

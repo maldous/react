@@ -1,0 +1,59 @@
+{
+  "proofId": "route-proof:route:post-api-auth-settings-idps-alias-test-connection",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-auth-settings-idps-alias-test-connection",
+    "proof:auth-oidc-enterprise"
+  ],
+  "subjectId": "route:post-api-auth-settings-idps-alias-test-connection",
+  "capabilityId": "OIDC test connection + callback display",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-auth-settings-idps-alias-test-connection"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/auth/settings/idps/:alias/test-connection",
+  "startedAt": "2026-06-23T06:45:51.248Z",
+  "endedAt": "2026-06-23T06:45:52.248Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:1890",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-auth-settings-idps-alias-test-connection",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-auth-settings-idps-alias-test-connection",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-auth-settings-idps-alias-test-connection",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.248Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1890", "docs/api/openapi.json"],
+  "evidenceSignature": "902942ef34561c5322080eda72d11b6210c5af7373007e98fbd4321545245dcf"
+}

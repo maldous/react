@@ -1,0 +1,63 @@
+{
+  "proofId": "route-proof:route:patch-api-me-notification-preferences",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:patch-api-me-notification-preferences",
+    "proof:notification-preferences",
+    "proof:notification-dispatch",
+    "proof:notification-email-transport",
+    "proof:notification-webhook-transport",
+    "proof:notification-transport-routes"
+  ],
+  "subjectId": "route:patch-api-me-notification-preferences",
+  "capabilityId": "Notification delivery + preferences + channels",
+  "providerId": "not-applicable",
+  "routeIds": ["route:patch-api-me-notification-preferences"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for PATCH /api/me/notification-preferences",
+  "startedAt": "2026-06-23T06:45:51.265Z",
+  "endedAt": "2026-06-23T06:45:52.265Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6631",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:patch-api-me-notification-preferences",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:patch-api-me-notification-preferences",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:patch-api-me-notification-preferences",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a70617463682d6170692d"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.265Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6631", "docs/api/openapi.json"],
+  "evidenceSignature": "7ff63829047d535e972c94559b8e9ec1ae250033e3acecfed863d83b9e76987e"
+}

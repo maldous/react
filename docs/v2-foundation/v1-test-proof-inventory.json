@@ -11899,5 +11899,27 @@
     "destructive": false,
     "prodSafe": true,
     "expectedFailureMode": "command exits non-zero when any protected provider semantic assertion fails"
+  },
+  {
+    "id": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "path": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "type": "unit-test",
+    "sourceCommand": "npm test -- tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "stageCoverage": "test (runtime evidence-backed proof-strength assurance)",
+    "proofLevel": 2,
+    "description": "Validates emitted proof evidence level calculation, negative controls, and missing-evidence failure semantics.",
+    "kind": "test",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "none",
+    "failureEvidence": "node:test assertion failure and non-zero exit",
+    "proofLevelRationale": "Unit-level validator behaviour for formal proof evidence rules.",
+    "capabilitiesProven": ["Universal Service Foundation scope + principles"],
+    "semanticFacetsProven": ["proof", "readinessModel", "failureMode"],
+    "environment": "test",
+    "providerClass": "hermetic",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "expectedFailureMode": "command exits non-zero when proof evidence validation semantics regress"
   }
 ]

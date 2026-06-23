@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "postgres-legal-hold",
+    "provider:postgres-legal-hold"
+  ],
+  "subjectId": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+  "capabilityId": "unknown",
+  "providerId": "postgres-legal-hold",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+  "startedAt": "2026-06-23T06:45:51.026Z",
+  "endedAt": "2026-06-23T06:45:52.026Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": ["postgres-legal-hold"],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": ["postgres-legal-hold"],
+    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["postgres-legal-hold"]
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-postgres-legal-hold-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-legal-hold-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-postgres-legal-hold-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.026Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"],
+  "evidenceSignature": "1764f8ceb8f29397e6cd946770bb882c33c8c2be3d7655c583dbd87244e187bf"
+}

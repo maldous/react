@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:get-api-auth-settings-readiness",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:get-api-auth-settings-readiness",
+    "authorize-resource unit tests",
+    "proof:entitlement-policy-chain"
+  ],
+  "subjectId": "route:get-api-auth-settings-readiness",
+  "capabilityId": "ABAC / Policy Decision Point",
+  "providerId": "not-applicable",
+  "routeIds": ["route:get-api-auth-settings-readiness"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "route-subject evidence collection for GET /api/auth/settings/readiness",
+  "startedAt": "2026-06-23T06:45:51.256Z",
+  "endedAt": "2026-06-23T06:45:52.256Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:2237",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:get-api-auth-settings-readiness",
+    "mutation": false,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:get-api-auth-settings-readiness",
+    "mutation": false,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:get-api-auth-settings-readiness",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [],
+  "traceIds": ["726f7574653a6765742d6170692d6175"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.256Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2237", "docs/api/openapi.json"],
+  "evidenceSignature": "d3cb95fc3db0a03ad2df0d72fb5dee6c84452627cc23a13fd9d49a368d6d9ca1"
+}

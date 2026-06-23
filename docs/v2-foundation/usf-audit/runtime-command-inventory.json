@@ -1166,7 +1166,13 @@
   {
     "commandId": "npm-script:v2-adversarial-usf-audit",
     "name": "npm run v2:adversarial-usf-audit",
-    "command": "node tools/v2-readiness/scripts/generate-adversarial-usf-audit.mjs",
+    "command": "npm run v2:collect-proof-evidence && node tools/v2-readiness/scripts/generate-adversarial-usf-audit.mjs",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:v2-collect-proof-evidence",
+    "name": "npm run v2:collect-proof-evidence",
+    "command": "node tools/v2-readiness/scripts/collect-proof-evidence.mjs",
     "sourceFileRefs": ["package.json"]
   },
   {
@@ -1184,7 +1190,7 @@
   {
     "commandId": "npm-script:v2-readiness",
     "name": "npm run v2:readiness",
-    "command": "node tools/v2-readiness/src/index.mjs --strict",
+    "command": "npm run v2:collect-proof-evidence && node tools/v2-readiness/src/index.mjs --strict",
     "sourceFileRefs": ["package.json"]
   },
   {

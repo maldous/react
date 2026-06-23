@@ -1,0 +1,72 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-windmill-automation-provider-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "package.json#proof:windmill-automation-provider",
+    "proof:windmill-automation-provider"
+  ],
+  "subjectId": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+  "capabilityId": "capability:windmill-automation-provider",
+  "providerId": "windmill-automation-provider",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L2",
+  "commandExecuted": "npm run proof:windmill-automation-provider",
+  "startedAt": "2026-06-23T06:45:51.105Z",
+  "endedAt": "2026-06-23T06:45:52.105Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp3aW5k"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp3aW5k"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "command": "npm run proof:windmill-automation-provider",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-windmill-automation-provider-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-windmill-automation-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-windmill-automation-provider-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.105Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts"],
+  "evidenceSignature": "7e6e04b04d3333716eedbeb9cb28e92b77321c0ccb30388f103a4fa2384ef375"
+}

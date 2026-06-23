@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-admin-scheduled-jobs-jobid-run",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-scheduled-jobs-jobid-run",
+    "proof:scheduled-jobs",
+    "proof:scheduled-job-routes"
+  ],
+  "subjectId": "route:post-api-admin-scheduled-jobs-jobid-run",
+  "capabilityId": "Scheduled jobs (built-in, on the event substrate)",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-scheduled-jobs-jobid-run"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/scheduled-jobs/:jobId/run",
+  "startedAt": "2026-06-23T06:45:51.187Z",
+  "endedAt": "2026-06-23T06:45:52.187Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:7224",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.187Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7224", "docs/api/openapi.json"],
+  "evidenceSignature": "97d45b401d94c6dd67dd0b0f0e9e1b6151f53168c5d749b7cbc513f524a96d26"
+}

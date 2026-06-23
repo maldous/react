@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-admin-support-session-approval-grant",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-support-session-approval-grant",
+    "support-mode unit tests",
+    "proof:support-approval"
+  ],
+  "subjectId": "route:post-api-admin-support-session-approval-grant",
+  "capabilityId": "Support-mode / break-glass access",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-support-session-approval-grant"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/support-session/approval-grant",
+  "startedAt": "2026-06-23T06:45:51.198Z",
+  "endedAt": "2026-06-23T06:45:52.198Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:2717",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-support-session-approval-grant",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-support-session-approval-grant",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-support-session-approval-grant",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.198Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2717", "docs/api/openapi.json"],
+  "evidenceSignature": "3bc708cd11dda419b7febff07968ba588a62a5ba59203f10f113e826336b1e72"
+}

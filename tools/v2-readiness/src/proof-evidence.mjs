@@ -1,3 +1,5 @@
+import crypto from "node:crypto";
+import fs from "node:fs";
 import path from "node:path";
 import { stableId } from "./formal-assurance.mjs";
 
@@ -11,53 +13,57 @@ export const PROOF_LEVELS = [
   { level: 6, id: "L6", name: "end-to-end journey" },
 ];
 
+export const PROOF_EVIDENCE_DIR = "docs/v2-foundation/usf-audit/proof-evidence";
+
 export const PROOF_EVIDENCE_REQUIRED_FIELDS = [
   "proofId",
   "subjectType",
+  "subjectIds",
   "subjectId",
   "capabilityId",
   "providerId",
+  "routeIds",
+  "workflowIds",
+  "eventIds",
+  "storageIds",
   "environmentMode",
   "providerMode",
   "proofLevelClaimed",
-  "proofLevelObserved",
+  "commandExecuted",
+  "startedAt",
+  "endedAt",
+  "exitStatus",
+  "commit",
   "realImplementationPathExecuted",
   "mockProviderUsed",
+  "fakeProviderUsed",
   "inMemoryProviderUsed",
   "realLocalProviderUsed",
   "externalSandboxProviderUsed",
-  "stateBeforeCaptured",
-  "stateAfterCaptured",
+  "externalSandboxRequestIds",
+  "beforeState",
+  "afterState",
+  "assertedStateDiff",
+  "failurePathExercised",
   "sideEffectsAsserted",
-  "failureModeAsserted",
   "tenantBoundaryAsserted",
   "securityBoundaryAsserted",
-  "auditObserved",
-  "traceObserved",
-  "metricObserved",
-  "logObserved",
-  "cleanupVerified",
+  "auditEventIds",
+  "traceIds",
+  "metricSamples",
+  "logCorrelationIds",
+  "cleanupResult",
   "deterministicReplaySupported",
+  "skipped",
+  "skipReason",
   "generatedAt",
   "sourceFileRefs",
+  "evidenceSignature",
 ];
 
-const GENERATED_AT = "1970-01-01T00:00:00.000Z";
-const FAKE_HTTP_RE = /\b(local HTTP|loopback|stub|fake|mocked?|fixture HTTP)\b/i;
-const REAL_LOCAL_RE =
-  /\b(compose|postgres|redis|minio|mailpit|clamav|openbao|loki|tempo|prometheus|clickhouse|local real)\b/i;
-const EXTERNAL_SANDBOX_RE =
-  /\b(external sandbox|sandbox provider|provider request id|providerRequestId|requestId)\b/i;
-const E2E_RE = /\b(e2e|end-to-end|playwright|journey|browser)\b/i;
-const STATE_RE =
-  /\b(stateModel|state transition|transition|lifecycle|before\/after|readback|side effect)\b/i;
-const SECURITY_RE =
-  /\b(securityBoundary|permission|tenantIsolation|fail.?closed|auth|rbac|abac|pdp)\b/i;
-const OBSERVABILITY_RE = /\b(auditTraceMetric|observability|trace|metric|log|span)\b/i;
-
 export function proofLevelId(value) {
-  const n = Number(value);
-  return Number.isInteger(n) && n >= 0 && n <= 6 ? `L${n}` : "L0";
+  const n = proofLevelNumber(value);
+  return `L${n}`;
 }
 
 export function proofLevelNumber(value) {
@@ -68,10 +74,11 @@ export function proofLevelNumber(value) {
 
 export function proofEvidenceSchema() {
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     title: "USF runtime proof evidence",
     required: PROOF_EVIDENCE_REQUIRED_FIELDS,
     proofLevels: PROOF_LEVELS,
+    evidenceDirectory: PROOF_EVIDENCE_DIR,
     fields: Object.fromEntries(
       PROOF_EVIDENCE_REQUIRED_FIELDS.map((field) => [
         field,
@@ -84,335 +91,501 @@ export function proofEvidenceSchema() {
   };
 }
 
+export function evidenceSignature(record) {
+  const clone = { ...record };
+  delete clone.evidenceSignature;
+  delete clone.evidenceFile;
+  delete clone.proofLevelObserved;
+  if (Array.isArray(clone.subjectIds)) clone.subjectIds = [...clone.subjectIds].sort();
+  return crypto.createHash("sha256").update(canonicalJson(clone)).digest("hex");
+}
+
+export function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
 export function buildProofEvidenceAssurance(ctx, audit) {
+  const requiredProofs = requiredRuntimeProofs(ctx, audit);
   const routeSubjectMap = buildRouteProofSubjectMap(audit);
-  const evidence = buildEvidenceIndex(ctx, audit, routeSubjectMap);
+  const evidence = buildEvidenceIndex(ctx, requiredProofs, routeSubjectMap);
   const strengthMatrix = buildStrengthMatrix(evidence.records);
   const claimVsObserved = buildClaimVsObservedReport(evidence.records);
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
+  const weakProofBacklog = buildWeakProofBacklog(requiredProofs, evidence, claimVsObserved);
+  const negativeControls = buildNegativeControlReport(ctx);
   const formalReadiness = buildFormalProofReadinessReport({
     evidence,
     strengthMatrix,
     claimVsObserved,
     inMemoryParity,
     routeSubjectMap,
+    weakProofBacklog,
+    negativeControls,
   });
 
   return {
     schema: proofEvidenceSchema(),
+    requiredProofs,
     evidenceIndex: evidence,
     strengthMatrix,
     claimVsObserved,
     inMemoryParity,
     routeSubjectMap,
+    weakProofBacklog,
+    negativeControls,
     formalReadiness,
     gaps: formalReadiness.gaps,
   };
 }
 
-function buildEvidenceIndex(ctx, audit, routeSubjectMap) {
-  const inventoryRecords = (ctx.testInventory || []).map((record) => ({
-    ...record,
-    scriptPath: record.scriptPath || scriptPathForInventoryRecord(record, ctx.packageJsonScripts),
-  }));
-  const recordsBySubject = new Map();
-  for (const record of inventoryRecords) {
-    const evidence = evidenceForInventoryRecord(record, audit, routeSubjectMap);
-    recordsBySubject.set(evidence.subjectId, evidence);
-  }
+export function requiredRuntimeProofs(ctx, audit) {
+  const packageScripts = ctx.packageJsonScripts || {};
+  const fromAudit = (audit.inventory.proofs || []).map((proof) => {
+    const scriptName = proofAliasForScript(proof.file, packageScripts);
+    return {
+      ...proof,
+      proofId: proof.proofId || stableId("proof", proof.file),
+      file: proof.file,
+      subjectIds: uniq([
+        proof.file,
+        ...(proof.subjectRefs || []),
+        scriptName ? `package.json#${scriptName}` : null,
+      ]),
+      commandExecuted:
+        (scriptName && `npm run ${scriptName}`) ||
+        `node --loader "$(pwd)/apps/platform-api/loader.mjs" ${proof.file}`,
+      proofLevelClaimed: proofLevelId(proof.level),
+      routeIds: proof.routeRefs || [],
+      sourceFileRefs: proof.sourceFileRefs || [proof.file],
+    };
+  });
+  const existingFiles = new Set(fromAudit.map((proof) => proof.file));
+  const fromPackageScripts = Object.entries(packageScripts)
+    .filter(
+      ([name, command]) =>
+        name.startsWith("proof:") &&
+        /apps\/platform-api\/scripts\/[^\s"'`]+\.ts/.test(String(command))
+    )
+    .map(([name, command]) => {
+      const file = String(command).match(/apps\/platform-api\/scripts\/[^\s"'`]+\.ts/)?.[0];
+      if (!file || existingFiles.has(file)) return null;
+      return {
+        proofId: stableId("proof", file),
+        file,
+        subjectIds: uniq([file, `package.json#${name}`, name]),
+        commandExecuted: `npm run ${name}`,
+        proofLevelClaimed: file.includes("in-memory-vs-real-parity-proof") ? "L3" : "L2",
+        routeIds: [],
+        sourceFileRefs: [file],
+      };
+    })
+    .filter(Boolean);
+  return [...fromAudit, ...fromPackageScripts].sort((a, b) => a.file.localeCompare(b.file));
+}
 
-  for (const proof of audit.inventory.proofs || []) {
-    if (!recordsBySubject.has(proof.file)) {
-      const alias = proofAliasForScript(proof.file, ctx.packageJsonScripts);
-      const evidence = evidenceForInventoryRecord(
-        {
-          id: alias ? `package.json#${alias}` : proof.file,
-          path: alias ? `package.json#${alias}` : proof.file,
-          kind: "runtime-proof",
-          proofLevel: Math.min(proof.level, 1),
-          proofLevelRationale: proof.classification,
-          capabilitiesProven: [],
-          semanticFacetsProven: [],
-          environment: "test",
-          providerClass: "hermetic",
-          liveSubstrateUsed: false,
-          destructive: false,
-          prodSafe: true,
-          sourceCommand:
-            (alias && ctx.packageJsonScripts?.[alias]) ||
-            `node --loader "$(pwd)/apps/platform-api/loader.mjs" ${proof.file}`,
-          scriptPath: proof.file,
-          expectedFailureMode: "command exits non-zero when runtime proof assertion fails",
-        },
-        audit,
-        routeSubjectMap
-      );
-      recordsBySubject.set(evidence.subjectId, evidence);
+function buildEvidenceIndex(ctx, requiredProofs, routeSubjectMap) {
+  const records = readEvidenceRecords(ctx.repoRoot).map((record) =>
+    normalizeEvidenceRecord(record)
+  );
+  const bySubject = new Map();
+  for (const record of records) {
+    for (const subject of record.subjectIds || []) {
+      if (!bySubject.has(subject)) bySubject.set(subject, []);
+      bySubject.get(subject).push(record);
     }
   }
 
-  const records = [...recordsBySubject.values()].sort((a, b) =>
-    a.subjectId.localeCompare(b.subjectId)
-  );
-  const missingFields = records.flatMap((record) =>
-    PROOF_EVIDENCE_REQUIRED_FIELDS.filter((field) => !(field in record)).map((field) => ({
-      proofId: record.proofId,
-      subjectId: record.subjectId,
-      field,
-    }))
-  );
+  const required = requiredProofs.map((proof) => {
+    const matches = proof.subjectIds.flatMap((subject) => bySubject.get(subject) || []);
+    const record = matches.find((candidate) => candidate.subjectIds.includes(proof.file)) || null;
+    return {
+      proofId: proof.proofId,
+      file: proof.file,
+      commandExecuted: proof.commandExecuted,
+      proofLevelClaimed: proof.proofLevelClaimed,
+      evidenceFound: Boolean(record),
+      evidenceProofId: record?.proofId || null,
+      observedLevel: record?.proofLevelObserved || "L0",
+    };
+  });
+
+  const validation = validateEvidenceSet({
+    ctx,
+    records,
+    requiredProofs,
+    routeSubjectMap,
+    allowNegativeControls: false,
+  });
+
   return {
     artefact: "proof-evidence-index",
-    schemaVersion: 1,
-    generatedAt: GENERATED_AT,
-    status: missingFields.length === 0 ? "PASS" : "FAIL",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    evidenceDirectory: PROOF_EVIDENCE_DIR,
+    currentCommit: ctx.headCommit,
+    status: validation.gaps.length === 0 ? "PASS" : "FAIL",
     schema: proofEvidenceSchema(),
+    requiredProofCount: requiredProofs.length,
     recordCount: records.length,
-    missingFields,
-    records,
+    required,
+    gaps: validation.gaps,
+    missingEvidence: validation.gaps.filter((gap) => gap.kind === "missing-evidence"),
+    staleEvidence: validation.gaps.filter((gap) => gap.kind === "stale-evidence"),
+    records: records.sort((a, b) => a.subjectId.localeCompare(b.subjectId)),
   };
 }
 
-function scriptPathForInventoryRecord(record, packageJsonScripts = {}) {
-  const p = record.path || record.id || "";
-  if (!p.startsWith("package.json#")) return null;
-  const scriptName = p.slice("package.json#".length);
-  const cmd = packageJsonScripts[scriptName] || "";
-  const match = cmd.match(/apps\/platform-api\/scripts\/[^\s"'`]+\.ts/);
-  return match ? match[0] : null;
-}
-
-function proofAliasForScript(scriptPath, packageJsonScripts = {}) {
-  return (
-    Object.entries(packageJsonScripts).find(
-      ([name, command]) => name.startsWith("proof:") && String(command).includes(scriptPath)
-    )?.[0] || null
-  );
-}
-
-function evidenceForInventoryRecord(record, audit, routeSubjectMap) {
-  const subjectId = record.scriptPath || record.path || record.id || "unknown-proof";
-  const text = [
-    record.kind,
-    record.type,
-    record.fixtureEnvDependency,
-    record.stageCoverage,
-    record.failureEvidence,
-    record.proofLevelRationale,
-    ...(record.semanticFacetsProven || []),
-  ].join(" ");
-  const fakeHttp =
-    FAKE_HTTP_RE.test(text) &&
-    !/\b(live-runtime|live Postgres|local Compose Postgres)\b/i.test(text);
-  const inMemory = record.providerClass === "in-memory" || /in-memory|semantic-dev/i.test(text);
-  const realLocal =
-    !fakeHttp &&
-    (record.providerClass === "compose-local" ||
-      (record.liveSubstrateUsed === true && REAL_LOCAL_RE.test(text)));
-  const externalSandbox =
-    !fakeHttp && record.providerClass === "sandbox-external" && EXTERNAL_SANDBOX_RE.test(text);
-  const subjectRoutes = (routeSubjectMap.routes || []).filter((route) =>
-    route.proofRefs.some(
-      (ref) =>
-        ref === subjectId ||
-        ref === record.scriptPath ||
-        ref === record.id ||
-        (String(ref).startsWith("proof:") && String(record.path || record.id || "").includes(ref))
+export function readEvidenceRecords(repoRoot) {
+  const dir = path.join(repoRoot || process.cwd(), PROOF_EVIDENCE_DIR);
+  if (!fs.existsSync(dir)) return [];
+  return walkFiles(dir)
+    .filter(
+      (file) => file.endsWith(".json") && !file.includes(`${path.sep}negative-controls${path.sep}`)
     )
-  );
-  const facts = {
-    fakeHttp,
-    inMemory,
-    realLocal,
-    externalSandbox,
-    e2e: E2E_RE.test(text),
-    contract:
-      /contract|schema|validation|providerContract|interface|shape/i.test(text) ||
-      (record.capabilitiesProven || []).length > 0,
-    behaviour:
-      (record.behaviourProtected === true ||
-        /assertion|proof script|node:test|non-zero/i.test(text)) &&
-      (Boolean(record.sourceCommand) || /gate|scanner|validator|config|policy/i.test(subjectId)) &&
-      (Boolean(record.failureEvidence) || Boolean(record.expectedFailureMode)),
-    state:
-      STATE_RE.test(text) ||
-      /validates|exercises|proves|readback|persisted|transition|lifecycle|delivery|dispatch/i.test(
-        text
-      ) ||
-      (record.semanticFacetsProven || []).includes("stateModel") ||
-      (record.semanticFacetsProven || []).includes("readinessModel") ||
-      /mutation|route|workflow|storage|event|billing|quota/i.test(subjectId),
-    sideEffects:
-      /side effect|readback|persist|write|delivery|dispatch|publish|consume|state|lifecycle|mutation/i.test(
-        text
-      ) ||
-      /routes?|workflow|storage|event|billing|quota|notification|webhook|gate|scanner|validator|policy/i.test(
-        subjectId
-      ),
-    failure:
-      Boolean(record.expectedFailureMode) ||
-      /failure|error|reject|degraded|unavailable/i.test(text),
-    tenant:
-      /tenant|organisation|RLS|isolation|tenantIsolation/i.test(text) ||
-      /tenant|org|identity|storage|search|secret|event|webhook|notification/i.test(subjectId),
-    security: SECURITY_RE.test(text),
-    observability:
-      OBSERVABILITY_RE.test(text) ||
-      /\b(observability|metrics?|traces?|logs?|spans?)\b/i.test(subjectId),
-    cleanup:
-      /cleanup|delete|reset|clear|non-destructive|prodSafe/i.test(text) ||
-      record.destructive === false,
-    deterministic:
-      /deterministic|seed|fixture|self-contained|hermetic|in-memory/i.test(text) ||
-      record.providerClass === "hermetic" ||
-      record.providerClass === "in-memory",
-  };
-  const observed = observedLevel(facts);
+    .map((file) => {
+      const parsed = JSON.parse(fs.readFileSync(file, "utf8"));
+      return { ...parsed, evidenceFile: path.relative(repoRoot || process.cwd(), file) };
+    });
+}
+
+function walkFiles(dir) {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...walkFiles(full));
+    if (entry.isFile()) out.push(full);
+  }
+  return out;
+}
+
+export function normalizeEvidenceRecord(record) {
+  const subjectIds = uniq(record.subjectIds || [record.subjectId].filter(Boolean));
   return {
-    proofId: stableId("proof-evidence", subjectId),
-    subjectType: subjectType(record),
-    subjectId,
-    capabilityId: capabilityId(record),
-    providerId: providerId(record),
-    environmentMode: record.environment || "unknown",
-    providerMode: providerMode(record, fakeHttp),
-    proofLevelClaimed: proofLevelId(record.proofLevel),
-    proofLevelObserved: proofLevelId(observed),
-    realImplementationPathExecuted: record.scriptPath || runtimePath(subjectId),
-    mockProviderUsed: fakeHttp || /mock/i.test(text),
-    inMemoryProviderUsed: inMemory,
-    realLocalProviderUsed: realLocal,
-    externalSandboxProviderUsed: externalSandbox,
-    stateBeforeCaptured: facts.state && facts.sideEffects,
-    stateAfterCaptured: facts.state && facts.sideEffects,
-    sideEffectsAsserted: facts.sideEffects,
-    failureModeAsserted: facts.failure,
-    tenantBoundaryAsserted: facts.tenant,
-    securityBoundaryAsserted: facts.security || facts.tenant,
-    auditObserved: facts.observability || /audit/i.test(text),
-    traceObserved: facts.observability || /trace|span/i.test(text),
-    metricObserved: facts.observability || /metric/i.test(text),
-    logObserved: facts.observability || /log/i.test(text),
-    cleanupVerified: facts.cleanup,
-    deterministicReplaySupported: facts.deterministic,
-    generatedAt: GENERATED_AT,
-    sourceFileRefs: sourceFileRefs(record, subjectId),
-    routeSubjectRefs: subjectRoutes.map((route) => route.routeId),
-    providerEvidenceClass: fakeHttp
-      ? "fake-http-adapter-proof"
-      : inMemory
-        ? "in-memory-provider-proof"
-        : realLocal
-          ? "local-real-provider-proof"
-          : externalSandbox
-            ? "external-sandbox-proof"
-            : "contract-or-unit-proof",
+    ...record,
+    subjectIds,
+    subjectId: record.subjectId || subjectIds[0] || record.proofId || "unknown",
+    routeIds: record.routeIds || [],
+    workflowIds: record.workflowIds || [],
+    eventIds: record.eventIds || [],
+    storageIds: record.storageIds || [],
+    auditEventIds: record.auditEventIds || [],
+    traceIds: record.traceIds || [],
+    metricSamples: record.metricSamples || [],
+    logCorrelationIds: record.logCorrelationIds || [],
+    externalSandboxRequestIds: record.externalSandboxRequestIds || [],
+    sourceFileRefs: record.sourceFileRefs || [],
+    proofLevelClaimed: proofLevelId(record.proofLevelClaimed),
+    proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
   };
 }
 
-function observedLevel(facts) {
-  if (facts.e2e && facts.behaviour && facts.sideEffects) return 6;
-  if (facts.externalSandbox && facts.behaviour && facts.sideEffects && facts.failure) return 5;
-  if (facts.realLocal && facts.behaviour && facts.failure) return 4;
-  if (facts.state && facts.sideEffects && facts.failure && facts.behaviour) return 3;
-  if (facts.behaviour) return 2;
-  if (facts.contract) return 1;
-  return 0;
-}
-
-function subjectType(record) {
-  if (record.kind === "runtime-proof" || /runtime-proof\.ts$/.test(record.path || "")) {
-    return "runtime-proof";
+export function validateEvidenceSet({
+  ctx,
+  records,
+  requiredProofs = [],
+  routeSubjectMap = { routes: [] },
+  allowNegativeControls = false,
+}) {
+  const gaps = [];
+  const bySubject = new Map();
+  for (const record of records) {
+    for (const subject of record.subjectIds || []) {
+      if (!bySubject.has(subject)) bySubject.set(subject, []);
+      bySubject.get(subject).push(record);
+    }
+    validateRecordShape(record, gaps, ctx, allowNegativeControls);
   }
-  if (/playwright|e2e/i.test(record.kind || "")) return "journey-proof";
-  if (/provider|adapter/i.test(record.path || record.id || "")) return "provider-proof";
-  if (/route/i.test(record.path || record.id || "")) return "route-proof";
-  return record.kind || record.type || "proof";
+
+  for (const proof of requiredProofs) {
+    const matches = proof.subjectIds.flatMap((subject) => bySubject.get(subject) || []);
+    if (matches.length === 0) {
+      gaps.push({
+        kind: "missing-evidence",
+        subject: proof.file,
+        message: "required runtime proof has no emitted evidence JSON",
+      });
+      continue;
+    }
+    if (!matches.some((record) => record.commandExecuted === proof.commandExecuted)) {
+      gaps.push({
+        kind: "command-mismatch",
+        subject: proof.file,
+        message: "evidence exact command does not match the inventoried proof command",
+      });
+    }
+  }
+
+  for (const route of routeSubjectMap.routes || []) {
+    if (route.proofRefs.length === 0) continue;
+    const matching = route.proofRefs.flatMap((ref) => bySubject.get(ref) || []);
+    if (matching.length === 0) {
+      gaps.push({
+        kind: "route-proof-evidence-missing",
+        subject: `${route.method} ${route.path}`,
+        message: "route proof has explicit subject refs but no emitted evidence record",
+      });
+    }
+    if (route.proofRefs.some((ref) => ref === "/" || ref.endsWith("/*"))) {
+      gaps.push({
+        kind: "broad-route-mapping",
+        subject: `${route.method} ${route.path}`,
+        message: "broad route proof mapping is forbidden",
+      });
+    }
+    if (route.mutationBeforeAfterRequired) {
+      const hasState = matching.some(
+        (record) => isMeaningfulObject(record.beforeState) && isMeaningfulObject(record.afterState)
+      );
+      if (!hasState) {
+        gaps.push({
+          kind: "mutation-state-evidence",
+          subject: `${route.method} ${route.path}`,
+          message: "mutation proof lacks emitted before/after state evidence",
+        });
+      }
+    }
+  }
+
+  return { gaps };
 }
 
-function capabilityId(record) {
-  const caps = record.capabilitiesProven || [];
-  if (caps.length === 0) return "unknown";
-  return caps.map((cap) => stableId("capability", cap)).join(",");
-}
-
-function providerId(record) {
-  const p = record.path || record.scriptPath || record.id || "";
-  const base = path.basename(String(p).replace(/^package\.json#proof:/, ""), ".ts");
+function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
+  for (const field of PROOF_EVIDENCE_REQUIRED_FIELDS) {
+    if (!(field in record)) {
+      gaps.push({
+        kind: "proof-evidence-schema",
+        subject: record.subjectId || record.proofId || "<unknown>",
+        message: `proof evidence missing ${field}`,
+      });
+    }
+  }
+  if (record.evidenceSignature && record.evidenceSignature !== evidenceSignature(record)) {
+    gaps.push({
+      kind: "evidence-signature-invalid",
+      subject: record.subjectId,
+      message: "proof evidence signature does not match the structured payload",
+    });
+  }
+  if (ctx?.headCommit && record.commit !== ctx.headCommit) {
+    gaps.push({
+      kind: "stale-evidence",
+      subject: record.subjectId,
+      message: `evidence commit ${record.commit || "<missing>"} does not match current commit ${ctx.headCommit}`,
+    });
+  }
+  if (record.skipped === true && !record.skipReason) {
+    gaps.push({
+      kind: "skipped-without-reason",
+      subject: record.subjectId,
+      message: "skipped proof must carry an explicit skip reason",
+    });
+  }
+  if (record.skipped === true && proofLevelNumber(record.proofLevelClaimed) > 0) {
+    gaps.push({
+      kind: "skipped-proof-marked-pass",
+      subject: record.subjectId,
+      message: "skipped proof cannot claim a passing proof level",
+    });
+  }
+  if (record.exitStatus !== 0 && record.skipped !== true) {
+    gaps.push({
+      kind: "proof-command-failed",
+      subject: record.subjectId,
+      message: `proof command exited ${record.exitStatus}`,
+    });
+  }
+  if (proofLevelNumber(record.proofLevelClaimed) > observedLevelFromEvidence(record)) {
+    gaps.push({
+      kind: "proof-claim-overstated",
+      subject: record.subjectId,
+      message: `claimed ${record.proofLevelClaimed} exceeds observed ${proofLevelId(observedLevelFromEvidence(record))}`,
+    });
+  }
+  if (record.inMemoryProviderUsed && record.providerMode !== "semantic-dev") {
+    gaps.push({
+      kind: "in-memory-provider-mode",
+      subject: record.subjectId,
+      message: "in-memory provider evidence must be classified as semantic-dev only",
+    });
+  }
+  if (record.realLocalProviderUsed && record.inMemoryProviderUsed) {
+    gaps.push({
+      kind: "in-memory-labelled-real-provider",
+      subject: record.subjectId,
+      message: "in-memory proof cannot also claim real-local provider evidence",
+    });
+  }
+  if (record.fakeProviderUsed && proofLevelNumber(record.proofLevelClaimed) >= 4) {
+    gaps.push({
+      kind: "fake-http-labelled-l4",
+      subject: record.subjectId,
+      message: "fake HTTP adapter proof cannot claim local-real-provider strength",
+    });
+  }
+  if (proofLevelNumber(record.proofLevelClaimed) >= 3) {
+    if (!isMeaningfulObject(record.beforeState) || !isMeaningfulObject(record.afterState)) {
+      gaps.push({
+        kind: "missing-before-after-state",
+        subject: record.subjectId,
+        message: "L3+ proof requires before and after state snapshots",
+      });
+    }
+    if (!isMeaningfulObject(record.assertedStateDiff) || record.sideEffectsAsserted !== true) {
+      gaps.push({
+        kind: "missing-side-effect-evidence",
+        subject: record.subjectId,
+        message: "L3+ proof requires asserted state diff and side-effect assertion",
+      });
+    }
+    if (record.failurePathExercised !== true) {
+      gaps.push({
+        kind: "missing-failure-path",
+        subject: record.subjectId,
+        message: "L3+ proof requires an exercised failure path",
+      });
+    }
+  }
+  if (proofLevelNumber(record.proofLevelClaimed) >= 4 && record.realLocalProviderUsed !== true) {
+    gaps.push({
+      kind: "missing-real-local-substrate",
+      subject: record.subjectId,
+      message: "L4 proof requires real local substrate evidence",
+    });
+  }
   if (
-    /provider|adapter|repository|store|bus|storage|workflow|billing|notification|webhook|search|secret|rate-limit|antivirus/i.test(
-      base
-    )
+    proofLevelNumber(record.proofLevelClaimed) >= 5 &&
+    (!record.externalSandboxProviderUsed || record.externalSandboxRequestIds.length === 0)
   ) {
-    return stableId("provider", base.replace(/-runtime-proof$/, ""));
+    gaps.push({
+      kind: "missing-external-sandbox-request",
+      subject: record.subjectId,
+      message: "L5 proof requires external sandbox request/response ids",
+    });
   }
-  return "not-applicable";
+  if (proofLevelNumber(record.proofLevelClaimed) >= 6) {
+    const missing =
+      record.routeIds.length === 0 ||
+      record.auditEventIds.length === 0 ||
+      record.traceIds.length === 0 ||
+      record.metricSamples.length === 0 ||
+      record.logCorrelationIds.length === 0;
+    if (missing) {
+      gaps.push({
+        kind: "missing-l6-correlation",
+        subject: record.subjectId,
+        message: "L6 proof requires correlated UI/API/state/audit/trace/metric/log evidence",
+      });
+    }
+  }
+  if (observabilitySubject(record) && !observabilityComplete(record)) {
+    gaps.push({
+      kind: "observability-proof-signal",
+      subject: record.subjectId,
+      message: "observability proof lacks captured trace/log/metric evidence",
+    });
+  }
+  if (
+    !allowNegativeControls &&
+    record.subjectIds.some((subject) => subject === "/" || subject.endsWith("/*"))
+  ) {
+    gaps.push({
+      kind: "broad-route-mapping",
+      subject: record.subjectId,
+      message: "proof evidence subject mapping cannot use broad route prefixes",
+    });
+  }
 }
 
-function providerMode(record, fakeHttp) {
-  if (fakeHttp) return "fake-http-adapter";
-  if (record.providerClass === "in-memory") return "semantic-dev";
-  if (record.providerClass === "compose-local") return "compose-local";
-  if (record.providerClass === "sandbox-external") return "external-sandbox";
-  if (record.providerClass === "live-external") return "live-external";
-  return record.providerClass || "hermetic";
-}
-
-function runtimePath(subjectId) {
-  return /^(apps|packages|tools|scripts|e2e)\//.test(subjectId) ? subjectId : "not-applicable";
-}
-
-function sourceFileRefs(record, subjectId) {
-  const refs = new Set(record.sourceFileRefs || []);
-  if (/^(apps|packages|tools|scripts|e2e)\//.test(subjectId)) refs.add(subjectId);
-  if (record.scriptPath) refs.add(record.scriptPath);
-  return [...refs].sort();
+export function observedLevelFromEvidence(record) {
+  if (record.skipped === true || record.exitStatus !== 0) return 0;
+  const hasShape = Boolean(
+    record.proofId && record.commandExecuted && record.startedAt && record.endedAt
+  );
+  const hasBehaviour = hasShape && record.exitStatus === 0;
+  const hasState =
+    isMeaningfulObject(record.beforeState) &&
+    isMeaningfulObject(record.afterState) &&
+    isMeaningfulObject(record.assertedStateDiff) &&
+    record.sideEffectsAsserted === true &&
+    record.failurePathExercised === true;
+  const hasRealLocal =
+    hasState && record.realLocalProviderUsed === true && record.fakeProviderUsed !== true;
+  const hasSandbox =
+    hasState &&
+    record.externalSandboxProviderUsed === true &&
+    (record.externalSandboxRequestIds || []).length > 0;
+  const hasE2E =
+    hasState &&
+    record.fakeProviderUsed !== true &&
+    (record.routeIds || []).length > 0 &&
+    (record.auditEventIds || []).length > 0 &&
+    (record.traceIds || []).length > 0 &&
+    (record.metricSamples || []).length > 0 &&
+    (record.logCorrelationIds || []).length > 0;
+  if (hasE2E) return 6;
+  if (hasSandbox) return 5;
+  if (hasRealLocal) return 4;
+  if (hasState) return 3;
+  if (hasBehaviour) return 2;
+  if (hasShape) return 1;
+  return 0;
 }
 
 function buildStrengthMatrix(records) {
   const byObserved = Object.fromEntries(PROOF_LEVELS.map((level) => [level.id, 0]));
   const byClass = {};
-  for (const record of records) {
-    byObserved[record.proofLevelObserved] += 1;
-    byClass[record.providerEvidenceClass] = (byClass[record.providerEvidenceClass] || 0) + 1;
-  }
-  return {
-    artefact: "proof-strength-matrix",
-    schemaVersion: 1,
-    generatedAt: GENERATED_AT,
-    status: "PASS",
-    levels: PROOF_LEVELS,
-    byObservedLevel: byObserved,
-    byProviderEvidenceClass: byClass,
-    records: records.map((record) => ({
+  const rows = records.map((record) => {
+    const observed = proofLevelId(observedLevelFromEvidence(record));
+    const evidenceClass = providerEvidenceClass(record);
+    byObserved[observed] += 1;
+    byClass[evidenceClass] = (byClass[evidenceClass] || 0) + 1;
+    return {
       proofId: record.proofId,
       subjectId: record.subjectId,
       subjectType: record.subjectType,
       proofLevelClaimed: record.proofLevelClaimed,
-      proofLevelObserved: record.proofLevelObserved,
-      providerEvidenceClass: record.providerEvidenceClass,
-    })),
+      proofLevelObserved: observed,
+      providerEvidenceClass: evidenceClass,
+      evidenceFile: record.evidenceFile,
+    };
+  });
+  return {
+    artefact: "proof-strength-matrix",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: "PASS",
+    levels: PROOF_LEVELS,
+    byObservedLevel: byObserved,
+    byProviderEvidenceClass: byClass,
+    records: rows,
   };
 }
 
 function buildClaimVsObservedReport(records) {
   const mismatches = records
     .filter(
-      (record) =>
-        proofLevelNumber(record.proofLevelClaimed) > proofLevelNumber(record.proofLevelObserved)
+      (record) => proofLevelNumber(record.proofLevelClaimed) > observedLevelFromEvidence(record)
     )
     .map((record) => ({
       proofId: record.proofId,
       subjectId: record.subjectId,
       proofLevelClaimed: record.proofLevelClaimed,
-      proofLevelObserved: record.proofLevelObserved,
-      providerEvidenceClass: record.providerEvidenceClass,
+      proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
+      providerEvidenceClass: providerEvidenceClass(record),
+      evidenceFile: record.evidenceFile,
       sourceFileRefs: record.sourceFileRefs,
     }));
   return {
     artefact: "proof-claim-vs-observed-report",
-    schemaVersion: 1,
-    generatedAt: GENERATED_AT,
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
     status: mismatches.length === 0 ? "PASS" : "FAIL",
     mismatchCount: mismatches.length,
     mismatches,
@@ -425,72 +598,37 @@ function buildInMemoryProviderParityReport(ctx, records) {
   const inMemoryAliases = aliases.filter((alias) =>
     String(alias.provider).startsWith("in-memory-")
   );
-  const realProviderByCapability = new Map();
-  for (const row of ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || []) {
-    if (row.dev?.providerClass === "in-memory") {
-      realProviderByCapability.set(row.dev.provider, {
-        testProvider: row.test?.provider || "unknown",
-        testProviderClass: row.test?.providerClass || "unknown",
-        stagingProviderClass: row.staging?.providerClass || "unknown",
-        prodProviderClass: row.prod?.providerClass || "unknown",
-      });
-    }
-  }
-  const explicitRealProvider = {
-    "in-memory-antivirus": "clamav-antivirus",
-    "in-memory-automation-runner": "windmill-automation-provider",
-    "in-memory-backup-restore-provider": "backup-restore-scripts",
-    "in-memory-billing-provider": "lago-billing-provider",
-    "in-memory-event-bus": "postgres-event-bus",
-    "in-memory-identity-repository": "postgres-identity-repository",
-    "in-memory-notification-transport": "smtp-email-adapter",
-    "in-memory-object-storage": "s3-object-storage-adapter",
-    "in-memory-observability-repository": "postgres-observability-repository",
-    "in-memory-rate-limit-repository": "redis-rate-limit-repository",
-    "in-memory-search-repository": "postgres-search-repository",
-    "in-memory-secret-store": "openbao-secret-store",
-    "in-memory-semantic-provider": "not-runtime-static-provider-factory",
-    "in-memory-semantic-providers": "not-runtime-shared-provider-substrate",
-    "in-memory-webhook-dispatcher": "http-webhook-dispatcher",
-  };
+  const parityRecords = records.filter((record) =>
+    record.subjectIds.some((subject) => subject.includes("in-memory-vs-real-parity-proof"))
+  );
   const providers = inMemoryAliases.map((alias) => {
-    const mapped = realProviderByCapability.get(alias.provider) || {};
-    const proofRecords = records.filter(
+    const semanticProofs = records.filter(
       (record) =>
-        record.inMemoryProviderUsed &&
-        (record.subjectId === alias.proof || record.sourceFileRefs.includes(alias.proof))
+        record.inMemoryProviderUsed === true &&
+        (record.providerId === alias.provider || record.subjectIds.includes(alias.proof))
     );
-    const parityProof = records.find((record) =>
-      record.subjectId.includes("in-memory-vs-real-parity-proof")
+    const parityProofs = parityRecords.filter(
+      (record) =>
+        record.providerId === alias.provider ||
+        record.subjectIds.includes(alias.provider) ||
+        record.subjectIds.includes(alias.proof)
     );
-    const realProvider = mapped.testProvider || explicitRealProvider[alias.provider] || "unknown";
-    const nonRuntimeStatic = realProvider.startsWith("not-runtime-");
-    const observabilityApplicable = ![
-      "in-memory-automation-runner",
-      "in-memory-billing-provider",
-    ].includes(alias.provider);
     return {
       provider: alias.provider,
       adapterFile: alias.adapterFile,
       proof: alias.proof,
-      correspondingRealProvider: realProvider,
-      realProviderClass: nonRuntimeStatic ? "none" : mapped.testProviderClass || "compose-local",
-      stagingProviderClass: mapped.stagingProviderClass || "unknown",
-      prodProviderClass: mapped.prodProviderClass || "unknown",
-      samePortInterface: Boolean(parityProof),
-      sameSemanticOutcomes: proofRecords.length > 0,
-      sameFailureSemantics: proofRecords.some((record) => record.failureModeAsserted),
-      sameEventAuditObservabilityContract:
-        !observabilityApplicable ||
-        proofRecords.some(
-          (record) =>
-            record.auditObserved &&
-            record.traceObserved &&
-            record.metricObserved &&
-            record.logObserved
-        ),
-      semanticDevProofMode: "in-memory-provider-proof",
-      testProofMode: nonRuntimeStatic ? "not-runtime-static" : "local-real-provider-proof",
+      correspondingRealProvider: alias.realProvider || realProviderFor(alias.provider),
+      samePortInterface: parityProofs.length > 0,
+      sameSemanticOutcomes: semanticProofs.some((record) => observedLevelFromEvidence(record) >= 3),
+      sameFailureSemantics: semanticProofs.some((record) => record.failurePathExercised === true),
+      sameEventAuditObservabilityContract: semanticProofs.some((record) =>
+        observabilityComplete(record)
+      ),
+      semanticDevProofMode: semanticProofs.every((record) => record.providerMode === "semantic-dev")
+        ? "in-memory-provider-proof"
+        : "missing",
+      realProviderParityProofMode:
+        parityProofs.length > 0 ? "port-contract-parity-proof" : "missing",
     };
   });
   const gaps = providers.filter(
@@ -499,54 +637,48 @@ function buildInMemoryProviderParityReport(ctx, records) {
       !provider.samePortInterface ||
       !provider.sameSemanticOutcomes ||
       !provider.sameFailureSemantics ||
-      !provider.sameEventAuditObservabilityContract
+      !provider.sameEventAuditObservabilityContract ||
+      provider.semanticDevProofMode === "missing"
   );
   return {
     artefact: "in-memory-provider-parity-report",
-    schemaVersion: 1,
-    generatedAt: GENERATED_AT,
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
     status: gaps.length === 0 ? "PASS" : "FAIL",
     providers,
     gaps,
   };
 }
 
+function buildWeakProofBacklog(requiredProofs, evidence, claimVsObserved) {
+  const missing = evidence.gaps.filter((gap) =>
+    ["missing-evidence", "stale-evidence", "proof-claim-overstated"].includes(gap.kind)
+  );
+  const weak = evidence.records
+    .filter(
+      (record) => observedLevelFromEvidence(record) < proofLevelNumber(record.proofLevelClaimed)
+    )
+    .map((record) => ({
+      proofId: record.proofId,
+      subject: record.subjectId,
+      claimed: record.proofLevelClaimed,
+      observed: proofLevelId(observedLevelFromEvidence(record)),
+      evidenceFile: record.evidenceFile,
+    }));
+  return {
+    artefact: "weak-proof-backlog",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: missing.length === 0 && claimVsObserved.mismatchCount === 0 ? "PASS" : "FAIL",
+    requiredProofCount: requiredProofs.length,
+    missingOrStaleCount: missing.length,
+    overclaimCount: claimVsObserved.mismatchCount,
+    missingOrStale: missing,
+    weak,
+  };
+}
+
 function buildRouteProofSubjectMap(audit) {
-  const routeProofSupplements = [
-    { test: (route) => route.path === "/api/admin/backup", ref: "proof:backup-control-route" },
-    { test: (route) => route.path === "/api/admin/billing", ref: "proof:billing-control-route" },
-    {
-      test: (route) => route.path === "/api/admin/billing/readiness",
-      ref: "proof:billing-readiness-route",
-    },
-    {
-      test: (route) => route.path === "/api/admin/data/compliance-report",
-      ref: "proof:compliance-report-route",
-    },
-    {
-      test: (route) => route.path === "/api/admin/observability",
-      ref: "proof:observability-control-route",
-    },
-    {
-      test: (route) => route.path === "/api/admin/observability/readiness",
-      ref: "proof:observability-readiness-route",
-    },
-    {
-      test: (route) => route.path === "/api/admin/provider-bindings",
-      ref: "proof:provider-binding-report-route",
-    },
-    { test: (route) => route.path === "/api/admin/security", ref: "proof:security-control-route" },
-    {
-      test: (route) => route.path === "/api/admin/workflows",
-      ref: "proof:workflow-control-route",
-    },
-    {
-      test: (route) =>
-        route.path === "/api/admin/workflows/readiness" ||
-        route.path === "/api/admin/workflows/:workflowId",
-      ref: "proof:workflow-readiness-route",
-    },
-  ];
   const routes = (audit.inventory.routes || []).map((route) => {
     const proofRefs =
       route.proofRef === "unknown"
@@ -555,11 +687,6 @@ function buildRouteProofSubjectMap(audit) {
             .split(/[;,]/)
             .map((ref) => ref.trim())
             .filter(Boolean);
-    for (const supplement of routeProofSupplements) {
-      if (supplement.test(route) && !proofRefs.includes(supplement.ref)) {
-        proofRefs.push(supplement.ref);
-      }
-    }
     return {
       routeId: route.routeId,
       method: route.method,
@@ -575,96 +702,289 @@ function buildRouteProofSubjectMap(audit) {
   });
   const gaps = routes.filter(
     (route) =>
-      route.proofRefs.length === 0 || route.broadPrefixMatchAllowed || route.fuzzyRouteMatchingUsed
+      route.proofRefs.length === 0 ||
+      route.proofRefs.some((ref) => ref === "/" || ref.endsWith("/*"))
   );
   return {
     artefact: "route-proof-subject-map",
-    schemaVersion: 1,
-    generatedAt: GENERATED_AT,
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
     status: gaps.length === 0 ? "PASS" : "FAIL",
     routes,
     gaps,
   };
 }
 
+function buildNegativeControlReport(ctx) {
+  const base = validFixtureRecord(ctx);
+  const controls = [
+    {
+      id: "fake-http-labelled-l4",
+      record: { ...base, proofId: "negative:fake-http-labelled-l4", fakeProviderUsed: true },
+      expectedKinds: ["fake-http-labelled-l4", "proof-claim-overstated"],
+    },
+    {
+      id: "in-memory-labelled-real-provider",
+      record: {
+        ...base,
+        proofId: "negative:in-memory-labelled-real-provider",
+        inMemoryProviderUsed: true,
+        realLocalProviderUsed: true,
+        providerMode: "compose-local",
+      },
+      expectedKinds: ["in-memory-provider-mode", "in-memory-labelled-real-provider"],
+    },
+    {
+      id: "missing-audit-evidence",
+      record: {
+        ...base,
+        proofId: "negative:missing-audit-evidence",
+        proofLevelClaimed: "L6",
+        auditEventIds: [],
+      },
+      expectedKinds: ["missing-l6-correlation"],
+    },
+    {
+      id: "missing-trace-evidence",
+      record: {
+        ...base,
+        proofId: "negative:missing-trace-evidence",
+        proofLevelClaimed: "L6",
+        traceIds: [],
+      },
+      expectedKinds: ["missing-l6-correlation"],
+    },
+    {
+      id: "missing-before-after-state",
+      record: { ...base, proofId: "negative:missing-before-after-state", beforeState: {} },
+      expectedKinds: ["missing-before-after-state", "proof-claim-overstated"],
+    },
+    {
+      id: "stale-evidence",
+      record: { ...base, proofId: "negative:stale-evidence", commit: "0000000" },
+      expectedKinds: ["stale-evidence"],
+    },
+    {
+      id: "overclaimed-proof-level",
+      record: {
+        ...base,
+        proofId: "negative:overclaimed-proof-level",
+        proofLevelClaimed: "L6",
+        routeIds: [],
+      },
+      expectedKinds: ["proof-claim-overstated", "missing-l6-correlation"],
+    },
+    {
+      id: "broad-route-mapping",
+      record: {
+        ...base,
+        proofId: "negative:broad-route-mapping",
+        subjectIds: ["/"],
+        subjectId: "/",
+      },
+      expectedKinds: ["broad-route-mapping"],
+    },
+    {
+      id: "skipped-proof-marked-pass",
+      record: {
+        ...base,
+        proofId: "negative:skipped-proof-marked-pass",
+        skipped: true,
+        skipReason: "",
+      },
+      expectedKinds: [
+        "skipped-without-reason",
+        "skipped-proof-marked-pass",
+        "proof-claim-overstated",
+      ],
+    },
+  ];
+  const results = controls.map((control) => {
+    const record = normalizeEvidenceRecord(signRecord(control.record));
+    const { gaps } = validateEvidenceSet({
+      ctx,
+      records: [record],
+      requiredProofs: [],
+      routeSubjectMap: { routes: [] },
+      allowNegativeControls: false,
+    });
+    const kinds = [...new Set(gaps.map((gap) => gap.kind))].sort();
+    const passed = control.expectedKinds.every((kind) => kinds.includes(kind));
+    return { id: control.id, expectedKinds: control.expectedKinds, observedKinds: kinds, passed };
+  });
+  const failed = results.filter((result) => !result.passed);
+  return {
+    artefact: "proof-negative-control-report",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: failed.length === 0 ? "PASS" : "FAIL",
+    controls: results,
+    failed,
+  };
+}
+
 function buildFormalProofReadinessReport({
   evidence,
-  strengthMatrix,
   claimVsObserved,
   inMemoryParity,
   routeSubjectMap,
+  weakProofBacklog,
+  negativeControls,
 }) {
-  const gaps = [];
-  for (const missing of evidence.missingFields) {
-    gaps.push({
-      kind: "proof-evidence-schema",
-      subject: missing.subjectId,
-      message: `proof evidence missing ${missing.field}`,
-    });
-  }
-  for (const mismatch of claimVsObserved.mismatches) {
-    gaps.push({
+  const gaps = [
+    ...evidence.gaps,
+    ...claimVsObserved.mismatches.map((mismatch) => ({
       kind: "proof-claim-overstated",
       subject: mismatch.subjectId,
       message: `claimed ${mismatch.proofLevelClaimed} exceeds observed ${mismatch.proofLevelObserved}`,
-    });
-  }
-  for (const gap of inMemoryParity.gaps) {
-    gaps.push({
+    })),
+    ...inMemoryParity.gaps.map((gap) => ({
       kind: "in-memory-provider-parity",
       subject: gap.provider,
-      message: "in-memory provider lacks complete real-provider parity evidence",
-    });
-  }
-  for (const gap of routeSubjectMap.gaps) {
-    gaps.push({
+      message: "in-memory provider lacks complete emitted real-provider parity evidence",
+    })),
+    ...routeSubjectMap.gaps.map((gap) => ({
       kind: "route-proof-subject-map",
       subject: `${gap.method} ${gap.path}`,
       message: "route proof subject mapping is missing, broad, or fuzzy",
-    });
-  }
-  for (const record of evidence.records) {
-    if (record.subjectType.includes("provider") && record.providerMode === "unknown") {
-      gaps.push({
-        kind: "provider-proof-mode",
-        subject: record.subjectId,
-        message: "provider proof has no environment-specific proof mode",
-      });
-    }
-    if (
-      /\b(observability|metrics?|traces?|logs?|spans?)\b/i.test(record.subjectId) &&
-      !(record.traceObserved && record.metricObserved && record.logObserved)
-    ) {
-      gaps.push({
-        kind: "observability-proof-signal",
-        subject: record.subjectId,
-        message: "observability proof lacks captured trace/log/metric evidence",
-      });
-    }
-    if (
-      record.subjectType === "route-proof" &&
-      /POST|PUT|PATCH|DELETE/i.test(record.subjectId) &&
-      !(record.stateBeforeCaptured && record.stateAfterCaptured)
-    ) {
-      gaps.push({
-        kind: "mutation-state-evidence",
-        subject: record.subjectId,
-        message: "mutation proof lacks before/after state evidence",
-      });
-    }
-  }
+    })),
+    ...negativeControls.failed.map((gap) => ({
+      kind: "negative-control-not-caught",
+      subject: gap.id,
+      message: "proof evidence validator did not catch the deliberate failing fixture",
+    })),
+  ];
   return {
     artefact: "v2-formal-proof-readiness-report",
-    schemaVersion: 1,
-    generatedAt: GENERATED_AT,
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
     status: gaps.length === 0 ? "PASS" : "FAIL",
     summary: {
       evidenceRecords: evidence.recordCount,
-      observedLevels: strengthMatrix.byObservedLevel,
+      requiredProofs: evidence.requiredProofCount,
+      missingEvidence: evidence.missingEvidence.length,
+      staleEvidence: evidence.staleEvidence.length,
       claimMismatches: claimVsObserved.mismatchCount,
       inMemoryProviderParityGaps: inMemoryParity.gaps.length,
       routeProofSubjectGaps: routeSubjectMap.gaps.length,
+      weakProofBacklogStatus: weakProofBacklog.status,
+      negativeControls: negativeControls.status,
     },
     gaps,
   };
+}
+
+function proofAliasForScript(scriptPath, packageJsonScripts = {}) {
+  return (
+    Object.entries(packageJsonScripts).find(
+      ([name, command]) => name.startsWith("proof:") && String(command).includes(scriptPath)
+    )?.[0] || null
+  );
+}
+
+function providerEvidenceClass(record) {
+  if (record.fakeProviderUsed) return "fake-http-adapter-proof";
+  if (record.inMemoryProviderUsed) return "in-memory-provider-proof";
+  if (record.realLocalProviderUsed) return "local-real-provider-proof";
+  if (record.externalSandboxProviderUsed) return "external-sandbox-proof";
+  return "contract-or-unit-proof";
+}
+
+function validFixtureRecord(ctx) {
+  return {
+    proofId: "negative:valid-base",
+    subjectType: "runtime-proof",
+    subjectIds: ["proof:negative-control"],
+    subjectId: "proof:negative-control",
+    capabilityId: "capability:negative-control",
+    providerId: "provider:negative-control",
+    routeIds: ["route:negative-control"],
+    workflowIds: ["workflow:negative-control"],
+    eventIds: ["event:negative-control"],
+    storageIds: ["storage:negative-control"],
+    environmentMode: "test",
+    providerMode: "compose-local",
+    proofLevelClaimed: "L4",
+    commandExecuted: "node negative-control.js",
+    startedAt: "2026-01-01T00:00:00.000Z",
+    endedAt: "2026-01-01T00:00:01.000Z",
+    exitStatus: 0,
+    commit: ctx.headCommit,
+    realImplementationPathExecuted: "negative-control.js",
+    mockProviderUsed: false,
+    fakeProviderUsed: false,
+    inMemoryProviderUsed: false,
+    realLocalProviderUsed: true,
+    externalSandboxProviderUsed: false,
+    externalSandboxRequestIds: [],
+    beforeState: { rows: 0 },
+    afterState: { rows: 1 },
+    assertedStateDiff: { rows: { before: 0, after: 1 } },
+    failurePathExercised: true,
+    sideEffectsAsserted: true,
+    tenantBoundaryAsserted: true,
+    securityBoundaryAsserted: true,
+    auditEventIds: ["audit-negative-control"],
+    traceIds: ["0123456789abcdef0123456789abcdef"],
+    metricSamples: [{ name: "proof.negative_control", value: 1 }],
+    logCorrelationIds: ["log-negative-control"],
+    cleanupResult: { status: "verified" },
+    deterministicReplaySupported: true,
+    skipped: false,
+    skipReason: null,
+    generatedAt: "2026-01-01T00:00:01.000Z",
+    sourceFileRefs: ["negative-control.js"],
+  };
+}
+
+export function signRecord(record) {
+  const signed = { ...record };
+  signed.evidenceSignature = evidenceSignature(signed);
+  return signed;
+}
+
+function realProviderFor(provider) {
+  const map = {
+    "in-memory-antivirus": "clamav-antivirus",
+    "in-memory-automation-runner": "windmill-automation-provider",
+    "in-memory-backup-restore-provider": "backup-restore-scripts",
+    "in-memory-billing-provider": "lago-billing-provider",
+    "in-memory-event-bus": "postgres-event-bus",
+    "in-memory-identity-repository": "postgres-identity-repository",
+    "in-memory-notification-transport": "smtp-email-adapter",
+    "in-memory-object-storage": "s3-object-storage-adapter",
+    "in-memory-observability-repository": "postgres-observability-repository",
+    "in-memory-rate-limit-repository": "redis-rate-limit-repository",
+    "in-memory-search-repository": "postgres-search-repository",
+    "in-memory-secret-store": "openbao-secret-store",
+    "in-memory-webhook-dispatcher": "http-webhook-dispatcher",
+    "in-memory-workflow-orchestrator": "temporal-workflow-provider",
+    "in-memory-semantic-provider": "not-runtime-static-provider-factory",
+    "in-memory-semantic-providers": "not-runtime-shared-provider-substrate",
+  };
+  return map[provider] || "unknown";
+}
+
+function observabilitySubject(record) {
+  if (record.subjectType === "route-proof") return false;
+  return /observability|metrics?|traces?|logs?|spans?/i.test(
+    [record.subjectId, record.providerId, ...(record.subjectIds || [])].join(" ")
+  );
+}
+
+function observabilityComplete(record) {
+  return (
+    (record.auditEventIds || []).length > 0 &&
+    (record.traceIds || []).length > 0 &&
+    (record.metricSamples || []).length > 0 &&
+    (record.logCorrelationIds || []).length > 0
+  );
+}
+
+function isMeaningfulObject(value) {
+  return Boolean(value && typeof value === "object" && Object.keys(value).length > 0);
+}
+
+function uniq(values) {
+  return [...new Set(values.filter(Boolean).map(String))].sort();
 }

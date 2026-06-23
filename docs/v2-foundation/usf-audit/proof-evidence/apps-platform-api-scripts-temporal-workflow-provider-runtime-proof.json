@@ -1,0 +1,76 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-temporal-workflow-provider-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "package.json#proof:temporal-workflow-provider",
+    "proof:temporal-workflow-provider"
+  ],
+  "subjectId": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+  "capabilityId": "capability:temporal-workflow-provider",
+  "providerId": "temporal-workflow-provider",
+  "routeIds": [],
+  "workflowIds": [
+    "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "package.json#proof:temporal-workflow-provider",
+    "proof:temporal-workflow-provider"
+  ],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:temporal-workflow-provider",
+  "startedAt": "2026-06-23T06:45:51.082Z",
+  "endedAt": "2026-06-23T06:45:52.082Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW1w"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW1w"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "command": "npm run proof:temporal-workflow-provider",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-temporal-workflow-provider-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-temporal-workflow-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-temporal-workflow-provider-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.082Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts"],
+  "evidenceSignature": "9bd91f1a91ed959be347a4ce37e1e0085ab6a42e25bc9b3b2d94c2a519c52f14"
+}

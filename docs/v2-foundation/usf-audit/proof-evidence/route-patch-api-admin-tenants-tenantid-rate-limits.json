@@ -1,0 +1,61 @@
+{
+  "proofId": "route-proof:route:patch-api-admin-tenants-tenantid-rate-limits",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:patch-api-admin-tenants-tenantid-rate-limits",
+    "proof:rate-limits",
+    "proof:rate-limits-redis",
+    "proof:api-key-routes"
+  ],
+  "subjectId": "route:patch-api-admin-tenants-tenantid-rate-limits",
+  "capabilityId": "Rate limiting (API)",
+  "providerId": "not-applicable",
+  "routeIds": ["route:patch-api-admin-tenants-tenantid-rate-limits"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for PATCH /api/admin/tenants/:tenantId/rate-limits",
+  "startedAt": "2026-06-23T06:45:51.224Z",
+  "endedAt": "2026-06-23T06:45:52.224Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6277",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:patch-api-admin-tenants-tenantid-rate-limits",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:patch-api-admin-tenants-tenantid-rate-limits",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:patch-api-admin-tenants-tenantid-rate-limits",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a70617463682d6170692d"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.224Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6277", "docs/api/openapi.json"],
+  "evidenceSignature": "4ef4dd5f770e32ab0d39f7d70d1f09925c6901b586e5e4bddd3fa37e9beefe2e"
+}

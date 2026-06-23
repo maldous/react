@@ -1,0 +1,69 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-email-sender-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "package.json#proof:email-sender",
+    "proof:email-sender"
+  ],
+  "subjectId": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+  "capabilityId": "capability:email-sender",
+  "providerId": "not-applicable",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:email-sender",
+  "startedAt": "2026-06-23T06:45:50.951Z",
+  "endedAt": "2026-06-23T06:45:51.951Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjplbWFp"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "routeCount": 0,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjplbWFp"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "command": "npm run proof:email-sender",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-email-sender-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-email-sender-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-email-sender-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.951Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"],
+  "evidenceSignature": "6494fc4a60a84d114f52a6095c4e3a900b43d63162740204899ec33fa62714e0"
+}

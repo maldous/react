@@ -1,0 +1,62 @@
+{
+  "proofId": "route-proof:route:patch-api-admin-incidents-incidentid",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:patch-api-admin-incidents-incidentid",
+    "proof:observability-signals",
+    "proof:alerting",
+    "proof:incident-foundation",
+    "proof:alert-notification-bridge"
+  ],
+  "subjectId": "route:patch-api-admin-incidents-incidentid",
+  "capabilityId": "Observability — built-in alerting + incidents",
+  "providerId": "not-applicable",
+  "routeIds": ["route:patch-api-admin-incidents-incidentid"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for PATCH /api/admin/incidents/:incidentId",
+  "startedAt": "2026-06-23T06:45:51.171Z",
+  "endedAt": "2026-06-23T06:45:52.171Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:7058",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:patch-api-admin-incidents-incidentid",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:patch-api-admin-incidents-incidentid",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:patch-api-admin-incidents-incidentid",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a70617463682d6170692d"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.171Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7058", "docs/api/openapi.json"],
+  "evidenceSignature": "68e442f28f64924d183f2c0112cfc59184afb54c00c57836e7857fd4b5984743"
+}

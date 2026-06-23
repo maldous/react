@@ -1,0 +1,83 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "package.json#proof:tenant-observability",
+    "proof:tenant-observability",
+    "route:get-admin-logs",
+    "route:get-api-admin-logs-search",
+    "route:get-api-org-observability-readiness"
+  ],
+  "subjectId": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+  "capabilityId": "capability:tenant-observability",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-admin-logs",
+    "route:get-api-admin-logs-search",
+    "route:get-api-org-observability-readiness"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:tenant-observability",
+  "startedAt": "2026-06-23T06:45:51.093Z",
+  "endedAt": "2026-06-23T06:45:52.093Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "routeCount": 3,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "command": "npm run proof:tenant-observability",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-logs",
+      "route:get-api-admin-logs-search",
+      "route:get-api-org-observability-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-tenant-observability-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-observability-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-tenant-observability-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.093Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"],
+  "evidenceSignature": "5e03ac2871085e5898b9356b5cf13f8d17586249a9afe407610fcb3b998b4ed8"
+}

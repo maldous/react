@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:patch-api-org-sub-organisations-suborgid",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:patch-api-org-sub-organisations-suborgid",
+    "proof:ui-semantic-sub-organisations (headless journey)",
+    "sub-organisations unit tests"
+  ],
+  "subjectId": "route:patch-api-org-sub-organisations-suborgid",
+  "capabilityId": "Sub-organisations",
+  "providerId": "not-applicable",
+  "routeIds": ["route:patch-api-org-sub-organisations-suborgid"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for PATCH /api/org/sub-organisations/:subOrgId",
+  "startedAt": "2026-06-23T06:45:51.322Z",
+  "endedAt": "2026-06-23T06:45:52.322Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:5389",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:patch-api-org-sub-organisations-suborgid",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:patch-api-org-sub-organisations-suborgid",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:patch-api-org-sub-organisations-suborgid",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a70617463682d6170692d"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.322Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5389", "docs/api/openapi.json"],
+  "evidenceSignature": "518e1944805c71d376605d3324698214cdfcd5c8f7ea490bec12ece044e4598d"
+}

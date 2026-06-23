@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:post-api-admin-support-tickets",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:post-api-admin-support-tickets",
+    "support-mode unit tests",
+    "proof:support-approval"
+  ],
+  "subjectId": "route:post-api-admin-support-tickets",
+  "capabilityId": "Support-mode / break-glass access",
+  "providerId": "not-applicable",
+  "routeIds": ["route:post-api-admin-support-tickets"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for POST /api/admin/support/tickets",
+  "startedAt": "2026-06-23T06:45:51.202Z",
+  "endedAt": "2026-06-23T06:45:52.202Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:6828",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:post-api-admin-support-tickets",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:post-api-admin-support-tickets",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:post-api-admin-support-tickets",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a706f73742d6170692d61"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.202Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6828", "docs/api/openapi.json"],
+  "evidenceSignature": "b2558bbc8086a62de657871f658cb055e228d8acd2d835146c7903e27fea30de"
+}

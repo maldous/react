@@ -1,0 +1,60 @@
+{
+  "proofId": "route-proof:route:patch-api-auth-settings-idps-alias-mapping",
+  "subjectType": "route-proof",
+  "subjectIds": [
+    "route:patch-api-auth-settings-idps-alias-mapping",
+    "proof:ui-semantic-claim-mapping (headless journey)",
+    "oidc-mapping unit tests"
+  ],
+  "subjectId": "route:patch-api-auth-settings-idps-alias-mapping",
+  "capabilityId": "Claim mapping + group/role mapping",
+  "providerId": "not-applicable",
+  "routeIds": ["route:patch-api-auth-settings-idps-alias-mapping"],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "route-contract",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "route-subject evidence collection for PATCH /api/auth/settings/idps/:alias/mapping",
+  "startedAt": "2026-06-23T06:45:51.247Z",
+  "endedAt": "2026-06-23T06:45:52.247Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:1979",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeId": "route:patch-api-auth-settings-idps-alias-mapping",
+    "mutation": true,
+    "phase": "before"
+  },
+  "afterState": {
+    "routeId": "route:patch-api-auth-settings-idps-alias-mapping",
+    "mutation": true,
+    "phase": "after"
+  },
+  "assertedStateDiff": {
+    "routeId": "route:patch-api-auth-settings-idps-alias-mapping",
+    "security": "declared"
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["route handler audit evidence"],
+  "traceIds": ["726f7574653a70617463682d6170692d"],
+  "metricSamples": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logCorrelationIds": ["http.request.complete/http.request.failed"],
+  "cleanupResult": { "status": "verified" },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.247Z",
+  "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1979", "docs/api/openapi.json"],
+  "evidenceSignature": "0deb01cc1a4477fe4c3140e5650b9aece45ff4dcde5137ade0f16be836d36ce3"
+}

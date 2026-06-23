@@ -1,0 +1,83 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "package.json#proof:dashboards",
+    "proof:dashboards",
+    "route:get-admin-monitoring",
+    "route:get-admin-observability",
+    "route:get-api-admin-observability",
+    "route:get-api-admin-observability-readiness"
+  ],
+  "subjectId": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+  "capabilityId": "capability:dashboards",
+  "providerId": "not-applicable",
+  "routeIds": [
+    "route:get-admin-monitoring",
+    "route:get-admin-observability",
+    "route:get-api-admin-observability",
+    "route:get-api-admin-observability-readiness"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:dashboards",
+  "startedAt": "2026-06-23T06:45:50.943Z",
+  "endedAt": "2026-06-23T06:45:51.943Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "routeCount": 4,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpkYXNo"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "routeCount": 4,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjpkYXNo"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "command": "npm run proof:dashboards",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-monitoring",
+      "route:get-admin-observability",
+      "route:get-api-admin-observability",
+      "route:get-api-admin-observability-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-dashboards-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    { "name": "proof.apps-platform-api-scripts-dashboards-runtime-proof.passed", "value": 1 }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-dashboards-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:51.943Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"],
+  "evidenceSignature": "4126a9073b92723fc23413a036497f5958dc1c03e1e3424e04bc1042f685c741"
+}

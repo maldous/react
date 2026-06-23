@@ -1,0 +1,78 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-workflow-control-route-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "package.json#proof:workflow-control-route",
+    "proof:workflow-control-route",
+    "route:get-api-admin-workflows"
+  ],
+  "subjectId": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+  "capabilityId": "capability:workflow-control-route",
+  "providerId": "workflow-control-route",
+  "routeIds": ["route:get-api-admin-workflows"],
+  "workflowIds": [
+    "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "package.json#proof:workflow-control-route",
+    "proof:workflow-control-route",
+    "route:get-api-admin-workflows"
+  ],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "test",
+  "providerMode": "hermetic",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:workflow-control-route",
+  "startedAt": "2026-06-23T06:45:51.108Z",
+  "endedAt": "2026-06-23T06:45:52.108Z",
+  "exitStatus": 0,
+  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "phase": "before",
+    "proofFile": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "routeCount": 1,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp3b3Jr"
+  },
+  "afterState": {
+    "phase": "after",
+    "proofFile": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "routeCount": 1,
+    "providerSubjects": [],
+    "commandHash": "bnBtIHJ1biBwcm9vZjp3b3Jr"
+  },
+  "assertedStateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "command": "npm run proof:workflow-control-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-workflows"],
+    "providerSubjects": []
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit-apps-platform-api-scripts-workflow-control-route-runtime-proof"],
+  "traceIds": ["617070732f706c6174666f726d2d6170"],
+  "metricSamples": [
+    {
+      "name": "proof.apps-platform-api-scripts-workflow-control-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log-apps-platform-api-scripts-workflow-control-route-runtime-proof"],
+  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T06:45:52.108Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-route-runtime-proof.ts"],
+  "evidenceSignature": "c06a02f991d3635a452fa4b79221ca3bc7b0efa1d8b92e89e51aced1d0903dcb"
+}
