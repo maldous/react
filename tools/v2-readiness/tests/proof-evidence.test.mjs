@@ -90,7 +90,7 @@ test("observed level is calculated from emitted evidence fields only", () => {
         externalSandboxRequestIds: ["sandbox-request-1", "sandbox-response-1"],
       })
     ),
-    6
+    3
   );
   assert.equal(observedLevelFromEvidence(validRecord({ routeIds: [] })), 4);
   assert.equal(
@@ -140,27 +140,29 @@ test("negative controls are caught by emitted-evidence validation", () => {
       })
     ).includes("dev-proof-claims-l4")
   );
-  assert.ok(gapKinds(validRecord({ proofLevelClaimed: "L5" })).includes("test-proof-claims-l5"));
+  assert.ok(
+    gapKinds(validRecord({ proofLevelClaimed: "L5" })).includes("missing-restart-evidence")
+  );
   assert.ok(
     gapKinds(validRecord({ auditEventIds: [], proofLevelClaimed: "L6" })).includes(
-      "missing-l6-correlation"
+      "missing-audit-evidence"
     )
   );
   assert.ok(
     gapKinds(validRecord({ traceIds: [], proofLevelClaimed: "L6" })).includes(
-      "missing-l6-correlation"
+      "missing-trace-evidence"
     )
   );
   assert.ok(
     gapKinds(
       validRecord({ metricSamples: [], metricEvidence: [], proofLevelClaimed: "L6" })
-    ).includes("missing-l6-correlation")
+    ).includes("missing-metric-evidence")
   );
-  assert.ok(gapKinds(validRecord({ beforeState: {} })).includes("missing-before-after-state"));
-  assert.ok(gapKinds(validRecord({ afterState: {} })).includes("missing-before-after-state"));
+  assert.ok(gapKinds(validRecord({ beforeState: {} })).includes("missing-before-state"));
+  assert.ok(gapKinds(validRecord({ afterState: {} })).includes("missing-after-state"));
   assert.ok(
     gapKinds(validRecord({ failurePathExercised: false, failureMode: "not-exercised" })).includes(
-      "missing-failure-path"
+      "missing-failure-path-evidence"
     )
   );
   assert.ok(gapKinds(validRecord({ commit: "old" })).includes("stale-evidence"));
@@ -201,7 +203,7 @@ test("required runtime proof with deleted evidence fails", () => {
   assert.ok(gaps.some((gap) => gap.kind === "missing-evidence"));
 });
 
-test("capability readiness fails until every proof band is evidenced", () => {
+test("capability readiness locks on Behaviour Proven before future substrate work", () => {
   const capabilityCtx = {
     foundation: {
       "environment-capability-matrix.json": {
@@ -238,43 +240,27 @@ test("capability readiness fails until every proof band is evidenced", () => {
     }),
   ];
   const partial = buildCapabilityProofReadinessReport(capabilityCtx, semanticOnly);
-  assert.equal(partial.status, "FAIL");
-  assert.equal(partial.capabilities[0].readiness, "SEMANTIC_PROVEN");
-  assert.deepEqual(partial.capabilities[0].requiredBands, [
-    "semantic-L3",
-    "provider-L4",
-    "sandbox-L5",
-    "journey-L6",
-  ]);
-  assert.deepEqual(partial.capabilities[0].missingBands, [
-    "provider-L4",
-    "sandbox-L5",
-    "journey-L6",
-  ]);
-  assert.deepEqual(partial.capabilities[0].missingRequiredBands, [
-    "provider-L4",
-    "sandbox-L5",
-    "journey-L6",
-  ]);
-  assert.ok(partial.gaps.some((gap) => gap.kind === "capability-real-provider-proof-missing"));
+  assert.equal(partial.status, "PASS");
+  assert.equal(partial.capabilities[0].readiness, "BEHAVIOUR_PROVEN");
+  assert.equal(partial.capabilities[0].l3BehaviourComplete, true);
+  assert.equal(partial.capabilities[0].eligibleForSubstrateProvenWork, true);
+  assert.deepEqual(partial.capabilities[0].missingRequiredBands, []);
+  assert.deepEqual(partial.gaps, []);
+  assert.ok(partial.capabilities[0].futureBlockedLevels.includes("resilience-L5-blocked-until-L4"));
 
-  const fullyProven = buildCapabilityProofReadinessReport(capabilityCtx, [
-    ...semanticOnly,
-    validRecord({ proofId: "proof:fixture-provider" }),
+  const incompleteBehaviour = buildCapabilityProofReadinessReport(capabilityCtx, [
     validRecord({
-      proofId: "proof:fixture-journey",
-      environmentMode: "staging",
-      environment: "staging",
-      providerMode: "external-sandbox",
-      proofLevelClaimed: "L6",
-      realLocalProviderUsed: false,
-      externalSandboxProviderUsed: true,
-      externalSandboxRequestIds: ["sandbox-request-1", "sandbox-response-1"],
+      proofId: "proof:fixture-incomplete",
+      beforeState: {},
+      proofLevelClaimed: "L3",
     }),
   ]);
-  assert.equal(fullyProven.status, "PASS");
-  assert.equal(fullyProven.capabilities[0].readiness, "FULLY_PROVEN");
-  assert.deepEqual(fullyProven.capabilities[0].missingBands, []);
+  assert.equal(incompleteBehaviour.status, "FAIL");
+  assert.equal(incompleteBehaviour.capabilities[0].readiness, "CONTRACT_PROVEN");
+  assert.deepEqual(incompleteBehaviour.capabilities[0].missingRequiredBands, ["behaviour-L3"]);
+  assert.ok(
+    incompleteBehaviour.gaps.some((gap) => gap.kind === "capability-behaviour-proof-missing")
+  );
 });
 
 test("weak proof backlog includes capability-level proof gaps", () => {
@@ -286,10 +272,10 @@ test("weak proof backlog includes capability-level proof gaps", () => {
       gaps: [
         {
           capability: "Fixture capability",
-          kind: "capability-real-provider-proof-missing",
-          readiness: "SEMANTIC_PROVEN",
-          missingBand: "provider-L4",
-          message: "Fixture capability is SEMANTIC_PROVEN; missing provider-L4 runtime evidence",
+          kind: "capability-behaviour-proof-missing",
+          readiness: "CONTRACT_PROVEN",
+          missingBand: "behaviour-L3",
+          message: "Fixture capability is CONTRACT_PROVEN; missing behaviour-L3 runtime evidence",
         },
       ],
     }
@@ -299,10 +285,10 @@ test("weak proof backlog includes capability-level proof gaps", () => {
   assert.deepEqual(backlog.capabilityProofGaps, [
     {
       capability: "Fixture capability",
-      kind: "capability-real-provider-proof-missing",
-      readiness: "SEMANTIC_PROVEN",
-      missingBand: "provider-L4",
-      message: "Fixture capability is SEMANTIC_PROVEN; missing provider-L4 runtime evidence",
+      kind: "capability-behaviour-proof-missing",
+      readiness: "CONTRACT_PROVEN",
+      missingBand: "behaviour-L3",
+      message: "Fixture capability is CONTRACT_PROVEN; missing behaviour-L3 runtime evidence",
     },
   ]);
 });

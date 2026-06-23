@@ -44,8 +44,11 @@ writeJson("semantic-orphan-runtime-report.json", audit.reports.semanticOrphan);
 writeJson("proof-evidence-index.json", proofEvidence.evidenceIndex);
 writeJson("proof-strength-matrix.json", proofEvidence.strengthMatrix);
 writeJson("proof-claim-vs-observed-report.json", proofEvidence.claimVsObserved);
+writeJson("proof-ladder-migration-report.json", proofEvidence.ladderMigration);
 writeJson("proof-ladder-compliance-report.json", proofEvidence.ladderCompliance);
 writeJson("environment-proof-consistency-report.json", proofEvidence.environmentConsistency);
+writeJson("behaviour-proof-locking-report.json", proofEvidence.behaviourLocking);
+writeJson("behaviour-proof-readiness-report.json", proofEvidence.behaviourReadiness);
 writeJson("capability-proof-readiness-report.json", proofEvidence.capabilityReadiness);
 writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity);
 writeJson("route-proof-subject-map.json", proofEvidence.routeSubjectMap);
@@ -321,9 +324,9 @@ ${knownGapsHeading}
 | Show every storage operation without lifecycle proof. | ${summary.storageProofGaps} |
 | Show every event without DLQ/retry proof. | ${summary.eventRuntimeGaps} |
 | Show every alert without runbook. | ${audit.reports.metricsAlerts.gaps.filter((item) => item.message.includes("runbook") || item.message.includes("alert")).length} |
-| Show every capability missing required real-provider L4 proof. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-real-provider-proof-missing").length} |
-| Show every capability missing required external-sandbox L5 proof. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-external-sandbox-proof-missing").length} |
-| Show every capability missing required end-to-end L6 proof. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-end-to-end-journey-proof-missing").length} |
+| Show every capability blocked from Behaviour Proven L3. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-behaviour-proof-missing").length} |
+| Show every capability eligible for future Substrate Proven L4 work. | ${proofEvidence.capabilityReadiness.capabilities.filter((item) => item.eligibleForSubstrateProvenWork).length} |
+| Show every capability already Foundation Proven L6. | ${proofEvidence.capabilityReadiness.capabilities.filter((item) => item.readiness === "FOUNDATION_PROVEN").length} |
 
 See \`docs/v2-foundation/usf-audit/v1-correction-backlog.md\` for classified gaps.
 `;

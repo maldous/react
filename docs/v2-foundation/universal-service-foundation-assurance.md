@@ -31,28 +31,28 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | Assurance surface             | Status | Gaps |
 | ----------------------------- | ------ | ---: |
 | adversarial runtime inventory | PASS   |    0 |
-| formal proof readiness        | FAIL   |  296 |
-| weak proof backlog            | FAIL   |   89 |
-| capability proof readiness    | FAIL   |   89 |
+| formal proof readiness        | FAIL   |  207 |
+| weak proof backlog            | PASS   |    0 |
+| capability proof readiness    | PASS   |    0 |
 
 ## Known Gaps Identified
 
-| Question                                                          | Machine-generated answer |
-| ----------------------------------------------------------------- | -----------------------: |
-| Show every route without tracing.                                 |                        0 |
-| Show every route without logging.                                 |                        0 |
-| Show every route without metrics.                                 |                        0 |
-| Show every mutation without audit.                                |                        0 |
-| Show every route without capability owner.                        |                        0 |
-| Show every capability without ownership.                          |                        0 |
-| Show every semantic orphan.                                       |                        0 |
-| Show every provider without unavailable-path proof.               |                        0 |
-| Show every workflow without failure-path proof.                   |                        0 |
-| Show every storage operation without lifecycle proof.             |                        0 |
-| Show every event without DLQ/retry proof.                         |                        0 |
-| Show every alert without runbook.                                 |                        0 |
-| Show every capability missing required real-provider L4 proof.    |                       62 |
-| Show every capability missing required external-sandbox L5 proof. |                       27 |
-| Show every capability missing required end-to-end L6 proof.       |                        0 |
+| Question                                                            | Machine-generated answer |
+| ------------------------------------------------------------------- | -----------------------: |
+| Show every route without tracing.                                   |                        0 |
+| Show every route without logging.                                   |                        0 |
+| Show every route without metrics.                                   |                        0 |
+| Show every mutation without audit.                                  |                        0 |
+| Show every route without capability owner.                          |                        0 |
+| Show every capability without ownership.                            |                        0 |
+| Show every semantic orphan.                                         |                        0 |
+| Show every provider without unavailable-path proof.                 |                        0 |
+| Show every workflow without failure-path proof.                     |                        0 |
+| Show every storage operation without lifecycle proof.               |                        0 |
+| Show every event without DLQ/retry proof.                           |                        0 |
+| Show every alert without runbook.                                   |                        0 |
+| Show every capability blocked from Behaviour Proven L3.             |                        0 |
+| Show every capability eligible for future Substrate Proven L4 work. |                       70 |
+| Show every capability already Foundation Proven L6.                 |                        0 |
 
 See `docs/v2-foundation/usf-audit/v1-correction-backlog.md` for classified gaps.

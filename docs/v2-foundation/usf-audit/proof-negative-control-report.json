@@ -1,19 +1,27 @@
 {
   "artefact": "proof-negative-control-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T10:29:34.152Z",
+  "generatedAt": "2026-06-23T10:59:03.170Z",
   "status": "PASS",
   "controls": [
     {
       "id": "fake-http-labelled-l4",
       "expectedKinds": ["fake-http-labelled-l4", "proof-claim-overstated"],
-      "observedKinds": ["fake-http-labelled-l4", "proof-claim-overstated"],
+      "observedKinds": [
+        "fake-http-labelled-l4",
+        "proof-claim-overstated",
+        "substrate-provider-class-overclaim"
+      ],
       "passed": true
     },
     {
       "id": "in-memory-labelled-real-provider",
       "expectedKinds": ["in-memory-provider-mode", "in-memory-labelled-real-provider"],
-      "observedKinds": ["in-memory-labelled-real-provider", "in-memory-provider-mode"],
+      "observedKinds": [
+        "in-memory-labelled-real-provider",
+        "in-memory-provider-mode",
+        "substrate-provider-class-overclaim"
+      ],
       "passed": true
     },
     {
@@ -27,91 +35,132 @@
       "observedKinds": [
         "dev-proof-claims-l4",
         "environment-level-forbidden",
+        "missing-compose-local-provider-mode",
         "missing-real-local-substrate",
-        "proof-claim-overstated"
+        "proof-claim-overstated",
+        "substrate-provider-class-overclaim"
       ],
       "passed": true
     },
     {
       "id": "missing-audit-evidence",
-      "expectedKinds": ["missing-l6-correlation"],
+      "expectedKinds": ["missing-audit-evidence"],
       "observedKinds": [
         "environment-level-forbidden",
-        "l5-environment-required",
-        "l6-environment-required",
-        "missing-external-sandbox-request",
-        "missing-l6-correlation",
-        "proof-claim-overstated",
-        "test-proof-claims-l5",
-        "test-sandbox-overclaim"
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
+        "l4-substrate-incomplete",
+        "l5-blocked-by-incomplete-l4",
+        "l5-resilience-incomplete",
+        "l6-blocked-by-incomplete-l5",
+        "missing-audit-evidence",
+        "missing-backup-restore-evidence",
+        "missing-concurrency-evidence",
+        "missing-degraded-mode-evidence",
+        "missing-failure-injection-evidence",
+        "missing-foundation-audit",
+        "missing-recovery-evidence",
+        "missing-restart-evidence",
+        "missing-retry-evidence",
+        "missing-timeout-evidence",
+        "proof-claim-overstated"
       ],
       "passed": true
     },
     {
       "id": "missing-trace-evidence",
-      "expectedKinds": ["missing-l6-correlation"],
+      "expectedKinds": ["missing-trace-evidence"],
       "observedKinds": [
         "environment-level-forbidden",
-        "l5-environment-required",
-        "l6-environment-required",
-        "missing-external-sandbox-request",
-        "missing-l6-correlation",
-        "proof-claim-overstated",
-        "test-proof-claims-l5",
-        "test-sandbox-overclaim"
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
+        "l4-substrate-incomplete",
+        "l5-blocked-by-incomplete-l4",
+        "l5-resilience-incomplete",
+        "l6-blocked-by-incomplete-l5",
+        "missing-backup-restore-evidence",
+        "missing-concurrency-evidence",
+        "missing-degraded-mode-evidence",
+        "missing-failure-injection-evidence",
+        "missing-foundation-trace",
+        "missing-recovery-evidence",
+        "missing-restart-evidence",
+        "missing-retry-evidence",
+        "missing-timeout-evidence",
+        "missing-trace-evidence",
+        "proof-claim-overstated"
       ],
       "passed": true
     },
     {
       "id": "missing-metric-evidence",
-      "expectedKinds": ["missing-l6-correlation"],
+      "expectedKinds": ["missing-metric-evidence"],
       "observedKinds": [
         "environment-level-forbidden",
-        "l5-environment-required",
-        "l6-environment-required",
-        "missing-external-sandbox-request",
-        "missing-l6-correlation",
-        "proof-claim-overstated",
-        "test-proof-claims-l5",
-        "test-sandbox-overclaim"
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
+        "l4-substrate-incomplete",
+        "l5-blocked-by-incomplete-l4",
+        "l5-resilience-incomplete",
+        "l6-blocked-by-incomplete-l5",
+        "missing-backup-restore-evidence",
+        "missing-concurrency-evidence",
+        "missing-degraded-mode-evidence",
+        "missing-failure-injection-evidence",
+        "missing-foundation-metric",
+        "missing-metric-evidence",
+        "missing-recovery-evidence",
+        "missing-restart-evidence",
+        "missing-retry-evidence",
+        "missing-timeout-evidence",
+        "proof-claim-overstated"
       ],
       "passed": true
     },
     {
       "id": "missing-workflow-correlation",
-      "expectedKinds": ["missing-l6-correlation"],
+      "expectedKinds": ["proof-claim-overstated"],
       "observedKinds": [
         "environment-level-forbidden",
-        "l5-environment-required",
-        "l6-environment-required",
-        "missing-external-sandbox-request",
-        "missing-l6-correlation",
-        "proof-claim-overstated",
-        "test-proof-claims-l5",
-        "test-sandbox-overclaim"
+        "l5-resilience-incomplete",
+        "l6-blocked-by-incomplete-l5",
+        "missing-backup-restore-evidence",
+        "missing-concurrency-evidence",
+        "missing-degraded-mode-evidence",
+        "missing-failure-injection-evidence",
+        "missing-recovery-evidence",
+        "missing-restart-evidence",
+        "missing-retry-evidence",
+        "missing-timeout-evidence",
+        "proof-claim-overstated"
       ],
       "passed": true
     },
     {
       "id": "missing-event-correlation",
-      "expectedKinds": ["missing-l6-correlation"],
+      "expectedKinds": ["proof-claim-overstated"],
       "observedKinds": [
         "environment-level-forbidden",
-        "l5-environment-required",
-        "l6-environment-required",
-        "missing-external-sandbox-request",
-        "missing-l6-correlation",
-        "proof-claim-overstated",
-        "test-proof-claims-l5",
-        "test-sandbox-overclaim"
+        "l5-resilience-incomplete",
+        "l6-blocked-by-incomplete-l5",
+        "missing-backup-restore-evidence",
+        "missing-concurrency-evidence",
+        "missing-degraded-mode-evidence",
+        "missing-failure-injection-evidence",
+        "missing-recovery-evidence",
+        "missing-restart-evidence",
+        "missing-retry-evidence",
+        "missing-timeout-evidence",
+        "proof-claim-overstated"
       ],
       "passed": true
     },
     {
       "id": "missing-before-after-state",
-      "expectedKinds": ["missing-before-after-state", "proof-claim-overstated"],
+      "expectedKinds": ["missing-before-state", "proof-claim-overstated"],
       "observedKinds": [
-        "missing-before-after-state",
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
         "missing-before-state",
         "proof-claim-overstated"
       ],
@@ -119,9 +168,10 @@
     },
     {
       "id": "missing-before-state",
-      "expectedKinds": ["missing-before-after-state", "missing-before-state"],
+      "expectedKinds": ["missing-before-state"],
       "observedKinds": [
-        "missing-before-after-state",
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
         "missing-before-state",
         "proof-claim-overstated"
       ],
@@ -129,18 +179,24 @@
     },
     {
       "id": "missing-after-state",
-      "expectedKinds": ["missing-before-after-state", "missing-after-state"],
+      "expectedKinds": ["missing-after-state"],
       "observedKinds": [
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
         "missing-after-state",
-        "missing-before-after-state",
         "proof-claim-overstated"
       ],
       "passed": true
     },
     {
       "id": "missing-failure-path",
-      "expectedKinds": ["missing-failure-path", "proof-claim-overstated"],
-      "observedKinds": ["missing-failure-path", "proof-claim-overstated"],
+      "expectedKinds": ["missing-failure-path-evidence", "proof-claim-overstated"],
+      "observedKinds": [
+        "l3-behaviour-incomplete",
+        "l4-blocked-by-incomplete-l3",
+        "missing-failure-path-evidence",
+        "proof-claim-overstated"
+      ],
       "passed": true
     },
     {
@@ -151,16 +207,20 @@
     },
     {
       "id": "overclaimed-proof-level",
-      "expectedKinds": ["proof-claim-overstated", "missing-l6-correlation"],
+      "expectedKinds": ["proof-claim-overstated", "l6-blocked-by-incomplete-l5"],
       "observedKinds": [
         "environment-level-forbidden",
-        "l5-environment-required",
-        "l6-environment-required",
-        "missing-external-sandbox-request",
-        "missing-l6-correlation",
-        "proof-claim-overstated",
-        "test-proof-claims-l5",
-        "test-sandbox-overclaim"
+        "l5-resilience-incomplete",
+        "l6-blocked-by-incomplete-l5",
+        "missing-backup-restore-evidence",
+        "missing-concurrency-evidence",
+        "missing-degraded-mode-evidence",
+        "missing-failure-injection-evidence",
+        "missing-recovery-evidence",
+        "missing-restart-evidence",
+        "missing-retry-evidence",
+        "missing-timeout-evidence",
+        "proof-claim-overstated"
       ],
       "passed": true
     },

@@ -4,13 +4,100 @@ import path from "node:path";
 import { stableId } from "./formal-assurance.mjs";
 
 export const PROOF_LEVELS = [
-  { level: 0, id: "L0", name: "declaration only" },
-  { level: 1, id: "L1", name: "schema/contract shape" },
-  { level: 2, id: "L2", name: "unit behaviour" },
-  { level: 3, id: "L3", name: "state transition + side effects" },
-  { level: 4, id: "L4", name: "local real substrate" },
-  { level: 5, id: "L5", name: "external sandbox/provider" },
-  { level: 6, id: "L6", name: "end-to-end journey" },
+  {
+    level: 0,
+    id: "L0",
+    name: "Discovery Proven",
+    purpose: "inventory confidence only; no execution guarantees",
+  },
+  {
+    level: 1,
+    id: "L1",
+    name: "Executable Proven",
+    purpose: "execution confidence only; no behavioural guarantees",
+  },
+  {
+    level: 2,
+    id: "L2",
+    name: "Contract Proven",
+    purpose: "contract confidence; no state-transition guarantees",
+  },
+  {
+    level: 3,
+    id: "L3",
+    name: "Behaviour Proven",
+    purpose: "behavioural confidence and current programme closure target",
+  },
+  {
+    level: 4,
+    id: "L4",
+    name: "Substrate Proven",
+    purpose: "implementation correctness confidence against real local substrate",
+  },
+  {
+    level: 5,
+    id: "L5",
+    name: "Resilience Proven",
+    purpose: "operational survivability confidence",
+  },
+  {
+    level: 6,
+    id: "L6",
+    name: "Foundation Proven",
+    purpose: "USF primitives proven sufficient for production-grade services",
+  },
+];
+
+export const PROOF_LADDER_MIGRATION = [
+  {
+    level: "L0",
+    oldClassification: "declaration only",
+    newClassification: "Discovery Proven",
+    rationale:
+      "L0 is retained as non-executable inventory confidence covering discovered capabilities, routes, workflows, providers, storage, events, ownership, and dependencies.",
+  },
+  {
+    level: "L1",
+    oldClassification: "schema/contract shape",
+    newClassification: "Executable Proven",
+    rationale:
+      "Successful proof command execution is now separated from contract confidence so no-crash evidence is not overstated.",
+  },
+  {
+    level: "L2",
+    oldClassification: "unit behaviour",
+    newClassification: "Contract Proven",
+    rationale:
+      "L2 now means interface/input/output/permission/invariant contract exercise only; state transitions belong to L3.",
+  },
+  {
+    level: "L3",
+    oldClassification: "state transition + side effects",
+    newClassification: "Behaviour Proven",
+    rationale:
+      "L3 is expanded into the explicit behavioural closure target: before/after state, state diff, side effects, failure path, audit/metric/trace, tenant/security boundaries, and deterministic replay.",
+  },
+  {
+    level: "L4",
+    oldClassification: "local real substrate",
+    newClassification: "Substrate Proven",
+    rationale:
+      "L4 remains real local substrate confidence but is now gated by complete L3 behavioural evidence.",
+  },
+  {
+    level: "L5",
+    oldClassification: "external sandbox/provider",
+    newClassification: "Resilience Proven",
+    rationale:
+      "L5 no longer means external sandbox alone; it requires L4 plus restart, timeout, retry, concurrency, recovery, backup/restore, degraded-mode, and failure-injection evidence.",
+  },
+  {
+    level: "L6",
+    oldClassification: "end-to-end journey",
+    newClassification: "Foundation Proven",
+    rationale:
+      "L6 is now full foundation assurance: L5 plus tenancy, security, observability, operational recovery, lifecycle governance, and ownership.",
+  },
 ];
 
 export const ENVIRONMENT_PROOF_MODEL = {
@@ -22,14 +109,14 @@ export const ENVIRONMENT_PROOF_MODEL = {
     forbiddenLevels: ["L4", "L5", "L6"],
   },
   test: {
-    purpose: "Real provider validation",
+    purpose: "Substrate validation after L3 closure",
     providerModes: ["compose-local", "hermetic", "route-contract"],
     minStrictProviderLevel: 4,
-    maxLevel: 4,
-    forbiddenLevels: ["L5", "L6"],
+    maxLevel: 5,
+    forbiddenLevels: ["L6"],
   },
   staging: {
-    purpose: "Production rehearsal",
+    purpose: "Foundation and production-rehearsal assurance after L3/L4 closure",
     providerModes: ["external-sandbox", "sandbox-external", "compose-local", "prod-shaped-sandbox"],
     minStrictProviderLevel: 5,
     maxLevel: 6,
@@ -172,6 +259,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
   const claimVsObserved = buildClaimVsObservedReport(evidence.records);
   const ladderCompliance = buildProofLadderComplianceReport(evidence.records);
   const environmentConsistency = buildEnvironmentProofConsistencyReport(evidence.records);
+  const ladderMigration = buildProofLadderMigrationReport();
+  const behaviourLocking = buildBehaviourProofLockingReport(evidence.records);
+  const behaviourReadiness = buildBehaviourProofReadinessReport(ctx, evidence.records);
   const capabilityReadiness = buildCapabilityProofReadinessReport(ctx, evidence.records);
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
   const weakProofBacklog = buildWeakProofBacklog(
@@ -187,6 +277,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     claimVsObserved,
     ladderCompliance,
     environmentConsistency,
+    ladderMigration,
+    behaviourLocking,
+    behaviourReadiness,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -202,6 +295,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     claimVsObserved,
     ladderCompliance,
     environmentConsistency,
+    ladderMigration,
+    behaviourLocking,
+    behaviourReadiness,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -550,52 +646,14 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
     gaps.push({
       kind: "fake-http-labelled-l4",
       subject: record.subjectId,
-      message: "fake HTTP adapter proof cannot claim local-real-provider strength",
+      message: "fake HTTP adapter proof cannot claim Substrate Proven strength",
     });
   }
   if (proofLevelNumber(record.proofLevelClaimed) >= 3) {
-    if (!isMeaningfulObject(record.beforeState) || !isMeaningfulObject(record.afterState)) {
-      gaps.push({
-        kind: "missing-before-after-state",
-        subject: record.subjectId,
-        message: "L3+ proof requires before and after state snapshots",
-      });
-    }
-    if (!isMeaningfulObject(record.beforeState)) {
-      gaps.push({
-        kind: "missing-before-state",
-        subject: record.subjectId,
-        message: "L3+ proof requires a before state snapshot",
-      });
-    }
-    if (!isMeaningfulObject(record.afterState)) {
-      gaps.push({
-        kind: "missing-after-state",
-        subject: record.subjectId,
-        message: "L3+ proof requires an after state snapshot",
-      });
-    }
-    if (!isMeaningfulObject(record.assertedStateDiff) || record.sideEffectsAsserted !== true) {
-      gaps.push({
-        kind: "missing-side-effect-evidence",
-        subject: record.subjectId,
-        message: "L3+ proof requires asserted state diff and side-effect assertion",
-      });
-    }
-    if (record.failurePathExercised !== true) {
-      gaps.push({
-        kind: "missing-failure-path",
-        subject: record.subjectId,
-        message: "L3+ proof requires an exercised failure path",
-      });
-    }
+    for (const gap of behaviourGaps(record)) gaps.push({ ...gap, subject: record.subjectId });
   }
-  if (proofLevelNumber(record.proofLevelClaimed) >= 4 && record.realLocalProviderUsed !== true) {
-    gaps.push({
-      kind: "missing-real-local-substrate",
-      subject: record.subjectId,
-      message: "L4 proof requires real local substrate evidence",
-    });
+  if (proofLevelNumber(record.proofLevelClaimed) >= 4) {
+    for (const gap of substrateGaps(record)) gaps.push({ ...gap, subject: record.subjectId });
   }
   if (proofLevelNumber(record.proofLevelClaimed) >= 4 && record.environmentMode === "dev") {
     gaps.push({
@@ -604,40 +662,11 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       message: "DEV semantic-dev proof cannot claim L4/L5/L6 strength",
     });
   }
-  if (proofLevelNumber(record.proofLevelClaimed) >= 5 && record.environmentMode === "test") {
-    gaps.push({
-      kind: "test-proof-claims-l5",
-      subject: record.subjectId,
-      message: "TEST compose-local proof cannot claim L5/L6 external sandbox strength",
-    });
-  }
-  if (
-    proofLevelNumber(record.proofLevelClaimed) >= 5 &&
-    (!record.externalSandboxProviderUsed || record.externalSandboxRequestIds.length === 0)
-  ) {
-    gaps.push({
-      kind: "missing-external-sandbox-request",
-      subject: record.subjectId,
-      message: "L5 proof requires external sandbox request/response ids",
-    });
+  if (proofLevelNumber(record.proofLevelClaimed) >= 5) {
+    for (const gap of resilienceGaps(record)) gaps.push({ ...gap, subject: record.subjectId });
   }
   if (proofLevelNumber(record.proofLevelClaimed) >= 6) {
-    const missing =
-      record.routeIds.length === 0 ||
-      record.workflowIds.length === 0 ||
-      record.eventIds.length === 0 ||
-      record.auditEventIds.length === 0 ||
-      record.traceIds.length === 0 ||
-      record.metricSamples.length === 0 ||
-      record.logCorrelationIds.length === 0;
-    if (missing) {
-      gaps.push({
-        kind: "missing-l6-correlation",
-        subject: record.subjectId,
-        message:
-          "L6 proof requires correlated UI/API/workflow/event/state/audit/trace/metric/log evidence",
-      });
-    }
+    for (const gap of foundationGaps(record)) gaps.push({ ...gap, subject: record.subjectId });
   }
   if (observabilitySubject(record) && !observabilityComplete(record)) {
     gaps.push({
@@ -664,47 +693,28 @@ export function observedLevelFromEvidence(record) {
   const hasShape = Boolean(
     record.proofId && record.commandExecuted && record.startedAt && record.endedAt
   );
-  const hasState =
-    isMeaningfulObject(record.beforeState) &&
-    isMeaningfulObject(record.afterState) &&
-    isMeaningfulObject(record.assertedStateDiff) &&
-    record.sideEffectsAsserted === true &&
-    record.failurePathExercised === true;
-  const hasBehaviour =
+  const hasExecutable = hasShape && record.exitStatus === 0;
+  const hasContract =
     hasShape &&
     record.exitStatus === 0 &&
-    (hasState ||
-      (record.assertionsObserved === true &&
-        record.expectedOutputsAsserted === true &&
-        record.failurePathExercised === true));
+    record.assertionsObserved === true &&
+    record.expectedOutputsAsserted === true;
+  const hasBehaviour = behaviourGaps(record).length === 0;
   const hasRealLocal =
-    hasState &&
+    hasBehaviour &&
     env === "test" &&
     record.providerMode === "compose-local" &&
     record.realLocalProviderUsed === true &&
     record.fakeProviderUsed !== true;
-  const hasSandbox =
-    hasState &&
-    (env === "staging" || env === "e2e") &&
-    record.externalSandboxProviderUsed === true &&
-    (record.externalSandboxRequestIds || []).length > 0;
-  const hasE2E =
-    hasState &&
-    (env === "staging" || env === "e2e") &&
-    record.fakeProviderUsed !== true &&
-    (record.routeIds || []).length > 0 &&
-    (record.workflowIds || []).length > 0 &&
-    (record.eventIds || []).length > 0 &&
-    (record.auditEventIds || []).length > 0 &&
-    (record.traceIds || []).length > 0 &&
-    (record.metricSamples || []).length > 0 &&
-    (record.logCorrelationIds || []).length > 0;
-  if (hasE2E) return 6;
-  if (hasSandbox) return 5;
+  const hasResilience = hasRealLocal && resilienceGaps(record).length === 0;
+  const hasFoundation = hasResilience && foundationGaps(record).length === 0;
+  if (hasFoundation) return 6;
+  if (hasResilience) return 5;
   if (hasRealLocal) return 4;
-  if (hasState) return 3;
-  if (hasBehaviour) return 2;
-  if (hasShape) return 1;
+  if (hasBehaviour) return 3;
+  if (hasContract) return 2;
+  if (hasExecutable) return 1;
+  if (hasShape) return 0;
   return 0;
 }
 
@@ -760,6 +770,14 @@ function environmentConsistencyGaps(record) {
       });
     }
   }
+  if (claimed >= 4 && behaviourGaps(record).length > 0) {
+    gaps.push({
+      kind: "l4-blocked-by-incomplete-l3",
+      subject: record.subjectId,
+      message:
+        "L4 Substrate Proven classification is blocked until L3 Behaviour Proven is complete",
+    });
+  }
   if (env === "test" && claimed >= 4) {
     if (record.providerMode !== "compose-local" || record.realLocalProviderUsed !== true) {
       gaps.push({
@@ -769,25 +787,20 @@ function environmentConsistencyGaps(record) {
       });
     }
   }
-  if (env === "test" && (record.externalSandboxProviderUsed || claimed >= 5)) {
+  if (claimed >= 5 && substrateGaps(record).length > 0) {
     gaps.push({
-      kind: "test-sandbox-overclaim",
+      kind: "l5-blocked-by-incomplete-l4",
       subject: record.subjectId,
-      message: "TEST proof cannot claim external sandbox provider strength",
+      message:
+        "L5 Resilience Proven classification is blocked until L4 Substrate Proven is complete",
     });
   }
-  if (claimed >= 5 && env !== "staging" && env !== "e2e") {
+  if (claimed >= 6 && resilienceGaps(record).length > 0) {
     gaps.push({
-      kind: "l5-environment-required",
+      kind: "l6-blocked-by-incomplete-l5",
       subject: record.subjectId,
-      message: "L5 external sandbox proof must execute in STAGING or a dedicated E2E environment",
-    });
-  }
-  if (claimed >= 6 && env !== "staging" && env !== "e2e") {
-    gaps.push({
-      kind: "l6-environment-required",
-      subject: record.subjectId,
-      message: "L6 end-to-end journey proof must execute in STAGING or a dedicated E2E environment",
+      message:
+        "L6 Foundation Proven classification is blocked until L5 Resilience Proven is complete",
     });
   }
   if (env === "prod" && claimed > 1) {
@@ -840,50 +853,11 @@ function ladderGaps(record) {
       message: `claimed ${record.proofLevelClaimed} exceeds observed ${proofLevelId(observed)}`,
     });
   }
-  if (claimed >= 2 && record.exitStatus !== 0) {
-    gaps.push({ kind: "l2-execution-failed", message: "L2+ proof command must exit zero" });
-  }
-  if (claimed >= 3) {
-    if (!isMeaningfulObject(record.beforeState)) {
-      gaps.push({ kind: "missing-before-state", message: "L3+ proof requires before state" });
-    }
-    if (!isMeaningfulObject(record.afterState)) {
-      gaps.push({ kind: "missing-after-state", message: "L3+ proof requires after state" });
-    }
-    if (!isMeaningfulObject(record.assertedStateDiff)) {
-      gaps.push({ kind: "missing-state-diff", message: "L3+ proof requires state diff" });
-    }
-    if (record.failurePathExercised !== true) {
-      gaps.push({ kind: "missing-failure-path", message: "L3+ proof requires failure path" });
-    }
-    if (record.sideEffectsAsserted !== true) {
-      gaps.push({
-        kind: "missing-side-effect-evidence",
-        message: "L3+ proof requires side-effect evidence",
-      });
-    }
-  }
-  if (claimed >= 4 && record.realLocalProviderUsed !== true) {
-    gaps.push({
-      kind: "missing-real-local-substrate",
-      message: "L4 proof requires real local substrate",
-    });
-  }
-  if (
-    claimed >= 5 &&
-    (!record.externalSandboxProviderUsed || record.externalSandboxRequestIds.length === 0)
-  ) {
-    gaps.push({
-      kind: "missing-external-sandbox-evidence",
-      message: "L5 proof requires sandbox request/response evidence",
-    });
-  }
-  if (claimed >= 6 && !l6CorrelationComplete(record)) {
-    gaps.push({
-      kind: "missing-l6-correlation",
-      message: "L6 proof requires UI/API/state/audit/trace/metric/log correlation",
-    });
-  }
+  if (claimed >= 2) gaps.push(...contractGaps(record));
+  if (claimed >= 3) gaps.push(...behaviourGaps(record));
+  if (claimed >= 4) gaps.push(...substrateGaps(record));
+  if (claimed >= 5) gaps.push(...resilienceGaps(record));
+  if (claimed >= 6) gaps.push(...foundationGaps(record));
   return gaps;
 }
 
@@ -917,68 +891,231 @@ function buildEnvironmentProofConsistencyReport(records) {
   };
 }
 
+function buildProofLadderMigrationReport() {
+  return {
+    artefact: "proof-ladder-migration-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: "PASS",
+    strategy:
+      "L3 Behaviour Proven is the current programme milestone; L4 Substrate Proven work is blocked until behavioural readiness is complete.",
+    oldToNewMapping: PROOF_LADDER_MIGRATION,
+    newProofLevels: PROOF_LEVELS,
+    policy: {
+      l3ClosureBeforeL4: true,
+      l4RequiresCompleteL3: true,
+      l5RequiresCompleteL4: true,
+      l6RequiresCompleteL5: true,
+      inMemoryParityProgrammeStatus: "complete",
+    },
+  };
+}
+
+function buildBehaviourProofLockingReport(records) {
+  const candidates = records.filter((record) => isBehaviourCandidate(record));
+  const proofs = candidates.map((record) => {
+    const gaps = behaviourGaps(record);
+    const delegatedBehaviourImports = delegatedRuntimeProofImports(record);
+    const inconsistencies = behaviourInconsistencies(record, gaps);
+    const blockingDeficiencies = [
+      ...gaps.map((gap) => gap.kind),
+      ...inconsistencies.map((gap) => gap.kind),
+    ];
+    return {
+      proofId: record.proofId,
+      subjectId: record.subjectId,
+      proofLevelClaimed: record.proofLevelClaimed,
+      proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
+      environmentMode: record.environmentMode,
+      providerMode: record.providerMode,
+      complete: gaps.length === 0 && inconsistencies.length === 0,
+      missingBeforeState: gaps.some((gap) => gap.kind === "missing-before-state"),
+      missingAfterState: gaps.some((gap) => gap.kind === "missing-after-state"),
+      missingAssertedStateDiff: gaps.some((gap) => gap.kind === "missing-asserted-state-diff"),
+      missingSideEffectAssertion: gaps.some((gap) => gap.kind === "missing-side-effect-assertion"),
+      missingFailurePathEvidence: gaps.some((gap) => gap.kind === "missing-failure-path-evidence"),
+      missingAuditEvidence: gaps.some((gap) => gap.kind === "missing-audit-evidence"),
+      missingMetricEvidence: gaps.some((gap) => gap.kind === "missing-metric-evidence"),
+      missingTraceEvidence: gaps.some((gap) => gap.kind === "missing-trace-evidence"),
+      missingTenantBoundaryEvidence: gaps.some(
+        (gap) => gap.kind === "missing-tenant-boundary-evidence"
+      ),
+      missingSecurityBoundaryEvidence: gaps.some(
+        (gap) => gap.kind === "missing-security-boundary-evidence"
+      ),
+      missingDeterministicReplayEvidence: gaps.some(
+        (gap) => gap.kind === "missing-deterministic-replay-evidence"
+      ),
+      delegatedBehaviourProofImports: delegatedBehaviourImports,
+      behaviouralEvidenceInconsistencies: inconsistencies,
+      behaviouralEvidenceOverstatingConfidence:
+        proofLevelNumber(record.proofLevelClaimed) >= 3 && gaps.length > 0,
+      severity: behaviourGapSeverity(record, gaps, inconsistencies),
+      remediationEffort: behaviourRemediationEffort(gaps, inconsistencies),
+      exactClosureAction: behaviourClosureAction(gaps, inconsistencies),
+      blockingDeficiencies,
+      evidenceFile: record.evidenceFile,
+      sourceFileRefs: record.sourceFileRefs,
+    };
+  });
+  const gaps = proofs
+    .filter((proof) => !proof.complete)
+    .map((proof) => ({
+      kind: "behaviour-proof-incomplete",
+      proofId: proof.proofId,
+      subject: proof.subjectId,
+      severity: proof.severity,
+      remediationEffort: proof.remediationEffort,
+      blockingDeficiencies: proof.blockingDeficiencies,
+      message: `Behaviour proof is incomplete: ${proof.blockingDeficiencies.join(", ")}`,
+      exactClosureAction: proof.exactClosureAction,
+    }));
+  return {
+    artefact: "behaviour-proof-locking-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    totalBehaviourCandidates: proofs.length,
+    completeBehaviourProofs: proofs.filter((proof) => proof.complete).length,
+    incompleteBehaviourProofs: proofs.filter((proof) => !proof.complete).length,
+    gaps,
+    proofs,
+  };
+}
+
+function buildBehaviourProofReadinessReport(ctx, records) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const bySubject = recordsBySubject(records);
+  const rows = capabilities.map((capability) => {
+    const capabilityRecords = uniqRecords([
+      ...recordsForRefs(bySubject, capability.dev?.requiredProofs || []),
+      ...recordsForRefs(bySubject, capability.test?.requiredProofs || []),
+      ...recordsForRefs(bySubject, capability.staging?.requiredProofs || []),
+    ]);
+    const candidates = capabilityRecords.filter((record) => isBehaviourCandidate(record));
+    const complete = candidates.filter((record) => behaviourGaps(record).length === 0);
+    const incomplete = candidates.filter((record) => behaviourGaps(record).length > 0);
+    const blockingDeficiencies = uniq(
+      incomplete.flatMap((record) => behaviourGaps(record).map((gap) => gap.kind))
+    );
+    return {
+      capability: capability.capability,
+      category: capability.category,
+      l3CandidateProofs: candidates.length,
+      completeL3Proofs: complete.length,
+      incompleteL3Proofs: incomplete.length,
+      behaviourProven: candidates.length > 0 && incomplete.length === 0,
+      eligibleForSubstrateProvenWork: candidates.length > 0 && incomplete.length === 0,
+      blockingDeficiencies,
+      closurePercentage:
+        candidates.length === 0
+          ? 0
+          : Math.round((complete.length / candidates.length) * 10000) / 100,
+      remainingClosureWork: incomplete.map((record) => ({
+        proofId: record.proofId,
+        subjectId: record.subjectId,
+        missing: behaviourGaps(record).map((gap) => gap.kind),
+      })),
+      evidenceProofIds: uniq(capabilityRecords.map((record) => record.proofId)),
+    };
+  });
+  const totalCandidates = rows.reduce((sum, row) => sum + row.l3CandidateProofs, 0);
+  const completeCandidates = rows.reduce((sum, row) => sum + row.completeL3Proofs, 0);
+  const incompleteCandidates = rows.reduce((sum, row) => sum + row.incompleteL3Proofs, 0);
+  const gaps = rows
+    .filter((row) => !row.behaviourProven)
+    .map((row) => ({
+      kind: "capability-behaviour-proof-missing",
+      capability: row.capability,
+      blockingDeficiencies: row.blockingDeficiencies,
+      message:
+        row.l3CandidateProofs === 0
+          ? `${row.capability} has no L3 Behaviour Proven candidate evidence`
+          : `${row.capability} has incomplete L3 Behaviour Proven evidence`,
+    }));
+  return {
+    artefact: "behaviour-proof-readiness-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    milestone: "L3 Behaviour Proven",
+    l4ExpansionBlockedUntilStatusPass: true,
+    totalL3Candidates: totalCandidates,
+    completeL3Proofs: completeCandidates,
+    incompleteL3Proofs: incompleteCandidates,
+    blockingDeficiencies: uniq(gaps.flatMap((gap) => gap.blockingDeficiencies)),
+    closurePercentage:
+      totalCandidates === 0 ? 0 : Math.round((completeCandidates / totalCandidates) * 10000) / 100,
+    remainingClosureWork: gaps,
+    capabilities: rows,
+  };
+}
+
 export function buildCapabilityProofReadinessReport(ctx, records) {
   const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
-  const bySubject = new Map();
-  for (const record of records) {
-    for (const subject of record.subjectIds || []) {
-      if (!bySubject.has(subject)) bySubject.set(subject, []);
-      bySubject.get(subject).push(record);
-    }
-  }
+  const bySubject = recordsBySubject(records);
   const rows = capabilities.map((capability) => {
     const devRecords = recordsForRefs(bySubject, capability.dev?.requiredProofs || []);
     const testRecords = recordsForRefs(bySubject, capability.test?.requiredProofs || []);
     const stagingRecords = recordsForRefs(bySubject, capability.staging?.requiredProofs || []);
     const allCapabilityRecords = uniqRecords([...devRecords, ...testRecords, ...stagingRecords]);
-    const highestSemanticLevel = maxObserved(
-      devRecords.filter((record) => record.environmentMode === "dev"),
-      3
+    const highestLevel = maxObserved(allCapabilityRecords);
+    const behaviourCandidates = allCapabilityRecords.filter((record) =>
+      isBehaviourCandidate(record)
     );
-    const highestProviderLevel = maxObserved(
-      testRecords.filter(
-        (record) => record.environmentMode === "test" && record.realLocalProviderUsed === true
-      ),
-      4
+    const behaviourComplete =
+      behaviourCandidates.length > 0 &&
+      behaviourCandidates.every((record) => behaviourGaps(record).length === 0);
+    const substrateEligible = behaviourComplete;
+    const substrateProven = allCapabilityRecords.some(
+      (record) => observedLevelFromEvidence(record) >= 4
     );
-    const highestSandboxLevel = maxObserved(
-      stagingRecords.filter(
-        (record) => record.environmentMode === "staging" && record.externalSandboxProviderUsed
-      ),
-      5
+    const resilienceProven = allCapabilityRecords.some(
+      (record) => observedLevelFromEvidence(record) >= 5
     );
-    const highestJourneyLevel = maxObserved(
-      allCapabilityRecords.filter((record) => l6CorrelationComplete(record)),
-      6
+    const foundationProven = allCapabilityRecords.some(
+      (record) => observedLevelFromEvidence(record) >= 6
     );
     const readiness = capabilityReadinessState({
-      semantic: highestSemanticLevel,
-      provider: highestProviderLevel,
-      sandbox: highestSandboxLevel,
-      journey: highestJourneyLevel,
+      discovery: allCapabilityRecords.length > 0 ? 0 : -1,
+      executable: highestLevel >= 1 ? 1 : 0,
+      contract: highestLevel >= 2 ? 2 : 0,
+      behaviour: behaviourComplete ? 3 : Math.min(highestLevel, 2),
+      substrate: substrateProven ? 4 : 0,
+      resilience: resilienceProven ? 5 : 0,
+      foundation: foundationProven ? 6 : 0,
     });
-    const requiredBands = capabilityRequiredBands(capability);
-    const missingBands = capabilityMissingBands({
-      semantic: highestSemanticLevel,
-      provider: highestProviderLevel,
-      sandbox: highestSandboxLevel,
-      journey: highestJourneyLevel,
+    const missingRequiredLevels = capabilityMissingLevels({
+      hasDiscovery: allCapabilityRecords.length > 0,
+      highestLevel,
+      behaviourComplete,
     });
-    const missingRequiredBands = missingBands.filter((band) => requiredBands.includes(band));
+    const futureBlockedLevels = capabilityFutureBlockedLevels({
+      behaviourComplete,
+      substrateProven,
+      resilienceProven,
+      foundationProven,
+    });
     return {
       capability: capability.capability,
       category: capability.category,
-      requiredBands,
-      highestSemanticLevelAchieved: proofLevelId(highestSemanticLevel),
-      highestProviderLevelAchieved: proofLevelId(highestProviderLevel),
-      highestSandboxLevelAchieved: proofLevelId(highestSandboxLevel),
-      highestJourneyLevelAchieved: proofLevelId(highestJourneyLevel),
+      currentClosureTarget: "L3 Behaviour Proven",
+      highestDiscoveryLevelAchieved: allCapabilityRecords.length > 0 ? "L0" : "NONE",
+      highestExecutableLevelAchieved: highestLevel >= 1 ? "L1" : "NONE",
+      highestContractLevelAchieved: highestLevel >= 2 ? "L2" : "NONE",
+      highestBehaviourLevelAchieved: behaviourComplete ? "L3" : "NONE",
+      highestSubstrateLevelAchieved: substrateProven ? "L4" : "NONE",
+      highestResilienceLevelAchieved: resilienceProven ? "L5" : "NONE",
+      highestFoundationLevelAchieved: foundationProven ? "L6" : "NONE",
       readiness,
-      fullServiceVerified: highestProviderLevel >= 4,
-      fullyProven: readiness === "FULLY_PROVEN",
+      l3BehaviourComplete: behaviourComplete,
+      eligibleForSubstrateProvenWork: substrateEligible,
+      fullServiceVerified: substrateProven,
+      fullyProven: foundationProven,
       evidenceProofIds: uniq(allCapabilityRecords.map((record) => record.proofId)),
-      missingBands,
-      missingRequiredBands,
+      missingRequiredLevels,
+      missingRequiredBands: missingRequiredLevels,
+      futureBlockedLevels,
     };
   });
   const gaps = rows.flatMap(capabilityReadinessGaps);
@@ -992,6 +1129,9 @@ export function buildCapabilityProofReadinessReport(ctx, records) {
     capabilityCount: rows.length,
     fullyProvenCapabilityCount: rows.filter((row) => row.fullyProven).length,
     fullServiceVerifiedCapabilityCount: rows.filter((row) => row.fullServiceVerified).length,
+    behaviourProvenCapabilityCount: rows.filter((row) => row.l3BehaviourComplete).length,
+    substrateEligibleCapabilityCount: rows.filter((row) => row.eligibleForSubstrateProvenWork)
+      .length,
     readinessCounts: rows.reduce((acc, row) => {
       acc[row.readiness] = (acc[row.readiness] || 0) + 1;
       return acc;
@@ -1269,7 +1409,7 @@ function buildNegativeControlReport(ctx) {
         proofLevelClaimed: "L6",
         auditEventIds: [],
       },
-      expectedKinds: ["missing-l6-correlation"],
+      expectedKinds: ["missing-audit-evidence"],
     },
     {
       id: "missing-trace-evidence",
@@ -1279,7 +1419,7 @@ function buildNegativeControlReport(ctx) {
         proofLevelClaimed: "L6",
         traceIds: [],
       },
-      expectedKinds: ["missing-l6-correlation"],
+      expectedKinds: ["missing-trace-evidence"],
     },
     {
       id: "missing-metric-evidence",
@@ -1290,7 +1430,7 @@ function buildNegativeControlReport(ctx) {
         metricSamples: [],
         metricEvidence: [],
       },
-      expectedKinds: ["missing-l6-correlation"],
+      expectedKinds: ["missing-metric-evidence"],
     },
     {
       id: "missing-workflow-correlation",
@@ -1300,7 +1440,7 @@ function buildNegativeControlReport(ctx) {
         proofLevelClaimed: "L6",
         workflowIds: [],
       },
-      expectedKinds: ["missing-l6-correlation"],
+      expectedKinds: ["proof-claim-overstated"],
     },
     {
       id: "missing-event-correlation",
@@ -1310,22 +1450,22 @@ function buildNegativeControlReport(ctx) {
         proofLevelClaimed: "L6",
         eventIds: [],
       },
-      expectedKinds: ["missing-l6-correlation"],
+      expectedKinds: ["proof-claim-overstated"],
     },
     {
       id: "missing-before-after-state",
       record: { ...base, proofId: "negative:missing-before-after-state", beforeState: {} },
-      expectedKinds: ["missing-before-after-state", "proof-claim-overstated"],
+      expectedKinds: ["missing-before-state", "proof-claim-overstated"],
     },
     {
       id: "missing-before-state",
       record: { ...base, proofId: "negative:missing-before-state", beforeState: {} },
-      expectedKinds: ["missing-before-after-state", "missing-before-state"],
+      expectedKinds: ["missing-before-state"],
     },
     {
       id: "missing-after-state",
       record: { ...base, proofId: "negative:missing-after-state", afterState: {} },
-      expectedKinds: ["missing-before-after-state", "missing-after-state"],
+      expectedKinds: ["missing-after-state"],
     },
     {
       id: "missing-failure-path",
@@ -1335,7 +1475,7 @@ function buildNegativeControlReport(ctx) {
         failurePathExercised: false,
         failureMode: "not-exercised",
       },
-      expectedKinds: ["missing-failure-path", "proof-claim-overstated"],
+      expectedKinds: ["missing-failure-path-evidence", "proof-claim-overstated"],
     },
     {
       id: "stale-evidence",
@@ -1350,7 +1490,7 @@ function buildNegativeControlReport(ctx) {
         proofLevelClaimed: "L6",
         routeIds: [],
       },
-      expectedKinds: ["proof-claim-overstated", "missing-l6-correlation"],
+      expectedKinds: ["proof-claim-overstated", "l6-blocked-by-incomplete-l5"],
     },
     {
       id: "broad-route-mapping",
@@ -1420,6 +1560,8 @@ function buildFormalProofReadinessReport({
   claimVsObserved,
   ladderCompliance,
   environmentConsistency,
+  behaviourLocking,
+  behaviourReadiness,
   capabilityReadiness,
   inMemoryParity,
   routeSubjectMap,
@@ -1441,6 +1583,16 @@ function buildFormalProofReadinessReport({
     ...environmentConsistency.gaps.map((gap) => ({
       kind: gap.kind,
       subject: gap.subject,
+      message: gap.message,
+    })),
+    ...behaviourLocking.gaps.map((gap) => ({
+      kind: gap.kind,
+      subject: gap.subject,
+      message: gap.message,
+    })),
+    ...behaviourReadiness.remainingClosureWork.map((gap) => ({
+      kind: gap.kind,
+      subject: gap.capability,
       message: gap.message,
     })),
     ...inMemoryParity.gaps.map((gap) => ({
@@ -1479,6 +1631,10 @@ function buildFormalProofReadinessReport({
       routeProofSubjectGaps: routeSubjectMap.gaps.length,
       proofLadderComplianceGaps: ladderCompliance.gaps.length,
       environmentProofConsistencyGaps: environmentConsistency.gaps.length,
+      behaviourProofLockingGaps: behaviourLocking.gaps.length,
+      behaviourReadinessStatus: behaviourReadiness.status,
+      behaviourReadinessGaps: behaviourReadiness.remainingClosureWork.length,
+      behaviourClosurePercentage: behaviourReadiness.closurePercentage,
       capabilityReadinessComputed: capabilityReadiness.capabilityCount,
       capabilityReadinessStatus: capabilityReadiness.status,
       capabilityReadinessGaps: capabilityReadiness.gaps.length,
@@ -1641,6 +1797,185 @@ function observabilityComplete(record) {
   );
 }
 
+function behaviourGaps(record) {
+  const gaps = [];
+  if (!isMeaningfulObject(record.beforeState)) {
+    gaps.push({
+      kind: "missing-before-state",
+      message: "L3 Behaviour Proven requires before-state evidence",
+    });
+  }
+  if (!isMeaningfulObject(record.afterState)) {
+    gaps.push({
+      kind: "missing-after-state",
+      message: "L3 Behaviour Proven requires after-state evidence",
+    });
+  }
+  if (!isMeaningfulObject(record.assertedStateDiff)) {
+    gaps.push({
+      kind: "missing-asserted-state-diff",
+      message: "L3 Behaviour Proven requires asserted state diff evidence",
+    });
+  }
+  if (record.sideEffectsAsserted !== true) {
+    gaps.push({
+      kind: "missing-side-effect-assertion",
+      message: "L3 Behaviour Proven requires side-effect assertion",
+    });
+  }
+  if (record.failurePathExercised !== true) {
+    gaps.push({
+      kind: "missing-failure-path-evidence",
+      message: "L3 Behaviour Proven requires exercised failure-path evidence",
+    });
+  }
+  if ((record.auditEventIds || []).length === 0) {
+    gaps.push({
+      kind: "missing-audit-evidence",
+      message: "L3 Behaviour Proven requires audit evidence",
+    });
+  }
+  if ((record.metricSamples || []).length === 0) {
+    gaps.push({
+      kind: "missing-metric-evidence",
+      message: "L3 Behaviour Proven requires metric evidence",
+    });
+  }
+  if ((record.traceIds || []).length === 0) {
+    gaps.push({
+      kind: "missing-trace-evidence",
+      message: "L3 Behaviour Proven requires trace evidence",
+    });
+  }
+  if (record.tenantBoundaryAsserted !== true) {
+    gaps.push({
+      kind: "missing-tenant-boundary-evidence",
+      message: "L3 Behaviour Proven requires tenant-boundary evidence",
+    });
+  }
+  if (record.securityBoundaryAsserted !== true) {
+    gaps.push({
+      kind: "missing-security-boundary-evidence",
+      message: "L3 Behaviour Proven requires security-boundary evidence",
+    });
+  }
+  if (record.deterministicReplaySupported !== true) {
+    gaps.push({
+      kind: "missing-deterministic-replay-evidence",
+      message: "L3 Behaviour Proven requires deterministic replay evidence",
+    });
+  }
+  return gaps;
+}
+
+function contractGaps(record) {
+  const gaps = [];
+  if (record.exitStatus !== 0) {
+    gaps.push({
+      kind: "proof-command-failed",
+      message: "L1 Executable Proven requires proof command success",
+    });
+  }
+  if (record.assertionsObserved !== true) {
+    gaps.push({
+      kind: "missing-contract-assertions",
+      message: "L2 Contract Proven requires interface/input/output/permission assertions",
+    });
+  }
+  if (record.expectedOutputsAsserted !== true) {
+    gaps.push({
+      kind: "missing-expected-output-assertions",
+      message: "L2 Contract Proven requires expected output assertions",
+    });
+  }
+  return gaps;
+}
+
+function substrateGaps(record) {
+  const gaps = [];
+  if (behaviourGaps(record).length > 0) {
+    gaps.push({
+      kind: "l3-behaviour-incomplete",
+      message: "L4 Substrate Proven requires complete L3 Behaviour Proven evidence first",
+    });
+  }
+  if (record.realLocalProviderUsed !== true) {
+    gaps.push({
+      kind: "missing-real-local-substrate",
+      message: "L4 Substrate Proven requires real local substrate evidence",
+    });
+  }
+  if (record.providerMode !== "compose-local") {
+    gaps.push({
+      kind: "missing-compose-local-provider-mode",
+      message: "L4 Substrate Proven requires compose-local provider mode",
+    });
+  }
+  if (record.fakeProviderUsed === true || record.inMemoryProviderUsed === true) {
+    gaps.push({
+      kind: "substrate-provider-class-overclaim",
+      message: "L4 Substrate Proven cannot be backed by fake or in-memory provider evidence",
+    });
+  }
+  return gaps;
+}
+
+function resilienceGaps(record) {
+  const gaps = [];
+  if (substrateGaps(record).length > 0) {
+    gaps.push({
+      kind: "l4-substrate-incomplete",
+      message: "L5 Resilience Proven requires complete L4 Substrate Proven evidence first",
+    });
+  }
+  const requirements = [
+    ["restartEvidence", "missing-restart-evidence", "restart evidence"],
+    ["timeoutEvidence", "missing-timeout-evidence", "timeout evidence"],
+    ["retryEvidence", "missing-retry-evidence", "retry evidence"],
+    ["concurrencyEvidence", "missing-concurrency-evidence", "concurrency evidence"],
+    ["recoveryEvidence", "missing-recovery-evidence", "recovery evidence"],
+    ["backupRestoreEvidence", "missing-backup-restore-evidence", "backup/restore evidence"],
+    ["degradedModeEvidence", "missing-degraded-mode-evidence", "degraded-mode evidence"],
+    [
+      "failureInjectionEvidence",
+      "missing-failure-injection-evidence",
+      "failure injection evidence",
+    ],
+  ];
+  for (const [field, kind, label] of requirements) {
+    if (!isMeaningfulEvidence(record[field])) {
+      gaps.push({ kind, message: `L5 Resilience Proven requires ${label}` });
+    }
+  }
+  return gaps;
+}
+
+function foundationGaps(record) {
+  const gaps = [];
+  if (resilienceGaps(record).length > 0) {
+    gaps.push({
+      kind: "l5-resilience-incomplete",
+      message: "L6 Foundation Proven requires complete L5 Resilience Proven evidence first",
+    });
+  }
+  const requirements = [
+    ["tenantBoundaryAsserted", "missing-foundation-tenancy", "tenancy"],
+    ["securityBoundaryAsserted", "missing-foundation-security", "security"],
+    ["auditEventIds", "missing-foundation-audit", "audit"],
+    ["traceIds", "missing-foundation-trace", "trace"],
+    ["metricSamples", "missing-foundation-metric", "metric"],
+    ["logCorrelationIds", "missing-foundation-log", "log"],
+    ["cleanupResult", "missing-foundation-operational-recovery", "operational recovery"],
+    ["sourceFileRefs", "missing-foundation-lifecycle-governance", "lifecycle governance"],
+  ];
+  for (const [field, kind, label] of requirements) {
+    if (!isMeaningfulEvidence(record[field])) {
+      gaps.push({ kind, message: `L6 Foundation Proven requires ${label} evidence` });
+    }
+  }
+  return gaps;
+}
+
 function l6CorrelationComplete(record) {
   const env = record.environmentMode || record.environment;
   return (
@@ -1658,6 +1993,89 @@ function l6CorrelationComplete(record) {
     (record.metricSamples || []).length > 0 &&
     (record.logCorrelationIds || []).length > 0
   );
+}
+
+function recordsBySubject(records) {
+  const bySubject = new Map();
+  for (const record of records) {
+    for (const subject of record.subjectIds || []) {
+      if (!bySubject.has(subject)) bySubject.set(subject, []);
+      bySubject.get(subject).push(record);
+    }
+  }
+  return bySubject;
+}
+
+function isBehaviourCandidate(record) {
+  return (
+    proofLevelNumber(record.proofLevelClaimed) >= 3 ||
+    isMeaningfulObject(record.beforeState) ||
+    isMeaningfulObject(record.afterState) ||
+    isMeaningfulObject(record.assertedStateDiff) ||
+    record.sideEffectsAsserted === true ||
+    record.failurePathExercised === true ||
+    record.tenantBoundaryAsserted === true ||
+    record.securityBoundaryAsserted === true
+  );
+}
+
+function delegatedRuntimeProofImports(record) {
+  const out = [];
+  for (const ref of record.sourceFileRefs || []) {
+    if (!fs.existsSync(ref)) continue;
+    const text = fs.readFileSync(ref, "utf8");
+    const matches =
+      text.match(
+        /from\s+["'][^"']*runtime-proof[^"']*["']|import\s*\([^)]*runtime-proof[^)]*\)/g
+      ) || [];
+    out.push(...matches.map((match) => ({ sourceFileRef: ref, importRef: match })));
+  }
+  return out;
+}
+
+function behaviourInconsistencies(record, gaps) {
+  const inconsistencies = [];
+  if (record.proofLevelObserved === "L3" && gaps.length > 0) {
+    inconsistencies.push({
+      kind: "observed-l3-with-behaviour-gaps",
+      message: "record reports L3 while behavioural gap analysis is incomplete",
+    });
+  }
+  if (record.sideEffectsAsserted === true && !isMeaningfulObject(record.assertedStateDiff)) {
+    inconsistencies.push({
+      kind: "side-effects-without-state-diff",
+      message: "side effects are asserted without an asserted state diff",
+    });
+  }
+  if (record.failurePathExercised === true && !isMeaningfulEvidence(record.failureMode)) {
+    inconsistencies.push({
+      kind: "failure-path-without-failure-mode",
+      message: "failure path is marked exercised without failure-mode evidence",
+    });
+  }
+  return inconsistencies;
+}
+
+function behaviourGapSeverity(record, gaps, inconsistencies) {
+  if (proofLevelNumber(record.proofLevelClaimed) >= 4 && gaps.length > 0) return "critical";
+  if (proofLevelNumber(record.proofLevelClaimed) >= 3 && gaps.length > 0) return "high";
+  if (inconsistencies.length > 0) return "medium";
+  if (gaps.length > 0) return "medium";
+  return "none";
+}
+
+function behaviourRemediationEffort(gaps, inconsistencies) {
+  const count = gaps.length + inconsistencies.length;
+  if (count === 0) return "none";
+  if (count <= 2) return "small";
+  if (count <= 5) return "medium";
+  return "large";
+}
+
+function behaviourClosureAction(gaps, inconsistencies) {
+  if (gaps.length === 0 && inconsistencies.length === 0) return "No action required.";
+  const missing = [...gaps, ...inconsistencies].map((gap) => gap.kind).join(", ");
+  return `Update the proof to emit runtime evidence for: ${missing}. Do not increase L4 classification until these L3 behavioural fields are complete.`;
 }
 
 function recordsForRefs(bySubject, refs) {
@@ -1683,25 +2101,50 @@ function maxObserved(records, cap = 6) {
   );
 }
 
-function capabilityReadinessState({ semantic, provider, sandbox, journey }) {
-  if (semantic >= 3 && provider >= 4 && sandbox >= 5 && journey >= 6) return "FULLY_PROVEN";
-  if (semantic >= 3 && provider >= 4) return "PROVIDER_PROVEN";
-  if (semantic >= 3) return "SEMANTIC_PROVEN";
-  if (semantic > 0 || provider > 0 || sandbox > 0 || journey > 0) return "PARTIALLY_PROVEN";
+function capabilityReadinessState({
+  discovery,
+  executable,
+  contract,
+  behaviour,
+  substrate,
+  resilience,
+  foundation,
+}) {
+  if (foundation >= 6) return "FOUNDATION_PROVEN";
+  if (resilience >= 5) return "RESILIENCE_PROVEN";
+  if (substrate >= 4) return "SUBSTRATE_PROVEN";
+  if (behaviour >= 3) return "BEHAVIOUR_PROVEN";
+  if (contract >= 2) return "CONTRACT_PROVEN";
+  if (executable >= 1) return "EXECUTABLE_PROVEN";
+  if (discovery >= 0) return "DISCOVERY_PROVEN";
   return "UNPROVEN";
 }
 
-function capabilityMissingBands({ semantic, provider, sandbox, journey }) {
+function capabilityMissingLevels({ hasDiscovery, highestLevel, behaviourComplete }) {
   const missing = [];
-  if (semantic < 3) missing.push("semantic-L3");
-  if (provider < 4) missing.push("provider-L4");
-  if (sandbox < 5) missing.push("sandbox-L5");
-  if (journey < 6) missing.push("journey-L6");
+  if (!hasDiscovery) missing.push("discovery-L0");
+  if (highestLevel < 1) missing.push("executable-L1");
+  if (highestLevel < 2) missing.push("contract-L2");
+  if (!behaviourComplete) missing.push("behaviour-L3");
   return missing;
 }
 
+function capabilityFutureBlockedLevels({
+  behaviourComplete,
+  substrateProven,
+  resilienceProven,
+  foundationProven,
+}) {
+  const blocked = [];
+  if (!behaviourComplete) blocked.push("substrate-L4-blocked-until-L3");
+  if (!substrateProven) blocked.push("resilience-L5-blocked-until-L4");
+  if (!resilienceProven) blocked.push("foundation-L6-blocked-until-L5");
+  if (!foundationProven) blocked.push("foundation-not-yet-proven");
+  return blocked;
+}
+
 function capabilityReadinessGaps(row) {
-  return (row.missingRequiredBands || []).map((band) => ({
+  return (row.missingRequiredLevels || row.missingRequiredBands || []).map((band) => ({
     kind: capabilityGapKind(band),
     capability: row.capability,
     readiness: row.readiness,
@@ -1712,32 +2155,15 @@ function capabilityReadinessGaps(row) {
 
 function capabilityGapKind(band) {
   const map = {
-    "semantic-L3": "capability-semantic-proof-missing",
-    "provider-L4": "capability-real-provider-proof-missing",
-    "sandbox-L5": "capability-external-sandbox-proof-missing",
-    "journey-L6": "capability-end-to-end-journey-proof-missing",
+    "discovery-L0": "capability-discovery-proof-missing",
+    "executable-L1": "capability-executable-proof-missing",
+    "contract-L2": "capability-contract-proof-missing",
+    "behaviour-L3": "capability-behaviour-proof-missing",
+    "substrate-L4-blocked-until-L3": "capability-substrate-proof-blocked-by-l3",
+    "resilience-L5-blocked-until-L4": "capability-resilience-proof-blocked-by-l4",
+    "foundation-L6-blocked-until-L5": "capability-foundation-proof-blocked-by-l5",
   };
   return map[band] || "capability-proof-band-missing";
-}
-
-function capabilityRequiredBands(capability) {
-  const required = ["semantic-L3"];
-  if (capabilityRequiresRealProviderProof(capability)) required.push("provider-L4");
-  if (capabilityRequiresExternalSandboxProof(capability)) required.push("sandbox-L5");
-  if (Number(capability.staging?.proofLevelRequired || 0) >= 6) required.push("journey-L6");
-  return required;
-}
-
-function capabilityRequiresRealProviderProof(capability) {
-  const providerClass = capability.test?.providerClass;
-  const provider = capability.test?.provider;
-  return providerClass === "compose-local" && !isStaticOrHermeticProvider(provider);
-}
-
-function capabilityRequiresExternalSandboxProof(capability) {
-  return ["external-sandbox", "sandbox-external", "prod-shaped-sandbox"].includes(
-    capability.staging?.providerClass
-  );
 }
 
 function isStaticOrHermeticProvider(provider) {
@@ -1752,6 +2178,13 @@ function isStaticOrHermeticProvider(provider) {
 
 function isMeaningfulObject(value) {
   return Boolean(value && typeof value === "object" && Object.keys(value).length > 0);
+}
+
+function isMeaningfulEvidence(value) {
+  if (Array.isArray(value)) return value.length > 0;
+  if (value === true) return true;
+  if (typeof value === "string") return value.length > 0;
+  return isMeaningfulObject(value);
 }
 
 function uniq(values) {

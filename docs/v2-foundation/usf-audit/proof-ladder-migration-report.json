@@ -1,0 +1,102 @@
+{
+  "artefact": "proof-ladder-migration-report",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-23T10:59:03.162Z",
+  "status": "PASS",
+  "strategy": "L3 Behaviour Proven is the current programme milestone; L4 Substrate Proven work is blocked until behavioural readiness is complete.",
+  "oldToNewMapping": [
+    {
+      "level": "L0",
+      "oldClassification": "declaration only",
+      "newClassification": "Discovery Proven",
+      "rationale": "L0 is retained as non-executable inventory confidence covering discovered capabilities, routes, workflows, providers, storage, events, ownership, and dependencies."
+    },
+    {
+      "level": "L1",
+      "oldClassification": "schema/contract shape",
+      "newClassification": "Executable Proven",
+      "rationale": "Successful proof command execution is now separated from contract confidence so no-crash evidence is not overstated."
+    },
+    {
+      "level": "L2",
+      "oldClassification": "unit behaviour",
+      "newClassification": "Contract Proven",
+      "rationale": "L2 now means interface/input/output/permission/invariant contract exercise only; state transitions belong to L3."
+    },
+    {
+      "level": "L3",
+      "oldClassification": "state transition + side effects",
+      "newClassification": "Behaviour Proven",
+      "rationale": "L3 is expanded into the explicit behavioural closure target: before/after state, state diff, side effects, failure path, audit/metric/trace, tenant/security boundaries, and deterministic replay."
+    },
+    {
+      "level": "L4",
+      "oldClassification": "local real substrate",
+      "newClassification": "Substrate Proven",
+      "rationale": "L4 remains real local substrate confidence but is now gated by complete L3 behavioural evidence."
+    },
+    {
+      "level": "L5",
+      "oldClassification": "external sandbox/provider",
+      "newClassification": "Resilience Proven",
+      "rationale": "L5 no longer means external sandbox alone; it requires L4 plus restart, timeout, retry, concurrency, recovery, backup/restore, degraded-mode, and failure-injection evidence."
+    },
+    {
+      "level": "L6",
+      "oldClassification": "end-to-end journey",
+      "newClassification": "Foundation Proven",
+      "rationale": "L6 is now full foundation assurance: L5 plus tenancy, security, observability, operational recovery, lifecycle governance, and ownership."
+    }
+  ],
+  "newProofLevels": [
+    {
+      "level": 0,
+      "id": "L0",
+      "name": "Discovery Proven",
+      "purpose": "inventory confidence only; no execution guarantees"
+    },
+    {
+      "level": 1,
+      "id": "L1",
+      "name": "Executable Proven",
+      "purpose": "execution confidence only; no behavioural guarantees"
+    },
+    {
+      "level": 2,
+      "id": "L2",
+      "name": "Contract Proven",
+      "purpose": "contract confidence; no state-transition guarantees"
+    },
+    {
+      "level": 3,
+      "id": "L3",
+      "name": "Behaviour Proven",
+      "purpose": "behavioural confidence and current programme closure target"
+    },
+    {
+      "level": 4,
+      "id": "L4",
+      "name": "Substrate Proven",
+      "purpose": "implementation correctness confidence against real local substrate"
+    },
+    {
+      "level": 5,
+      "id": "L5",
+      "name": "Resilience Proven",
+      "purpose": "operational survivability confidence"
+    },
+    {
+      "level": 6,
+      "id": "L6",
+      "name": "Foundation Proven",
+      "purpose": "USF primitives proven sufficient for production-grade services"
+    }
+  ],
+  "policy": {
+    "l3ClosureBeforeL4": true,
+    "l4RequiresCompleteL3": true,
+    "l5RequiresCompleteL4": true,
+    "l6RequiresCompleteL5": true,
+    "inMemoryParityProgrammeStatus": "complete"
+  }
+}

@@ -10,8 +10,8 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   296 |
-| capability proof readiness gaps             |    89 |
+| formal proof readiness gaps                 |   207 |
+| capability proof readiness gaps             |     0 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
 | routes discovered                           |   235 |
@@ -245,46 +245,3 @@ The adversarial runtime inventory status is reported separately from formal proo
 - route-proof-evidence-missing: GET /api/theme - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted before/after state evidence
 - route-proof-evidence-missing: GET /e2e-harness - route proof has explicit subject refs but no emitted evidence record
-- capability-real-provider-proof-missing: Tenant identity (record + FQDN) - Tenant identity (record + FQDN) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: User identity + tenant membership - User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: End-user profile + preferences self-service - End-user profile + preferences self-service is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: API keys / personal access tokens - API keys / personal access tokens is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Tenant groups - Tenant groups is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Sub-organisations - Sub-organisations is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: RBAC (roles + permissions) - RBAC (roles + permissions) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: ABAC / Policy Decision Point - ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: ABAC / Policy Decision Point - ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Delegated administration roles - Delegated administration roles is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Entitlement engine - Entitlement engine is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Support-mode / break-glass access - Support-mode / break-glass access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Audit of privileged access - Audit of privileged access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Platform login + session - Platform login + session is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Platform login + session - Platform login + session is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: IdP brokering + OIDC provider management - IdP brokering + OIDC provider management is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: IdP brokering + OIDC provider management - IdP brokering + OIDC provider management is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Claim mapping + group/role mapping - Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Claim mapping + group/role mapping - Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: MFA + session policy + lockout - MFA + session policy + lockout is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: MFA + session policy + lockout - MFA + session policy + lockout is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Configuration registry + history - Configuration registry + history is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Branding + theming - Branding + theming is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Custom domains, DNS ownership, TLS, canonical - Custom domains, DNS ownership, TLS, canonical is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Custom domains, DNS ownership, TLS, canonical - Custom domains, DNS ownership, TLS, canonical is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Write-only secret settings - Write-only secret settings is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Write-only secret settings - Write-only secret settings is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Product catalog, plans, prices - Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Subscriptions, invoices, payment methods, dunning - Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Subscriptions, invoices, payment methods, dunning - Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Usage metering + meter event ingestion - Usage metering + meter event ingestion is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Quota enforcement - Quota enforcement is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Relational storage + migrations + RLS - Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Backup + restore - Backup + restore is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: PITR, retention, legal hold, data residency - PITR, retention, legal hold, data residency is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Data governance: catalog, lineage, classification, PII, DSR/GDPR - Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Tenant data import / export - Tenant data import / export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Search + indexing (product search) - Search + indexing (product search) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Object storage + tenant prefixes + signed URLs - Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Object storage + tenant prefixes + signed URLs - Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Event bus, durable queues, DLQ, redrive - Event bus, durable queues, DLQ, redrive is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Workflow engine, scheduled jobs, approvals - Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Workflow engine, scheduled jobs, approvals - Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence

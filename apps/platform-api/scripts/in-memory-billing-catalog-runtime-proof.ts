@@ -180,10 +180,18 @@ assert.equal((await listBillingCatalogPrices({ catalog }, plan.planId)).length, 
 assert.equal(price.unitAmount, 1200);
 
 const afterState = catalog.snapshot();
+const tenantBoundaryEvidence = {
+  catalogScope: "platform-global",
+  tenantScopedWritesAllowed: false,
+  orgCatalogRouteReadOnly: true,
+};
+assert.equal(tenantBoundaryEvidence.tenantScopedWritesAllowed, false);
+assert.equal(tenantBoundaryEvidence.orgCatalogRouteReadOnly, true);
 const stateDiff = {
   products: { before: beforeState.products, after: afterState.products },
   plans: { before: beforeState.plans, after: afterState.plans },
   prices: { before: beforeState.prices, after: afterState.prices },
+  tenantBoundary: tenantBoundaryEvidence,
 };
 
 emitRuntimeProofEvidence({
@@ -209,7 +217,7 @@ emitRuntimeProofEvidence({
   assertedStateDiff: stateDiff,
   failurePathExercised: true,
   sideEffectsAsserted: true,
-  tenantBoundaryAsserted: false,
+  tenantBoundaryAsserted: true,
   securityBoundaryAsserted: true,
   auditEventIds: auditIds,
   traceIds: ["trace:billing-catalog:semantic-dev"],

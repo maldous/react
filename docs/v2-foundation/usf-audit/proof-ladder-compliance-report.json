@@ -1,43 +1,50 @@
 {
   "artefact": "proof-ladder-compliance-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T10:29:34.147Z",
+  "generatedAt": "2026-06-23T10:59:03.162Z",
   "status": "PASS",
   "ladder": [
     {
       "level": 0,
       "id": "L0",
-      "name": "declaration only"
+      "name": "Discovery Proven",
+      "purpose": "inventory confidence only; no execution guarantees"
     },
     {
       "level": 1,
       "id": "L1",
-      "name": "schema/contract shape"
+      "name": "Executable Proven",
+      "purpose": "execution confidence only; no behavioural guarantees"
     },
     {
       "level": 2,
       "id": "L2",
-      "name": "unit behaviour"
+      "name": "Contract Proven",
+      "purpose": "contract confidence; no state-transition guarantees"
     },
     {
       "level": 3,
       "id": "L3",
-      "name": "state transition + side effects"
+      "name": "Behaviour Proven",
+      "purpose": "behavioural confidence and current programme closure target"
     },
     {
       "level": 4,
       "id": "L4",
-      "name": "local real substrate"
+      "name": "Substrate Proven",
+      "purpose": "implementation correctness confidence against real local substrate"
     },
     {
       "level": 5,
       "id": "L5",
-      "name": "external sandbox/provider"
+      "name": "Resilience Proven",
+      "purpose": "operational survivability confidence"
     },
     {
       "level": 6,
       "id": "L6",
-      "name": "end-to-end journey"
+      "name": "Foundation Proven",
+      "purpose": "USF primitives proven sufficient for production-grade services"
     }
   ],
   "environmentModel": {
@@ -49,14 +56,14 @@
       "forbiddenLevels": ["L4", "L5", "L6"]
     },
     "test": {
-      "purpose": "Real provider validation",
+      "purpose": "Substrate validation after L3 closure",
       "providerModes": ["compose-local", "hermetic", "route-contract"],
       "minStrictProviderLevel": 4,
-      "maxLevel": 4,
-      "forbiddenLevels": ["L5", "L6"]
+      "maxLevel": 5,
+      "forbiddenLevels": ["L6"]
     },
     "staging": {
-      "purpose": "Production rehearsal",
+      "purpose": "Foundation and production-rehearsal assurance after L3/L4 closure",
       "providerModes": [
         "external-sandbox",
         "sandbox-external",
@@ -640,7 +647,7 @@
       "environment": "dev",
       "providerMode": "semantic-dev",
       "proofLevelClaimed": "L1",
-      "proofLevelObserved": "L1",
+      "proofLevelObserved": "L2",
       "compliant": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof.json"

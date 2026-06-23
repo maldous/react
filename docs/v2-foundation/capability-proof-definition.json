@@ -13,19 +13,22 @@
   },
   "requiredFacet": "proof",
   "proofLevels": {
-    "0": "route existence only",
-    "1": "contract existence",
-    "2": "behaviour validation",
-    "3": "state machine validation",
-    "4": "live substrate validation",
-    "5": "end-to-end semantic validation"
+    "0": "Discovery Proven: inventory confidence only; no execution guarantees",
+    "1": "Executable Proven: proof command executes successfully with expected output and no crash",
+    "2": "Contract Proven: interface/input/output/permission/invariant contract exercised",
+    "3": "Behaviour Proven: before/after state, state diff, side effects, failure path, audit, metric, trace, tenancy, security, and deterministic replay evidence",
+    "4": "Substrate Proven: same behavioural proof executed against Compose-backed real local substrate after L3 closure",
+    "5": "Resilience Proven: L4 plus restart, timeout, retry, concurrency, recovery, backup/restore, degraded-mode, and failure-injection evidence",
+    "6": "Foundation Proven: L5 plus tenancy, security, observability, operational recovery, lifecycle governance, and ownership"
   },
   "minimumDefinition": {
     "unitProof": "unit test or explicit n/a with rationale",
     "integrationProof": "integration/substrate proof or explicit n/a with rationale",
     "runtimeProof": "runtime proof script or explicit n/a with rationale",
-    "level": "integer 0-5",
+    "level": "integer 0-6",
+    "currentProgrammeMilestone": "L3 Behaviour Proven",
     "deliveredAndProvenMinimumLevel": 3,
+    "l4Prerequisite": "all associated L3 behavioural gaps are closed",
     "liveProviderMinimumLevel": 4,
     "proofLevelRationale": "required for every proof inventory record",
     "capabilitiesProven": "array of named capabilities or empty only when the proof validates shared tool/runtime infrastructure",
@@ -40,9 +43,12 @@
     "expectedFailureMode": "how failure is observed"
   },
   "rules": [
-    "Level 0/1 proofs cannot close foundational capability semantics.",
-    "Provider-backed capabilities require Level 4 unless explicitly external-limited in the capability evidence.",
-    "Critical cross-capability journeys require Level 5 or documented rationale.",
+    "L0 Discovery Proven is inventory confidence only.",
+    "L1 Executable Proven is execution confidence only.",
+    "L2 Contract Proven cannot claim state-transition guarantees.",
+    "L3 Behaviour Proven is the current closure target.",
+    "No capability may be upgraded to L4 until all associated L3 behavioural gaps are closed.",
+    "L5 requires L4; L6 requires L5.",
     "Prod-safe proofs must be non-destructive.",
     "Destructive proofs must be dev/test/staging only."
   ]

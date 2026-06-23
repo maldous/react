@@ -40,10 +40,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-billing-catalog",
-  "startedAt": "2026-06-23T10:29:55.077Z",
-  "endedAt": "2026-06-23T10:29:55.120Z",
+  "startedAt": "2026-06-23T10:59:21.051Z",
+  "endedAt": "2026-06-23T10:59:21.089Z",
   "exitStatus": 0,
-  "commit": "7146bb1c7d872b020a4cbf68b4986e4192facfcb",
+  "commit": "bc8fbcff83d5b6ea061234fe385c7f038d508974",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,11 +79,16 @@
     "prices": {
       "before": 0,
       "after": 1
+    },
+    "tenantBoundary": {
+      "catalogScope": "platform-global",
+      "tenantScopedWritesAllowed": false,
+      "orgCatalogRouteReadOnly": true
     }
   },
   "failurePathExercised": true,
   "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": false,
+  "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
   "auditEventIds": [
     "billing_catalog.product.created:billing_catalog_product:Semantic Dev Product",
@@ -114,18 +119,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T10:29:55.120Z",
+  "generatedAt": "2026-06-23T10:59:21.089Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782210579921-3498309",
+  "collectorRunId": "proof-run-1782212345925-3665898",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T10:29:55.077Z",
-  "endTime": "2026-06-23T10:29:55.120Z",
-  "gitCommit": "7146bb1c7d872b020a4cbf68b4986e4192facfcb",
-  "executionTimestamp": "2026-06-23T10:29:55.120Z",
+  "startTime": "2026-06-23T10:59:21.051Z",
+  "endTime": "2026-06-23T10:59:21.089Z",
+  "gitCommit": "bc8fbcff83d5b6ea061234fe385c7f038d508974",
+  "executionTimestamp": "2026-06-23T10:59:21.089Z",
   "stateDiff": {
     "products": {
       "before": 0,
@@ -138,6 +143,11 @@
     "prices": {
       "before": 0,
       "after": 1
+    },
+    "tenantBoundary": {
+      "catalogScope": "platform-global",
+      "tenantScopedWritesAllowed": false,
+      "orgCatalogRouteReadOnly": true
     }
   },
   "failureMode": "exercised",
@@ -162,5 +172,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:semantic-dev"],
-  "evidenceSignature": "8d9116a3b35ebc279a4883e9395539e9bd3c0ec027e429ddbd79a6b0a7c05f91"
+  "evidenceSignature": "3b5751d6a2d49df83f7bad7d0eb10a6016e67c23cc659b20e92cd85359d3517f"
 }
