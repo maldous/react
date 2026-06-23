@@ -10,6 +10,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { emitRuntimeProofEvidence } from "./lib/runtime-evidence.ts";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const delegatedProofSource = readFileSync(
@@ -45,5 +46,22 @@ assert.ok(
     adapterSource.includes("invalid_refund_amount"),
   "in-memory billing adapter must persist account state and implement webhook, retry, timeout, and fail-closed behavior"
 );
+
+emitRuntimeProofEvidence({
+  subjectIds: [
+    "provider:in-memory-billing-provider",
+    "in-memory-billing-provider",
+    "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+  ],
+  providerId: "in-memory-billing-provider",
+  proofLevelClaimed: "L1",
+  inMemoryProviderUsed: true,
+  realLocalProviderUsed: false,
+  externalSandboxProviderUsed: false,
+  assertionsObserved: true,
+  expectedOutputsAsserted: true,
+  deterministicReplaySupported: true,
+  cleanupResult: { status: "delegated-proof-imported" },
+});
 
 await import("./billing-provider-runtime-proof.ts");

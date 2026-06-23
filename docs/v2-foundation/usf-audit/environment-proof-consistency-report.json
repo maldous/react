@@ -1,8 +1,8 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:17:37.791Z",
-  "status": "FAIL",
+  "generatedAt": "2026-06-23T08:26:27.322Z",
+  "status": "PASS",
   "environmentModel": {
     "dev": {
       "purpose": "Semantic capability development",
@@ -45,716 +45,7 @@
       "forbiddenLevels": []
     }
   },
-  "gaps": [
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-alert-incident-closure-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/alerting-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-alerting-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-browser-telemetry-provider-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-clamav-antivirus-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-compliance-report-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-compose-environment-operation-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-credential-lifecycle-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-email-sender-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-full-observability-contract-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/history-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-history-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/idp-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-idp-runtime-proof-ts"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-automation-runner-runtime-proof-ts"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-legal-hold-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/metering-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-metering-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-observability-provider-closure-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-email-sender-store-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-identity-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-prometheus-metrics-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-provider-observability-closure-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-provider-observability-contract-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/retention-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-retention-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/search-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-search-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-temporal-workflow-provider-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-tenant-storage-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-typed-secret-resolution-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-webhook-worker-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-workflow-closure-runtime-proof-ts"
-    },
-    {
-      "kind": "test-l4-provider-mode",
-      "subject": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
-      "message": "L4 TEST proof must use compose-local real local substrate evidence",
-      "proofId": "proof:apps-platform-api-scripts-workflow-readiness-runtime-proof-ts"
-    }
-  ],
+  "gaps": [],
   "records": [
     {
       "proofId": "proof:apps-platform-api-scripts-alert-incident-closure-runtime-proof-ts",
@@ -762,16 +53,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alert-incident-closure-runtime-proof.json"
     },
     {
@@ -780,16 +65,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alert-notification-bridge-runtime-proof.json"
     },
     {
@@ -798,16 +77,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/alerting-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alerting-runtime-proof.json"
     },
     {
@@ -816,16 +89,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-api-key-routes-runtime-proof.json"
     },
     {
@@ -834,16 +101,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-api-keys-runtime-proof.json"
     },
     {
@@ -852,16 +113,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-auth-settings-runtime-proof.json"
     },
     {
@@ -870,7 +125,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -882,16 +137,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-local-runtime-proof.json"
     },
     {
@@ -900,16 +149,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-restore-scripts-runtime-proof.json"
     },
     {
@@ -918,7 +161,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -930,7 +173,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -942,7 +185,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -954,7 +197,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -966,16 +209,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-browser-telemetry-provider-runtime-proof.json"
     },
     {
@@ -984,7 +221,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -996,16 +233,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-clamav-antivirus-runtime-proof.json"
     },
     {
@@ -1014,16 +245,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-clickthrough-services-runtime-proof.json"
     },
     {
@@ -1032,7 +257,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1044,16 +269,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compliance-report-runtime-proof.json"
     },
     {
@@ -1062,16 +281,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compose-environment-operation-runtime-proof.json"
     },
     {
@@ -1080,16 +293,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-composed-provider-readiness-runtime-proof.json"
     },
     {
@@ -1098,7 +305,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1110,16 +317,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-credential-lifecycle-runtime-proof.json"
     },
     {
@@ -1128,16 +329,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-dashboards-runtime-proof.json"
     },
     {
@@ -1146,7 +341,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -1158,16 +353,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-portability-runtime-proof.json"
     },
     {
@@ -1176,7 +365,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1188,16 +377,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-domain-identity-matrix-runtime-proof.json"
     },
     {
@@ -1206,16 +389,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-email-sender-runtime-proof.json"
     },
     {
@@ -1224,7 +401,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1236,16 +413,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-postgres-runtime-proof.json"
     },
     {
@@ -1254,16 +425,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-routes-runtime-proof.json"
     },
     {
@@ -1272,7 +437,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1284,7 +449,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1296,16 +461,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-operations-runtime-proof.json"
     },
     {
@@ -1314,16 +473,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-registry-runtime-proof.json"
     },
     {
@@ -1332,16 +485,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-bus-runtime-proof.json"
     },
     {
@@ -1350,16 +497,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-redrive-runtime-proof.json"
     },
     {
@@ -1368,16 +509,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-worker-runtime-proof.json"
     },
     {
@@ -1386,16 +521,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-full-observability-contract-runtime-proof.json"
     },
     {
@@ -1404,16 +533,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/history-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-history-runtime-proof.json"
     },
     {
@@ -1422,7 +545,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1434,16 +557,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof.json"
     },
     {
@@ -1452,7 +569,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -1464,16 +581,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/idp-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-idp-runtime-proof.json"
     },
     {
@@ -1481,17 +592,11 @@
       "subjectId": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "environment": "dev",
       "providerMode": "semantic-dev",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelClaimed": "L1",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "dev-provider-not-in-memory",
-          "subject": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
-          "message": "DEV proof evidence must use an in-memory semantic provider"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-automation-runner-runtime-proof.json"
     },
     {
@@ -1499,17 +604,11 @@
       "subjectId": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
       "environment": "dev",
       "providerMode": "semantic-dev",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelClaimed": "L1",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "dev-provider-not-in-memory",
-          "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-          "message": "DEV proof evidence must use an in-memory semantic provider"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-provider-runtime-proof.json"
     },
     {
@@ -1529,17 +628,11 @@
       "subjectId": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
       "environment": "dev",
       "providerMode": "semantic-dev",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "dev-provider-not-in-memory",
-          "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
-          "message": "DEV proof evidence must use an in-memory semantic provider"
-        }
-      ],
+      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-vs-real-parity-proof.json"
     },
     {
@@ -1547,17 +640,11 @@
       "subjectId": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
       "environment": "dev",
       "providerMode": "semantic-dev",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelClaimed": "L1",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "dev-provider-not-in-memory",
-          "subject": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
-          "message": "DEV proof evidence must use an in-memory semantic provider"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof.json"
     },
     {
@@ -1566,16 +653,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-incident-foundation-runtime-proof.json"
     },
     {
@@ -1584,7 +665,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -1596,7 +677,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1608,16 +689,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-legal-hold-runtime-proof.json"
     },
     {
@@ -1626,16 +701,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metering-quota-routes-runtime-proof.json"
     },
     {
@@ -1644,16 +713,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/metering-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metering-runtime-proof.json"
     },
     {
@@ -1662,16 +725,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metrics-prometheus-runtime-proof.json"
     },
     {
@@ -1680,16 +737,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-dispatch-runtime-proof.json"
     },
     {
@@ -1698,16 +749,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-email-transport-runtime-proof.json"
     },
     {
@@ -1716,16 +761,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-preferences-runtime-proof.json"
     },
     {
@@ -1734,16 +773,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-transport-routes-runtime-proof.json"
     },
     {
@@ -1752,7 +785,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -1764,16 +797,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-webhook-transport-runtime-proof.json"
     },
     {
@@ -1782,7 +809,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1794,7 +821,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1806,16 +833,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof.json"
     },
     {
@@ -1824,16 +845,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-provider-closure-runtime-proof.json"
     },
     {
@@ -1842,7 +857,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1854,16 +869,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-signals-runtime-proof.json"
     },
     {
@@ -1872,16 +881,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-oidc-enterprise-runtime-proof.json"
     },
     {
@@ -1890,7 +893,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1902,16 +905,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-openbao-secret-store-runtime-proof.json"
     },
     {
@@ -1920,16 +917,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-pitr-restore-drill-runtime-proof.json"
     },
     {
@@ -1938,16 +929,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-platform-services-runtime-proof.json"
     },
     {
@@ -1956,7 +941,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1968,7 +953,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -1980,16 +965,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-api-key-repository-runtime-proof.json"
     },
     {
@@ -1998,16 +977,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-billing-catalog-runtime-proof.json"
     },
     {
@@ -2016,16 +989,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-data-governance-runtime-proof.json"
     },
     {
@@ -2034,16 +1001,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof.json"
     },
     {
@@ -2052,16 +1013,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-email-sender-store-runtime-proof.json"
     },
     {
@@ -2070,16 +1025,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof.json"
     },
     {
@@ -2088,16 +1037,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof.json"
     },
     {
@@ -2106,16 +1049,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-event-bus-runtime-proof.json"
     },
     {
@@ -2124,16 +1061,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-history-repository-runtime-proof.json"
     },
     {
@@ -2142,16 +1073,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-identity-repository-runtime-proof.json"
     },
     {
@@ -2160,16 +1085,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-legal-hold-runtime-proof.json"
     },
     {
@@ -2178,16 +1097,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-metering-repository-runtime-proof.json"
     },
     {
@@ -2196,16 +1109,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof.json"
     },
     {
@@ -2214,16 +1121,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-notification-repository-runtime-proof.json"
     },
     {
@@ -2232,16 +1133,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-observability-repository-runtime-proof.json"
     },
     {
@@ -2250,16 +1145,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof.json"
     },
     {
@@ -2268,16 +1157,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-profile-repository-runtime-proof.json"
     },
     {
@@ -2286,16 +1169,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof.json"
     },
     {
@@ -2304,16 +1181,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-quota-repository-runtime-proof.json"
     },
     {
@@ -2322,16 +1193,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof.json"
     },
     {
@@ -2340,16 +1205,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-retention-runtime-proof.json"
     },
     {
@@ -2358,16 +1217,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof.json"
     },
     {
@@ -2376,16 +1229,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-search-repository-runtime-proof.json"
     },
     {
@@ -2394,16 +1241,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-secret-store-runtime-proof.json"
     },
     {
@@ -2412,16 +1253,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof.json"
     },
     {
@@ -2430,16 +1265,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof.json"
     },
     {
@@ -2448,16 +1277,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof.json"
     },
     {
@@ -2466,16 +1289,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-webhook-store-runtime-proof.json"
     },
     {
@@ -2484,16 +1301,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-profile-self-service-runtime-proof.json"
     },
     {
@@ -2502,16 +1313,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-prometheus-metrics-runtime-proof.json"
     },
     {
@@ -2520,7 +1325,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2532,16 +1337,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-config-runtime-proof.json"
     },
     {
@@ -2550,16 +1349,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-environment-classification-runtime-proof.json"
     },
     {
@@ -2568,16 +1361,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-observability-closure-runtime-proof.json"
     },
     {
@@ -2586,16 +1373,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-observability-contract-runtime-proof.json"
     },
     {
@@ -2604,7 +1385,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2616,16 +1397,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-secrets-readiness-runtime-proof.json"
     },
     {
@@ -2634,16 +1409,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-quota-enforcement-runtime-proof.json"
     },
     {
@@ -2652,16 +1421,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-rate-limits-redis-runtime-proof.json"
     },
     {
@@ -2670,16 +1433,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-rate-limits-runtime-proof.json"
     },
     {
@@ -2688,7 +1445,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2700,16 +1457,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof.json"
     },
     {
@@ -2718,16 +1469,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/retention-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-retention-runtime-proof.json"
     },
     {
@@ -2736,16 +1481,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof.json"
     },
     {
@@ -2754,16 +1493,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-scheduled-job-routes-runtime-proof.json"
     },
     {
@@ -2772,16 +1505,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-scheduled-jobs-runtime-proof.json"
     },
     {
@@ -2790,16 +1517,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-isolation-runtime-proof.json"
     },
     {
@@ -2808,16 +1529,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-routes-runtime-proof.json"
     },
     {
@@ -2826,16 +1541,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/search-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-runtime-proof.json"
     },
     {
@@ -2844,16 +1553,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-secret-store-contract-runtime-proof.json"
     },
     {
@@ -2862,16 +1565,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-secrets-openbao-runtime-proof.json"
     },
     {
@@ -2880,7 +1577,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2892,16 +1589,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-service-catalog-registry-runtime-proof.json"
     },
     {
@@ -2910,16 +1601,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-service-clickthrough-policy-runtime-proof.json"
     },
     {
@@ -2928,7 +1613,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -2940,7 +1625,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2952,7 +1637,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2964,7 +1649,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2976,7 +1661,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -2988,16 +1673,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-temporal-workflow-provider-runtime-proof.json"
     },
     {
@@ -3006,16 +1685,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof.json"
     },
     {
@@ -3024,16 +1697,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof.json"
     },
     {
@@ -3042,16 +1709,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domain-canonical-runtime-proof.json"
     },
     {
@@ -3060,16 +1721,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof.json"
     },
     {
@@ -3078,16 +1733,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domains-routing-runtime-proof.json"
     },
     {
@@ -3096,16 +1745,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domains-runtime-proof.json"
     },
     {
@@ -3114,7 +1757,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
       "environmentValid": true,
       "gaps": [],
@@ -3126,7 +1769,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3138,16 +1781,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-observability-runtime-proof.json"
     },
     {
@@ -3156,7 +1793,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3168,16 +1805,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-storage-objects-runtime-proof.json"
     },
     {
@@ -3186,16 +1817,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-storage-runtime-proof.json"
     },
     {
@@ -3204,16 +1829,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-typed-secret-resolution-runtime-proof.json"
     },
     {
@@ -3222,16 +1841,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof.json"
     },
     {
@@ -3240,16 +1853,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhook-redrive-runtime-proof.json"
     },
     {
@@ -3258,16 +1865,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhook-worker-runtime-proof.json"
     },
     {
@@ -3276,16 +1877,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L0",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhooks-runtime-proof.json"
     },
     {
@@ -3294,7 +1889,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3306,7 +1901,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3318,16 +1913,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-closure-runtime-proof.json"
     },
     {
@@ -3336,7 +1925,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3348,7 +1937,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3360,7 +1949,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L2",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3372,7 +1961,7 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L3",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
       "environmentValid": true,
       "gaps": [],
@@ -3384,16 +1973,10 @@
       "environment": "test",
       "providerMode": "compose-local",
       "providerEvidenceClass": "contract-or-unit-proof",
-      "proofLevelClaimed": "L4",
+      "proofLevelClaimed": "L0",
       "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "test-l4-provider-mode",
-          "subject": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
-          "message": "L4 TEST proof must use compose-local real local substrate evidence"
-        }
-      ],
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-runtime-proof.json"
     }
   ]

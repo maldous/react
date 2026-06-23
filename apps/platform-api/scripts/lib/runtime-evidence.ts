@@ -5,6 +5,7 @@ type RuntimeProofEvidenceOverrides = {
   eventIds?: string[];
   storageIds?: string[];
   providerId?: string;
+  proofLevelClaimed?: "L0" | "L1" | "L2" | "L3" | "L4" | "L5" | "L6";
   inMemoryProviderUsed?: boolean;
   realLocalProviderUsed?: boolean;
   externalSandboxProviderUsed?: boolean;

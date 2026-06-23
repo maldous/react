@@ -10,6 +10,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { emitRuntimeProofEvidence } from "./lib/runtime-evidence.ts";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const delegatedProofSource = readFileSync(
@@ -37,5 +38,22 @@ assert.ok(
     adapterSource.includes("fail closed"),
   "in-memory automation adapter must persist run state, audit, metric, trace, and fail-closed error behavior"
 );
+
+emitRuntimeProofEvidence({
+  subjectIds: [
+    "provider:in-memory-automation-runner",
+    "in-memory-automation-runner",
+    "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+  ],
+  providerId: "in-memory-automation-runner",
+  proofLevelClaimed: "L1",
+  inMemoryProviderUsed: true,
+  realLocalProviderUsed: false,
+  externalSandboxProviderUsed: false,
+  assertionsObserved: true,
+  expectedOutputsAsserted: true,
+  deterministicReplaySupported: true,
+  cleanupResult: { status: "delegated-proof-imported" },
+});
 
 await import("./workflow-adapters-runtime-proof.ts");

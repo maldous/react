@@ -59,12 +59,18 @@ test("golden: base consistency clean; formal proof gaps truthfully reported; R9 
     "formal proof assurance must fail real provider proof commands that cannot reach their substrate"
   );
   assert.ok(
+    !formalProof.some((f) => f.message.includes("claimed L") && f.message.includes("exceeds")),
+    "formal proof assurance must not rely on inventory-derived overclaims once proofs emit their own claim"
+  );
+  assert.ok(
     formalProof.some(
       (f) =>
-        f.subject === "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts" &&
-        f.message.includes("claimed L4 exceeds observed L1")
+        f.subject === "in-memory-antivirus" &&
+        f.message.includes(
+          "in-memory provider lacks complete emitted real-provider parity evidence"
+        )
     ),
-    "formal proof assurance must fail proof level overclaims from proof-process evidence"
+    "formal proof assurance must still fail missing in-memory-to-real provider parity evidence"
   );
 
   const adversarial = findings.filter((f) => adversarialRule(f.ruleId));

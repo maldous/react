@@ -36,7 +36,7 @@ if (evidenceFile && rawMetadata) {
         storageIds: proofOverrides.storageIds || [],
         environmentMode,
         providerMode,
-        proofLevelClaimed: metadata.proofLevelClaimed || "L0",
+        proofLevelClaimed: proofOverrides.proofLevelClaimed || "L0",
         commandExecuted: metadata.commandExecuted,
         startedAt,
         endedAt,

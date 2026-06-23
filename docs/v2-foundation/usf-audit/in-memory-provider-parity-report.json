@@ -1,7 +1,7 @@
 {
   "artefact": "in-memory-provider-parity-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:17:37.793Z",
+  "generatedAt": "2026-06-23T08:26:27.324Z",
   "status": "FAIL",
   "providers": [
     {
@@ -25,7 +25,7 @@
       "sameSemanticOutcomes": false,
       "sameFailureSemantics": false,
       "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -49,7 +49,7 @@
       "sameSemanticOutcomes": false,
       "sameFailureSemantics": false,
       "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -57,12 +57,12 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-event-bus.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-event-bus",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-identity-repository",
@@ -117,36 +117,36 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-rate-limit-repository.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "redis-rate-limit-repository",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-search-repository",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-search-repository.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-search-repository",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-secret-store",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-secret-store.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "openbao-secret-store",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-semantic-provider",
@@ -165,12 +165,12 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-semantic-providers.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-shared-provider-substrate",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-webhook-dispatcher",
@@ -207,7 +207,7 @@
       "sameSemanticOutcomes": false,
       "sameFailureSemantics": false,
       "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -231,18 +231,6 @@
       "sameSemanticOutcomes": false,
       "sameFailureSemantics": false,
       "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
-      "realProviderParityProofMode": "missing"
-    },
-    {
-      "provider": "in-memory-event-bus",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-event-bus.ts",
-      "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "postgres-event-bus",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
@@ -295,58 +283,10 @@
       "realProviderParityProofMode": "missing"
     },
     {
-      "provider": "in-memory-rate-limit-repository",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-rate-limit-repository.ts",
-      "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "redis-rate-limit-repository",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
-      "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
-    },
-    {
-      "provider": "in-memory-search-repository",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-search-repository.ts",
-      "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "postgres-search-repository",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
-      "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
-    },
-    {
-      "provider": "in-memory-secret-store",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-secret-store.ts",
-      "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "openbao-secret-store",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
-      "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
-    },
-    {
       "provider": "in-memory-semantic-provider",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-semantic-provider.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-static-provider-factory",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
-      "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
-    },
-    {
-      "provider": "in-memory-semantic-providers",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-semantic-providers.ts",
-      "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "not-runtime-shared-provider-substrate",
       "samePortInterface": false,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,

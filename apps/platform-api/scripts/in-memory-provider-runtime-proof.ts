@@ -349,6 +349,7 @@ emitRuntimeProofEvidence({
   workflowIds: ["workflow:wf-proof"],
   eventIds: ["event:thing.created"],
   storageIds: ["storage:tenant-semantic-dev/hello.txt"],
+  proofLevelClaimed: "L3",
   inMemoryProviderUsed: true,
   realLocalProviderUsed: false,
   externalSandboxProviderUsed: false,
