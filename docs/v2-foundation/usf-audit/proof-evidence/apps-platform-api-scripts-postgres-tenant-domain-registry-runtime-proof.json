@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
-  "startedAt": "2026-06-23T14:22:11.302Z",
-  "endedAt": "2026-06-23T14:22:11.432Z",
+  "startedAt": "2026-06-23T20:32:20.094Z",
+  "endedAt": "2026-06-23T20:32:20.212Z",
   "exitStatus": 0,
-  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T14:22:11.432Z",
+  "generatedAt": "2026-06-23T20:32:20.212Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782224456962-891334",
+  "collectorRunId": "proof-run-1782246666428-3325139",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T14:22:11.302Z",
-  "endTime": "2026-06-23T14:22:11.432Z",
-  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
-  "executionTimestamp": "2026-06-23T14:22:11.432Z",
+  "startTime": "2026-06-23T20:32:20.094Z",
+  "endTime": "2026-06-23T20:32:20.212Z",
+  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "executionTimestamp": "2026-06-23T20:32:20.212Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts": {
@@ -116,5 +116,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
-  "evidenceSignature": "0ea6c65d05f831c6ea79f723678bd5874a1d86e240527f9a81020dfadc28e6dc"
+  "evidenceSignature": "17fde29b32f146a2fbf873f9d09c52710aadb2261fced7cfe0f7203a282fadd5"
 }

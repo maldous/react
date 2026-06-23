@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T14:22:07.696Z",
-  "endedAt": "2026-06-23T14:22:07.915Z",
+  "startedAt": "2026-06-23T20:32:16.446Z",
+  "endedAt": "2026-06-23T20:32:16.662Z",
   "exitStatus": 0,
-  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -65,20 +65,20 @@
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T14:22:07.915Z",
+  "generatedAt": "2026-06-23T20:32:16.662Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782224456962-891334",
+  "collectorRunId": "proof-run-1782246666428-3325139",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L2",
-  "startTime": "2026-06-23T14:22:07.696Z",
-  "endTime": "2026-06-23T14:22:07.915Z",
-  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
-  "executionTimestamp": "2026-06-23T14:22:07.915Z",
+  "startTime": "2026-06-23T20:32:16.446Z",
+  "endTime": "2026-06-23T20:32:16.662Z",
+  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "executionTimestamp": "2026-06-23T20:32:16.662Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
   "auditIds": [
@@ -105,5 +105,5 @@
     "log:postgres-observability-repository:runtime-proof",
     "log:observability-signals:runtime-proof"
   ],
-  "evidenceSignature": "5ea86235543326fffe492da3178a231d68a8415f475fd3d630fc2a138af03919"
+  "evidenceSignature": "78d79bee07fd20694c6c9cdd6ac20f37fea3e0c890f08ca6e03acc5ab3dfb9cf"
 }

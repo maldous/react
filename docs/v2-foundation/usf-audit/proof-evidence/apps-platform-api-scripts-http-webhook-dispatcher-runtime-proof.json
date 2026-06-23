@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
-  "startedAt": "2026-06-23T14:21:15.129Z",
-  "endedAt": "2026-06-23T14:21:15.885Z",
+  "startedAt": "2026-06-23T20:31:24.293Z",
+  "endedAt": "2026-06-23T20:31:25.041Z",
   "exitStatus": 0,
-  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
   "realImplementationPathExecuted": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T14:21:15.885Z",
+  "generatedAt": "2026-06-23T20:31:25.041Z",
   "sourceFileRefs": ["apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782224456962-891334",
+  "collectorRunId": "proof-run-1782246666428-3325139",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T14:21:15.129Z",
-  "endTime": "2026-06-23T14:21:15.885Z",
-  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
-  "executionTimestamp": "2026-06-23T14:21:15.885Z",
+  "startTime": "2026-06-23T20:31:24.293Z",
+  "endTime": "2026-06-23T20:31:25.041Z",
+  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "executionTimestamp": "2026-06-23T20:31:25.041Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts": {
@@ -112,5 +112,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
-  "evidenceSignature": "826a679bcfef35ccb31774fbf2701e39a6aebd8be9de91040f58cd68b9c39f86"
+  "evidenceSignature": "ce169ae121c94b39241beb147a76054f17bbd647284ebd9e953e992ba9641a41"
 }

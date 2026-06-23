@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
-  "startedAt": "2026-06-23T14:22:03.970Z",
-  "endedAt": "2026-06-23T14:22:04.745Z",
+  "startedAt": "2026-06-23T20:32:12.867Z",
+  "endedAt": "2026-06-23T20:32:13.633Z",
   "exitStatus": 0,
-  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,18 +77,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T14:22:04.745Z",
+  "generatedAt": "2026-06-23T20:32:13.633Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782224456962-891334",
+  "collectorRunId": "proof-run-1782246666428-3325139",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T14:22:03.970Z",
-  "endTime": "2026-06-23T14:22:04.745Z",
-  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
-  "executionTimestamp": "2026-06-23T14:22:04.745Z",
+  "startTime": "2026-06-23T20:32:12.867Z",
+  "endTime": "2026-06-23T20:32:13.633Z",
+  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "executionTimestamp": "2026-06-23T20:32:13.633Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts": {
@@ -114,5 +114,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
-  "evidenceSignature": "67c0c90cf677e67361bcc443f8651bebe7d6923a088f7c9602b25b59e59448f1"
+  "evidenceSignature": "cda2745cae8a02d373a335cc251806070e9c07fe592aebe5d87da883d5682775"
 }
