@@ -624,6 +624,8 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
   if (proofLevelNumber(record.proofLevelClaimed) >= 6) {
     const missing =
       record.routeIds.length === 0 ||
+      record.workflowIds.length === 0 ||
+      record.eventIds.length === 0 ||
       record.auditEventIds.length === 0 ||
       record.traceIds.length === 0 ||
       record.metricSamples.length === 0 ||
@@ -632,7 +634,8 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       gaps.push({
         kind: "missing-l6-correlation",
         subject: record.subjectId,
-        message: "L6 proof requires correlated UI/API/state/audit/trace/metric/log evidence",
+        message:
+          "L6 proof requires correlated UI/API/workflow/event/state/audit/trace/metric/log evidence",
       });
     }
   }
@@ -690,6 +693,8 @@ export function observedLevelFromEvidence(record) {
     (env === "staging" || env === "e2e") &&
     record.fakeProviderUsed !== true &&
     (record.routeIds || []).length > 0 &&
+    (record.workflowIds || []).length > 0 &&
+    (record.eventIds || []).length > 0 &&
     (record.auditEventIds || []).length > 0 &&
     (record.traceIds || []).length > 0 &&
     (record.metricSamples || []).length > 0 &&
@@ -1267,6 +1272,26 @@ function buildNegativeControlReport(ctx) {
       expectedKinds: ["missing-l6-correlation"],
     },
     {
+      id: "missing-workflow-correlation",
+      record: {
+        ...base,
+        proofId: "negative:missing-workflow-correlation",
+        proofLevelClaimed: "L6",
+        workflowIds: [],
+      },
+      expectedKinds: ["missing-l6-correlation"],
+    },
+    {
+      id: "missing-event-correlation",
+      record: {
+        ...base,
+        proofId: "negative:missing-event-correlation",
+        proofLevelClaimed: "L6",
+        eventIds: [],
+      },
+      expectedKinds: ["missing-l6-correlation"],
+    },
+    {
       id: "missing-before-after-state",
       record: { ...base, proofId: "negative:missing-before-after-state", beforeState: {} },
       expectedKinds: ["missing-before-after-state", "proof-claim-overstated"],
@@ -1605,6 +1630,8 @@ function l6CorrelationComplete(record) {
     record.sideEffectsAsserted === true &&
     record.failurePathExercised === true &&
     (record.routeIds || []).length > 0 &&
+    (record.workflowIds || []).length > 0 &&
+    (record.eventIds || []).length > 0 &&
     (record.auditEventIds || []).length > 0 &&
     (record.traceIds || []).length > 0 &&
     (record.metricSamples || []).length > 0 &&

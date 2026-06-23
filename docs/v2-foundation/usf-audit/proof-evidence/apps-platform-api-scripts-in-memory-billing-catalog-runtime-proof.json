@@ -1,0 +1,166 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
+    "package.json#proof:in-memory-billing-catalog",
+    "proof:in-memory-billing-catalog",
+    "proof:billing-catalog",
+    "route:post-api-admin-billing-catalog-products",
+    "route:post-api-admin-billing-catalog-plans",
+    "route:post-api-admin-billing-catalog-prices",
+    "route:get-api-admin-billing-catalog-products",
+    "route:get-api-admin-billing-catalog-plans",
+    "route:get-api-admin-billing-catalog-prices",
+    "route:get-api-org-billing-catalog",
+    "POST /api/admin/billing/catalog/products",
+    "POST /api/admin/billing/catalog/plans",
+    "POST /api/admin/billing/catalog/prices",
+    "GET /api/admin/billing/catalog/products",
+    "GET /api/admin/billing/catalog/plans",
+    "GET /api/admin/billing/catalog/prices",
+    "GET /api/org/billing/catalog"
+  ],
+  "subjectId": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
+  "capabilityId": "capability:in-memory-billing-catalog",
+  "providerId": "in-memory-billing-catalog-route-proof",
+  "routeIds": [
+    "route:post-api-admin-billing-catalog-products",
+    "route:post-api-admin-billing-catalog-plans",
+    "route:post-api-admin-billing-catalog-prices",
+    "route:get-api-admin-billing-catalog-products",
+    "route:get-api-admin-billing-catalog-plans",
+    "route:get-api-admin-billing-catalog-prices",
+    "route:get-api-org-billing-catalog"
+  ],
+  "workflowIds": [],
+  "eventIds": [],
+  "storageIds": [],
+  "environmentMode": "dev",
+  "providerMode": "semantic-dev",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:in-memory-billing-catalog",
+  "startedAt": "2026-06-23T08:53:10.479Z",
+  "endedAt": "2026-06-23T08:53:10.518Z",
+  "exitStatus": 0,
+  "commit": "7b85515e24db3fa66d562d7f792853e2eb11f8bf",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": true,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "products": 0,
+    "plans": 0,
+    "prices": 0,
+    "activeProducts": 0,
+    "activePlans": 0,
+    "activePrices": 0
+  },
+  "afterState": {
+    "products": 1,
+    "plans": 1,
+    "prices": 1,
+    "activeProducts": 1,
+    "activePlans": 1,
+    "activePrices": 1
+  },
+  "assertedStateDiff": {
+    "products": {
+      "before": 0,
+      "after": 1
+    },
+    "plans": {
+      "before": 0,
+      "after": 1
+    },
+    "prices": {
+      "before": 0,
+      "after": 1
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "billing_catalog.product.created:billing_catalog_product:Semantic Dev Product",
+    "billing_catalog.plan.created:billing_catalog_plan:Semantic Dev Plan",
+    "billing_catalog.price.created:billing_catalog_price:plan-1",
+    "billing_catalog.plan.created:billing_catalog_plan:Broken Plan"
+  ],
+  "traceIds": ["trace:billing-catalog:semantic-dev"],
+  "metricSamples": [
+    {
+      "name": "billing_catalog.products.created",
+      "value": 1
+    },
+    {
+      "name": "billing_catalog.plans.created",
+      "value": 1
+    },
+    {
+      "name": "billing_catalog.prices.created",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log:billing-catalog:semantic-dev"],
+  "cleanupResult": {
+    "status": "verified",
+    "resetSupported": true
+  },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T08:53:10.518Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782204775248-2923776",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
+  "environment": "dev",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T08:53:10.479Z",
+  "endTime": "2026-06-23T08:53:10.518Z",
+  "gitCommit": "7b85515e24db3fa66d562d7f792853e2eb11f8bf",
+  "executionTimestamp": "2026-06-23T08:53:10.518Z",
+  "stateDiff": {
+    "products": {
+      "before": 0,
+      "after": 1
+    },
+    "plans": {
+      "before": 0,
+      "after": 1
+    },
+    "prices": {
+      "before": 0,
+      "after": 1
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "billing_catalog.product.created:billing_catalog_product:Semantic Dev Product",
+    "billing_catalog.plan.created:billing_catalog_plan:Semantic Dev Plan",
+    "billing_catalog.price.created:billing_catalog_price:plan-1",
+    "billing_catalog.plan.created:billing_catalog_plan:Broken Plan"
+  ],
+  "metricEvidence": [
+    {
+      "name": "billing_catalog.products.created",
+      "value": 1
+    },
+    {
+      "name": "billing_catalog.plans.created",
+      "value": 1
+    },
+    {
+      "name": "billing_catalog.prices.created",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log:billing-catalog:semantic-dev"],
+  "evidenceSignature": "3b311e04b90adf72ae3bcd56ed6b8cb9825dea81d94b205c9ddda9bcb6aa18ab"
+}

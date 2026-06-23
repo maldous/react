@@ -2760,6 +2760,53 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "package.json#proof:in-memory-automation-runner",
+    "v2Path": "package.json#proof:in-memory-automation-runner",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true,
+    "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:in-memory-billing-catalog",
+    "v2Path": "package.json#proof:in-memory-billing-catalog",
+    "migrationType": "carry",
+    "retirementJustification": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+    ],
+    "notes": "Semantic-dev billing catalog mutation state proof; L3 only, real-provider parity remains separate",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": true
+  },
+  {
+    "v1Path": "package.json#proof:in-memory-provider-runtime",
+    "v2Path": "package.json#proof:in-memory-provider-runtime",
+    "migrationType": "carry",
+    "retirementJustification": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+    ],
+    "notes": "Runtime proof for semantic-dev in-memory providers",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false
+  },
+  {
+    "v1Path": "package.json#proof:in-memory-vs-real-parity",
+    "v2Path": "package.json#proof:in-memory-vs-real-parity",
+    "migrationType": "carry",
+    "retirementJustification": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"
+    ],
+    "notes": "Parity proof for in-memory and real provider port contracts",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false
+  },
+  {
     "v1Path": "package.json#proof:incident-foundation",
     "v2Path": "package.json#proof:incident-foundation",
     "migrationType": "carry",
@@ -4136,6 +4183,14 @@
     "retirementJustification": null
   },
   {
+    "v1Path": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "v2Path": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "migrationType": "carry",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false,
+    "retirementJustification": null
+  },
+  {
     "v1Path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
     "v2Path": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
     "migrationType": "carry",
@@ -4146,40 +4201,6 @@
   {
     "v1Path": "tools/v2-readiness/tests/rules.test.mjs",
     "v2Path": "tools/v2-readiness/tests/rules.test.mjs",
-    "migrationType": "carry",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false,
-    "retirementJustification": null
-  },
-  {
-    "v1Path": "package.json#proof:in-memory-provider-runtime",
-    "v2Path": "package.json#proof:in-memory-provider-runtime",
-    "migrationType": "carry",
-    "retirementJustification": null,
-    "sourceFileRefs": [
-      "package.json",
-      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    ],
-    "notes": "Runtime proof for semantic-dev in-memory providers",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false
-  },
-  {
-    "v1Path": "package.json#proof:in-memory-vs-real-parity",
-    "v2Path": "package.json#proof:in-memory-vs-real-parity",
-    "migrationType": "carry",
-    "retirementJustification": null,
-    "sourceFileRefs": [
-      "package.json",
-      "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"
-    ],
-    "notes": "Parity proof for in-memory and real provider port contracts",
-    "selectorsOrImportsChange": false,
-    "becomesReusableContract": false
-  },
-  {
-    "v1Path": "tools/v2-readiness/tests/proof-evidence.test.mjs",
-    "v2Path": "tools/v2-readiness/tests/proof-evidence.test.mjs",
     "migrationType": "carry",
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,

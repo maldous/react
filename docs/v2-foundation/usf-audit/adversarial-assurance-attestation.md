@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   309 |
+| formal proof readiness gaps                 |   306 |
 | capability proof readiness gaps             |    89 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -104,9 +104,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - route-proof-evidence-missing: GET /admin/members - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/admin/alerts - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/admin/alerts/:alertId/evaluate - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/billing/catalog/plans - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/billing/catalog/prices - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/billing/catalog/products - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: DELETE /api/admin/data/legal-holds - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/admin/data/legal-holds - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/admin/data/residency - mutation proof lacks emitted before/after state evidence
@@ -288,3 +285,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - capability-real-provider-proof-missing: Product catalog, plans, prices - Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Subscriptions, invoices, payment methods, dunning - Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-external-sandbox-proof-missing: Subscriptions, invoices, payment methods, dunning - Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
+- capability-real-provider-proof-missing: Usage metering + meter event ingestion - Usage metering + meter event ingestion is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: Quota enforcement - Quota enforcement is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: Relational storage + migrations + RLS - Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence

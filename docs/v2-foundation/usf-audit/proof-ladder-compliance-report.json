@@ -1,7 +1,7 @@
 {
   "artefact": "proof-ladder-compliance-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:26:27.322Z",
+  "generatedAt": "2026-06-23T08:51:03.156Z",
   "status": "PASS",
   "ladder": [
     {
@@ -584,11 +584,22 @@
       "subjectId": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "environment": "dev",
       "providerMode": "semantic-dev",
-      "proofLevelClaimed": "L1",
-      "proofLevelObserved": "L1",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
       "compliant": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-automation-runner-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
+      "environment": "dev",
+      "providerMode": "semantic-dev",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "compliant": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",

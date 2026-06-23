@@ -1540,6 +1540,30 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm proof:in-memory-automation-runner",
+    "v2Name": "npm proof:in-memory-automation-runner",
+    "disposition": "carry",
+    "retireReason": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"
+    ],
+    "notes": "Semantic-dev runtime proof for the in-memory automation runner provider.",
+    "v2Location": "V2 package.json scripts"
+  },
+  {
+    "v1Name": "npm proof:in-memory-billing-catalog",
+    "v2Name": "npm proof:in-memory-billing-catalog",
+    "disposition": "carry",
+    "retireReason": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+    ],
+    "notes": "Semantic-dev runtime proof for billing catalog route mutation state transitions",
+    "v2Location": "V2 package.json scripts"
+  },
+  {
     "v1Name": "npm proof:in-memory-provider-runtime",
     "v2Name": "npm proof:in-memory-provider-runtime",
     "disposition": "carry",
@@ -2026,20 +2050,6 @@
     "retireReason": null
   },
   {
-    "v1Name": "npm v2:collect-proof-evidence",
-    "v2Name": "npm v2:collect-proof-evidence",
-    "v2Location": "tools/v2-readiness/scripts/collect-proof-evidence.mjs",
-    "disposition": "carry",
-    "retireReason": null
-  },
-  {
-    "v1Name": "npm v2:proof-strength",
-    "v2Name": "npm v2:proof-strength",
-    "v2Location": "package.json scripts",
-    "disposition": "carry",
-    "retireReason": null
-  },
-  {
     "v1Name": "npm sbom:generate",
     "v2Name": "npm sbom:generate",
     "v2Location": "V2 package.json scripts",
@@ -2292,9 +2302,23 @@
     "retireReason": null
   },
   {
+    "v1Name": "npm v2:collect-proof-evidence",
+    "v2Name": "npm v2:collect-proof-evidence",
+    "v2Location": "tools/v2-readiness/scripts/collect-proof-evidence.mjs",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
     "v1Name": "npm v2:formal-assurance",
     "v2Name": "npm v2:formal-assurance",
     "v2Location": "V2 root package.json scripts",
+    "disposition": "carry",
+    "retireReason": null
+  },
+  {
+    "v1Name": "npm v2:proof-strength",
+    "v2Name": "npm v2:proof-strength",
+    "v2Location": "package.json scripts",
     "disposition": "carry",
     "retireReason": null
   },

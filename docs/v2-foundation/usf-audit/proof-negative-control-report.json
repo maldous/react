@@ -1,7 +1,7 @@
 {
   "artefact": "proof-negative-control-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:26:27.326Z",
+  "generatedAt": "2026-06-23T08:51:03.161Z",
   "status": "PASS",
   "controls": [
     {
@@ -64,6 +64,36 @@
     },
     {
       "id": "missing-metric-evidence",
+      "expectedKinds": ["missing-l6-correlation"],
+      "observedKinds": [
+        "environment-level-forbidden",
+        "l5-environment-required",
+        "l6-environment-required",
+        "missing-external-sandbox-request",
+        "missing-l6-correlation",
+        "proof-claim-overstated",
+        "test-proof-claims-l5",
+        "test-sandbox-overclaim"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-workflow-correlation",
+      "expectedKinds": ["missing-l6-correlation"],
+      "observedKinds": [
+        "environment-level-forbidden",
+        "l5-environment-required",
+        "l6-environment-required",
+        "missing-external-sandbox-request",
+        "missing-l6-correlation",
+        "proof-claim-overstated",
+        "test-proof-claims-l5",
+        "test-sandbox-overclaim"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-event-correlation",
       "expectedKinds": ["missing-l6-correlation"],
       "observedKinds": [
         "environment-level-forbidden",

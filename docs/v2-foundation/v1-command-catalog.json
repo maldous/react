@@ -3982,6 +3982,58 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm proof:in-memory-automation-runner",
+    "kind": "npm",
+    "owner": "team-platform",
+    "purpose": "Semantic-dev runtime proof for the in-memory automation runner provider.",
+    "inputs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"
+    ],
+    "outputs": ["runtime proof evidence JSON"],
+    "prerequisites": ["platform-api loader"],
+    "sideEffects": ["executes in-memory automation state transitions only"],
+    "envScope": "dev",
+    "failureSemantics": "exit-nonzero on proof assertion failure",
+    "idempotent": true,
+    "safetyControls": ["semantic-dev in-memory provider mode", "no external substrate"],
+    "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"
+    ]
+  },
+  {
+    "name": "npm proof:in-memory-billing-catalog",
+    "kind": "npm",
+    "owner": "team-platform",
+    "purpose": "Semantic-dev runtime proof for billing catalog route mutation state transitions",
+    "inputs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+    ],
+    "outputs": ["runtime proof evidence JSON"],
+    "prerequisites": ["platform-api loader"],
+    "sideEffects": ["executes in-memory billing catalog state transitions only"],
+    "envScope": "dev",
+    "failureSemantics": "exit-nonzero on proof assertion failure",
+    "idempotent": true,
+    "safetyControls": ["semantic-dev in-memory provider mode", "no external substrate"],
+    "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+    ]
+  },
+  {
     "name": "npm proof:in-memory-provider-runtime",
     "kind": "npm",
     "owner": "team-platform",
@@ -5199,55 +5251,6 @@
     "docDriftsFromBehaviour": false
   },
   {
-    "name": "npm v2:collect-proof-evidence",
-    "kind": "npm",
-    "purpose": "Collect fresh structured runtime proof evidence JSON records for every required V2 proof subject before proof-strength validation.",
-    "inputs": [
-      "docs/v2-foundation/**",
-      "apps/platform-api/scripts/*runtime-proof.ts",
-      "tools/v2-readiness/src/**"
-    ],
-    "outputs": ["docs/v2-foundation/usf-audit/proof-evidence/*.json"],
-    "prerequisites": ["node", "npm"],
-    "sideEffects": ["rewrites docs/v2-foundation/usf-audit/proof-evidence/"],
-    "envScope": "all",
-    "failureSemantics": "exit-nonzero-on-collection-or-validation-failure",
-    "idempotent": true,
-    "safetyControls": ["R62 formal proof evidence assurance"],
-    "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
-    "duplicateOf": null,
-    "hidesErrors": false,
-    "dead": false,
-    "docDriftsFromBehaviour": false
-  },
-  {
-    "name": "npm v2:proof-strength",
-    "kind": "npm",
-    "purpose": "Regenerate adversarial USF proof evidence reports and run strict V2 readiness, including R62 formal proof-strength assurance.",
-    "inputs": [
-      "docs/v2-foundation/**",
-      "apps/platform-api/scripts/*runtime-proof.ts",
-      "tools/v2-readiness/src/**"
-    ],
-    "outputs": [
-      "docs/v2-foundation/usf-audit/proof-evidence-index.json",
-      "docs/v2-foundation/usf-audit/proof-strength-matrix.json",
-      "docs/v2-foundation/usf-audit/proof-claim-vs-observed-report.json",
-      "docs/v2-foundation/usf-audit/v2-formal-proof-readiness-report.json"
-    ],
-    "prerequisites": ["node", "npm"],
-    "sideEffects": ["rewrites generated USF audit proof-strength reports"],
-    "envScope": "all",
-    "failureSemantics": "exit-nonzero-on-failure",
-    "idempotent": true,
-    "safetyControls": ["R62 formal proof evidence assurance", "strict v2 readiness"],
-    "testCoverage": "npm run v2:proof-strength",
-    "duplicateOf": null,
-    "hidesErrors": false,
-    "dead": false,
-    "docDriftsFromBehaviour": false
-  },
-  {
     "name": "npm sbom:generate",
     "kind": "npm",
     "purpose": "Generate CycloneDX SBOM JSON.",
@@ -5900,6 +5903,28 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm v2:collect-proof-evidence",
+    "kind": "npm",
+    "purpose": "Collect fresh structured runtime proof evidence JSON records for every required V2 proof subject before proof-strength validation.",
+    "inputs": [
+      "docs/v2-foundation/**",
+      "apps/platform-api/scripts/*runtime-proof.ts",
+      "tools/v2-readiness/src/**"
+    ],
+    "outputs": ["docs/v2-foundation/usf-audit/proof-evidence/*.json"],
+    "prerequisites": ["node", "npm"],
+    "sideEffects": ["rewrites docs/v2-foundation/usf-audit/proof-evidence/"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-collection-or-validation-failure",
+    "idempotent": true,
+    "safetyControls": ["R62 formal proof evidence assurance"],
+    "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
     "name": "npm v2:formal-assurance",
     "kind": "npm",
     "purpose": "Generate the formal V2 semantic assurance graph, proof reports, traceability matrix, and mathematical assurance attestation.",
@@ -5920,6 +5945,33 @@
     "dead": false,
     "docDriftsFromBehaviour": false,
     "postAudit": "formal assurance command added for mathematical V2 readiness proof"
+  },
+  {
+    "name": "npm v2:proof-strength",
+    "kind": "npm",
+    "purpose": "Regenerate adversarial USF proof evidence reports and run strict V2 readiness, including R62 formal proof-strength assurance.",
+    "inputs": [
+      "docs/v2-foundation/**",
+      "apps/platform-api/scripts/*runtime-proof.ts",
+      "tools/v2-readiness/src/**"
+    ],
+    "outputs": [
+      "docs/v2-foundation/usf-audit/proof-evidence-index.json",
+      "docs/v2-foundation/usf-audit/proof-strength-matrix.json",
+      "docs/v2-foundation/usf-audit/proof-claim-vs-observed-report.json",
+      "docs/v2-foundation/usf-audit/v2-formal-proof-readiness-report.json"
+    ],
+    "prerequisites": ["node", "npm"],
+    "sideEffects": ["rewrites generated USF audit proof-strength reports"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-failure",
+    "idempotent": true,
+    "safetyControls": ["R62 formal proof evidence assurance", "strict v2 readiness"],
+    "testCoverage": "npm run v2:proof-strength",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   },
   {
     "name": "npm v2:readiness",

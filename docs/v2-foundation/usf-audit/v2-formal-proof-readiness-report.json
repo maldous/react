@@ -1,11 +1,11 @@
 {
   "artefact": "v2-formal-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:26:27.326Z",
+  "generatedAt": "2026-06-23T08:51:03.161Z",
   "status": "FAIL",
   "summary": {
-    "evidenceRecords": 161,
-    "requiredProofs": 161,
+    "evidenceRecords": 162,
+    "requiredProofs": 162,
     "missingEvidence": 0,
     "staleEvidence": 0,
     "claimMismatches": 0,
@@ -350,21 +350,6 @@
     {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/admin/alerts/:alertId/evaluate",
-      "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "mutation-state-evidence",
-      "subject": "POST /api/admin/billing/catalog/plans",
-      "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "mutation-state-evidence",
-      "subject": "POST /api/admin/billing/catalog/prices",
-      "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "mutation-state-evidence",
-      "subject": "POST /api/admin/billing/catalog/products",
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {

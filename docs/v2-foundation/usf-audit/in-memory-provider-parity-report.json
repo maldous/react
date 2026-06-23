@@ -1,7 +1,7 @@
 {
   "artefact": "in-memory-provider-parity-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:26:27.324Z",
+  "generatedAt": "2026-06-23T08:51:03.159Z",
   "status": "FAIL",
   "providers": [
     {
@@ -22,9 +22,9 @@
       "proof": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "correspondingRealProvider": "windmill-automation-provider",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
@@ -204,9 +204,9 @@
       "proof": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "correspondingRealProvider": "windmill-automation-provider",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },

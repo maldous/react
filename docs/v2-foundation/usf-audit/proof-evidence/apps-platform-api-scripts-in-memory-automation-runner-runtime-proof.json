@@ -3,11 +3,13 @@
   "subjectType": "runtime-proof",
   "subjectIds": [
     "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+    "package.json#proof:in-memory-automation-runner",
+    "proof:in-memory-automation-runner",
     "provider:in-memory-automation-runner",
     "in-memory-automation-runner"
   ],
   "subjectId": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
-  "capabilityId": "unknown",
+  "capabilityId": "capability:in-memory-automation-runner",
   "providerId": "in-memory-automation-runner",
   "routeIds": [],
   "workflowIds": [],
@@ -15,12 +17,12 @@
   "storageIds": [],
   "environmentMode": "dev",
   "providerMode": "semantic-dev",
-  "proofLevelClaimed": "L1",
-  "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
-  "startedAt": "2026-06-23T08:26:50.082Z",
-  "endedAt": "2026-06-23T08:26:50.201Z",
+  "proofLevelClaimed": "L3",
+  "commandExecuted": "npm run proof:in-memory-automation-runner",
+  "startedAt": "2026-06-23T08:53:10.249Z",
+  "endedAt": "2026-06-23T08:53:10.316Z",
   "exitStatus": 0,
-  "commit": "8076717632854f06e5085efdb121a0d920b643b2",
+  "commit": "7b85515e24db3fa66d562d7f792853e2eb11f8bf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +30,182 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "tenantA": "tenant-a",
+    "tenantB": "tenant-b",
+    "healthReady": true,
+    "runCount": 0,
+    "auditEvents": 0,
+    "statusErrorMetric": 0
+  },
+  "afterState": {
+    "tenantA": "tenant-a",
+    "tenantB": "tenant-b",
+    "healthReady": true,
+    "runCount": 2,
+    "scriptStatus": {
+      "runId": "automation-proof-script-run",
+      "status": "succeeded",
+      "detail": "script:tenant.export"
+    },
+    "flowStatusBeforeCancel": {
+      "runId": "automation-proof-flow-run",
+      "status": "succeeded",
+      "detail": "flow:tenant.delete"
+    },
+    "flowStatusAfterCancel": {
+      "runId": "automation-proof-flow-run",
+      "status": "cancelled",
+      "detail": "cancelled"
+    },
+    "idempotentRunIdPreserved": true,
+    "missingRunFailure": "in-memory-automation-runner unavailable after retry attempts; fail closed: Error: run_not_found",
+    "unavailableHealth": {
+      "ok": false,
+      "reason": "in-memory-automation-runner unavailable: Error: in-memory-automation-runner unavailable: disabled; fail closed"
+    },
+    "unavailableFailure": "in-memory-automation-runner unavailable: disabled; fail closed",
+    "recoveryAction": "operator recovery: unset IN_MEMORY_AUTOMATION_RUNNER_DISABLED or set it to 0; verify IN_MEMORY_AUTOMATION_RUNNER_TIMEOUT_MS, IN_MEMORY_AUTOMATION_RUNNER_RETRY_ATTEMPTS, and IN_MEMORY_AUTOMATION_RUNNER_RETRY_BACKOFF_MS are positive integers; repair automation provider configuration or switch to Windmill, then retry the workflow adapter proof",
+    "auditEvents": 5,
+    "metricSamples": [
+      {
+        "name": "in_memory_automation_run_script_success_total",
+        "value": 2
+      },
+      {
+        "name": "in_memory_automation_run_flow_success_total",
+        "value": 1
+      },
+      {
+        "name": "in_memory_automation_status_success_total",
+        "value": 3
+      },
+      {
+        "name": "in_memory_automation_status_error_total",
+        "value": 1
+      },
+      {
+        "name": "in_memory_automation_cancel_success_total",
+        "value": 1
+      }
+    ]
+  },
+  "assertedStateDiff": {
+    "scriptRunPersisted": true,
+    "duplicateRunDidNotResetState": true,
+    "flowRunPersisted": true,
+    "cancelTransitionPersisted": true,
+    "missingRunFailedClosed": true,
+    "unavailableProviderFailedClosed": true,
+    "healthReadinessReported": true,
+    "auditEventsRecorded": true,
+    "metricsRecorded": true
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "automation-proof-script-run:automation.script_started:0",
+    "automation-proof-script-run:automation.script_succeeded:1",
+    "automation-proof-flow-run:automation.flow_started:2",
+    "automation-proof-flow-run:automation.flow_succeeded:3",
+    "automation-proof-flow-run:automation.cancelled:4"
+  ],
+  "traceIds": ["trace:automation-proof-script-run", "trace:automation-proof-flow-run"],
+  "metricSamples": [
+    {
+      "name": "in_memory_automation_run_script_success_total",
+      "value": 2
+    },
+    {
+      "name": "in_memory_automation_run_flow_success_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_automation_status_success_total",
+      "value": 3
+    },
+    {
+      "name": "in_memory_automation_status_error_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_automation_cancel_success_total",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log:automation-proof-script-run",
+    "log:automation-proof-flow-run",
+    "log:automation-proof-missing-run"
+  ],
   "cleanupResult": {
-    "status": "delegated-proof-imported"
+    "status": "verified",
+    "deterministicRunIds": ["automation-proof-script-run", "automation-proof-flow-run"],
+    "resetLifecycle": "fresh-runner-per-proof",
+    "unavailableProviderRecovery": "operator recovery: unset IN_MEMORY_AUTOMATION_RUNNER_DISABLED or set it to 0; verify IN_MEMORY_AUTOMATION_RUNNER_TIMEOUT_MS, IN_MEMORY_AUTOMATION_RUNNER_RETRY_ATTEMPTS, and IN_MEMORY_AUTOMATION_RUNNER_RETRY_BACKOFF_MS are positive integers; repair automation provider configuration or switch to Windmill, then retry the workflow adapter proof"
   },
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T08:26:50.201Z",
+  "generatedAt": "2026-06-23T08:53:10.316Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782203195103-2768477",
+  "collectorRunId": "proof-run-1782204775248-2923776",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T08:26:50.082Z",
-  "endTime": "2026-06-23T08:26:50.201Z",
-  "gitCommit": "8076717632854f06e5085efdb121a0d920b643b2",
-  "executionTimestamp": "2026-06-23T08:26:50.201Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "11f87ea5550903ede927c76eeeb6f86c52dc86584451c2bc6f24a1051443e3bf"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T08:53:10.249Z",
+  "endTime": "2026-06-23T08:53:10.316Z",
+  "gitCommit": "7b85515e24db3fa66d562d7f792853e2eb11f8bf",
+  "executionTimestamp": "2026-06-23T08:53:10.316Z",
+  "stateDiff": {
+    "scriptRunPersisted": true,
+    "duplicateRunDidNotResetState": true,
+    "flowRunPersisted": true,
+    "cancelTransitionPersisted": true,
+    "missingRunFailedClosed": true,
+    "unavailableProviderFailedClosed": true,
+    "healthReadinessReported": true,
+    "auditEventsRecorded": true,
+    "metricsRecorded": true
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "automation-proof-script-run:automation.script_started:0",
+    "automation-proof-script-run:automation.script_succeeded:1",
+    "automation-proof-flow-run:automation.flow_started:2",
+    "automation-proof-flow-run:automation.flow_succeeded:3",
+    "automation-proof-flow-run:automation.cancelled:4"
+  ],
+  "metricEvidence": [
+    {
+      "name": "in_memory_automation_run_script_success_total",
+      "value": 2
+    },
+    {
+      "name": "in_memory_automation_run_flow_success_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_automation_status_success_total",
+      "value": 3
+    },
+    {
+      "name": "in_memory_automation_status_error_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_automation_cancel_success_total",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log:automation-proof-script-run",
+    "log:automation-proof-flow-run",
+    "log:automation-proof-missing-run"
+  ],
+  "evidenceSignature": "6e0336d731f54295217e766bb8d544aa2bb2c069f4b8bc54cad4a095451da40a"
 }

@@ -552,6 +552,18 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:proof-in-memory-automation-runner",
+    "name": "npm run proof:in-memory-automation-runner",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-in-memory-billing-catalog",
+    "name": "npm run proof:in-memory-billing-catalog",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:proof-in-memory-provider-runtime",
     "name": "npm run proof:in-memory-provider-runtime",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",

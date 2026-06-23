@@ -1,7 +1,7 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:26:27.321Z",
+  "generatedAt": "2026-06-23T08:51:03.156Z",
   "status": "PASS",
   "levels": [
     {
@@ -43,16 +43,16 @@
   "overclaimCount": 0,
   "byObservedLevel": {
     "L0": 45,
-    "L1": 114,
+    "L1": 113,
     "L2": 1,
-    "L3": 1,
+    "L3": 3,
     "L4": 0,
     "L5": 0,
     "L6": 0
   },
   "byProviderEvidenceClass": {
     "contract-or-unit-proof": 156,
-    "in-memory-provider-proof": 5
+    "in-memory-provider-proof": 6
   },
   "records": [
     {
@@ -464,10 +464,19 @@
       "proofId": "proof:apps-platform-api-scripts-in-memory-automation-runner-runtime-proof-ts",
       "subjectId": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "subjectType": "runtime-proof",
-      "proofLevelClaimed": "L1",
-      "proofLevelObserved": "L1",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
       "providerEvidenceClass": "in-memory-provider-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-automation-runner-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",

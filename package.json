@@ -192,6 +192,8 @@
     "proof:tenant-domains": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
     "proof:tenant-storage": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
     "proof:tenant-storage-objects": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "proof:in-memory-automation-runner": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+    "proof:in-memory-billing-catalog": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
     "proof:in-memory-provider-runtime": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
     "proof:in-memory-vs-real-parity": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
     "proof:tenant-observability": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-observability-runtime-proof.ts",

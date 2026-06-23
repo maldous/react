@@ -4216,6 +4216,36 @@
       "sourceFileRefs": ["package.json", "docs/v2-foundation/v1-command-catalog.json"]
     },
     {
+      "runtimeCommand": "npm run proof:in-memory-automation-runner",
+      "semanticCatalogueRef": "npm proof:in-memory-automation-runner",
+      "purpose": "Semantic-dev runtime proof for the in-memory automation runner provider.",
+      "envScope": "dev",
+      "failureSemantics": "exit-nonzero on proof assertion failure",
+      "safetyControls": ["semantic-dev in-memory provider mode", "no external substrate"],
+      "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+      "duplicateOf": null,
+      "sourceFileRefs": [
+        "package.json",
+        "docs/v2-foundation/v1-command-catalog.json",
+        "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"
+      ]
+    },
+    {
+      "runtimeCommand": "npm run proof:in-memory-billing-catalog",
+      "semanticCatalogueRef": "npm proof:in-memory-billing-catalog",
+      "purpose": "Semantic-dev runtime proof for billing catalog route mutation state transitions.",
+      "envScope": "dev",
+      "failureSemantics": "exit-nonzero on proof assertion failure",
+      "safetyControls": ["semantic-dev in-memory provider mode", "no external substrate"],
+      "testCoverage": "tools/v2-readiness/tests/proof-evidence.test.mjs",
+      "duplicateOf": null,
+      "sourceFileRefs": [
+        "package.json",
+        "docs/v2-foundation/v1-command-catalog.json",
+        "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      ]
+    },
+    {
       "runtimeCommand": "npm run proof:observability-control-route",
       "semanticCatalogueRef": "npm proof:observability-control-route",
       "purpose": "Runtime proof harness for observability control route.",
