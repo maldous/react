@@ -3638,6 +3638,18 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof.json",
+      "introducingCommit": "pending-proof-emitted-billing-catalog-state",
+      "purpose": "post-audit emitted runtime proof evidence for the semantic-dev billing catalog state-transition proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:in-memory-billing-catalog",
+        "npm run v2:readiness -- --strict"
+      ],
+      "decisionRefs": ["ADR-0027", "ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-provider-runtime-proof.json",
       "introducingCommit": "pending",
       "purpose": "post-audit emitted runtime proof evidence for formal V2 proof-strength assurance",
@@ -6873,6 +6885,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 690,
+  "additionCount": 692,
   "deletionCount": 54
 }

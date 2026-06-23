@@ -9,10 +9,18 @@
     "provider:in-memory-event-bus",
     "provider:in-memory-secret-store",
     "provider:in-memory-search-repository",
+    "provider:in-memory-automation-runner",
+    "provider:in-memory-object-storage",
     "in-memory-rate-limit-repository",
     "in-memory-event-bus",
     "in-memory-secret-store",
-    "in-memory-search-repository"
+    "in-memory-search-repository",
+    "in-memory-automation-runner",
+    "in-memory-object-storage",
+    "provider:windmill-automation-provider",
+    "windmill-automation-provider",
+    "provider:s3-object-storage-adapter",
+    "s3-object-storage-adapter"
   ],
   "subjectId": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "capabilityId": "capability:in-memory-vs-real-parity",
@@ -20,18 +28,18 @@
   "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
-  "storageIds": [],
+  "storageIds": ["storage:tenant-a/object.txt"],
   "environmentMode": "dev",
   "providerMode": "semantic-dev",
-  "proofLevelClaimed": "L2",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T08:53:11.127Z",
-  "endedAt": "2026-06-23T08:53:11.176Z",
+  "startedAt": "2026-06-23T09:10:56.365Z",
+  "endedAt": "2026-06-23T09:10:56.607Z",
   "exitStatus": 0,
-  "commit": "7b85515e24db3fa66d562d7f792853e2eb11f8bf",
+  "commit": "ad02f0fd47de3ab5381deeae87541d1321c03e12",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
-  "fakeProviderUsed": false,
+  "fakeProviderUsed": true,
   "inMemoryProviderUsed": true,
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
@@ -40,6 +48,8 @@
     "tenantA": "tenant-a",
     "tenantB": "tenant-b",
     "indexedDocuments": 0,
+    "automationRuns": 0,
+    "storageObjects": 0,
     "secretReadableAcrossTenant": false,
     "failurePathExercised": false
   },
@@ -51,19 +61,158 @@
     "tenantBSearchResults": 0,
     "secretResolvedForTenantA": true,
     "secretReadableAcrossTenant": false,
+    "automationContractMethods": 4,
+    "inMemoryAutomationScriptStatus": "succeeded",
+    "fakeWindmillScriptStatus": "succeeded",
+    "inMemoryAutomationFlowStatusAfterCancel": "cancelled",
+    "fakeWindmillFlowStatusAfterCancel": "cancelled",
+    "inMemoryMissingRunFailure": "in-memory-automation-runner unavailable after retry attempts; fail closed: Error: run_not_found",
+    "fakeWindmillMissingRunFailure": "http_404",
+    "fakeWindmillHealth": {
+      "status": "ready",
+      "detail": "windmill:http:200"
+    },
+    "fakeWindmillRequests": 7,
+    "objectStorageContractMethods": 5,
+    "inMemoryObjectStorageSize": 12,
+    "fakeS3ObjectStorageSize": 12,
+    "inMemoryObjectLifecycleState": "clean",
+    "fakeS3ObjectLifecycleState": "clean",
+    "inMemoryStorageIsolationFailure": "storage tenantPrefix isolation rejected key \"tenant-b/object.txt\" outside \"tenant-a/\"",
+    "fakeS3StorageIsolationFailure": "storage tenantPrefix isolation rejected key \"tenant-b/object.txt\" outside \"tenant-a/\"",
+    "inMemorySignedUrlIssued": true,
+    "fakeS3SignedUrlIssued": true,
+    "fakeS3Requests": 6,
+    "fakeS3ObjectsAfterCleanup": 0,
     "failurePathExercised": true,
     "healthChecks": ["ready", "ready", "ready", "ready"],
     "resetVerified": true
   },
-  "assertedStateDiff": {},
+  "assertedStateDiff": {
+    "searchTenantIsolation": true,
+    "secretTenantIsolation": true,
+    "automationPortMethodsMatch": true,
+    "automationScriptStatusParity": true,
+    "automationCancelStatusParity": true,
+    "automationFailurePathParity": true,
+    "fakeWindmillHealthReady": true,
+    "objectStoragePortMethodsMatch": true,
+    "objectStorageLifecycleParity": true,
+    "objectStorageTenantIsolationParity": true,
+    "objectStorageCleanupParity": true
+  },
   "failurePathExercised": true,
   "sideEffectsAsserted": true,
   "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": [
+    "in-memory:automation.script_started:0",
+    "in-memory:automation.script_succeeded:1",
+    "in-memory:automation.flow_started:2",
+    "in-memory:automation.flow_succeeded:3",
+    "in-memory:automation.cancelled:4",
+    "fake-windmill:automation.script_started:0",
+    "fake-windmill:automation.status_observed:1",
+    "fake-windmill:automation.flow_started:2",
+    "fake-windmill:automation.cancelled:3",
+    "fake-windmill:automation.status_observed:4",
+    "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
+    "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
+    "in-memory:storage.object.download:clean:tenant-a/object.txt",
+    "fake-s3:storage.object.download:clean:tenant-a/object.txt",
+    "in-memory:storage.object.delete:none:tenant-a/object.txt",
+    "fake-s3:storage.object.delete:none:tenant-a/object.txt"
+  ],
+  "traceIds": [
+    "trace:automation-parity-script-run",
+    "trace:automation-parity-flow-run",
+    "trace:automation-parity-missing-run",
+    "trace:in-memory:storage.put",
+    "trace:fake-s3:storage.put",
+    "trace:in-memory:storage.download",
+    "trace:fake-s3:storage.download",
+    "trace:in-memory:storage.list",
+    "trace:fake-s3:storage.list",
+    "trace:in-memory:storage.signedUrl",
+    "trace:in-memory:storage.delete",
+    "trace:fake-s3:storage.delete"
+  ],
+  "metricSamples": [
+    {
+      "name": "in_memory_automation_run_script_success_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_automation_status_error_total",
+      "value": 1
+    },
+    {
+      "name": "windmill_automation_run_script_success_total",
+      "value": 1
+    },
+    {
+      "name": "windmill_automation_status_error_total",
+      "value": 1
+    },
+    {
+      "name": "s3_object_storage_put_success_total",
+      "value": 2
+    },
+    {
+      "name": "s3_object_storage_delete_success_total",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:put:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:put:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:download:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:download:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:list:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:list:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:signedUrl:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:delete:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:delete:success",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": [
+    "log:automation-parity-script-run",
+    "log:automation-parity-flow-run",
+    "log:automation-parity-missing-run",
+    "log:in-memory:info:put:storage.operation.complete",
+    "log:fake-s3:info:put:storage.operation.complete",
+    "log:in-memory:info:download:storage.operation.complete",
+    "log:fake-s3:info:download:storage.operation.complete",
+    "log:in-memory:info:list:storage.operation.complete",
+    "log:fake-s3:info:list:storage.operation.complete",
+    "log:in-memory:info:signedUrl:storage.operation.complete",
+    "log:in-memory:info:delete:storage.operation.complete",
+    "log:fake-s3:info:delete:storage.operation.complete"
+  ],
   "cleanupResult": {
     "status": "verified",
     "resetSupported": true
@@ -71,22 +220,125 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T08:53:11.176Z",
+  "generatedAt": "2026-06-23T09:10:56.607Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782204775248-2923776",
+  "collectorRunId": "proof-run-1782205840270-3029131",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
-  "proofLevelObserved": "L2",
-  "startTime": "2026-06-23T08:53:11.127Z",
-  "endTime": "2026-06-23T08:53:11.176Z",
-  "gitCommit": "7b85515e24db3fa66d562d7f792853e2eb11f8bf",
-  "executionTimestamp": "2026-06-23T08:53:11.176Z",
-  "stateDiff": {},
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T09:10:56.365Z",
+  "endTime": "2026-06-23T09:10:56.607Z",
+  "gitCommit": "ad02f0fd47de3ab5381deeae87541d1321c03e12",
+  "executionTimestamp": "2026-06-23T09:10:56.607Z",
+  "stateDiff": {
+    "searchTenantIsolation": true,
+    "secretTenantIsolation": true,
+    "automationPortMethodsMatch": true,
+    "automationScriptStatusParity": true,
+    "automationCancelStatusParity": true,
+    "automationFailurePathParity": true,
+    "fakeWindmillHealthReady": true,
+    "objectStoragePortMethodsMatch": true,
+    "objectStorageLifecycleParity": true,
+    "objectStorageTenantIsolationParity": true,
+    "objectStorageCleanupParity": true
+  },
   "failureMode": "exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "e9ee500c123b8a008ccb57189ee28b85b5b3438b066c6aced5a128ca3cae1f4d"
+  "auditIds": [
+    "in-memory:automation.script_started:0",
+    "in-memory:automation.script_succeeded:1",
+    "in-memory:automation.flow_started:2",
+    "in-memory:automation.flow_succeeded:3",
+    "in-memory:automation.cancelled:4",
+    "fake-windmill:automation.script_started:0",
+    "fake-windmill:automation.status_observed:1",
+    "fake-windmill:automation.flow_started:2",
+    "fake-windmill:automation.cancelled:3",
+    "fake-windmill:automation.status_observed:4",
+    "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
+    "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
+    "in-memory:storage.object.download:clean:tenant-a/object.txt",
+    "fake-s3:storage.object.download:clean:tenant-a/object.txt",
+    "in-memory:storage.object.delete:none:tenant-a/object.txt",
+    "fake-s3:storage.object.delete:none:tenant-a/object.txt"
+  ],
+  "metricEvidence": [
+    {
+      "name": "in_memory_automation_run_script_success_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_automation_status_error_total",
+      "value": 1
+    },
+    {
+      "name": "windmill_automation_run_script_success_total",
+      "value": 1
+    },
+    {
+      "name": "windmill_automation_status_error_total",
+      "value": 1
+    },
+    {
+      "name": "s3_object_storage_put_success_total",
+      "value": 2
+    },
+    {
+      "name": "s3_object_storage_delete_success_total",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:put:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:put:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:download:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:download:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:list:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:list:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:signedUrl:success",
+      "value": 1
+    },
+    {
+      "name": "in-memory:storage_operation_total:delete:success",
+      "value": 1
+    },
+    {
+      "name": "fake-s3:storage_operation_total:delete:success",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log:automation-parity-script-run",
+    "log:automation-parity-flow-run",
+    "log:automation-parity-missing-run",
+    "log:in-memory:info:put:storage.operation.complete",
+    "log:fake-s3:info:put:storage.operation.complete",
+    "log:in-memory:info:download:storage.operation.complete",
+    "log:fake-s3:info:download:storage.operation.complete",
+    "log:in-memory:info:list:storage.operation.complete",
+    "log:fake-s3:info:list:storage.operation.complete",
+    "log:in-memory:info:signedUrl:storage.operation.complete",
+    "log:in-memory:info:delete:storage.operation.complete",
+    "log:fake-s3:info:delete:storage.operation.complete"
+  ],
+  "evidenceSignature": "46f08b855a5dc17ab611f00db18e932b0bfeeff9292e4b4857394ddc12170522"
 }

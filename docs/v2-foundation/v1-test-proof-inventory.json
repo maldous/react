@@ -8170,9 +8170,9 @@
     "description": "Parity proof for in-memory and real provider port contracts",
     "kind": "proof",
     "behaviourProtected": true,
-    "fixtureEnvDependency": "semantic-dev in-memory provider mode",
-    "failureEvidence": "runtime assertion output and non-zero exit",
-    "proofLevelRationale": "asserts exposed port methods, reset, healthCheck, failure injection, and tenant isolation parity surfaces shared with real provider proofs",
+    "fixtureEnvDependency": "semantic-dev in-memory provider mode plus local fake HTTP adapter for adapter-contract parity",
+    "failureEvidence": "runtime evidence JSON plus assertion output",
+    "proofLevelRationale": "emitted runtime evidence includes before/after state, asserted state diff, side effects, failure paths, tenant isolation, audit IDs, trace/log correlation IDs, and metric samples for semantic-dev in-memory providers plus fake HTTP adapter-contract parity for Windmill automation; it is not real-local L4 provider evidence",
     "capabilitiesProven": [
       "Universal Service Foundation scope + principles",
       "Service catalog + provider integration model",
@@ -8183,14 +8183,15 @@
       "tenantIsolation",
       "readinessModel",
       "failureMode",
-      "auditTraceMetric"
+      "auditTraceMetric",
+      "adapterContractParity"
     ],
-    "environment": "test",
-    "providerClass": "compose-local",
+    "environment": "dev",
+    "providerClass": "in-memory",
     "liveSubstrateUsed": false,
     "destructive": false,
     "prodSafe": true,
-    "expectedFailureMode": "command exits non-zero when any protected provider semantic assertion fails"
+    "expectedFailureMode": "command exits non-zero when protected in-memory provider behavior or fake-adapter contract parity assertions fail"
   },
   {
     "id": "package.json#proof:incident-foundation",

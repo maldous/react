@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   306 |
+| formal proof readiness gaps                 |   304 |
 | capability proof readiness gaps             |    89 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -246,12 +246,10 @@ The adversarial runtime inventory status is reported separately from formal proo
 - mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted before/after state evidence
 - route-proof-evidence-missing: GET /e2e-harness - route proof has explicit subject refs but no emitted evidence record
 - in-memory-provider-parity: in-memory-antivirus - in-memory provider lacks complete emitted real-provider parity evidence
-- in-memory-provider-parity: in-memory-automation-runner - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-backup-restore-provider - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-billing-provider - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-identity-repository - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-notification-transport - in-memory provider lacks complete emitted real-provider parity evidence
-- in-memory-provider-parity: in-memory-object-storage - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-observability-repository - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-semantic-provider - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-webhook-dispatcher - in-memory provider lacks complete emitted real-provider parity evidence
@@ -288,3 +286,5 @@ The adversarial runtime inventory status is reported separately from formal proo
 - capability-real-provider-proof-missing: Usage metering + meter event ingestion - Usage metering + meter event ingestion is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Quota enforcement - Quota enforcement is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Relational storage + migrations + RLS - Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: Backup + restore - Backup + restore is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: PITR, retention, legal hold, data residency - PITR, retention, legal hold, data residency is SEMANTIC_PROVEN; missing provider-L4 runtime evidence

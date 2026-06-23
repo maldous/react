@@ -1,7 +1,7 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:51:03.156Z",
+  "generatedAt": "2026-06-23T09:10:22.656Z",
   "status": "PASS",
   "levels": [
     {
@@ -44,15 +44,16 @@
   "byObservedLevel": {
     "L0": 45,
     "L1": 113,
-    "L2": 1,
-    "L3": 3,
+    "L2": 0,
+    "L3": 4,
     "L4": 0,
     "L5": 0,
     "L6": 0
   },
   "byProviderEvidenceClass": {
     "contract-or-unit-proof": 156,
-    "in-memory-provider-proof": 6
+    "in-memory-provider-proof": 5,
+    "fake-http-adapter-proof": 1
   },
   "records": [
     {
@@ -500,9 +501,9 @@
       "proofId": "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
       "subjectId": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
       "subjectType": "runtime-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-vs-real-parity-proof.json"
     },
     {

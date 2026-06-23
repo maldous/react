@@ -44,7 +44,7 @@ if (evidenceFile && rawMetadata) {
         commit: metadata.currentCommit,
         realImplementationPathExecuted: target,
         mockProviderUsed: providerMode === "mock",
-        fakeProviderUsed: providerMode === "fake-http",
+        fakeProviderUsed: proofOverrides.fakeProviderUsed === true || providerMode === "fake-http",
         inMemoryProviderUsed: proofOverrides.inMemoryProviderUsed === true,
         realLocalProviderUsed: proofOverrides.realLocalProviderUsed === true,
         externalSandboxProviderUsed: proofOverrides.externalSandboxProviderUsed === true,

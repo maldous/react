@@ -1,7 +1,7 @@
 {
   "artefact": "in-memory-provider-parity-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:51:03.159Z",
+  "generatedAt": "2026-06-23T09:10:22.659Z",
   "status": "FAIL",
   "providers": [
     {
@@ -21,12 +21,12 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
       "proof": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "correspondingRealProvider": "windmill-automation-provider",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-backup-restore-provider",
@@ -93,12 +93,12 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-object-storage.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "s3-object-storage-adapter",
-      "samePortInterface": false,
+      "samePortInterface": true,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
       "sameEventAuditObservabilityContract": true,
       "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
+      "realProviderParityProofMode": "port-contract-parity-proof"
     },
     {
       "provider": "in-memory-observability-repository",
@@ -199,18 +199,6 @@
       "realProviderParityProofMode": "missing"
     },
     {
-      "provider": "in-memory-automation-runner",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-automation-runner.ts",
-      "proof": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
-      "correspondingRealProvider": "windmill-automation-provider",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
-      "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
-    },
-    {
       "provider": "in-memory-backup-restore-provider",
       "adapterFile": "apps/platform-api/src/adapters/in-memory-backup-restore-provider.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
@@ -251,18 +239,6 @@
       "adapterFile": "apps/platform-api/src/adapters/in-memory-notification-transport.ts",
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "smtp-email-adapter",
-      "samePortInterface": false,
-      "sameSemanticOutcomes": true,
-      "sameFailureSemantics": true,
-      "sameEventAuditObservabilityContract": true,
-      "semanticDevProofMode": "in-memory-provider-proof",
-      "realProviderParityProofMode": "missing"
-    },
-    {
-      "provider": "in-memory-object-storage",
-      "adapterFile": "apps/platform-api/src/adapters/in-memory-object-storage.ts",
-      "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "correspondingRealProvider": "s3-object-storage-adapter",
       "samePortInterface": false,
       "sameSemanticOutcomes": true,
       "sameFailureSemantics": true,
