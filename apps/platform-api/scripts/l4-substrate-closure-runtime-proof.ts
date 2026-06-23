@@ -66,12 +66,13 @@ const assertedStateDiff: Record<string, unknown> = {};
 const storageIds: string[] = [];
 const workflowIds: string[] = [];
 const eventIds: string[] = [];
-const pureSemanticDevCommands = new Set([
+const nonReplayableBehaviourCommands = new Set([
   "npm run proof:in-memory-provider-runtime",
   "npm run proof:in-memory-billing-catalog",
   "npm run proof:in-memory-billing-provider",
   "npm run proof:in-memory-automation-runner",
   "npm run proof:in-memory-workflow-orchestrator",
+  "npm run proof:l4-substrate-closure",
 ]);
 
 try {
@@ -159,7 +160,7 @@ try {
   };
   assertedStateDiff.l3BehaviourReplay = {
     replayedCertifiedL3HarnessesAgainstComposeLocal: replayResults.length,
-    pureSemanticDevCommandsExcluded: pureSemanticDevCommands.size,
+    nonReplayableCommandsExcluded: nonReplayableBehaviourCommands.size,
     perCapabilityReplayCoverage: replayPlan.length,
   };
 
@@ -458,7 +459,7 @@ function buildL3ReplayPlan(rows: RoadmapRow[]): Array<{ capability: string; comm
   return rows.map((row) => ({
     capability: row.capability,
     commands: (row.existingL3ProofHarnessToReuse || []).filter(
-      (command) => !pureSemanticDevCommands.has(command)
+      (command) => !nonReplayableBehaviourCommands.has(command)
     ),
   }));
 }
