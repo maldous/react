@@ -65,6 +65,33 @@ export default function r24EnvironmentSemantics(ctx) {
       out.push(
         finding("R24-environment-semantics", subject, "test relies on paid/live-only provider")
       );
+    if (row.dev?.providerClass !== "in-memory")
+      out.push(
+        finding(
+          "R24-environment-semantics",
+          subject,
+          "semantic-dev provider mode requires dev providerClass=in-memory"
+        )
+      );
+    if (row.test?.providerClass !== "compose-local")
+      out.push(
+        finding(
+          "R24-environment-semantics",
+          subject,
+          "test provider mode requires compose-local real provider parity"
+        )
+      );
+    for (const env of ["staging", "prod"]) {
+      if (row[env]?.providerClass === "in-memory" && row[env]?.dataClass !== "non-runtime-static") {
+        out.push(
+          finding(
+            "R24-environment-semantics",
+            subject,
+            `${env} must not use in-memory runtime providers`
+          )
+        );
+      }
+    }
     if (
       row.prod?.destructiveProofProdSafe === true ||
       row.prod?.destructiveProofsForbidden !== true

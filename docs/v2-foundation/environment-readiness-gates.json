@@ -7,7 +7,7 @@
     "purpose": "fast local discovery that is complete enough to prove semantics before promotion",
     "requiredCommands": ["npm run v2:readiness -- --json", "npm test -- tools/v2-readiness"],
     "requiredProofLevels": [2, 3],
-    "allowedProviders": ["hermetic", "compose-local", "sandbox-external"],
+    "allowedProviders": ["in-memory", "hermetic", "compose-local", "sandbox-external"],
     "allowedMocks": true,
     "dataPolicy": "fixture or disposable local tenant data only",
     "forbiddenProofs": ["production destructive proof", "paid live-only provider dependency"]

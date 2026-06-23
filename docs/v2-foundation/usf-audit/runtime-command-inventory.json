@@ -552,6 +552,18 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:proof-in-memory-provider-runtime",
+    "name": "npm run proof:in-memory-provider-runtime",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-in-memory-vs-real-parity",
+    "name": "npm run proof:in-memory-vs-real-parity",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:proof-incident-foundation",
     "name": "npm run proof:incident-foundation",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/incident-foundation-runtime-proof.ts",

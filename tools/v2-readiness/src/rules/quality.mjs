@@ -20,6 +20,7 @@ export const VALID_EVENT_CATEGORIES = new Set([
 ]);
 export const VALID_PROVIDER_CLASSES = new Set([
   "hermetic",
+  "in-memory",
   "compose-local",
   "sandbox-external",
   "live-external",

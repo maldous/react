@@ -39,6 +39,13 @@ import { decryptToken } from "./token-crypto.ts";
 import { loadPlatformApiConfig } from "../config/app-config.ts";
 import { getFixtureSession } from "./session.ts";
 import type { TenantContext } from "./tenant-resolver.ts";
+import {
+  InMemoryAuthStateStore,
+  InMemoryIdentityRepository,
+  InMemoryOrganisationRepository,
+  InMemorySessionStore,
+  InMemoryAuditEventPort,
+} from "../adapters/in-memory-semantic-providers.ts";
 
 // Superuser URL — used only by migration runner, seed, and reset scripts.
 // Never use this for the runtime application pool. Sourced from the managed env
@@ -47,7 +54,9 @@ import type { TenantContext } from "./tenant-resolver.ts";
 // fallback (Sonar secrets:S6698).
 export function getPostgresUrl(): string {
   // Fail-closed via the typed config (postgresUrl is required, no hardcoded fallback — Sonar S6698).
-  return loadPlatformApiConfig().postgresUrl;
+  const value = loadPlatformApiConfig().postgresUrl;
+  if (!value) throw new Error("POSTGRES_URL is unavailable in semantic in-memory provider mode");
+  return value;
 }
 
 // Non-superuser app role URL — used by the runtime application pool (ADR-ACT-0189).
@@ -55,7 +64,15 @@ export function getPostgresUrl(): string {
 // Migrated to the typed composition-root config (V1C-CONF-01/02): sourced from the validated,
 // immutable PlatformApiConfig (still fail-closed, no hardcoded fallback — Sonar S6698).
 export function getPostgresAppUrl(): string {
-  return loadPlatformApiConfig().postgresAppUrl;
+  const value = loadPlatformApiConfig().postgresAppUrl;
+  if (!value)
+    throw new Error("POSTGRES_APP_URL is unavailable in semantic in-memory provider mode");
+  return value;
+}
+
+export function isSemanticInMemoryProviderMode(): boolean {
+  const mode = loadPlatformApiConfig().usfProviderMode.toLowerCase();
+  return mode === "in-memory" || mode === "semantic-dev";
 }
 
 // Shared application pool — used by withTenant, withSystemAdmin, provisioning.
@@ -118,8 +135,13 @@ export function getProvisioningConfig(): ProvisioningConfig {
 // access does not open a fresh client per request.
 let organisationRepository: OrganisationRepository | undefined;
 let readinessAdapter: PostgresReadinessAdapter | undefined;
+let auditEventPort: AuditEventPort | undefined;
 
 export function getOrganisationRepository(): OrganisationRepository {
+  if (isSemanticInMemoryProviderMode()) {
+    organisationRepository ??= new InMemoryOrganisationRepository();
+    return organisationRepository;
+  }
   organisationRepository ??= new PostgresOrganisationRepository(getPostgresAppUrl());
   return organisationRepository;
 }
@@ -127,6 +149,15 @@ export function getOrganisationRepository(): OrganisationRepository {
 export function getPostgresReadinessAdapter(): PostgresReadinessAdapter {
   readinessAdapter ??= new PostgresReadinessAdapter(getPostgresAppUrl());
   return readinessAdapter;
+}
+
+export function getAuditEventPort(): AuditEventPort {
+  if (isSemanticInMemoryProviderMode()) {
+    auditEventPort ??= new InMemoryAuditEventPort() as never;
+    return auditEventPort;
+  }
+  auditEventPort ??= createPostgresAuditEventPort(getApplicationPool());
+  return auditEventPort;
 }
 
 export interface OrganisationDependencies {
@@ -139,9 +170,15 @@ export interface OrganisationDependencies {
  * Tests can substitute by passing their own bundle directly to the use case.
  */
 export function createOrganisationDependencies(): OrganisationDependencies {
+  if (isSemanticInMemoryProviderMode()) {
+    return {
+      organisations: getOrganisationRepository(),
+      audit: getAuditEventPort(),
+    };
+  }
   return {
     organisations: getOrganisationRepository(),
-    audit: createPostgresAuditEventPort(getApplicationPool()),
+    audit: getAuditEventPort(),
   };
 }
 
@@ -157,23 +194,40 @@ let redisClient: ReturnType<typeof createRedisClient> | undefined;
 let sessionStore: RedisSessionStore | undefined;
 let authStateStore: RedisAuthStateStore | undefined;
 let identityRepository: IdentityRepository | undefined;
+let inMemorySessionStore: InMemorySessionStore | undefined;
+let inMemoryAuthStateStore: InMemoryAuthStateStore | undefined;
 
 export function getRedisClient(): ReturnType<typeof createRedisClient> {
+  if (isSemanticInMemoryProviderMode()) {
+    throw new Error("Redis client is unavailable in semantic in-memory provider mode");
+  }
   redisClient ??= createRedisClient(getRedisUrl());
   return redisClient;
 }
 
 export function getSessionStore(): SessionStore {
+  if (isSemanticInMemoryProviderMode()) {
+    inMemorySessionStore ??= new InMemorySessionStore();
+    return inMemorySessionStore;
+  }
   sessionStore ??= new RedisSessionStore(getRedisClient());
   return sessionStore;
 }
 
 export function getAuthStateStore(): RedisAuthStateStore {
+  if (isSemanticInMemoryProviderMode()) {
+    inMemoryAuthStateStore ??= new InMemoryAuthStateStore();
+    return inMemoryAuthStateStore as unknown as RedisAuthStateStore;
+  }
   authStateStore ??= new RedisAuthStateStore(getRedisClient());
   return authStateStore;
 }
 
 export function getIdentityRepository(): IdentityRepository {
+  if (isSemanticInMemoryProviderMode()) {
+    identityRepository ??= new InMemoryIdentityRepository();
+    return identityRepository;
+  }
   identityRepository ??= new PostgresIdentityRepository(getPostgresAppUrl());
   return identityRepository;
 }
@@ -310,6 +364,7 @@ export function getAppBaseUrl(): string {
  * of relying on error-message matching.
  */
 export async function connectRedis(): Promise<void> {
+  if (isSemanticInMemoryProviderMode()) return;
   const client = getRedisClient();
   if (!client.isOpen) {
     await client.connect();
@@ -329,6 +384,8 @@ export async function disconnectRedis(): Promise<void> {
     redisClient = undefined;
     sessionStore = undefined;
     authStateStore = undefined;
+    inMemorySessionStore = undefined;
+    inMemoryAuthStateStore = undefined;
   }
 }
 

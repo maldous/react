@@ -25,5 +25,16 @@ fi
 timeout 30 bash -c \
     "while pgrep -f 'tilt' >/dev/null 2>&1; do sleep 1; done" || true
 
+if command -v lsof >/dev/null 2>&1; then
+    for _port in 3001 5173 5174 5175; do
+        _pids="$(lsof -tiTCP:"$_port" -sTCP:LISTEN 2>/dev/null || true)"
+        if [ -n "$_pids" ]; then
+            printf '%s⚠ killing stale listener(s) on port %s%s\n' "$YELLOW" "$_port" "$RESET"
+            # shellcheck disable=SC2086
+            kill $_pids 2>/dev/null || true
+        fi
+    done
+fi
+
 rm -f .tilt.pid
 printf '%s✓ Tilt stopped%s\n' "$GREEN" "$RESET"

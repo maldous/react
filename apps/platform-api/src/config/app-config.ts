@@ -18,10 +18,19 @@ import {
 } from "@platform/config-runtime";
 
 export const PLATFORM_API_CONFIG_SCHEMA = {
+  usfProviderMode: {
+    key: "USF_PROVIDER_MODE",
+    type: "string",
+    default: "compose",
+    restartOrReload: "restart-required",
+    description:
+      "Provider mode selector. `in-memory`/`semantic-dev` runs Compose-free semantic providers; `compose` keeps real local providers.",
+  },
   // database / runtime
   postgresUrl: {
     key: "POSTGRES_URL",
     type: "string",
+    optional: true,
     secret: true,
     restartOrReload: "restart-required",
     description: "Superuser Postgres URL — migrations/seed/reset only.",
@@ -29,6 +38,7 @@ export const PLATFORM_API_CONFIG_SCHEMA = {
   postgresAppUrl: {
     key: "POSTGRES_APP_URL",
     type: "string",
+    optional: true,
     secret: true,
     restartOrReload: "restart-required",
     description: "Application-role Postgres URL — the runtime pool.",
@@ -313,7 +323,15 @@ export type PlatformApiConfig = ResolvedConfig<typeof PLATFORM_API_CONFIG_SCHEMA
 export function loadPlatformApiConfig(
   opts?: LoadConfigOptions<typeof PLATFORM_API_CONFIG_SCHEMA>
 ): PlatformApiConfig {
-  return loadConfig(PLATFORM_API_CONFIG_SCHEMA, opts);
+  const cfg = loadConfig(PLATFORM_API_CONFIG_SCHEMA, opts);
+  const mode = String(cfg.usfProviderMode).toLowerCase();
+  const semanticDev = mode === "in-memory" || mode === "semantic-dev";
+  if (!semanticDev && (!cfg.postgresUrl || !cfg.postgresAppUrl)) {
+    throw new Error(
+      "POSTGRES_URL and POSTGRES_APP_URL are required unless USF_PROVIDER_MODE=in-memory|semantic-dev"
+    );
+  }
+  return cfg;
 }
 
 /** Machine-readable metadata for the config catalogue — never includes secret values. */

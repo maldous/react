@@ -110,6 +110,8 @@ export const PROOF_LADDER = [
   "proof:dashboards",
   "proof:metrics-prometheus",
   "proof:typed-secret-resolution",
+  "proof:in-memory-provider-runtime",
+  "proof:in-memory-vs-real-parity",
   "proof:ui-semantic-groups",
   "proof:ui-semantic-sub-organisations",
   "proof:ui-semantic-claim-mapping",

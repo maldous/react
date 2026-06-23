@@ -2532,5 +2532,29 @@
     "v2Location": "V2 tools/v2-readiness/scripts/",
     "disposition": "carry",
     "retireReason": null
+  },
+  {
+    "v1Name": "npm proof:in-memory-provider-runtime",
+    "v2Name": "npm proof:in-memory-provider-runtime",
+    "disposition": "carry",
+    "retireReason": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+    ],
+    "notes": "Runtime proof for semantic-dev in-memory providers",
+    "v2Location": "V2 package.json scripts"
+  },
+  {
+    "v1Name": "npm proof:in-memory-vs-real-parity",
+    "v2Name": "npm proof:in-memory-vs-real-parity",
+    "disposition": "carry",
+    "retireReason": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"
+    ],
+    "notes": "Parity proof for in-memory and real provider port contracts",
+    "v2Location": "V2 package.json scripts"
   }
 ]

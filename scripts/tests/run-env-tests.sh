@@ -158,7 +158,18 @@ run_group() {
             npx playwright test --config playwright.discovery.config.ts e2e/discovery/persona-matrix.spec.ts
         ;;
       unit)
-        POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
+        if [ "$STAGE" = "dev" ] && { [ "${USF_PROVIDER_MODE:-semantic-dev}" = "semantic-dev" ] || [ "${USF_PROVIDER_MODE:-semantic-dev}" = "in-memory" ]; }; then
+            USF_PROVIDER_MODE=compose \
+            LOCAL_FIXTURE_SESSION=unauthenticated \
+            AUTH_PROVIDER_MODE="${AUTH_PROVIDER_MODE:-disabled}" \
+            SECRET_STORE_PROVIDER="${SECRET_STORE_PROVIDER:-builtin}" \
+            TENANT_SECRET_ENCRYPTION_KEY="${TENANT_SECRET_ENCRYPTION_KEY:-00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff}" \
+            WEBHOOK_WORKER_DISABLED=true \
+            V1C12B_RETENTION_TICK_DISABLED=true \
+            npm run test:platform-api:unit-safe
+        else
+            POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" npm run test:platform-api
+        fi
         NODE_ENV=test npm run test:frontend:run
         ;;
 

@@ -35,6 +35,17 @@ if pkill -f 'tilt up' 2>/dev/null; then
     timeout 15 bash -c 'while ss -tlnp "sport = :10350" 2>/dev/null | grep -q .; do sleep 1; done' 2>/dev/null || true
 fi
 
+if command -v lsof >/dev/null 2>&1; then
+    for _port in "$_api_port" 5173 5174 5175; do
+        _pids="$(lsof -tiTCP:"$_port" -sTCP:LISTEN 2>/dev/null || true)"
+        if [ -n "$_pids" ]; then
+            printf 'Killed stale listener(s) on port %s...\n' "$_port"
+            # shellcheck disable=SC2086
+            kill $_pids 2>/dev/null || true
+        fi
+    done
+fi
+
 printf 'Starting Tilt...\n'
 # Redirect Tilt stdout/stderr to a dedicated log so it does not inherit the
 # parent process's stdout. Without this, `make all > all.txt 2>&1` (or any

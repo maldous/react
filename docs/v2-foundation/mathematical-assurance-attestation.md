@@ -7,7 +7,7 @@ The model treats V2 foundation semantics as a knowledge graph, state-machine sys
 
 | Assurance Area           | Result | Rationale                                                                                                                                                      |
 | ------------------------ | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Graph Integrity          | PASS   | 1500 nodes and 1771 explicit edges; cycles=0, orphans=0, dangling=0, ownershipViolations=0.                                                                    |
+| Graph Integrity          | PASS   | 1502 nodes and 1911 explicit edges; cycles=0, orphans=0, dangling=0, ownershipViolations=0.                                                                    |
 | State Machine Soundness  | PASS   | 70 lifecycle state machines; violations=0.                                                                                                                     |
 | Traceability Closure     | PASS   | 70 capabilities traced through contracts, proofs, environments, operations, events/interactions or explicit absence semantics, and UI semantics; violations=0. |
 | Environment Completeness | PASS   | 280 Capability x Environment cells checked; violations=0.                                                                                                      |

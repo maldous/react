@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "parityProof": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+  "rule": "in-memory providers expose and exercise the same port methods as their real provider counterparts; test uses compose-local real providers for parity",
+  "contracts": [
+    "RateLimitRepository",
+    "EventBusPort",
+    "SecretStore",
+    "StorageObjectRepository/ObjectStoragePort",
+    "NotificationRepository/NotificationTransport",
+    "WebhookStore/WebhookDispatchPort",
+    "SearchIndexPort/SearchQueryPort",
+    "MetricRepository/AlertRepository/IncidentRepository",
+    "WorkflowOrchestratorPort",
+    "BillingProviderPort"
+  ]
+}

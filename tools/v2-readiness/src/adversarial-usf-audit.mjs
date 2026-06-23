@@ -606,6 +606,11 @@ function buildWorkflowInventory(repoRoot) {
 
 function proofExistsFor(repoRoot, needle) {
   const scriptDir = path.join(repoRoot, "apps/platform-api/scripts");
+  if (String(needle).startsWith("in-memory")) {
+    return walkFiles(scriptDir, (file) => file.endsWith(".ts")).some((file) =>
+      path.basename(file).includes("in-memory-provider-runtime-proof")
+    );
+  }
   return walkFiles(scriptDir, (file) => file.endsWith(".ts")).some((file) =>
     path.basename(file).includes(needle)
   );

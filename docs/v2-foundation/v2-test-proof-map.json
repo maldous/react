@@ -4150,5 +4150,31 @@
     "selectorsOrImportsChange": false,
     "becomesReusableContract": false,
     "retirementJustification": null
+  },
+  {
+    "v1Path": "package.json#proof:in-memory-provider-runtime",
+    "v2Path": "package.json#proof:in-memory-provider-runtime",
+    "migrationType": "carry",
+    "retirementJustification": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+    ],
+    "notes": "Runtime proof for semantic-dev in-memory providers",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false
+  },
+  {
+    "v1Path": "package.json#proof:in-memory-vs-real-parity",
+    "v2Path": "package.json#proof:in-memory-vs-real-parity",
+    "migrationType": "carry",
+    "retirementJustification": null,
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"
+    ],
+    "notes": "Parity proof for in-memory and real provider port contracts",
+    "selectorsOrImportsChange": false,
+    "becomesReusableContract": false
   }
 ]

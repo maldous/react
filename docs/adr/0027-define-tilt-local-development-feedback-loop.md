@@ -172,25 +172,46 @@ Tilt must not replace or duplicate:
 
 ## Two operating modes
 
-### Mode 1 ? Fast dev (default: `tilt up`)
+### Mode 1 — Semantic dev (default: `tilt up`)
 
-Optimises for iteration speed. Uses host processes for the application tier
-so file changes rebuild and restart in seconds, not minutes.
+Optimises for iteration speed without local Compose infrastructure. Uses host
+processes for the application tier and sets `USF_PROVIDER_MODE=semantic-dev`.
+All runtime capabilities that would otherwise require Postgres, Redis, MinIO,
+Mailpit, OTel/Loki/Prometheus, ClamAV, OpenBao, Lago, Windmill, Temporal, or
+Keycloak-backed provider state use explicit in-memory adapters that implement the
+same ports as the real providers.
 
-| Resource                                                    | How it runs                                                                                       | Rebuild trigger                                                                           |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| postgres, redis, clickhouse, minio, mailpit, otel-collector | Docker Compose (default profile)                                                                  | `compose.yaml` changes                                                                    |
-| platform-api                                                | `local_resource` `serve_cmd` (`npm run api:start:admin`)                                          | `apps/platform-api/src/**`, `packages/**`                                                 |
-| react-enterprise-app                                        | `local_resource` `serve_cmd` (Vite dev: `cd apps/react-enterprise-app && npx vite`)               | `apps/react-enterprise-app/src/**`, `packages/**`                                         |
-| typecheck                                                   | `local_resource` (`npm run tsc:check`)                                                            | `**/*.ts`, `**/*.tsx`, `tsconfig*.json`                                                   |
-| lint                                                        | `local_resource` (`npm run lint && npm run lint:md`)                                              | `**/*.ts`, `**/*.tsx`, `**/*.md`                                                          |
-| architecture-orchestrator                                   | `local_resource` (`node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict`) | `apps/**/package.json`, `packages/**/package.json`, `docs/adr/**`, `docs/architecture/**` |
-| platform-api-tests                                          | `local_resource` (`npm run test:platform-api`)                                                    | `apps/platform-api/src/**`, `apps/platform-api/tests/**`, `packages/**`                   |
-| react-tests                                                 | `local_resource` (`npm run test:frontend:run`)                                                    | `apps/react-enterprise-app/src/**`, `packages/**`                                         |
-| e2e-dev                                                     | `local_resource` (`npm run test:e2e`) ? **manual trigger**                                        | Manual only                                                                               |
-| i18n-validation                                             | `local_resource` (future: key validation gate from ADR-ACT-0123)                                  | `packages/i18n-runtime/locales/**`, `apps/react-enterprise-app/src/**`                    |
+| Resource                  | How it runs                                                                                       | Rebuild trigger                                                                           |
+| ------------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| platform-api              | `local_resource` `serve_cmd` (`USF_PROVIDER_MODE=semantic-dev npm run api:start:admin`)           | `apps/platform-api/src/**`, `packages/**`                                                 |
+| react-enterprise-app      | `local_resource` `serve_cmd` (Vite dev: `cd apps/react-enterprise-app && npx vite`)               | `apps/react-enterprise-app/src/**`, `packages/**`                                         |
+| typecheck                 | `local_resource` (`npm run tsc:check`)                                                            | `**/*.ts`, `**/*.tsx`, `tsconfig*.json`                                                   |
+| lint                      | `local_resource` (`npm run lint && npm run lint:md`)                                              | `**/*.ts`, `**/*.tsx`, `**/*.md`                                                          |
+| architecture-orchestrator | `local_resource` (`node tools/architecture/orchestrator/src/index.mjs all --no-reports --strict`) | `apps/**/package.json`, `packages/**/package.json`, `docs/adr/**`, `docs/architecture/**` |
+| platform-api-tests        | `local_resource` (`npm run test:platform-api`)                                                    | `apps/platform-api/src/**`, `apps/platform-api/tests/**`, `packages/**`                   |
+| react-tests               | `local_resource` (`npm run test:frontend:run`)                                                    | `apps/react-enterprise-app/src/**`, `packages/**`                                         |
+| e2e-dev                   | `local_resource` (`npm run test:e2e`) ? **manual trigger**                                        | Manual only                                                                               |
+| i18n-validation           | `local_resource` (future: key validation gate from ADR-ACT-0123)                                  | `packages/i18n-runtime/locales/**`, `apps/react-enterprise-app/src/**`                    |
 
-### Mode 2 ? Production parity (manual entry: `tilt up -- --mode=production`)
+Semantic dev substitution rules:
+
+- in-memory providers must satisfy the same semantic port contract as real
+  providers, including tenant isolation, audit emission, trace/log/metric hooks
+  where the real provider has them, reset, health/readiness, failure injection,
+  unavailable/misconfigured modes, and operator recovery metadata.
+- provider substitution is explicit in
+  `docs/v2-foundation/environment-capability-matrix.json` and generated reports
+  under `docs/v2-foundation/usf-audit/`.
+- no in-memory runtime provider may be selected in staging or prod.
+
+### Mode 2 — Test-local real providers (manual entry: `tilt up -- --mode=compose`)
+
+Optimises for real-provider parity. Uses Compose services and keeps local
+Postgres, Redis, MinIO, Mailpit, OTel/Loki/Prometheus, ClamAV, OpenBao,
+Windmill, Temporal, Keycloak, and related providers available for provider
+contract and integration proofs.
+
+### Mode 3 — Production parity (manual entry: `tilt up -- --mode=production`)
 
 Optimises for production fidelity. Uses the Compose `web` profile (containers)
 and the production SPA build. Slower to start; manual by default.

@@ -176,6 +176,8 @@ proof:full-observability-contract
 proof:history
 proof:http-engine-providers
 proof:incident-foundation
+proof:in-memory-provider-runtime
+proof:in-memory-vs-real-parity
 proof:lago-billing-provider
 proof:metering
 proof:metering-quota-routes

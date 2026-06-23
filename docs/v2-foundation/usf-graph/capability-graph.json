@@ -12626,6 +12626,12 @@
       "env": "dev"
     },
     {
+      "from": "environment:abac-policy-decision-point:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:abac-policy-decision-point:staging",
       "to": "proof:entitlement-policy-chain",
       "type": "requires-proof",
@@ -12638,6 +12644,36 @@
       "env": "test"
     },
     {
+      "from": "environment:abac-policy-decision-point:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:accessibility-a11y-gate:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:accessibility-a11y-gate:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:api-docs-developer-portal-sdks-rate-limits:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:api-docs-developer-portal-sdks-rate-limits:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:api-keys-personal-access-tokens:dev",
       "to": "proof:api-key-routes",
       "type": "requires-proof",
@@ -12646,6 +12682,12 @@
     {
       "from": "environment:api-keys-personal-access-tokens:dev",
       "to": "proof:api-keys",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -12670,12 +12712,36 @@
     {
       "from": "environment:api-keys-personal-access-tokens:test",
       "to": "proof:api-keys",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:api-keys-personal-access-tokens:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:audit-of-privileged-access:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:audit-of-privileged-access:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
     {
       "from": "environment:background-workers-job-runner:dev",
       "to": "proof:event-worker",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:background-workers-job-runner:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -12692,8 +12758,20 @@
       "env": "test"
     },
     {
+      "from": "environment:background-workers-job-runner:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:backup-plus-restore:dev",
       "to": "proof:backup-local",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:backup-plus-restore:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -12710,6 +12788,54 @@
       "env": "test"
     },
     {
+      "from": "environment:backup-plus-restore:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:branding-plus-theming:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:branding-plus-theming:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:browser-telemetry-grafana-faro-rum-plus-browser-to-bff-tracing:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:build-versus-compose-decision-framework:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:build-versus-compose-decision-framework:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:claim-mapping-plus-group-role-mapping:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:claim-mapping-plus-group-role-mapping:dev",
       "to": "proof:ui-semantic-claim-mapping",
       "type": "requires-proof",
@@ -12723,13 +12849,37 @@
     },
     {
       "from": "environment:claim-mapping-plus-group-role-mapping:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:claim-mapping-plus-group-role-mapping:test",
       "to": "proof:ui-semantic-claim-mapping",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:code-quality-plus-secret-plus-dependency-scanning:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:code-quality-plus-secret-plus-dependency-scanning:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
     {
       "from": "environment:compliance-reports-access-reviews-evidence-packs:dev",
       "to": "proof:compliance-report",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:compliance-reports-access-reviews-evidence-packs:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -12746,8 +12896,20 @@
       "env": "test"
     },
     {
+      "from": "environment:compliance-reports-access-reviews-evidence-packs:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:composed-provider-readiness-spine:dev",
       "to": "proof:composed-provider-readiness",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:composed-provider-readiness-spine:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -12764,6 +12926,30 @@
       "env": "test"
     },
     {
+      "from": "environment:composed-provider-readiness-spine:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:configuration-registry-plus-history:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:configuration-registry-plus-history:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:custom-domains-dns-ownership-tls-canonical:dev",
       "to": "proof:tenant-domain-canonical",
       "type": "requires-proof",
@@ -12810,6 +12996,12 @@
       "to": "proof:tenant-domains-routing",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:custom-domains-dns-ownership-tls-canonical:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:custom-domains-dns-ownership-tls-canonical:test",
@@ -12842,6 +13034,12 @@
       "env": "dev"
     },
     {
+      "from": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:staging",
       "to": "proof:data-governance",
       "type": "requires-proof",
@@ -12854,8 +13052,20 @@
       "env": "test"
     },
     {
+      "from": "environment:data-governance-catalog-lineage-classification-pii-dsr-gdpr:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:delegated-administration-roles:dev",
       "to": "proof:delegated-admin",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:delegated-administration-roles:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -12872,6 +13082,30 @@
       "env": "test"
     },
     {
+      "from": "environment:delegated-administration-roles:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:e2e-confidence-ladder-stage-aware:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:e2e-confidence-ladder-stage-aware:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:end-user-profile-plus-preferences-self-service:dev",
       "to": "proof:notification-dispatch",
       "type": "requires-proof",
@@ -12894,6 +13128,12 @@
       "to": "proof:profile-self-service",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:end-user-profile-plus-preferences-self-service:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:end-user-profile-plus-preferences-self-service:test",
@@ -12932,6 +13172,12 @@
       "env": "dev"
     },
     {
+      "from": "environment:entitlement-engine:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:entitlement-engine:staging",
       "to": "proof:entitlement-policy-chain",
       "type": "requires-proof",
@@ -12980,6 +13226,12 @@
       "env": "test"
     },
     {
+      "from": "environment:entitlement-engine:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:environment-registry-plus-bootstrap:dev",
       "to": "proof:environment-admin-bootstrap",
       "type": "requires-proof",
@@ -12994,6 +13246,12 @@
     {
       "from": "environment:environment-registry-plus-bootstrap:dev",
       "to": "proof:environment-registry",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13030,6 +13288,24 @@
     {
       "from": "environment:environment-registry-plus-bootstrap:test",
       "to": "proof:environment-registry",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:environment-registry-plus-bootstrap:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:environment-specific-vs-shared-service-model:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:environment-specific-vs-shared-service-model:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
@@ -13042,6 +13318,12 @@
     {
       "from": "environment:event-bus-durable-queues-dlq-redrive:dev",
       "to": "proof:event-redrive",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13066,12 +13348,24 @@
     {
       "from": "environment:event-bus-durable-queues-dlq-redrive:test",
       "to": "proof:event-redrive",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:event-bus-durable-queues-dlq-redrive:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
     {
       "from": "environment:history-read-model-read-only-projection:dev",
       "to": "proof:history",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:history-read-model-read-only-projection:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13088,6 +13382,24 @@
       "env": "test"
     },
     {
+      "from": "environment:history-read-model-read-only-projection:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:i18n-runtime-plus-validation:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:i18n-runtime-plus-validation:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:idp-brokering-plus-oidc-provider-management:dev",
       "to": "proof:auth-idps",
       "type": "requires-proof",
@@ -13096,6 +13408,12 @@
     {
       "from": "environment:idp-brokering-plus-oidc-provider-management:dev",
       "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13124,6 +13442,18 @@
       "env": "test"
     },
     {
+      "from": "environment:idp-brokering-plus-oidc-provider-management:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:internal-service-catalog-plus-readiness:dev",
       "to": "proof:platform-services",
       "type": "requires-proof",
@@ -13146,6 +13476,12 @@
       "to": "proof:service-clickthrough-policy",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:internal-service-catalog-plus-readiness:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:internal-service-catalog-plus-readiness:test",
@@ -13161,6 +13497,12 @@
     },
     {
       "from": "environment:logs-aggregation-plus-tenant-scoped-search:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:logs-aggregation-plus-tenant-scoped-search:dev",
       "to": "proof:tenant-observability",
       "type": "requires-proof",
       "env": "dev"
@@ -13173,6 +13515,12 @@
     },
     {
       "from": "environment:logs-aggregation-plus-tenant-scoped-search:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:logs-aggregation-plus-tenant-scoped-search:test",
       "to": "proof:tenant-observability",
       "type": "requires-proof",
       "env": "test"
@@ -13180,6 +13528,12 @@
     {
       "from": "environment:metrics-plus-traces:dev",
       "to": "proof:dashboards",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:metrics-plus-traces:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13204,6 +13558,12 @@
     {
       "from": "environment:metrics-plus-traces:test",
       "to": "proof:dashboards",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:metrics-plus-traces:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
@@ -13220,6 +13580,12 @@
       "env": "dev"
     },
     {
+      "from": "environment:mfa-plus-session-policy-plus-lockout:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:mfa-plus-session-policy-plus-lockout:staging",
       "to": "proof:auth-settings",
       "type": "requires-proof",
@@ -13232,6 +13598,18 @@
       "env": "test"
     },
     {
+      "from": "environment:mfa-plus-session-policy-plus-lockout:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:notification-delivery-plus-preferences-plus-channels:dev",
       "to": "proof:notification-dispatch",
       "type": "requires-proof",
@@ -13290,6 +13668,12 @@
       "to": "proof:notification-webhook-transport",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:notification-delivery-plus-preferences-plus-channels:test",
@@ -13323,6 +13707,12 @@
     },
     {
       "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:dev",
       "to": "proof:tenant-storage-objects",
       "type": "requires-proof",
       "env": "dev"
@@ -13332,6 +13722,12 @@
       "to": "proof:tenant-storage-objects",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:object-storage-plus-tenant-prefixes-plus-signed-urls:test",
@@ -13353,6 +13749,12 @@
     },
     {
       "from": "environment:observability-built-in-alerting-plus-incidents:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:dev",
       "to": "proof:incident-foundation",
       "type": "requires-proof",
       "env": "dev"
@@ -13396,6 +13798,12 @@
     {
       "from": "environment:observability-built-in-alerting-plus-incidents:test",
       "to": "proof:alerting",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:observability-built-in-alerting-plus-incidents:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
@@ -13418,6 +13826,12 @@
       "env": "dev"
     },
     {
+      "from": "environment:oidc-discovery-issuer-jwks-validation:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:oidc-discovery-issuer-jwks-validation:staging",
       "to": "proof:auth-oidc-enterprise",
       "type": "requires-proof",
@@ -13430,8 +13844,20 @@
       "env": "test"
     },
     {
+      "from": "environment:oidc-discovery-issuer-jwks-validation:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:oidc-test-connection-plus-callback-display:dev",
       "to": "proof:auth-oidc-enterprise",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:oidc-test-connection-plus-callback-display:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13448,8 +13874,32 @@
       "env": "test"
     },
     {
+      "from": "environment:oidc-test-connection-plus-callback-display:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:openapi-drift-hard-gate:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:openapi-drift-hard-gate:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:pitr-retention-legal-hold-data-residency:dev",
       "to": "proof:data-residency",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13498,6 +13948,12 @@
     {
       "from": "environment:pitr-retention-legal-hold-data-residency:test",
       "to": "proof:data-residency",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:pitr-retention-legal-hold-data-residency:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
@@ -13526,6 +13982,12 @@
       "env": "dev"
     },
     {
+      "from": "environment:platform-login-plus-session:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:platform-login-plus-session:staging",
       "to": "proof:auth-settings",
       "type": "requires-proof",
@@ -13538,8 +14000,20 @@
       "env": "test"
     },
     {
+      "from": "environment:platform-login-plus-session:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
       "from": "environment:product-catalog-plans-prices:dev",
       "to": "proof:billing-catalog",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:product-catalog-plans-prices:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13556,6 +14030,18 @@
       "env": "test"
     },
     {
+      "from": "environment:product-catalog-plans-prices:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:provider-configuration-plane:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:provider-configuration-plane:dev",
       "to": "proof:provider-config",
       "type": "requires-proof",
@@ -13578,6 +14064,12 @@
       "to": "proof:provider-readiness-contract",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:provider-configuration-plane:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:provider-configuration-plane:test",
@@ -13593,6 +14085,12 @@
     },
     {
       "from": "environment:provider-environment-classification:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:provider-environment-classification:dev",
       "to": "proof:provider-environment-classification",
       "type": "requires-proof",
       "env": "dev"
@@ -13605,12 +14103,24 @@
     },
     {
       "from": "environment:provider-environment-classification:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:provider-environment-classification:test",
       "to": "proof:provider-environment-classification",
       "type": "requires-proof",
       "env": "test"
     },
     {
       "from": "environment:quota-enforcement:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:quota-enforcement:dev",
       "to": "proof:metering-quota-routes",
       "type": "requires-proof",
       "env": "dev"
@@ -13635,6 +14145,12 @@
     },
     {
       "from": "environment:quota-enforcement:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:quota-enforcement:test",
       "to": "proof:metering-quota-routes",
       "type": "requires-proof",
       "env": "test"
@@ -13653,6 +14169,12 @@
     },
     {
       "from": "environment:rate-limiting-api:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:rate-limiting-api:dev",
       "to": "proof:rate-limits",
       "type": "requires-proof",
       "env": "dev"
@@ -13689,6 +14211,12 @@
     },
     {
       "from": "environment:rate-limiting-api:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:rate-limiting-api:test",
       "to": "proof:rate-limits",
       "type": "requires-proof",
       "env": "test"
@@ -13700,6 +14228,36 @@
       "env": "test"
     },
     {
+      "from": "environment:rbac-roles-plus-permissions:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:rbac-roles-plus-permissions:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:relational-storage-plus-migrations-plus-rls:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:relational-storage-plus-migrations-plus-rls:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:runtime-secrets-management:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:runtime-secrets-management:dev",
       "to": "proof:provider-secrets-readiness",
       "type": "requires-proof",
@@ -13737,6 +14295,12 @@
     },
     {
       "from": "environment:runtime-secrets-management:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:runtime-secrets-management:test",
       "to": "proof:provider-secrets-readiness",
       "type": "requires-proof",
       "env": "test"
@@ -13752,6 +14316,12 @@
       "to": "proof:secrets-openbao",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:dev",
@@ -13779,6 +14349,12 @@
     },
     {
       "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:scheduled-jobs-built-in-on-the-event-substrate:test",
       "to": "proof:scheduled-job-routes",
       "type": "requires-proof",
       "env": "test"
@@ -13788,6 +14364,12 @@
       "to": "proof:scheduled-jobs",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:search-plus-indexing-product-search:dev",
@@ -13824,6 +14406,12 @@
       "to": "proof:search-routes",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:search-plus-indexing-product-search:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:search-plus-indexing-product-search:test",
@@ -13846,6 +14434,12 @@
     {
       "from": "environment:service-catalog-plus-provider-integration-model:dev",
       "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -13894,6 +14488,12 @@
     {
       "from": "environment:service-catalog-plus-provider-integration-model:test",
       "to": "proof:entitlements-routes",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:service-catalog-plus-provider-integration-model:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     },
@@ -13917,6 +14517,12 @@
     },
     {
       "from": "environment:sub-organisations:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:sub-organisations:dev",
       "to": "proof:ui-semantic-sub-organisations",
       "type": "requires-proof",
       "env": "dev"
@@ -13926,6 +14532,12 @@
       "to": "proof:ui-semantic-sub-organisations",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:sub-organisations:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:sub-organisations:test",
@@ -13941,6 +14553,12 @@
     },
     {
       "from": "environment:subscriptions-invoices-payment-methods-dunning:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:dev",
       "to": "proof:lago-billing-provider",
       "type": "requires-proof",
       "env": "dev"
@@ -13965,9 +14583,21 @@
     },
     {
       "from": "environment:subscriptions-invoices-payment-methods-dunning:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:subscriptions-invoices-payment-methods-dunning:test",
       "to": "proof:lago-billing-provider",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:support-mode-break-glass-access:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:support-mode-break-glass-access:dev",
@@ -13983,9 +14613,33 @@
     },
     {
       "from": "environment:support-mode-break-glass-access:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:support-mode-break-glass-access:test",
       "to": "proof:support-approval",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:support-tickets-customer-health-announcements:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:support-tickets-customer-health-announcements:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-canonical-domain-set-unset:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:tenant-canonical-domain-set-unset:dev",
@@ -14001,9 +14655,21 @@
     },
     {
       "from": "environment:tenant-canonical-domain-set-unset:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-canonical-domain-set-unset:test",
       "to": "proof:tenant-domain-canonical",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:tenant-custom-domain-auth-callback:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:tenant-custom-domain-auth-callback:dev",
@@ -14019,6 +14685,12 @@
     },
     {
       "from": "environment:tenant-custom-domain-auth-callback:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-custom-domain-auth-callback:test",
       "to": "proof:tenant-custom-domain-auth-origin",
       "type": "requires-proof",
       "env": "test"
@@ -14026,6 +14698,12 @@
     {
       "from": "environment:tenant-data-import-export:dev",
       "to": "proof:data-portability",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-data-import-export:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -14042,6 +14720,18 @@
       "env": "test"
     },
     {
+      "from": "environment:tenant-data-import-export:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-domain-activation-auth-client:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:tenant-domain-activation-auth-client:dev",
       "to": "proof:tenant-domain-canonical",
       "type": "requires-proof",
@@ -14055,9 +14745,21 @@
     },
     {
       "from": "environment:tenant-domain-activation-auth-client:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-domain-activation-auth-client:test",
       "to": "proof:tenant-domain-canonical",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:tenant-groups:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:tenant-groups:dev",
@@ -14073,6 +14775,12 @@
     },
     {
       "from": "environment:tenant-groups:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-groups:test",
       "to": "proof:ui-semantic-groups",
       "type": "requires-proof",
       "env": "test"
@@ -14085,6 +14793,12 @@
     },
     {
       "from": "environment:tenant-host-identity-resolution:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:dev",
       "to": "proof:tenant-custom-domain-resolution",
       "type": "requires-proof",
       "env": "dev"
@@ -14109,6 +14823,12 @@
     },
     {
       "from": "environment:tenant-host-identity-resolution:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-host-identity-resolution:test",
       "to": "proof:tenant-custom-domain-resolution",
       "type": "requires-proof",
       "env": "test"
@@ -14116,6 +14836,12 @@
     {
       "from": "environment:tenant-identity-record-plus-fqdn:dev",
       "to": "proof:domain-identity-matrix",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:dev",
+      "to": "proof:in-memory-provider-runtime",
       "type": "requires-proof",
       "env": "dev"
     },
@@ -14145,6 +14871,12 @@
     },
     {
       "from": "environment:tenant-identity-record-plus-fqdn:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-identity-record-plus-fqdn:test",
       "to": "proof:tenant-custom-domain-resolution",
       "type": "requires-proof",
       "env": "test"
@@ -14157,6 +14889,12 @@
     },
     {
       "from": "environment:tenant-isolation-proof:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:dev",
       "to": "proof:tenant-storage-isolation",
       "type": "requires-proof",
       "env": "dev"
@@ -14181,9 +14919,21 @@
     },
     {
       "from": "environment:tenant-isolation-proof:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-isolation-proof:test",
       "to": "proof:tenant-storage-isolation",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:tenant-lifecycle-provision-suspend-delete-export:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:tenant-lifecycle-provision-suspend-delete-export:dev",
@@ -14199,6 +14949,12 @@
     },
     {
       "from": "environment:tenant-lifecycle-provision-suspend-delete-export:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-lifecycle-provision-suspend-delete-export:test",
       "to": "proof:tenant-lifecycle",
       "type": "requires-proof",
       "env": "test"
@@ -14211,6 +14967,12 @@
     },
     {
       "from": "environment:tenant-service-clickthrough-policy:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:dev",
       "to": "proof:service-clickthrough-policy",
       "type": "requires-proof",
       "env": "dev"
@@ -14235,9 +14997,33 @@
     },
     {
       "from": "environment:tenant-service-clickthrough-policy:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:tenant-service-clickthrough-policy:test",
       "to": "proof:service-clickthrough-policy",
       "type": "requires-proof",
       "env": "test"
+    },
+    {
+      "from": "environment:universal-service-foundation-scope-plus-principles:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:universal-service-foundation-scope-plus-principles:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
     },
     {
       "from": "environment:usage-metering-plus-meter-event-ingestion:dev",
@@ -14265,6 +15051,12 @@
     },
     {
       "from": "environment:usage-metering-plus-meter-event-ingestion:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:usage-metering-plus-meter-event-ingestion:test",
       "to": "proof:metering",
       "type": "requires-proof",
       "env": "test"
@@ -14276,6 +15068,24 @@
       "env": "test"
     },
     {
+      "from": "environment:user-identity-plus-tenant-membership:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:user-identity-plus-tenant-membership:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
       "from": "environment:webhooks-developer-facing:dev",
       "to": "proof:webhook-redrive",
       "type": "requires-proof",
@@ -14298,6 +15108,12 @@
       "to": "proof:webhooks",
       "type": "requires-proof",
       "env": "staging"
+    },
+    {
+      "from": "environment:webhooks-developer-facing:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
     },
     {
       "from": "environment:webhooks-developer-facing:test",
@@ -14313,6 +15129,12 @@
     },
     {
       "from": "environment:workflow-engine-scheduled-jobs-approvals:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:workflow-engine-scheduled-jobs-approvals:dev",
       "to": "proof:workflow-provider-live",
       "type": "requires-proof",
       "env": "dev"
@@ -14325,7 +15147,25 @@
     },
     {
       "from": "environment:workflow-engine-scheduled-jobs-approvals:test",
+      "to": "proof:in-memory-vs-real-parity",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:workflow-engine-scheduled-jobs-approvals:test",
       "to": "proof:workflow-provider-live",
+      "type": "requires-proof",
+      "env": "test"
+    },
+    {
+      "from": "environment:write-only-secret-settings:dev",
+      "to": "proof:in-memory-provider-runtime",
+      "type": "requires-proof",
+      "env": "dev"
+    },
+    {
+      "from": "environment:write-only-secret-settings:test",
+      "to": "proof:in-memory-vs-real-parity",
       "type": "requires-proof",
       "env": "test"
     }

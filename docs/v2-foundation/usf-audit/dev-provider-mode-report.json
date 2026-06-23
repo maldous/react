@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "selector": "USF_PROVIDER_MODE=semantic-dev",
+  "tiltDefault": "semantic-dev",
+  "composeRequiredInDefaultTilt": false,
+  "composeModes": ["compose", "test-local", "production"],
+  "devComposeLeaks": [],
+  "illegalProdMemory": [],
+  "substitutionRules": [
+    "dev semantic-dev uses explicit in-memory providerClass for eligible runtime capabilities and must satisfy the same semantic port contract as the real provider",
+    "test uses compose-local or real local providers and must prove parity with the in-memory provider contract",
+    "staging remains prod-shaped sandbox; no in-memory provider may be used unless classified non-runtime/static",
+    "prod remains live/readiness-only; no in-memory provider may be used for runtime capability execution",
+    "provider substitution must be documented in this matrix and the generated in-memory provider coverage reports"
+  ]
+}

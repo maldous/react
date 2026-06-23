@@ -9,7 +9,11 @@ import {
 } from "@platform/api-runtime";
 import { PostgresReadinessAdapter } from "@platform/adapters-postgres";
 import { KeycloakRealmAdminAdapter, type KeycloakAdminConfig } from "@platform/adapters-keycloak";
-import { getPostgresReadinessAdapter, getRedisClient } from "./dependencies.ts";
+import {
+  getPostgresReadinessAdapter,
+  getRedisClient,
+  isSemanticInMemoryProviderMode,
+} from "./dependencies.ts";
 import { getFixtureSession } from "./session.ts";
 import { postgresAvailable, redisAvailable } from "../adapters/prometheus-metrics.ts";
 import { loadStageConfig } from "../config/stage-config.ts";
@@ -113,6 +117,11 @@ export async function getReadiness(opts?: {
   postgresUrl?: string;
   mapperConfig?: MapperCheckConfig | null;
 }): Promise<ReadinessResponse> {
+  if (isSemanticInMemoryProviderMode()) {
+    postgresAvailable.set(1);
+    redisAvailable.set(1);
+    return createReadinessResponse({ database: "ok", keycloak_mapper: "ok" });
+  }
   const adapter = opts?.postgresUrl
     ? new PostgresReadinessAdapter(opts.postgresUrl)
     : getPostgresReadinessAdapter();

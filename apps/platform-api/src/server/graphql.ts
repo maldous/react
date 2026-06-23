@@ -16,6 +16,7 @@ import type { OrganisationProfile } from "@platform/contracts-organisation";
 import { getOrganisationProfile, updateOrganisationDisplayName } from "../usecases/organisation.ts";
 import {
   createOrganisationDependencies,
+  getAuditEventPort,
   getApplicationPool,
   getSessionStore,
 } from "./dependencies.ts";
@@ -30,11 +31,7 @@ import {
 import type { PipelineHandler } from "./pipeline.ts";
 import { serverT } from "./i18n.ts";
 import { loadTenantResourcePolicies } from "./resource-policies.ts";
-import {
-  AuditAction,
-  createAuditEvent,
-  createPostgresAuditEventPort,
-} from "@platform/audit-events";
+import { AuditAction, createAuditEvent } from "@platform/audit-events";
 
 const gqlLog = createLogger({ name: "graphql", service: "platform-api", boundedContext: "bff" });
 
@@ -275,7 +272,7 @@ export const handleGraphql: PipelineHandler = async (req, res) => {
     }
   }
 
-  await createPostgresAuditEventPort(getApplicationPool()).emit(
+  await getAuditEventPort().emit(
     createAuditEvent({
       actorId: actor.userId,
       actorRoles: actor.roles,

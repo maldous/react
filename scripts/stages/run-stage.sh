@@ -60,6 +60,15 @@ set -a
 source "$ENV_FILE"
 set +a
 
+SEMANTIC_DEV=0
+if [ "$STAGE" = "dev" ] && [ "$EXECUTOR" = "tilt" ]; then
+    USF_PROVIDER_MODE="${USF_PROVIDER_MODE:-semantic-dev}"
+    export USF_PROVIDER_MODE
+    if [ "$USF_PROVIDER_MODE" = "semantic-dev" ] || [ "$USF_PROVIDER_MODE" = "in-memory" ]; then
+        SEMANTIC_DEV=1
+    fi
+fi
+
 # ── 3. Policy guards ──────────────────────────────────────────────────────────
 
 if [ "$AUTH_MODE" = "real" ] && [ -n "${LOCAL_FIXTURE_SESSION:-}" ]; then
@@ -130,12 +139,16 @@ _pg_port_m="$(grep -oP 'POSTGRES_PORT=\K\d+' "$ENV_FILE" 2>/dev/null | head -1 |
 _pg_port_m="${_pg_port_m:-5433}"
 _pg_url_m="postgresql://platform:platformpassword@localhost:${_pg_port_m}/platform"
 
-if [ "$STAGE_RESULT" -eq 0 ]; then
+if [ "$STAGE_RESULT" -eq 0 ] && [ "$SEMANTIC_DEV" -eq 0 ]; then
     POSTGRES_URL="$_pg_url_m" npm run db:migrate || STAGE_RESULT=1
+elif [ "$STAGE_RESULT" -eq 0 ]; then
+    printf '%s↷ semantic-dev: skipping Postgres migrations for in-memory dev provider mode%s\n' "$YELLOW" "$RESET"
 fi
 
-if [ "$STAGE_RESULT" -eq 0 ] && [ "$DATA_POLICY" = "destructive" ]; then
+if [ "$STAGE_RESULT" -eq 0 ] && [ "$DATA_POLICY" = "destructive" ] && [ "$SEMANTIC_DEV" -eq 0 ]; then
     POSTGRES_URL="$_pg_url_m" npm run db:seed || STAGE_RESULT=1
+elif [ "$STAGE_RESULT" -eq 0 ] && [ "$DATA_POLICY" = "destructive" ]; then
+    printf '%s↷ semantic-dev: skipping Postgres seed for in-memory dev provider mode%s\n' "$YELLOW" "$RESET"
 fi
 
 # ── 8b. Environment bootstrap seed (ADR-0072) ────────────────────────────────
@@ -143,9 +156,11 @@ fi
 # provider_configs + OpenBao secrets, and generate the global system administrator
 # handoff. Non-fatal: each step degrades honestly (skips if Postgres/OpenBao is
 # unreachable) so the confidence ladder is never weakened by an optional substrate.
-if [ "$STAGE_RESULT" -eq 0 ]; then
+if [ "$STAGE_RESULT" -eq 0 ] && [ "$SEMANTIC_DEV" -eq 0 ]; then
     POSTGRES_URL="$_pg_url_m" make env-bootstrap-seed ENV="$STAGE" || \
         printf '%s⚠ env-bootstrap-seed reported issues (non-fatal)%s\n' "$YELLOW" "$RESET"
+elif [ "$STAGE_RESULT" -eq 0 ]; then
+    printf '%s↷ semantic-dev: skipping env-bootstrap Postgres/OpenBao seed%s\n' "$YELLOW" "$RESET"
 fi
 
 # ── 9. SonarQube quality gate (test stage only) ──────────────────────────────

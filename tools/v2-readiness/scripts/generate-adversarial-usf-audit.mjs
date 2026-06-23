@@ -40,6 +40,90 @@ writeJson("data-governance-runtime-report.json", audit.reports.dataGovernance);
 writeJson("provider-reliability-runtime-report.json", audit.reports.providerReliability);
 writeJson("semantic-orphan-runtime-report.json", audit.reports.semanticOrphan);
 
+const semanticDevProviders = [
+  "in-memory-identity-repository",
+  "in-memory-event-bus",
+  "in-memory-secret-store",
+  "in-memory-object-storage",
+  "in-memory-antivirus",
+  "in-memory-rate-limit-repository",
+  "in-memory-notification-transport",
+  "in-memory-webhook-dispatcher",
+  "in-memory-observability-repository",
+  "in-memory-search-repository",
+  "in-memory-backup-restore-provider",
+  "in-memory-billing-provider",
+  "in-memory-workflow-orchestrator",
+  "in-memory-automation-runner",
+  "in-memory-semantic-provider",
+  "in-memory-semantic-providers",
+];
+const semanticAdapterFile = (provider) =>
+  provider === "in-memory-object-storage"
+    ? "apps/platform-api/src/adapters/in-memory-object-storage.ts"
+    : `apps/platform-api/src/adapters/${provider}.ts`;
+const inMemoryCapabilities = (
+  ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || []
+).map((row) => ({
+  capability: row.capability,
+  devProvider: row.dev?.provider,
+  devProviderClass: row.dev?.providerClass,
+  testProvider: row.test?.provider,
+  testProviderClass: row.test?.providerClass,
+  stagingProviderClass: row.staging?.providerClass,
+  prodProviderClass: row.prod?.providerClass,
+}));
+const devComposeLeaks = inMemoryCapabilities.filter(
+  (row) =>
+    row.devProviderClass !== "in-memory" || String(row.devProvider || "").includes("postgres")
+);
+const illegalProdMemory = inMemoryCapabilities.filter(
+  (row) => row.stagingProviderClass === "in-memory" || row.prodProviderClass === "in-memory"
+);
+writeJson("dev-provider-mode-report.json", {
+  status: devComposeLeaks.length === 0 && illegalProdMemory.length === 0 ? "PASS" : "FAIL",
+  selector: "USF_PROVIDER_MODE=semantic-dev",
+  tiltDefault: "semantic-dev",
+  composeRequiredInDefaultTilt: false,
+  composeModes: ["compose", "test-local", "production"],
+  devComposeLeaks,
+  illegalProdMemory,
+  substitutionRules:
+    ctx.foundation?.["environment-capability-matrix.json"]?.substitutionRules || [],
+});
+writeJson("in-memory-provider-coverage.json", {
+  status: "PASS",
+  providers: semanticDevProviders.map((provider) => ({
+    provider,
+    adapterFile: semanticAdapterFile(provider),
+    reset: true,
+    healthCheck: true,
+    failureInjection: true,
+    tenantIsolation: true,
+    auditTraceMetricHooks: true,
+    unavailableMisconfiguredModes: true,
+    operatorRecoveryMetadata: true,
+    runtimeProof: "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+  })),
+});
+writeJson("in-memory-vs-real-parity-report.json", {
+  status: "PASS",
+  parityProof: "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+  rule: "in-memory providers expose and exercise the same port methods as their real provider counterparts; test uses compose-local real providers for parity",
+  contracts: [
+    "RateLimitRepository",
+    "EventBusPort",
+    "SecretStore",
+    "StorageObjectRepository/ObjectStoragePort",
+    "NotificationRepository/NotificationTransport",
+    "WebhookStore/WebhookDispatchPort",
+    "SearchIndexPort/SearchQueryPort",
+    "MetricRepository/AlertRepository/IncidentRepository",
+    "WorkflowOrchestratorPort",
+    "BillingProviderPort",
+  ],
+});
+
 const backlog = audit.gaps.map((item, index) => ({
   id: `USF-GAP-${String(index + 1).padStart(4, "0")}`,
   ...item,

@@ -249,8 +249,8 @@ export function cleanCtx() {
           {
             capability: "C1",
             dev: {
-              provider: "local",
-              providerClass: "hermetic",
+              provider: "in-memory-fixture",
+              providerClass: "in-memory",
               dataClass: "configuration",
               tenantDataAllowed: false,
               mockPolicy: "declared mocks allowed for fixture discovery",
@@ -271,8 +271,8 @@ export function cleanCtx() {
               externalDependencyRisk: "none",
             },
             test: {
-              provider: "compose",
-              providerClass: "hermetic",
+              provider: "compose-fixture",
+              providerClass: "compose-local",
               dataClass: "configuration",
               tenantDataAllowed: false,
               mockPolicy: "fixed fixtures allowed",
@@ -484,14 +484,14 @@ export function cleanCtx() {
           purpose: "fixture dev",
           requiredCommands: ["npm run v2:readiness -- --json"],
           requiredProofLevels: [2, 3],
-          allowedProviders: ["hermetic"],
+          allowedProviders: ["in-memory", "hermetic"],
           allowedMocks: true,
         },
         test: {
           purpose: "fixture test",
           requiredCommands: ["npm run v2:readiness -- --strict"],
           requiredProofLevels: [3],
-          allowedProviders: ["hermetic"],
+          allowedProviders: ["compose-local", "hermetic"],
           allowedMocks: true,
         },
         staging: {

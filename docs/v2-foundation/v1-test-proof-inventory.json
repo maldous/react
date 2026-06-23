@@ -11833,5 +11833,71 @@
     "sourceCommand": "tsx apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
     "scriptPath": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero with assertion failure when protected workflow readiness semantics regress"
+  },
+  {
+    "id": "package.json#proof:in-memory-provider-runtime",
+    "path": "package.json#proof:in-memory-provider-runtime",
+    "type": "runtime-proof",
+    "sourceCommand": "npm run proof:in-memory-provider-runtime",
+    "scriptPath": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+    "stageCoverage": "proof script (npm run proof:in-memory-provider-runtime)",
+    "proofLevel": 4,
+    "description": "Runtime proof for semantic-dev in-memory providers",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "semantic-dev in-memory provider mode",
+    "failureEvidence": "runtime assertion output and non-zero exit",
+    "proofLevelRationale": "boots and exercises semantic-dev in-memory provider behaviour across session/auth, tenant identity, storage lifecycle, events, workflow failure, billing/quota, notifications/webhooks, search, secrets, and observability capture",
+    "capabilitiesProven": [
+      "Universal Service Foundation scope + principles",
+      "Service catalog + provider integration model",
+      "Environment-specific vs shared service model"
+    ],
+    "semanticFacetsProven": [
+      "providerContract",
+      "tenantIsolation",
+      "readinessModel",
+      "failureMode",
+      "auditTraceMetric"
+    ],
+    "environment": "dev",
+    "providerClass": "in-memory",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "expectedFailureMode": "command exits non-zero when any protected provider semantic assertion fails"
+  },
+  {
+    "id": "package.json#proof:in-memory-vs-real-parity",
+    "path": "package.json#proof:in-memory-vs-real-parity",
+    "type": "runtime-proof",
+    "sourceCommand": "npm run proof:in-memory-vs-real-parity",
+    "scriptPath": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+    "stageCoverage": "proof script (npm run proof:in-memory-vs-real-parity)",
+    "proofLevel": 3,
+    "description": "Parity proof for in-memory and real provider port contracts",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "semantic-dev in-memory provider mode",
+    "failureEvidence": "runtime assertion output and non-zero exit",
+    "proofLevelRationale": "asserts exposed port methods, reset, healthCheck, failure injection, and tenant isolation parity surfaces shared with real provider proofs",
+    "capabilitiesProven": [
+      "Universal Service Foundation scope + principles",
+      "Service catalog + provider integration model",
+      "Environment-specific vs shared service model"
+    ],
+    "semanticFacetsProven": [
+      "providerContract",
+      "tenantIsolation",
+      "readinessModel",
+      "failureMode",
+      "auditTraceMetric"
+    ],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "expectedFailureMode": "command exits non-zero when any protected provider semantic assertion fails"
   }
 ]

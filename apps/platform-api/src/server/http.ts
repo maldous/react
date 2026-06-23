@@ -6,7 +6,7 @@ import process from "node:process";
 import { createLogger, type PlatformLogLevel } from "@platform/platform-logging";
 import { createRouter } from "./pipeline.ts";
 import { routes } from "./routes.ts";
-import { connectRedis, disconnectRedis } from "./dependencies.ts";
+import { connectRedis, disconnectRedis, isSemanticInMemoryProviderMode } from "./dependencies.ts";
 import { assertEncryptionKeyConfigured } from "./token-crypto.ts";
 import { validateProviderModeAtStartup } from "./auth-providers.ts";
 import { createSentryAdapter } from "./observability.ts";
@@ -58,7 +58,9 @@ async function start(): Promise<void> {
   }
 
   await connectRedis();
-  log.info("Redis connected");
+  log.info(
+    isSemanticInMemoryProviderMode() ? "semantic in-memory provider mode active" : "Redis connected"
+  );
 
   const router = createRouter(routes, undefined, sentry);
   // http.createServer expects a sync (req, res) => void callback; router is

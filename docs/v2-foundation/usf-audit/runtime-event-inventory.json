@@ -105,7 +105,10 @@
     "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
     "proofRef": "proof:webhooks",
     "proofExercisesPublishConsume": true,
-    "proofSourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+    "proofSourceFileRefs": [
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+    ],
     "sourceFileRefs": [
       "apps/platform-api/scripts/webhooks-runtime-proof.ts",
       "apps/platform-api/tests/unit/webhooks.test.ts",
@@ -170,6 +173,7 @@
       "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
       "apps/platform-api/scripts/event-worker-runtime-proof.ts",
       "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
       "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
       "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
@@ -261,7 +265,10 @@
     "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
     "proofRef": "proof:event-bus",
     "proofExercisesPublishConsume": true,
-    "proofSourceFileRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"],
+    "proofSourceFileRefs": [
+      "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+    ],
     "sourceFileRefs": [
       "apps/platform-api/scripts/event-bus-runtime-proof.ts",
       "apps/platform-api/tests/unit/events.test.ts"
@@ -301,6 +308,7 @@
       "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
       "apps/platform-api/scripts/event-worker-runtime-proof.ts",
       "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
       "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
       "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
