@@ -10,7 +10,11 @@
   "subjectId": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
   "capabilityId": "capability:ui-semantic-claim-mapping,capability:ui-semantic-claim-mapping (headless journey)",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-auth-settings-idps-alias",
+    "route:patch-api-auth-settings-idps-alias",
+    "route:patch-api-auth-settings-idps-alias-mapping"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -18,10 +22,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L1",
   "commandExecuted": "npm run proof:ui-semantic-claim-mapping",
-  "startedAt": "2026-06-23T12:41:46.087Z",
-  "endedAt": "2026-06-23T12:41:53.472Z",
+  "startedAt": "2026-06-23T14:22:33.638Z",
+  "endedAt": "2026-06-23T14:22:40.971Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,39 +33,153 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-auth-settings-idps-alias": {
+        "observed": "before",
+        "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+      },
+      "route:patch-api-auth-settings-idps-alias": {
+        "observed": "before",
+        "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+      },
+      "route:patch-api-auth-settings-idps-alias-mapping": {
+        "observed": "before",
+        "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-auth-settings-idps-alias": {
+        "observed": "after",
+        "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+      },
+      "route:patch-api-auth-settings-idps-alias": {
+        "observed": "after",
+        "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+      },
+      "route:patch-api-auth-settings-idps-alias-mapping": {
+        "observed": "after",
+        "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-auth-settings-idps-alias": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-idps-alias": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-idps-alias-mapping": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
+  "traceIds": ["trace:tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:53.472Z",
+  "generatedAt": "2026-06-23T14:22:40.971Z",
   "sourceFileRefs": ["tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:46.087Z",
-  "endTime": "2026-06-23T12:41:53.472Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:53.472Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "9ee4d80c8554b9908b87c7f5417d497ce36bc477dff6cd1fdef24545ff2fcf4a"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:33.638Z",
+  "endTime": "2026-06-23T14:22:40.971Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:40.971Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-auth-settings-idps-alias": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-idps-alias": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-idps-alias-mapping": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts"
+    }
+  ],
+  "logEvidence": ["log:tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
+  "evidenceSignature": "affa34bf49c9bc57f23e82274f922d461fa6f2fb9fc87ec5d8012fcff89dcf97"
 }

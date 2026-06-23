@@ -23,7 +23,7 @@ const adapterSource = readFileSync(
 );
 
 assert.ok(
-  proofSource.includes("dataset lineage normalized and persisted") &&
+  proofSource.includes("catalogue lineage edges normalized and queryable") &&
     proofSource.includes("DSR open-to-fulfilled workflow records fulfilment evidence") &&
     proofSource.includes(
       "governance routes include catalogue, classification, DSR create/list and fulfil"
@@ -40,6 +40,6 @@ assert.ok(
     adapterSource.includes("postgres-data-governance unavailable") &&
     adapterSource.includes("no fallback is allowed") &&
     adapterSource.includes("fail-closed after retry attempts") &&
-    adapterSource.includes("SET LOCAL statement_timeout"),
+    adapterSource.includes("set_config('statement_timeout'"),
   "data governance proof must assert forbidden duplicate fulfilment and unavailable fail-closed failure modes"
 );

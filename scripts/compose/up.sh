@@ -119,6 +119,11 @@ case "$PROFILE" in
     PROFILE_FLAG="--profile observability-provider"
     TIMEOUT=180
     ;;
+  antivirus-provider)
+    SERVICES="clamav"
+    PROFILE_FLAG="--profile antivirus-provider"
+    TIMEOUT=240
+    ;;
   *)
     printf '%s✗ Unknown profile: %s%s\n' "$RED" "$PROFILE" "$RESET"
     exit 1

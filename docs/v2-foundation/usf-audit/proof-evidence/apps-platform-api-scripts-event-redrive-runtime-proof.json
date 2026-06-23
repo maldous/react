@@ -9,18 +9,23 @@
   "subjectId": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
   "capabilityId": "capability:event-redrive",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-events",
+    "route:get-api-admin-events",
+    "route:get-api-admin-events-dead-letter",
+    "route:post-api-admin-events-eventid-redrive"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:event-redrive",
-  "startedAt": "2026-06-23T12:41:08.142Z",
-  "endedAt": "2026-06-23T12:41:08.661Z",
+  "startedAt": "2026-06-23T14:21:13.142Z",
+  "endedAt": "2026-06-23T14:21:13.782Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +33,183 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      },
+      "route:get-api-admin-events": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      },
+      "route:get-api-admin-events": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:08.661Z",
+  "generatedAt": "2026-06-23T14:21:13.782Z",
   "sourceFileRefs": ["apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:08.142Z",
-  "endTime": "2026-06-23T12:41:08.661Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:08.661Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "c01aa5bd9275080a14713dcc25dc131fc6bf99e16b942ddeb6d8cc40d2b0ca2f"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:13.142Z",
+  "endTime": "2026-06-23T14:21:13.782Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:13.782Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
+  "evidenceSignature": "daa41d5ac9c420643ccc7f0069b92ebb63e7de11836e86e49dcf4e2fa8d9608a"
 }

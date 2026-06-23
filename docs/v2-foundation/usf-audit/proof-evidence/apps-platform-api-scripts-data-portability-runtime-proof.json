@@ -15,12 +15,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:data-portability",
-  "startedAt": "2026-06-23T12:41:03.997Z",
-  "endedAt": "2026-06-23T12:41:04.532Z",
+  "startedAt": "2026-06-23T14:21:08.056Z",
+  "endedAt": "2026-06-23T14:21:08.588Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +28,93 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/data-portability-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/data-portability-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/data-portability-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/data-portability-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/data-portability-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/data-portability-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:04.532Z",
+  "generatedAt": "2026-06-23T14:21:08.588Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-portability-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:03.997Z",
-  "endTime": "2026-06-23T12:41:04.532Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:04.532Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "50e320aeaa16bad59d97f5201ed18a25baa92f9ea9cbdb7602b19224136fc18b"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:08.056Z",
+  "endTime": "2026-06-23T14:21:08.588Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:08.588Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/data-portability-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/data-portability-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/data-portability-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/data-portability-runtime-proof.ts"],
+  "evidenceSignature": "ae565e82988060fa3e62d93d57240c31976fc33844f30ca49d13f6afd8d86c2c"
 }

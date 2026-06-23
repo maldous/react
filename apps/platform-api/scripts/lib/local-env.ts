@@ -50,8 +50,13 @@ function parseEnvFile(path: string): Record<string, string> {
 export function loadLocalEnv(envName = process.env["ENV"] ?? "dev"): string[] {
   const root = process.cwd();
   const loaded: string[] = [];
-  // Generated artifact first (complete: shared base + stage + secrets), then legacy.
-  for (const file of [join(".env", `${envName}.env`), ".env", `.env.${envName}`]) {
+  // Generated artifacts first (runtime + secrets), then legacy.
+  for (const file of [
+    join(".env", `${envName}.env`),
+    join(".env", "secrets", `${envName}.env`),
+    ".env",
+    `.env.${envName}`,
+  ]) {
     const path = join(root, file);
     if (!isRegularFile(path)) continue;
     const parsed = parseEnvFile(path);
@@ -61,6 +66,14 @@ export function loadLocalEnv(envName = process.env["ENV"] ?? "dev"): string[] {
     loaded.push(file);
   }
   return loaded;
+}
+
+let defaultEnvLoaded = false;
+
+function ensureDefaultLocalEnvLoaded(): void {
+  if (defaultEnvLoaded) return;
+  defaultEnvLoaded = true;
+  loadLocalEnv();
 }
 
 /** Resolve local S3/MinIO config from S3_* → MINIO_* → sensible local defaults. */
@@ -89,6 +102,7 @@ export function resolveLocalS3(): {
  * flagged by Sonar secrets:S6698.
  */
 export function requireEnv(...keys: string[]): string {
+  ensureDefaultLocalEnvLoaded();
   for (const k of keys) {
     const v = process.env[k];
     if (v !== undefined && v !== "") return v;

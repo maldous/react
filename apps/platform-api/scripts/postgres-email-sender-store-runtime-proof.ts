@@ -19,12 +19,12 @@ const adapterSource = readFileSync(
 const usecaseSource = readFileSync("apps/platform-api/src/usecases/email-sender.ts", "utf8");
 
 assert.ok(
-  proofSource.includes("tenant email sender readiness") &&
-    proofSource.includes("real SMTP delivery") &&
-    proofSource.includes("provider health probing") &&
+  proofSource.includes("readiness classifier") &&
+    proofSource.includes("Send a real email to Mailpit") &&
+    proofSource.includes("SMTP provider health probe reports Mailpit ready") &&
     proofSource.includes("unavailable SMTP provider health probe fails closed") &&
     usecaseSource.includes("markValidated") &&
-    usecaseSource.includes("sendTestEmail"),
+    usecaseSource.includes("testEmailSender"),
   "email sender store proof must assert readiness, validation, live delivery, and provider health state"
 );
 assert.ok(

@@ -9,18 +9,18 @@
   "subjectId": "apps/platform-api/scripts/idp-runtime-proof.ts",
   "capabilityId": "capability:auth-idps",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": ["route:get-api-auth-settings-idps", "route:post-api-auth-settings-idps"],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:auth-idps",
-  "startedAt": "2026-06-23T12:41:10.076Z",
-  "endedAt": "2026-06-23T12:41:10.162Z",
-  "exitStatus": 2,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:21:16.040Z",
+  "endedAt": "2026-06-23T14:21:16.664Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/idp-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +28,123 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-auth-settings-idps": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-idps": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-auth-settings-idps": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-idps": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-auth-settings-idps": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-idps": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/idp-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/idp-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/idp-runtime-proof.ts"],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:10.162Z",
+  "generatedAt": "2026-06-23T14:21:16.664Z",
   "sourceFileRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:10.076Z",
-  "endTime": "2026-06-23T12:41:10.162Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:10.162Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "001faeb26d371f3b3f2bf386c0b4b4ff290a08fbec3e878b6aaa790d78cf4d27"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:16.040Z",
+  "endTime": "2026-06-23T14:21:16.664Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:16.664Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-auth-settings-idps": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-idps": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/idp-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/idp-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/idp-runtime-proof.ts"],
+  "evidenceSignature": "06ae9bb145958cfe2803b095a28da7cfba291c01b8b1a836eb35e519cb311cf7"
 }

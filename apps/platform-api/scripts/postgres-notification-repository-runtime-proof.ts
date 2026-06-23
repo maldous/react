@@ -23,13 +23,13 @@ const adapterSource = readFileSync(
 assert.ok(
   proofSource.includes("notification preferences update via real handler") &&
     proofSource.includes("readiness lists local channels") &&
-    proofSource.includes("test send dispatches enabled email") &&
+    proofSource.includes("test send dispatches the enabled channel") &&
     proofSource.includes("test send suppresses the disabled channel") &&
     proofSource.includes("dispatch is logged durably"),
   "notification repository proof must assert preferences, readiness, sent/suppressed status, and durable log side effects"
 );
 assert.ok(
-  proofSource.includes("me/profile without a tenant context is rejected") &&
+  proofSource.includes("me/profile write without a tenant context is rejected") &&
     proofSource.includes("invalid tenant id rejected") &&
     proofSource.includes("secret-bearing payload rejected at dispatch") &&
     adapterSource.includes("postgres-notification-repository unavailable") &&

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   buildCapabilityProofReadinessReport,
   buildFormalProofGapTaxonomyReport,
+  buildL0DiscoveryReadinessReport,
   buildWeakProofBacklog,
   normalizeEvidenceRecord,
   observedLevelFromEvidence,
@@ -276,16 +277,24 @@ test("mutation route evidence must name the exact route state transition", () =>
 
 test("capability readiness locks on Behaviour Proven before future substrate work", () => {
   const capabilityCtx = {
+    repoRoot: process.cwd(),
     foundation: {
       "environment-capability-matrix.json": {
         capabilities: [
           {
             capability: "Fixture capability",
             category: "test",
-            dev: { requiredProofs: ["proof:fixture"] },
+            runtimeOwner: "team-fixture",
+            dev: {
+              provider: "in-memory-fixture-provider",
+              providerClass: "in-memory",
+              externalDependencyRisk: "semantic-dev has no external dependency",
+              requiredProofs: ["proof:fixture"],
+            },
             test: {
               provider: "fixture-real-provider",
               providerClass: "compose-local",
+              externalDependencyRisk: "fixture depends on compose-local substrate",
               requiredProofs: ["proof:fixture"],
             },
             staging: {
@@ -298,6 +307,7 @@ test("capability readiness locks on Behaviour Proven before future substrate wor
       },
     },
   };
+  const l0 = buildL0DiscoveryReadinessReport(capabilityCtx, [validRecord()]);
   const semanticOnly = [
     validRecord({
       proofId: "proof:fixture-semantic",
@@ -310,8 +320,9 @@ test("capability readiness locks on Behaviour Proven before future substrate wor
       externalSandboxProviderUsed: false,
     }),
   ];
-  const partial = buildCapabilityProofReadinessReport(capabilityCtx, semanticOnly);
+  const partial = buildCapabilityProofReadinessReport(capabilityCtx, semanticOnly, l0);
   assert.equal(partial.status, "PASS");
+  assert.equal(partial.capabilities[0].highestDiscoveryLevelAchieved, "L0");
   assert.equal(partial.capabilities[0].readiness, "BEHAVIOUR_PROVEN");
   assert.equal(partial.capabilities[0].l3BehaviourComplete, true);
   assert.equal(partial.capabilities[0].eligibleForSubstrateProvenWork, true);
@@ -319,18 +330,70 @@ test("capability readiness locks on Behaviour Proven before future substrate wor
   assert.deepEqual(partial.gaps, []);
   assert.ok(partial.capabilities[0].futureBlockedLevels.includes("resilience-L5-blocked-until-L4"));
 
-  const incompleteBehaviour = buildCapabilityProofReadinessReport(capabilityCtx, [
-    validRecord({
-      proofId: "proof:fixture-incomplete",
-      beforeState: {},
-      proofLevelClaimed: "L3",
-    }),
-  ]);
+  const incompleteBehaviour = buildCapabilityProofReadinessReport(
+    capabilityCtx,
+    [
+      validRecord({
+        proofId: "proof:fixture-incomplete",
+        beforeState: {},
+        proofLevelClaimed: "L3",
+      }),
+    ],
+    l0
+  );
   assert.equal(incompleteBehaviour.status, "FAIL");
   assert.equal(incompleteBehaviour.capabilities[0].readiness, "CONTRACT_PROVEN");
   assert.deepEqual(incompleteBehaviour.capabilities[0].missingRequiredBands, ["behaviour-L3"]);
   assert.ok(
     incompleteBehaviour.gaps.some((gap) => gap.kind === "capability-behaviour-proof-missing")
+  );
+});
+
+test("L0 discovery blocks every higher capability level", () => {
+  const capabilityCtx = {
+    repoRoot: process.cwd(),
+    foundation: {
+      "environment-capability-matrix.json": {
+        capabilities: [
+          {
+            capability: "Fixture capability",
+            category: "test",
+            runtimeOwner: "team-fixture",
+            dev: {
+              provider: "fixture-provider",
+              providerClass: "compose-local",
+              externalDependencyRisk: "fixture dependency declared",
+              requiredProofs: ["proof:fixture"],
+            },
+            test: {
+              provider: "fixture-real-provider",
+              providerClass: "compose-local",
+              externalDependencyRisk: "fixture depends on compose-local substrate",
+              requiredProofs: ["proof:fixture"],
+            },
+            staging: { requiredProofs: ["proof:fixture"] },
+          },
+        ],
+      },
+    },
+  };
+  const l0 = buildL0DiscoveryReadinessReport(capabilityCtx, [validRecord()]);
+  assert.equal(l0.status, "FAIL");
+  assert.equal(l0.runtimeNodesMissingInMemoryImplementation, 1);
+  assert.ok(l0.gaps.some((gap) => gap.kind === "missing-in-memory-implementation"));
+
+  const readiness = buildCapabilityProofReadinessReport(capabilityCtx, [validRecord()], l0);
+  const row = readiness.capabilities[0];
+  assert.equal(row.readiness, "UNPROVEN");
+  assert.equal(row.highestDiscoveryLevelAchieved, "NONE");
+  assert.equal(row.highestExecutableLevelAchieved, "NONE");
+  assert.equal(row.highestContractLevelAchieved, "NONE");
+  assert.equal(row.highestBehaviourLevelAchieved, "NONE");
+  assert.ok(
+    row.advancementBlockers.some((blocker) => blocker.message === "L1 blocked by missing L0")
+  );
+  assert.ok(
+    row.advancementBlockers.some((blocker) => blocker.message === "L6 blocked by missing L0")
   );
 });
 

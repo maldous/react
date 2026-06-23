@@ -11,12 +11,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L2",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:41:25.305Z",
-  "endedAt": "2026-06-23T12:41:25.466Z",
+  "startedAt": "2026-06-23T14:22:07.696Z",
+  "endedAt": "2026-06-23T14:22:07.915Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -65,20 +65,20 @@
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:25.466Z",
+  "generatedAt": "2026-06-23T14:22:07.915Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:25.305Z",
-  "endTime": "2026-06-23T12:41:25.466Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:25.466Z",
+  "proofLevelObserved": "L2",
+  "startTime": "2026-06-23T14:22:07.696Z",
+  "endTime": "2026-06-23T14:22:07.915Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:07.915Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
   "auditIds": [
@@ -105,5 +105,5 @@
     "log:postgres-observability-repository:runtime-proof",
     "log:observability-signals:runtime-proof"
   ],
-  "evidenceSignature": "36746be8dfdd8efe1d3b3f5b7ee301ea0b5ce64f9fa788fb7a66ed821d54deb2"
+  "evidenceSignature": "5ea86235543326fffe492da3178a231d68a8415f475fd3d630fc2a138af03919"
 }

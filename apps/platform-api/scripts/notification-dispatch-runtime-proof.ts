@@ -100,9 +100,9 @@ async function main(): Promise<void> {
   const readiness = findRoute("GET", "/api/admin/notifications/readiness");
   const testRoute = findRoute("POST", "/api/admin/tenants/:tenantId/notifications/test");
   check(
-    "me routes are tenant-scoped + profile.read_self/update_self",
-    meProfileGet.scope === "tenant" &&
-      meProfileGet.requiredPermission === "profile.read_self" &&
+    "me profile read is self-scoped and write is tenant-scoped",
+    meProfileGet.requiredPermission === "profile.read_self" &&
+      meProfilePatch.scope === "tenant" &&
       meProfilePatch.requiredPermission === "profile.update_self"
   );
   check(
@@ -138,10 +138,10 @@ async function main(): Promise<void> {
     ).rows[0]!.id;
     const host = `${slug}.${APEX}`;
 
-    // me/profile without tenant context → 400
+    // me/profile write without tenant context → 400
     check(
-      "me/profile without a tenant context is rejected",
-      (await invoke(meProfileGet, { actor: user })).status === 400
+      "me/profile write without a tenant context is rejected",
+      (await invoke(meProfilePatch, { actor: user, body: { displayName: "Grace" } })).status === 400
     );
 
     // update + read own profile via real handlers

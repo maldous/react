@@ -40,10 +40,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-billing-catalog",
-  "startedAt": "2026-06-23T12:41:10.544Z",
-  "endedAt": "2026-06-23T12:41:10.583Z",
+  "startedAt": "2026-06-23T14:21:17.058Z",
+  "endedAt": "2026-06-23T14:21:17.098Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -52,6 +52,36 @@
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
   "beforeState": {
+    "routeMutations": {
+      "route:post-api-admin-billing-catalog-products": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:post-api-admin-billing-catalog-plans": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:post-api-admin-billing-catalog-prices": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-admin-billing-catalog-products": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-admin-billing-catalog-plans": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-admin-billing-catalog-prices": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-org-billing-catalog": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      }
+    },
     "products": 0,
     "plans": 0,
     "prices": 0,
@@ -60,6 +90,36 @@
     "activePrices": 0
   },
   "afterState": {
+    "routeMutations": {
+      "route:post-api-admin-billing-catalog-products": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:post-api-admin-billing-catalog-plans": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:post-api-admin-billing-catalog-prices": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-admin-billing-catalog-products": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-admin-billing-catalog-plans": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-admin-billing-catalog-prices": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      },
+      "route:get-api-org-billing-catalog": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+      }
+    },
     "products": 1,
     "plans": 1,
     "prices": 1,
@@ -68,6 +128,85 @@
     "activePrices": 1
   },
   "assertedStateDiff": {
+    "routeMutations": {
+      "route:post-api-admin-billing-catalog-products": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-billing-catalog-plans": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-billing-catalog-prices": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-billing-catalog-products": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-billing-catalog-plans": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-billing-catalog-prices": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-billing-catalog": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
     "products": {
       "before": 0,
       "after": 1
@@ -119,19 +258,98 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:10.583Z",
+  "generatedAt": "2026-06-23T14:21:17.098Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
+  "collectorRunId": "proof-run-1782224456962-891334",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T12:41:10.544Z",
-  "endTime": "2026-06-23T12:41:10.583Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:10.583Z",
+  "startTime": "2026-06-23T14:21:17.058Z",
+  "endTime": "2026-06-23T14:21:17.098Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:17.098Z",
   "stateDiff": {
+    "routeMutations": {
+      "route:post-api-admin-billing-catalog-products": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-billing-catalog-plans": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-billing-catalog-prices": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-billing-catalog-products": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-billing-catalog-plans": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-billing-catalog-prices": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-billing-catalog": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
     "products": {
       "before": 0,
       "after": 1
@@ -172,5 +390,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:semantic-dev"],
-  "evidenceSignature": "00683acc339e18fd5eee5c00a82edecdcc9f8c21b20473fc1a33acbe22f412fe"
+  "evidenceSignature": "219f39133adf642f697351a4938db9a268cfc6819e762c69a3422b1d2a72060a"
 }

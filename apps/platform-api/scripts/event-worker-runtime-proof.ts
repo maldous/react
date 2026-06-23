@@ -57,9 +57,16 @@ async function main(): Promise<void> {
     audit: noopAudit,
   };
   let orgA: string | null = null;
-  const workerId = "proof-worker-" + Date.now().toString(36);
+  const token = Date.now().toString(36);
+  const workerId = "proof-worker-" + token;
+  const okEvent = `ok.event.${token}`;
+  const boomEvent = `boom.event.${token}`;
+  const missingHandlerEvent = `no.handler.${token}`;
 
   try {
+    await su.query(
+      "UPDATE public.platform_events SET status='failed', updated_at=now() WHERE status IN ('pending', 'processing')"
+    );
     orgA = (
       await su.query<{ id: string }>(
         "INSERT INTO public.organisations (slug, display_name) VALUES ($1,$2) RETURNING id",
@@ -68,10 +75,10 @@ async function main(): Promise<void> {
     ).rows[0]!.id;
 
     // happy path: publish → worker consumes → processed
-    await publishEvent({ organisationId: orgA, eventType: "ok.event", idempotencyKey: "k1" }, deps);
+    await publishEvent({ organisationId: orgA, eventType: okEvent, idempotencyKey: "k1" }, deps);
     const handled: string[] = [];
     const okHandlers = {
-      "ok.event": async (e: ClaimedEvent) => {
+      [okEvent]: async (e: ClaimedEvent) => {
         handled.push(e.id);
       },
     };
@@ -91,11 +98,11 @@ async function main(): Promise<void> {
 
     // failure path: max_attempts=2 → retry once, then dead-letter
     await publishEvent(
-      { organisationId: orgA, eventType: "boom.event", idempotencyKey: "k2", maxAttempts: 2 },
+      { organisationId: orgA, eventType: boomEvent, idempotencyKey: "k2", maxAttempts: 2 },
       deps
     );
     const boomHandlers = {
-      "boom.event": async () => {
+      [boomEvent]: async () => {
         throw new Error("intentional handler failure");
       },
     };
@@ -112,7 +119,12 @@ async function main(): Promise<void> {
     // Unknown event types are not silently dropped: publish no.handler, consume it
     // with an empty handler registry, and prove it reaches DLQ at max_attempts.
     await publishEvent(
-      { organisationId: orgA, eventType: "no.handler", idempotencyKey: "k3", maxAttempts: 1 },
+      {
+        organisationId: orgA,
+        eventType: missingHandlerEvent,
+        idempotencyKey: "k3",
+        maxAttempts: 1,
+      },
       deps
     );
     const missingHandler = await processNext({}, deps, { batch: 10 });
@@ -121,7 +133,7 @@ async function main(): Promise<void> {
       "no.handler publish is consumed by the worker and dead-lettered when no handler exists",
       missingHandler.claimed === 1 &&
         missingHandler.deadLettered === 1 &&
-        dlqAfterMissingHandler.deadLetters.some((e) => e.eventType === "no.handler")
+        dlqAfterMissingHandler.deadLetters.some((e) => e.eventType === missingHandlerEvent)
     );
 
     // heartbeat visible

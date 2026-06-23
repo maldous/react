@@ -9,18 +9,22 @@
   "subjectId": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
   "capabilityId": "capability:rate-limits",
   "providerId": "rate-limits",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-api-admin-tenants-tenantid-rate-limits",
+    "route:get-api-org-rate-limits",
+    "route:patch-api-admin-tenants-tenantid-rate-limits"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:rate-limits",
-  "startedAt": "2026-06-23T12:41:31.652Z",
-  "endedAt": "2026-06-23T12:41:31.722Z",
+  "startedAt": "2026-06-23T14:22:16.376Z",
+  "endedAt": "2026-06-23T14:22:16.515Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +32,153 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-rate-limits": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+      },
+      "route:get-api-org-rate-limits": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+      },
+      "route:patch-api-admin-tenants-tenantid-rate-limits": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-rate-limits": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+      },
+      "route:get-api-org-rate-limits": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+      },
+      "route:patch-api-admin-tenants-tenantid-rate-limits": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-rate-limits": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-rate-limits": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-tenants-tenantid-rate-limits": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:31.722Z",
+  "generatedAt": "2026-06-23T14:22:16.515Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:31.652Z",
-  "endTime": "2026-06-23T12:41:31.722Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:31.722Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "81185b811be4da479c3b5318df610760b0a98a17c3f89a7cc7e1372c65ac45a6"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:16.376Z",
+  "endTime": "2026-06-23T14:22:16.515Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:16.515Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-rate-limits": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-rate-limits": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-tenants-tenantid-rate-limits": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/rate-limits-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
+  "evidenceSignature": "d1d694d06ad9851c0d2aab88283f7a1aacffa076fd9906ffaf368c0ff4d0c85a"
 }

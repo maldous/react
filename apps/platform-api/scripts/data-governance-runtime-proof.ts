@@ -89,6 +89,17 @@ class ProofGovernancePort implements DataGovernancePort {
   }
 }
 
+const actor = {
+  actorId: "00000000-0000-0000-0000-000000000001",
+  actorRoles: ["platform-admin"],
+};
+const auditEvents: unknown[] = [];
+const audit = {
+  emit: async (event: unknown) => {
+    auditEvents.push(event);
+  },
+};
+
 async function main(): Promise<void> {
   const required = [
     "/api/admin/governance/catalog",
@@ -114,23 +125,25 @@ async function main(): Promise<void> {
       owner: " analytics ",
       classification: "pii",
       lineageEdges: ["raw.crm.contacts", "warehouse.customer_360", "raw.crm.contacts"],
-      actorId: "00000000-0000-0000-0000-000000000001",
+      actor,
     },
-    { port }
+    { port, audit }
   );
   assert.deepEqual(dataset.lineageEdges, ["raw.crm.contacts", "warehouse.customer_360"]);
+  assert.equal(auditEvents.length, 1);
 
   const classification = await classifyColumn(
     {
       datasetId: dataset.datasetId,
       columnName: "card_number",
       sampleValue: "4111 1111 1111 1111",
-      actorId: "00000000-0000-0000-0000-000000000001",
+      actor,
     },
-    { port }
+    { port, audit }
   );
   assert.equal(classification.classification, "sensitive");
   assert.equal(classification.rule, "sensitive.payment_card_luhn");
+  assert.equal(auditEvents.length, 2);
 
   const dsr = await createDsr(
     {
@@ -138,13 +151,16 @@ async function main(): Promise<void> {
       subjectId: "subject-1",
       type: "portability",
       reason: "subject portability request",
-      actorId: "00000000-0000-0000-0000-000000000001",
+      actor,
     },
-    { port }
+    { port, audit }
   );
   const fulfilled = await fulfillDsr(
-    { dsrId: dsr.dsrId, actorId: "00000000-0000-0000-0000-000000000003" },
-    { port }
+    {
+      dsrId: dsr.dsrId,
+      actor: { actorId: "00000000-0000-0000-0000-000000000003", actorRoles: ["platform-admin"] },
+    },
+    { port, audit }
   );
   assert.equal(fulfilled.state, "fulfilled");
   assert.equal(fulfilled.fulfillmentEvidence?.action, "portability-export");
@@ -153,6 +169,7 @@ async function main(): Promise<void> {
     fulfilled.fulfillmentEvidence?.classifications[0]?.rule,
     "sensitive.payment_card_luhn"
   );
+  assert.equal(auditEvents.length, 4);
 
   console.log(
     JSON.stringify(

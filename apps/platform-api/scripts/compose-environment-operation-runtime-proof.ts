@@ -56,8 +56,8 @@ assert.ok(
 );
 assert.ok(
   usecaseSource.includes("requiredPermissionFor") &&
-    usecaseSource.includes("environment.operation_invoked") &&
-    usecaseSource.includes("FORBIDDEN"),
+    usecaseSource.includes("AuditAction.EnvironmentOperationInvoked") &&
+    usecaseSource.includes("ForbiddenError"),
   "environment operation usecase must enforce permission state and emit the operation audit event"
 );
 

@@ -9,18 +9,18 @@
   "subjectId": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
   "capabilityId": "capability:observability-control-route",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": ["route:get-api-admin-observability"],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:observability-control-route",
-  "startedAt": "2026-06-23T12:41:16.687Z",
-  "endedAt": "2026-06-23T12:41:17.195Z",
+  "startedAt": "2026-06-23T14:21:26.631Z",
+  "endedAt": "2026-06-23T14:21:27.150Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,13 +28,41 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-observability": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-observability": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-observability": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
   "auditEventIds": ["audit:observability-control-route:runtime-proof-observed"],
   "traceIds": ["trace:observability-control-route:runtime-proof"],
   "metricSamples": [
@@ -50,23 +78,37 @@
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:17.195Z",
+  "generatedAt": "2026-06-23T14:21:27.150Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:16.687Z",
-  "endTime": "2026-06-23T12:41:17.195Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:17.195Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:26.631Z",
+  "endTime": "2026-06-23T14:21:27.150Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:27.150Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-observability": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
   "auditIds": ["audit:observability-control-route:runtime-proof-observed"],
   "metricEvidence": [
     {
@@ -78,5 +120,5 @@
     }
   ],
   "logEvidence": ["log:observability-control-route:runtime-proof"],
-  "evidenceSignature": "6e09ce4d1728855149cd1b512733ceca57983bebc68aa207a516ce8b229b397f"
+  "evidenceSignature": "ef3ed2b26ac4e7ff2d810e1fb4c4b99f45a0bdc2895972c7403f3acd370faf7b"
 }

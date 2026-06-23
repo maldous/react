@@ -9,18 +9,26 @@
   "subjectId": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "capabilityId": "capability:pitr-restore-drill",
   "providerId": "pitr-restore-drill",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-admin-data-legal-holds",
+    "route:delete-api-admin-data-retention-policies",
+    "route:get-api-admin-data-legal-holds",
+    "route:get-api-admin-data-retention-policies",
+    "route:post-api-admin-data-legal-holds",
+    "route:post-api-admin-data-residency",
+    "route:post-api-admin-data-retention-policies"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:pitr-restore-drill",
-  "startedAt": "2026-06-23T12:41:20.310Z",
-  "endedAt": "2026-06-23T12:41:20.698Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:21:30.633Z",
+  "endedAt": "2026-06-23T14:22:01.807Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +36,273 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-residency": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-residency": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-residency": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:20.698Z",
+  "generatedAt": "2026-06-23T14:22:01.807Z",
   "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:20.310Z",
-  "endTime": "2026-06-23T12:41:20.698Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:20.698Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "2ac41663d1075462db2e235d7e98c7418abee40873f9ee2fb4d45d281a51a24f"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:30.633Z",
+  "endTime": "2026-06-23T14:22:01.807Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:01.807Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-residency": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "evidenceSignature": "91d059b0c0fba8fa15f3e276fbe6416dadbac04521284019fb9f3a775db6c02f"
 }

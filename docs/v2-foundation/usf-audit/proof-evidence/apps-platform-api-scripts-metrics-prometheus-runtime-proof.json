@@ -9,18 +9,23 @@
   "subjectId": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "capabilityId": "capability:metrics-prometheus",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-monitoring",
+    "route:get-admin-observability",
+    "route:get-api-admin-observability",
+    "route:get-api-admin-observability-readiness"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:metrics-prometheus",
-  "startedAt": "2026-06-23T12:41:13.771Z",
-  "endedAt": "2026-06-23T12:41:13.834Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:21:20.721Z",
+  "endedAt": "2026-06-23T14:21:20.885Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,13 +33,98 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-monitoring": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      },
+      "route:get-admin-observability": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      },
+      "route:get-api-admin-observability": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      },
+      "route:get-api-admin-observability-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-monitoring": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      },
+      "route:get-admin-observability": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      },
+      "route:get-api-admin-observability": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      },
+      "route:get-api-admin-observability-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-monitoring": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-observability": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-observability": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-observability-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
   "auditEventIds": ["audit:metrics-prometheus:runtime-proof-observed"],
   "traceIds": ["trace:metrics-prometheus:runtime-proof"],
   "metricSamples": [
@@ -48,25 +138,72 @@
   ],
   "logCorrelationIds": ["log:metrics-prometheus:runtime-proof"],
   "cleanupResult": {
-    "status": "failed"
+    "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:13.834Z",
+  "generatedAt": "2026-06-23T14:21:20.885Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:13.771Z",
-  "endTime": "2026-06-23T12:41:13.834Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:13.834Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:20.721Z",
+  "endTime": "2026-06-23T14:21:20.885Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:20.885Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-monitoring": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-observability": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-observability": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-observability-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
   "auditIds": ["audit:metrics-prometheus:runtime-proof-observed"],
   "metricEvidence": [
     {
@@ -78,5 +215,5 @@
     }
   ],
   "logEvidence": ["log:metrics-prometheus:runtime-proof"],
-  "evidenceSignature": "d7e7143250ae9a8ab88631b056d2f7269f316ceee439a3867d6c5819a04f898c"
+  "evidenceSignature": "ac759fca4600e68c2d1b896a709d40bf61cc3e98833876bc8b4500a634698aa8"
 }

@@ -15,12 +15,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:environment-admin-bootstrap",
-  "startedAt": "2026-06-23T12:41:07.138Z",
-  "endedAt": "2026-06-23T12:41:07.346Z",
+  "startedAt": "2026-06-23T14:21:11.939Z",
+  "endedAt": "2026-06-23T14:21:12.172Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +28,95 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:07.346Z",
+  "generatedAt": "2026-06-23T14:21:12.172Z",
   "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:07.138Z",
-  "endTime": "2026-06-23T12:41:07.346Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:07.346Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "54be0f3a2f74cce58699f232916280747aa2d313b4455c1e6af367da12d052c9"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:11.939Z",
+  "endTime": "2026-06-23T14:21:12.172Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:12.172Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
+  "evidenceSignature": "4e545d51ab7161fed67eb9ff42e1c64600eb99fbaa7b10bf734587bb783d1ca3"
 }

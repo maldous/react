@@ -9,18 +9,22 @@
   "subjectId": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
   "capabilityId": "capability:workflow-provider-live",
   "providerId": "workflow-provider-live-proof",
-  "routeIds": [],
+  "routeIds": [
+    "route:post-api-admin-workflows-start",
+    "route:post-api-admin-workflows-workflowid-cancel",
+    "route:post-api-admin-workflows-workflowid-signal"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:workflow-provider-live",
-  "startedAt": "2026-06-23T12:41:45.076Z",
-  "endedAt": "2026-06-23T12:41:45.145Z",
+  "startedAt": "2026-06-23T14:22:32.628Z",
+  "endedAt": "2026-06-23T14:22:32.695Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +32,153 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:post-api-admin-workflows-start": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+      },
+      "route:post-api-admin-workflows-workflowid-cancel": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+      },
+      "route:post-api-admin-workflows-workflowid-signal": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:post-api-admin-workflows-start": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+      },
+      "route:post-api-admin-workflows-workflowid-cancel": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+      },
+      "route:post-api-admin-workflows-workflowid-signal": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:post-api-admin-workflows-start": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-workflows-workflowid-cancel": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-workflows-workflowid-signal": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/workflow-provider-live-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/workflow-provider-live-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/workflow-provider-live-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:45.145Z",
+  "generatedAt": "2026-06-23T14:22:32.695Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-provider-live-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:45.076Z",
-  "endTime": "2026-06-23T12:41:45.145Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:45.145Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "e956dd2e6993c6f5982fd7a8eda4bb91fd6b9b43d0ec4d7e5cc6299132b54611"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:32.628Z",
+  "endTime": "2026-06-23T14:22:32.695Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:32.695Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:post-api-admin-workflows-start": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-workflows-workflowid-cancel": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-workflows-workflowid-signal": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/workflow-provider-live-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/workflow-provider-live-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/workflow-provider-live-proof.ts"],
+  "evidenceSignature": "7462fd7eb33e177bf905c18b2fe50085a5a40b3c9a4328df4989418215952581"
 }

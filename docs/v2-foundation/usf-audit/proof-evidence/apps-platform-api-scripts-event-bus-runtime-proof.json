@@ -9,18 +9,23 @@
   "subjectId": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
   "capabilityId": "capability:event-bus",
   "providerId": "event-bus",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-events",
+    "route:get-api-admin-events",
+    "route:get-api-admin-events-dead-letter",
+    "route:post-api-admin-events-eventid-redrive"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:event-bus",
-  "startedAt": "2026-06-23T12:41:07.915Z",
-  "endedAt": "2026-06-23T12:41:07.984Z",
+  "startedAt": "2026-06-23T14:21:12.856Z",
+  "endedAt": "2026-06-23T14:21:12.978Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +33,183 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      },
+      "route:get-api-admin-events": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      },
+      "route:get-api-admin-events": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/event-bus-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/event-bus-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/event-bus-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:07.984Z",
+  "generatedAt": "2026-06-23T14:21:12.978Z",
   "sourceFileRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:07.915Z",
-  "endTime": "2026-06-23T12:41:07.984Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:07.984Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "4a0af8c8f1f3656aab628c400d8074703db9b4a116bf7484f238016903fc1aa4"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:12.856Z",
+  "endTime": "2026-06-23T14:21:12.978Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:12.978Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-events-dead-letter": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-events-eventid-redrive": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/event-bus-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/event-bus-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/event-bus-runtime-proof.ts"],
+  "evidenceSignature": "119eb2d10a672e454c88b1aa83facfacd180e9ab3851131402f73cf411ce3498"
 }

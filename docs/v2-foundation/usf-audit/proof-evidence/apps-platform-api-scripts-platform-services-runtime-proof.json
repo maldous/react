@@ -9,18 +9,26 @@
   "subjectId": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
   "capabilityId": "capability:platform-services",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-platform",
+    "route:get-admin-readiness",
+    "route:get-api-org-platform-services-readiness",
+    "route:get-api-platform-service-catalog",
+    "route:get-healthz",
+    "route:get-readyz",
+    "route:get-version"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:platform-services",
-  "startedAt": "2026-06-23T12:41:20.859Z",
-  "endedAt": "2026-06-23T12:41:20.955Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:22:01.973Z",
+  "endedAt": "2026-06-23T14:22:02.090Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +36,273 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-platform": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-admin-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-api-org-platform-services-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-api-platform-service-catalog": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-healthz": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-readyz": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-version": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-platform": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-admin-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-api-org-platform-services-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-api-platform-service-catalog": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-healthz": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-readyz": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      },
+      "route:get-version": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-platform": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-platform-services-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-platform-service-catalog": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-healthz": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-readyz": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-version": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/platform-services-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/platform-services-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/platform-services-runtime-proof.ts"],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:20.955Z",
+  "generatedAt": "2026-06-23T14:22:02.090Z",
   "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:20.859Z",
-  "endTime": "2026-06-23T12:41:20.955Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:20.955Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "14ffbdc06435ffe58eb2e5ef0af9fad3e25f058c1fbdc458d7d8f8b0c091bcf0"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:01.973Z",
+  "endTime": "2026-06-23T14:22:02.090Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:02.090Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-platform": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-platform-services-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-platform-service-catalog": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-healthz": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-readyz": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-version": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/platform-services-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/platform-services-runtime-proof.ts"],
+  "evidenceSignature": "95638aba98c068375706f45b87c96848cd811205414783fa94d0a8b17e9cd65c"
 }

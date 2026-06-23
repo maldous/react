@@ -15,12 +15,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:composed-provider-runtime-closure",
-  "startedAt": "2026-06-23T12:41:02.598Z",
-  "endedAt": "2026-06-23T12:41:02.679Z",
+  "startedAt": "2026-06-23T14:21:06.344Z",
+  "endedAt": "2026-06-23T14:21:06.430Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +28,93 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:02.679Z",
+  "generatedAt": "2026-06-23T14:21:06.430Z",
   "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:02.598Z",
-  "endTime": "2026-06-23T12:41:02.679Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:02.679Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "ef93c6b098b2af0de4005ec1cf890f12701833b19909206f2ed5458aebf21495"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:06.344Z",
+  "endTime": "2026-06-23T14:21:06.430Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:06.430Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
+  "evidenceSignature": "adc4df52a308488f1be0fb0113c87a2d612d32c0089ae25493a7588e65814166"
 }

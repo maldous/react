@@ -9,18 +9,26 @@
   "subjectId": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
   "capabilityId": "capability:data-residency",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-admin-data-legal-holds",
+    "route:delete-api-admin-data-retention-policies",
+    "route:get-api-admin-data-legal-holds",
+    "route:get-api-admin-data-retention-policies",
+    "route:post-api-admin-data-legal-holds",
+    "route:post-api-admin-data-residency",
+    "route:post-api-admin-data-retention-policies"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:data-residency",
-  "startedAt": "2026-06-23T12:41:04.695Z",
-  "endedAt": "2026-06-23T12:41:04.735Z",
+  "startedAt": "2026-06-23T14:21:08.748Z",
+  "endedAt": "2026-06-23T14:21:08.790Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +36,273 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-residency": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-residency": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-residency": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:04.735Z",
+  "generatedAt": "2026-06-23T14:21:08.790Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-residency-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:04.695Z",
-  "endTime": "2026-06-23T12:41:04.735Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:04.735Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "4a6d6061eb08dd291825ef14c6929122fe466c69aa20109d882b73ef539d07d4"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:08.748Z",
+  "endTime": "2026-06-23T14:21:08.790Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:08.790Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-legal-holds": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-residency": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-data-retention-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/data-residency-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
+  "evidenceSignature": "b7bc2b06e9d53895831a36f63b0dda656f1431a8805870ab9d7d65e9dd6664f5"
 }

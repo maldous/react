@@ -9,18 +9,22 @@
   "subjectId": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
   "capabilityId": "capability:delegated-admin",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-admin-tenants-tenantid-delegations-delegationid",
+    "route:get-api-admin-tenants-tenantid-delegations",
+    "route:post-api-admin-tenants-tenantid-delegations"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:delegated-admin",
-  "startedAt": "2026-06-23T12:41:42.537Z",
-  "endedAt": "2026-06-23T12:41:42.578Z",
+  "startedAt": "2026-06-23T14:22:29.799Z",
+  "endedAt": "2026-06-23T14:22:29.836Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +32,155 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-delegations": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-delegations": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-delegations": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-delegations": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-delegations": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-delegations": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:42.578Z",
+  "generatedAt": "2026-06-23T14:22:29.836Z",
   "sourceFileRefs": ["apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:42.537Z",
-  "endTime": "2026-06-23T12:41:42.578Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:42.578Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "d1657577bda3cd1fe8d429987bc9ce1211f4de38d5080edd4ebbd422a59cd41c"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:29.799Z",
+  "endTime": "2026-06-23T14:22:29.836Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:29.836Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-delegations": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-delegations": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
+  "evidenceSignature": "ddc8f81464a468e04ff7347f01a08d36eae9bf4e6464f0b4fd263c8d38efe610"
 }

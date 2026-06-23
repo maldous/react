@@ -15,12 +15,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:provider-observability-contract",
-  "startedAt": "2026-06-23T12:41:30.285Z",
-  "endedAt": "2026-06-23T12:41:30.351Z",
+  "startedAt": "2026-06-23T14:22:13.666Z",
+  "endedAt": "2026-06-23T14:22:13.730Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,13 +28,41 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
   "auditEventIds": ["audit:provider-observability-contract:runtime-proof-observed"],
   "traceIds": ["trace:provider-observability-contract:runtime-proof"],
   "metricSamples": [
@@ -50,23 +78,37 @@
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:30.351Z",
+  "generatedAt": "2026-06-23T14:22:13.730Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:30.285Z",
-  "endTime": "2026-06-23T12:41:30.351Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:30.351Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:13.666Z",
+  "endTime": "2026-06-23T14:22:13.730Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:13.730Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
   "auditIds": ["audit:provider-observability-contract:runtime-proof-observed"],
   "metricEvidence": [
     {
@@ -78,5 +120,5 @@
     }
   ],
   "logEvidence": ["log:provider-observability-contract:runtime-proof"],
-  "evidenceSignature": "8219b75390025c21703e38e415d7352aa2a841889aa873e5ba3f02128ea0b27c"
+  "evidenceSignature": "b326f1692e06294e6bcbf43b210d36a17789d7d45f5dfbab6b83d69b11007270"
 }

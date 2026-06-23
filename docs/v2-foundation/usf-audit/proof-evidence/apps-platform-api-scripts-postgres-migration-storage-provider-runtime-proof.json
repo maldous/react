@@ -11,12 +11,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:41:24.574Z",
-  "endedAt": "2026-06-23T12:41:24.638Z",
+  "startedAt": "2026-06-23T14:22:06.852Z",
+  "endedAt": "2026-06-23T14:22:06.915Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -24,41 +24,105 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+  ],
+  "traceIds": [
+    "trace:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+  ],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:24.638Z",
+  "generatedAt": "2026-06-23T14:22:06.915Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:24.574Z",
-  "endTime": "2026-06-23T12:41:24.638Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:24.638Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "0254a31c4ed7cb763f479cf59ec465f505129360cf7d0328cfa781930c18f450"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:06.852Z",
+  "endTime": "2026-06-23T14:22:06.915Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:06.915Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+  ],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": [
+    "log:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+  ],
+  "evidenceSignature": "ceabb06bfc2637e6d44018b9d6880a13a1cfa7ec14cb0d3395be5e05c8418588"
 }

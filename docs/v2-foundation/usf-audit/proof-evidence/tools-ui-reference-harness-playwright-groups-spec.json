@@ -10,7 +10,11 @@
   "subjectId": "tools/ui-reference-harness/playwright/groups.spec.ts",
   "capabilityId": "capability:ui-semantic-groups,capability:ui-semantic-groups (headless journey)",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-groups-groupid",
+    "route:patch-api-org-groups-groupid",
+    "route:post-api-org-groups"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -18,10 +22,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L1",
   "commandExecuted": "npm run proof:ui-semantic-groups",
-  "startedAt": "2026-06-23T12:41:53.602Z",
-  "endedAt": "2026-06-23T12:42:00.238Z",
+  "startedAt": "2026-06-23T14:22:41.102Z",
+  "endedAt": "2026-06-23T14:22:47.775Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "tools/ui-reference-harness/playwright/groups.spec.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,39 +33,153 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-groups-groupid": {
+        "observed": "before",
+        "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+      },
+      "route:patch-api-org-groups-groupid": {
+        "observed": "before",
+        "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+      },
+      "route:post-api-org-groups": {
+        "observed": "before",
+        "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-groups-groupid": {
+        "observed": "after",
+        "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+      },
+      "route:patch-api-org-groups-groupid": {
+        "observed": "after",
+        "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+      },
+      "route:post-api-org-groups": {
+        "observed": "after",
+        "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-groups-groupid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-groups-groupid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-groups": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:tools/ui-reference-harness/playwright/groups.spec.ts"],
+  "traceIds": ["trace:tools/ui-reference-harness/playwright/groups.spec.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:tools/ui-reference-harness/playwright/groups.spec.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:42:00.238Z",
+  "generatedAt": "2026-06-23T14:22:47.775Z",
   "sourceFileRefs": ["tools/ui-reference-harness/playwright/groups.spec.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:53.602Z",
-  "endTime": "2026-06-23T12:42:00.238Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:42:00.238Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "4c1e21f2e021e338e9c84c701e655f359f49b8c9e8d848a38d2f3e399865f3c6"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:41.102Z",
+  "endTime": "2026-06-23T14:22:47.775Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:47.775Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-groups-groupid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-groups-groupid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-groups": {
+        "before": {
+          "observed": "before",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:tools/ui-reference-harness/playwright/groups.spec.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "tools/ui-reference-harness/playwright/groups.spec.ts"
+    }
+  ],
+  "logEvidence": ["log:tools/ui-reference-harness/playwright/groups.spec.ts"],
+  "evidenceSignature": "d58ecdbc464ebc69657298f63d44fbab558f4c932348821f17f7ef5d41b69ac6"
 }

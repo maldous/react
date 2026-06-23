@@ -9,18 +9,26 @@
   "subjectId": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
   "capabilityId": "capability:metering-quota-routes",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-usage",
+    "route:get-api-admin-tenants-tenantid-quotas",
+    "route:get-api-admin-tenants-tenantid-usage",
+    "route:get-api-org-quotas",
+    "route:get-api-org-usage",
+    "route:patch-api-admin-tenants-tenantid-quotas",
+    "route:post-api-admin-tenants-tenantid-meter-events"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:metering-quota-routes",
-  "startedAt": "2026-06-23T12:41:12.779Z",
-  "endedAt": "2026-06-23T12:41:13.289Z",
+  "startedAt": "2026-06-23T14:21:19.575Z",
+  "endedAt": "2026-06-23T14:21:20.179Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +36,273 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-usage": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-usage": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-org-quotas": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-org-usage": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-meter-events": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-usage": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-usage": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-org-quotas": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:get-api-org-usage": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-meter-events": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-usage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-usage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-usage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-meter-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:13.289Z",
+  "generatedAt": "2026-06-23T14:21:20.179Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:12.779Z",
-  "endTime": "2026-06-23T12:41:13.289Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:13.289Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "cb6380d08492e68076aca1d69a557febe3f486fd662fc1be34e1a18669fa12da"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:19.575Z",
+  "endTime": "2026-06-23T14:21:20.179Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:20.179Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-usage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-usage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-usage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-meter-events": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
+  "evidenceSignature": "55e365dbc8c77b95a26499a2924a59d239cd79fba6a69170b866b3f53a92c06e"
 }

@@ -9,18 +9,22 @@
   "subjectId": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
   "capabilityId": "capability:quota-enforcement",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-api-admin-tenants-tenantid-quotas",
+    "route:get-api-org-quotas",
+    "route:patch-api-admin-tenants-tenantid-quotas"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:quota-enforcement",
-  "startedAt": "2026-06-23T12:41:30.961Z",
-  "endedAt": "2026-06-23T12:41:31.142Z",
+  "startedAt": "2026-06-23T14:22:14.352Z",
+  "endedAt": "2026-06-23T14:22:14.597Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +32,153 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+      },
+      "route:get-api-org-quotas": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+      },
+      "route:get-api-org-quotas": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:31.142Z",
+  "generatedAt": "2026-06-23T14:22:14.597Z",
   "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:30.961Z",
-  "endTime": "2026-06-23T12:41:31.142Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:31.142Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "813ae657c288a660715c300849568bfa544b1d3bbeef0c1599967c6bf75c2395"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:14.352Z",
+  "endTime": "2026-06-23T14:22:14.597Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:14.597Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-tenants-tenantid-quotas": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
+  "evidenceSignature": "793714ecfd4ca2cf9786f56fe347d3d4f25254cb65c1185f3a55771032365f13"
 }

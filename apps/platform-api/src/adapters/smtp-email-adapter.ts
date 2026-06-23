@@ -53,7 +53,10 @@ function numberFromEnv(value: string | undefined, fallback: number): number {
 export function loadSmtpEmailProviderConfig(env: NodeJS.ProcessEnv = process.env): SmtpConfig {
   return {
     host: env["SMTP_HOST"] ?? env["MAIL_SMTP_HOST"] ?? "localhost",
-    port: numberFromEnv(env["SMTP_PORT"] ?? env["MAIL_SMTP_PORT"], 1025),
+    port: numberFromEnv(
+      env["SMTP_PORT"] ?? env["MAIL_SMTP_PORT"] ?? env["MAILPIT_SMTP_PORT"],
+      1025
+    ),
     secure: (env["SMTP_SECURE"] ?? "false") === "true",
     user: env["SMTP_USER"],
     pass: env["SMTP_PASSWORD"],

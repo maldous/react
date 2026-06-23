@@ -26,10 +26,19 @@ import {
   computeEmailSenderReadiness,
   DEFAULT_EMAIL_SENDER_CONFIG,
 } from "../src/usecases/email-sender.ts";
+import { loadLocalEnv } from "./lib/local-env.ts";
 
+loadLocalEnv();
 const SMTP_HOST = process.env["MAIL_SMTP_HOST"] ?? "localhost";
-const SMTP_PORT = Number(process.env["MAIL_SMTP_PORT"] ?? 1025);
-const MAILPIT_API = process.env["MAILPIT_API"] ?? "http://localhost:8025/mailpit/api/v1";
+const SMTP_PORT = Number(process.env["MAIL_SMTP_PORT"] ?? process.env["MAILPIT_SMTP_PORT"] ?? 1025);
+const MAILPIT_API = normalizeMailpitApi(
+  process.env["MAILPIT_API"] ?? "http://localhost:8025/mailpit/api/v1"
+);
+
+function normalizeMailpitApi(value: string): string {
+  const trimmed = value.replace(/\/$/, "");
+  return trimmed.endsWith("/api/v1") ? trimmed : `${trimmed}/api/v1`;
+}
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {

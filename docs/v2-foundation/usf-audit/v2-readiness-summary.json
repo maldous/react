@@ -1,0 +1,33 @@
+{
+  "artefact": "v2-readiness-summary",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-23T15:12:15.113Z",
+  "status": "PASS",
+  "answers": {
+    "isL3Complete": true,
+    "areAllFormalBlockersClosed": true,
+    "areAllCapabilitiesEligibleForL4": true,
+    "isSubstrateExpansionUnblocked": true,
+    "nextExactMilestone": "Start L4 Substrate Proven implementation from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
+    "whatRemainsBeforeFoundationProven": [
+      "Implement and pass L4 Substrate Proven proofs for the 70 BEHAVIOUR_PROVEN capabilities.",
+      "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
+      "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle."
+    ]
+  },
+  "evidence": {
+    "behaviourReadinessStatus": "PASS",
+    "behaviourClosurePercentage": 100,
+    "invalidL3Proofs": 0,
+    "totalFormalGapCount": 0,
+    "futureSubstrateExpansionBlocked": false,
+    "capabilityCount": 70,
+    "behaviourProvenCapabilityCount": 70,
+    "substrateRoadmapStatus": "PASS",
+    "substrateRoadmapCapabilityCount": 70,
+    "l0DiscoveryStatus": "PASS",
+    "l0RuntimeNodes": 70,
+    "l0RuntimeNodesMissingInMemoryImplementation": 0,
+    "l0InvalidExceptions": 0
+  }
+}

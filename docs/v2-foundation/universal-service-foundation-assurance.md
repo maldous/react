@@ -1,6 +1,6 @@
 # Universal Service Foundation Assurance
 
-Status: FAIL
+Status: PASS
 
 This attestation is generated from `docs/v2-foundation/usf-graph/` and the V2 readiness semantic artefacts.
 It extends formal semantic assurance into operational, observability, security, audit, event, environment, data, dependency, reliability, capability coverage, and runtime alignment assurance.
@@ -24,14 +24,14 @@ The platform can answer assurance questions through the generated graph and repo
 
 ## Adversarial Runtime Assurance
 
-Status: FAIL
+Status: PASS
 
 The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories, adversarial reports, and formal proof-readiness reports are generated under `docs/v2-foundation/usf-audit/`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, orphan, or proof-readiness evidence is classified as a gap.
 
 | Assurance surface             | Status | Gaps |
 | ----------------------------- | ------ | ---: |
 | adversarial runtime inventory | PASS   |    0 |
-| formal proof readiness        | FAIL   |  153 |
+| formal proof readiness        | PASS   |    0 |
 | weak proof backlog            | PASS   |    0 |
 | capability proof readiness    | PASS   |    0 |
 

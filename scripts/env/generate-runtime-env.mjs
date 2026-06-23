@@ -86,6 +86,7 @@ const LOCAL_BOOTSTRAP_DEFAULTS = {
   KEYCLOAK_TEST_PASSWORD: "password",
   KEYCLOAK_CLIENT_SECRET: "local-dev-bff-secret",
   KEYCLOAK_PROVISIONER_CLIENT_SECRET: "local-dev-provisioner-secret",
+  OPENBAO_TOKEN: "platform-dev-root-token",
   SENTRY_DB_PASSWORD: "sentrypassword",
   // Shared-service (sonar/sentry) container-init creds — match the running instances.
   SONAR_DB_PASSWORD: "sonarpassword",

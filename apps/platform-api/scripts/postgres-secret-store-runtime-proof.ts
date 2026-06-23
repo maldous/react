@@ -25,7 +25,7 @@ assert.ok(
     adapterSource.includes("UPDATE public.secret_refs") &&
     adapterSource.includes("DELETE FROM public.secret_refs") &&
     adapterSource.includes("getMetadata") &&
-    adapterSource.includes("listMetadata"),
+    adapterSource.includes("async list("),
   "Postgres secret store proof must assert create/update/delete/list metadata state and persisted secret-ref side effects"
 );
 assert.ok(

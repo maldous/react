@@ -9,18 +9,23 @@
   "subjectId": "apps/platform-api/scripts/search-runtime-proof.ts",
   "capabilityId": "capability:search",
   "providerId": "search",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-search",
+    "route:get-api-admin-search-readiness",
+    "route:post-api-admin-search-reindex",
+    "route:post-api-org-search"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:search",
-  "startedAt": "2026-06-23T12:41:35.594Z",
-  "endedAt": "2026-06-23T12:41:35.661Z",
+  "startedAt": "2026-06-23T14:22:21.658Z",
+  "endedAt": "2026-06-23T14:22:21.784Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/search-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +33,183 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-search": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      },
+      "route:get-api-admin-search-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      },
+      "route:post-api-admin-search-reindex": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      },
+      "route:post-api-org-search": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-search": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      },
+      "route:get-api-admin-search-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      },
+      "route:post-api-admin-search-reindex": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      },
+      "route:post-api-org-search": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-search": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-search-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-search-reindex": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-search": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/search-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/search-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/search-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:35.661Z",
+  "generatedAt": "2026-06-23T14:22:21.784Z",
   "sourceFileRefs": ["apps/platform-api/scripts/search-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:35.594Z",
-  "endTime": "2026-06-23T12:41:35.661Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:35.661Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "287775482bd7a68770c4b1a18d22ec9ef586c5c1aa956654e4b829efa461dba7"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:21.658Z",
+  "endTime": "2026-06-23T14:22:21.784Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:21.784Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-search": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-search-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-search-reindex": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-search": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/search-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/search-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/search-runtime-proof.ts"],
+  "evidenceSignature": "95f054c00938cda2cdd3ab0544deeaaead72090765b18f1fabfb48fbbf5ce1b5"
 }

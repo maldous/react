@@ -9,18 +9,31 @@
   "subjectId": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
   "capabilityId": "capability:webhooks",
   "providerId": "webhooks",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-webhooks-id",
+    "route:get-admin-webhooks",
+    "route:get-api-org-webhooks",
+    "route:get-api-org-webhooks-id-deliveries",
+    "route:get-api-org-webhooks-id-metrics",
+    "route:get-api-org-webhooks-readiness",
+    "route:patch-api-org-webhooks-id",
+    "route:post-api-org-webhooks",
+    "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+    "route:post-api-org-webhooks-id-redrive-dead",
+    "route:post-api-org-webhooks-id-rotate-secret",
+    "route:post-api-org-webhooks-id-test"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:webhooks",
-  "startedAt": "2026-06-23T12:41:43.218Z",
-  "endedAt": "2026-06-23T12:41:43.306Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:22:30.707Z",
+  "endedAt": "2026-06-23T14:22:30.841Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +41,423 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-webhooks-id": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-admin-webhooks": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks-id-deliveries": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks-id-metrics": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:patch-api-org-webhooks-id": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-redrive-dead": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-rotate-secret": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-test": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-webhooks-id": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-admin-webhooks": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks-id-deliveries": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks-id-metrics": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:get-api-org-webhooks-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:patch-api-org-webhooks-id": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-redrive-dead": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-rotate-secret": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      },
+      "route:post-api-org-webhooks-id-test": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-webhooks-id": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-webhooks": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks-id-deliveries": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks-id-metrics": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-webhooks-id": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-redrive-dead": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-rotate-secret": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:43.306Z",
+  "generatedAt": "2026-06-23T14:22:30.841Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:43.218Z",
-  "endTime": "2026-06-23T12:41:43.306Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:43.306Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "47451072e1a14833ccb02a2ba4fcbd48665c393d888c6153a88e373719244221"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:30.707Z",
+  "endTime": "2026-06-23T14:22:30.841Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:30.841Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-webhooks-id": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-webhooks": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks-id-deliveries": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks-id-metrics": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-webhooks-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-webhooks-id": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-redrive-dead": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-rotate-secret": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-webhooks-id-test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/webhooks-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/webhooks-runtime-proof.ts"],
+  "evidenceSignature": "d2361d14fb19d97c2e3a2114aabbefd8cb99c0f6ec820afca3b0df1477a22f62"
 }

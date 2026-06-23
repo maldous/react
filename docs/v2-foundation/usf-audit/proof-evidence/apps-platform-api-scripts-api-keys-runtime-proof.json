@@ -9,18 +9,25 @@
   "subjectId": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
   "capabilityId": "capability:api-keys",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-api-keys-keyid",
+    "route:get-api-admin-tenants-tenantid-announcements",
+    "route:get-api-admin-tenants-tenantid-api-keys",
+    "route:get-api-org-api-keys",
+    "route:post-api-admin-tenants-tenantid-announcements",
+    "route:post-api-org-api-keys"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:api-keys",
-  "startedAt": "2026-06-23T12:40:57.176Z",
-  "endedAt": "2026-06-23T12:40:57.249Z",
+  "startedAt": "2026-06-23T14:20:59.057Z",
+  "endedAt": "2026-06-23T14:20:59.275Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +35,243 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-api-keys-keyid": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-announcements": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-api-keys": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:get-api-org-api-keys": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-announcements": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:post-api-org-api-keys": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-api-keys-keyid": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-announcements": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-api-keys": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:get-api-org-api-keys": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-announcements": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      },
+      "route:post-api-org-api-keys": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-api-keys-keyid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-announcements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-api-keys": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-api-keys": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-announcements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-api-keys": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/api-keys-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/api-keys-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/api-keys-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:40:57.249Z",
+  "generatedAt": "2026-06-23T14:20:59.275Z",
   "sourceFileRefs": ["apps/platform-api/scripts/api-keys-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:40:57.176Z",
-  "endTime": "2026-06-23T12:40:57.249Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:40:57.249Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "5336c7ad5a92aba4ae3f86185019044e6a43258c2bc7aa34dc95cbb7bd82efc6"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:20:59.057Z",
+  "endTime": "2026-06-23T14:20:59.275Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:20:59.275Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-api-keys-keyid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-announcements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-api-keys": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-api-keys": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-announcements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-api-keys": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/api-keys-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/api-keys-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/api-keys-runtime-proof.ts"],
+  "evidenceSignature": "460fddb93edb3d9da2ad76ea80b4cdfc121788898cda5b330221de29a733dbff"
 }

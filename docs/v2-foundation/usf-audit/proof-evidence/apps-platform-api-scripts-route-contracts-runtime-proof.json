@@ -43,6 +43,18 @@
   "capabilityId": "capability:route-contracts",
   "providerId": "not-applicable",
   "routeIds": [
+    "route:delete-api-org-config-key",
+    "route:delete-api-org-members-userid",
+    "route:patch-api-org-config-key",
+    "route:patch-api-org-email-sender",
+    "route:patch-api-org-features-featurekey",
+    "route:patch-api-org-members-userid",
+    "route:patch-api-org-members-userid-status",
+    "route:patch-api-org-members-userid-username",
+    "route:post-api-graphql",
+    "route:post-api-org-email-sender-test",
+    "route:post-api-org-members-invite",
+    "route:post-api-org-members-resend-invite",
     "GET /admin/config",
     "GET /admin/developer",
     "GET /admin/features",
@@ -78,10 +90,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:route-contracts",
-  "startedAt": "2026-06-23T12:41:32.400Z",
-  "endedAt": "2026-06-23T12:41:32.912Z",
+  "startedAt": "2026-06-23T14:22:18.472Z",
+  "endedAt": "2026-06-23T14:22:19.022Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -89,40 +101,1234 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-config-key": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:delete-api-org-members-userid": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-config-key": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-email-sender": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-features-featurekey": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-members-userid": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-members-userid-status": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-members-userid-username": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-graphql": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-org-email-sender-test": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-org-members-invite": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-org-members-resend-invite": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/config": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/developer": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/features": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/members": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/graphql": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/audit": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/config": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "DELETE /api/org/config/:key": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/config/:key": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/developer": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/email-sender": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/email-sender": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/email-sender/readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/org/email-sender/test": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/features": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/features/:featureKey": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/members": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "DELETE /api/org/members/:userId": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/members/:userId": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/members/:userId/external-identities": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/members/:userId/status": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/members/:userId/username": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/org/members/invite": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/org/members/resend-invite": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/theme": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /e2e-harness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-config-key": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:delete-api-org-members-userid": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-config-key": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-email-sender": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-features-featurekey": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-members-userid": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-members-userid-status": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:patch-api-org-members-userid-username": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-graphql": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-org-email-sender-test": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-org-members-invite": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "route:post-api-org-members-resend-invite": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/config": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/developer": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/features": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /admin/members": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/graphql": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/audit": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/config": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "DELETE /api/org/config/:key": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/config/:key": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/developer": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/email-sender": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/email-sender": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/email-sender/readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/org/email-sender/test": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/features": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/features/:featureKey": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/members": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "DELETE /api/org/members/:userId": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/members/:userId": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/members/:userId/external-identities": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/members/:userId/status": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "PATCH /api/org/members/:userId/username": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/org/members/invite": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "POST /api/org/members/resend-invite": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/org/readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /api/theme": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      },
+      "GET /e2e-harness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-config-key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-org-members-userid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-config-key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-email-sender": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-features-featurekey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-members-userid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-members-userid-status": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-members-userid-username": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-graphql": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-email-sender-test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-members-invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-members-resend-invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/config": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/developer": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/features": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/members": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/graphql": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/audit": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/config": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "DELETE /api/org/config/:key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/config/:key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/developer": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/email-sender": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/email-sender": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/email-sender/readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/org/email-sender/test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/features": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/features/:featureKey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/members": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "DELETE /api/org/members/:userId": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/members/:userId": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/members/:userId/external-identities": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/members/:userId/status": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/members/:userId/username": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/org/members/invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/org/members/resend-invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/theme": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /e2e-harness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-required",
     "reason": "route contract proof only reads the route table"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:32.912Z",
+  "generatedAt": "2026-06-23T14:22:19.022Z",
   "sourceFileRefs": ["apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
+  "collectorRunId": "proof-run-1782224456962-891334",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L2",
-  "startTime": "2026-06-23T12:41:32.400Z",
-  "endTime": "2026-06-23T12:41:32.912Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:32.912Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "8ce341f0fdb6b3adda53a4acb97d4119398deed1cb09a20133564318e939e5a3"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:18.472Z",
+  "endTime": "2026-06-23T14:22:19.022Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:19.022Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-config-key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-org-members-userid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-config-key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-email-sender": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-features-featurekey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-members-userid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-members-userid-status": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-org-members-userid-username": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-graphql": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-email-sender-test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-members-invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-members-resend-invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/config": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/developer": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/features": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /admin/members": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/graphql": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/audit": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/config": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "DELETE /api/org/config/:key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/config/:key": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/developer": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/email-sender": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/email-sender": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/email-sender/readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/org/email-sender/test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/features": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/features/:featureKey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/members": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "DELETE /api/org/members/:userId": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/members/:userId": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/members/:userId/external-identities": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/members/:userId/status": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "PATCH /api/org/members/:userId/username": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/org/members/invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "POST /api/org/members/resend-invite": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/org/readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /api/theme": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "GET /e2e-harness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
+  "evidenceSignature": "12d7ca4b69950ce0e717a0d4ac724b063eb29d671f0cadce28718a28d21b7d19"
 }

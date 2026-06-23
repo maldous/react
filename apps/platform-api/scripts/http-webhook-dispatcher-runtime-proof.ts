@@ -7,11 +7,13 @@
  * - webhook-redrive-runtime-proof.ts for operator recovery/redrive
  */
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
+const repoRoot = resolve(scriptDir, "../../..");
 const oneShotProofSource = readFileSync(join(scriptDir, "webhooks-runtime-proof.ts"), "utf8");
 const workerProofSource = readFileSync(join(scriptDir, "webhook-worker-runtime-proof.ts"), "utf8");
 const redriveProofSource = readFileSync(
@@ -71,6 +73,14 @@ assert.ok(
   "webhook usecase must record delivery state, classify readiness, and audit redrive side effects"
 );
 
-await import("./webhooks-runtime-proof.ts");
-await import("./webhook-worker-runtime-proof.ts");
-await import("./webhook-redrive-runtime-proof.ts");
+for (const proof of [
+  "webhooks-runtime-proof.ts",
+  "webhook-worker-runtime-proof.ts",
+  "webhook-redrive-runtime-proof.ts",
+]) {
+  execFileSync(
+    process.execPath,
+    ["--loader", join(repoRoot, "apps/platform-api/loader.mjs"), join(scriptDir, proof)],
+    { stdio: "inherit", env: process.env }
+  );
+}

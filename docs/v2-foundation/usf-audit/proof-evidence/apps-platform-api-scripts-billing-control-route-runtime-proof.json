@@ -9,18 +9,18 @@
   "subjectId": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
   "capabilityId": "capability:billing-control-route",
   "providerId": "billing-control-route",
-  "routeIds": [],
+  "routeIds": ["route:get-api-admin-billing"],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-control-route",
-  "startedAt": "2026-06-23T12:40:59.331Z",
-  "endedAt": "2026-06-23T12:40:59.842Z",
+  "startedAt": "2026-06-23T14:21:02.301Z",
+  "endedAt": "2026-06-23T14:21:02.828Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +28,93 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-billing": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-billing": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-billing": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:40:59.842Z",
+  "generatedAt": "2026-06-23T14:21:02.828Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:40:59.331Z",
-  "endTime": "2026-06-23T12:40:59.842Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:40:59.842Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "0a10ed6a0ee1fd0aa160ec0efe7945fa2b780f574aefa43883ccef333744fb1b"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:02.301Z",
+  "endTime": "2026-06-23T14:21:02.828Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:02.828Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-billing": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
+  "evidenceSignature": "9be525221ccff7a1b6b3308d53e1ab2e20c37fcb9fe1315a34fa895d116abff5"
 }

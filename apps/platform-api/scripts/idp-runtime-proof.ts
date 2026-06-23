@@ -25,9 +25,17 @@ import {
   buildCreateRepresentation,
   applyUpdate,
 } from "../src/usecases/idp-management.ts";
+import { loadLocalEnv } from "./lib/local-env.ts";
 
-const url = process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc";
-const realm = process.env["KC_PROOF_REALM"] ?? "platform";
+loadLocalEnv();
+const url =
+  process.env["KEYCLOAK_URL"] ??
+  (process.env["KEYCLOAK_PORT"]
+    ? `http://localhost:${process.env["KEYCLOAK_PORT"]}/kc`
+    : undefined) ??
+  process.env["KC_HOSTNAME"] ??
+  "http://localhost:8090/kc";
+const realm = process.env["KC_PROOF_REALM"] ?? process.env["KEYCLOAK_REALM"] ?? "platform";
 const adminUsername = process.env["KEYCLOAK_ADMIN_USER"] ?? "admin";
 const adminPassword = process.env["KEYCLOAK_ADMIN_PASSWORD"] ?? "admin";
 

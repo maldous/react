@@ -34,7 +34,7 @@ assert.ok(
 assert.ok(
   delegatedProofSource.includes("EICAR-STANDARD-ANTIVIRUS-TEST-FILE") &&
     delegatedProofSource.includes("AuditAction.StorageObjectRejected") &&
-    delegatedProofSource.includes("legal hold blocks delete") &&
+    delegatedProofSource.includes("legal hold blocks deletion") &&
     delegatedProofSource.includes("quota"),
   "delegated ClamAV proof must assert rejection, audit, legal-hold, and quota side effects"
 );
@@ -48,7 +48,8 @@ assert.ok(
 assert.ok(
   adapterSource.includes("assertTenantPrefixIsolation") &&
     adapterSource.includes("quotaBeforeWrite") &&
-    adapterSource.includes("legalHoldDeletionBlock") &&
+    storageUsecaseSource.includes("legalHoldGuard") &&
+    storageUsecaseSource.includes("assertCanDelete") &&
     adapterSource.includes('metric("clamav_scan_total"') &&
     adapterSource.includes("auditEvent") &&
     adapterSource.includes("withSpan") &&
@@ -57,9 +58,9 @@ assert.ok(
 );
 assert.ok(
   storageUsecaseSource.includes('scanState: "quarantined"') &&
-    storageUsecaseSource.includes("StorageObjectClean") &&
+    storageUsecaseSource.includes("StorageObjectScanClean") &&
     storageUsecaseSource.includes("StorageObjectRejected") &&
-    storageUsecaseSource.includes("storage_object_not_clean"),
+    storageUsecaseSource.includes("api.error.objectNotClean"),
   "storage object usecase must persist scan state and block download until clean"
 );
 

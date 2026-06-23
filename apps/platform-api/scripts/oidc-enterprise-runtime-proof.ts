@@ -29,17 +29,30 @@ import {
   testIdpConnection,
 } from "../src/usecases/oidc-discovery.ts";
 import { createOidcHttpFetcher } from "../src/server/oidc-http-fetcher.ts";
+import { loadLocalEnv } from "./lib/local-env.ts";
 
-const url = process.env["KEYCLOAK_URL"] ?? "http://localhost:8090/kc";
-const realm = process.env["KC_PROOF_REALM"] ?? "platform";
+loadLocalEnv();
+const url =
+  process.env["KEYCLOAK_URL"] ??
+  (process.env["KEYCLOAK_PORT"]
+    ? `http://localhost:${process.env["KEYCLOAK_PORT"]}/kc`
+    : undefined) ??
+  process.env["KC_HOSTNAME"] ??
+  "http://localhost:8090/kc";
+const publicUrl = process.env["KC_HOSTNAME"] ?? url;
+const realm = process.env["KC_PROOF_REALM"] ?? process.env["KEYCLOAK_REALM"] ?? "platform";
 const adminUsername = process.env["KEYCLOAK_ADMIN_USER"] ?? "admin";
 const adminPassword = process.env["KEYCLOAK_ADMIN_PASSWORD"] ?? "admin";
 
-const REALM_ISSUER = `${url}/realms/${realm}`;
-const WELL_KNOWN = `${REALM_ISSUER}/.well-known/openid-configuration`;
+const REALM_ISSUER = `${publicUrl}/realms/${realm}`;
+const WELL_KNOWN = `${url}/realms/${realm}/.well-known/openid-configuration`;
 const ALIAS = "proof-oidc-enterprise-temp";
 
-const fetcher = createOidcHttpFetcher();
+const rawFetcher = createOidcHttpFetcher();
+const fetcher = {
+  get: (targetUrl: string, opts: Parameters<typeof rawFetcher.get>[1]) =>
+    rawFetcher.get(targetUrl.replace(REALM_ISSUER, `${url}/realms/${realm}`), opts),
+};
 const silentAudit: AuditEventPort = { emit: async () => {}, query: async () => [] };
 
 let failures = 0;
@@ -53,7 +66,10 @@ async function main(): Promise<void> {
   console.log(`# OIDC enterprise runtime proof — realm "${realm}" @ ${url}\n`);
 
   // 1. Discovery import against the real realm discovery document.
-  const ok = await importOidcDiscovery({ issuer: REALM_ISSUER }, { fetcher });
+  const ok = await importOidcDiscovery(
+    { issuer: REALM_ISSUER, discoveryUrl: WELL_KNOWN },
+    { fetcher }
+  );
   check("discovery import ok", ok.kind === "ok" && ok.response.validation.result === "ok");
   if (ok.kind === "ok") {
     check("issuer validated", ok.response.validation.issuerValid === true);
@@ -110,8 +126,8 @@ async function main(): Promise<void> {
       providerId: "oidc",
       clientId: "proof-client",
       clientSecret: "proof-only-secret-do-not-log",
-      authorizationUrl: `${REALM_ISSUER}/protocol/openid-connect/auth`,
-      tokenUrl: `${REALM_ISSUER}/protocol/openid-connect/token`,
+      authorizationUrl: `${url}/realms/${realm}/protocol/openid-connect/auth`,
+      tokenUrl: `${url}/realms/${realm}/protocol/openid-connect/token`,
       issuer: REALM_ISSUER,
       scopes: "openid email",
       trustEmail: false,

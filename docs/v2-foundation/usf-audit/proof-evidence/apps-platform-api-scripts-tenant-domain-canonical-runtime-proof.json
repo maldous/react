@@ -10,18 +10,30 @@
   "subjectId": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
   "capabilityId": "capability:tenant-domain-canonical,capability:tenant-domain-canonical (local routing only)",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-domains-domain",
+    "route:delete-api-org-domains-domain-canonical",
+    "route:get-admin-domains",
+    "route:get-api-org-domains",
+    "route:get-api-org-domains-readiness",
+    "route:post-api-org-domains",
+    "route:post-api-org-domains-domain-activate",
+    "route:post-api-org-domains-domain-canonical",
+    "route:post-api-org-domains-domain-deactivate",
+    "route:post-api-org-domains-domain-probe-routing-local",
+    "route:post-api-org-domains-domain-verify"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domain-canonical",
-  "startedAt": "2026-06-23T12:41:39.246Z",
-  "endedAt": "2026-06-23T12:41:39.304Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:22:26.291Z",
+  "endedAt": "2026-06-23T14:22:26.422Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,39 +41,393 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:delete-api-org-domains-domain-canonical": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:get-admin-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:get-api-org-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:get-api-org-domains-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-activate": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-canonical": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-deactivate": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:delete-api-org-domains-domain-canonical": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:get-admin-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:get-api-org-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:get-api-org-domains-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-activate": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-canonical": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-deactivate": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-org-domains-domain-canonical": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-activate": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-canonical": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-deactivate": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:39.304Z",
+  "generatedAt": "2026-06-23T14:22:26.422Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:39.246Z",
-  "endTime": "2026-06-23T12:41:39.304Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:39.304Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "35d296de013a1d11138561238c7f3ee2b2d8fe3cf8d3d0dffb7154bd0d7e1f01"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:26.291Z",
+  "endTime": "2026-06-23T14:22:26.422Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:26.422Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:delete-api-org-domains-domain-canonical": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-activate": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-canonical": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-deactivate": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
+  "evidenceSignature": "a3043b1bc91638fe9651fee0b3bc5d8ba830c30c293a1921c48ee2c406354ebe"
 }

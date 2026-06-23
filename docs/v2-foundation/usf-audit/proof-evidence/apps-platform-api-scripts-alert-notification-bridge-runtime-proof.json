@@ -9,18 +9,25 @@
   "subjectId": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
   "capabilityId": "capability:alert-notification-bridge",
   "providerId": "alert-notification-bridge",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-api-admin-alerts",
+    "route:get-api-admin-incidents",
+    "route:get-api-admin-observability-signals",
+    "route:patch-api-admin-incidents-incidentid",
+    "route:post-api-admin-alerts",
+    "route:post-api-admin-alerts-alertid-evaluate"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:alert-notification-bridge",
-  "startedAt": "2026-06-23T12:40:55.852Z",
-  "endedAt": "2026-06-23T12:40:56.019Z",
+  "startedAt": "2026-06-23T14:20:57.491Z",
+  "endedAt": "2026-06-23T14:20:57.705Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +35,243 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-alerts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:get-api-admin-incidents": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:get-api-admin-observability-signals": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:patch-api-admin-incidents-incidentid": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:post-api-admin-alerts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:post-api-admin-alerts-alertid-evaluate": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-alerts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:get-api-admin-incidents": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:get-api-admin-observability-signals": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:patch-api-admin-incidents-incidentid": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:post-api-admin-alerts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      },
+      "route:post-api-admin-alerts-alertid-evaluate": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-alerts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-incidents": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-observability-signals": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-incidents-incidentid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-alerts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-alerts-alertid-evaluate": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:40:56.019Z",
+  "generatedAt": "2026-06-23T14:20:57.705Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:40:55.852Z",
-  "endTime": "2026-06-23T12:40:56.019Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:40:56.019Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "2a1ab9992faa1552170f6e9c98be77f97e604479ace5338e6c472e8871b425a8"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:20:57.491Z",
+  "endTime": "2026-06-23T14:20:57.705Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:20:57.705Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-alerts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-incidents": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-observability-signals": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-admin-incidents-incidentid": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-alerts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-alerts-alertid-evaluate": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
+  "evidenceSignature": "98e720d2bda586ed0234b5c83bb0f2437aec3379db7776f467e416c8a5c80855"
 }

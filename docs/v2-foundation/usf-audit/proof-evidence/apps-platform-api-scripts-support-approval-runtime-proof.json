@@ -10,18 +10,25 @@
   "subjectId": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
   "capabilityId": "capability:approval-workflow,capability:support-approval",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-api-admin-support-health",
+    "route:get-api-admin-support-tickets",
+    "route:post-api-admin-support-session",
+    "route:post-api-admin-support-session-approval-grant",
+    "route:post-api-admin-support-session-approval-request",
+    "route:post-api-admin-support-tickets"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:approval-workflow",
-  "startedAt": "2026-06-23T12:41:37.855Z",
-  "endedAt": "2026-06-23T12:41:37.926Z",
+  "startedAt": "2026-06-23T14:22:24.778Z",
+  "endedAt": "2026-06-23T14:22:24.846Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,39 +36,243 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-support-health": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:get-api-admin-support-tickets": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-session": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-session-approval-grant": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-session-approval-request": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-tickets": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-support-health": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:get-api-admin-support-tickets": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-session": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-session-approval-grant": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-session-approval-request": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      },
+      "route:post-api-admin-support-tickets": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-support-health": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-support-tickets": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-session": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-session-approval-grant": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-session-approval-request": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-tickets": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/support-approval-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/support-approval-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/support-approval-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:37.926Z",
+  "generatedAt": "2026-06-23T14:22:24.846Z",
   "sourceFileRefs": ["apps/platform-api/scripts/support-approval-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:37.855Z",
-  "endTime": "2026-06-23T12:41:37.926Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:37.926Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "7249b337e808bd15a2666935a8b2839d1cfc522315a97ac5d4dab35a0e4277b8"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:24.778Z",
+  "endTime": "2026-06-23T14:22:24.846Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:24.846Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-support-health": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-support-tickets": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-session": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-session-approval-grant": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-session-approval-request": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-support-tickets": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/support-approval-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/support-approval-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/support-approval-runtime-proof.ts"],
+  "evidenceSignature": "798d2167f90006f64d32b42758fd42fef361b3b767936a684a193eecc654e381"
 }

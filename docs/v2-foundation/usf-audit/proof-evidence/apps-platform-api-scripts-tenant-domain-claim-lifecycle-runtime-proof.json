@@ -9,18 +9,26 @@
   "subjectId": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
   "capabilityId": "capability:tenant-domain-claim-lifecycle",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-domains-domain",
+    "route:get-admin-domains",
+    "route:get-api-org-domains",
+    "route:get-api-org-domains-readiness",
+    "route:post-api-org-domains",
+    "route:post-api-org-domains-domain-probe-routing-local",
+    "route:post-api-org-domains-domain-verify"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domain-claim-lifecycle",
-  "startedAt": "2026-06-23T12:41:39.471Z",
-  "endedAt": "2026-06-23T12:41:39.540Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:22:26.580Z",
+  "endedAt": "2026-06-23T14:22:26.701Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +36,277 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:get-admin-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:get-api-org-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:get-api-org-domains-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-org-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:get-admin-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:get-api-org-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:get-api-org-domains-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-org-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+  ],
+  "traceIds": ["trace:apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+  ],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:39.540Z",
+  "generatedAt": "2026-06-23T14:22:26.701Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:39.471Z",
-  "endTime": "2026-06-23T12:41:39.540Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:39.540Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "831bcc5b0c0108e9bfaf8100f8cb4e3b8e10ebc5272b150de2686f4876af5a2b"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:26.580Z",
+  "endTime": "2026-06-23T14:22:26.701Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:26.701Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
+  "evidenceSignature": "e2df071c21786b99f760d354eb0db66c62839e191d68a4691ef90f2571417332"
 }

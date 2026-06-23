@@ -9,18 +9,27 @@
   "subjectId": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
   "capabilityId": "capability:tenant-storage-objects",
   "providerId": "tenant-storage-objects",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-storage-objects-objectkey",
+    "route:get-admin-storage",
+    "route:get-api-org-storage-objects",
+    "route:get-api-org-storage-objects-objectkey",
+    "route:get-api-org-storage-readiness",
+    "route:post-api-org-storage-objects",
+    "route:post-api-org-storage-objects-objectkey-scan",
+    "route:post-api-org-storage-probe"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-storage-objects",
-  "startedAt": "2026-06-23T12:41:40.867Z",
-  "endedAt": "2026-06-23T12:41:41.485Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:22:28.291Z",
+  "endedAt": "2026-06-23T14:22:28.907Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +37,303 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "failed"
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-storage-objects-objectkey": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-admin-storage": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-api-org-storage-objects": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-api-org-storage-objects-objectkey": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-api-org-storage-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:post-api-org-storage-objects": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:post-api-org-storage-objects-objectkey-scan": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:post-api-org-storage-probe": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-storage-objects-objectkey": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-admin-storage": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-api-org-storage-objects": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-api-org-storage-objects-objectkey": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:get-api-org-storage-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:post-api-org-storage-objects": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:post-api-org-storage-objects-objectkey-scan": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      },
+      "route:post-api-org-storage-probe": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-storage-objects-objectkey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-storage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-storage-objects": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-storage-objects-objectkey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-storage-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-storage-objects": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-storage-objects-objectkey-scan": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-storage-probe": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:41.485Z",
+  "generatedAt": "2026-06-23T14:22:28.907Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:40.867Z",
-  "endTime": "2026-06-23T12:41:41.485Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:41.485Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "e967c11f656f89e5add1c3c47762ace900849135939b8775afdc518aa49d78f3"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:28.291Z",
+  "endTime": "2026-06-23T14:22:28.907Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:28.907Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-storage-objects-objectkey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-storage": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-storage-objects": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-storage-objects-objectkey": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-storage-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-storage-objects": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-storage-objects-objectkey-scan": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-storage-probe": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
+  "evidenceSignature": "f47592073fab61c3c208f8e7ef165b9eba24dedc9eb189bb6ebbba077b494ce0"
 }

@@ -35,10 +35,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-provider-runtime",
-  "startedAt": "2026-06-23T12:41:10.851Z",
-  "endedAt": "2026-06-23T12:41:11.026Z",
+  "startedAt": "2026-06-23T14:21:17.363Z",
+  "endedAt": "2026-06-23T14:21:17.543Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -47,6 +47,12 @@
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
   "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-provider-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+      }
+    },
     "tenant": "tenant-semantic-dev",
     "providerMode": "semantic-dev",
     "sessions": 0,
@@ -64,6 +70,12 @@
     "auditEvents": 0
   },
   "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-provider-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+      }
+    },
     "tenant": "tenant-semantic-dev",
     "providerMode": "semantic-dev",
     "sessionFound": true,
@@ -82,6 +94,19 @@
     "auditEvents": 8
   },
   "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-provider-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
     "sessionCreated": true,
     "storageObjectWrittenReadDeleted": true,
     "eventConsumedAndDeadLettered": true,
@@ -254,19 +279,32 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:11.026Z",
+  "generatedAt": "2026-06-23T14:21:17.543Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
+  "collectorRunId": "proof-run-1782224456962-891334",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T12:41:10.851Z",
-  "endTime": "2026-06-23T12:41:11.026Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:11.026Z",
+  "startTime": "2026-06-23T14:21:17.363Z",
+  "endTime": "2026-06-23T14:21:17.543Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:17.543Z",
   "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-provider-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
     "sessionCreated": true,
     "storageObjectWrittenReadDeleted": true,
     "eventConsumedAndDeadLettered": true,
@@ -422,5 +460,5 @@
     }
   ],
   "logEvidence": ["log:storage.info:tenant-semantic-dev/hello.txt"],
-  "evidenceSignature": "0418b3ae9a9bf47cc3147374643e3d8ba6630ac6afe394c963b273f76a678c2a"
+  "evidenceSignature": "47bb9bc7b7cf3084b6c0b0c274ab35a5217cb93752e4e26a973a204c562f5e0e"
 }

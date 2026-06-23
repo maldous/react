@@ -19,10 +19,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:41:10.658Z",
-  "endedAt": "2026-06-23T12:41:10.696Z",
+  "startedAt": "2026-06-23T14:21:17.169Z",
+  "endedAt": "2026-06-23T14:21:17.210Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -31,6 +31,12 @@
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
   "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
+      }
+    },
     "tenantA": "org-billing-proof-a",
     "tenantB": "org-billing-proof-b",
     "tenantAAccountExists": false,
@@ -40,6 +46,12 @@
     "paymentRefunds": 0
   },
   "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
+      }
+    },
     "tenantA": "org-billing-proof-a",
     "tenantB": "org-billing-proof-b",
     "accountCreated": "acct_org-billing-proof-a",
@@ -68,6 +80,19 @@
     "paymentChargeMetricAfterReset": 0
   },
   "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
     "accountCreated": true,
     "accountReadBack": true,
     "accountIdempotency": true,
@@ -148,19 +173,32 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:10.696Z",
+  "generatedAt": "2026-06-23T14:21:17.210Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
+  "collectorRunId": "proof-run-1782224456962-891334",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T12:41:10.658Z",
-  "endTime": "2026-06-23T12:41:10.696Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:10.696Z",
+  "startTime": "2026-06-23T14:21:17.169Z",
+  "endTime": "2026-06-23T14:21:17.210Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:17.210Z",
   "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
     "accountCreated": true,
     "accountReadBack": true,
     "accountIdempotency": true,
@@ -219,5 +257,5 @@
     "log:in-memory-billing-injected-failure",
     "log:in-memory-billing-unavailable"
   ],
-  "evidenceSignature": "2c06afa80a31b1879ea9d2ecd3fb5ff74accd944651c8e452940b493ef576e93"
+  "evidenceSignature": "dcc60b92bf813897c27a06335685c62834662978e34d8284aaca07c946c60d08"
 }

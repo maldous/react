@@ -1,7 +1,7 @@
 {
   "artefact": "capability-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T12:42:13.997Z",
+  "generatedAt": "2026-06-23T15:12:15.105Z",
   "status": "PASS",
   "modelConsistencyStatus": "PASS",
   "migrationReadinessStatus": "PASS",
@@ -13,12 +13,23 @@
   "readinessCounts": {
     "BEHAVIOUR_PROVEN": 70
   },
+  "ladderLevelDistribution": {
+    "L0": 70,
+    "L1": 70,
+    "L2": 70,
+    "L3": 70,
+    "L4": 0,
+    "L5": 0,
+    "L6": 0
+  },
   "gaps": [],
   "capabilities": [
     {
       "capability": "Tenant identity (record + FQDN)",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -39,6 +50,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -49,6 +77,8 @@
       "capability": "User identity + tenant membership",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -67,6 +97,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -77,6 +124,8 @@
       "capability": "End-user profile + preferences self-service",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -97,6 +146,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -107,6 +173,8 @@
       "capability": "API keys / personal access tokens",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -127,6 +195,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -137,6 +222,8 @@
       "capability": "Tenant groups",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -156,6 +243,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -166,6 +270,8 @@
       "capability": "Sub-organisations",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -185,6 +291,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -195,6 +318,8 @@
       "capability": "RBAC (roles + permissions)",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -213,6 +338,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -223,6 +365,8 @@
       "capability": "ABAC / Policy Decision Point",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -242,6 +386,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -252,6 +413,8 @@
       "capability": "Delegated administration roles",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -271,6 +434,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -281,6 +461,8 @@
       "capability": "Entitlement engine",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -303,6 +485,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -313,6 +512,8 @@
       "capability": "Support-mode / break-glass access",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -332,6 +533,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -342,6 +560,8 @@
       "capability": "Audit of privileged access",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -360,6 +580,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -370,6 +607,8 @@
       "capability": "Platform login + session",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -389,6 +628,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -399,6 +655,8 @@
       "capability": "IdP brokering + OIDC provider management",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -419,6 +677,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -429,6 +704,8 @@
       "capability": "Claim mapping + group/role mapping",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -448,6 +725,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -458,6 +752,8 @@
       "capability": "MFA + session policy + lockout",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -477,6 +773,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -487,6 +800,8 @@
       "capability": "Configuration registry + history",
       "category": "configuration",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -505,6 +820,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -515,6 +847,8 @@
       "capability": "Branding + theming",
       "category": "configuration",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -534,6 +868,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -544,6 +895,8 @@
       "capability": "Custom domains, DNS ownership, TLS, canonical",
       "category": "configuration",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -566,6 +919,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -576,6 +946,8 @@
       "capability": "Write-only secret settings",
       "category": "configuration",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -594,6 +966,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -604,6 +993,8 @@
       "capability": "Product catalog, plans, prices",
       "category": "entitlements-billing",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -624,6 +1015,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -634,6 +1042,8 @@
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "category": "entitlements-billing",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -654,6 +1064,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -664,6 +1091,8 @@
       "capability": "Usage metering + meter event ingestion",
       "category": "entitlements-billing",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -684,6 +1113,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -694,6 +1140,8 @@
       "capability": "Quota enforcement",
       "category": "entitlements-billing",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -714,6 +1162,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -724,6 +1189,8 @@
       "capability": "Relational storage + migrations + RLS",
       "category": "data-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -742,6 +1209,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -752,6 +1236,8 @@
       "capability": "Backup + restore",
       "category": "data-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -771,6 +1257,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -781,6 +1284,8 @@
       "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -801,6 +1306,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -811,6 +1333,8 @@
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
       "category": "data-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -830,6 +1354,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -840,6 +1381,8 @@
       "capability": "Tenant data import / export",
       "category": "data-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -859,6 +1402,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -869,6 +1429,8 @@
       "capability": "Search + indexing (product search)",
       "category": "search",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -890,6 +1452,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -900,6 +1479,8 @@
       "capability": "Object storage + tenant prefixes + signed URLs",
       "category": "storage",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -919,6 +1500,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -929,6 +1527,8 @@
       "capability": "Event bus, durable queues, DLQ, redrive",
       "category": "events-workflow",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -949,6 +1549,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -959,6 +1576,8 @@
       "capability": "Workflow engine, scheduled jobs, approvals",
       "category": "events-workflow",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -978,6 +1597,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -988,6 +1624,8 @@
       "capability": "Scheduled jobs (built-in, on the event substrate)",
       "category": "events-workflow",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1008,6 +1646,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1018,6 +1673,8 @@
       "capability": "Notification delivery + preferences + channels",
       "category": "events-workflow",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1041,6 +1698,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1051,6 +1725,8 @@
       "capability": "Background workers / job runner",
       "category": "compute-runtime",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1070,6 +1746,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1080,6 +1773,8 @@
       "capability": "Runtime secrets management",
       "category": "compute-runtime",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1101,6 +1796,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1111,6 +1823,8 @@
       "capability": "Logs (aggregation + tenant-scoped search)",
       "category": "observability-ops",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1130,6 +1844,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1140,6 +1871,8 @@
       "capability": "Metrics + traces",
       "category": "observability-ops",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1160,6 +1893,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1170,6 +1920,8 @@
       "capability": "Observability — built-in alerting + incidents",
       "category": "observability-ops",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1192,6 +1944,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1202,6 +1971,8 @@
       "capability": "Internal service catalog + readiness",
       "category": "observability-ops",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1222,6 +1993,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1232,6 +2020,8 @@
       "capability": "Code quality + secret + dependency scanning",
       "category": "security-governance",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1250,6 +2040,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1260,6 +2067,8 @@
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1278,6 +2087,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1288,6 +2114,8 @@
       "capability": "Tenant isolation proof",
       "category": "security-governance",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1307,6 +2135,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1317,6 +2162,8 @@
       "capability": "Webhooks (developer-facing)",
       "category": "developer-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1337,6 +2184,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1347,6 +2211,8 @@
       "capability": "API docs, developer portal, SDKs, rate limits",
       "category": "developer-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1366,6 +2232,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1376,6 +2259,8 @@
       "capability": "Rate limiting (API)",
       "category": "developer-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1397,6 +2282,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1407,6 +2309,8 @@
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
       "category": "support-admin",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1426,6 +2330,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1436,6 +2357,8 @@
       "capability": "Support tickets, customer health, announcements",
       "category": "support-admin",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1454,6 +2377,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1464,6 +2404,8 @@
       "capability": "Universal Service Foundation scope + principles",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1482,6 +2424,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1492,6 +2451,8 @@
       "capability": "Build-versus-compose decision framework",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1510,6 +2471,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1520,6 +2498,8 @@
       "capability": "Service catalog + provider integration model",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1542,6 +2522,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1552,6 +2549,8 @@
       "capability": "Environment-specific vs shared service model",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1570,6 +2569,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1580,6 +2596,8 @@
       "capability": "Provider configuration plane",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1600,6 +2618,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1610,6 +2645,8 @@
       "capability": "Composed provider readiness spine",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1629,6 +2666,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1639,6 +2693,8 @@
       "capability": "History read-model (read-only projection)",
       "category": "data-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1658,6 +2714,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1668,6 +2741,8 @@
       "capability": "OIDC discovery / issuer / JWKS validation",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1687,6 +2762,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1697,6 +2789,8 @@
       "capability": "OIDC test connection + callback display",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1716,6 +2810,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1726,6 +2837,8 @@
       "capability": "Tenant host identity resolution",
       "category": "identity-access",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1746,6 +2859,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1756,6 +2886,8 @@
       "capability": "Tenant domain activation (auth-client)",
       "category": "configuration",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1775,6 +2907,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1785,6 +2934,8 @@
       "capability": "Tenant canonical domain set/unset",
       "category": "configuration",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1804,6 +2955,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1814,6 +2982,8 @@
       "capability": "Tenant custom-domain auth callback",
       "category": "authentication",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1833,6 +3003,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1843,6 +3030,8 @@
       "capability": "Tenant service clickthrough policy",
       "category": "observability-ops",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1863,6 +3052,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1873,6 +3079,8 @@
       "capability": "Environment registry + bootstrap",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1894,6 +3102,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1904,6 +3129,8 @@
       "capability": "Provider environment classification",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1923,6 +3150,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1933,6 +3177,8 @@
       "capability": "E2E confidence ladder (stage-aware)",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1951,6 +3197,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1961,6 +3224,8 @@
       "capability": "OpenAPI drift hard gate",
       "category": "developer-platform",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -1979,6 +3244,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -1989,6 +3271,8 @@
       "capability": "i18n runtime + validation",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -2007,6 +3291,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -2017,6 +3318,8 @@
       "capability": "Accessibility (a11y) gate",
       "category": "foundation",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -2035,6 +3338,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",
@@ -2045,6 +3365,8 @@
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "category": "observability-ops",
       "currentClosureTarget": "L3 Behaviour Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
       "highestExecutableLevelAchieved": "L1",
       "highestContractLevelAchieved": "L2",
@@ -2063,6 +3385,23 @@
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L4",
+          "blockedBy": "L3",
+          "message": "L4 blocked by missing L3"
+        },
+        {
+          "targetLevel": "L5",
+          "blockedBy": "L4",
+          "message": "L5 blocked by missing L4"
+        },
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
       "futureBlockedLevels": [
         "resilience-L5-blocked-until-L4",
         "foundation-L6-blocked-until-L5",

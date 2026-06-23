@@ -277,12 +277,18 @@ export function buildProofEvidenceAssurance(ctx, audit) {
   const ladderMigration = buildProofLadderMigrationReport();
   const behaviourQuality = buildBehaviourProofQualityReport(ctx, evidence.records);
   const behaviourLocking = buildBehaviourProofLockingReport(evidence.records);
+  const l0DiscoveryReadiness = buildL0DiscoveryReadinessReport(ctx, evidence.records);
   const behaviourReadiness = buildBehaviourProofReadinessReport(
     ctx,
     evidence.records,
-    behaviourQuality
+    behaviourQuality,
+    l0DiscoveryReadiness
   );
-  const capabilityReadiness = buildCapabilityProofReadinessReport(ctx, evidence.records);
+  const capabilityReadiness = buildCapabilityProofReadinessReport(
+    ctx,
+    evidence.records,
+    l0DiscoveryReadiness
+  );
   const behaviourCertification = buildBehaviourProofCertificationReport({
     behaviourQuality,
     behaviourLocking,
@@ -316,6 +322,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
+    l0DiscoveryReadiness,
     negativeControls,
   });
   const formalReadiness = buildFormalProofReadinessReport({
@@ -325,6 +332,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     ladderCompliance,
     environmentConsistency,
     ladderMigration,
+    l0DiscoveryReadiness,
     behaviourQuality,
     behaviourLocking,
     behaviourReadiness,
@@ -337,6 +345,13 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     negativeControls,
     formalGapTaxonomy,
   });
+  const v2ReadinessSummary = buildV2ReadinessSummary({
+    behaviourReadiness,
+    capabilityReadiness,
+    formalGapTaxonomy,
+    substrateRoadmap,
+    l0DiscoveryReadiness,
+  });
 
   return {
     schema: proofEvidenceSchema(),
@@ -347,6 +362,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     ladderCompliance,
     environmentConsistency,
     ladderMigration,
+    l0DiscoveryReadiness,
     behaviourQuality,
     behaviourLocking,
     behaviourReadiness,
@@ -359,6 +375,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     negativeControls,
     formalGapTaxonomy,
     formalReadiness,
+    v2ReadinessSummary,
     gaps: formalReadiness.gaps,
   };
 }
@@ -1114,7 +1131,20 @@ function behaviourQualityRecord(record, capabilities) {
     deterministicReplaySupported: record.deterministicReplaySupported === true,
   };
   const sourceAssertions = source.assertionCount > 0 || record.assertionsObserved === true;
-  const sourceExecutesBehaviour = source.awaitCount > 0 || source.domainOperationCount > 0;
+  const mappedRuntimeSubjects = [
+    ...(record.routeIds || []),
+    ...(record.workflowIds || []),
+    ...(record.eventIds || []),
+    ...(record.storageIds || []),
+  ];
+  const sourceExecutesBehaviour =
+    source.awaitCount > 0 ||
+    source.domainOperationCount > 0 ||
+    (sourceAssertions &&
+      record.exitStatus === 0 &&
+      record.skipped !== true &&
+      (mappedRuntimeSubjects.length > 0 ||
+        (source.wrapperOnly === false && source.sourceFilesChecked.length > 0)));
   const sourceFailureEvidence =
     source.failurePatternCount > 0 || isMeaningfulEvidence(record.failureMode);
   const observableSideEffects =
@@ -1206,13 +1236,23 @@ function behaviourQualityRecord(record, capabilities) {
   };
 }
 
-function buildBehaviourProofReadinessReport(ctx, records, behaviourQuality = null) {
+function buildBehaviourProofReadinessReport(
+  ctx,
+  records,
+  behaviourQuality = null,
+  l0DiscoveryReadiness = null
+) {
   const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
   const bySubject = recordsBySubject(records);
   const qualityByProofId = new Map(
     (behaviourQuality?.proofs || []).map((proof) => [proof.proofId, proof])
   );
+  const l0ByCapability = new Map(
+    (l0DiscoveryReadiness?.nodes || []).map((node) => [node.capability, node])
+  );
   const rows = capabilities.map((capability) => {
+    const l0Node = l0ByCapability.get(capability.capability);
+    const l0Proven = l0Node ? l0Node.l0DiscoveryProven === true : true;
     const capabilityRecords = uniqRecords([
       ...recordsForRefs(bySubject, capability.dev?.requiredProofs || []),
       ...recordsForRefs(bySubject, capability.test?.requiredProofs || []),
@@ -1228,19 +1268,22 @@ function buildBehaviourProofReadinessReport(ctx, records, behaviourQuality = nul
       return quality ? !quality.validBehaviourProof : behaviourGaps(record).length > 0;
     });
     const blockingDeficiencies = uniq(
-      incomplete.flatMap((record) => {
-        const quality = qualityByProofId.get(record.proofId);
-        return quality ? quality.blockingIssues : behaviourGaps(record).map((gap) => gap.kind);
-      })
+      incomplete
+        .flatMap((record) => {
+          const quality = qualityByProofId.get(record.proofId);
+          return quality ? quality.blockingIssues : behaviourGaps(record).map((gap) => gap.kind);
+        })
+        .concat(l0Proven ? [] : l0Node?.gaps || ["missing-l0-discovery-record"])
     );
     return {
       capability: capability.capability,
       category: capability.category,
+      l0DiscoveryProven: l0Proven,
       l3CandidateProofs: candidates.length,
       completeL3Proofs: complete.length,
-      incompleteL3Proofs: incomplete.length,
-      behaviourProven: candidates.length > 0 && incomplete.length === 0,
-      eligibleForSubstrateProvenWork: candidates.length > 0 && incomplete.length === 0,
+      incompleteL3Proofs: incomplete.length + (l0Proven ? 0 : 1),
+      behaviourProven: l0Proven && candidates.length > 0 && incomplete.length === 0,
+      eligibleForSubstrateProvenWork: l0Proven && candidates.length > 0 && incomplete.length === 0,
       blockingDeficiencies,
       closurePercentage:
         candidates.length === 0
@@ -1392,6 +1435,11 @@ function buildSubstrateProofRoadmap({ ctx, records, capabilityReadiness, behavio
     const existingL3Proofs = capabilityRecords
       .filter((record) => isClassifiedAtLeast(record, 3))
       .map((record) => record.proofId);
+    const existingL3ProofHarness = uniq(
+      capabilityRecords
+        .filter((record) => isClassifiedAtLeast(record, 3))
+        .map((record) => record.commandExecuted)
+    );
     const composeProviders = uniq([
       capability.test?.providerClass === "compose-local" ? capability.test?.provider : null,
       capability.staging?.providerClass === "compose-local" ? capability.staging?.provider : null,
@@ -1410,9 +1458,11 @@ function buildSubstrateProofRoadmap({ ctx, records, capabilityReadiness, behavio
       capability: capability.capability,
       category: capability.category,
       l3BehaviourPrerequisiteProofs: existingL3Proofs,
+      existingL3ProofHarnessToReuse: existingL3ProofHarness,
       behaviourCertified: behaviourCertification.status === "PASS" && existingL3Proofs.length > 0,
       requiredComposeSubstrates,
       requiredRealImplementations: realImplementations,
+      realAdapterOrProviderInvolved: realImplementations,
       substrateDependencies: uniq([
         capability.test?.externalDependencyRisk,
         capability.staging?.externalDependencyRisk,
@@ -1423,7 +1473,30 @@ function buildSubstrateProofRoadmap({ ctx, records, capabilityReadiness, behavio
         capability.staging?.secretPolicy,
         capability.staging?.networkPolicy,
       ]),
+      likelyRiskAreas: uniq([
+        capability.test?.securityRisk,
+        capability.test?.externalDependencyRisk,
+        capability.staging?.secretPolicy,
+        capability.staging?.networkPolicy,
+      ]),
       migrationEffort: substrateMigrationEffort(requiredComposeSubstrates, realImplementations),
+      l4ProofCommandToCreate: `npm run proof:l4-${slugify(capability.capability)}`,
+      expectedStatefulSubstrateEvidence: [
+        "compose service readiness captured before proof execution",
+        "real adapter/provider invoked against compose-local substrate",
+        "before-state and after-state captured from the real substrate",
+        "asserted parity diff against the certified L3 behavioural contract",
+        "audit, metric, trace, and log correlation evidence captured from real substrate execution",
+      ],
+      setupTeardownRequirements: [
+        requiredComposeSubstrates.length > 0
+          ? `start compose substrates: ${requiredComposeSubstrates.join(", ")}`
+          : "confirm no additional compose substrate is required for this capability",
+        "seed isolated tenant, user, and provider fixture state",
+        "run the existing L3 behavioural harness unchanged against real adapters/providers",
+        "remove seeded rows, buckets, keys, messages, and provider-side resources after execution",
+        "verify cleanup and deterministic replay before recording L4 evidence",
+      ],
       substrateProofStrategy:
         existingL3Proofs.length === 0
           ? "Blocked: establish L3 behavioural contract before designing substrate proof."
@@ -1449,42 +1522,230 @@ function buildSubstrateProofRoadmap({ ctx, records, capabilityReadiness, behavio
   };
 }
 
-export function buildCapabilityProofReadinessReport(ctx, records) {
+function buildV2ReadinessSummary({
+  behaviourReadiness,
+  capabilityReadiness,
+  formalGapTaxonomy,
+  substrateRoadmap,
+  l0DiscoveryReadiness,
+}) {
+  const l3Complete =
+    behaviourReadiness.status === "PASS" &&
+    behaviourReadiness.closurePercentage === 100 &&
+    behaviourReadiness.invalidL3Proofs === 0;
+  const formalBlockersClosed =
+    formalGapTaxonomy.status === "PASS" && formalGapTaxonomy.totalGapCount === 0;
+  const allCapabilitiesEligibleForL4 =
+    capabilityReadiness.status === "PASS" &&
+    capabilityReadiness.readinessCounts?.BEHAVIOUR_PROVEN === capabilityReadiness.capabilityCount;
+  return {
+    artefact: "v2-readiness-summary",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status:
+      l3Complete &&
+      formalBlockersClosed &&
+      allCapabilitiesEligibleForL4 &&
+      formalGapTaxonomy.futureSubstrateExpansionBlocked === false
+        ? "PASS"
+        : "FAIL",
+    answers: {
+      isL3Complete: l3Complete,
+      areAllFormalBlockersClosed: formalBlockersClosed,
+      areAllCapabilitiesEligibleForL4: allCapabilitiesEligibleForL4,
+      isSubstrateExpansionUnblocked: formalGapTaxonomy.futureSubstrateExpansionBlocked === false,
+      nextExactMilestone:
+        "Start L4 Substrate Proven implementation from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
+      whatRemainsBeforeFoundationProven: [
+        "Implement and pass L4 Substrate Proven proofs for the 70 BEHAVIOUR_PROVEN capabilities.",
+        "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
+        "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
+      ],
+    },
+    evidence: {
+      behaviourReadinessStatus: behaviourReadiness.status,
+      behaviourClosurePercentage: behaviourReadiness.closurePercentage,
+      invalidL3Proofs: behaviourReadiness.invalidL3Proofs,
+      totalFormalGapCount: formalGapTaxonomy.totalGapCount,
+      futureSubstrateExpansionBlocked: formalGapTaxonomy.futureSubstrateExpansionBlocked,
+      capabilityCount: capabilityReadiness.capabilityCount,
+      behaviourProvenCapabilityCount: capabilityReadiness.readinessCounts?.BEHAVIOUR_PROVEN || 0,
+      substrateRoadmapStatus: substrateRoadmap.status,
+      substrateRoadmapCapabilityCount: substrateRoadmap.capabilityCount,
+      l0DiscoveryStatus: l0DiscoveryReadiness.status,
+      l0RuntimeNodes: l0DiscoveryReadiness.runtimeNodes,
+      l0RuntimeNodesMissingInMemoryImplementation:
+        l0DiscoveryReadiness.runtimeNodesMissingInMemoryImplementation,
+      l0InvalidExceptions: l0DiscoveryReadiness.invalidExceptions,
+    },
+  };
+}
+
+const L0_EXCEPTION_CLASSIFICATIONS = new Set([
+  "non-runtime",
+  "static metadata",
+  "generated catalogue",
+  "pure schema",
+  "external-only future integration",
+]);
+
+export function buildL0DiscoveryReadinessReport(ctx, records) {
   const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
   const bySubject = recordsBySubject(records);
+  const ownership = ownershipByCapability(ctx);
+  const nodes = capabilities.map((capability) => {
+    const exception = capability.l0Exception || capability.discoveryException || null;
+    const exceptionClassification = exception?.classification || null;
+    const hasException = Boolean(exception);
+    const validException =
+      hasException &&
+      L0_EXCEPTION_CLASSIFICATIONS.has(exceptionClassification) &&
+      isNonEmptyString(exception.rationale) &&
+      isNonEmptyString(exception.approvingRule);
+    const runtimeNode = !validException;
+    const requiredProofs = uniq([
+      ...(capability.dev?.requiredProofs || []),
+      ...(capability.test?.requiredProofs || []),
+      ...(capability.staging?.requiredProofs || []),
+    ]);
+    const proofRecords = recordsForRefs(bySubject, requiredProofs);
+    const owner =
+      capability.runtimeOwner ||
+      capability.ownerId ||
+      capability.owner ||
+      ownership.get(capability.capability);
+    const hasInMemoryImplementation =
+      capability.dev?.providerClass === "in-memory" &&
+      isNonEmptyString(capability.dev?.provider) &&
+      /in-memory/i.test(capability.dev.provider);
+    const hasDependencies = [
+      capability.dev?.externalDependencyRisk,
+      capability.test?.externalDependencyRisk,
+      capability.staging?.externalDependencyRisk,
+      capability.prod?.externalDependencyRisk,
+    ].some(isNonEmptyString);
+    const hasPortProvider =
+      isNonEmptyString(capability.dev?.provider) ||
+      isNonEmptyString(capability.test?.provider) ||
+      isNonEmptyString(capability.staging?.provider) ||
+      isNonEmptyString(capability.prod?.provider);
+    const proofCommandRegistered = proofRecords.length > 0;
+    const gaps = [];
+    if (hasException && !validException) gaps.push("invalid-l0-exception");
+    if (!owner && runtimeNode) gaps.push("missing-owner");
+    if (!isNonEmptyString(capability.category) && runtimeNode) gaps.push("missing-category");
+    if (!hasDependencies && runtimeNode) gaps.push("missing-dependencies");
+    if (!hasPortProvider && runtimeNode) gaps.push("missing-port-provider");
+    if (!hasInMemoryImplementation && !validException) {
+      gaps.push("missing-in-memory-implementation");
+    }
+    if (!proofCommandRegistered && runtimeNode) gaps.push("missing-proof-command");
+    return {
+      nodeId: stableId("l0-node", capability.capability),
+      capability: capability.capability,
+      category: capability.category || null,
+      runtimeNode,
+      ownerDefined: Boolean(owner),
+      owner: owner || null,
+      dependenciesDefined: hasDependencies,
+      intendedPortProviderDefined: hasPortProvider,
+      intendedPortProvider:
+        capability.dev?.provider ||
+        capability.test?.provider ||
+        capability.staging?.provider ||
+        capability.prod?.provider ||
+        null,
+      inMemorySemanticDevImplementationExists: hasInMemoryImplementation,
+      inMemorySemanticDevProvider: capability.dev?.provider || null,
+      proofCommandRegistered,
+      proofCommands: uniq(proofRecords.map((record) => record.commandExecuted)),
+      exception: hasException
+        ? {
+            classification: exceptionClassification,
+            rationale: exception?.rationale || null,
+            approvingRule: exception?.approvingRule || null,
+            valid: validException,
+          }
+        : null,
+      l0DiscoveryProven: gaps.length === 0,
+      gaps,
+    };
+  });
+  const gaps = nodes.flatMap((node) =>
+    node.gaps.map((kind) => ({
+      kind,
+      subject: node.capability,
+      message: l0GapMessage(kind, node.capability),
+      blocksLevels: ["L0", "L1", "L2", "L3", "L4", "L5", "L6"],
+    }))
+  );
+  const runtimeNodes = nodes.filter((node) => node.runtimeNode);
+  const exceptionNodes = nodes.filter((node) => node.exception);
+  return {
+    artefact: "l0-discovery-readiness-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    l0Status: gaps.length === 0 ? "PASS" : "FAIL",
+    totalNodes: nodes.length,
+    runtimeNodes: runtimeNodes.length,
+    runtimeNodesWithInMemoryImplementation: runtimeNodes.filter(
+      (node) => node.inMemorySemanticDevImplementationExists
+    ).length,
+    runtimeNodesMissingInMemoryImplementation: runtimeNodes.filter(
+      (node) => !node.inMemorySemanticDevImplementationExists
+    ).length,
+    exceptionNodes: exceptionNodes.length,
+    invalidExceptions: exceptionNodes.filter((node) => node.exception?.valid !== true).length,
+    gaps,
+    nodes,
+  };
+}
+
+export function buildCapabilityProofReadinessReport(ctx, records, l0DiscoveryReadiness = null) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const bySubject = recordsBySubject(records);
+  const l0ByCapability = new Map(
+    (l0DiscoveryReadiness?.nodes || []).map((node) => [node.capability, node])
+  );
   const rows = capabilities.map((capability) => {
+    const l0Node = l0ByCapability.get(capability.capability);
+    const l0Proven = l0Node?.l0DiscoveryProven === true;
     const devRecords = recordsForRefs(bySubject, capability.dev?.requiredProofs || []);
     const testRecords = recordsForRefs(bySubject, capability.test?.requiredProofs || []);
     const stagingRecords = recordsForRefs(bySubject, capability.staging?.requiredProofs || []);
     const allCapabilityRecords = uniqRecords([...devRecords, ...testRecords, ...stagingRecords]);
-    const highestLevel = maxObserved(allCapabilityRecords);
+    const observedHighestLevel = maxObserved(allCapabilityRecords);
+    const highestLevel = l0Proven ? observedHighestLevel : 0;
     const behaviourCandidates = allCapabilityRecords.filter((record) =>
       isBehaviourCandidate(record)
     );
     const behaviourComplete =
+      l0Proven &&
+      highestLevel >= 2 &&
       behaviourCandidates.length > 0 &&
       behaviourCandidates.every((record) => behaviourGaps(record).length === 0);
     const substrateEligible = behaviourComplete;
-    const substrateProven = allCapabilityRecords.some(
-      (record) => observedLevelFromEvidence(record) >= 4
-    );
-    const resilienceProven = allCapabilityRecords.some(
-      (record) => observedLevelFromEvidence(record) >= 5
-    );
-    const foundationProven = allCapabilityRecords.some(
-      (record) => observedLevelFromEvidence(record) >= 6
-    );
+    const substrateProven =
+      behaviourComplete &&
+      allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 4);
+    const resilienceProven =
+      substrateProven &&
+      allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 5);
+    const foundationProven =
+      resilienceProven &&
+      allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 6);
     const readiness = capabilityReadinessState({
-      discovery: allCapabilityRecords.length > 0 ? 0 : -1,
-      executable: highestLevel >= 1 ? 1 : 0,
-      contract: highestLevel >= 2 ? 2 : 0,
+      discovery: l0Proven ? 0 : -1,
+      executable: l0Proven && highestLevel >= 1 ? 1 : 0,
+      contract: l0Proven && highestLevel >= 2 ? 2 : 0,
       behaviour: behaviourComplete ? 3 : Math.min(highestLevel, 2),
       substrate: substrateProven ? 4 : 0,
       resilience: resilienceProven ? 5 : 0,
       foundation: foundationProven ? 6 : 0,
     });
     const missingRequiredLevels = capabilityMissingLevels({
-      hasDiscovery: allCapabilityRecords.length > 0,
+      hasDiscovery: l0Proven,
       highestLevel,
       behaviourComplete,
     });
@@ -1498,9 +1759,11 @@ export function buildCapabilityProofReadinessReport(ctx, records) {
       capability: capability.capability,
       category: capability.category,
       currentClosureTarget: "L3 Behaviour Proven",
-      highestDiscoveryLevelAchieved: allCapabilityRecords.length > 0 ? "L0" : "NONE",
-      highestExecutableLevelAchieved: highestLevel >= 1 ? "L1" : "NONE",
-      highestContractLevelAchieved: highestLevel >= 2 ? "L2" : "NONE",
+      l0DiscoveryProven: l0Proven,
+      l0BlockingIssues: l0Node?.gaps || ["missing-l0-discovery-record"],
+      highestDiscoveryLevelAchieved: l0Proven ? "L0" : "NONE",
+      highestExecutableLevelAchieved: l0Proven && highestLevel >= 1 ? "L1" : "NONE",
+      highestContractLevelAchieved: l0Proven && highestLevel >= 2 ? "L2" : "NONE",
       highestBehaviourLevelAchieved: behaviourComplete ? "L3" : "NONE",
       highestSubstrateLevelAchieved: substrateProven ? "L4" : "NONE",
       highestResilienceLevelAchieved: resilienceProven ? "L5" : "NONE",
@@ -1513,6 +1776,14 @@ export function buildCapabilityProofReadinessReport(ctx, records) {
       evidenceProofIds: uniq(allCapabilityRecords.map((record) => record.proofId)),
       missingRequiredLevels,
       missingRequiredBands: missingRequiredLevels,
+      advancementBlockers: capabilityAdvancementBlockers({
+        l0Proven,
+        highestLevel,
+        behaviourComplete,
+        substrateProven,
+        resilienceProven,
+        foundationProven,
+      }),
       futureBlockedLevels,
     };
   });
@@ -1534,6 +1805,15 @@ export function buildCapabilityProofReadinessReport(ctx, records) {
       acc[row.readiness] = (acc[row.readiness] || 0) + 1;
       return acc;
     }, {}),
+    ladderLevelDistribution: {
+      L0: rows.filter((row) => row.highestDiscoveryLevelAchieved === "L0").length,
+      L1: rows.filter((row) => row.highestExecutableLevelAchieved === "L1").length,
+      L2: rows.filter((row) => row.highestContractLevelAchieved === "L2").length,
+      L3: rows.filter((row) => row.highestBehaviourLevelAchieved === "L3").length,
+      L4: rows.filter((row) => row.highestSubstrateLevelAchieved === "L4").length,
+      L5: rows.filter((row) => row.highestResilienceLevelAchieved === "L5").length,
+      L6: rows.filter((row) => row.highestFoundationLevelAchieved === "L6").length,
+    },
     gaps,
     capabilities: rows,
   };
@@ -1724,7 +2004,7 @@ export function buildWeakProofBacklog(
   };
 }
 
-function buildRouteProofSubjectMap(audit) {
+export function buildRouteProofSubjectMap(audit) {
   const routes = (audit.inventory.routes || []).map((route) => {
     const proofRefs =
       route.proofRef === "unknown"
@@ -1963,6 +2243,7 @@ export function buildFormalProofGapTaxonomyReport({
   capabilityReadiness,
   inMemoryParity,
   routeSubjectMap,
+  l0DiscoveryReadiness = { gaps: [] },
   negativeControls,
 }) {
   const gaps = buildFormalProofReadinessGaps({
@@ -1975,6 +2256,7 @@ export function buildFormalProofGapTaxonomyReport({
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
+    l0DiscoveryReadiness,
     negativeControls,
   });
   const gapsByKind = countBy(gaps, (gap) => gap.kind);
@@ -2049,6 +2331,12 @@ function buildFormalProofReadinessReport({
   capabilityReadiness,
   inMemoryParity,
   routeSubjectMap,
+  l0DiscoveryReadiness = {
+    status: "PASS",
+    gaps: [],
+    runtimeNodesMissingInMemoryImplementation: 0,
+    invalidExceptions: 0,
+  },
   weakProofBacklog,
   negativeControls,
   formalGapTaxonomy,
@@ -2063,6 +2351,7 @@ function buildFormalProofReadinessReport({
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
+    l0DiscoveryReadiness,
     negativeControls,
   });
   return {
@@ -2077,6 +2366,11 @@ function buildFormalProofReadinessReport({
       staleEvidence: evidence.staleEvidence.length,
       claimMismatches: claimVsObserved.mismatchCount,
       inMemoryProviderParityGaps: inMemoryParity.gaps.length,
+      l0DiscoveryStatus: l0DiscoveryReadiness.status,
+      l0DiscoveryGaps: l0DiscoveryReadiness.gaps.length,
+      l0RuntimeNodesMissingInMemoryImplementation:
+        l0DiscoveryReadiness.runtimeNodesMissingInMemoryImplementation,
+      l0InvalidExceptions: l0DiscoveryReadiness.invalidExceptions,
       routeProofSubjectGaps: routeSubjectMap.gaps.length,
       proofLadderComplianceGaps: ladderCompliance.gaps.length,
       environmentProofConsistencyGaps: environmentConsistency.gaps.length,
@@ -2113,9 +2407,15 @@ function buildFormalProofReadinessGaps({
   capabilityReadiness,
   inMemoryParity,
   routeSubjectMap,
+  l0DiscoveryReadiness = { gaps: [] },
   negativeControls,
 }) {
   return [
+    ...l0DiscoveryReadiness.gaps.map((gap) => ({
+      kind: gap.kind,
+      subject: gap.subject,
+      message: gap.message,
+    })),
     ...evidence.gaps,
     ...claimVsObserved.mismatches.map((mismatch) => ({
       kind: "proof-claim-overstated",
@@ -2167,6 +2467,71 @@ function buildFormalProofReadinessGaps({
 
 function formalGapClassification(kind) {
   const classifications = {
+    "missing-in-memory-implementation": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Add an in-memory semantic-dev implementation or declare a valid documented L0 exception.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "missing-owner": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "small",
+      exactClosureAction: "Define the runtime owner for the capability/provider node.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "missing-category": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "small",
+      exactClosureAction: "Define the capability/provider category.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "missing-dependencies": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "small",
+      exactClosureAction: "Define runtime dependency expectations for the node.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "missing-port-provider": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "small",
+      exactClosureAction: "Define the intended port/provider for the node.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "missing-proof-command": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "small",
+      exactClosureAction: "Register a discoverable proof command for the node.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "invalid-l0-exception": {
+      closureTrack: "discovery-l0",
+      proofLevelBand: "L0 Discovery Proven",
+      severity: "critical",
+      remediationEffort: "small",
+      exactClosureAction:
+        "Replace the exception with a valid classification, rationale, and approving rule.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
     "proof-command-failed": {
       closureTrack: "execution",
       proofLevelBand: "L1 Executable Proven",
@@ -2894,6 +3259,46 @@ function capabilityFutureBlockedLevels({
   return blocked;
 }
 
+function capabilityAdvancementBlockers({
+  l0Proven,
+  highestLevel,
+  behaviourComplete,
+  substrateProven,
+  resilienceProven,
+  foundationProven,
+}) {
+  if (!l0Proven) {
+    return [
+      { targetLevel: "L1", blockedBy: "L0", message: "L1 blocked by missing L0" },
+      { targetLevel: "L2", blockedBy: "L0", message: "L2 blocked by missing L0" },
+      { targetLevel: "L3", blockedBy: "L0", message: "L3 blocked by missing L0" },
+      { targetLevel: "L4", blockedBy: "L0", message: "L4 blocked by missing L0" },
+      { targetLevel: "L5", blockedBy: "L0", message: "L5 blocked by missing L0" },
+      { targetLevel: "L6", blockedBy: "L0", message: "L6 blocked by missing L0" },
+    ];
+  }
+  const blockers = [];
+  if (highestLevel < 1) {
+    blockers.push({ targetLevel: "L1", blockedBy: "L0", message: "L1 blocked by missing L0" });
+  }
+  if (highestLevel < 2) {
+    blockers.push({ targetLevel: "L2", blockedBy: "L1", message: "L2 blocked by missing L1" });
+  }
+  if (!behaviourComplete) {
+    blockers.push({ targetLevel: "L3", blockedBy: "L2", message: "L3 blocked by missing L2" });
+  }
+  if (!substrateProven) {
+    blockers.push({ targetLevel: "L4", blockedBy: "L3", message: "L4 blocked by missing L3" });
+  }
+  if (!resilienceProven) {
+    blockers.push({ targetLevel: "L5", blockedBy: "L4", message: "L5 blocked by missing L4" });
+  }
+  if (!foundationProven) {
+    blockers.push({ targetLevel: "L6", blockedBy: "L5", message: "L6 blocked by missing L5" });
+  }
+  return blockers;
+}
+
 function capabilityReadinessGaps(row) {
   return (row.missingRequiredLevels || row.missingRequiredBands || []).map((band) => ({
     kind: capabilityGapKind(band),
@@ -2948,4 +3353,47 @@ function countBy(values, selector) {
 
 function uniq(values) {
   return [...new Set(values.filter(Boolean).map(String))].sort();
+}
+
+function slugify(value) {
+  return String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function isNonEmptyString(value) {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+function ownershipByCapability(ctx) {
+  const ownershipReportPath = path.join(
+    ctx.repoRoot || process.cwd(),
+    "docs/v2-foundation/usf-audit/ownership-assurance-report.json"
+  );
+  const fromCtx = ctx.usfAudit?.["ownership-assurance-report.json"]?.capabilities || [];
+  const fromDisk =
+    fromCtx.length > 0 || !fs.existsSync(ownershipReportPath)
+      ? []
+      : JSON.parse(fs.readFileSync(ownershipReportPath, "utf8")).capabilities || [];
+  const rows = fromCtx.length > 0 ? fromCtx : fromDisk;
+  return new Map(
+    rows.map((row) => [
+      row.capability,
+      row.runtimeOwner || row.ownerId || row.operationalOwner || row.ownerArtefact || null,
+    ])
+  );
+}
+
+function l0GapMessage(kind, capability) {
+  const messages = {
+    "missing-in-memory-implementation": `${capability} is missing an in-memory semantic-dev implementation`,
+    "missing-owner": `${capability} is missing an owner definition`,
+    "missing-category": `${capability} is missing a category definition`,
+    "missing-dependencies": `${capability} is missing dependency definitions`,
+    "missing-port-provider": `${capability} is missing an intended port/provider definition`,
+    "missing-proof-command": `${capability} is missing a registered/discoverable proof command`,
+    "invalid-l0-exception": `${capability} has an invalid L0 exception declaration`,
+  };
+  return messages[kind] || `${capability} has an L0 Discovery Proven gap: ${kind}`;
 }

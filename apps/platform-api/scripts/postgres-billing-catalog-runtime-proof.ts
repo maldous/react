@@ -35,7 +35,7 @@ assert.ok(
   "billing catalog proof must assert route registration plus create/list/audit state"
 );
 assert.ok(
-  adapterSource.includes("SET LOCAL statement_timeout") &&
+  adapterSource.includes("set_config('statement_timeout'") &&
     adapterSource.includes("retryAttempts") &&
     adapterSource.includes("postgres-billing-catalog unavailable") &&
     adapterSource.includes("no fallback is allowed") &&

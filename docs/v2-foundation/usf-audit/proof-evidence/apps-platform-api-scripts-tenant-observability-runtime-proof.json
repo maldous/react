@@ -9,18 +9,22 @@
   "subjectId": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
   "capabilityId": "capability:tenant-observability",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-logs",
+    "route:get-api-admin-logs-search",
+    "route:get-api-org-observability-readiness"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-observability",
-  "startedAt": "2026-06-23T12:41:40.494Z",
-  "endedAt": "2026-06-23T12:41:40.562Z",
-  "exitStatus": 1,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "startedAt": "2026-06-23T14:22:27.793Z",
+  "endedAt": "2026-06-23T14:22:27.883Z",
+  "exitStatus": 0,
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,13 +32,79 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-logs": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+      },
+      "route:get-api-admin-logs-search": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+      },
+      "route:get-api-org-observability-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-logs": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+      },
+      "route:get-api-admin-logs-search": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+      },
+      "route:get-api-org-observability-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-logs": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-logs-search": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-observability-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
   "auditEventIds": ["audit:tenant-observability:runtime-proof-observed"],
   "traceIds": ["trace:tenant-observability:runtime-proof"],
   "metricSamples": [
@@ -48,25 +118,61 @@
   ],
   "logCorrelationIds": ["log:tenant-observability:runtime-proof"],
   "cleanupResult": {
-    "status": "failed"
+    "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:40.562Z",
+  "generatedAt": "2026-06-23T14:22:27.883Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:41:40.494Z",
-  "endTime": "2026-06-23T12:41:40.562Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:40.562Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:27.793Z",
+  "endTime": "2026-06-23T14:22:27.883Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:27.883Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-logs": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-logs-search": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-observability-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
   "auditIds": ["audit:tenant-observability:runtime-proof-observed"],
   "metricEvidence": [
     {
@@ -78,5 +184,5 @@
     }
   ],
   "logEvidence": ["log:tenant-observability:runtime-proof"],
-  "evidenceSignature": "400c1c9ed8e1d9d2ecf6678b807da6400185cf9673ebd897f2c52caeafc1adb3"
+  "evidenceSignature": "534a4c74aeb7ecbcd599d489c5bcb72d39c6cbb7380933819c725e227c5f8e06"
 }

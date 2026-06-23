@@ -9,18 +9,18 @@
   "subjectId": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
   "capabilityId": "capability:backup-control-route",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": ["route:get-api-admin-backup"],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:backup-control-route",
-  "startedAt": "2026-06-23T12:40:57.646Z",
-  "endedAt": "2026-06-23T12:40:58.156Z",
+  "startedAt": "2026-06-23T14:21:00.180Z",
+  "endedAt": "2026-06-23T14:21:00.703Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +28,93 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-backup": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-backup": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-backup": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:40:58.156Z",
+  "generatedAt": "2026-06-23T14:21:00.703Z",
   "sourceFileRefs": ["apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:40:57.646Z",
-  "endTime": "2026-06-23T12:40:58.156Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:40:58.156Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "f90dea473feb5830f68cc667e9f09fdc16b7755f2c7685c1369c756c9ceb03bd"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:00.180Z",
+  "endTime": "2026-06-23T14:21:00.703Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:00.703Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-backup": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
+  "evidenceSignature": "d087b683da626685a83e2c1480f126749ade575f5b69e4cdebf15e2758c4bd01"
 }

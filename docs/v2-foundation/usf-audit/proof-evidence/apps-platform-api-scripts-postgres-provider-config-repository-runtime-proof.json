@@ -11,12 +11,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:41:26.265Z",
-  "endedAt": "2026-06-23T12:41:26.331Z",
+  "startedAt": "2026-06-23T14:22:08.772Z",
+  "endedAt": "2026-06-23T14:22:08.869Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -24,41 +24,105 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+  ],
+  "traceIds": [
+    "trace:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+  ],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:26.331Z",
+  "generatedAt": "2026-06-23T14:22:08.869Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:26.265Z",
-  "endTime": "2026-06-23T12:41:26.331Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:26.331Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "3dd2eec06306de7d23a299779e364928a26bb3b8c9933369b99de2d4ada3af88"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:08.772Z",
+  "endTime": "2026-06-23T14:22:08.869Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:08.869Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+  ],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": [
+    "log:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+  ],
+  "evidenceSignature": "e1bbed937891b0a2faaa3ad188d4324744b881b2d94906eb7cbd31fae5ceb531"
 }

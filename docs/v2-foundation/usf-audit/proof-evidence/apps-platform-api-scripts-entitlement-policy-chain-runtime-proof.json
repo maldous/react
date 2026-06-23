@@ -10,7 +10,28 @@
   "subjectId": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "capabilityId": "capability:entitlement-policy-chain",
   "providerId": "entitlement-policy-chain-hermetic",
-  "routeIds": ["route:patch-api-admin-tenants-tenantid-entitlements"],
+  "routeIds": [
+    "route:delete-api-auth-settings-domains-domain",
+    "route:get-admin-entitlements",
+    "route:get-api-admin-tenants-tenantid-entitlements",
+    "route:get-api-auth-providers",
+    "route:get-api-auth-settings-lockout",
+    "route:get-api-auth-settings-providers",
+    "route:get-api-auth-settings-readiness",
+    "route:get-api-auth-settings-resource-policies",
+    "route:get-api-auth-settings-session",
+    "route:get-api-auth-settings-sysadmin-brokering",
+    "route:get-api-org-entitlements",
+    "route:patch-api-admin-tenants-tenantid-entitlements",
+    "route:patch-api-auth-settings-lockout",
+    "route:patch-api-auth-settings-providers",
+    "route:patch-api-auth-settings-resource-policies",
+    "route:patch-api-auth-settings-session",
+    "route:patch-api-auth-settings-sysadmin-brokering",
+    "route:post-api-auth-settings-domains",
+    "route:post-api-auth-settings-domains-challenges",
+    "route:post-api-auth-settings-domains-verify"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -18,10 +39,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlement-policy-chain",
-  "startedAt": "2026-06-23T12:41:05.518Z",
-  "endedAt": "2026-06-23T12:41:05.645Z",
+  "startedAt": "2026-06-23T14:21:10.238Z",
+  "endedAt": "2026-06-23T14:21:10.367Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -31,17 +52,137 @@
   "externalSandboxRequestIds": [],
   "beforeState": {
     "routeMutations": {
+      "route:delete-api-auth-settings-domains-domain": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-admin-entitlements": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-entitlements": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-providers": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-lockout": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-providers": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-resource-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-session": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-sysadmin-brokering": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-org-entitlements": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
       "route:patch-api-admin-tenants-tenantid-entitlements": {
         "tenant": "11111111-1111-1111-1111-111111111111",
         "entitlementKey": "webhooks",
         "grantBefore": null,
         "tenantBBefore": null,
         "auditEvents": 0
+      },
+      "route:patch-api-auth-settings-lockout": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-providers": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-resource-policies": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-session": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-sysadmin-brokering": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-domains-challenges": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-domains-verify": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
       }
     }
   },
   "afterState": {
     "routeMutations": {
+      "route:delete-api-auth-settings-domains-domain": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-admin-entitlements": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-admin-tenants-tenantid-entitlements": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-providers": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-lockout": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-providers": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-resource-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-session": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-auth-settings-sysadmin-brokering": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:get-api-org-entitlements": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
       "route:patch-api-admin-tenants-tenantid-entitlements": {
         "tenant": "11111111-1111-1111-1111-111111111111",
         "grantAfterSet": {
@@ -108,11 +249,164 @@
         },
         "assertEntitlementFailure": "api.error.notEntitled",
         "auditEvents": 2
+      },
+      "route:patch-api-auth-settings-lockout": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-providers": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-resource-policies": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-session": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:patch-api-auth-settings-sysadmin-brokering": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-domains-challenges": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+      },
+      "route:post-api-auth-settings-domains-verify": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
       }
     }
   },
   "assertedStateDiff": {
     "routeMutations": {
+      "route:delete-api-auth-settings-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-entitlements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-entitlements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-providers": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-lockout": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-providers": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-resource-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-session": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-sysadmin-brokering": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-entitlements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
       "route:patch-api-admin-tenants-tenantid-entitlements": {
         "grant": {
           "before": null,
@@ -130,6 +424,94 @@
         "tenantBoundary": true,
         "unknownKeyFailsClosed": true,
         "assertEntitlementFailsClosed": true
+      },
+      "route:patch-api-auth-settings-lockout": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-providers": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-resource-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-session": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-sysadmin-brokering": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-domains-challenges": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-domains-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
       }
     }
   },
@@ -183,20 +565,141 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:05.645Z",
+  "generatedAt": "2026-06-23T14:21:10.367Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
+  "collectorRunId": "proof-run-1782224456962-891334",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T12:41:05.518Z",
-  "endTime": "2026-06-23T12:41:05.645Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:05.645Z",
+  "startTime": "2026-06-23T14:21:10.238Z",
+  "endTime": "2026-06-23T14:21:10.367Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:10.367Z",
   "stateDiff": {
     "routeMutations": {
+      "route:delete-api-auth-settings-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-entitlements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-tenants-tenantid-entitlements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-providers": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-lockout": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-providers": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-resource-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-session": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-auth-settings-sysadmin-brokering": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-entitlements": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
       "route:patch-api-admin-tenants-tenantid-entitlements": {
         "grant": {
           "before": null,
@@ -214,6 +717,94 @@
         "tenantBoundary": true,
         "unknownKeyFailsClosed": true,
         "assertEntitlementFailsClosed": true
+      },
+      "route:patch-api-auth-settings-lockout": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-providers": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-resource-policies": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-session": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-auth-settings-sysadmin-brokering": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-domains-challenges": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-auth-settings-domains-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
       }
     }
   },
@@ -246,5 +837,5 @@
     "log:entitlement-policy-chain:revoke",
     "log:entitlement-policy-chain:tenant-boundary"
   ],
-  "evidenceSignature": "22413bc14ed47875efc462b02f831cb16895c7f8a6cb6fe0bc4594863b21852c"
+  "evidenceSignature": "27547c2bde1a78ccd60a8d44f5a8cebc22e764a3a33a1d8f589f3c6505558559"
 }

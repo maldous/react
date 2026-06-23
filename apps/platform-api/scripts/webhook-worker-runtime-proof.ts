@@ -62,6 +62,7 @@ async function main(): Promise<void> {
   const store = new PostgresWebhookStore(pool);
   const deps = { store, dispatch: new HttpWebhookDispatcher() };
   const created: string[] = [];
+  let organisationId: string | null = null;
 
   const retryRecv = makeReceiver(1); // fail once, then succeed
   const deadRecv = makeReceiver(99); // always fail
@@ -70,9 +71,10 @@ async function main(): Promise<void> {
 
   try {
     const org = await pool.query<{ id: string }>(
-      "SELECT id FROM public.organisations ORDER BY created_at LIMIT 1"
+      "INSERT INTO public.organisations (slug, display_name) VALUES ($1, $2) RETURNING id",
+      ["proof-ww-" + Date.now().toString(36), "Proof Webhook Worker"]
     );
-    const organisationId = org.rows[0]?.id;
+    organisationId = org.rows[0]?.id ?? null;
     if (!organisationId) {
       console.log("SKIP  no organisation seeded (run `make seed-demo`)");
     } else {
@@ -139,11 +141,12 @@ async function main(): Promise<void> {
   } catch (err) {
     check("worker lifecycle", false, err instanceof Error ? err.message : String(err));
   } finally {
-    const org = await pool
-      .query<{ id: string }>("SELECT id FROM public.organisations ORDER BY created_at LIMIT 1")
-      .catch(() => ({ rows: [] as { id: string }[] }));
-    const oid = org.rows[0]?.id;
-    if (oid) for (const id of created) await store.delete(oid, id).catch(() => {});
+    if (organisationId) {
+      for (const id of created) await store.delete(organisationId, id).catch(() => {});
+      await pool
+        .query("DELETE FROM public.organisations WHERE id=$1", [organisationId])
+        .catch(() => {});
+    }
     check("cleanup removed the temp webhooks", true);
     await pool.end();
     await new Promise<void>((r) => retryRecv.server.close(() => r()));

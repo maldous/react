@@ -6514,11 +6514,38 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/usf-audit/l0-discovery-readiness-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated USF L0 Discovery Proven readiness report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/l0-discovery-readiness-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/usf-audit/behaviour-proof-readiness-report.json",
       "introducingCommit": "pending",
       "purpose": "generated USF Behaviour Proven L3 closure readiness report",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "docs/v2-foundation/usf-audit/behaviour-proof-readiness-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/behaviour-proof-certification-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated USF Behaviour Proven L3 certification report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/behaviour-proof-certification-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/behaviour-proof-quality-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated USF Behaviour Proven L3 proof-quality audit report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/behaviour-proof-quality-report.json",
       "protectingTests": ["npm run v2:adversarial-usf-audit"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -6537,6 +6564,24 @@
       "purpose": "generated taxonomy for remaining formal proof readiness gaps after L3 closure",
       "v2Disposition": "reuse-unchanged",
       "v2Target": "docs/v2-foundation/usf-audit/formal-proof-gap-taxonomy-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/substrate-proof-roadmap.json",
+      "introducingCommit": "pending",
+      "purpose": "generated L4 Substrate Proven planning roadmap after L3/formal closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/substrate-proof-roadmap.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/v2-readiness-summary.json",
+      "introducingCommit": "pending",
+      "purpose": "generated concise USF V2 readiness summary after L3/formal closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/v2-readiness-summary.json",
       "protectingTests": ["npm run v2:adversarial-usf-audit"],
       "decisionRefs": ["ADR-ACT-0292"]
     },
@@ -6966,6 +7011,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 701,
+  "additionCount": 706,
   "deletionCount": 54
 }

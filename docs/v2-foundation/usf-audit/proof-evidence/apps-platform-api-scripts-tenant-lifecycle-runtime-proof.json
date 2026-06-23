@@ -9,18 +9,23 @@
   "subjectId": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "capabilityId": "capability:tenant-lifecycle",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-api-admin-tenants-tenantid-export",
+    "route:post-api-admin-tenants-tenantid-delete",
+    "route:post-api-admin-tenants-tenantid-import",
+    "route:post-api-admin-tenants-tenantid-suspend"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-lifecycle",
-  "startedAt": "2026-06-23T12:41:40.302Z",
-  "endedAt": "2026-06-23T12:41:40.340Z",
+  "startedAt": "2026-06-23T14:22:27.593Z",
+  "endedAt": "2026-06-23T14:22:27.631Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +33,183 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-export": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-delete": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-import": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-suspend": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-export": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-delete": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-import": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-suspend": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-export": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-delete": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-import": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-suspend": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:40.340Z",
+  "generatedAt": "2026-06-23T14:22:27.631Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:40.302Z",
-  "endTime": "2026-06-23T12:41:40.340Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:40.340Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "ec97b30c24ddd02137bb5f4be2b6d3ef274a94cf943bc5169eeff5caa4e424c2"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:27.593Z",
+  "endTime": "2026-06-23T14:22:27.631Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:27.631Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-api-admin-tenants-tenantid-export": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-delete": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-import": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-suspend": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
+  "evidenceSignature": "9b4a2972ecfa2a414afcc9e762278c17d23bf2dbcd95ed32de0734037a8a8824"
 }

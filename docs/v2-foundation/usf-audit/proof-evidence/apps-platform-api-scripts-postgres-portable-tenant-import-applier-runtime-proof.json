@@ -13,12 +13,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:41:25.535Z",
-  "endedAt": "2026-06-23T12:41:26.052Z",
+  "startedAt": "2026-06-23T14:22:07.982Z",
+  "endedAt": "2026-06-23T14:22:08.516Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -26,41 +26,105 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+  ],
+  "traceIds": [
+    "trace:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+  ],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:26.052Z",
+  "generatedAt": "2026-06-23T14:22:08.516Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:25.535Z",
-  "endTime": "2026-06-23T12:41:26.052Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:26.052Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "89cf9935a7544dfb21fe7cd762cf68cf9c8817fe034001d53694ec6434abb2c7"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:07.982Z",
+  "endTime": "2026-06-23T14:22:08.516Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:08.516Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+  ],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": [
+    "log:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+  ],
+  "evidenceSignature": "ef69c0a382ea1b988dc7301108da517774f8cbd7f2b65fe41926aa0b1fa2969c"
 }

@@ -6,7 +6,11 @@ import { pathToFileURL } from "node:url";
 import prettier from "prettier";
 import { loadContext } from "../src/load.mjs";
 import { buildAdversarialUSFAudit } from "../src/adversarial-usf-audit.mjs";
-import { PROOF_EVIDENCE_DIR, requiredRuntimeProofs } from "../src/proof-evidence.mjs";
+import {
+  PROOF_EVIDENCE_DIR,
+  buildRouteProofSubjectMap,
+  requiredRuntimeProofs,
+} from "../src/proof-evidence.mjs";
 
 const repoRoot = process.cwd();
 const ctx = loadContext({ repoRoot, strict: true });
@@ -17,13 +21,15 @@ const runtimeHook = path.join(
   repoRoot,
   "tools/v2-readiness/scripts/proof-evidence-runtime-hook.mjs"
 );
-const timeoutMs = Number(process.env.USF_PROOF_COMMAND_TIMEOUT_MS || 30_000);
+const timeoutMs = Number(process.env.USF_PROOF_COMMAND_TIMEOUT_MS || 120_000);
 const limit = Number(process.env.USF_COLLECT_PROOF_LIMIT || 0);
 
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 
 const requiredProofs = dedupeProofExecutions(requiredRuntimeProofs(ctx, audit));
+const routeSubjectMap = buildRouteProofSubjectMap(audit);
+const routeIdsByProofFile = routeIdsByProof(requiredProofs, routeSubjectMap);
 const selectedProofs = limit > 0 ? requiredProofs.slice(0, limit) : requiredProofs;
 const collection = {
   artefact: "proof-evidence-collection-report",
@@ -50,6 +56,7 @@ for (const proof of selectedProofs) {
     providerId: providerIdFor(proof),
     proofLevelClaimed: proof.proofLevelClaimed,
     commandExecuted: proof.commandExecuted,
+    routeIds: routeIdsByProofFile.get(proof.file) || proof.routeIds || [],
     currentCommit: ctx.headCommit,
     collectorRunId: runId,
     sourceFileRefs: proof.sourceFileRefs || [proof.file],
@@ -61,6 +68,7 @@ for (const proof of selectedProofs) {
     USF_PROOF_EVIDENCE_FILE: evidencePath,
     USF_PROOF_EVIDENCE_METADATA: JSON.stringify(metadata),
     USF_PROOF_RUN_ID: runId,
+    ENV: mode.environmentMode,
     USF_ENVIRONMENT_MODE: mode.environmentMode,
     USF_PROVIDER_MODE: mode.providerMode,
   };
@@ -104,6 +112,26 @@ function dedupeProofExecutions(proofs) {
     if (!byFile.has(proof.file)) byFile.set(proof.file, proof);
   }
   return [...byFile.values()].sort((a, b) => a.file.localeCompare(b.file));
+}
+
+function routeIdsByProof(proofs, routeSubjectMap) {
+  const routeIdsBySubject = new Map();
+  for (const route of routeSubjectMap.routes || []) {
+    if (!route.mutationBeforeAfterRequired) continue;
+    for (const ref of route.proofRefs || []) {
+      if (!routeIdsBySubject.has(ref)) routeIdsBySubject.set(ref, new Set());
+      routeIdsBySubject.get(ref).add(route.routeId);
+    }
+  }
+  const out = new Map();
+  for (const proof of proofs) {
+    const ids = new Set(proof.routeIds || []);
+    for (const subject of proof.subjectIds || []) {
+      for (const routeId of routeIdsBySubject.get(subject) || []) ids.add(routeId);
+    }
+    out.set(proof.file, [...ids].sort());
+  }
+  return out;
 }
 
 function appendNodeImport(current, hookPath) {

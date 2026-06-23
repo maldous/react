@@ -9,18 +9,24 @@
   "subjectId": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
   "capabilityId": "capability:notification-preferences",
   "providerId": "notification-preferences",
-  "routeIds": [],
+  "routeIds": [
+    "route:get-admin-email",
+    "route:get-api-admin-notifications-readiness",
+    "route:get-api-me-notification-preferences",
+    "route:patch-api-me-notification-preferences",
+    "route:post-api-admin-tenants-tenantid-notifications-test"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:notification-preferences",
-  "startedAt": "2026-06-23T12:41:15.031Z",
-  "endedAt": "2026-06-23T12:41:15.187Z",
+  "startedAt": "2026-06-23T14:21:22.785Z",
+  "endedAt": "2026-06-23T14:21:22.989Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +34,213 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:get-admin-email": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:get-api-admin-notifications-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:get-api-me-notification-preferences": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:patch-api-me-notification-preferences": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-notifications-test": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:get-admin-email": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:get-api-admin-notifications-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:get-api-me-notification-preferences": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:patch-api-me-notification-preferences": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      },
+      "route:post-api-admin-tenants-tenantid-notifications-test": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:get-admin-email": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-notifications-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-me-notification-preferences": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-me-notification-preferences": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-notifications-test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/notification-preferences-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/notification-preferences-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/notification-preferences-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:15.187Z",
+  "generatedAt": "2026-06-23T14:21:22.989Z",
   "sourceFileRefs": ["apps/platform-api/scripts/notification-preferences-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:15.031Z",
-  "endTime": "2026-06-23T12:41:15.187Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:15.187Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "fdb94cc5be4f3415aa1ca89e0cfe83913aeb46e9a87e8421bbade9cf7b2a670a"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:22.785Z",
+  "endTime": "2026-06-23T14:21:22.989Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:22.989Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:get-admin-email": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-admin-notifications-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-me-notification-preferences": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:patch-api-me-notification-preferences": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-admin-tenants-tenantid-notifications-test": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/notification-preferences-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/notification-preferences-runtime-proof.ts"],
+  "evidenceSignature": "2fd9911a51c57ba6ccef3ed0052e83a97edeb7cd88b02ef82585fd8533b1d1db"
 }

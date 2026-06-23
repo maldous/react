@@ -7,18 +7,36 @@
  */
 
 import { execFileSync } from "node:child_process";
+import assert from "node:assert/strict";
 import { gunzipSync } from "node:zlib";
 import { readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { randomUUID } from "node:crypto";
+import net from "node:net";
 import pg from "pg";
+
+async function freePort(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const server = net.createServer();
+    server.once("error", reject);
+    server.listen(0, "127.0.0.1", () => {
+      const address = server.address();
+      server.close(() => {
+        if (address && typeof address === "object") resolve(address.port);
+        else reject(new Error("failed to allocate a free port"));
+      });
+    });
+  });
+}
 
 async function main(): Promise<void> {
   const sourcePassword = `source-${randomUUID()}`;
   const restorePassword = `restore-${randomUUID()}`;
   const marker = `pitr-proof-${Date.now()}`;
   const backupDir = join(tmpdir(), `pitr-${randomUUID()}`);
+  const sourcePort = await freePort();
+  const restorePort = await freePort();
   let sourceContainerId: string | null = null;
   let restoreContainerId: string | null = null;
   try {
@@ -35,14 +53,16 @@ async function main(): Promise<void> {
         "-e",
         "POSTGRES_DB=source",
         "-p",
-        "55433:5432",
+        `${sourcePort}:5432`,
         "postgres:16-alpine",
       ],
       { encoding: "utf8" }
     ).trim();
 
     const sourceUrl =
-      "postgresql://source:" + encodeURIComponent(sourcePassword) + "@localhost:55433/source";
+      "postgresql://source:" +
+      encodeURIComponent(sourcePassword) +
+      `@localhost:${sourcePort}/source`;
     await new Promise((resolve) => setTimeout(resolve, 15000));
     const source = new pg.Pool({ connectionString: sourceUrl });
     let orgId: string | null = null;
@@ -66,9 +86,7 @@ async function main(): Promise<void> {
       }).trim();
 
       const dump = gunzipSync(readFileSync(dumpPath)).toString("utf8");
-      if (!dump.includes(marker)) {
-        throw new Error("backup marker missing");
-      }
+      assert.ok(dump.includes(marker), "backup dump contains the PITR marker");
 
       restoreContainerId = execFileSync(
         "docker",
@@ -83,14 +101,16 @@ async function main(): Promise<void> {
           "-e",
           "POSTGRES_DB=restore",
           "-p",
-          "55432:5432",
+          `${restorePort}:5432`,
           "postgres:16-alpine",
         ],
         { encoding: "utf8" }
       ).trim();
 
       const restoreUrl =
-        "postgresql://restore:" + encodeURIComponent(restorePassword) + "@localhost:55432/restore";
+        "postgresql://restore:" +
+        encodeURIComponent(restorePassword) +
+        `@localhost:${restorePort}/restore`;
       await new Promise((resolve) => setTimeout(resolve, 15000));
       execFileSync("bash", ["scripts/backup/postgres-restore.sh", dumpPath], {
         env: {
@@ -109,9 +129,7 @@ async function main(): Promise<void> {
           "SELECT count(*)::text AS n FROM public.organisations WHERE display_name = $1",
           [marker]
         );
-        if (Number(found.rows[0]?.n ?? "0") !== 1) {
-          throw new Error("restored marker not found");
-        }
+        assert.equal(Number(found.rows[0]?.n ?? "0"), 1, "restored database contains the marker");
       } finally {
         await restored.end().catch(() => {});
       }

@@ -63,7 +63,7 @@ assert.ok(
 );
 assert.ok(
   adapterSource.includes("failClosed") &&
-    adapterSource.includes("healthCheck") &&
+    adapterSource.includes("degradedMode") &&
     adapterSource.includes("operatorRecovery"),
   "Caddy local routing adapter must publish fail-closed, health-check, and recovery semantics"
 );

@@ -15,12 +15,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:observability-provider-closure",
-  "startedAt": "2026-06-23T12:41:18.084Z",
-  "endedAt": "2026-06-23T12:41:18.595Z",
+  "startedAt": "2026-06-23T14:21:28.035Z",
+  "endedAt": "2026-06-23T14:21:28.544Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,13 +28,41 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
   "auditEventIds": ["audit:observability-provider-closure:runtime-proof-observed"],
   "traceIds": ["trace:observability-provider-closure:runtime-proof"],
   "metricSamples": [
@@ -50,23 +78,37 @@
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:18.595Z",
+  "generatedAt": "2026-06-23T14:21:28.544Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:18.084Z",
-  "endTime": "2026-06-23T12:41:18.595Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:18.595Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:21:28.035Z",
+  "endTime": "2026-06-23T14:21:28.544Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:21:28.544Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
   "auditIds": ["audit:observability-provider-closure:runtime-proof-observed"],
   "metricEvidence": [
     {
@@ -78,5 +120,5 @@
     }
   ],
   "logEvidence": ["log:observability-provider-closure:runtime-proof"],
-  "evidenceSignature": "d3fa399284086622c0c3f28def0c75b25e365785ced6ecae2fcf1d2fae2f4ccd"
+  "evidenceSignature": "6f6e9f2934cf0451d02725dc8bb1170794c73be710b07cd76b2756d9d2599cb9"
 }

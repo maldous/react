@@ -9,18 +9,26 @@
   "subjectId": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "capabilityId": "capability:tenant-domains-routing",
   "providerId": "not-applicable",
-  "routeIds": [],
+  "routeIds": [
+    "route:delete-api-org-domains-domain",
+    "route:get-admin-domains",
+    "route:get-api-org-domains",
+    "route:get-api-org-domains-readiness",
+    "route:post-api-org-domains",
+    "route:post-api-org-domains-domain-probe-routing-local",
+    "route:post-api-org-domains-domain-verify"
+  ],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domains-routing",
-  "startedAt": "2026-06-23T12:41:39.712Z",
-  "endedAt": "2026-06-23T12:41:39.810Z",
+  "startedAt": "2026-06-23T14:22:26.871Z",
+  "endedAt": "2026-06-23T14:22:27.050Z",
   "exitStatus": 0,
-  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "commit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +36,273 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:get-admin-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:get-api-org-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:get-api-org-domains-readiness": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:post-api-org-domains": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:get-admin-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:get-api-org-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:get-api-org-domains-readiness": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:post-api-org-domains": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:41:39.810Z",
+  "generatedAt": "2026-06-23T14:22:27.050Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782218455374-114497",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782224456962-891334",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:41:39.712Z",
-  "endTime": "2026-06-23T12:41:39.810Z",
-  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
-  "executionTimestamp": "2026-06-23T12:41:39.810Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "29e5d6b4af808b92d7096397f27226d87b5adf35c6cc418517ac390dbda4d64e"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T14:22:26.871Z",
+  "endTime": "2026-06-23T14:22:27.050Z",
+  "gitCommit": "4e9d064a6897eef27c5f9133417d73cd58f95ecb",
+  "executionTimestamp": "2026-06-23T14:22:27.050Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:delete-api-org-domains-domain": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-admin-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:get-api-org-domains-readiness": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-probe-routing-local": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "route:post-api-org-domains-domain-verify": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
+  "evidenceSignature": "152823e021377b0fcb5edfa9dfc68c672974a4ca72fb1e26844fcb20ca2f7513"
 }

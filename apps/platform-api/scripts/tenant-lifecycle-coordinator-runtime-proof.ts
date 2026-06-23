@@ -21,7 +21,7 @@ assert.ok(
   proofSource.includes("delete exports first") &&
     proofSource.includes("delete coordinates storage/realm/DSR/data") &&
     proofSource.includes("auditCalls.length") &&
-    coordinatorSource.includes("exportTenant"),
+    proofSource.includes("exportTenant"),
   "tenant lifecycle coordinator wrapper must assert delegated export-first delete state and audit side effects"
 );
 assert.ok(

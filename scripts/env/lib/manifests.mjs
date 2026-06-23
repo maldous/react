@@ -99,6 +99,7 @@ export const SECRET_ENV_KEYS = [
   "KEYCLOAK_TEST_PASSWORD",
   "WEBHOOK_SIGNING_SECRET",
   "SYSADMIN_BOOTSTRAP_PASSWORD",
+  "OPENBAO_TOKEN",
   // Shared service / container-bootstrap credentials (formerly the hand-maintained
   // root .env "shared service credentials" block). Emitted only into the generated
   // runtime artifact, never the manifest.

@@ -95,7 +95,10 @@ async function main(): Promise<void> {
   );
 
   // 3. Live Loki probe.
-  const lokiUrl = process.env["LOKI_URL"] ?? "http://localhost:3100";
+  const lokiUrl =
+    process.env["LOKI_URL"] ??
+    (process.env["LOKI_PORT"] ? `http://localhost:${process.env["LOKI_PORT"]}` : undefined) ??
+    "http://localhost:3100";
   const loki = createLokiLogQueryAdapter({ url: lokiUrl });
   const port = {
     search: (q: Parameters<typeof loki.search>[0]) =>
