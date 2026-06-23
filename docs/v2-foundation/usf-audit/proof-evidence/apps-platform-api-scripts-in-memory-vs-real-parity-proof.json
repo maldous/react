@@ -13,6 +13,7 @@
     "provider:in-memory-billing-provider",
     "provider:in-memory-notification-transport",
     "provider:in-memory-identity-repository",
+    "provider:in-memory-backup-restore-provider",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
     "provider:in-memory-antivirus",
@@ -24,6 +25,7 @@
     "in-memory-billing-provider",
     "in-memory-notification-transport",
     "in-memory-identity-repository",
+    "in-memory-backup-restore-provider",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
     "in-memory-antivirus",
@@ -35,6 +37,8 @@
     "smtp-email-adapter",
     "provider:postgres-identity-repository",
     "postgres-identity-repository",
+    "provider:backup-restore-scripts",
+    "backup-restore-scripts",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
@@ -53,10 +57,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T09:53:34.626Z",
-  "endedAt": "2026-06-23T09:53:34.924Z",
+  "startedAt": "2026-06-23T10:02:57.422Z",
+  "endedAt": "2026-06-23T10:02:57.734Z",
   "exitStatus": 0,
-  "commit": "73261afa1cc6ff16c0b6246cb8c3d3fd0b389897",
+  "commit": "5604c27177c0085f4084aedf4e43e44c38c75bcd",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -72,6 +76,7 @@
     "billingAccounts": 0,
     "notificationDeliveries": 0,
     "identityUsers": 0,
+    "backupSnapshots": 0,
     "storageObjects": 0,
     "webhookDeliveries": 0,
     "antivirusScans": 0,
@@ -99,7 +104,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T09:53:34.855Z"
+      "createdAt": "2026-06-23T10:02:57.663Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -147,6 +152,35 @@
     "fakePostgresIdentitySystemAdminStatements": 7,
     "fakePostgresIdentityRollbackObserved": true,
     "inMemoryIdentityEventsAfterCleanup": 0,
+    "backupRestoreContractMethods": 2,
+    "inMemoryBackupId": "backup_10b0d446d2eb",
+    "inMemoryRestore": {
+      "restored": true,
+      "payload": {
+        "marker": "backup-parity",
+        "rows": [
+          {
+            "id": "row-1",
+            "tenantId": "tenant-a"
+          }
+        ]
+      }
+    },
+    "inMemoryCrossTenantRestore": {
+      "restored": false,
+      "payload": null
+    },
+    "backupScriptProdRefusalObserved": true,
+    "restoreScriptProdRefusalObserved": true,
+    "restoreScriptConfirmRefusalObserved": true,
+    "inMemoryBackupRestoreInjectedFailure": "in-memory-backup-restore-provider injected failure for restoreTenant; fail closed",
+    "inMemoryBackupRestoreHealth": {
+      "provider": "in-memory-backup-restore-provider",
+      "status": "ready",
+      "detail": "in-memory-backup-restore-provider ready with deterministic seed backup-parity",
+      "operatorRecovery": "operator recovery: reset in-memory-backup-restore-provider, clear failure injection, or switch USF_PROVIDER_MODE to compose for real-local parity proof"
+    },
+    "inMemoryBackupRestoreEventsAfterCleanup": 0,
     "automationContractMethods": 4,
     "inMemoryAutomationScriptStatus": "succeeded",
     "fakeWindmillScriptStatus": "succeeded",
@@ -255,6 +289,12 @@
     "identityRepositoryFailurePathParity": true,
     "identityRepositorySystemAdminPathObserved": true,
     "identityRepositoryCleanupParity": true,
+    "backupRestorePortMethodsMatch": true,
+    "backupRestoreLifecycleParity": true,
+    "backupRestoreTenantBoundaryParity": true,
+    "backupRestoreFailurePathParity": true,
+    "backupRestoreScriptGuardParity": true,
+    "backupRestoreCleanupParity": true,
     "objectStoragePortMethodsMatch": true,
     "objectStorageLifecycleParity": true,
     "objectStorageTenantIsolationParity": true,
@@ -291,6 +331,8 @@
     "in-memory-notification-transport:notification.transport.sent:tenant-a:0",
     "in-memory-identity:identity.user_created:global:0",
     "in-memory-identity:identity.external_linked:global:1",
+    "in-memory-backup-restore:backup.created:tenant-a:0",
+    "in-memory-backup-restore:backup.restored:tenant-a:1",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
     "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
     "in-memory:storage.object.download:clean:tenant-a/object.txt",
@@ -323,6 +365,11 @@
     "trace:identity-parity-membership-miss",
     "trace:identity-parity-injected-failure",
     "trace:identity-parity-postgres-rollback",
+    "trace:backup-parity-in-memory-backup",
+    "trace:backup-parity-in-memory-restore",
+    "trace:backup-parity-cross-tenant-restore",
+    "trace:backup-parity-script-guard-refusal",
+    "trace:backup-parity-injected-failure",
     "trace:in-memory:storage.put",
     "trace:fake-s3:storage.put",
     "trace:in-memory:storage.download",
@@ -391,6 +438,18 @@
     {
       "name": "fake_postgres_identity_system_admin_query_total",
       "value": 7
+    },
+    {
+      "name": "in_memory_backup_restore_snapshot_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_backup_restore_restore_total",
+      "value": 1
+    },
+    {
+      "name": "backup_restore_script_guard_refusal_total",
+      "value": 3
     },
     {
       "name": "s3_object_storage_put_success_total",
@@ -480,6 +539,11 @@
     "log:identity-parity-membership-miss",
     "log:identity-parity-injected-failure",
     "log:identity-parity-postgres-rollback",
+    "log:backup-parity-in-memory-backup",
+    "log:backup-parity-in-memory-restore",
+    "log:backup-parity-cross-tenant-restore",
+    "log:backup-parity-script-guard-refusal",
+    "log:backup-parity-injected-failure",
     "log:in-memory:info:put:storage.operation.complete",
     "log:fake-s3:info:put:storage.operation.complete",
     "log:in-memory:info:download:storage.operation.complete",
@@ -503,18 +567,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T09:53:34.924Z",
+  "generatedAt": "2026-06-23T10:02:57.734Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782208398700-3281307",
+  "collectorRunId": "proof-run-1782208961572-3338396",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T09:53:34.626Z",
-  "endTime": "2026-06-23T09:53:34.924Z",
-  "gitCommit": "73261afa1cc6ff16c0b6246cb8c3d3fd0b389897",
-  "executionTimestamp": "2026-06-23T09:53:34.924Z",
+  "startTime": "2026-06-23T10:02:57.422Z",
+  "endTime": "2026-06-23T10:02:57.734Z",
+  "gitCommit": "5604c27177c0085f4084aedf4e43e44c38c75bcd",
+  "executionTimestamp": "2026-06-23T10:02:57.734Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -541,6 +605,12 @@
     "identityRepositoryFailurePathParity": true,
     "identityRepositorySystemAdminPathObserved": true,
     "identityRepositoryCleanupParity": true,
+    "backupRestorePortMethodsMatch": true,
+    "backupRestoreLifecycleParity": true,
+    "backupRestoreTenantBoundaryParity": true,
+    "backupRestoreFailurePathParity": true,
+    "backupRestoreScriptGuardParity": true,
+    "backupRestoreCleanupParity": true,
     "objectStoragePortMethodsMatch": true,
     "objectStorageLifecycleParity": true,
     "objectStorageTenantIsolationParity": true,
@@ -574,6 +644,8 @@
     "in-memory-notification-transport:notification.transport.sent:tenant-a:0",
     "in-memory-identity:identity.user_created:global:0",
     "in-memory-identity:identity.external_linked:global:1",
+    "in-memory-backup-restore:backup.created:tenant-a:0",
+    "in-memory-backup-restore:backup.restored:tenant-a:1",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
     "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
     "in-memory:storage.object.download:clean:tenant-a/object.txt",
@@ -639,6 +711,18 @@
     {
       "name": "fake_postgres_identity_system_admin_query_total",
       "value": 7
+    },
+    {
+      "name": "in_memory_backup_restore_snapshot_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_backup_restore_restore_total",
+      "value": 1
+    },
+    {
+      "name": "backup_restore_script_guard_refusal_total",
+      "value": 3
     },
     {
       "name": "s3_object_storage_put_success_total",
@@ -728,6 +812,11 @@
     "log:identity-parity-membership-miss",
     "log:identity-parity-injected-failure",
     "log:identity-parity-postgres-rollback",
+    "log:backup-parity-in-memory-backup",
+    "log:backup-parity-in-memory-restore",
+    "log:backup-parity-cross-tenant-restore",
+    "log:backup-parity-script-guard-refusal",
+    "log:backup-parity-injected-failure",
     "log:in-memory:info:put:storage.operation.complete",
     "log:fake-s3:info:put:storage.operation.complete",
     "log:in-memory:info:download:storage.operation.complete",
@@ -744,5 +833,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "badd3453b24e0c246b213db58f58b4487e59074c7f56900fef1187bbfdb2536e"
+  "evidenceSignature": "3bb5f1394fe3e249cf170e6609167f724161b50ee38328d81246a179348bf3e4"
 }

@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import http from "node:http";
 import net from "node:net";
 import {
@@ -9,6 +10,7 @@ import { InMemoryBillingProvider } from "../src/adapters/in-memory-billing-provi
 import {
   createInMemoryNotificationTransport,
   InMemoryAntivirus,
+  InMemoryBackupRestoreProvider,
   InMemoryEventBus,
   InMemoryIdentityRepository,
   InMemoryRateLimitRepository,
@@ -264,6 +266,20 @@ function createFailingPostgresIdentityPool() {
   };
 }
 
+function runRefusedBackupScript(script: string, env: Record<string, string>): string {
+  try {
+    execFileSync("bash", [script], {
+      env: { ...process.env, ...env },
+      encoding: "utf8",
+      stdio: "pipe",
+    });
+  } catch (err) {
+    const stderr = (err as { stderr?: Buffer | string }).stderr;
+    return Buffer.isBuffer(stderr) ? stderr.toString("utf8") : String(stderr ?? err);
+  }
+  throw new Error(`${script} unexpectedly succeeded`);
+}
+
 const requiredMethods = {
   "rate-limit-repository": [
     "getByKey",
@@ -308,6 +324,7 @@ const beforeState = {
   billingAccounts: 0,
   notificationDeliveries: 0,
   identityUsers: 0,
+  backupSnapshots: 0,
   storageObjects: 0,
   webhookDeliveries: 0,
   antivirusScans: 0,
@@ -363,6 +380,51 @@ assert.equal(await secrets.resolve(tenantB, meta.ref), null);
 secrets.injectFailure("resolve");
 await assert.rejects(() => secrets.resolve(tenantA, meta.ref), /injected failure/);
 secrets.clearFailure("resolve");
+
+const backupMethods = ["backupTenant", "restoreTenant"] as const;
+const inMemoryBackupRestore = new InMemoryBackupRestoreProvider({ seed: "backup-parity" });
+for (const method of backupMethods) {
+  assert.equal(
+    typeof inMemoryBackupRestore[method],
+    "function",
+    `in-memory backup restore.${method}`
+  );
+}
+const backupPayload = { marker: "backup-parity", rows: [{ id: "row-1", tenantId: tenantA }] };
+const inMemoryBackup = await inMemoryBackupRestore.backupTenant(tenantA, backupPayload);
+const inMemoryRestore = await inMemoryBackupRestore.restoreTenant(tenantA, inMemoryBackup.backupId);
+assert.equal(inMemoryRestore.restored, true);
+assert.deepEqual(inMemoryRestore.payload, backupPayload);
+const inMemoryCrossTenantRestore = await inMemoryBackupRestore.restoreTenant(
+  tenantB,
+  inMemoryBackup.backupId
+);
+assert.deepEqual(inMemoryCrossTenantRestore, { restored: false, payload: null });
+const backupScriptProdRefusal = runRefusedBackupScript("scripts/backup/postgres-backup.sh", {
+  ENV: "prod",
+  POSTGRES_URL: "postgresql://example.invalid/unused",
+});
+const restoreScriptProdRefusal = runRefusedBackupScript("scripts/backup/postgres-restore.sh", {
+  ENV: "prod",
+});
+const restoreScriptConfirmRefusal = runRefusedBackupScript("scripts/backup/postgres-restore.sh", {
+  ENV: "dev",
+});
+assert.match(backupScriptProdRefusal, /refusing: backups for ENV='prod'/);
+assert.match(restoreScriptProdRefusal, /refusing: restore is only allowed/);
+assert.match(restoreScriptConfirmRefusal, /refusing: set CONFIRM_RESTORE=restore-dev/);
+inMemoryBackupRestore.injectFailure("restoreTenant");
+let inMemoryBackupRestoreInjectedFailure = "";
+await assert.rejects(
+  async () => inMemoryBackupRestore.restoreTenant(tenantA, inMemoryBackup.backupId),
+  (err) => {
+    inMemoryBackupRestoreInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryBackupRestoreInjectedFailure);
+  }
+);
+inMemoryBackupRestore.clearFailure("restoreTenant");
+const inMemoryBackupRestoreHealth = inMemoryBackupRestore.healthCheck();
+assert.equal(inMemoryBackupRestoreHealth.status, "ready");
 
 const identityMethods = [
   "findExternalIdentity",
@@ -1252,6 +1314,12 @@ const identityAuditEvents = inMemoryIdentity
   .map(
     (event, index) => `in-memory-identity:${event.action}:${event.tenantId ?? "global"}:${index}`
   );
+const backupAuditEvents = inMemoryBackupRestore
+  .getAuditEvents()
+  .map(
+    (event, index) =>
+      `in-memory-backup-restore:${event.action}:${event.tenantId ?? "global"}:${index}`
+  );
 const webhookAuditEvents = inMemoryWebhookDispatcher
   .getAuditEvents()
   .map((event, index) => `in-memory-webhook:${event.action}:${index}`);
@@ -1323,6 +1391,24 @@ const automationMetricSamples = [
     ).length,
   },
   {
+    name: "in_memory_backup_restore_snapshot_total",
+    value: inMemoryBackupRestore
+      .getAuditEvents()
+      .filter((event) => event.action === "backup.created").length,
+  },
+  {
+    name: "in_memory_backup_restore_restore_total",
+    value: inMemoryBackupRestore
+      .getAuditEvents()
+      .filter((event) => event.action === "backup.restored").length,
+  },
+  {
+    name: "backup_restore_script_guard_refusal_total",
+    value: [backupScriptProdRefusal, restoreScriptProdRefusal, restoreScriptConfirmRefusal].filter(
+      (message) => /refusing/.test(message)
+    ).length,
+  },
+  {
     name: "s3_object_storage_put_success_total",
     value: getStorageOperationMetric("put", "success") - s3MetricBeforePut,
   },
@@ -1384,6 +1470,8 @@ notificationProvider.reset();
 assert.equal(notificationProvider.getAuditEvents().length, 0);
 inMemoryIdentity.reset();
 assert.equal(inMemoryIdentity.getAuditEvents().length, 0);
+inMemoryBackupRestore.reset();
+assert.equal(inMemoryBackupRestore.getAuditEvents().length, 0);
 inMemoryWebhookDispatcher.reset();
 assert.equal(inMemoryWebhookDispatcher.deliveries.length, 0);
 inMemoryAntivirus.reset();
@@ -1399,6 +1487,7 @@ emitRuntimeProofEvidence({
     "provider:in-memory-billing-provider",
     "provider:in-memory-notification-transport",
     "provider:in-memory-identity-repository",
+    "provider:in-memory-backup-restore-provider",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
     "provider:in-memory-antivirus",
@@ -1410,6 +1499,7 @@ emitRuntimeProofEvidence({
     "in-memory-billing-provider",
     "in-memory-notification-transport",
     "in-memory-identity-repository",
+    "in-memory-backup-restore-provider",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
     "in-memory-antivirus",
@@ -1421,6 +1511,8 @@ emitRuntimeProofEvidence({
     "smtp-email-adapter",
     "provider:postgres-identity-repository",
     "postgres-identity-repository",
+    "provider:backup-restore-scripts",
+    "backup-restore-scripts",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
@@ -1482,6 +1574,16 @@ emitRuntimeProofEvidence({
     fakePostgresIdentityRollbackObserved:
       fakeFailingIdentityRuntime.statements.includes("ROLLBACK"),
     inMemoryIdentityEventsAfterCleanup: inMemoryIdentity.getAuditEvents().length,
+    backupRestoreContractMethods: backupMethods.length,
+    inMemoryBackupId: inMemoryBackup.backupId,
+    inMemoryRestore,
+    inMemoryCrossTenantRestore,
+    backupScriptProdRefusalObserved: /refusing/.test(backupScriptProdRefusal),
+    restoreScriptProdRefusalObserved: /refusing/.test(restoreScriptProdRefusal),
+    restoreScriptConfirmRefusalObserved: /refusing/.test(restoreScriptConfirmRefusal),
+    inMemoryBackupRestoreInjectedFailure,
+    inMemoryBackupRestoreHealth,
+    inMemoryBackupRestoreEventsAfterCleanup: inMemoryBackupRestore.getAuditEvents().length,
     automationContractMethods: automationMethods.length,
     inMemoryAutomationScriptStatus: "succeeded",
     fakeWindmillScriptStatus: "succeeded",
@@ -1553,6 +1655,12 @@ emitRuntimeProofEvidence({
     identityRepositoryFailurePathParity: true,
     identityRepositorySystemAdminPathObserved: true,
     identityRepositoryCleanupParity: true,
+    backupRestorePortMethodsMatch: true,
+    backupRestoreLifecycleParity: true,
+    backupRestoreTenantBoundaryParity: true,
+    backupRestoreFailurePathParity: true,
+    backupRestoreScriptGuardParity: true,
+    backupRestoreCleanupParity: true,
     objectStoragePortMethodsMatch: true,
     objectStorageLifecycleParity: true,
     objectStorageTenantIsolationParity: true,
@@ -1576,6 +1684,7 @@ emitRuntimeProofEvidence({
     ...billingAuditEvents,
     ...notificationAuditEvents,
     ...identityAuditEvents,
+    ...backupAuditEvents,
     ...storageEvents.audit,
     ...webhookAuditEvents,
     ...antivirusAuditEvents,
@@ -1599,6 +1708,11 @@ emitRuntimeProofEvidence({
     "trace:identity-parity-membership-miss",
     "trace:identity-parity-injected-failure",
     "trace:identity-parity-postgres-rollback",
+    "trace:backup-parity-in-memory-backup",
+    "trace:backup-parity-in-memory-restore",
+    "trace:backup-parity-cross-tenant-restore",
+    "trace:backup-parity-script-guard-refusal",
+    "trace:backup-parity-injected-failure",
     ...storageEvents.trace,
     "trace:webhook-parity-dispatch-success",
     "trace:webhook-parity-dispatch-failure",
@@ -1627,6 +1741,11 @@ emitRuntimeProofEvidence({
     "log:identity-parity-membership-miss",
     "log:identity-parity-injected-failure",
     "log:identity-parity-postgres-rollback",
+    "log:backup-parity-in-memory-backup",
+    "log:backup-parity-in-memory-restore",
+    "log:backup-parity-cross-tenant-restore",
+    "log:backup-parity-script-guard-refusal",
+    "log:backup-parity-injected-failure",
     ...storageEvents.log,
     "log:webhook-parity-dispatch-success",
     "log:webhook-parity-dispatch-failure",
