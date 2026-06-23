@@ -1019,6 +1019,180 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev runtime proof for Compose-free in-memory providers",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "protectingTests": ["npm run proof:in-memory-provider-runtime"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev parity proof for in-memory provider contracts",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+      "protectingTests": ["npm run proof:in-memory-vs-real-parity"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-antivirus.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for antivirus scan semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-antivirus.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-backup-restore-provider.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for backup and restore semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-backup-restore-provider.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-event-bus.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for event bus publish and consume semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-event-bus.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-identity-repository.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for tenant identity semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-identity-repository.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-notification-transport.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for notification transport semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-notification-transport.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-object-storage.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for object lifecycle and scan-gated storage semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-object-storage.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-observability-repository.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for observability signal semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-observability-repository.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-rate-limit-repository.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for rate-limit repository semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-rate-limit-repository.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-search-repository.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for search index and read semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-search-repository.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-secret-store.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for secret read, write, rotate, and delete semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-secret-store.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-semantic-provider.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider factory for Compose-free local development",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-semantic-provider.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-semantic-providers.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "shared semantic-dev in-memory provider implementation with audit, health, failure injection, reset, and tenant isolation",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-semantic-providers.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "apps/platform-api/src/adapters/in-memory-webhook-dispatcher.ts",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider adapter for webhook dispatch semantics",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/src/adapters/in-memory-webhook-dispatcher.ts",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run proof:in-memory-vs-real-parity"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
       "path": "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
@@ -3386,6 +3560,96 @@
       "decisionRefs": ["ADR-ACT-0289", "ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/usf-audit/dev-provider-mode-report.json",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev provider mode assurance report",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/dev-provider-mode-report.json",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run v2:readiness -- --strict"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/in-memory-provider-coverage.json",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory provider coverage assurance report",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/in-memory-provider-coverage.json",
+      "protectingTests": [
+        "npm run proof:in-memory-provider-runtime",
+        "npm run v2:readiness -- --strict"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/in-memory-vs-real-parity-report.json",
+      "introducingCommit": "5954caf255390c259b374baee39c3cafa9abe18e",
+      "purpose": "semantic-dev in-memory versus real provider parity assurance report",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/in-memory-vs-real-parity-report.json",
+      "protectingTests": [
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run v2:readiness -- --strict"
+      ],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/in-memory-provider-parity-report.json",
+      "introducingCommit": "pending-formal-proof-strength-assurance",
+      "purpose": "formal proof-strength parity report for semantic-dev in-memory providers",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/in-memory-provider-parity-report.json",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-claim-vs-observed-report.json",
+      "introducingCommit": "pending-formal-proof-strength-assurance",
+      "purpose": "formal proof-strength report comparing claimed and observed proof levels",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-claim-vs-observed-report.json",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence-index.json",
+      "introducingCommit": "pending-formal-proof-strength-assurance",
+      "purpose": "machine-verifiable structured proof evidence index",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence-index.json",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-strength-matrix.json",
+      "introducingCommit": "pending-formal-proof-strength-assurance",
+      "purpose": "formal proof-strength matrix over observed L0-L6 levels",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-strength-matrix.json",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/route-proof-subject-map.json",
+      "introducingCommit": "pending-formal-proof-strength-assurance",
+      "purpose": "explicit route proof subject map replacing fuzzy route proof matching",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/route-proof-subject-map.json",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/v2-formal-proof-readiness-report.json",
+      "introducingCommit": "pending-formal-proof-strength-assurance",
+      "purpose": "formal V2 proof readiness report generated from observed proof evidence",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/v2-formal-proof-readiness-report.json",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0027"]
+    },
+    {
       "path": "docs/v2-foundation/v1-test-proof-inventory.json",
       "introducingCommit": "d0705ccc64d1a80593a58bcd2f57288daaf777ea",
       "purpose": "V1→V2 planning/closure artefact",
@@ -4521,6 +4785,24 @@
       "introducingCommit": "pending-adversarial-usf-audit-commit"
     },
     {
+      "path": "tools/v2-readiness/src/proof-evidence.mjs",
+      "purpose": "formal proof evidence schema, observed L0-L6 calculator, and generated report builder",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/proof-evidence.mjs",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011", "ADR-0027"],
+      "introducingCommit": "pending-formal-proof-strength-assurance"
+    },
+    {
+      "path": "tools/v2-readiness/src/rules/r62-formal-proof-evidence-assurance.mjs",
+      "purpose": "strict readiness rule for formal proof evidence and claim-vs-observed enforcement",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "tools/v2-readiness/src/rules/r62-formal-proof-evidence-assurance.mjs",
+      "protectingTests": ["npm run v2:proof-strength", "npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-0011", "ADR-0027"],
+      "introducingCommit": "pending-formal-proof-strength-assurance"
+    },
+    {
       "path": "tools/v2-readiness/src/rules/r7-soft-mapping.mjs",
       "introducingCommit": "83284a65d14862c8cc66e0d7045bbeb2e19c1012",
       "purpose": "V2-readiness validator implementation",
@@ -5034,6 +5316,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 493,
+  "additionCount": 519,
   "deletionCount": 54
 }

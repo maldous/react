@@ -205,7 +205,7 @@ export class InMemorySemanticProviderBase {
   protected nextId(prefix: string): string {
     this.sequence += 1;
     const digest = crypto
-      .createHash("sha1")
+      .createHash("sha256")
       .update(`${this.seed}:${prefix}:${this.sequence}`)
       .digest("hex");
     return `${prefix}_${digest.slice(0, 12)}`;
@@ -259,6 +259,10 @@ function byTenantKey(tenantId: string, key: string): string {
   return `${tenantId}::${key}`;
 }
 
+function stringField(value: unknown, fallback = ""): string {
+  return typeof value === "string" ? value : fallback;
+}
+
 export class InMemoryAuditEventPort extends InMemorySemanticProviderBase {
   constructor(options: SemanticProviderRuntimeOptions = {}) {
     super("in-memory-audit-event-port", options);
@@ -266,10 +270,11 @@ export class InMemoryAuditEventPort extends InMemorySemanticProviderBase {
 
   async emit(event: Record<string, unknown>): Promise<void> {
     this.assertAvailable("emit");
+    const tenantId = stringField(event["tenantId"]) || stringField(event["organisationId"]) || null;
     await this.recordAudit(
-      String(event["action"] ?? "audit.event"),
-      String(event["tenantId"] ?? event["organisationId"] ?? "") || null,
-      String(event["resourceId"] ?? ""),
+      stringField(event["action"], "audit.event"),
+      tenantId,
+      stringField(event["resourceId"]),
       event
     );
     this.metric("audit_events_total", { operation: "emit" });
@@ -1596,7 +1601,7 @@ export class InMemoryBackupRestoreProvider extends InMemorySemanticProviderBase 
   async restoreTenant(
     tenantId: string,
     backupId: string
-  ): Promise<{ restored: boolean; payload: unknown | null }> {
+  ): Promise<{ restored: boolean; payload: unknown }> {
     this.assertAvailable("restoreTenant");
     const snapshot = this.snapshots.get(backupId);
     if (!snapshot || snapshot.tenantId !== tenantId) return { restored: false, payload: null };

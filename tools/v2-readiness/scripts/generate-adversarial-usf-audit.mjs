@@ -3,6 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { loadContext } from "../src/load.mjs";
 import { buildAdversarialUSFAudit } from "../src/adversarial-usf-audit.mjs";
+import { buildProofEvidenceAssurance } from "../src/proof-evidence.mjs";
 
 const repoRoot = process.cwd();
 const outDir = path.join(repoRoot, "docs/v2-foundation/usf-audit");
@@ -10,6 +11,7 @@ fs.mkdirSync(outDir, { recursive: true });
 
 const ctx = loadContext({ repoRoot, strict: true });
 const audit = buildAdversarialUSFAudit(ctx);
+const proofEvidence = buildProofEvidenceAssurance(ctx, audit);
 
 const writeJson = (name, value) => {
   fs.writeFileSync(path.join(outDir, name), `${JSON.stringify(value, null, 2)}\n`);
@@ -39,6 +41,12 @@ writeJson("metrics-alerts-report.json", audit.reports.metricsAlerts);
 writeJson("data-governance-runtime-report.json", audit.reports.dataGovernance);
 writeJson("provider-reliability-runtime-report.json", audit.reports.providerReliability);
 writeJson("semantic-orphan-runtime-report.json", audit.reports.semanticOrphan);
+writeJson("proof-evidence-index.json", proofEvidence.evidenceIndex);
+writeJson("proof-strength-matrix.json", proofEvidence.strengthMatrix);
+writeJson("proof-claim-vs-observed-report.json", proofEvidence.claimVsObserved);
+writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity);
+writeJson("route-proof-subject-map.json", proofEvidence.routeSubjectMap);
+writeJson("v2-formal-proof-readiness-report.json", proofEvidence.formalReadiness);
 
 const semanticDevProviders = [
   "in-memory-identity-repository",

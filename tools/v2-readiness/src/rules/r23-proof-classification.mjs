@@ -19,7 +19,7 @@ function proofLevelsFromText(text) {
   if (typeof text !== "string") return [];
   const levels = [];
   for (const match of text.matchAll(/\b[Pp]roof levels?:\s*([^.]*)/g)) {
-    for (const level of match[1].matchAll(/[0-5]/g)) levels.push(Number(level[0]));
+    for (const level of match[1].matchAll(/[0-6]/g)) levels.push(Number(level[0]));
   }
   return levels;
 }
@@ -35,7 +35,7 @@ function scriptPathForInventoryRecord(record, packageJsonScripts = {}) {
 }
 
 // R23 implements the proof-strength audit from the objective: every runtime proof script must be
-// inventoried and classified at Level 0..5 with rationale, so "proof" is no longer an ambiguous word.
+// inventoried and classified at Level 0..6 with rationale, so "proof" is no longer an ambiguous word.
 export default function r23ProofClassification(ctx) {
   const out = [];
   const candidateScripts = new Set(
@@ -67,7 +67,7 @@ export default function r23ProofClassification(ctx) {
         finding(
           "R23-proof-classification",
           subject,
-          "proof inventory entry must declare proofLevel 0..5"
+          "proof inventory entry must declare proofLevel 0..6"
         )
       );
     if (present(record.environment) && !VALID_ENVIRONMENTS.has(record.environment))
@@ -95,7 +95,7 @@ export default function r23ProofClassification(ctx) {
         finding(
           "R23-proof-classification",
           record.path || record.id || scriptPath,
-          "runtime proof inventory entry must declare proofLevel 0..5"
+          "runtime proof inventory entry must declare proofLevel 0..6"
         )
       );
     if (!present(record.proofLevelRationale))

@@ -157,12 +157,23 @@ function capabilityName(capability) {
   return capability.capability ?? capability.name ?? capability.id ?? "unknown";
 }
 
-function proofRefsForRoute(route, capabilityRows, proofScripts) {
+function proofRefsForRoute(route, capabilityRows, proofScripts, routeProofSubjectMap) {
+  const explicitRouteProof = routeProofSubjectMap.get(`${route.method} ${route.path}`);
+  if (explicitRouteProof?.proofRefs?.length > 0) {
+    return {
+      semanticProofs: explicitRouteProof.proofRefs,
+      runtimeProofs: [],
+      mappingSource: "explicit-subject-map",
+    };
+  }
   const capability = capabilityRows.find((row) => capabilityName(row) === route.capability);
   const semanticProofs = String(capability?.proof ?? "")
     .split(/[;,]/)
     .map((item) => item.trim())
     .filter(Boolean);
+  if (semanticProofs.length > 0) {
+    return { semanticProofs, runtimeProofs: [], mappingSource: "capability-explicit-proof" };
+  }
   const pathNeedles = [
     route.path,
     route.path.replace(/:([A-Za-z0-9_]+)/g, ""),
@@ -175,6 +186,7 @@ function proofRefsForRoute(route, capabilityRows, proofScripts) {
   return {
     semanticProofs,
     runtimeProofs: scripts.map((script) => script.file),
+    mappingSource: scripts.length > 0 ? "bootstrap-substring-fallback" : "missing",
   };
 }
 
@@ -275,6 +287,12 @@ function buildRouteInventory(ctx, sources) {
   const routesText = readText(routesFile);
   const pipelineText = readText(pipelineFile);
   const capabilityRows = ctx.capabilities || [];
+  const routeProofSubjectMap = new Map(
+    (ctx.usfAudit?.["route-proof-subject-map.json"]?.routes || []).map((route) => [
+      `${route.method} ${route.path}`,
+      route,
+    ])
+  );
   const pipelineEvidence = {
     trace: pipelineText.includes("withServerSpan("),
     completionLog: pipelineText.includes("http.request.complete"),
@@ -345,9 +363,15 @@ function buildRouteInventory(ctx, sources) {
         },
       };
       route.capability = routeCapability(route.path, capabilityRows);
-      const proofs = proofRefsForRoute(route, capabilityRows, sources.proofScripts);
+      const proofs = proofRefsForRoute(
+        route,
+        capabilityRows,
+        sources.proofScripts,
+        routeProofSubjectMap
+      );
       if (proofs.runtimeProofs.length > 0) route.proofRef = proofs.runtimeProofs.join("; ");
       else if (proofs.semanticProofs.length > 0) route.proofRef = proofs.semanticProofs.join("; ");
+      route.proofMappingSource = proofs.mappingSource;
       return route;
     })
     .sort((a, b) => `${a.path} ${a.method}`.localeCompare(`${b.path} ${b.method}`));
@@ -680,19 +704,34 @@ function buildAuditInventory(routes) {
     }));
 }
 
-function buildProofInventory(repoRoot, routes) {
+function proofAliasesForFile(ctx, fileRef) {
+  return Object.entries(ctx.packageJsonScripts || {})
+    .filter(([name, command]) => name.startsWith("proof:") && String(command).includes(fileRef))
+    .map(([name]) => name);
+}
+
+function buildProofInventory(ctx, repoRoot, routes) {
   return walkFiles(path.join(repoRoot, "apps/platform-api/scripts"), (file) =>
     /runtime-proof\.ts$/.test(file)
   ).map((file) => {
     const text = readText(file);
-    const routeHits = routes.filter((route) => text.includes(route.path));
+    const fileRef = rel(repoRoot, file);
+    const proofRefs = new Set([fileRef, ...proofAliasesForFile(ctx, fileRef)]);
+    const routeHits = routes.filter((route) => {
+      const refs = String(route.proofRef || "")
+        .split(/[;,]/)
+        .map((ref) => ref.trim())
+        .filter(Boolean);
+      return refs.some((ref) => proofRefs.has(ref));
+    });
     const level = classifyProofLevel(text);
     return {
       proofId: stableId("proof", rel(repoRoot, file)),
-      file: rel(repoRoot, file),
+      file: fileRef,
       level,
       classification: proofLevelName(level),
       routeRefs: routeHits.map((route) => route.routeId),
+      subjectRefs: [...proofRefs].sort(),
       assertsSideEffects:
         /assert\..*(equal|ok|deep)|throw new Error/i.test(text) &&
         /select|find|get|list|status|state/i.test(text),
@@ -948,18 +987,19 @@ function ownershipReport(ctx, inventory) {
 function proofBehaviourReport(inventory) {
   const gaps = [];
   for (const proof of inventory.proofs) {
+    const routeProof = /(^|-)routes?(-|\.|$)|control-route|readiness-route/i.test(proof.file);
     if (proof.level <= 1)
       gaps.push(gap("proof-behaviour", proof.file, "proof only checks file/contract shape", proof));
     if (!proof.assertsSideEffects)
       gaps.push(gap("proof-behaviour", proof.file, "proof does not assert side effects", proof));
     if (!proof.assertsFailureMode)
       gaps.push(gap("proof-behaviour", proof.file, "proof does not assert failure mode", proof));
-    if (proof.routeRefs.length === 0)
+    if (routeProof && proof.routeRefs.length === 0)
       gaps.push(
         gap(
           "proof-behaviour",
           proof.file,
-          "proof does not map to a discovered runtime route",
+          "route proof does not map to a discovered runtime route",
           proof
         )
       );
@@ -1179,7 +1219,7 @@ export function buildAdversarialUSFAudit(ctx) {
     securityBoundaries: buildSecurityBoundaryInventory(routes),
     observability: buildObservabilityInventory(routes),
     audits: buildAuditInventory(routes),
-    proofs: buildProofInventory(repoRoot, routes),
+    proofs: buildProofInventory(ctx, repoRoot, routes),
   };
   const reports = {
     semanticRuntimeDiff: semanticRuntimeDiffReport(ctx, inventory),

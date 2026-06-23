@@ -3982,6 +3982,30 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm proof:in-memory-provider-runtime",
+    "kind": "npm",
+    "owner": "team-platform",
+    "purpose": "Runtime proof for semantic-dev in-memory providers",
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
+    ],
+    "stage": "dev",
+    "criticality": "high"
+  },
+  {
+    "name": "npm proof:in-memory-vs-real-parity",
+    "kind": "npm",
+    "owner": "team-platform",
+    "purpose": "Parity proof for in-memory and real provider port contracts",
+    "sourceFileRefs": [
+      "package.json",
+      "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"
+    ],
+    "stage": "dev",
+    "criticality": "high"
+  },
+  {
     "name": "npm proof:incident-foundation",
     "kind": "npm",
     "purpose": "Runtime proof harness for incident foundation (live-proof; honest skip/degrade when backend unreachable).",
@@ -5153,6 +5177,33 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm v2:proof-strength",
+    "kind": "npm",
+    "purpose": "Regenerate adversarial USF proof evidence reports and run strict V2 readiness, including R62 formal proof-strength assurance.",
+    "inputs": [
+      "docs/v2-foundation/**",
+      "apps/platform-api/scripts/*runtime-proof.ts",
+      "tools/v2-readiness/src/**"
+    ],
+    "outputs": [
+      "docs/v2-foundation/usf-audit/proof-evidence-index.json",
+      "docs/v2-foundation/usf-audit/proof-strength-matrix.json",
+      "docs/v2-foundation/usf-audit/proof-claim-vs-observed-report.json",
+      "docs/v2-foundation/usf-audit/v2-formal-proof-readiness-report.json"
+    ],
+    "prerequisites": ["node", "npm"],
+    "sideEffects": ["rewrites generated USF audit proof-strength reports"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-failure",
+    "idempotent": true,
+    "safetyControls": ["R62 formal proof evidence assurance", "strict v2 readiness"],
+    "testCoverage": "npm run v2:proof-strength",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
     "name": "npm sbom:generate",
     "kind": "npm",
     "purpose": "Generate CycloneDX SBOM JSON.",
@@ -5777,6 +5828,28 @@
     "idempotent": true,
     "safetyControls": [],
     "testCoverage": "none",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm v2:adversarial-usf-audit",
+    "kind": "npm",
+    "purpose": "Generate adversarial runtime-derived USF audit inventories, gap reports, backlog, and attestation.",
+    "inputs": [
+      "docs/v2-foundation/*.json",
+      "apps/platform-api/src/**",
+      "apps/platform-api/scripts/**"
+    ],
+    "outputs": ["docs/v2-foundation/usf-audit/*.json", "docs/v2-foundation/usf-audit/*.md"],
+    "prerequisites": ["node", "npm install"],
+    "sideEffects": ["rewrites generated USF audit artefacts"],
+    "envScope": "all",
+    "failureSemantics": "exit-nonzero-on-generation-error",
+    "idempotent": true,
+    "safetyControls": ["read-only runtime scan", "unknown evidence becomes a gap"],
+    "testCoverage": "tools/v2-readiness",
     "duplicateOf": null,
     "hidesErrors": false,
     "dead": false,
@@ -6529,51 +6602,5 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
-  },
-  {
-    "name": "npm v2:adversarial-usf-audit",
-    "kind": "npm",
-    "purpose": "Generate adversarial runtime-derived USF audit inventories, gap reports, backlog, and attestation.",
-    "inputs": [
-      "docs/v2-foundation/*.json",
-      "apps/platform-api/src/**",
-      "apps/platform-api/scripts/**"
-    ],
-    "outputs": ["docs/v2-foundation/usf-audit/*.json", "docs/v2-foundation/usf-audit/*.md"],
-    "prerequisites": ["node", "npm install"],
-    "sideEffects": ["rewrites generated USF audit artefacts"],
-    "envScope": "all",
-    "failureSemantics": "exit-nonzero-on-generation-error",
-    "idempotent": true,
-    "safetyControls": ["read-only runtime scan", "unknown evidence becomes a gap"],
-    "testCoverage": "tools/v2-readiness",
-    "duplicateOf": null,
-    "hidesErrors": false,
-    "dead": false,
-    "docDriftsFromBehaviour": false
-  },
-  {
-    "name": "npm proof:in-memory-provider-runtime",
-    "kind": "npm",
-    "owner": "team-platform",
-    "purpose": "Runtime proof for semantic-dev in-memory providers",
-    "sourceFileRefs": [
-      "package.json",
-      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    ],
-    "stage": "dev",
-    "criticality": "high"
-  },
-  {
-    "name": "npm proof:in-memory-vs-real-parity",
-    "kind": "npm",
-    "owner": "team-platform",
-    "purpose": "Parity proof for in-memory and real provider port contracts",
-    "sourceFileRefs": [
-      "package.json",
-      "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"
-    ],
-    "stage": "dev",
-    "criticality": "high"
   }
 ]

@@ -1,0 +1,3652 @@
+{
+  "artefact": "proof-strength-matrix",
+  "schemaVersion": 1,
+  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "status": "PASS",
+  "levels": [
+    {
+      "level": 0,
+      "id": "L0",
+      "name": "declaration only"
+    },
+    {
+      "level": 1,
+      "id": "L1",
+      "name": "schema/contract shape"
+    },
+    {
+      "level": 2,
+      "id": "L2",
+      "name": "unit behaviour"
+    },
+    {
+      "level": 3,
+      "id": "L3",
+      "name": "state transition + side effects"
+    },
+    {
+      "level": 4,
+      "id": "L4",
+      "name": "local real substrate"
+    },
+    {
+      "level": 5,
+      "id": "L5",
+      "name": "external sandbox/provider"
+    },
+    {
+      "level": 6,
+      "id": "L6",
+      "name": "end-to-end journey"
+    }
+  ],
+  "byObservedLevel": {
+    "L0": 0,
+    "L1": 11,
+    "L2": 180,
+    "L3": 87,
+    "L4": 142,
+    "L5": 0,
+    "L6": 29
+  },
+  "byProviderEvidenceClass": {
+    "contract-or-unit-proof": 261,
+    "local-real-provider-proof": 162,
+    "in-memory-provider-proof": 10,
+    "fake-http-adapter-proof": 16
+  },
+  "records": [
+    {
+      "proofId": "proof-evidence:github-codeql-codeql-config-yml",
+      "subjectId": ".github/codeql/codeql-config.yml",
+      "subjectType": "codeql",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:gitleaks-toml",
+      "subjectId": ".gitleaks.toml",
+      "subjectType": "gitleaks",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:spectral-yaml",
+      "subjectId": ".spectral.yaml",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-alert-incident-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-alerting-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-backup-control-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-billing-control-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-billing-readiness-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-browser-telemetry-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-clamav-antivirus-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-compliance-report-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-compliance-report-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-compose-environment-operation-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-composed-provider-runtime-closure-proof-ts",
+      "subjectId": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-credential-lifecycle-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-email-sender-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-full-observability-contract-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-history-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/history-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-http-engine-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-http-webhook-dispatcher-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-idp-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/idp-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-in-memory-automation-runner-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-legal-hold-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-metering-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/metering-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-object-scan-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-observability-control-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-observability-provider-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-observability-readiness-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-email-sender-store-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-identity-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-prometheus-metrics-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-binding-report-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-observability-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-observability-contract-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-react-i18n-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-retention-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-search-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/search-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-security-control-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-static-assurance-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-support-announcements-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-support-tickets-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/support-tickets-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "in-memory-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-temporal-workflow-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "subjectType": "proof-script",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-secret-crypto-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-tenant-storage-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-typed-secret-resolution-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-webhook-worker-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-windmill-automation-provider-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-adapters-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-control-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-control-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-provider-live-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-readiness-route-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-scripts-workflow-readiness-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-admin-logs-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/admin-logs.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-api-pipeline-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/api-pipeline.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-auth-routes-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/auth-routes.test.ts",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-graphql-organisation-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/graphql-organisation.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-health-handlers-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/health-handlers.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-observability-smoke-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/observability-smoke.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-organisation-profile-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/organisation-profile.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-postgres-identity-repository-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/postgres-identity-repository.test.ts",
+      "subjectType": "db",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-postgres-organisation-repository-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/postgres-organisation-repository.test.ts",
+      "subjectType": "db",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-substrate-session-fixture-test-ts",
+      "subjectId": "apps/platform-api/tests/substrate/session-fixture.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-admin-tenants-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/admin-tenants.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-api-keys-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/api-keys.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-app-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/app-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-audit-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/audit.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-auth-provider-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/auth-provider-config.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-auth-providers-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/auth-providers.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-auth-settings-audit-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/auth-settings-audit.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-auth-settings-readiness-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/auth-settings-readiness.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-auth-usecase-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/auth-usecase.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-authorize-resource-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/authorize-resource.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-billing-catalog-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/billing-catalog.test.ts",
+      "subjectType": "test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-bootstrap-secrets-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/bootstrap-secrets.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-capability-registry-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/capability-registry.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-config-contracts-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/config-contracts.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-contracts-admin-drift-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/contracts-admin-drift.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-cookie-security-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/cookie-security.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-data-governance-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/data-governance.test.ts",
+      "subjectType": "test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-data-portability-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/data-portability.test.ts",
+      "subjectType": "test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-data-residency-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/data-residency.test.ts",
+      "subjectType": "test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-delegations-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/delegations.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-email-sender-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/email-sender.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-entitlements-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/entitlements.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-events-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/events.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-features-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/features.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-forward-auth-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/forward-auth.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-groups-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/groups.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-health-metadata-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/health-metadata-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-idp-management-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/idp-management.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-in-memory-automation-runner-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/in-memory-automation-runner.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-in-memory-billing-provider-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/in-memory-billing-provider.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-in-memory-workflow-orchestrator-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/in-memory-workflow-orchestrator.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-keycloak-mapper-readiness-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/keycloak-mapper-readiness.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-lago-billing-provider-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/lago-billing-provider.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-legal-hold-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/legal-hold.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-logs-usecase-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/logs-usecase.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-members-v2-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/members-v2.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-members-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/members.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-metering-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/metering.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-migrations-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/migrations.test.ts",
+      "subjectType": "db",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-notification-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/notification-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-notification-transports-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/notification-transports.test.ts",
+      "subjectType": "unit-test",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-notifications-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/notifications.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-observability-alerting-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/observability-alerting.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-observability-probe-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/observability-probe-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-observability-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/observability.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-oidc-discovery-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/oidc-discovery.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-oidc-mapping-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/oidc-mapping.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-operator-config-repositories-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/operator-config-repositories.test.ts",
+      "subjectType": "unit-test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-organisation-usecase-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/organisation-usecase.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-organisation-validation-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/organisation-validation.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-platform-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/platform-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-platform-services-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/platform-services.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-postgres-delegated-admin-roles-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/postgres-delegated-admin-roles.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-postgres-observability-repository-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/postgres-observability-repository.test.ts",
+      "subjectType": "unit-test",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-postgres-runtime-repositories-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/postgres-runtime-repositories.test.ts",
+      "subjectType": "unit-test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-profile-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/profile.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-prometheus-metrics-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/prometheus-metrics.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-proof-registry-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/proof-registry.test.ts",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-quota-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/quota.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-rate-limits-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/rate-limits.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-redis-rate-limit-repository-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/redis-rate-limit-repository.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-resolve-access-token-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/resolve-access-token.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-resource-policies-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/resource-policies.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-retention-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/retention.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-scheduled-jobs-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/scheduled-jobs.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-search-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/search.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-service-catalog-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/service-catalog.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-service-clickthrough-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/service-clickthrough.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-session-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/session-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-stage-config-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/stage-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-storage-objects-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/storage-objects.test.ts",
+      "subjectType": "test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-sub-organisations-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/sub-organisations.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-support-announcements-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/support-announcements.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-support-mode-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/support-mode.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-support-tickets-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/support-tickets.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-synthetic-failure-endpoint-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/synthetic-failure-endpoint.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-temporal-workflow-provider-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/temporal-workflow-provider.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-credential-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-credential.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-domain-lifecycle-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-domain-lifecycle.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-domains-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-domains.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-lifecycle-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-observability-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-observability.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-resolver-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-resolver.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-secret-crypto-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-secret-crypto.test.ts",
+      "subjectType": "unit-test",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-tenant-storage-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/tenant-storage.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-test-env-preload-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/test-env-preload.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-test-suite-completeness-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/test-suite-completeness.test.ts",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-token-crypto-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/token-crypto.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-vanity-domain-challenge-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/vanity-domain-challenge.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-vanity-domain-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/vanity-domain.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-webhook-worker-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/webhook-worker.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-webhooks-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/webhooks.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-platform-api-tests-unit-windmill-automation-provider-test-ts",
+      "subjectId": "apps/platform-api/tests/unit/windmill-automation-provider.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-components-tests-adminlayout-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/components/__tests__/AdminLayout.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-config-tests-web-config-test-ts",
+      "subjectId": "apps/react-enterprise-app/src/config/__tests__/web-config.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-template-tests-featurepage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/_template/__tests__/FeaturePage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-account-tests-adminaccountpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-account/__tests__/AdminAccountPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-auth-tests-adminauthpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-auth/__tests__/AdminAuthPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-auth-tests-idpmanager-oidc-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-auth/__tests__/IdpManager.oidc.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-config-tests-adminconfigpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-config/__tests__/AdminConfigPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-developer-tests-admindeveloperpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-developer/__tests__/AdminDeveloperPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-domains-tests-admindomainspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-domains/__tests__/AdminDomainsPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-email-tests-adminemailpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-email/__tests__/AdminEmailPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-entitlements-tests-adminentitlementspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-entitlements/__tests__/AdminEntitlementsPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-events-tests-admineventspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-events/__tests__/AdminEventsPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-features-tests-adminfeaturespage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-features/__tests__/AdminFeaturesPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-members-tests-adminmemberspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-members/__tests__/AdminMembersPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-monitoring-tests-adminmonitoringpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-monitoring/__tests__/AdminMonitoringPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-observability-tests-adminobservabilitypage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-observability/__tests__/AdminObservabilityPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-platform-tests-adminplatformpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-platform/__tests__/AdminPlatformPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-readiness-tests-adminreadinesspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-readiness/__tests__/AdminReadinessPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-scheduled-jobs-tests-adminscheduledjobspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-scheduled-jobs/__tests__/AdminScheduledJobsPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-search-tests-adminsearchpage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-search/__tests__/AdminSearchPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-storage-tests-adminstoragepage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-storage/__tests__/AdminStoragePage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-usage-tests-adminusagepage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-usage/__tests__/AdminUsagePage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-webhooks-tests-adminwebhookspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin-webhooks/__tests__/AdminWebhooksPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-tests-admin-error-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin/__tests__/admin-error.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-admin-tests-audittrailpanel-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/admin/__tests__/AuditTrailPanel.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-features-organisation-tests-organisationprofilepage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/features/organisation/__tests__/OrganisationProfilePage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-routes-tests-login-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/routes/__tests__/login.test.tsx",
+      "subjectType": "route-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-admin-logs-admin-logs-client-test-ts",
+      "subjectId": "apps/react-enterprise-app/src/tests/admin-logs/admin-logs-client.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-admin-logs-adminlogspage-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/tests/admin-logs/AdminLogsPage.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-app-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/tests/app.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-as-text-test-ts",
+      "subjectId": "apps/react-enterprise-app/src/tests/as-text.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-msw-msw-substrate-test-ts",
+      "subjectId": "apps/react-enterprise-app/src/tests/msw/msw-substrate.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-substrate-authenticated-layout-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/tests/substrate/authenticated-layout.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-substrate-require-permission-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/tests/substrate/require-permission.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-theme-theme-test-tsx",
+      "subjectId": "apps/react-enterprise-app/src/tests/theme/theme.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-src-tests-use-session-test-ts",
+      "subjectId": "apps/react-enterprise-app/src/tests/use-session.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:apps-react-enterprise-app-vitest-config-ts",
+      "subjectId": "apps/react-enterprise-app/vitest.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-discovery-accessibility-spec-ts",
+      "subjectId": "e2e/discovery/accessibility.spec.ts",
+      "subjectType": "a11y",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-discovery-browser-bff-trace-spec-ts",
+      "subjectId": "e2e/discovery/browser-bff-trace.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-discovery-clickability-spec-ts",
+      "subjectId": "e2e/discovery/clickability.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-discovery-persona-authz-spec-ts",
+      "subjectId": "e2e/discovery/persona-authz.spec.ts",
+      "subjectType": "persona",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-discovery-persona-matrix-spec-ts",
+      "subjectId": "e2e/discovery/persona-matrix.spec.ts",
+      "subjectType": "persona",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-auth-negative-spec-ts",
+      "subjectId": "e2e/external/auth-negative.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-caddy-links-spec-ts",
+      "subjectId": "e2e/external/caddy-links.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-login-spec-ts",
+      "subjectId": "e2e/external/login.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-logout-spec-ts",
+      "subjectId": "e2e/external/logout.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-smoke-test-ts",
+      "subjectId": "e2e/external/smoke.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-tenant-prod-spec-ts",
+      "subjectId": "e2e/external/tenant-prod.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-external-tool-services-spec-ts",
+      "subjectId": "e2e/external/tool-services.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-identity-broker-login-spec-ts",
+      "subjectId": "e2e/identity/broker-login.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-identity-redirect-merge-test-ts",
+      "subjectId": "e2e/identity/redirect-merge.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-internal-build-test-ts",
+      "subjectId": "e2e/internal/build.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-internal-smoke-test-ts",
+      "subjectId": "e2e/internal/smoke.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-admin-tools-test-ts",
+      "subjectId": "e2e/prod/admin-tools.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-api-contract-test-ts",
+      "subjectId": "e2e/prod/api-contract.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-asset-integrity-test-ts",
+      "subjectId": "e2e/prod/asset-integrity.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-cookie-security-test-ts",
+      "subjectId": "e2e/prod/cookie-security.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-cross-cutting-test-ts",
+      "subjectId": "e2e/prod/cross-cutting.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-error-handling-test-ts",
+      "subjectId": "e2e/prod/error-handling.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-performance-budget-test-ts",
+      "subjectId": "e2e/prod/performance-budget.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:e2e-prod-security-headers-test-ts",
+      "subjectId": "e2e/prod/security-headers.test.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:eslint-config-mjs",
+      "subjectId": "eslint.config.mjs",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:knip-json",
+      "subjectId": "knip.json",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:osv-scanner-toml",
+      "subjectId": "osv-scanner.toml",
+      "subjectType": "osv",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-audit-deps",
+      "subjectId": "package.json#audit:deps",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-codegen-check",
+      "subjectId": "package.json#codegen:check",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-depcruise",
+      "subjectId": "package.json#depcruise",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-frontend-conventions",
+      "subjectId": "package.json#frontend:conventions",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-license-policy",
+      "subjectId": "package.json#license:policy",
+      "subjectType": "license",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-openapi-drift",
+      "subjectId": "package.json#openapi:drift",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-proof-ui-semantic-claim-mapping",
+      "subjectId": "package.json#proof:ui-semantic-claim-mapping",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-proof-ui-semantic-groups",
+      "subjectId": "package.json#proof:ui-semantic-groups",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-proof-ui-semantic-sub-organisations",
+      "subjectId": "package.json#proof:ui-semantic-sub-organisations",
+      "subjectType": "proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-sbom-generate",
+      "subjectId": "package.json#sbom:generate",
+      "subjectType": "sbom",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:package-json-usf-validate",
+      "subjectId": "package.json#usf:validate",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-brevo-tests-adapters-brevo-test-ts",
+      "subjectId": "packages/adapters-brevo/tests/adapters-brevo.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-clickhouse-tests-adapters-clickhouse-test-ts",
+      "subjectId": "packages/adapters-clickhouse/tests/adapters-clickhouse.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-graphql-tests-adapters-graphql-test-ts",
+      "subjectId": "packages/adapters-graphql/tests/adapters-graphql.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-ingestion-tests-adapters-ingestion-test-ts",
+      "subjectId": "packages/adapters-ingestion/tests/adapters-ingestion.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-keycloak-tests-adapters-keycloak-test-ts",
+      "subjectId": "packages/adapters-keycloak/tests/adapters-keycloak.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-loki-tests-adapters-loki-test-ts",
+      "subjectId": "packages/adapters-loki/tests/adapters-loki.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-object-storage-tests-adapters-object-storage-test-ts",
+      "subjectId": "packages/adapters-object-storage/tests/adapters-object-storage.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-opentelemetry-tests-adapters-opentelemetry-test-ts",
+      "subjectId": "packages/adapters-opentelemetry/tests/adapters-opentelemetry.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-postgres-tests-adapters-postgres-test-ts",
+      "subjectId": "packages/adapters-postgres/tests/adapters-postgres.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-redis-tests-adapters-redis-test-ts",
+      "subjectId": "packages/adapters-redis/tests/adapters-redis.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "fake-http-adapter-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-adapters-sentry-tests-adapters-sentry-test-ts",
+      "subjectId": "packages/adapters-sentry/tests/adapters-sentry.test.ts",
+      "subjectType": "provider-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-api-runtime-tests-health-contract-test-ts",
+      "subjectId": "packages/api-runtime/tests/health-contract.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-audit-events-tests-audit-events-test-ts",
+      "subjectId": "packages/audit-events/tests/audit-events.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-authorisation-runtime-tests-authorisation-runtime-test-ts",
+      "subjectId": "packages/authorisation-runtime/tests/authorisation-runtime.test.ts",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-config-runtime-tests-config-runtime-test-ts",
+      "subjectId": "packages/config-runtime/tests/config-runtime.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-contracts-analytics-tests-contracts-analytics-test-ts",
+      "subjectId": "packages/contracts-analytics/tests/contracts-analytics.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-contracts-auth-tests-contracts-auth-test-ts",
+      "subjectId": "packages/contracts-auth/tests/contracts-auth.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-contracts-graphql-tests-contracts-graphql-test-ts",
+      "subjectId": "packages/contracts-graphql/tests/contracts-graphql.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-contracts-ingestion-tests-contracts-ingestion-test-ts",
+      "subjectId": "packages/contracts-ingestion/tests/contracts-ingestion.test.ts",
+      "subjectType": "contract",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-domain-identity-tests-domain-identity-test-ts",
+      "subjectId": "packages/domain-identity/tests/domain-identity.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-email-runtime-tests-email-runtime-test-ts",
+      "subjectId": "packages/email-runtime/tests/email-runtime.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-graphql-api-runtime-tests-graphql-api-runtime-test-ts",
+      "subjectId": "packages/graphql-api-runtime/tests/graphql-api-runtime.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-graphql-browser-client-tests-client-test-ts",
+      "subjectId": "packages/graphql-browser-client/tests/client.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-i18n-runtime-tests-i18n-runtime-test-ts",
+      "subjectId": "packages/i18n-runtime/tests/i18n-runtime.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-i18n-runtime-tests-react-test-tsx",
+      "subjectId": "packages/i18n-runtime/tests/react.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-platform-errors-tests-platform-errors-auth-test-ts",
+      "subjectId": "packages/platform-errors/tests/platform-errors-auth.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-platform-errors-tests-platform-errors-test-ts",
+      "subjectId": "packages/platform-errors/tests/platform-errors.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-platform-logging-tests-platform-logging-test-ts",
+      "subjectId": "packages/platform-logging/tests/platform-logging.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-platform-observability-tests-platform-observability-test-ts",
+      "subjectId": "packages/platform-observability/tests/platform-observability.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-platform-runtime-context-tests-platform-runtime-context-test-ts",
+      "subjectId": "packages/platform-runtime-context/tests/platform-runtime-context.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-session-runtime-tests-session-runtime-test-ts",
+      "subjectId": "packages/session-runtime/tests/session-runtime.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-storage-runtime-tests-storage-runtime-test-ts",
+      "subjectId": "packages/storage-runtime/tests/storage-runtime.test.ts",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-ui-design-system-tests-accessible-controls-test-tsx",
+      "subjectId": "packages/ui-design-system/tests/accessible-controls.test.tsx",
+      "subjectType": "a11y",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-ui-design-system-tests-button-test-tsx",
+      "subjectId": "packages/ui-design-system/tests/button.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:packages-ui-design-system-tests-data-table-test-tsx",
+      "subjectId": "packages/ui-design-system/tests/data-table.test.tsx",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:playwright-build-config-ts",
+      "subjectId": "playwright.build.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:playwright-discovery-config-ts",
+      "subjectId": "playwright.discovery.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:playwright-external-config-ts",
+      "subjectId": "playwright.external.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:playwright-identity-config-ts",
+      "subjectId": "playwright.identity.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:playwright-internal-config-ts",
+      "subjectId": "playwright.internal.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:playwright-prod-config-ts",
+      "subjectId": "playwright.prod.config.ts",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-evidence-tests-deprecation-evidence-facts-test-mjs",
+      "subjectId": "scripts/evidence/tests/deprecation-evidence-facts.test.mjs",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-evidence-tests-verify-ladder-test-mjs",
+      "subjectId": "scripts/evidence/tests/verify-ladder.test.mjs",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-evidence-verify-ladder-mjs",
+      "subjectId": "scripts/evidence/verify-ladder.mjs",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-evidence-write-stage-evidence-mjs",
+      "subjectId": "scripts/evidence/write-stage-evidence.mjs",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-smoke-compose-smoke-sh",
+      "subjectId": "scripts/smoke/compose-smoke.sh",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-smoke-http-smoke-sh",
+      "subjectId": "scripts/smoke/http-smoke.sh",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-smoke-loki-smoke-sh",
+      "subjectId": "scripts/smoke/loki-smoke.sh",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-smoke-observability-smoke-sh",
+      "subjectId": "scripts/smoke/observability-smoke.sh",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-smoke-sentry-smoke-sh",
+      "subjectId": "scripts/smoke/sentry-smoke.sh",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-stages-run-stage-sh",
+      "subjectId": "scripts/stages/run-stage.sh",
+      "subjectType": "stage",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-stages-stage-exit-sh",
+      "subjectId": "scripts/stages/stage-exit.sh",
+      "subjectType": "stage",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-tests-tests-aggregate-confidence-test-mjs",
+      "subjectId": "scripts/tests/tests/aggregate-confidence.test.mjs",
+      "subjectType": "evidence-verifier",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-tests-tests-release-confidence-contract-test-mjs",
+      "subjectId": "scripts/tests/tests/release-confidence-contract.test.mjs",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-tests-tests-sonar-oidc-honesty-test-mjs",
+      "subjectId": "scripts/tests/tests/sonar-oidc-honesty.test.mjs",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:scripts-tests-tests-stage-exit-test-mjs",
+      "subjectId": "scripts/tests/tests/stage-exit.test.mjs",
+      "subjectType": "stage",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:services-mock-oidc-src-server-test-ts",
+      "subjectId": "services/mock-oidc/src/server.test.ts",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:sonar-project-properties",
+      "subjectId": "sonar-project.properties",
+      "subjectType": "gate",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tests-integration-compose-smoke-test-mjs",
+      "subjectId": "tests/integration/compose-smoke.test.mjs",
+      "subjectType": "integration",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-shared-tests-shared-primitives-test-mjs",
+      "subjectId": "tools/architecture/_shared/tests/shared-primitives.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-generate-lifecycle-reports-tests-generate-lifecycle-reports-test-mjs",
+      "subjectId": "tools/architecture/generate-lifecycle-reports/tests/generate-lifecycle-reports.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-generate-package-inventory-tests-generate-package-inventory-test-mjs",
+      "subjectId": "tools/architecture/generate-package-inventory/tests/generate-package-inventory.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-generate-package-readmes-tests-generate-package-readmes-unit-test-mjs",
+      "subjectId": "tools/architecture/generate-package-readmes/tests/generate-package-readmes-unit.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-generate-package-readmes-tests-generate-package-readmes-test-mjs",
+      "subjectId": "tools/architecture/generate-package-readmes/tests/generate-package-readmes.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-check-mode-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/check-mode.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-dependency-order-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/dependency-order.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-failure-stop-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/failure-stop.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-no-default-evidence-generation-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/no-default-evidence-generation.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-orchestrator-unit-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/orchestrator-unit.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-self-evidence-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/self-evidence.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-orchestrator-tests-write-mode-test-mjs",
+      "subjectId": "tools/architecture/orchestrator/tests/write-mode.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-action-register-tests-validate-action-register-test-mjs",
+      "subjectId": "tools/architecture/validate-action-register/tests/validate-action-register.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-frontend-conventions-tests-validate-frontend-conventions-test-mjs",
+      "subjectId": "tools/architecture/validate-frontend-conventions/tests/validate-frontend-conventions.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-i18n-tests-validate-i18n-test-mjs",
+      "subjectId": "tools/architecture/validate-i18n/tests/validate-i18n.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-lifecycle-evidence-tests-validate-lifecycle-evidence-unit-test-mjs",
+      "subjectId": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence-unit.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-lifecycle-evidence-tests-validate-lifecycle-evidence-test-mjs",
+      "subjectId": "tools/architecture/validate-lifecycle-evidence/tests/validate-lifecycle-evidence.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-openapi-drift-tests-validate-openapi-drift-test-mjs",
+      "subjectId": "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-package-codemap-tests-validate-package-codemap-test-mjs",
+      "subjectId": "tools/architecture/validate-package-codemap/tests/validate-package-codemap.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-package-metadata-tests-validate-package-metadata-unit-test-mjs",
+      "subjectId": "tools/architecture/validate-package-metadata/tests/validate-package-metadata-unit.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-package-metadata-tests-validate-package-metadata-test-mjs",
+      "subjectId": "tools/architecture/validate-package-metadata/tests/validate-package-metadata.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-slice-readiness-tests-validate-slice-readiness-test-mjs",
+      "subjectId": "tools/architecture/validate-slice-readiness/tests/validate-slice-readiness.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-source-imports-tests-validate-source-imports-unit-test-mjs",
+      "subjectId": "tools/architecture/validate-source-imports/tests/validate-source-imports-unit.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-source-imports-tests-validate-source-imports-test-mjs",
+      "subjectId": "tools/architecture/validate-source-imports/tests/validate-source-imports.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-architecture-validate-universal-foundation-tests-validate-universal-foundation-test-mjs",
+      "subjectId": "tools/architecture/validate-universal-foundation/tests/validate-universal-foundation.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-e2e-correlation-headers-test-mjs",
+      "subjectId": "tools/e2e/correlation-headers.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-e2e-observability-correlation-tests-classify-test-mjs",
+      "subjectId": "tools/e2e/observability-correlation/tests/classify.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-e2e-result-contract-test-mjs",
+      "subjectId": "tools/e2e/result-contract.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-e2e-scenario-manifest-test-mjs",
+      "subjectId": "tools/e2e/scenario-manifest.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-e2e-sentry-assertion-tests-sentry-assertion-test-mjs",
+      "subjectId": "tools/e2e/sentry-assertion/tests/sentry-assertion.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-e2e-tempo-trace-test-mjs",
+      "subjectId": "tools/e2e/tempo-trace.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-mcp-platform-governor-tests-handshake-test-mjs",
+      "subjectId": "tools/mcp/platform-governor/tests/handshake.test.mjs",
+      "subjectType": "architecture",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-security-tests-sbom-policy-test-mjs",
+      "subjectId": "tools/security/tests/sbom-policy.test.mjs",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-security-tests-sbom-verify-test-mjs",
+      "subjectId": "tools/security/tests/sbom-verify.test.mjs",
+      "subjectType": "security",
+      "proofLevelClaimed": "L3",
+      "proofLevelObserved": "L3",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-semgrep-rules-yml",
+      "subjectId": "tools/semgrep/rules.yml",
+      "subjectType": "semgrep",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+      "subjectType": "journey-proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-ui-reference-harness-tests-capability-controller-test-mjs",
+      "subjectId": "tools/ui-reference-harness/tests/capability-controller.test.mjs",
+      "subjectType": "tooling",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-ui-reference-harness-tests-harness-model-test-mjs",
+      "subjectId": "tools/ui-reference-harness/tests/harness-model.test.mjs",
+      "subjectType": "tooling",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-ui-reference-harness-tests-validate-definition-test-mjs",
+      "subjectId": "tools/ui-reference-harness/tests/validate-definition.test.mjs",
+      "subjectType": "tooling",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-cli-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/cli.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-golden-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/golden.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-import-parity-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/import-parity.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-osv-exceptions-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/osv-exceptions.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-package-status-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/package-status.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-r21-v1c17-observability-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/r21-v1c17-observability.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    },
+    {
+      "proofId": "proof-evidence:tools-v2-readiness-tests-rules-test-mjs",
+      "subjectId": "tools/v2-readiness/tests/rules.test.mjs",
+      "subjectType": "unit",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "providerEvidenceClass": "contract-or-unit-proof"
+    }
+  ]
+}

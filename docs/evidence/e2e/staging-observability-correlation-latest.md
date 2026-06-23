@@ -3,10 +3,10 @@
 Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e2e-observability-correlation make target.
 
 - Result: **FULL**
-- testRunId: `run-staging-1782175644-193da8df`
+- testRunId: `run-staging-1782184126-5f669a3d`
 - Loki: reachable
 - Tempo: reachable (required)
-- Total log lines: 491
+- Total log lines: 499
 - Required log scenarios: 8; missing: 0; unexpected observed: 0
 
 ## Per-scenario log correlation
@@ -19,7 +19,7 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 | `persona-authz` | true | true | 32 | OK |
 | `browser-bff-trace` | true | true | 4 | OK |
 | `persona-matrix:unauthenticated-visitor` | true | true | 48 | OK |
-| `persona-matrix:scaffold-system-admin` | false | true | 123 | OBSERVED |
+| `persona-matrix:scaffold-system-admin` | false | true | 131 | OBSERVED |
 | `persona-matrix:scaffold-tenant-admin` | true | true | 64 | OK |
 | `persona-matrix:scaffold-tenant-manager` | true | true | 46 | OK |
 | `persona-matrix:scaffold-tenant-member` | true | true | 46 | OK |
@@ -41,6 +41,6 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 
 ## Notes
 
-- Correlated 491 line(s); all 8 required scenario(s) observed.
-- Trace 5c52d6ae00877e3b4f73a9a6f02c617f for 'pipeline-health-probe' matched in Tempo: services [platform-api].
-- Trace 07e774e495ce2d995282c820c936a673 for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app].
+- Correlated 499 line(s); all 8 required scenario(s) observed.
+- Trace ad5dd878ef02c371f205d560d5d39391 for 'pipeline-health-probe' matched in Tempo: services [platform-api].
+- Trace 893d810ec5ed2f815764eaa834c231ee for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app].

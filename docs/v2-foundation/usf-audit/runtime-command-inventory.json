@@ -1176,6 +1176,12 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:v2-proof-strength",
+    "name": "npm run v2:proof-strength",
+    "command": "npm run v2:adversarial-usf-audit && npm run v2:readiness -- --strict",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:v2-readiness",
     "name": "npm run v2:readiness",
     "command": "node tools/v2-readiness/src/index.mjs --strict",

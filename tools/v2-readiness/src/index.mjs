@@ -60,6 +60,7 @@ import r58 from "./rules/r58-metrics-alerts-assurance.mjs";
 import r59 from "./rules/r59-data-governance-runtime-assurance.mjs";
 import r60 from "./rules/r60-provider-reliability-runtime-assurance.mjs";
 import r61 from "./rules/r61-semantic-orphan-runtime-assurance.mjs";
+import r62 from "./rules/r62-formal-proof-evidence-assurance.mjs";
 
 export const RULES = [
   r1,
@@ -121,6 +122,7 @@ export const RULES = [
   r59,
   r60,
   r61,
+  r62,
 ];
 
 export function runRules(ctx) {
@@ -181,6 +183,7 @@ const AUDIT_SURFACES = {
   "data-governance-runtime-assurance": "R59",
   "provider-reliability-runtime-assurance": "R60",
   "semantic-orphan-runtime-assurance": "R61",
+  "formal-proof-evidence-assurance": "R62",
 };
 // Surface rules wired into RULES. Keep in sync with the imports above.
 const IMPLEMENTED_SURFACE_RULES = [
@@ -233,6 +236,7 @@ const IMPLEMENTED_SURFACE_RULES = [
   "R59",
   "R60",
   "R61",
+  "R62",
 ];
 
 export function summarize(

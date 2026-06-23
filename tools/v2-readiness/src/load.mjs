@@ -130,6 +130,16 @@ function loadMigrations(repoRoot) {
     }));
 }
 
+function loadUsfAuditReports(repoRoot) {
+  const dir = path.join(repoRoot, "docs/v2-foundation/usf-audit");
+  const reports = {};
+  if (!fs.existsSync(dir)) return reports;
+  for (const f of fs.readdirSync(dir).sort()) {
+    if (f.endsWith(".json")) reports[f] = readJsonSafe(path.join(dir, f));
+  }
+  return reports;
+}
+
 const readJson = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 const readText = (p) => (fs.existsSync(p) ? fs.readFileSync(p, "utf8") : "");
 const readJsonSafe = (p) => {
@@ -326,6 +336,7 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
       "traceability-graph.json": optionalFormal("traceability-graph.json"),
       "state-machines.json": optionalFormal("state-machines.json"),
     },
+    usfAudit: loadUsfAuditReports(repoRoot),
     // live repo facts
     gitTracked: loadGitTrackedAtCommit(repoRoot, AUDIT_BASE_COMMIT),
     candidateTracked: loadCandidateTracked(repoRoot),

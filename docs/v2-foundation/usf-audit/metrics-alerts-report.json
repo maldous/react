@@ -14,7 +14,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts; apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts; apps/platform-api/scripts/alerting-runtime-proof.ts; apps/platform-api/scripts/api-key-routes-runtime-proof.ts; apps/platform-api/scripts/api-keys-runtime-proof.ts; apps/platform-api/scripts/auth-settings-runtime-proof.ts; apps/platform-api/scripts/backup-control-route-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts; apps/platform-api/scripts/billing-provider-runtime-proof.ts; apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts; apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts; apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts; apps/platform-api/scripts/clickthrough-services-runtime-proof.ts; apps/platform-api/scripts/compliance-report-route-runtime-proof.ts; apps/platform-api/scripts/compliance-report-runtime-proof.ts; apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts; apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts; apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts; apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/data-residency-runtime-proof.ts; apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts; apps/platform-api/scripts/email-sender-runtime-proof.ts; apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts; apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts; apps/platform-api/scripts/entitlements-routes-runtime-proof.ts; apps/platform-api/scripts/entitlements-runtime-proof.ts; apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts; apps/platform-api/scripts/environment-operations-runtime-proof.ts; apps/platform-api/scripts/environment-registry-runtime-proof.ts; apps/platform-api/scripts/event-bus-runtime-proof.ts; apps/platform-api/scripts/event-redrive-runtime-proof.ts; apps/platform-api/scripts/event-worker-runtime-proof.ts; apps/platform-api/scripts/full-observability-contract-runtime-proof.ts; apps/platform-api/scripts/history-runtime-proof.ts; apps/platform-api/scripts/http-engine-provider-runtime-proof.ts; apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts; apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts; apps/platform-api/scripts/idp-runtime-proof.ts; apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts; apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts; apps/platform-api/scripts/in-memory-provider-runtime-proof.ts; apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts; apps/platform-api/scripts/incident-foundation-runtime-proof.ts; apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts; apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts; apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts; apps/platform-api/scripts/metering-runtime-proof.ts; apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts; apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-email-transport-runtime-proof.ts; apps/platform-api/scripts/notification-preferences-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts; apps/platform-api/scripts/notification-transports-runtime-proof.ts; apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts; apps/platform-api/scripts/object-scan-closure-runtime-proof.ts; apps/platform-api/scripts/observability-control-route-runtime-proof.ts; apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts; apps/platform-api/scripts/observability-signals-runtime-proof.ts; apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts; apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts; apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts; apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/platform-services-runtime-proof.ts; apps/platform-api/scripts/playwright-adapter-runtime-proof.ts; apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts; apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts; apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts; apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts; apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts; apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts; apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts; apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts; apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts; apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts; apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts; apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts; apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts; apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts; apps/platform-api/scripts/profile-self-service-runtime-proof.ts; apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts; apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts; apps/platform-api/scripts/provider-config-runtime-proof.ts; apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts; apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts; apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts; apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts; apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts; apps/platform-api/scripts/quota-enforcement-runtime-proof.ts; apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts; apps/platform-api/scripts/rate-limits-runtime-proof.ts; apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts; apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts; apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts; apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts; apps/platform-api/scripts/search-isolation-runtime-proof.ts; apps/platform-api/scripts/search-routes-runtime-proof.ts; apps/platform-api/scripts/search-runtime-proof.ts; apps/platform-api/scripts/secret-store-contract-runtime-proof.ts; apps/platform-api/scripts/secrets-openbao-runtime-proof.ts; apps/platform-api/scripts/security-control-route-runtime-proof.ts; apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts; apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts; apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts; apps/platform-api/scripts/support-announcements-runtime-proof.ts; apps/platform-api/scripts/support-approval-runtime-proof.ts; apps/platform-api/scripts/support-tickets-runtime-proof.ts; apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts; apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts; apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts; apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts; apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-runtime-proof.ts; apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts; apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts; apps/platform-api/scripts/tenant-observability-runtime-proof.ts; apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts; apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts; apps/platform-api/scripts/tenant-storage-runtime-proof.ts; apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts; apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts; apps/platform-api/scripts/webhook-redrive-runtime-proof.ts; apps/platform-api/scripts/webhook-worker-runtime-proof.ts; apps/platform-api/scripts/webhooks-runtime-proof.ts; apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts; apps/platform-api/scripts/workflow-adapters-runtime-proof.ts; apps/platform-api/scripts/workflow-closure-runtime-proof.ts; apps/platform-api/scripts/workflow-control-route-runtime-proof.ts; apps/platform-api/scripts/workflow-control-runtime-proof.ts; apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts; apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1130", "docs/api/openapi.json"]
     },
     {
@@ -29,7 +29,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts; apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts; apps/platform-api/scripts/alerting-runtime-proof.ts; apps/platform-api/scripts/api-key-routes-runtime-proof.ts; apps/platform-api/scripts/api-keys-runtime-proof.ts; apps/platform-api/scripts/auth-settings-runtime-proof.ts; apps/platform-api/scripts/backup-control-route-runtime-proof.ts; apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts; apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts; apps/platform-api/scripts/clickthrough-services-runtime-proof.ts; apps/platform-api/scripts/compliance-report-route-runtime-proof.ts; apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts; apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/data-governance-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/data-residency-runtime-proof.ts; apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts; apps/platform-api/scripts/entitlements-routes-runtime-proof.ts; apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts; apps/platform-api/scripts/environment-operations-runtime-proof.ts; apps/platform-api/scripts/environment-registry-runtime-proof.ts; apps/platform-api/scripts/event-redrive-runtime-proof.ts; apps/platform-api/scripts/idp-runtime-proof.ts; apps/platform-api/scripts/in-memory-provider-runtime-proof.ts; apps/platform-api/scripts/incident-foundation-runtime-proof.ts; apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts; apps/platform-api/scripts/legal-hold-runtime-proof.ts; apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts; apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-preferences-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts; apps/platform-api/scripts/object-scan-closure-runtime-proof.ts; apps/platform-api/scripts/observability-control-route-runtime-proof.ts; apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts; apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts; apps/platform-api/scripts/platform-services-runtime-proof.ts; apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts; apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts; apps/platform-api/scripts/profile-self-service-runtime-proof.ts; apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts; apps/platform-api/scripts/provider-config-runtime-proof.ts; apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts; apps/platform-api/scripts/rate-limits-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts; apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts; apps/platform-api/scripts/search-routes-runtime-proof.ts; apps/platform-api/scripts/search-runtime-proof.ts; apps/platform-api/scripts/secret-store-contract-runtime-proof.ts; apps/platform-api/scripts/security-control-route-runtime-proof.ts; apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/support-announcements-runtime-proof.ts; apps/platform-api/scripts/support-approval-runtime-proof.ts; apps/platform-api/scripts/support-tickets-runtime-proof.ts; apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts; apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-runtime-proof.ts; apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts; apps/platform-api/scripts/tenant-observability-runtime-proof.ts; apps/platform-api/scripts/tenant-storage-runtime-proof.ts; apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts; apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts; apps/platform-api/scripts/webhook-redrive-runtime-proof.ts; apps/platform-api/scripts/webhook-worker-runtime-proof.ts; apps/platform-api/scripts/webhooks-runtime-proof.ts; apps/platform-api/scripts/workflow-control-route-runtime-proof.ts; apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1138", "docs/api/openapi.json"]
     },
     {
@@ -164,7 +164,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "proofRef": "proof:event-bus; proof:event-redrive",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1201", "docs/api/openapi.json"]
     },
     {
@@ -239,7 +239,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts; apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:metrics-prometheus; proof:dashboards",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1236", "docs/api/openapi.json"]
     },
     {
@@ -284,7 +284,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "proofRef": "proof:scheduled-jobs; proof:scheduled-job-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1257", "docs/api/openapi.json"]
     },
     {
@@ -299,7 +299,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "proofRef": "proof:search; proof:search-isolation; proof:search-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1264", "docs/api/openapi.json"]
     },
     {
@@ -404,7 +404,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution; proof:backup-control-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7131", "docs/api/openapi.json"]
     },
     {
@@ -419,7 +419,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts; apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog; proof:billing-control-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8265", "docs/api/openapi.json"]
     },
     {
@@ -434,7 +434,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8357", "docs/api/openapi.json"]
     },
     {
@@ -449,7 +449,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8380", "docs/api/openapi.json"]
     },
     {
@@ -464,7 +464,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8416", "docs/api/openapi.json"]
     },
     {
@@ -479,7 +479,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8439", "docs/api/openapi.json"]
     },
     {
@@ -494,7 +494,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8279", "docs/api/openapi.json"]
     },
     {
@@ -509,7 +509,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8321", "docs/api/openapi.json"]
     },
     {
@@ -524,7 +524,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog; proof:billing-readiness-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8251", "docs/api/openapi.json"]
     },
     {
@@ -554,7 +554,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "proofRef": "proof:compliance-report; proof:compliance-report-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8163", "docs/api/openapi.json"]
     },
     {
@@ -674,7 +674,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "proofRef": "proof:event-bus; proof:event-redrive",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6424", "docs/api/openapi.json"]
     },
     {
@@ -689,7 +689,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "proofRef": "proof:event-bus; proof:event-redrive",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6470", "docs/api/openapi.json"]
     },
     {
@@ -704,7 +704,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "proofRef": "proof:event-bus; proof:event-redrive",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6447", "docs/api/openapi.json"]
     },
     {
@@ -719,7 +719,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8475", "docs/api/openapi.json"]
     },
     {
@@ -734,7 +734,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8492", "docs/api/openapi.json"]
     },
     {
@@ -749,7 +749,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8531", "docs/api/openapi.json"]
     },
     {
@@ -764,7 +764,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8570", "docs/api/openapi.json"]
     },
     {
@@ -779,7 +779,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8591", "docs/api/openapi.json"]
     },
     {
@@ -794,7 +794,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8631", "docs/api/openapi.json"]
     },
     {
@@ -854,7 +854,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "proofRef": "proof:notification-preferences; proof:notification-dispatch; proof:notification-email-transport; proof:notification-webhook-transport; proof:notification-transport-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6674", "docs/api/openapi.json"]
     },
     {
@@ -869,7 +869,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts; apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:metrics-prometheus; proof:dashboards; proof:observability-control-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7102", "docs/api/openapi.json"]
     },
     {
@@ -884,7 +884,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts; apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts; apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:metrics-prometheus; proof:dashboards; proof:observability-readiness-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7117", "docs/api/openapi.json"]
     },
     {
@@ -914,7 +914,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution; proof:provider-binding-report-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7607", "docs/api/openapi.json"]
     },
     {
@@ -1004,7 +1004,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "proofRef": "proof:scheduled-jobs; proof:scheduled-job-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7164", "docs/api/openapi.json"]
     },
     {
@@ -1019,7 +1019,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "proofRef": "proof:scheduled-jobs; proof:scheduled-job-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7190", "docs/api/openapi.json"]
     },
     {
@@ -1034,7 +1034,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "proofRef": "proof:scheduled-jobs; proof:scheduled-job-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7259", "docs/api/openapi.json"]
     },
     {
@@ -1049,7 +1049,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "proofRef": "proof:scheduled-jobs; proof:scheduled-job-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7224", "docs/api/openapi.json"]
     },
     {
@@ -1064,7 +1064,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "proofRef": "proof:search; proof:search-isolation; proof:search-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6371", "docs/api/openapi.json"]
     },
     {
@@ -1079,7 +1079,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "proofRef": "proof:search; proof:search-isolation; proof:search-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6385", "docs/api/openapi.json"]
     },
     {
@@ -1169,7 +1169,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution; proof:security-control-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7145", "docs/api/openapi.json"]
     },
     {
@@ -1289,7 +1289,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/entitlements-routes-runtime-proof.ts; apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts; apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5852", "docs/api/openapi.json"]
     },
     {
@@ -1304,7 +1304,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts; apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/entitlements-routes-runtime-proof.ts; apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts; apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2354", "docs/api/openapi.json"]
     },
     {
@@ -1349,7 +1349,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:api-keys; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6239", "docs/api/openapi.json"]
     },
     {
@@ -1469,7 +1469,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "proofRef": "proof:entitlements; proof:entitlement-policy-chain; proof:entitlements-postgres; proof:entitlements-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5666", "docs/api/openapi.json"]
     },
     {
@@ -1484,7 +1484,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "proofRef": "proof:entitlements; proof:entitlement-policy-chain; proof:entitlements-postgres; proof:entitlements-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5685", "docs/api/openapi.json"]
     },
     {
@@ -1499,7 +1499,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7710", "docs/api/openapi.json"]
     },
     {
@@ -1529,7 +1529,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "proofRef": "proof:tenant-lifecycle; apps/platform-api/tests/unit/tenant-lifecycle.test.ts",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7758", "docs/api/openapi.json"]
     },
     {
@@ -1544,7 +1544,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proofRef": "proof:metering; proof:metering-quota-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5888", "docs/api/openapi.json"]
     },
     {
@@ -1559,7 +1559,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts; apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "proofRef": "proof:notification-preferences; proof:notification-dispatch; proof:notification-email-transport; proof:notification-webhook-transport; proof:notification-transport-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6688", "docs/api/openapi.json"]
     },
     {
@@ -1574,7 +1574,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proofRef": "proof:quota-enforcement; proof:metering-quota-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6017", "docs/api/openapi.json"]
     },
     {
@@ -1589,7 +1589,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proofRef": "proof:quota-enforcement; proof:metering-quota-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6036", "docs/api/openapi.json"]
     },
     {
@@ -1604,7 +1604,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:rate-limits; proof:rate-limits-redis; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6258", "docs/api/openapi.json"]
     },
     {
@@ -1619,7 +1619,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:rate-limits; proof:rate-limits-redis; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6277", "docs/api/openapi.json"]
     },
     {
@@ -1649,7 +1649,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proofRef": "proof:metering; proof:metering-quota-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5979", "docs/api/openapi.json"]
     },
     {
@@ -1694,7 +1694,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "proofRef": "proof:event-worker",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6505", "docs/api/openapi.json"]
     },
     {
@@ -1709,7 +1709,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts; apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:workflow-provider-live; proof:workflow-control-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8685", "docs/api/openapi.json"]
     },
     {
@@ -1724,7 +1724,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:workflow-provider-live; proof:workflow-readiness-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8822", "docs/api/openapi.json"]
     },
     {
@@ -1769,7 +1769,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "proofRef": "proof:workflow-provider-live; proof:workflow-readiness-route",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8671", "docs/api/openapi.json"]
     },
     {
@@ -2204,7 +2204,7 @@
       "alertOwner": "api-platform-operations",
       "alertRouting": "api-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#graphql-route-alerts",
-      "proofRef": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "proofRef": "openapi:drift (not complete)",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5613", "docs/api/openapi.json"]
     },
     {
@@ -2219,7 +2219,7 @@
       "alertOwner": "edge-platform-operations",
       "alertRouting": "edge-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#public-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "proofRef": "proof:domain-identity-matrix; proof:tenant-custom-domain-resolution",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1540", "docs/api/openapi.json"]
     },
     {
@@ -2234,7 +2234,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "proofRef": "proof:notification-preferences; proof:notification-dispatch; proof:notification-email-transport; proof:notification-webhook-transport; proof:notification-transport-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6604", "docs/api/openapi.json"]
     },
     {
@@ -2249,7 +2249,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "proofRef": "proof:notification-preferences; proof:notification-dispatch; proof:notification-email-transport; proof:notification-webhook-transport; proof:notification-transport-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6631", "docs/api/openapi.json"]
     },
     {
@@ -2264,7 +2264,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "proofRef": "proof:profile-self-service; proof:notification-dispatch",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6524", "docs/api/openapi.json"]
     },
     {
@@ -2279,7 +2279,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "proofRef": "proof:profile-self-service; proof:notification-dispatch",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6555", "docs/api/openapi.json"]
     },
     {
@@ -2294,7 +2294,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:api-keys; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6083", "docs/api/openapi.json"]
     },
     {
@@ -2309,7 +2309,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:api-keys; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6102", "docs/api/openapi.json"]
     },
     {
@@ -2324,7 +2324,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:api-keys; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6157", "docs/api/openapi.json"]
     },
     {
@@ -2354,7 +2354,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts; apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "proofRef": "proof:billing-catalog",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8299", "docs/api/openapi.json"]
     },
     {
@@ -2414,7 +2414,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "members unit + substrate tests",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6198", "docs/api/openapi.json"]
     },
     {
@@ -2639,7 +2639,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "proofRef": "proof:entitlements; proof:entitlement-policy-chain; proof:entitlements-postgres; proof:entitlements-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5644", "docs/api/openapi.json"]
     },
     {
@@ -2909,7 +2909,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proofRef": "proof:quota-enforcement; proof:metering-quota-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5998", "docs/api/openapi.json"]
     },
     {
@@ -2924,7 +2924,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proofRef": "proof:rate-limits; proof:rate-limits-redis; proof:api-key-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6220", "docs/api/openapi.json"]
     },
     {
@@ -2954,7 +2954,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "proofRef": "proof:search; proof:search-isolation; proof:search-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:6322", "docs/api/openapi.json"]
     },
     {
@@ -2969,7 +2969,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4622", "docs/api/openapi.json"]
     },
     {
@@ -2984,7 +2984,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4638", "docs/api/openapi.json"]
     },
     {
@@ -2999,7 +2999,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4732", "docs/api/openapi.json"]
     },
     {
@@ -3014,7 +3014,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4673", "docs/api/openapi.json"]
     },
     {
@@ -3029,7 +3029,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4702", "docs/api/openapi.json"]
     },
     {
@@ -3044,7 +3044,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4578", "docs/api/openapi.json"]
     },
     {
@@ -3059,7 +3059,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proofRef": "proof:tenant-storage-objects",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4556", "docs/api/openapi.json"]
     },
     {
@@ -3134,7 +3134,7 @@
       "alertOwner": "tenant-platform-operations",
       "alertRouting": "tenant-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#tenant-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proofRef": "proof:metering; proof:metering-quota-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5960", "docs/api/openapi.json"]
     },
     {
@@ -3344,7 +3344,7 @@
       "alertOwner": "platform-operations",
       "alertRouting": "platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#admin-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "proofRef": "proof:platform-services; proof:service-clickthrough-policy; proof:service-catalog-registry; proof:entitlements-routes",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5868", "docs/api/openapi.json"]
     },
     {
@@ -3374,7 +3374,7 @@
       "alertOwner": "edge-platform-operations",
       "alertRouting": "edge-platform-oncall",
       "runbook": "docs/runbooks/platform-api.md#public-api-route-alerts",
-      "proofRef": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "proofRef": "theme + platform-config tests",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1496", "docs/api/openapi.json"]
     },
     {
@@ -3389,7 +3389,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "proofRef": "auth-routes substrate tests; proof:auth-settings",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1437", "docs/api/openapi.json"]
     },
     {
@@ -3404,7 +3404,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "proofRef": "auth-routes substrate tests; proof:auth-settings",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1431", "docs/api/openapi.json"]
     },
     {
@@ -3449,7 +3449,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts; apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "proofRef": "proof:platform-services; proof:service-clickthrough-policy",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1315", "docs/api/openapi.json"]
     },
     {
@@ -3479,7 +3479,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "proofRef": "auth-routes substrate tests; proof:auth-settings",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1300", "docs/api/openapi.json"]
     },
     {
@@ -3509,7 +3509,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts; apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+      "proofRef": "proof:platform-services; proof:service-clickthrough-policy",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1357", "docs/api/openapi.json"]
     },
     {
@@ -3524,7 +3524,7 @@
       "alertOwner": "unknown",
       "alertRouting": "unknown",
       "runbook": "unknown",
-      "proofRef": "apps/platform-api/scripts/dashboards-runtime-proof.ts; apps/platform-api/scripts/in-memory-provider-runtime-proof.ts; apps/platform-api/scripts/secret-store-contract-runtime-proof.ts; apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "proofRef": "proof:platform-services; proof:service-clickthrough-policy",
       "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:1365", "docs/api/openapi.json"]
     }
   ],

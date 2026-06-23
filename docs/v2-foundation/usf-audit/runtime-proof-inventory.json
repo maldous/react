@@ -4,7 +4,11 @@
     "file": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "proof:alert-incident-closure"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -15,7 +19,18 @@
     "file": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+      "proof:alert-notification-bridge"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -26,7 +41,15 @@
     "file": "apps/platform-api/scripts/alerting-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts", "proof:alerting"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -38,18 +61,19 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-tenants",
-      "route:post-api-admin-tenants",
+      "route:get-api-admin-tenants-tenantid-announcements",
+      "route:post-api-admin-tenants-tenantid-announcements",
       "route:get-api-admin-tenants-tenantid-api-keys",
       "route:get-api-admin-tenants-tenantid-rate-limits",
       "route:patch-api-admin-tenants-tenantid-rate-limits",
       "route:get-api-org-api-keys",
       "route:post-api-org-api-keys",
       "route:delete-api-org-api-keys-keyid",
-      "route:get-api-org-developer",
       "route:get-api-org-rate-limits"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "proof:api-key-routes"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -61,7 +85,15 @@
     "file": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-tenants-tenantid-announcements",
+      "route:post-api-admin-tenants-tenantid-announcements",
+      "route:get-api-admin-tenants-tenantid-api-keys",
+      "route:get-api-org-api-keys",
+      "route:post-api-org-api-keys",
+      "route:delete-api-org-api-keys-keyid"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/api-keys-runtime-proof.ts", "proof:api-keys"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -72,7 +104,21 @@
     "file": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-auth",
+      "route:get-api-auth-settings-mfa",
+      "route:patch-api-auth-settings-mfa",
+      "route:get-api-session",
+      "route:get-auth-callback",
+      "route:get-auth-login",
+      "route:post-auth-logout",
+      "route:get-internal-auth-forward",
+      "route:get-login"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+      "proof:auth-settings"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -83,7 +129,11 @@
     "file": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-backup"],
+    "routeRefs": ["route:get-api-admin-backup"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "proof:backup-control-route"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -94,7 +144,11 @@
     "file": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+      "proof:backup-local"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -105,7 +159,8 @@
     "file": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -117,8 +172,6 @@
     "level": 2,
     "classification": "isolated unit behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
       "route:get-api-admin-billing",
       "route:get-api-admin-billing-catalog-plans",
       "route:post-api-admin-billing-catalog-plans",
@@ -126,7 +179,12 @@
       "route:post-api-admin-billing-catalog-prices",
       "route:get-api-admin-billing-catalog-products",
       "route:post-api-admin-billing-catalog-products",
+      "route:get-api-admin-billing-readiness",
       "route:get-api-org-billing-catalog"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "proof:billing-catalog"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -138,13 +196,10 @@
     "file": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-billing",
-      "route:get-api-admin-billing-catalog-products",
-      "route:post-api-admin-billing-catalog-products",
-      "route:get-api-org-billing-catalog"
+    "routeRefs": ["route:get-api-admin-billing"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "proof:billing-control-route"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -156,7 +211,11 @@
     "file": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "proof:billing-provider"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -167,11 +226,10 @@
     "file": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-billing",
-      "route:get-api-admin-billing-readiness"
+    "routeRefs": ["route:get-api-admin-billing-readiness"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "proof:billing-readiness-route"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -183,7 +241,8 @@
     "file": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -194,7 +253,8 @@
     "file": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get", "route:get-api-host-identity", "route:get-api-theme"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -205,7 +265,8 @@
     "file": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -216,7 +277,11 @@
     "file": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+      "proof:clickthrough"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -227,7 +292,11 @@
     "file": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-data-compliance-report"],
+    "routeRefs": ["route:get-api-admin-data-compliance-report"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "proof:compliance-report-route"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -238,7 +307,8 @@
     "file": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -249,7 +319,8 @@
     "file": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -260,7 +331,11 @@
     "file": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": ["route:get-api-admin-providers-readiness"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+      "proof:composed-provider-readiness"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -271,7 +346,11 @@
     "file": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get", "route:get-admin"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+      "proof:auth-credential-lifecycle"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -282,7 +361,13 @@
     "file": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get", "route:get-admin", "route:get-healthz", "route:get-readyz"],
+    "routeRefs": [
+      "route:get-admin-monitoring",
+      "route:get-admin-observability",
+      "route:get-api-admin-observability",
+      "route:get-api-admin-observability-readiness"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts", "proof:dashboards"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -293,15 +378,10 @@
     "file": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-governance-catalog",
-      "route:post-api-admin-governance-catalog",
-      "route:post-api-admin-governance-catalog-classify",
-      "route:get-api-admin-governance-dsr",
-      "route:post-api-admin-governance-dsr",
-      "route:post-api-admin-governance-dsr-dsrid-fulfill"
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "proof:data-governance"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -313,13 +393,10 @@
     "file": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-tenants",
-      "route:post-api-admin-tenants",
-      "route:get-api-admin-tenants-tenantid-export",
-      "route:post-api-admin-tenants-tenantid-import"
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "proof:data-portability"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -331,7 +408,19 @@
     "file": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:delete-api-admin-data-legal-holds",
+      "route:get-api-admin-data-legal-holds",
+      "route:post-api-admin-data-legal-holds",
+      "route:post-api-admin-data-residency",
+      "route:delete-api-admin-data-retention-policies",
+      "route:get-api-admin-data-retention-policies",
+      "route:post-api-admin-data-retention-policies"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "proof:data-residency"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -342,7 +431,37 @@
     "file": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get",
+      "route:get-admin",
+      "route:get-admin-clickthrough",
+      "route:get-api-admin-backup",
+      "route:get-api-admin-clickthrough",
+      "route:get-api-admin-governance-catalog",
+      "route:post-api-admin-governance-catalog",
+      "route:post-api-admin-governance-catalog-classify",
+      "route:get-api-admin-governance-dsr",
+      "route:post-api-admin-governance-dsr",
+      "route:post-api-admin-governance-dsr-dsrid-fulfill",
+      "route:get-api-admin-provider-bindings",
+      "route:get-api-admin-security",
+      "route:post-api-admin-sub-tenants",
+      "route:get-api-admin-tenants",
+      "route:post-api-admin-tenants",
+      "route:get-api-admin-tenants-tenantid-auth-settings-credential-readiness",
+      "route:post-api-admin-tenants-tenantid-auth-settings-credential-repair",
+      "route:post-api-admin-tenants-tenantid-auth-settings-credential-rotate",
+      "route:post-api-admin-tenants-auth-settings-credential",
+      "route:get-api-admin-tenants-resources",
+      "route:get-api-host-identity",
+      "route:get-api-organisation-profile",
+      "route:patch-api-organisation-profile",
+      "route:get-organisation-profile"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+      "proof:domain-identity-matrix"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -353,7 +472,11 @@
     "file": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "proof:email-sender"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -364,7 +487,32 @@
     "file": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-entitlements",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-auth-providers",
+      "route:post-api-auth-settings-domains",
+      "route:delete-api-auth-settings-domains-domain",
+      "route:post-api-auth-settings-domains-challenges",
+      "route:post-api-auth-settings-domains-verify",
+      "route:get-api-auth-settings-lockout",
+      "route:patch-api-auth-settings-lockout",
+      "route:get-api-auth-settings-providers",
+      "route:patch-api-auth-settings-providers",
+      "route:get-api-auth-settings-readiness",
+      "route:get-api-auth-settings-resource-policies",
+      "route:patch-api-auth-settings-resource-policies",
+      "route:get-api-auth-settings-session",
+      "route:patch-api-auth-settings-session",
+      "route:get-api-auth-settings-sysadmin-brokering",
+      "route:patch-api-auth-settings-sysadmin-brokering",
+      "route:get-api-org-entitlements"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+      "proof:entitlement-policy-chain"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -375,7 +523,16 @@
     "file": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-entitlements",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-org-entitlements"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+      "proof:entitlements-postgres"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -387,14 +544,16 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-tenants",
-      "route:post-api-admin-tenants",
+      "route:get-admin-entitlements",
+      "route:get-admin-platform",
       "route:get-api-admin-tenants-tenantid-entitlements",
       "route:patch-api-admin-tenants-tenantid-entitlements",
       "route:get-api-org-entitlements",
       "route:get-api-platform-service-catalog"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "proof:entitlements-routes"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -406,7 +565,16 @@
     "file": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-entitlements",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-org-entitlements"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+      "proof:entitlements"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -417,7 +585,11 @@
     "file": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "proof:environment-admin-bootstrap"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -428,7 +600,11 @@
     "file": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "proof:environment-operations"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -439,7 +615,11 @@
     "file": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+      "proof:environment-registry"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -450,7 +630,13 @@
     "file": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-events",
+      "route:get-api-admin-events",
+      "route:post-api-admin-events-eventid-redrive",
+      "route:get-api-admin-events-dead-letter"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts", "proof:event-bus"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -462,13 +648,14 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
       "route:get-admin-events",
       "route:get-api-admin-events",
       "route:post-api-admin-events-eventid-redrive",
-      "route:get-api-admin-events-dead-letter",
-      "route:get-api-admin-workers"
+      "route:get-api-admin-events-dead-letter"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "proof:event-redrive"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -480,7 +667,11 @@
     "file": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": ["route:get-api-admin-workers"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+      "proof:event-worker"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -491,7 +682,11 @@
     "file": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "proof:full-observability-contract"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -502,7 +697,8 @@
     "file": "apps/platform-api/scripts/history-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": ["route:get-api-admin-tenants-tenantid-history", "route:get-api-org-history"],
+    "subjectRefs": ["apps/platform-api/scripts/history-runtime-proof.ts", "proof:history"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -513,7 +709,11 @@
     "file": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "proof:http-engine-providers"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -524,7 +724,8 @@
     "file": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -535,7 +736,8 @@
     "file": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -546,7 +748,8 @@
     "file": "apps/platform-api/scripts/idp-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": ["route:get-api-auth-settings-idps", "route:post-api-auth-settings-idps"],
+    "subjectRefs": ["apps/platform-api/scripts/idp-runtime-proof.ts", "proof:auth-idps"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -557,7 +760,8 @@
     "file": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -568,7 +772,8 @@
     "file": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -579,7 +784,11 @@
     "file": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "proof:in-memory-provider-runtime"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -590,7 +799,8 @@
     "file": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -601,7 +811,18 @@
     "file": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+      "proof:incident-foundation"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -612,7 +833,8 @@
     "file": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -623,7 +845,11 @@
     "file": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "proof:lago-billing-provider"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -634,7 +860,8 @@
     "file": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/legal-hold-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -646,16 +873,17 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-tenants",
-      "route:post-api-admin-tenants",
+      "route:get-admin-usage",
       "route:post-api-admin-tenants-tenantid-meter-events",
       "route:get-api-admin-tenants-tenantid-quotas",
       "route:patch-api-admin-tenants-tenantid-quotas",
       "route:get-api-admin-tenants-tenantid-usage",
       "route:get-api-org-quotas",
       "route:get-api-org-usage"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "proof:metering-quota-routes"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -667,7 +895,13 @@
     "file": "apps/platform-api/scripts/metering-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-usage",
+      "route:post-api-admin-tenants-tenantid-meter-events",
+      "route:get-api-admin-tenants-tenantid-usage",
+      "route:get-api-org-usage"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts", "proof:metering"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -678,7 +912,16 @@
     "file": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get", "route:get-healthz", "route:get-readyz"],
+    "routeRefs": [
+      "route:get-admin-monitoring",
+      "route:get-admin-observability",
+      "route:get-api-admin-observability",
+      "route:get-api-admin-observability-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "proof:metrics-prometheus"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -690,16 +933,18 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
+      "route:get-admin-account",
+      "route:get-admin-email",
       "route:get-api-admin-notifications-readiness",
-      "route:get-api-admin-tenants",
-      "route:post-api-admin-tenants",
       "route:post-api-admin-tenants-tenantid-notifications-test",
       "route:get-api-me-notification-preferences",
       "route:patch-api-me-notification-preferences",
       "route:get-api-me-profile",
       "route:patch-api-me-profile"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "proof:notification-dispatch"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -711,7 +956,17 @@
     "file": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+      "proof:notification-email-transport"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -722,7 +977,17 @@
     "file": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+      "proof:notification-preferences"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -734,11 +999,15 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-tenants",
-      "route:post-api-admin-tenants",
-      "route:post-api-admin-tenants-tenantid-notifications-test"
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "proof:notification-transport-routes"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -750,7 +1019,8 @@
     "file": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -761,7 +1031,17 @@
     "file": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+      "proof:notification-webhook-transport"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -772,7 +1052,11 @@
     "file": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "proof:object-scan-closure"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -783,11 +1067,10 @@
     "file": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-admin-observability",
-      "route:get-api-admin-observability"
+    "routeRefs": ["route:get-api-admin-observability"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "proof:observability-control-route"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -799,12 +1082,10 @@
     "file": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-admin-observability",
-      "route:get-api-admin-observability",
-      "route:get-api-admin-observability-readiness"
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "proof:observability-metrics-traces-closure"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -818,12 +1099,10 @@
     "file": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-admin-observability",
-      "route:get-api-admin-observability",
-      "route:get-api-admin-observability-readiness"
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "proof:observability-provider-closure"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -835,12 +1114,10 @@
     "file": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-admin-observability",
-      "route:get-api-admin-observability",
-      "route:get-api-admin-observability-readiness"
+    "routeRefs": ["route:get-api-admin-observability-readiness"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "proof:observability-readiness-route"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -852,7 +1129,18 @@
     "file": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "proof:observability-signals"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -863,7 +1151,17 @@
     "file": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-auth-settings-idps",
+      "route:post-api-auth-settings-idps",
+      "route:get-api-auth-settings-idps-alias-callback-url",
+      "route:post-api-auth-settings-idps-alias-test-connection",
+      "route:post-api-auth-settings-idps-oidc-discover"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+      "proof:auth-oidc-enterprise"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -874,7 +1172,8 @@
     "file": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -885,7 +1184,8 @@
     "file": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -896,7 +1196,19 @@
     "file": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:delete-api-admin-data-legal-holds",
+      "route:get-api-admin-data-legal-holds",
+      "route:post-api-admin-data-legal-holds",
+      "route:post-api-admin-data-residency",
+      "route:delete-api-admin-data-retention-policies",
+      "route:get-api-admin-data-retention-policies",
+      "route:post-api-admin-data-retention-policies"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "proof:pitr-restore-drill"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -907,7 +1219,19 @@
     "file": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-platform",
+      "route:get-admin-readiness",
+      "route:get-api-org-platform-services-readiness",
+      "route:get-api-platform-service-catalog",
+      "route:get-healthz",
+      "route:get-readyz",
+      "route:get-version"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+      "proof:platform-services"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -918,7 +1242,8 @@
     "file": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/playwright-adapter-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -929,7 +1254,8 @@
     "file": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get", "route:post-api-graphql"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -940,7 +1266,8 @@
     "file": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -951,7 +1278,8 @@
     "file": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -962,7 +1290,8 @@
     "file": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -973,7 +1302,8 @@
     "file": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -984,7 +1314,8 @@
     "file": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -995,7 +1326,8 @@
     "file": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1006,7 +1338,10 @@
     "file": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1019,7 +1354,8 @@
     "file": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1030,7 +1366,8 @@
     "file": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1041,7 +1378,8 @@
     "file": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1052,7 +1390,8 @@
     "file": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1063,7 +1402,8 @@
     "file": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1074,7 +1414,10 @@
     "file": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1087,7 +1430,8 @@
     "file": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1100,7 +1444,8 @@
     "file": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1113,7 +1458,10 @@
     "file": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1126,7 +1474,8 @@
     "file": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1137,7 +1486,10 @@
     "file": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1150,7 +1502,8 @@
     "file": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1161,7 +1514,8 @@
     "file": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1172,7 +1526,8 @@
     "file": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1183,7 +1538,8 @@
     "file": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1196,7 +1552,8 @@
     "file": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1207,7 +1564,8 @@
     "file": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1218,7 +1576,10 @@
     "file": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1231,7 +1592,8 @@
     "file": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1244,7 +1606,8 @@
     "file": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1255,7 +1618,8 @@
     "file": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1266,7 +1630,15 @@
     "file": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-account",
+      "route:get-api-me-profile",
+      "route:patch-api-me-profile"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "proof:profile-self-service"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1277,7 +1649,8 @@
     "file": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get", "route:get-readyz"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1288,7 +1661,11 @@
     "file": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-provider-bindings"],
+    "routeRefs": ["route:get-api-admin-provider-bindings"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "proof:provider-binding-report-route"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1299,7 +1676,16 @@
     "file": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs-id-delete",
+      "route:post-api-admin-provider-configs-id-lifecycle"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+      "proof:provider-config"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1310,7 +1696,11 @@
     "file": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+      "proof:provider-environment-classification"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1323,7 +1713,11 @@
     "file": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "proof:provider-observability-closure"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1334,7 +1728,11 @@
     "file": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "proof:provider-observability-contract"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1345,7 +1743,16 @@
     "file": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs-id-delete",
+      "route:post-api-admin-provider-configs-id-lifecycle"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+      "proof:provider-readiness-contract"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1356,7 +1763,17 @@
     "file": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-secrets",
+      "route:post-api-admin-secrets",
+      "route:post-api-admin-secrets-delete",
+      "route:get-api-admin-secrets-readiness",
+      "route:post-api-admin-secrets-revoke"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+      "proof:provider-secrets-readiness"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1367,7 +1784,15 @@
     "file": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-tenants-tenantid-quotas",
+      "route:patch-api-admin-tenants-tenantid-quotas",
+      "route:get-api-org-quotas"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "proof:quota-enforcement"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1378,7 +1803,15 @@
     "file": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-tenants-tenantid-rate-limits",
+      "route:patch-api-admin-tenants-tenantid-rate-limits",
+      "route:get-api-org-rate-limits"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+      "proof:rate-limits-redis"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1389,7 +1822,12 @@
     "file": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-tenants-tenantid-rate-limits",
+      "route:patch-api-admin-tenants-tenantid-rate-limits",
+      "route:get-api-org-rate-limits"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts", "proof:rate-limits"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1400,7 +1838,8 @@
     "file": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1411,7 +1850,8 @@
     "file": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1422,7 +1862,8 @@
     "file": "apps/platform-api/scripts/retention-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/retention-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1433,7 +1874,8 @@
     "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1445,13 +1887,15 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
       "route:get-admin-scheduled-jobs",
       "route:get-api-admin-scheduled-jobs",
       "route:post-api-admin-scheduled-jobs",
       "route:patch-api-admin-scheduled-jobs-jobid",
       "route:post-api-admin-scheduled-jobs-jobid-run"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "proof:scheduled-job-routes"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -1463,7 +1907,17 @@
     "file": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-scheduled-jobs",
+      "route:get-api-admin-scheduled-jobs",
+      "route:post-api-admin-scheduled-jobs",
+      "route:patch-api-admin-scheduled-jobs-jobid",
+      "route:post-api-admin-scheduled-jobs-jobid-run"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "proof:scheduled-jobs"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1474,7 +1928,16 @@
     "file": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-search",
+      "route:get-api-admin-search-readiness",
+      "route:post-api-admin-search-reindex",
+      "route:post-api-org-search"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+      "proof:search-isolation"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1486,12 +1949,14 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
       "route:get-admin-search",
       "route:get-api-admin-search-readiness",
       "route:post-api-admin-search-reindex",
       "route:post-api-org-search"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "proof:search-routes"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -1503,7 +1968,13 @@
     "file": "apps/platform-api/scripts/search-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-search",
+      "route:get-api-admin-search-readiness",
+      "route:post-api-admin-search-reindex",
+      "route:post-api-org-search"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/search-runtime-proof.ts", "proof:search"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1514,7 +1985,17 @@
     "file": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-secrets",
+      "route:post-api-admin-secrets",
+      "route:post-api-admin-secrets-delete",
+      "route:get-api-admin-secrets-readiness",
+      "route:post-api-admin-secrets-revoke"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "proof:secret-store-contract"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1525,7 +2006,17 @@
     "file": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-secrets",
+      "route:post-api-admin-secrets",
+      "route:post-api-admin-secrets-delete",
+      "route:get-api-admin-secrets-readiness",
+      "route:post-api-admin-secrets-revoke"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+      "proof:secrets-openbao"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1536,7 +2027,11 @@
     "file": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-security"],
+    "routeRefs": ["route:get-api-admin-security"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "proof:security-control-route"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1547,7 +2042,11 @@
     "file": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": ["route:get-admin-platform", "route:get-api-platform-service-catalog"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+      "proof:service-catalog-registry"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1558,7 +2057,19 @@
     "file": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get", "route:get-healthz"],
+    "routeRefs": [
+      "route:get-admin-platform",
+      "route:get-admin-readiness",
+      "route:get-api-org-platform-services-readiness",
+      "route:get-api-platform-service-catalog",
+      "route:get-healthz",
+      "route:get-readyz",
+      "route:get-version"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+      "proof:service-clickthrough-policy"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1569,7 +2080,8 @@
     "file": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1580,7 +2092,8 @@
     "file": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1591,7 +2104,8 @@
     "file": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/support-announcements-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1602,7 +2116,19 @@
     "file": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:post-api-admin-support-session",
+      "route:post-api-admin-support-session-approval-grant",
+      "route:post-api-admin-support-session-approval-request",
+      "route:get-api-admin-support-health",
+      "route:get-api-admin-support-tickets",
+      "route:post-api-admin-support-tickets"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "proof:approval-workflow",
+      "proof:support-approval"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1613,7 +2139,8 @@
     "file": "apps/platform-api/scripts/support-tickets-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/support-tickets-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1624,7 +2151,11 @@
     "file": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "proof:temporal-workflow-provider"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1635,11 +2166,10 @@
     "file": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": [
-      "route:get",
-      "route:get-auth-callback",
-      "route:get-auth-login",
-      "route:get-login"
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "proof:tenant-custom-domain-auth-origin"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -1653,7 +2183,37 @@
     "file": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get",
+      "route:get-admin",
+      "route:get-admin-clickthrough",
+      "route:get-api-admin-backup",
+      "route:get-api-admin-clickthrough",
+      "route:get-api-admin-governance-catalog",
+      "route:post-api-admin-governance-catalog",
+      "route:post-api-admin-governance-catalog-classify",
+      "route:get-api-admin-governance-dsr",
+      "route:post-api-admin-governance-dsr",
+      "route:post-api-admin-governance-dsr-dsrid-fulfill",
+      "route:get-api-admin-provider-bindings",
+      "route:get-api-admin-security",
+      "route:post-api-admin-sub-tenants",
+      "route:get-api-admin-tenants",
+      "route:post-api-admin-tenants",
+      "route:get-api-admin-tenants-tenantid-auth-settings-credential-readiness",
+      "route:post-api-admin-tenants-tenantid-auth-settings-credential-repair",
+      "route:post-api-admin-tenants-tenantid-auth-settings-credential-rotate",
+      "route:post-api-admin-tenants-auth-settings-credential",
+      "route:get-api-admin-tenants-resources",
+      "route:get-api-host-identity",
+      "route:get-api-organisation-profile",
+      "route:patch-api-organisation-profile",
+      "route:get-organisation-profile"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+      "proof:tenant-custom-domain-resolution"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1664,7 +2224,21 @@
     "file": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-activate",
+      "route:post-api-org-domains-domain-deactivate",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+      "proof:tenant-domain-canonical"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1675,7 +2249,19 @@
     "file": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "proof:tenant-domain-claim-lifecycle"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1687,10 +2273,17 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-api-host-identity",
-      "route:get-api-theme",
-      "route:get-healthz"
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "proof:tenant-domains-routing"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -1702,7 +2295,19 @@
     "file": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+      "proof:tenant-domains"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1713,7 +2318,8 @@
     "file": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1724,7 +2330,16 @@
     "file": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:post-api-admin-tenants-tenantid-delete",
+      "route:get-api-admin-tenants-tenantid-export",
+      "route:post-api-admin-tenants-tenantid-import",
+      "route:post-api-admin-tenants-tenantid-suspend"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "proof:tenant-lifecycle"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1735,7 +2350,15 @@
     "file": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-logs",
+      "route:get-api-admin-logs-search",
+      "route:get-api-org-observability-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+      "proof:tenant-observability"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1746,7 +2369,8 @@
     "file": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": false,
@@ -1758,7 +2382,7 @@
     "level": 4,
     "classification": "live substrate behaviour",
     "routeRefs": [
-      "route:get",
+      "route:get-admin-storage",
       "route:get-api-org-storage-objects",
       "route:post-api-org-storage-objects",
       "route:delete-api-org-storage-objects-objectkey",
@@ -1766,6 +2390,10 @@
       "route:post-api-org-storage-objects-objectkey-scan",
       "route:post-api-org-storage-probe",
       "route:get-api-org-storage-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "proof:tenant-storage-objects"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -1777,7 +2405,11 @@
     "file": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+      "proof:tenant-storage"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1788,7 +2420,11 @@
     "file": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "proof:typed-secret-resolution"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1799,7 +2435,15 @@
     "file": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-api-admin-tenants-tenantid-delegations",
+      "route:post-api-admin-tenants-tenantid-delegations",
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "proof:delegated-admin"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1810,7 +2454,24 @@
     "file": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-webhooks",
+      "route:get-api-org-webhooks",
+      "route:post-api-org-webhooks",
+      "route:delete-api-org-webhooks-id",
+      "route:patch-api-org-webhooks-id",
+      "route:get-api-org-webhooks-id-deliveries",
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+      "route:get-api-org-webhooks-id-metrics",
+      "route:post-api-org-webhooks-id-redrive-dead",
+      "route:post-api-org-webhooks-id-rotate-secret",
+      "route:post-api-org-webhooks-id-test",
+      "route:get-api-org-webhooks-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+      "proof:webhook-redrive"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1821,7 +2482,11 @@
     "file": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+      "proof:webhook-worker"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1832,7 +2497,21 @@
     "file": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [
+      "route:get-admin-webhooks",
+      "route:get-api-org-webhooks",
+      "route:post-api-org-webhooks",
+      "route:delete-api-org-webhooks-id",
+      "route:patch-api-org-webhooks-id",
+      "route:get-api-org-webhooks-id-deliveries",
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+      "route:get-api-org-webhooks-id-metrics",
+      "route:post-api-org-webhooks-id-redrive-dead",
+      "route:post-api-org-webhooks-id-rotate-secret",
+      "route:post-api-org-webhooks-id-test",
+      "route:get-api-org-webhooks-readiness"
+    ],
+    "subjectRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts", "proof:webhooks"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1843,7 +2522,11 @@
     "file": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
     "level": 2,
     "classification": "isolated unit behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "proof:windmill-automation-provider"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1854,7 +2537,11 @@
     "file": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "proof:workflow-adapters"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1865,7 +2552,12 @@
     "file": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "proof:workflow-closure",
+      "proof:workflow-engine"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1876,7 +2568,11 @@
     "file": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get", "route:get-admin", "route:get-api-admin-workflows"],
+    "routeRefs": ["route:get-api-admin-workflows"],
+    "subjectRefs": [
+      "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "proof:workflow-control-route"
+    ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1887,7 +2583,8 @@
     "file": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
     "level": 3,
     "classification": "state transition behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/workflow-control-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,
@@ -1899,10 +2596,12 @@
     "level": 3,
     "classification": "state transition behaviour",
     "routeRefs": [
-      "route:get",
-      "route:get-admin",
-      "route:get-api-admin-workflows",
+      "route:get-api-admin-workflows-workflowid",
       "route:get-api-admin-workflows-readiness"
+    ],
+    "subjectRefs": [
+      "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "proof:workflow-readiness-route"
     ],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
@@ -1914,7 +2613,8 @@
     "file": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
     "level": 4,
     "classification": "live substrate behaviour",
-    "routeRefs": ["route:get"],
+    "routeRefs": [],
+    "subjectRefs": ["apps/platform-api/scripts/workflow-readiness-runtime-proof.ts"],
     "assertsSideEffects": true,
     "assertsFailureMode": true,
     "assertsObservabilityOrAudit": true,

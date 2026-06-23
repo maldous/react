@@ -24,10 +24,11 @@ export const VALID_PROVIDER_CLASSES = new Set([
   "compose-local",
   "sandbox-external",
   "live-external",
+  "fake-http-adapter",
   "none",
 ]);
 export const VALID_ENVIRONMENTS = new Set(["dev", "test", "staging", "prod"]);
-export const VALID_PROOF_LEVELS = new Set([0, 1, 2, 3, 4, 5]);
+export const VALID_PROOF_LEVELS = new Set([0, 1, 2, 3, 4, 5, 6]);
 
 export const present = (value) =>
   value != null && value !== "" && !(Array.isArray(value) && value.length === 0);
