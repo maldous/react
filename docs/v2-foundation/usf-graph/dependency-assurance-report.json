@@ -55,283 +55,283 @@
   "providerDependencies": [
     {
       "capability": "Tenant identity (record + FQDN)",
-      "provider": "production PostgresIdentityAdapter provider"
+      "provider": "postgres-identity-repository"
     },
     {
       "capability": "User identity + tenant membership",
-      "provider": "production PostgresIdentityAdapter provider"
+      "provider": "postgres-identity-repository"
     },
     {
       "capability": "End-user profile + preferences self-service",
-      "provider": "production PostgresProfileAdapter provider"
+      "provider": "postgres-profile-repository"
     },
     {
       "capability": "API keys / personal access tokens",
-      "provider": "production n/a provider"
+      "provider": "postgres-api-key-repository"
     },
     {
       "capability": "Tenant groups",
-      "provider": "production PostgresIdentityAdapter provider"
+      "provider": "postgres-identity-repository"
     },
     {
       "capability": "Sub-organisations",
-      "provider": "production PostgresIdentityAdapter provider"
+      "provider": "postgres-identity-repository"
     },
     {
       "capability": "RBAC (roles + permissions)",
-      "provider": "production PostgresIdentityAdapter provider"
+      "provider": "postgres-identity-repository"
     },
     {
       "capability": "ABAC / Policy Decision Point",
-      "provider": "production n/a provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "Delegated administration roles",
-      "provider": "production PostgresIdentityAdapter provider"
+      "provider": "postgres-delegated-admin-roles"
     },
     {
       "capability": "Entitlement engine",
-      "provider": "production PostgresEntitlementAdapter provider"
+      "provider": "postgres-entitlement-repository"
     },
     {
       "capability": "Support-mode / break-glass access",
-      "provider": "production n/a provider"
+      "provider": "in-memory-workflow-orchestrator"
     },
     {
       "capability": "Audit of privileged access",
-      "provider": "production PostgresAuditAdapter provider"
+      "provider": "postgres-history-repository"
     },
     {
       "capability": "Platform login + session",
-      "provider": "production KeycloakAdminAdapter provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "IdP brokering + OIDC provider management",
-      "provider": "production KeycloakAdminAdapter provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "Claim mapping + group/role mapping",
-      "provider": "production KeycloakAdminAdapter provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "MFA + session policy + lockout",
-      "provider": "production KeycloakAdminAdapter provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "Configuration registry + history",
-      "provider": "production PostgresConfigAdapter provider"
+      "provider": "postgres-provider-config-repository"
     },
     {
       "capability": "Branding + theming",
-      "provider": "production PostgresConfigAdapter provider"
+      "provider": "postgres-provider-config-repository"
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "provider": "production KeycloakAuthClientAdapter / DnsChallengeAdapter provider"
+      "provider": "postgres-tenant-domain-registry"
     },
     {
       "capability": "Write-only secret settings",
-      "provider": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+      "provider": "postgres-secret-store"
     },
     {
       "capability": "Product catalog, plans, prices",
-      "provider": "production PostgresBillingCatalogAdapter provider"
+      "provider": "postgres-billing-catalog"
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
-      "provider": "production LagoBillingProviderAdapter / InMemoryPaymentProvider provider"
+      "provider": "lago-billing-provider"
     },
     {
       "capability": "Usage metering + meter event ingestion",
-      "provider": "production PostgresMeterAdapter provider"
+      "provider": "postgres-metering-repository"
     },
     {
       "capability": "Quota enforcement",
-      "provider": "production PostgresQuotaAdapter provider"
+      "provider": "postgres-quota-repository"
     },
     {
       "capability": "Relational storage + migrations + RLS",
-      "provider": "production MinioStorageAdapter provider"
+      "provider": "postgres-migration-storage-provider"
     },
     {
       "capability": "Backup + restore",
-      "provider": "production pg_dump/pg_restore scripts provider"
+      "provider": "backup-restore-scripts"
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
-      "provider": "production PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column provider"
+      "provider": "postgres-retention"
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "provider": "production PostgresDataGovernanceAdapter provider"
+      "provider": "postgres-data-governance"
     },
     {
       "capability": "Tenant data import / export",
-      "provider": "production encrypted tar.gz archive builder + Postgres portable import applier provider"
+      "provider": "postgres-portable-tenant-import-applier"
     },
     {
       "capability": "Search + indexing (product search)",
-      "provider": "production PostgresFtsSearchAdapter provider"
+      "provider": "postgres-search-repository"
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
-      "provider": "production S3ObjectStorageAdapter + PostgresStorageObjectRepository provider"
+      "provider": "s3-object-storage-adapter"
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
-      "provider": "production PostgresEventBusAdapter provider"
+      "provider": "postgres-event-bus"
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
-      "provider": "production TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator provider"
+      "provider": "temporal-workflow-provider"
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
-      "provider": "production PostgresEventBusAdapter provider"
+      "provider": "postgres-scheduled-job-repository"
     },
     {
       "capability": "Notification delivery + preferences + channels",
-      "provider": "production EmailTransportAdapter / WebhookTransportAdapter provider"
+      "provider": "notification-transports"
     },
     {
       "capability": "Background workers / job runner",
-      "provider": "production PostgresJobAdapter provider"
+      "provider": "postgres-scheduled-job-repository"
     },
     {
       "capability": "Runtime secrets management",
-      "provider": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+      "provider": "openbao-secret-store"
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
-      "provider": "production PostgresFtsSearchAdapter provider"
+      "provider": "postgres-observability-repository"
     },
     {
       "capability": "Metrics + traces",
-      "provider": "production LokiAdapter / OtelCollector provider"
+      "provider": "prometheus-metrics"
     },
     {
       "capability": "Observability — built-in alerting + incidents",
-      "provider": "production LokiAdapter / OtelCollector provider"
+      "provider": "postgres-observability-repository"
     },
     {
       "capability": "Internal service catalog + readiness",
-      "provider": "production LokiAdapter / OtelCollector provider"
+      "provider": "http-provider-readiness-probe"
     },
     {
       "capability": "Code quality + secret + dependency scanning",
-      "provider": "production OpenBaoSecretAdapter / PostgresSecretAdapter provider"
+      "provider": "openbao-secret-store"
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
-      "provider": "production n/a provider"
+      "provider": "static-assurance-provider"
     },
     {
       "capability": "Tenant isolation proof",
-      "provider": "production n/a provider"
+      "provider": "postgres-migration-storage-provider"
     },
     {
       "capability": "Webhooks (developer-facing)",
-      "provider": "production PostgresWebhookAdapter + DeliveryWorker provider"
+      "provider": "postgres-webhook-store"
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
-      "provider": "production RedisRateLimitAdapter / PostgresRateLimitAdapter provider"
+      "provider": "redis-rate-limit-repository"
     },
     {
       "capability": "Rate limiting (API)",
-      "provider": "production RedisRateLimitAdapter / PostgresRateLimitAdapter provider"
+      "provider": "redis-rate-limit-repository"
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
-      "provider": "production Postgres lifecycle coordinator + portable export provider"
+      "provider": "tenant-lifecycle-coordinator"
     },
     {
       "capability": "Support tickets, customer health, announcements",
-      "provider": "production Postgres support tickets + customer-health read-model provider"
+      "provider": "postgres-notification-repository"
     },
     {
       "capability": "Universal Service Foundation scope + principles",
-      "provider": "production n/a provider"
+      "provider": "static-assurance-provider"
     },
     {
       "capability": "Build-versus-compose decision framework",
-      "provider": "production n/a provider"
+      "provider": "static-assurance-provider"
     },
     {
       "capability": "Service catalog + provider integration model",
-      "provider": "production LokiAdapter / OtelCollector provider"
+      "provider": "http-provider-readiness-probe"
     },
     {
       "capability": "Environment-specific vs shared service model",
-      "provider": "production n/a provider"
+      "provider": "static-assurance-provider"
     },
     {
       "capability": "Provider configuration plane",
-      "provider": "production HttpHealthProbeAdapter provider"
+      "provider": "postgres-provider-config-repository"
     },
     {
       "capability": "Composed provider readiness spine",
-      "provider": "production HttpHealthProbeAdapter provider"
+      "provider": "http-provider-readiness-probe"
     },
     {
       "capability": "History read-model (read-only projection)",
-      "provider": "production PostgresAuditAdapter provider"
+      "provider": "postgres-history-repository"
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
-      "provider": "production KeycloakAdminAdapter provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "OIDC test connection + callback display",
-      "provider": "production KeycloakAdminAdapter provider"
+      "provider": "keycloak-realm-admin-adapter"
     },
     {
       "capability": "Tenant host identity resolution",
-      "provider": "production SlugAndCustomDomainResolver provider"
+      "provider": "postgres-tenant-domain-registry"
     },
     {
       "capability": "Tenant domain activation (auth-client)",
-      "provider": "production KeycloakAuthClientAdapter provider"
+      "provider": "postgres-tenant-domain-registry"
     },
     {
       "capability": "Tenant canonical domain set/unset",
-      "provider": "production KeycloakAuthClientAdapter provider"
+      "provider": "postgres-tenant-domain-registry"
     },
     {
       "capability": "Tenant custom-domain auth callback",
-      "provider": "production KeycloakAuthClientAdapter provider"
+      "provider": "postgres-tenant-domain-registry"
     },
     {
       "capability": "Tenant service clickthrough policy",
-      "provider": "production CaddyfileReconciler provider"
+      "provider": "caddy-local-routing-probe"
     },
     {
       "capability": "Environment registry + bootstrap",
-      "provider": "production ManifestEnvAdapter provider"
+      "provider": "postgres-environment-registry-repository"
     },
     {
       "capability": "Provider environment classification",
-      "provider": "production ManifestEnvAdapter provider"
+      "provider": "postgres-provider-config-repository"
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
-      "provider": "production PlaywrightAdapter provider"
+      "provider": "playwright-adapter"
     },
     {
       "capability": "OpenAPI drift hard gate",
-      "provider": "production validate-openapi-drift provider"
+      "provider": "openapi-drift-validator"
     },
     {
       "capability": "i18n runtime + validation",
-      "provider": "production ReactI18nProvider provider"
+      "provider": "react-i18n-provider"
     },
     {
       "capability": "Accessibility (a11y) gate",
-      "provider": "production PlaywrightAxeAdapter provider"
+      "provider": "playwright-axe-adapter"
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "provider": "production Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki provider"
+      "provider": "browser-telemetry-provider"
     }
   ],
   "operationalDependencies": [
@@ -552,7 +552,8 @@
     {
       "capability": "PITR, retention, legal hold, data residency",
       "dependencies": [
-        "apps/platform-api/src/adapters/PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column.ts"
+        "apps/platform-api/src/adapters/PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column.ts",
+        "apps/platform-api/src/server/retention-worker-runtime.ts"
       ]
     },
     {
@@ -587,7 +588,9 @@
       "capability": "Object storage + tenant prefixes + signed URLs",
       "dependencies": [
         "apps/platform-api/tests/unit/storage-objects.test.ts",
-        "apps/platform-api/src/adapters/S3ObjectStorageAdapter + PostgresStorageObjectRepository.ts"
+        "apps/platform-api/src/adapters/S3ObjectStorageAdapter + PostgresStorageObjectRepository.ts",
+        "packages/adapters-object-storage/tests/adapters-object-storage.test.ts",
+        "packages/storage-runtime/tests/storage-runtime.test.ts"
       ]
     },
     {
@@ -833,6 +836,41 @@
         "tools/e2e/observability-correlation",
         "docs/evidence/platform/browser-diagnostics-faro.md",
         "apps/platform-api/src/adapters/Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki.ts"
+      ]
+    },
+    {
+      "capability": "Real IdP login simulation",
+      "dependencies": [
+        "docs/evidence/auth/oidc-login-mapping-proof.md",
+        "docs/evidence/auth/oidc-enterprise-hardening.md"
+      ]
+    },
+    {
+      "capability": "Serverless / function runtime",
+      "dependencies": [
+        "docs/evidence/platform/universal-service-foundation-matrix.md",
+        "apps/platform-api/scripts/platform-services-runtime-proof.ts"
+      ]
+    },
+    {
+      "capability": "Alerting, incident management, on-call, status page",
+      "dependencies": [
+        "apps/platform-api/scripts/alerting-runtime-proof.ts",
+        "apps/platform-api/scripts/incident-foundation-runtime-proof.ts"
+      ]
+    },
+    {
+      "capability": "Mock providers (dev/test)",
+      "dependencies": [
+        "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+        "apps/platform-api/scripts/environment-registry-runtime-proof.ts"
+      ]
+    },
+    {
+      "capability": "OIDC login simulation",
+      "dependencies": [
+        "docs/evidence/auth/oidc-login-mapping-proof.md",
+        "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"
       ]
     }
   ],

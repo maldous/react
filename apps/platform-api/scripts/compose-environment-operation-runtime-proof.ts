@@ -20,6 +20,10 @@ const adapterSource = readFileSync(
   join(scriptDir, "../src/adapters/compose-environment-operation.ts"),
   "utf8"
 );
+const timeoutConfigSource = readFileSync(
+  join(scriptDir, "../src/config/operational-timeouts-config.ts"),
+  "utf8"
+);
 const usecaseSource = readFileSync(
   join(scriptDir, "../src/usecases/environment-operations.ts"),
   "utf8"
@@ -44,7 +48,8 @@ assert.ok(
 assert.ok(
   adapterSource.includes("withOperationTimeout") &&
     adapterSource.includes("EnvironmentOperationRejected") &&
-    adapterSource.includes("COMPOSE_ENV_OPERATION_TIMEOUT_MS") &&
+    adapterSource.includes("loadOperationalTimeoutsConfig") &&
+    timeoutConfigSource.includes("COMPOSE_ENV_OPERATION_TIMEOUT_MS") &&
     adapterSource.includes("no fallback runner or shell exists") &&
     adapterSource.includes("ok: exitCode === 0"),
   "compose environment adapter must publish timeout, fail-closed, no-fallback, and exit status semantics"

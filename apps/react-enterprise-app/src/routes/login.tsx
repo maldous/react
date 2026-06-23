@@ -35,6 +35,7 @@ export function LoginPage() {
   return (
     <main
       id="main-content"
+      data-testid="sign-in-entry"
       className="auth-gutter-x flex min-h-screen flex-col items-center justify-start bg-surface-muted pb-8 pt-20"
     >
       <div className="w-full max-w-sm space-y-8">

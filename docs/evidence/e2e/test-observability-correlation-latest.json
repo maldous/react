@@ -1,11 +1,11 @@
 {
   "stage": "test",
-  "testRunId": "run-test-1782124813-53d81d3a",
+  "testRunId": "run-test-1782174220-7f9d82b3",
   "result": "FULL",
   "loki": {
     "status": "reachable",
     "reason": null,
-    "lineCount": 18,
+    "lineCount": 46,
     "truncated": false
   },
   "tempo": {
@@ -32,7 +32,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "b0b59ae3dc28c14924a6e69052f0bf54"
+        "fad43a850e18eee907f4f7e61d8cfe28"
       ],
       "result": "OK"
     },
@@ -64,12 +64,18 @@
       "scenarioId": "persona-authz",
       "required": true,
       "observed": true,
-      "lines": 4,
+      "lines": 10,
       "traceIds": [
-        "47adaf6e679e426b5581ceeb8ffb2612",
-        "e0ecc07a722ce324530c1383be16929a",
-        "7761380783a1fbee48e44f78ee3d204a",
-        "f6fcb864312fa01045c3510468b56e38"
+        "855fa180e9165af61e8674e5a49b76a6",
+        "3460507fe4b4efabadd720fafaef7d44",
+        "14cccebc6a4998247a901208edaa43fa",
+        "1a349b97e442439a33d0b59bf9b1745c",
+        "505afdf4284274314f427e6e552c1464",
+        "ce74f974655ca383b8bf0027af9c0ee4",
+        "b814d9ee22a25d1ac8fbe2a462fcbb11",
+        "945a224520bd5bc1f288fa8c5006d104",
+        "ee8b8f786438bfe41bf38f2254c95c56",
+        "68f52aff5f91e8844dd554f5240a8c6c"
       ],
       "result": "OK"
     },
@@ -79,7 +85,7 @@
       "observed": true,
       "lines": 1,
       "traceIds": [
-        "9c26a2a3cebce5739c980d5c714eeebe"
+        "a84227d8ebe504f49011fbeb96c74b53"
       ],
       "result": "OK"
     },
@@ -87,12 +93,18 @@
       "scenarioId": "persona-matrix:unauthenticated-visitor",
       "required": true,
       "observed": true,
-      "lines": 4,
+      "lines": 10,
       "traceIds": [
-        "4c6c62f4b4d0b48e5b748547b088cabe",
-        "69359e791499de374a3dc06f6b5a2e6b",
-        "9f77c4be59e73e5af429f065fc9208a2",
-        "60a4f4ed99d972663f8c618db423a024"
+        "067344d1a679bfa5a6983a0da76af74f",
+        "f150ed7a74aefa4e62a389ce2cc90675",
+        "173daeadec24c72eba5f2a823aad7cd9",
+        "eb533333238875c8df73102fc34c8a7f",
+        "6dd37c60117828ac81354bfb20cb9161",
+        "6f50471cf1c65befde8fd280db73b9e8",
+        "66f0e9d1fded39885dd6778d414565c2",
+        "40268ab350a085238f93553e15431394",
+        "f2f80824c7f0ef60268d9227a8dddc93",
+        "9c9e0e03de629338cdc7031e52833c82"
       ],
       "result": "OK"
     },
@@ -100,10 +112,18 @@
       "scenarioId": "persona-matrix:fixture-tenant-admin",
       "required": true,
       "observed": true,
-      "lines": 2,
+      "lines": 10,
       "traceIds": [
-        "d9db49f02545056edeb3c0449c33d6cf",
-        "64403d3cd64766f620975125a21128a9"
+        "26977ce74f2c66b7c153ab5137d7cf73",
+        "8d378c541c692a8d86d9d62fe9069ee7",
+        "db32cd6d8549265816ab0a914307cba1",
+        "6062d2299b953df7b3c11e90ca3793c4",
+        "d99860ea784944b865a9798807317a35",
+        "eae5e4264dd096227fb06db1fea22399",
+        "9af3a3172937677674f0998eedf47760",
+        "25bc1c3f0aa6868af438d9b6343b5395",
+        "3c0462db66e895840c69c0ada4f71b9c",
+        "59f51c0d4699290117ffb6115c32f81a"
       ],
       "result": "OK"
     },
@@ -111,12 +131,16 @@
       "scenarioId": "persona-matrix:fixture-viewer",
       "required": true,
       "observed": true,
-      "lines": 4,
+      "lines": 8,
       "traceIds": [
-        "0997be99c7990b2134411df4032b334a",
-        "1e4002cfaa77055b0a77b37c3b67c725",
-        "3f85fa8299d4610313c6f96b8e92cc09",
-        "8e1dfb7f653c3518a0f84e97f6306a67"
+        "6f84fe9d19174166542e54459bfed7ad",
+        "8bd9085b45f299543e971fe17f706808",
+        "cdd7be6bddf5bacdea3f05f4ba5c0d1b",
+        "f6099213457dcfd6f780a28948c865f4",
+        "c4d8545704f7897552176f24618fa39c",
+        "4d36170167ea0f93cfc4f3cabac09825",
+        "8e0f975c0cd955fe47d39f8a70b60a77",
+        "e51dc859cde590a3223fc215a60bbc93"
       ],
       "result": "OK"
     },
@@ -124,10 +148,14 @@
       "scenarioId": "persona-matrix:fixture-no-membership",
       "required": true,
       "observed": true,
-      "lines": 2,
+      "lines": 6,
       "traceIds": [
-        "9ab09ead2a43bdd4dafa2ad4359cf98a",
-        "9188852d5f5bbec884abe694e9b8a664"
+        "dffefeac4e249e6e045e492bcc58690c",
+        "0dfd3683b5307601ff3a3e8fa476fbdc",
+        "351810673fe2f943267c4c59513ed091",
+        "03ec59c76f33c09177526c37f00021d0",
+        "4efe14ffe22c08597a7461ad33b34357",
+        "6d200e291473cdebf31bb714e81b0e1e"
       ],
       "result": "OK"
     }
@@ -136,9 +164,9 @@
     {
       "scenarioId": "pipeline-health-probe",
       "result": "PASSED",
-      "chosenTraceId": "b0b59ae3dc28c14924a6e69052f0bf54",
+      "chosenTraceId": "fad43a850e18eee907f4f7e61d8cfe28",
       "candidateTraceIds": [
-        "b0b59ae3dc28c14924a6e69052f0bf54"
+        "fad43a850e18eee907f4f7e61d8cfe28"
       ],
       "found": true,
       "services": [
@@ -153,14 +181,14 @@
     {
       "scenarioId": "browser-bff-trace",
       "result": "PASSED",
-      "chosenTraceId": "9c26a2a3cebce5739c980d5c714eeebe",
+      "chosenTraceId": "a84227d8ebe504f49011fbeb96c74b53",
       "candidateTraceIds": [
-        "9c26a2a3cebce5739c980d5c714eeebe"
+        "a84227d8ebe504f49011fbeb96c74b53"
       ],
       "found": true,
       "services": [
-        "platform-api",
-        "react-enterprise-app"
+        "react-enterprise-app",
+        "platform-api"
       ],
       "missingServices": [],
       "routeFound": true,
@@ -170,9 +198,9 @@
     }
   ],
   "notes": [
-    "Correlated 18 line(s); all 7 required scenario(s) observed.",
-    "Trace b0b59ae3dc28c14924a6e69052f0bf54 for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
-    "Trace 9c26a2a3cebce5739c980d5c714eeebe for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app]."
+    "Correlated 46 line(s); all 7 required scenario(s) observed.",
+    "Trace fad43a850e18eee907f4f7e61d8cfe28 for 'pipeline-health-probe' matched in Tempo: services [platform-api].",
+    "Trace a84227d8ebe504f49011fbeb96c74b53 for 'browser-bff-trace' matched in Tempo: services [react-enterprise-app, platform-api]."
   ],
   "probe": {
     "scenario": "pipeline-health-probe",

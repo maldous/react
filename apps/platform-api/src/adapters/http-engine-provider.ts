@@ -45,6 +45,22 @@ export const httpEngineProviderReliabilityEvidence = {
 
 const DEFAULT_HTTP_ENGINE_TIMEOUT_MS = 5000;
 
+class HttpProviderAdapterBase {
+  protected readonly baseUrl: string;
+  protected readonly fetchImpl: FetchLike;
+  protected readonly timeoutMs: number;
+
+  constructor(
+    baseUrl: string,
+    fetchImpl: FetchLike = fetch,
+    timeoutMs = DEFAULT_HTTP_ENGINE_TIMEOUT_MS
+  ) {
+    this.baseUrl = baseUrl;
+    this.fetchImpl = fetchImpl;
+    this.timeoutMs = timeoutMs;
+  }
+}
+
 function boundedFetch(
   fetchImpl: FetchLike,
   url: string,
@@ -76,20 +92,10 @@ export async function json<T>(
   return (await res.json()) as T;
 }
 
-export class HttpBillingProviderAdapter implements BillingProviderPort {
-  private readonly baseUrl: string;
-  private readonly fetchImpl: FetchLike;
-  private readonly timeoutMs: number;
-  constructor(
-    baseUrl: string,
-    fetchImpl: FetchLike = fetch,
-    timeoutMs = DEFAULT_HTTP_ENGINE_TIMEOUT_MS
-  ) {
-    this.baseUrl = baseUrl;
-    this.fetchImpl = fetchImpl;
-    this.timeoutMs = timeoutMs;
-  }
-
+export class HttpBillingProviderAdapter
+  extends HttpProviderAdapterBase
+  implements BillingProviderPort
+{
   async readiness(): Promise<BillingEngineReadiness> {
     try {
       const res = await boundedFetch(
@@ -136,20 +142,10 @@ export class HttpBillingProviderAdapter implements BillingProviderPort {
   }
 }
 
-export class HttpPaymentProviderAdapter implements PaymentProviderPort {
-  private readonly baseUrl: string;
-  private readonly fetchImpl: FetchLike;
-  private readonly timeoutMs: number;
-  constructor(
-    baseUrl: string,
-    fetchImpl: FetchLike = fetch,
-    timeoutMs = DEFAULT_HTTP_ENGINE_TIMEOUT_MS
-  ) {
-    this.baseUrl = baseUrl;
-    this.fetchImpl = fetchImpl;
-    this.timeoutMs = timeoutMs;
-  }
-
+export class HttpPaymentProviderAdapter
+  extends HttpProviderAdapterBase
+  implements PaymentProviderPort
+{
   async charge(input: ChargeInput): Promise<ChargeResult> {
     return json<ChargeResult>(
       this.fetchImpl,
@@ -189,19 +185,10 @@ export class HttpPaymentProviderAdapter implements PaymentProviderPort {
   }
 }
 
-export class HttpWorkflowOrchestratorAdapter implements WorkflowOrchestratorPort {
-  private readonly baseUrl: string;
-  private readonly fetchImpl: FetchLike;
-  private readonly timeoutMs: number;
-  constructor(
-    baseUrl: string,
-    fetchImpl: FetchLike = fetch,
-    timeoutMs = DEFAULT_HTTP_ENGINE_TIMEOUT_MS
-  ) {
-    this.baseUrl = baseUrl;
-    this.fetchImpl = fetchImpl;
-    this.timeoutMs = timeoutMs;
-  }
+export class HttpWorkflowOrchestratorAdapter
+  extends HttpProviderAdapterBase
+  implements WorkflowOrchestratorPort
+{
   async startWorkflow(input: WorkflowStartInput): Promise<{ workflowId: string }> {
     return json(
       this.fetchImpl,
@@ -249,19 +236,10 @@ export class HttpWorkflowOrchestratorAdapter implements WorkflowOrchestratorPort
   }
 }
 
-export class HttpAutomationRunnerAdapter implements AutomationRunnerPort {
-  private readonly baseUrl: string;
-  private readonly fetchImpl: FetchLike;
-  private readonly timeoutMs: number;
-  constructor(
-    baseUrl: string,
-    fetchImpl: FetchLike = fetch,
-    timeoutMs = DEFAULT_HTTP_ENGINE_TIMEOUT_MS
-  ) {
-    this.baseUrl = baseUrl;
-    this.fetchImpl = fetchImpl;
-    this.timeoutMs = timeoutMs;
-  }
+export class HttpAutomationRunnerAdapter
+  extends HttpProviderAdapterBase
+  implements AutomationRunnerPort
+{
   async runScript(input: AutomationRunInput): Promise<{ runId: string }> {
     return json(
       this.fetchImpl,

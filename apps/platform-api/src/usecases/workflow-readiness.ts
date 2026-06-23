@@ -145,11 +145,12 @@ export async function getWorkflowReadiness(
         const ready =
           providers.some((p) => p.provider === "windmill" && p.status === "ready") &&
           providers.some((p) => p.provider === "temporal" && p.status === "ready");
-        const state = ready
-          ? "ready"
-          : providers.some((p) => p.status === "degraded")
-            ? "degraded"
-            : "failed";
+        let state: "ready" | "degraded" | "failed" = "failed";
+        if (ready) {
+          state = "ready";
+        } else if (providers.some((p) => p.status === "degraded")) {
+          state = "degraded";
+        }
         workflowReadinessMetrics.auditEvents += 1;
         workflowReadinessAuditTrail.push({
           action: "workflow_readiness.status_checked",

@@ -226,6 +226,13 @@ async function auditAdminWorkflowMutation(input: {
   requestId: string;
   sourceHost?: string;
 }): Promise<void> {
+  let after = "provider-authoritative";
+  if (input.action === AuditAction.WorkflowStarted) {
+    after = "running";
+  } else if (input.action === AuditAction.WorkflowCancelled) {
+    after = "cancelled";
+  }
+
   await createPostgresAuditEventPort(getApplicationPool()).emit(
     createAuditEvent({
       actorId: input.actor.userId,
@@ -239,12 +246,7 @@ async function auditAdminWorkflowMutation(input: {
         workflowId: input.workflowId,
         signalName: input.signalName,
         before: "provider-authoritative",
-        after:
-          input.action === AuditAction.WorkflowStarted
-            ? "running"
-            : input.action === AuditAction.WorkflowCancelled
-              ? "cancelled"
-              : "provider-authoritative",
+        after,
       },
       correlationId: input.requestId,
       sourceHost: input.sourceHost,

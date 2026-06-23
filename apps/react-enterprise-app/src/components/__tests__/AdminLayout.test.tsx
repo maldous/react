@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { I18nProvider, enGB } from "@platform/i18n-runtime";
 import {
   createRootRoute,
-  createRoute,
   createRouter,
   createMemoryHistory,
   RouterProvider,
@@ -16,20 +15,10 @@ import { AdminLayout } from "../AdminLayout";
 
 /** Mount AdminLayout inside a minimal router (it renders TanStack Link + Outlet). */
 function renderLayout() {
-  const rootRoute = createRootRoute();
-  const layoutRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "/admin",
-    component: AdminLayout,
-  });
-  const indexRoute = createRoute({
-    getParentRoute: () => layoutRoute,
-    path: "/",
-    component: () => <div data-testid="admin-stub" />,
-  });
+  const rootRoute = createRootRoute({ component: AdminLayout });
   const router = createRouter({
-    routeTree: rootRoute.addChildren([layoutRoute.addChildren([indexRoute])]),
-    history: createMemoryHistory({ initialEntries: ["/admin"] }),
+    routeTree: rootRoute,
+    history: createMemoryHistory({ initialEntries: ["/"] }),
   });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   function Wrapper({ children }: { children: ReactNode }) {

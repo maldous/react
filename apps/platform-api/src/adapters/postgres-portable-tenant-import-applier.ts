@@ -373,7 +373,9 @@ export class PostgresPortableTenantImportApplier implements PortableTenantImport
   }
 
   private async applyQueryTimeout(client: PgClient): Promise<void> {
-    await client.query(`SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`);
+    await client.query("SELECT set_config('statement_timeout', $1, true)", [
+      `${this.providerConfig.statementTimeoutMs}ms`,
+    ]);
   }
 }
 

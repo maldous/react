@@ -16,6 +16,502 @@
     }
   ],
   "paths": {
+    "/": {
+      "get": {
+        "summary": "SPA shell index route",
+        "operationId": "spaShellIndex",
+        "tags": ["SPA Shell"],
+        "responses": {
+          "204": {
+            "description": "SPA shell route is registered"
+          }
+        }
+      }
+    },
+    "/admin": {
+      "get": {
+        "summary": "Admin SPA shell route",
+        "operationId": "spaShellAdmin",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/account": {
+      "get": {
+        "summary": "Admin account SPA shell route",
+        "operationId": "spaShellAdminAccount",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin account SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/auth": {
+      "get": {
+        "summary": "Admin auth SPA shell route",
+        "operationId": "spaShellAdminAuth",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin auth SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/clickthrough": {
+      "get": {
+        "summary": "Admin clickthrough SPA shell route",
+        "operationId": "spaShellAdminClickthrough",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin clickthrough SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/config": {
+      "get": {
+        "summary": "Admin config SPA shell route",
+        "operationId": "spaShellAdminConfig",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin config SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/developer": {
+      "get": {
+        "summary": "Admin developer SPA shell route",
+        "operationId": "spaShellAdminDeveloper",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin developer SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/domains": {
+      "get": {
+        "summary": "Admin domains SPA shell route",
+        "operationId": "spaShellAdminDomains",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin domains SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/email": {
+      "get": {
+        "summary": "Admin email SPA shell route",
+        "operationId": "spaShellAdminEmail",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin email SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/entitlements": {
+      "get": {
+        "summary": "Admin entitlements SPA shell route",
+        "operationId": "spaShellAdminEntitlements",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin entitlements SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/events": {
+      "get": {
+        "summary": "Admin events SPA shell route",
+        "operationId": "spaShellAdminEvents",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin events SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/features": {
+      "get": {
+        "summary": "Admin features SPA shell route",
+        "operationId": "spaShellAdminFeatures",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin features SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/logs": {
+      "get": {
+        "summary": "Admin logs SPA shell route",
+        "operationId": "spaShellAdminLogs",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin logs SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/members": {
+      "get": {
+        "summary": "Admin members SPA shell route",
+        "operationId": "spaShellAdminMembers",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin members SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/monitoring": {
+      "get": {
+        "summary": "Admin monitoring SPA shell route",
+        "operationId": "spaShellAdminMonitoring",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin monitoring SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/observability": {
+      "get": {
+        "summary": "Admin observability SPA shell route",
+        "operationId": "spaShellAdminObservability",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin observability SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/platform": {
+      "get": {
+        "summary": "Admin platform SPA shell route",
+        "operationId": "spaShellAdminPlatform",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin platform SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/readiness": {
+      "get": {
+        "summary": "Admin readiness SPA shell route",
+        "operationId": "spaShellAdminReadiness",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin readiness SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/scheduled-jobs": {
+      "get": {
+        "summary": "Admin scheduled jobs SPA shell route",
+        "operationId": "spaShellAdminScheduledJobs",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin scheduled jobs SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/search": {
+      "get": {
+        "summary": "Admin search SPA shell route",
+        "operationId": "spaShellAdminSearch",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin search SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/storage": {
+      "get": {
+        "summary": "Admin storage SPA shell route",
+        "operationId": "spaShellAdminStorage",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin storage SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/usage": {
+      "get": {
+        "summary": "Admin usage SPA shell route",
+        "operationId": "spaShellAdminUsage",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin usage SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/admin/webhooks": {
+      "get": {
+        "summary": "Admin webhooks SPA shell route",
+        "operationId": "spaShellAdminWebhooks",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Admin webhooks SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/e2e-harness": {
+      "get": {
+        "summary": "E2E harness SPA shell route",
+        "operationId": "spaShellE2eHarness",
+        "tags": ["SPA Shell"],
+        "responses": {
+          "204": {
+            "description": "E2E harness SPA shell route is registered"
+          }
+        }
+      }
+    },
+    "/login": {
+      "get": {
+        "summary": "Login SPA shell route",
+        "operationId": "spaShellLogin",
+        "tags": ["SPA Shell"],
+        "responses": {
+          "204": {
+            "description": "Login SPA shell route is registered"
+          }
+        }
+      }
+    },
+    "/organisation/profile": {
+      "get": {
+        "summary": "Organisation profile SPA shell route",
+        "operationId": "spaShellOrganisationProfile",
+        "tags": ["SPA Shell"],
+        "security": [
+          {
+            "sessionCookie": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Organisation profile SPA shell route is registered"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
     "/healthz": {
       "get": {
         "summary": "Process liveness probe",

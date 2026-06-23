@@ -15,6 +15,7 @@ import type {
   TenantDomainRecord,
   TenantDomainRegistryPort,
 } from "../ports/tenant-domain-registry.ts";
+import { loadOperationalTimeoutsConfig } from "../config/operational-timeouts-config.ts";
 
 type PgClient = Pick<pg.PoolClient, "query"> | Pick<pg.Pool, "query">;
 type TenantDomainPool = pg.Pool & { connect?: pg.Pool["connect"] };
@@ -46,9 +47,7 @@ const COLUMNS = `organisation_id, domain, source, ownership_status, auth_client_
   tls_local_proven_at, tls_public_proven_at, canonical_at, disabled_at`;
 
 function configuredStatementTimeoutMs(): number {
-  const raw = process.env["TENANT_DOMAIN_POSTGRES_STATEMENT_TIMEOUT_MS"] ?? "5000";
-  const parsed = Number.parseInt(raw, 10);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 5000;
+  return loadOperationalTimeoutsConfig().tenantDomainPostgresStatementTimeoutMs;
 }
 
 async function applyStatementTimeout(client: PgClient, timeoutMs: number): Promise<void> {
@@ -80,7 +79,7 @@ async function withDomainStatementTimeout<T>(
 
 export const postgresTenantDomainRegistryReliabilityEvidence = {
   configSource:
-    "statement timeout is loaded from process.env.TENANT_DOMAIN_POSTGRES_STATEMENT_TIMEOUT_MS with a 5000ms default",
+    "statement timeout is loaded from typed OperationalTimeoutsConfig with a 5000ms default",
   secretSource:
     "tenant domain registry stores domains and lifecycle state only; DNS challenge token creation is owned by vanity-domain-challenge and conflict paths return no token",
   timeout:

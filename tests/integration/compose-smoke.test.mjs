@@ -28,6 +28,7 @@ import {
   getOrganisationProfile,
   updateOrganisationDisplayName,
 } from "../../apps/platform-api/src/usecases/organisation.ts";
+import { createPostgresAuditEventPort } from "../../packages/audit-events/src/index.ts";
 import { PostgresOrganisationRepository } from "../../packages/adapters-postgres/src/index.ts";
 import {
   S3Client,
@@ -83,6 +84,12 @@ function dockerInspect(container, format) {
 
 const pgClient = new pg.Client(POSTGRES_URL);
 const organisationRepo = new PostgresOrganisationRepository(POSTGRES_URL);
+const audit = createPostgresAuditEventPort(new pg.Pool({ connectionString: POSTGRES_URL }));
+const smokeActor = {
+  actorId: FIXTURE.ADMIN_ID,
+  actorRoles: ["tenant-admin"],
+  sourceHost: "compose-smoke",
+};
 const redisClient = createRedisClient({ url: REDIS_URL });
 const s3 = new S3Client({
   endpoint: MINIO_ENDPOINT,
@@ -429,15 +436,15 @@ test("organisation: updateOrganisationDisplayName updates and returns updated re
   await runMigrations();
   await seedFixtures();
   const updated = await updateOrganisationDisplayName(
-    { organisationId: FIXTURE.ORG_ID, displayName: "Test Display Name" },
-    { organisations: organisationRepo }
+    { organisationId: FIXTURE.ORG_ID, displayName: "Test Display Name", actor: smokeActor },
+    { organisations: organisationRepo, audit }
   );
   assert.equal(updated.displayName, "Test Display Name");
   assert.equal(updated.id, FIXTURE.ORG_ID);
   // Restore original display name
   await updateOrganisationDisplayName(
-    { organisationId: FIXTURE.ORG_ID, displayName: "Fixture Organisation" },
-    { organisations: organisationRepo }
+    { organisationId: FIXTURE.ORG_ID, displayName: "Fixture Organisation", actor: smokeActor },
+    { organisations: organisationRepo, audit }
   );
 });
 

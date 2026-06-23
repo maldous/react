@@ -276,9 +276,9 @@ export class PostgresStorageObjectRepository implements StorageObjectRepository 
     let lastError: unknown;
     for (let attempt = 0; attempt <= this.providerConfig.retryAttempts; attempt += 1) {
       try {
-        await this.pool.query(
-          `SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`
-        );
+        await this.pool.query("SELECT set_config('statement_timeout', $1, true)", [
+          `${this.providerConfig.statementTimeoutMs}ms`,
+        ]);
         return await this.pool.query<T>(sql, values);
       } catch (err) {
         lastError = err;

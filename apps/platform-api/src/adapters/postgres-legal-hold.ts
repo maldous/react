@@ -18,6 +18,7 @@ import type {
   ReleaseLegalHoldInput,
   SetLegalHoldInput,
 } from "../ports/legal-hold.ts";
+import { loadOperationalTimeoutsConfig } from "../config/operational-timeouts-config.ts";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PgPool = { connect(): Promise<any> };
@@ -86,9 +87,7 @@ const SELECT_COLS =
   "id, organisation_id, resource_table, row_id, reason, state, set_by, released_by, set_at, released_at, metadata";
 
 function configuredStatementTimeoutMs(): number {
-  const raw = process.env["LEGAL_HOLD_POSTGRES_STATEMENT_TIMEOUT_MS"] ?? "5000";
-  const parsed = Number.parseInt(raw, 10);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 5000;
+  return loadOperationalTimeoutsConfig().legalHoldPostgresStatementTimeoutMs;
 }
 
 async function applyStatementTimeout(client: PgClient, timeoutMs: number): Promise<void> {
@@ -120,7 +119,7 @@ async function withLegalHoldSystemAdmin<T>(
 
 export const postgresLegalHoldReliabilityEvidence = {
   configSource:
-    "statement timeout is loaded from process.env.LEGAL_HOLD_POSTGRES_STATEMENT_TIMEOUT_MS with a 5000ms default",
+    "statement timeout is loaded from typed OperationalTimeoutsConfig with a 5000ms default",
   timeout:
     "every legal-hold transaction sets PostgreSQL statement_timeout with set_config(..., true) before repository SQL",
   retry:

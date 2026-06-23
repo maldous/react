@@ -27,7 +27,7 @@ function expectedBlockerSubjects(ctx) {
 
 const adversarialRule = (ruleId) => /^R5[1-9]-|^R6[0-1]-/.test(ruleId);
 
-test("golden: base consistency clean; adversarial runtime gaps exposed; R9 exact", () => {
+test("golden: base consistency clean; adversarial runtime gaps closed; R9 exact", () => {
   const ctx = loadContext({ repoRoot, strict: true });
   const findings = runRules(ctx);
 
@@ -45,10 +45,10 @@ test("golden: base consistency clean; adversarial runtime gaps exposed; R9 exact
   );
 
   const adversarial = findings.filter((f) => adversarialRule(f.ruleId));
-  assert.ok(adversarial.length > 0, "adversarial runtime audit must expose gaps before V2 cut");
-  assert.ok(
-    adversarial.some((f) => f.ruleId === "R51-route-observability-assurance"),
-    "route-level observability/audit gaps must be represented"
+  assert.deepEqual(
+    adversarial,
+    [],
+    `adversarial runtime audit must remain closed; got:\n${adversarial.map((f) => `${f.ruleId} ${f.subject}: ${f.message}`).join("\n")}`
   );
 
   const actual = findings

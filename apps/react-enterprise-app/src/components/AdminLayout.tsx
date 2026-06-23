@@ -1,4 +1,4 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import { Link, Navigate, Outlet, useLocation } from "@tanstack/react-router";
 import { SectionHeader } from "@platform/ui-design-system";
 import { useTranslation } from "@platform/i18n-runtime";
 import { useSession } from "../hooks/use-session";
@@ -145,6 +145,16 @@ export function AdminLayout() {
   const t = useTranslation();
   const { hasPermission } = useSession();
   const items = ADMIN_NAV_ITEMS.filter((i) => hasPermission(i.permission));
+  const location = useLocation();
+  const activeItem = [...ADMIN_NAV_ITEMS]
+    .sort((a, b) => b.to.length - a.to.length)
+    .find((item) =>
+      item.exact ? location.pathname === item.to : location.pathname.startsWith(item.to)
+    );
+
+  if (activeItem && !hasPermission(activeItem.permission)) {
+    return <Navigate to="/login" replace />;
+  }
 
   return (
     <div className="lg:grid lg:grid-cols-[14rem_1fr] lg:gap-8" data-testid="admin-layout">

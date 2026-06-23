@@ -23,13 +23,14 @@ import {
   type EnvironmentOperationResult,
 } from "../ports/environment-operation.ts";
 import type { EnvironmentRecord } from "../ports/environment-registry-repository.ts";
+import { loadOperationalTimeoutsConfig } from "../config/operational-timeouts-config.ts";
 
 const ENV_KEY = /^[A-Z][A-Z0-9_]*$/;
 const PROOF_NAME = /^[a-z0-9][a-z0-9-]*$/;
 
 export const composeEnvironmentOperationReliabilityEvidence = {
   configSource:
-    "operation configuration is the EnvironmentRecord supplied by the environment registry plus COMPOSE_ENV_OPERATION_TIMEOUT_MS",
+    "operation configuration is the EnvironmentRecord supplied by the environment registry plus typed OperationalTimeoutsConfig",
   timeout:
     "non-dry-run operation execution is bounded by operationTimeoutMs through withOperationTimeout",
   retry:
@@ -45,9 +46,7 @@ export const composeEnvironmentOperationReliabilityEvidence = {
 };
 
 function configuredOperationTimeoutMs(): number {
-  const raw = process.env["COMPOSE_ENV_OPERATION_TIMEOUT_MS"] ?? "120000";
-  const parsed = Number.parseInt(raw, 10);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : 120000;
+  return loadOperationalTimeoutsConfig().composeEnvironmentOperationTimeoutMs;
 }
 
 async function withOperationTimeout<T>(

@@ -11,10 +11,12 @@ export class StorageError extends Error {
 
 export interface PutObjectCommand {
   key: string;
-  body: Buffer | ReadableStream | string;
+  body: ObjectBody;
   contentType: string;
   metadata?: Record<string, string>;
 }
+
+export type ObjectBody = Buffer | ReadableStream | string;
 
 export interface GetObjectResult {
   body: ReadableStream;

@@ -25,6 +25,13 @@ export function getClamAvMetric(name: string, labels: Record<string, string>): n
   return clamAvMetrics.get(key) ?? 0;
 }
 
+function finishSocketOperation(settled: { value: boolean }, timer: NodeJS.Timeout, fn: () => void) {
+  if (settled.value) return;
+  settled.value = true;
+  clearTimeout(timer);
+  fn();
+}
+
 export interface ClamAvAdapterOptions {
   host: string;
   port: number;
@@ -184,16 +191,10 @@ export class ClamAvAdapter implements AntivirusPort {
     return new Promise((resolve, reject) => {
       const socket = net.createConnection({ host: this.host, port: this.port });
       let response = "";
-      let settled = false;
-      const finish = (fn: () => void) => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        fn();
-      };
+      const settled = { value: false };
       const timer = setTimeout(() => {
         socket.destroy();
-        finish(() => reject(new Error("ClamAV command timed out")));
+        finishSocketOperation(settled, timer, () => reject(new Error("ClamAV command timed out")));
       }, this.timeoutMs);
 
       socket.on("connect", () => {
@@ -203,10 +204,10 @@ export class ClamAvAdapter implements AntivirusPort {
         response += chunk.toString("utf8");
       });
       socket.on("error", (err) => {
-        finish(() => reject(err));
+        finishSocketOperation(settled, timer, () => reject(err));
       });
       socket.on("close", () => {
-        finish(() => resolve(response));
+        finishSocketOperation(settled, timer, () => resolve(response));
       });
     });
   }
@@ -215,16 +216,10 @@ export class ClamAvAdapter implements AntivirusPort {
     return new Promise((resolve, reject) => {
       const socket = net.createConnection({ host: this.host, port: this.port });
       let response = "";
-      let settled = false;
-      const finish = (fn: () => void) => {
-        if (settled) return;
-        settled = true;
-        clearTimeout(timer);
-        fn();
-      };
+      const settled = { value: false };
       const timer = setTimeout(() => {
         socket.destroy();
-        finish(() => reject(new Error("ClamAV scan timed out")));
+        finishSocketOperation(settled, timer, () => reject(new Error("ClamAV scan timed out")));
       }, this.timeoutMs);
 
       socket.on("connect", () => {
@@ -242,10 +237,10 @@ export class ClamAvAdapter implements AntivirusPort {
         response += chunk.toString("utf8");
       });
       socket.on("error", (err) => {
-        finish(() => reject(err));
+        finishSocketOperation(settled, timer, () => reject(err));
       });
       socket.on("close", () => {
-        finish(() => resolve(response));
+        finishSocketOperation(settled, timer, () => resolve(response));
       });
     });
   }

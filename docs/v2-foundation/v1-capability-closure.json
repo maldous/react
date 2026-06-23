@@ -379,7 +379,7 @@
     "dataGovernanceRuntimeProofs": {
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/server/provisioning.ts",
-        "evidence": "tenant identity records are retained as platform identity state; retention proofs validate policy windows, legal-hold guarded candidates, and audit-before-change retention behavior for tenant-scoped governance records"
+        "evidence": "tenant identity records are retained as platform identity state; retention proofs validate policy windows, legal-hold guarded retention rows, and audit-before-change retention behavior for tenant-scoped governance records"
       },
       "restore": {
         "proof": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -721,7 +721,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "retention proof validates policy windows, audit-before-change behavior, and legal-hold guarded candidates for identity/audit records"
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, and legal-hold guarded retention rows for identity/audit records"
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -1283,7 +1283,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "retention proof validates policy windows, audit-before-change behavior, and legal-hold guarded candidates for group audit records"
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, and legal-hold guarded retention rows for group audit records"
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
@@ -2155,7 +2155,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "Retention proof exercises audit_events candidates, legal-hold skipped outcomes, deleted outcomes, audit-before-change emission, and retention tick completion."
+        "evidence": "Retention proof exercises audit_events retention rows, legal-hold skipped outcomes, deleted outcomes, audit-before-change emission, and retention tick completion."
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -2793,7 +2793,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "retention proof validates policy windows, audit-before-change behavior, legal-hold guarded candidates, and route registration for configuration audit/history records"
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, legal-hold guarded retention rows, and route registration for configuration audit/history records"
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -3610,7 +3610,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/db/migrations/036-retention-policies.sql",
-        "evidence": "retention policies and candidate ledgers are Postgres-backed, tenant-scoped by organisation_id, RLS-protected, and runtime-proven for policy windows, audit-before-change behavior, and legal-hold guarded candidates"
+        "evidence": "retention policies and retention row ledgers are Postgres-backed, tenant-scoped by organisation_id, RLS-protected, and runtime-proven for policy windows, audit-before-change behavior, and legal-hold guarded retention rows"
       },
       "export": {
         "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/src/usecases/data-portability.ts; apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
@@ -3826,7 +3826,7 @@
     "dataGovernanceRuntimeProofs": {
       "classification": {
         "proof": "apps/platform-api/src/usecases/retention.ts; apps/platform-api/src/usecases/legal-hold.ts; apps/platform-api/src/usecases/data-residency.ts; apps/platform-api/tests/unit/retention.test.ts; apps/platform-api/tests/unit/legal-hold.test.ts; apps/platform-api/tests/unit/data-residency.test.ts",
-        "evidence": "data lifecycle state is explicitly classified as retention policy/candidate outcomes, legal hold active/released state, holdable resource tables, and organisation residency tags with validation and fail-closed placement checks"
+        "evidence": "data lifecycle state is explicitly classified as retention policy/retention-row outcomes, legal hold active/released state, holdable resource tables, and organisation residency tags with validation and fail-closed placement checks"
       },
       "export": {
         "proof": "apps/platform-api/scripts/data-portability-runtime-proof.ts; apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts; apps/platform-api/scripts/backup-local-runtime-proof.ts",
@@ -3904,7 +3904,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "retention proof validates policy windows, audit-before-change behavior, legal-hold guarded candidates, and retention route registration"
+        "evidence": "retention proof validates policy windows, audit-before-change behavior, legal-hold guarded retention rows, and retention route registration"
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -3977,7 +3977,7 @@
         ]
       },
       "retention": {
-        "proof": "Export/import is governed by retained tenant identity, domain, audit, and history records. The retention runtime proof exercises candidate selection, audit-before-change, legal-hold skip/delete behavior, and the Postgres retention entrypoint for those persisted sources; portable import progress stores operational resume state only.",
+        "proof": "Export/import is governed by retained tenant identity, domain, audit, and history records. The retention runtime proof exercises retention-row selection, audit-before-change, legal-hold skip/delete behavior, and the Postgres retention entrypoint for those persisted sources; portable import progress stores operational resume state only.",
         "evidence": [
           "apps/platform-api/scripts/retention-runtime-proof.ts",
           "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
@@ -5770,7 +5770,7 @@
     "dataGovernanceRuntimeProofs": {
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/db/migrations/036-retention-policies.sql",
-        "evidence": "retention policy and candidate tables are tenant-scoped by organisation_id with RLS; runtime proofs validate legal-hold guarded retention candidates and audit-before-change behavior under tenant isolation controls"
+        "evidence": "retention policy and retention row tables are tenant-scoped by organisation_id with RLS; runtime proofs validate legal-hold guarded retention rows and audit-before-change behavior under tenant isolation controls"
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/src/server/dependencies.ts",
@@ -6263,7 +6263,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
-        "evidence": "retention proofs validate legal-hold guarded candidates and audit-before-change retention behavior; tenant lifecycle delete marks organisation deletion state and DSR erasure checkpoint instead of bypassing retention controls"
+        "evidence": "retention proofs validate legal-hold guarded retention rows and audit-before-change retention behavior; tenant lifecycle delete marks organisation deletion state and DSR erasure checkpoint instead of bypassing retention controls"
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts; apps/platform-api/src/server/routes.ts",
@@ -6959,7 +6959,7 @@
     "sourceFileRefs": ["docs/v2-foundation/v1-capability-closure.json"],
     "dataGovernanceRuntimeProofs": {
       "retention": {
-        "proof": "Host identity registry state is governed by the platform retention lifecycle: retention proof exercises retention candidates, audit-before-change, legal-hold skip/delete outcomes, and the Postgres retention entrypoint. Host resolution itself is read-only and retains no derived request context.",
+        "proof": "Host identity registry state is governed by the platform retention lifecycle: retention proof exercises retention rows, audit-before-change, legal-hold skip/delete outcomes, and the Postgres retention entrypoint. Host resolution itself is read-only and retains no derived request context.",
         "evidence": [
           "apps/platform-api/scripts/retention-runtime-proof.ts",
           "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
@@ -7073,7 +7073,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "Domain claim lifecycle proof retains disabled tenant domain history, while retention proofs exercise audited retention candidates and legal-hold skipped/deleted outcomes for persisted governance records."
+        "evidence": "Domain claim lifecycle proof retains disabled tenant domain history, while retention proofs exercise audited retention rows and legal-hold skipped/deleted outcomes for persisted governance records."
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -7153,7 +7153,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "Domain lifecycle proof retains disabled domain history, while retention proofs exercise audited retention candidates and legal-hold skipped/deleted outcomes for persisted governance records."
+        "evidence": "Domain lifecycle proof retains disabled domain history, while retention proofs exercise audited retention rows and legal-hold skipped/deleted outcomes for persisted governance records."
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -7230,7 +7230,7 @@
       },
       "retention": {
         "proof": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "Domain claim lifecycle proof retains disabled domain history, while retention proofs exercise audited retention candidates and legal-hold skipped/deleted outcomes for persisted governance records."
+        "evidence": "Domain claim lifecycle proof retains disabled domain history, while retention proofs exercise audited retention rows and legal-hold skipped/deleted outcomes for persisted governance records."
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
@@ -7320,7 +7320,7 @@
     "dataGovernanceRuntimeProofs": {
       "retention": {
         "proof": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts; apps/platform-api/scripts/retention-runtime-proof.ts; apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-        "evidence": "Clickthrough policy proof preserves denied/global-only/not-exposed decisions without tenant data mutation; retention proofs cover audited retention candidates and legal-hold skipped/deleted outcomes for persisted governance records that feed platform service visibility."
+        "evidence": "Clickthrough policy proof preserves denied/global-only/not-exposed decisions without tenant data mutation; retention proofs cover audited retention rows and legal-hold skipped/deleted outcomes for persisted governance records that feed platform service visibility."
       },
       "backup": {
         "proof": "apps/platform-api/scripts/backup-local-runtime-proof.ts; apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",

@@ -156,8 +156,8 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
       dsrId: r.dsr_id,
       organisationId: r.organisation_id,
       subjectId: r.subject_id ?? "",
-      type: r.type as DsrType,
-      state: r.state as DsrState,
+      type: r.type,
+      state: r.state,
       reason: r.reason,
       createdAt: iso(r.created_at),
       fulfilledAt: iso(r.fulfilled_at ?? null),
@@ -174,8 +174,8 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
       dsrId: r.dsr_id,
       organisationId: r.organisation_id,
       subjectId: r.subject_id ?? "",
-      type: r.type as DsrType,
-      state: r.state as DsrState,
+      type: r.type,
+      state: r.state,
       reason: r.reason,
       createdAt: iso(r.created_at),
       fulfilledAt: iso(r.fulfilled_at ?? null),
@@ -197,8 +197,8 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
       dsrId: r.dsr_id,
       organisationId: r.organisation_id,
       subjectId: r.subject_id ?? "",
-      type: r.type as DsrType,
-      state: r.state as DsrState,
+      type: r.type,
+      state: r.state,
       reason: r.reason,
       createdAt: iso(r.created_at),
       fulfilledAt: iso(r.fulfilled_at ?? null),
@@ -260,6 +260,8 @@ export class PostgresDataGovernanceAdapter implements DataGovernancePort {
   }
 
   private async applyQueryTimeout(client: PgClient): Promise<void> {
-    await client.query(`SET LOCAL statement_timeout = ${this.providerConfig.statementTimeoutMs}`);
+    await client.query("SELECT set_config('statement_timeout', $1, true)", [
+      `${this.providerConfig.statementTimeoutMs}ms`,
+    ]);
   }
 }

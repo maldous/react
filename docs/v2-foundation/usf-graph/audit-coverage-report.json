@@ -12,6 +12,66 @@
       "correlation": true
     },
     {
+      "capability": "User identity + tenant membership",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Tenant groups",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Sub-organisations",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
       "capability": "Delegated administration roles",
       "auditEvent": true,
       "auditBeforeChange": true,
@@ -33,6 +93,66 @@
     },
     {
       "capability": "Support-mode / break-glass access",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Platform login + session",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Configuration registry + history",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
       "auditEvent": true,
       "auditBeforeChange": true,
       "auditAfterChange": true,
@@ -72,7 +192,117 @@
       "correlation": true
     },
     {
+      "capability": "PITR, retention, legal hold, data residency",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
       "capability": "Runtime secrets management",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Rate limiting (API)",
       "auditEvent": true,
       "auditBeforeChange": true,
       "auditAfterChange": true,
@@ -102,7 +332,37 @@
       "correlation": true
     },
     {
-      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "auditEvent": true,
+      "auditBeforeChange": true,
+      "auditAfterChange": true,
+      "actor": true,
+      "resource": true,
+      "timestamp": true,
+      "correlation": true
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
       "auditEvent": true,
       "auditBeforeChange": true,
       "auditAfterChange": true,
