@@ -197,6 +197,39 @@ test("negative controls are caught by emitted-evidence validation", () => {
   );
   assert.ok(gapKinds(validRecord({ commit: "old" })).includes("stale-evidence"));
   assert.ok(
+    !gapKinds(validRecord({ commit: "tested" }), {
+      ctx: {
+        headCommit: "attestation",
+        headParentCommit: "tested",
+        headChangedFilesFromParent: [
+          "docs/v2-foundation/usf-audit/proof-evidence-index.json",
+          "docs/v2-foundation/universal-service-foundation-assurance.md",
+        ],
+      },
+    }).includes("stale-evidence")
+  );
+  assert.ok(
+    gapKinds(validRecord({ commit: "tested" }), {
+      ctx: {
+        headCommit: "attestation",
+        headParentCommit: "tested",
+        headChangedFilesFromParent: [
+          "docs/v2-foundation/usf-audit/proof-evidence-index.json",
+          "tools/v2-readiness/src/proof-evidence.mjs",
+        ],
+      },
+    }).includes("stale-evidence")
+  );
+  assert.ok(
+    gapKinds(validRecord({ commit: "tested" }), {
+      ctx: {
+        headCommit: "attestation",
+        headParentCommit: "different-parent",
+        headChangedFilesFromParent: ["docs/v2-foundation/usf-audit/proof-evidence-index.json"],
+      },
+    }).includes("stale-evidence")
+  );
+  assert.ok(
     gapKinds(validRecord({ proofLevelClaimed: "L6", routeIds: [] })).includes(
       "proof-claim-overstated"
     )

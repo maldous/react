@@ -256,6 +256,13 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
         shards = shards.concat(readJson(path.join(shardsDir, f)));
 
   const head = gitOk(repoRoot, ["rev-parse", "HEAD"]);
+  const headParentCommit = head ? gitOk(repoRoot, ["rev-parse", "HEAD^"]) : null;
+  const headChangedFilesFromParent =
+    head && headParentCommit
+      ? (gitOk(repoRoot, ["diff-tree", "--no-commit-id", "--name-only", "-r", head]) || "")
+          .split("\n")
+          .filter(Boolean)
+      : [];
   const cutCandidateCommit = pinned ?? head ?? AUDIT_BASE_COMMIT;
   const treeClean = gitOk(repoRoot, ["status", "--porcelain"]) === "";
 
@@ -267,6 +274,8 @@ export function loadContext({ repoRoot = process.cwd(), strict = false, pinned }
     auditBaseCommit: AUDIT_BASE_COMMIT,
     cutCandidateCommit,
     headCommit: head,
+    headParentCommit,
+    headChangedFilesFromParent,
     treeClean,
     candidateResolves:
       gitOk(repoRoot, ["cat-file", "-e", `${cutCandidateCommit}^{commit}`]) !== null,

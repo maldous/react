@@ -678,7 +678,7 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       message: `emitted observed level ${record.proofLevelObserved} does not match calculated ${proofLevelId(observedLevelFromEvidence(record))}`,
     });
   }
-  if (ctx?.headCommit && record.commit !== ctx.headCommit) {
+  if (!evidenceCommitMatchesCurrent(record, ctx)) {
     gaps.push({
       kind: "stale-evidence",
       subject: record.subjectId,
@@ -771,6 +771,30 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       message: "proof evidence subject mapping cannot use broad route prefixes",
     });
   }
+}
+
+function evidenceCommitMatchesCurrent(record, ctx) {
+  if (!ctx?.headCommit) return true;
+  if (record.commit === ctx.headCommit) return true;
+  if (!record.commit || record.commit !== ctx.headParentCommit) return false;
+  return isEvidenceOnlyAttestationFileSet(ctx.headChangedFilesFromParent || []);
+}
+
+const EVIDENCE_ONLY_ATTESTATION_PATHS = [
+  "docs/v2-foundation/usf-audit/",
+  "docs/v2-foundation/universal-service-foundation-assurance.md",
+  "docs/v2-foundation/v2-readiness-final-attestation.md",
+];
+
+function isEvidenceOnlyAttestationFileSet(files) {
+  return (
+    files.length > 0 &&
+    files.every((file) =>
+      EVIDENCE_ONLY_ATTESTATION_PATHS.some(
+        (allowed) => file === allowed || (allowed.endsWith("/") && file.startsWith(allowed))
+      )
+    )
+  );
 }
 
 export function observedLevelFromEvidence(record) {
