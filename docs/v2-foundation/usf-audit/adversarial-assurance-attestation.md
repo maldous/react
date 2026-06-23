@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   303 |
+| formal proof readiness gaps                 |   302 |
 | capability proof readiness gaps             |    89 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -245,7 +245,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - route-proof-evidence-missing: GET /api/theme - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted before/after state evidence
 - route-proof-evidence-missing: GET /e2e-harness - route proof has explicit subject refs but no emitted evidence record
-- in-memory-provider-parity: in-memory-antivirus - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-backup-restore-provider - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-billing-provider - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-identity-repository - in-memory provider lacks complete emitted real-provider parity evidence
@@ -288,3 +287,4 @@ The adversarial runtime inventory status is reported separately from formal proo
 - capability-real-provider-proof-missing: Backup + restore - Backup + restore is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: PITR, retention, legal hold, data residency - PITR, retention, legal hold, data residency is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Data governance: catalog, lineage, classification, PII, DSR/GDPR - Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: Tenant data import / export - Tenant data import / export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence

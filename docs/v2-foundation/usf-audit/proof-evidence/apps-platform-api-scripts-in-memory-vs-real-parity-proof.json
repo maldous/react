@@ -12,6 +12,7 @@
     "provider:in-memory-automation-runner",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
+    "provider:in-memory-antivirus",
     "in-memory-rate-limit-repository",
     "in-memory-event-bus",
     "in-memory-secret-store",
@@ -19,12 +20,15 @@
     "in-memory-automation-runner",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
+    "in-memory-antivirus",
     "provider:windmill-automation-provider",
     "windmill-automation-provider",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
-    "http-webhook-dispatcher"
+    "http-webhook-dispatcher",
+    "provider:clamav-antivirus",
+    "clamav-antivirus"
   ],
   "subjectId": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "capabilityId": "capability:in-memory-vs-real-parity",
@@ -37,10 +41,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T09:18:12.016Z",
-  "endedAt": "2026-06-23T09:18:12.260Z",
+  "startedAt": "2026-06-23T09:27:20.158Z",
+  "endedAt": "2026-06-23T09:27:20.421Z",
   "exitStatus": 0,
-  "commit": "694573a00f05addaeffb4f65031f7fac8f9f8cb3",
+  "commit": "5eb6b2c930e2246ec5a3fbb24b6864070804bb72",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -55,6 +59,7 @@
     "automationRuns": 0,
     "storageObjects": 0,
     "webhookDeliveries": 0,
+    "antivirusScans": 0,
     "secretReadableAcrossTenant": false,
     "failurePathExercised": false
   },
@@ -119,6 +124,31 @@
     },
     "fakeHttpWebhookRequests": 2,
     "inMemoryWebhookDeliveriesAfterCleanup": 0,
+    "antivirusContractMethods": 1,
+    "inMemoryAntivirusClean": {
+      "verdict": "clean"
+    },
+    "fakeClamAvClean": {
+      "verdict": "clean"
+    },
+    "inMemoryAntivirusRejected": {
+      "verdict": "rejected",
+      "reason": "eicar_test_signature"
+    },
+    "fakeClamAvRejected": {
+      "verdict": "rejected",
+      "reason": "stream: Eicar-Test-Signature FOUND\u0000"
+    },
+    "fakeClamAvHealth": {
+      "status": "ready",
+      "provider": "clamav-antivirus"
+    },
+    "inMemoryAntivirusInjectedFailure": "in-memory-antivirus injected failure for scan; fail closed",
+    "fakeClamAvTenantIsolationFailure": "ClamAV tenantPrefix isolation rejected object key \"tenant-b/foreign.txt\" outside \"tenant-a/\"",
+    "fakeClamAvRequests": 3,
+    "fakeClamAvQuotaChecks": 2,
+    "fakeClamAvLegalHoldChecks": 2,
+    "inMemoryAntivirusEventsAfterCleanup": 0,
     "failurePathExercised": true,
     "healthChecks": ["ready", "ready", "ready", "ready"],
     "resetVerified": true
@@ -138,7 +168,12 @@
     "webhookDispatcherPortMethodsMatch": true,
     "webhookDispatcherSuccessParity": true,
     "webhookDispatcherFailureParity": true,
-    "webhookDispatcherCleanupParity": true
+    "webhookDispatcherCleanupParity": true,
+    "antivirusPortMethodsMatch": true,
+    "antivirusCleanVerdictParity": true,
+    "antivirusRejectedVerdictParity": true,
+    "antivirusFailurePathParity": true,
+    "antivirusCleanupParity": true
   },
   "failurePathExercised": true,
   "sideEffectsAsserted": true,
@@ -162,7 +197,11 @@
     "in-memory:storage.object.delete:none:tenant-a/object.txt",
     "fake-s3:storage.object.delete:none:tenant-a/object.txt",
     "in-memory-webhook:webhook.dispatched:0",
-    "in-memory-webhook:webhook.dispatched:1"
+    "in-memory-webhook:webhook.dispatched:1",
+    "in-memory-antivirus:antivirus.clean:0",
+    "in-memory-antivirus:antivirus.rejected:1",
+    "fake-clamav:clamav.scan.clean:tenant-a/clean.txt",
+    "fake-clamav:clamav.scan.rejected:tenant-a/eicar.txt"
   ],
   "traceIds": [
     "trace:automation-parity-script-run",
@@ -179,7 +218,10 @@
     "trace:fake-s3:storage.delete",
     "trace:webhook-parity-dispatch-success",
     "trace:webhook-parity-dispatch-failure",
-    "trace:webhook-parity-dispatch-injected-failure"
+    "trace:webhook-parity-dispatch-injected-failure",
+    "trace:antivirus-parity-clean",
+    "trace:antivirus-parity-rejected",
+    "trace:antivirus-parity-injected-failure"
   ],
   "metricSamples": [
     {
@@ -217,6 +259,18 @@
     {
       "name": "http_webhook_dispatch_attempt_total",
       "value": 2
+    },
+    {
+      "name": "in_memory_antivirus_scan_total",
+      "value": 2
+    },
+    {
+      "name": "clamav_antivirus_clean_total",
+      "value": 1
+    },
+    {
+      "name": "clamav_antivirus_rejected_total",
+      "value": 1
     },
     {
       "name": "in-memory:storage_operation_total:put:success",
@@ -270,7 +324,10 @@
     "log:fake-s3:info:delete:storage.operation.complete",
     "log:webhook-parity-dispatch-success",
     "log:webhook-parity-dispatch-failure",
-    "log:webhook-parity-dispatch-injected-failure"
+    "log:webhook-parity-dispatch-injected-failure",
+    "log:antivirus-parity-clean",
+    "log:antivirus-parity-rejected",
+    "log:antivirus-parity-injected-failure"
   ],
   "cleanupResult": {
     "status": "verified",
@@ -279,18 +336,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T09:18:12.260Z",
+  "generatedAt": "2026-06-23T09:27:20.421Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782206276109-3072076",
+  "collectorRunId": "proof-run-1782206823725-3126871",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T09:18:12.016Z",
-  "endTime": "2026-06-23T09:18:12.260Z",
-  "gitCommit": "694573a00f05addaeffb4f65031f7fac8f9f8cb3",
-  "executionTimestamp": "2026-06-23T09:18:12.260Z",
+  "startTime": "2026-06-23T09:27:20.158Z",
+  "endTime": "2026-06-23T09:27:20.421Z",
+  "gitCommit": "5eb6b2c930e2246ec5a3fbb24b6864070804bb72",
+  "executionTimestamp": "2026-06-23T09:27:20.421Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -306,7 +363,12 @@
     "webhookDispatcherPortMethodsMatch": true,
     "webhookDispatcherSuccessParity": true,
     "webhookDispatcherFailureParity": true,
-    "webhookDispatcherCleanupParity": true
+    "webhookDispatcherCleanupParity": true,
+    "antivirusPortMethodsMatch": true,
+    "antivirusCleanVerdictParity": true,
+    "antivirusRejectedVerdictParity": true,
+    "antivirusFailurePathParity": true,
+    "antivirusCleanupParity": true
   },
   "failureMode": "exercised",
   "auditIds": [
@@ -327,7 +389,11 @@
     "in-memory:storage.object.delete:none:tenant-a/object.txt",
     "fake-s3:storage.object.delete:none:tenant-a/object.txt",
     "in-memory-webhook:webhook.dispatched:0",
-    "in-memory-webhook:webhook.dispatched:1"
+    "in-memory-webhook:webhook.dispatched:1",
+    "in-memory-antivirus:antivirus.clean:0",
+    "in-memory-antivirus:antivirus.rejected:1",
+    "fake-clamav:clamav.scan.clean:tenant-a/clean.txt",
+    "fake-clamav:clamav.scan.rejected:tenant-a/eicar.txt"
   ],
   "metricEvidence": [
     {
@@ -365,6 +431,18 @@
     {
       "name": "http_webhook_dispatch_attempt_total",
       "value": 2
+    },
+    {
+      "name": "in_memory_antivirus_scan_total",
+      "value": 2
+    },
+    {
+      "name": "clamav_antivirus_clean_total",
+      "value": 1
+    },
+    {
+      "name": "clamav_antivirus_rejected_total",
+      "value": 1
     },
     {
       "name": "in-memory:storage_operation_total:put:success",
@@ -418,7 +496,10 @@
     "log:fake-s3:info:delete:storage.operation.complete",
     "log:webhook-parity-dispatch-success",
     "log:webhook-parity-dispatch-failure",
-    "log:webhook-parity-dispatch-injected-failure"
+    "log:webhook-parity-dispatch-injected-failure",
+    "log:antivirus-parity-clean",
+    "log:antivirus-parity-rejected",
+    "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "526dd95b6e03669a0a33aff710f162446d32d4f5441fac25307d8ac88a0aabab"
+  "evidenceSignature": "78daeca45befff132066405ec4bb8b579f929bfe0d91c40de25358894e2f5bcb"
 }

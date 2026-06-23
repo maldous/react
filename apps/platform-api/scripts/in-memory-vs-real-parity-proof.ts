@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import http from "node:http";
+import net from "node:net";
 import {
   getInMemoryAutomationMetric,
   InMemoryAutomationRunner,
 } from "../src/adapters/in-memory-automation-runner.ts";
 import {
+  InMemoryAntivirus,
   InMemoryEventBus,
   InMemoryRateLimitRepository,
   InMemorySearchRepository,
@@ -24,6 +26,7 @@ import {
   WindmillAutomationProviderAdapter,
 } from "../src/adapters/windmill-automation-provider.ts";
 import { HttpWebhookDispatcher } from "../src/adapters/http-webhook-dispatcher.ts";
+import { ClamAvAdapter, getClamAvMetric } from "../src/adapters/clamav-antivirus.ts";
 import { emitRuntimeProofEvidence } from "./lib/runtime-evidence.ts";
 
 const requiredMethods = {
@@ -55,7 +58,7 @@ const providers = {
   "search-repository": new InMemorySearchRepository(),
 };
 
-async function listen(server: http.Server): Promise<number> {
+async function listen(server: http.Server | net.Server): Promise<number> {
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   return (server.address() as { port: number }).port;
 }
@@ -69,6 +72,7 @@ const beforeState = {
   automationRuns: 0,
   storageObjects: 0,
   webhookDeliveries: 0,
+  antivirusScans: 0,
   secretReadableAcrossTenant: false,
   failurePathExercised: false,
 };
@@ -504,6 +508,118 @@ assert.equal(webhookReceiverRequests[0]?.method, "POST");
 assert.equal(webhookReceiverRequests[0]?.eventHeader, "platform.parity");
 assert.equal(webhookReceiverRequests[1]?.url, "/fail");
 
+const antivirusMethods = ["scan"] as const;
+const inMemoryAntivirus = new InMemoryAntivirus();
+const fakeClamAvRequests: Array<{ command: "ping" | "scan"; bodyBytes: number; verdict: string }> =
+  [];
+const fakeClamAvServer = net.createServer((socket) => {
+  let buffer = Buffer.alloc(0);
+  socket.on("data", (chunk) => {
+    buffer = Buffer.concat([buffer, chunk]);
+    if (buffer.includes(Buffer.from("zPING\0"))) {
+      fakeClamAvRequests.push({ command: "ping", bodyBytes: 0, verdict: "PONG" });
+      socket.end("PONG\0");
+      return;
+    }
+    const command = Buffer.from("zINSTREAM\0");
+    if (!buffer.subarray(0, command.length).equals(command)) return;
+    let offset = command.length;
+    const bodyChunks: Buffer[] = [];
+    while (buffer.length >= offset + 4) {
+      const size = buffer.readUInt32BE(offset);
+      offset += 4;
+      if (size === 0) {
+        const body = Buffer.concat(bodyChunks);
+        const verdict = body.includes(Buffer.from("EICAR-STANDARD-ANTIVIRUS-TEST-FILE"))
+          ? "stream: Eicar-Test-Signature FOUND"
+          : "stream: OK";
+        fakeClamAvRequests.push({ command: "scan", bodyBytes: body.length, verdict });
+        socket.end(`${verdict}\0`);
+        return;
+      }
+      if (buffer.length < offset + size) return;
+      bodyChunks.push(buffer.subarray(offset, offset + size));
+      offset += size;
+    }
+  });
+});
+const fakeClamAvPort = await listen(fakeClamAvServer);
+const fakeClamAvAuditEvents: string[] = [];
+let fakeClamAvQuotaChecks = 0;
+let fakeClamAvLegalHoldChecks = 0;
+const fakeClamAv = new ClamAvAdapter({
+  host: "127.0.0.1",
+  port: fakeClamAvPort,
+  timeoutMs: 1000,
+  retryAttempts: 0,
+  tenantPrefix: `${tenantA}/`,
+  async quotaBeforeWrite(input) {
+    fakeClamAvQuotaChecks += 1;
+    assert.equal(input.objectKey.startsWith(`${tenantA}/`), true);
+    assert.equal(input.sizeBytes > 0, true);
+  },
+  async legalHoldDeletionBlock(objectKey) {
+    fakeClamAvLegalHoldChecks += 1;
+    assert.equal(objectKey.startsWith(`${tenantA}/`), true);
+  },
+  async auditEvent(event) {
+    fakeClamAvAuditEvents.push(`fake-clamav:${event.action}:${event.objectKey}`);
+  },
+});
+for (const method of antivirusMethods) {
+  assert.equal(typeof inMemoryAntivirus[method], "function", `in-memory antivirus.${method}`);
+  assert.equal(typeof fakeClamAv[method], "function", `fake clamav.${method}`);
+}
+const clamAvMetricBeforeClean = getClamAvMetric("clamav_scan_total", { verdict: "clean" });
+const clamAvMetricBeforeRejected = getClamAvMetric("clamav_scan_total", { verdict: "rejected" });
+const antivirusCleanInput = {
+  objectKey: `${tenantA}/clean.txt`,
+  body: Buffer.from("plain clean content"),
+  contentType: "text/plain",
+};
+const antivirusRejectedInput = {
+  objectKey: `${tenantA}/eicar.txt`,
+  body: Buffer.from("EICAR-STANDARD-ANTIVIRUS-TEST-FILE"),
+  contentType: "text/plain",
+};
+const inMemoryAntivirusClean = await inMemoryAntivirus.scan(antivirusCleanInput);
+const fakeClamAvClean = await fakeClamAv.scan(antivirusCleanInput);
+const inMemoryAntivirusRejected = await inMemoryAntivirus.scan(antivirusRejectedInput);
+const fakeClamAvRejected = await fakeClamAv.scan(antivirusRejectedInput);
+assert.deepEqual(inMemoryAntivirusClean, { verdict: "clean" });
+assert.deepEqual(fakeClamAvClean, { verdict: "clean" });
+assert.equal(inMemoryAntivirusRejected.verdict, "rejected");
+assert.equal(fakeClamAvRejected.verdict, "rejected");
+const fakeClamAvHealth = await fakeClamAv.healthCheck();
+assert.equal(fakeClamAvHealth.status, "ready");
+inMemoryAntivirus.injectFailure("scan");
+let inMemoryAntivirusInjectedFailure = "";
+await assert.rejects(
+  async () => inMemoryAntivirus.scan(antivirusCleanInput),
+  (err) => {
+    inMemoryAntivirusInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryAntivirusInjectedFailure);
+  }
+);
+inMemoryAntivirus.clearFailure("scan");
+let fakeClamAvTenantIsolationFailure = "";
+await assert.rejects(
+  async () =>
+    fakeClamAv.scan({
+      objectKey: `${tenantB}/foreign.txt`,
+      body: Buffer.from("foreign clean content"),
+      contentType: "text/plain",
+    }),
+  (err) => {
+    fakeClamAvTenantIsolationFailure = err instanceof Error ? err.message : String(err);
+    return /tenantPrefix isolation/.test(fakeClamAvTenantIsolationFailure);
+  }
+);
+assert.equal(inMemoryAntivirus.healthCheck().status, "ready");
+assert.equal(fakeClamAvRequests.filter((request) => request.command === "scan").length, 2);
+assert.equal(fakeClamAvQuotaChecks, 2);
+assert.equal(fakeClamAvLegalHoldChecks, 2);
+
 const automationAuditEvents = [
   ...inMemoryAutomation
     .getAuditEvents()
@@ -513,6 +629,12 @@ const automationAuditEvents = [
 const webhookAuditEvents = inMemoryWebhookDispatcher
   .getAuditEvents()
   .map((event, index) => `in-memory-webhook:${event.action}:${index}`);
+const antivirusAuditEvents = [
+  ...inMemoryAntivirus
+    .getAuditEvents()
+    .map((event, index) => `in-memory-antivirus:${event.action}:${index}`),
+  ...fakeClamAvAuditEvents,
+];
 const automationMetricSamples = [
   {
     name: "in_memory_automation_run_script_success_total",
@@ -552,6 +674,21 @@ const automationMetricSamples = [
     name: "http_webhook_dispatch_attempt_total",
     value: webhookReceiverRequests.length,
   },
+  {
+    name: "in_memory_antivirus_scan_total",
+    value: inMemoryAntivirus
+      .getAuditEvents()
+      .filter((event) => event.action.startsWith("antivirus.")).length,
+  },
+  {
+    name: "clamav_antivirus_clean_total",
+    value: getClamAvMetric("clamav_scan_total", { verdict: "clean" }) - clamAvMetricBeforeClean,
+  },
+  {
+    name: "clamav_antivirus_rejected_total",
+    value:
+      getClamAvMetric("clamav_scan_total", { verdict: "rejected" }) - clamAvMetricBeforeRejected,
+  },
   ...[...storageEvents.metric.entries()].map(([name, value]) => ({ name, value })),
 ];
 for (const sample of automationMetricSamples) {
@@ -567,8 +704,11 @@ for (const [name, provider] of Object.entries(providers)) {
 }
 await new Promise<void>((resolve) => windmillServer.close(() => resolve()));
 await new Promise<void>((resolve) => webhookReceiver.close(() => resolve()));
+await new Promise<void>((resolve) => fakeClamAvServer.close(() => resolve()));
 inMemoryWebhookDispatcher.reset();
 assert.equal(inMemoryWebhookDispatcher.deliveries.length, 0);
+inMemoryAntivirus.reset();
+assert.equal(inMemoryAntivirus.getAuditEvents().length, 0);
 
 emitRuntimeProofEvidence({
   subjectIds: [
@@ -579,6 +719,7 @@ emitRuntimeProofEvidence({
     "provider:in-memory-automation-runner",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
+    "provider:in-memory-antivirus",
     "in-memory-rate-limit-repository",
     "in-memory-event-bus",
     "in-memory-secret-store",
@@ -586,12 +727,15 @@ emitRuntimeProofEvidence({
     "in-memory-automation-runner",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
+    "in-memory-antivirus",
     "provider:windmill-automation-provider",
     "windmill-automation-provider",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
     "http-webhook-dispatcher",
+    "provider:clamav-antivirus",
+    "clamav-antivirus",
     "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   ],
   storageIds: [`storage:${storageKey}`],
@@ -639,6 +783,18 @@ emitRuntimeProofEvidence({
     inMemoryWebhookHealth,
     fakeHttpWebhookRequests: webhookReceiverRequests.length,
     inMemoryWebhookDeliveriesAfterCleanup: inMemoryWebhookDispatcher.deliveries.length,
+    antivirusContractMethods: antivirusMethods.length,
+    inMemoryAntivirusClean,
+    fakeClamAvClean,
+    inMemoryAntivirusRejected,
+    fakeClamAvRejected,
+    fakeClamAvHealth,
+    inMemoryAntivirusInjectedFailure,
+    fakeClamAvTenantIsolationFailure,
+    fakeClamAvRequests: fakeClamAvRequests.length,
+    fakeClamAvQuotaChecks,
+    fakeClamAvLegalHoldChecks,
+    inMemoryAntivirusEventsAfterCleanup: inMemoryAntivirus.getAuditEvents().length,
     failurePathExercised: true,
     healthChecks: healthChecks.map((health) => health.status),
     resetVerified: true,
@@ -659,12 +815,22 @@ emitRuntimeProofEvidence({
     webhookDispatcherSuccessParity: true,
     webhookDispatcherFailureParity: true,
     webhookDispatcherCleanupParity: true,
+    antivirusPortMethodsMatch: true,
+    antivirusCleanVerdictParity: true,
+    antivirusRejectedVerdictParity: true,
+    antivirusFailurePathParity: true,
+    antivirusCleanupParity: true,
   },
   failurePathExercised: true,
   sideEffectsAsserted: true,
   tenantBoundaryAsserted: true,
   securityBoundaryAsserted: true,
-  auditEventIds: [...automationAuditEvents, ...storageEvents.audit, ...webhookAuditEvents],
+  auditEventIds: [
+    ...automationAuditEvents,
+    ...storageEvents.audit,
+    ...webhookAuditEvents,
+    ...antivirusAuditEvents,
+  ],
   traceIds: [
     "trace:automation-parity-script-run",
     "trace:automation-parity-flow-run",
@@ -673,6 +839,9 @@ emitRuntimeProofEvidence({
     "trace:webhook-parity-dispatch-success",
     "trace:webhook-parity-dispatch-failure",
     "trace:webhook-parity-dispatch-injected-failure",
+    "trace:antivirus-parity-clean",
+    "trace:antivirus-parity-rejected",
+    "trace:antivirus-parity-injected-failure",
   ],
   metricSamples: automationMetricSamples,
   logCorrelationIds: [
@@ -683,6 +852,9 @@ emitRuntimeProofEvidence({
     "log:webhook-parity-dispatch-success",
     "log:webhook-parity-dispatch-failure",
     "log:webhook-parity-dispatch-injected-failure",
+    "log:antivirus-parity-clean",
+    "log:antivirus-parity-rejected",
+    "log:antivirus-parity-injected-failure",
   ],
   cleanupResult: { status: "verified", resetSupported: true },
   deterministicReplaySupported: true,
