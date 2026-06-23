@@ -44,7 +44,7 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-system-admin] expected-route `/admin` → expected loads + data APIs 2xx, got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/logs` → expected loads + data APIs 2xx, got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/clickthrough` → expected loads + data APIs 2xx, got loads
-- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/kc/admin/master/console/>
+- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fstaging.aldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=4b2f2c52-5f5c-4848-a9eb-21f8f092ac26&response_mode=query&response_type=code&scope=openid&nonce=e7dd971e-1e68-4881-940a-f2c2dc5dc228&code_challenge=TZtrnrIVX_Q6a1LhPTPMxuNj5GB80MfKZGYgM72I8SU&code_challenge_method=S256>
 - ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/grafana/>
 - ✅ [scaffold-system-admin] clickthrough-granted `mailpit /mailpit/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/mailpit/>
 - ✅ [scaffold-system-admin] clickthrough-granted `sonarqube /sonar/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/sonar/>

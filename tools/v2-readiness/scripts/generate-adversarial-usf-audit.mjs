@@ -243,16 +243,27 @@ const universalPath = path.join(
 const previousUniversal = fs.existsSync(universalPath)
   ? fs.readFileSync(universalPath, "utf8")
   : "";
-const semanticSection = previousUniversal.split("\n## Known Gaps Identified\n")[0].trimEnd();
+const adversarialRuntimeHeading = "## Adversarial Runtime Assurance";
+const knownGapsHeading = "## Known Gaps Identified";
+const semanticSection = previousUniversal
+  .split(`\n${knownGapsHeading}\n`)[0]
+  .replace(
+    new RegExp(
+      `(?:^|\\n)${adversarialRuntimeHeading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?(?=\\n## |$)`,
+      "g"
+    ),
+    ""
+  )
+  .trimEnd();
 const universal = `${semanticSection}
 
-## Adversarial Runtime Assurance
+${adversarialRuntimeHeading}
 
 Status: ${summary.status}
 
 The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under \`docs/v2-foundation/usf-audit/\`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
 
-## Known Gaps Identified
+${knownGapsHeading}
 
 | Question | Machine-generated answer |
 | --- | ---: |

@@ -3,10 +3,10 @@
 Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e2e-observability-correlation make target.
 
 - Result: **FULL**
-- testRunId: `run-prod-1782184541-d6ab9ef3`
+- testRunId: `run-prod-1782187146-048ee31d`
 - Loki: reachable
 - Tempo: reachable (required)
-- Total log lines: 484
+- Total log lines: 470
 - Required log scenarios: 9; missing: 0; unexpected observed: 0
 
 ## Per-scenario log correlation
@@ -15,11 +15,11 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 | --- | --- | --- | --- | --- |
 | `pipeline-health-probe` | true | true | 1 | OK |
 | `clickability-crawl` | false | true | 5 | OBSERVED |
-| `accessibility-safe-routes` | false | true | 30 | OBSERVED |
+| `accessibility-safe-routes` | false | true | 36 | OBSERVED |
 | `persona-authz` | true | true | 32 | OK |
 | `browser-bff-trace` | true | true | 4 | OK |
 | `persona-matrix:unauthenticated-visitor` | true | true | 48 | OK |
-| `persona-matrix:scaffold-system-admin` | false | true | 122 | OBSERVED |
+| `persona-matrix:scaffold-system-admin` | false | true | 102 | OBSERVED |
 | `persona-matrix:scaffold-tenant-admin` | true | true | 64 | OK |
 | `persona-matrix:scaffold-tenant-manager` | true | true | 46 | OK |
 | `persona-matrix:scaffold-tenant-member` | true | true | 46 | OK |
@@ -41,6 +41,6 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 
 ## Notes
 
-- Correlated 484 line(s); all 9 required scenario(s) observed.
-- Trace 83b1c8fe188c21229d52b80cc2a5cc8e for 'pipeline-health-probe' matched in Tempo: services [platform-api].
-- Trace 1537902f656e0a0dd8eb430074753bf8 for 'browser-bff-trace' matched in Tempo: services [react-enterprise-app, platform-api].
+- Correlated 470 line(s); all 9 required scenario(s) observed.
+- Trace 18a172e51075a518599628a23a4c54e7 for 'pipeline-health-probe' matched in Tempo: services [platform-api].
+- Trace 89fc6e55f5b88023ce1388160d346364 for 'browser-bff-trace' matched in Tempo: services [react-enterprise-app, platform-api].
