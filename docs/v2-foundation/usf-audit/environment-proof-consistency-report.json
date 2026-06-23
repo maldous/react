@@ -1,7 +1,7 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T11:14:54.928Z",
+  "generatedAt": "2026-06-23T11:31:07.901Z",
   "status": "PASS",
   "environmentModel": {
     "dev": {
@@ -1990,6 +1990,42 @@
       "environmentValid": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "environment": "test",
+      "providerMode": "route-contract",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-claim-mapping-spec.json"
+    },
+    {
+      "proofId": "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "environment": "test",
+      "providerMode": "route-contract",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-groups-spec.json"
+    },
+    {
+      "proofId": "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+      "environment": "test",
+      "providerMode": "route-contract",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-sub-organisations-spec.json"
     }
   ]
 }

@@ -6539,6 +6539,33 @@
       "v2Target": "docs/v2-foundation/usf-audit/formal-proof-gap-taxonomy-report.json",
       "protectingTests": ["npm run v2:adversarial-usf-audit"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-claim-mapping-spec.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for UI semantic claim-mapping proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-claim-mapping-spec.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-groups-spec.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for UI semantic groups proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-groups-spec.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-sub-organisations-spec.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for UI semantic sub-organisations proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-sub-organisations-spec.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -6921,6 +6948,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 696,
+  "additionCount": 699,
   "deletionCount": 54
 }

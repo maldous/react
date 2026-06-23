@@ -1,7 +1,7 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T11:14:54.927Z",
+  "generatedAt": "2026-06-23T11:31:07.901Z",
   "status": "PASS",
   "levels": [
     {
@@ -50,7 +50,7 @@
   "overclaimCount": 0,
   "byObservedLevel": {
     "L0": 45,
-    "L1": 111,
+    "L1": 114,
     "L2": 1,
     "L3": 5,
     "L4": 0,
@@ -58,7 +58,7 @@
     "L6": 0
   },
   "byProviderEvidenceClass": {
-    "contract-or-unit-proof": 156,
+    "contract-or-unit-proof": 159,
     "in-memory-provider-proof": 5,
     "fake-http-adapter-proof": 1
   },
@@ -1520,6 +1520,33 @@
       "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-claim-mapping-spec.json"
+    },
+    {
+      "proofId": "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/groups.spec.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-groups-spec.json"
+    },
+    {
+      "proofId": "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+      "subjectId": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L1",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-sub-organisations-spec.json"
     }
   ]
 }

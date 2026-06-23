@@ -1,11 +1,11 @@
 {
   "artefact": "v2-formal-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T11:14:54.936Z",
+  "generatedAt": "2026-06-23T11:31:07.910Z",
   "status": "FAIL",
   "summary": {
-    "evidenceRecords": 162,
-    "requiredProofs": 162,
+    "evidenceRecords": 165,
+    "requiredProofs": 165,
     "missingEvidence": 0,
     "staleEvidence": 0,
     "claimMismatches": 0,
@@ -42,7 +42,7 @@
       },
       {
         "closureTrack": "route-evidence",
-        "gapCount": 41
+        "gapCount": 27
       }
     ]
   },
@@ -623,34 +623,14 @@
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "DELETE /api/auth/settings/idps/:alias",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "DELETE /api/auth/settings/idps/:alias",
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/auth/settings/idps/:alias",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "PATCH /api/auth/settings/idps/:alias",
       "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/auth/settings/idps/:alias/mapping",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/auth/settings/idps/:alias/mapping",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
     },
     {
       "kind": "mutation-state-evidence",
@@ -778,19 +758,9 @@
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "DELETE /api/org/domains/:domain/canonical",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "DELETE /api/org/domains/:domain/canonical",
       "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/org/domains/:domain/canonical",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
     },
     {
       "kind": "mutation-state-evidence",
@@ -858,34 +828,14 @@
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/groups",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/org/groups",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/org/groups",
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "DELETE /api/org/groups/:groupId",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "DELETE /api/org/groups/:groupId",
       "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/groups/:groupId",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
     },
     {
       "kind": "mutation-state-evidence",
@@ -993,34 +943,14 @@
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/sub-organisations",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/org/sub-organisations",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/org/sub-organisations",
       "message": "mutation proof lacks emitted before/after state evidence"
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "DELETE /api/org/sub-organisations/:subOrgId",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "DELETE /api/org/sub-organisations/:subOrgId",
       "message": "mutation proof lacks emitted before/after state evidence"
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/sub-organisations/:subOrgId",
-      "message": "route proof has explicit subject refs but no emitted evidence record"
     },
     {
       "kind": "mutation-state-evidence",

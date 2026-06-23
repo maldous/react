@@ -140,6 +140,13 @@ export const ENVIRONMENT_PROOF_MODEL = {
 
 export const PROOF_EVIDENCE_DIR = "docs/v2-foundation/usf-audit/proof-evidence";
 
+export const LEGACY_ROUTE_PROOF_ALIASES = {
+  "proof:tenant-domain-canonical": ["proof:tenant-domain-canonical (local routing only)"],
+  "proof:ui-semantic-claim-mapping": ["proof:ui-semantic-claim-mapping (headless journey)"],
+  "proof:ui-semantic-groups": ["proof:ui-semantic-groups (headless journey)"],
+  "proof:ui-semantic-sub-organisations": ["proof:ui-semantic-sub-organisations (headless journey)"],
+};
+
 export const PROOF_EVIDENCE_REQUIRED_FIELDS = [
   "proofId",
   "subjectType",
@@ -334,6 +341,8 @@ export function requiredRuntimeProofs(ctx, audit) {
         proof.file,
         ...(proof.subjectRefs || []),
         scriptName ? `package.json#${scriptName}` : null,
+        ...proofSubjectAliases(scriptName),
+        ...(proof.subjectRefs || []).flatMap((ref) => proofSubjectAliases(ref)),
       ]),
       commandExecuted:
         (scriptName && `npm run ${scriptName}`) ||
@@ -345,26 +354,39 @@ export function requiredRuntimeProofs(ctx, audit) {
   });
   const existingFiles = new Set(fromAudit.map((proof) => proof.file));
   const fromPackageScripts = Object.entries(packageScripts)
-    .filter(
-      ([name, command]) =>
-        name.startsWith("proof:") &&
-        /apps\/platform-api\/scripts\/[^\s"'`]+\.ts/.test(String(command))
-    )
     .map(([name, command]) => {
-      const file = String(command).match(/apps\/platform-api\/scripts\/[^\s"'`]+\.ts/)?.[0];
+      if (!name.startsWith("proof:")) return null;
+      const file = proofTargetForPackageScript(command);
       if (!file || existingFiles.has(file)) return null;
       return {
         proofId: stableId("proof", file),
         file,
-        subjectIds: uniq([file, `package.json#${name}`, name]),
+        subjectIds: uniq([file, `package.json#${name}`, name, ...proofSubjectAliases(name)]),
         commandExecuted: `npm run ${name}`,
-        proofLevelClaimed: file.includes("in-memory-vs-real-parity-proof") ? "L3" : "L2",
+        proofLevelClaimed:
+          file.includes("in-memory-vs-real-parity-proof") ||
+          file.includes("apps/platform-api/scripts/")
+            ? "L3"
+            : "L1",
         routeIds: [],
         sourceFileRefs: [file],
       };
     })
     .filter(Boolean);
   return [...fromAudit, ...fromPackageScripts].sort((a, b) => a.file.localeCompare(b.file));
+}
+
+function proofTargetForPackageScript(command) {
+  const text = String(command);
+  return (
+    text.match(/apps\/platform-api\/scripts\/[^\s"'`]+\.ts/)?.[0] ||
+    text.match(/tools\/ui-reference-harness\/playwright\/[^\s"'`]+\.spec\.ts/)?.[0] ||
+    null
+  );
+}
+
+function proofSubjectAliases(subject) {
+  return LEGACY_ROUTE_PROOF_ALIASES[subject] || [];
 }
 
 function buildEvidenceIndex(ctx, requiredProofs, routeSubjectMap) {

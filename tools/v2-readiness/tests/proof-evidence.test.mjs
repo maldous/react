@@ -6,6 +6,7 @@ import {
   buildWeakProofBacklog,
   normalizeEvidenceRecord,
   observedLevelFromEvidence,
+  requiredRuntimeProofs,
   signRecord,
   validateEvidenceSet,
 } from "../src/proof-evidence.mjs";
@@ -366,6 +367,35 @@ test("formal proof gap taxonomy separates L3 closure from future formal backlog"
     },
   });
   assert.equal(behaviourBlocking.currentL3MilestoneBlocked, true);
+});
+
+test("required runtime proofs include explicit UI proof scripts with route-proof aliases", () => {
+  const proofs = requiredRuntimeProofs(
+    {
+      packageJsonScripts: {
+        "proof:ui-semantic-groups":
+          "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/groups.spec.ts",
+        "proof:tenant-domain-canonical":
+          'node --loader "$(pwd)/apps/platform-api/loader.mjs" apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts',
+      },
+    },
+    { inventory: { proofs: [] } }
+  );
+
+  const groups = proofs.find(
+    (proof) => proof.file === "tools/ui-reference-harness/playwright/groups.spec.ts"
+  );
+  assert.equal(groups.commandExecuted, "npm run proof:ui-semantic-groups");
+  assert.equal(groups.proofLevelClaimed, "L1");
+  assert.ok(groups.subjectIds.includes("proof:ui-semantic-groups"));
+  assert.ok(groups.subjectIds.includes("proof:ui-semantic-groups (headless journey)"));
+
+  const canonical = proofs.find(
+    (proof) => proof.file === "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"
+  );
+  assert.equal(canonical.proofLevelClaimed, "L3");
+  assert.ok(canonical.subjectIds.includes("proof:tenant-domain-canonical"));
+  assert.ok(canonical.subjectIds.includes("proof:tenant-domain-canonical (local routing only)"));
 });
 
 function taxonomyFixture() {

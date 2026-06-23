@@ -140,6 +140,9 @@ function proofExecutionMode(proof) {
   if (proof.file.includes("/in-memory-")) {
     return { environmentMode: "dev", providerMode: "semantic-dev" };
   }
+  if (proof.file.includes("tools/ui-reference-harness/playwright/")) {
+    return { environmentMode: "test", providerMode: "route-contract" };
+  }
   if (proof.proofLevelClaimed === "L5" || proof.proofLevelClaimed === "L6") {
     return { environmentMode: "staging", providerMode: "external-sandbox" };
   }

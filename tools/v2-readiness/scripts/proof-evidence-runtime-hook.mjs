@@ -20,6 +20,7 @@ if (evidenceFile && rawMetadata) {
         process.env.APP_ENV ||
         "unknown";
       const proofOverrides = globalThis.__USF_PROOF_EVIDENCE_OVERRIDES__ || {};
+      const wrapperClaimedLevel = metadata.proofLevelClaimed === "L1" ? "L1" : "L0";
       const record = signRecord({
         proofId: metadata.proofId,
         subjectType: "runtime-proof",
@@ -36,7 +37,7 @@ if (evidenceFile && rawMetadata) {
         storageIds: proofOverrides.storageIds || [],
         environmentMode,
         providerMode,
-        proofLevelClaimed: proofOverrides.proofLevelClaimed || "L0",
+        proofLevelClaimed: proofOverrides.proofLevelClaimed || wrapperClaimedLevel,
         commandExecuted: metadata.commandExecuted,
         startedAt,
         endedAt,
