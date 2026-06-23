@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   166 |
+| formal proof readiness gaps                 |   151 |
 | capability proof readiness gaps             |     0 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -42,7 +42,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - proof-command-failed: apps/platform-api/scripts/auth-settings-runtime-proof.ts - proof command exited 2
 - proof-command-failed: apps/platform-api/scripts/backup-local-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/billing-catalog-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - proof command exited 1
@@ -51,40 +50,27 @@ The adversarial runtime inventory status is reported separately from formal proo
 - proof-command-failed: apps/platform-api/scripts/data-governance-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/email-sender-runtime-proof.ts - proof command exited 2
-- observability-proof-signal: apps/platform-api/scripts/full-observability-contract-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/idp-runtime-proof.ts - proof command exited 2
 - proof-command-failed: apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts - proof command exited 2
 - proof-command-failed: apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/notification-transports-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/observability-control-route-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
-- observability-proof-signal: apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
-- observability-proof-signal: apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
-- observability-proof-signal: apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
-- observability-proof-signal: apps/platform-api/scripts/observability-signals-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts - proof command exited 2
 - proof-command-failed: apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/platform-services-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts - proof command exited 2
 - proof-command-failed: apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
-- observability-proof-signal: apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
-- observability-proof-signal: apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/secrets-openbao-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts - proof command exited 2
 - proof-command-failed: apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts - proof command exited 1
@@ -93,7 +79,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - proof-command-failed: apps/platform-api/scripts/tenant-domains-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/tenant-observability-runtime-proof.ts - proof command exited 1
-- observability-proof-signal: apps/platform-api/scripts/tenant-observability-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
 - proof-command-failed: apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/webhook-worker-runtime-proof.ts - proof command exited 1

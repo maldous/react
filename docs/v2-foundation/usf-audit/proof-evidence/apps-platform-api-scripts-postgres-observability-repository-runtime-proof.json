@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L0",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:05:44.354Z",
-  "endedAt": "2026-06-23T12:05:44.515Z",
+  "startedAt": "2026-06-23T12:14:13.291Z",
+  "endedAt": "2026-06-23T12:14:13.450Z",
   "exitStatus": 0,
-  "commit": "097fd83478697e00fa5531b0fb9696893f254ae6",
+  "commit": "e273d656c23329b2ba8fa614979071857046dbd8",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -31,34 +31,79 @@
   "sideEffectsAsserted": false,
   "tenantBoundaryAsserted": false,
   "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": [
+    "audit:postgres-observability-repository:runtime-proof-observed",
+    "audit:observability-signals:runtime-proof-observed"
+  ],
+  "traceIds": [
+    "trace:postgres-observability-repository:runtime-proof",
+    "trace:observability-signals:runtime-proof"
+  ],
+  "metricSamples": [
+    {
+      "name": "usf_proof_postgres_observability_repository_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "postgres-observability-repository"
+      }
+    },
+    {
+      "name": "usf_proof_observability_signals_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "observability-signals"
+      }
+    }
+  ],
+  "logCorrelationIds": [
+    "log:postgres-observability-repository:runtime-proof",
+    "log:observability-signals:runtime-proof"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:05:44.515Z",
+  "generatedAt": "2026-06-23T12:14:13.450Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782216314477-4093810",
+  "collectorRunId": "proof-run-1782216823696-4144796",
   "assertionsObserved": false,
   "expectedOutputsAsserted": false,
   "environment": "test",
   "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:05:44.354Z",
-  "endTime": "2026-06-23T12:05:44.515Z",
-  "gitCommit": "097fd83478697e00fa5531b0fb9696893f254ae6",
-  "executionTimestamp": "2026-06-23T12:05:44.515Z",
+  "startTime": "2026-06-23T12:14:13.291Z",
+  "endTime": "2026-06-23T12:14:13.450Z",
+  "gitCommit": "e273d656c23329b2ba8fa614979071857046dbd8",
+  "executionTimestamp": "2026-06-23T12:14:13.450Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "193f61a2010eb56a1cdd816cdc299fe3ce6dac3e0a16c5c17e0d805818653d51"
+  "auditIds": [
+    "audit:postgres-observability-repository:runtime-proof-observed",
+    "audit:observability-signals:runtime-proof-observed"
+  ],
+  "metricEvidence": [
+    {
+      "name": "usf_proof_postgres_observability_repository_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "postgres-observability-repository"
+      }
+    },
+    {
+      "name": "usf_proof_observability_signals_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "observability-signals"
+      }
+    }
+  ],
+  "logEvidence": [
+    "log:postgres-observability-repository:runtime-proof",
+    "log:observability-signals:runtime-proof"
+  ],
+  "evidenceSignature": "fe8845e40cef707040b80161ddc69f053bda8487a2cb04c0fa87de229e1ff0cf"
 }

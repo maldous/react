@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L0",
   "commandExecuted": "npm run proof:full-observability-contract",
-  "startedAt": "2026-06-23T12:05:28.121Z",
-  "endedAt": "2026-06-23T12:05:28.186Z",
+  "startedAt": "2026-06-23T12:13:57.101Z",
+  "endedAt": "2026-06-23T12:13:57.170Z",
   "exitStatus": 0,
-  "commit": "097fd83478697e00fa5531b0fb9696893f254ae6",
+  "commit": "e273d656c23329b2ba8fa614979071857046dbd8",
   "realImplementationPathExecuted": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -35,32 +35,48 @@
   "sideEffectsAsserted": false,
   "tenantBoundaryAsserted": false,
   "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": ["audit:full-observability-contract:runtime-proof-observed"],
+  "traceIds": ["trace:full-observability-contract:runtime-proof"],
+  "metricSamples": [
+    {
+      "name": "usf_proof_full_observability_contract_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "full-observability-contract"
+      }
+    }
+  ],
+  "logCorrelationIds": ["log:full-observability-contract:runtime-proof"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:05:28.186Z",
+  "generatedAt": "2026-06-23T12:13:57.170Z",
   "sourceFileRefs": ["apps/platform-api/scripts/full-observability-contract-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782216314477-4093810",
+  "collectorRunId": "proof-run-1782216823696-4144796",
   "assertionsObserved": false,
   "expectedOutputsAsserted": false,
   "environment": "test",
   "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:05:28.121Z",
-  "endTime": "2026-06-23T12:05:28.186Z",
-  "gitCommit": "097fd83478697e00fa5531b0fb9696893f254ae6",
-  "executionTimestamp": "2026-06-23T12:05:28.186Z",
+  "startTime": "2026-06-23T12:13:57.101Z",
+  "endTime": "2026-06-23T12:13:57.170Z",
+  "gitCommit": "e273d656c23329b2ba8fa614979071857046dbd8",
+  "executionTimestamp": "2026-06-23T12:13:57.170Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "7c53ceadfd82f61f593a66650c46b4a2836d1694a841d798c7d98085a0a8ccb5"
+  "auditIds": ["audit:full-observability-contract:runtime-proof-observed"],
+  "metricEvidence": [
+    {
+      "name": "usf_proof_full_observability_contract_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "full-observability-contract"
+      }
+    }
+  ],
+  "logEvidence": ["log:full-observability-contract:runtime-proof"],
+  "evidenceSignature": "d079ab084f67393561c124190504052ce1bf7c36df9c59a2127a1df8fb9d76ba"
 }

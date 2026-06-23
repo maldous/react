@@ -3,6 +3,9 @@ import { getBillingBoundaryReadiness } from "../src/usecases/billing-readiness.t
 import { getCombinedWorkflowStatus } from "../src/usecases/workflow-control.ts";
 import { getBackupControlReport } from "../src/usecases/backup-control.ts";
 import { getSecurityControlReport } from "../src/usecases/security-control.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("full-observability-contract");
 
 async function main(): Promise<void> {
   const billing = await getBillingBoundaryReadiness();

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L0",
   "commandExecuted": "npm run proof:metrics-prometheus",
-  "startedAt": "2026-06-23T12:05:32.803Z",
-  "endedAt": "2026-06-23T12:05:32.861Z",
+  "startedAt": "2026-06-23T12:14:01.792Z",
+  "endedAt": "2026-06-23T12:14:01.853Z",
   "exitStatus": 1,
-  "commit": "097fd83478697e00fa5531b0fb9696893f254ae6",
+  "commit": "e273d656c23329b2ba8fa614979071857046dbd8",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -35,32 +35,48 @@
   "sideEffectsAsserted": false,
   "tenantBoundaryAsserted": false,
   "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": ["audit:metrics-prometheus:runtime-proof-observed"],
+  "traceIds": ["trace:metrics-prometheus:runtime-proof"],
+  "metricSamples": [
+    {
+      "name": "usf_proof_metrics_prometheus_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "metrics-prometheus"
+      }
+    }
+  ],
+  "logCorrelationIds": ["log:metrics-prometheus:runtime-proof"],
   "cleanupResult": {
     "status": "failed"
   },
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:05:32.861Z",
+  "generatedAt": "2026-06-23T12:14:01.853Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782216314477-4093810",
+  "collectorRunId": "proof-run-1782216823696-4144796",
   "assertionsObserved": false,
   "expectedOutputsAsserted": false,
   "environment": "test",
   "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:05:32.803Z",
-  "endTime": "2026-06-23T12:05:32.861Z",
-  "gitCommit": "097fd83478697e00fa5531b0fb9696893f254ae6",
-  "executionTimestamp": "2026-06-23T12:05:32.861Z",
+  "startTime": "2026-06-23T12:14:01.792Z",
+  "endTime": "2026-06-23T12:14:01.853Z",
+  "gitCommit": "e273d656c23329b2ba8fa614979071857046dbd8",
+  "executionTimestamp": "2026-06-23T12:14:01.853Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "37fc7a49364cd2c86c90c33b90f9c990800c70b702dcb5ea7270a4089bb13e95"
+  "auditIds": ["audit:metrics-prometheus:runtime-proof-observed"],
+  "metricEvidence": [
+    {
+      "name": "usf_proof_metrics_prometheus_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "metrics-prometheus"
+      }
+    }
+  ],
+  "logEvidence": ["log:metrics-prometheus:runtime-proof"],
+  "evidenceSignature": "4d875b2f9653960c9f564c7418731ce9944db4ff3e50f8bec48cb35d7daa7c28"
 }

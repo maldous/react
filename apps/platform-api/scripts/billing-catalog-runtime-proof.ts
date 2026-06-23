@@ -1,5 +1,8 @@
 import { strict as assert } from "node:assert";
 import { routes } from "../src/server/routes.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("billing-catalog");
 
 async function main(): Promise<void> {
   const required = [

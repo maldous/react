@@ -17,6 +17,9 @@ import {
   forbiddenProvidersForEnvironment,
 } from "../src/usecases/service-catalog.ts";
 import assert from "node:assert/strict";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("service-catalog-registry");
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {

@@ -1,7 +1,7 @@
 {
   "artefact": "v2-formal-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T12:05:11.704Z",
+  "generatedAt": "2026-06-23T12:14:55.555Z",
   "status": "FAIL",
   "summary": {
     "evidenceRecords": 166,
@@ -35,10 +35,6 @@
       {
         "closureTrack": "mutation-state",
         "gapCount": 106
-      },
-      {
-        "closureTrack": "observability",
-        "gapCount": 15
       }
     ]
   },
@@ -62,11 +58,6 @@
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
       "message": "proof command exited 1"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
     },
     {
       "kind": "proof-command-failed",
@@ -109,11 +100,6 @@
       "message": "proof command exited 2"
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
       "message": "proof command exited 1"
@@ -134,39 +120,9 @@
       "message": "proof command exited 1"
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
       "message": "proof command exited 1"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
     },
     {
       "kind": "proof-command-failed",
@@ -194,11 +150,6 @@
       "message": "proof command exited 1"
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
       "message": "proof command exited 1"
@@ -217,11 +168,6 @@
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
       "message": "proof command exited 1"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
     },
     {
       "kind": "proof-command-failed",
@@ -254,29 +200,9 @@
       "message": "proof command exited 1"
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
       "message": "proof command exited 1"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
     },
     {
       "kind": "proof-command-failed",
@@ -317,11 +243,6 @@
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
       "message": "proof command exited 1"
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence"
     },
     {
       "kind": "proof-command-failed",

@@ -19,8 +19,10 @@ import type { AuditEventPort } from "@platform/audit-events";
 import { PostgresObservabilityRepository } from "../src/adapters/postgres-observability-repository.ts";
 import { PostgresNotificationRepository } from "../src/adapters/postgres-notification-repository.ts";
 import { listSignals, recordSample, registerSignal } from "../src/usecases/observability.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
 
 loadLocalEnv();
+emitRuntimeProofObservabilityEvidence("observability-signals");
 const SU_URL = requireEnv("POSTGRES_URL");
 const APP_URL = requireEnv("POSTGRES_APP_URL");
 const SECRET_FIELD = /secret|password|token|credential|api[_-]?key|private[_-]?key/i;

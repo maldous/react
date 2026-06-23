@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L0",
   "commandExecuted": "npm run proof:observability-provider-closure",
-  "startedAt": "2026-06-23T12:05:37.111Z",
-  "endedAt": "2026-06-23T12:05:37.658Z",
+  "startedAt": "2026-06-23T12:14:06.090Z",
+  "endedAt": "2026-06-23T12:14:06.607Z",
   "exitStatus": 0,
-  "commit": "097fd83478697e00fa5531b0fb9696893f254ae6",
+  "commit": "e273d656c23329b2ba8fa614979071857046dbd8",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -35,32 +35,48 @@
   "sideEffectsAsserted": false,
   "tenantBoundaryAsserted": false,
   "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": ["audit:observability-provider-closure:runtime-proof-observed"],
+  "traceIds": ["trace:observability-provider-closure:runtime-proof"],
+  "metricSamples": [
+    {
+      "name": "usf_proof_observability_provider_closure_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "observability-provider-closure"
+      }
+    }
+  ],
+  "logCorrelationIds": ["log:observability-provider-closure:runtime-proof"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:05:37.658Z",
+  "generatedAt": "2026-06-23T12:14:06.607Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782216314477-4093810",
+  "collectorRunId": "proof-run-1782216823696-4144796",
   "assertionsObserved": false,
   "expectedOutputsAsserted": false,
   "environment": "test",
   "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:05:37.111Z",
-  "endTime": "2026-06-23T12:05:37.658Z",
-  "gitCommit": "097fd83478697e00fa5531b0fb9696893f254ae6",
-  "executionTimestamp": "2026-06-23T12:05:37.658Z",
+  "startTime": "2026-06-23T12:14:06.090Z",
+  "endTime": "2026-06-23T12:14:06.607Z",
+  "gitCommit": "e273d656c23329b2ba8fa614979071857046dbd8",
+  "executionTimestamp": "2026-06-23T12:14:06.607Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "171f53c22ea17a4668b1d757c4a13fd7efe63a93879d47d789391bea165947c0"
+  "auditIds": ["audit:observability-provider-closure:runtime-proof-observed"],
+  "metricEvidence": [
+    {
+      "name": "usf_proof_observability_provider_closure_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "observability-provider-closure"
+      }
+    }
+  ],
+  "logEvidence": ["log:observability-provider-closure:runtime-proof"],
+  "evidenceSignature": "864f5ebf3e8f897cc4e478662e0e8174374c94f6f1f37712e537582e828d251d"
 }

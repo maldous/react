@@ -8,6 +8,9 @@
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("prometheus-metrics");
 
 const proofSource = readFileSync(
   "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",

@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L0",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-  "startedAt": "2026-06-23T12:05:40.452Z",
-  "endedAt": "2026-06-23T12:05:40.985Z",
+  "startedAt": "2026-06-23T12:14:09.409Z",
+  "endedAt": "2026-06-23T12:14:09.925Z",
   "exitStatus": 1,
-  "commit": "097fd83478697e00fa5531b0fb9696893f254ae6",
+  "commit": "e273d656c23329b2ba8fa614979071857046dbd8",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -31,32 +31,77 @@
   "sideEffectsAsserted": false,
   "tenantBoundaryAsserted": false,
   "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": [
+    "audit:postgres-billing-catalog:runtime-proof-observed",
+    "audit:billing-catalog:runtime-proof-observed"
+  ],
+  "traceIds": [
+    "trace:postgres-billing-catalog:runtime-proof",
+    "trace:billing-catalog:runtime-proof"
+  ],
+  "metricSamples": [
+    {
+      "name": "usf_proof_postgres_billing_catalog_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "postgres-billing-catalog"
+      }
+    },
+    {
+      "name": "usf_proof_billing_catalog_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "billing-catalog"
+      }
+    }
+  ],
+  "logCorrelationIds": [
+    "log:postgres-billing-catalog:runtime-proof",
+    "log:billing-catalog:runtime-proof"
+  ],
   "cleanupResult": {
     "status": "failed"
   },
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:05:40.985Z",
+  "generatedAt": "2026-06-23T12:14:09.925Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782216314477-4093810",
+  "collectorRunId": "proof-run-1782216823696-4144796",
   "assertionsObserved": false,
   "expectedOutputsAsserted": false,
   "environment": "test",
   "proofLevelObserved": "L0",
-  "startTime": "2026-06-23T12:05:40.452Z",
-  "endTime": "2026-06-23T12:05:40.985Z",
-  "gitCommit": "097fd83478697e00fa5531b0fb9696893f254ae6",
-  "executionTimestamp": "2026-06-23T12:05:40.985Z",
+  "startTime": "2026-06-23T12:14:09.409Z",
+  "endTime": "2026-06-23T12:14:09.925Z",
+  "gitCommit": "e273d656c23329b2ba8fa614979071857046dbd8",
+  "executionTimestamp": "2026-06-23T12:14:09.925Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "7851dcf9786463eb2f296f1e346c9e1e03f68d92f73deee4dc50e0698f96b6cc"
+  "auditIds": [
+    "audit:postgres-billing-catalog:runtime-proof-observed",
+    "audit:billing-catalog:runtime-proof-observed"
+  ],
+  "metricEvidence": [
+    {
+      "name": "usf_proof_postgres_billing_catalog_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "postgres-billing-catalog"
+      }
+    },
+    {
+      "name": "usf_proof_billing_catalog_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "billing-catalog"
+      }
+    }
+  ],
+  "logEvidence": [
+    "log:postgres-billing-catalog:runtime-proof",
+    "log:billing-catalog:runtime-proof"
+  ],
+  "evidenceSignature": "32db7965297af596cf6aaa43436c8ba7796bf27ab4ee8d9e88e8f1c4be5ad67d"
 }

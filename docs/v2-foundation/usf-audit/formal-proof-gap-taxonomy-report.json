@@ -1,10 +1,10 @@
 {
   "artefact": "formal-proof-gap-taxonomy-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T12:05:11.703Z",
+  "generatedAt": "2026-06-23T12:14:55.555Z",
   "status": "FAIL",
   "activeMilestone": "L3 Behaviour Proven",
-  "totalGapCount": 166,
+  "totalGapCount": 151,
   "currentL3MilestoneBlocked": false,
   "futureSubstrateExpansionBlocked": true,
   "behaviourReadinessStatus": "PASS",
@@ -12,7 +12,6 @@
   "inMemoryParityStatus": "PASS",
   "gapsByKind": {
     "proof-command-failed": 45,
-    "observability-proof-signal": 15,
     "mutation-state-evidence": 106
   },
   "byClosureTrack": [
@@ -34,16 +33,6 @@
       "proofLevelBands": ["L3 Behaviour Proven"],
       "exactClosureActions": [
         "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff."
-      ]
-    },
-    {
-      "closureTrack": "observability",
-      "gapCount": 15,
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true,
-      "proofLevelBands": ["L3 Behaviour Proven"],
-      "exactClosureActions": [
-        "Emit correlated trace, metric, and log evidence from the proof process for the observability subject."
       ]
     }
   ],
@@ -93,18 +82,6 @@
       "severity": "critical",
       "remediationEffort": "medium",
       "exactClosureAction": "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -205,18 +182,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
       "message": "proof command exited 1",
@@ -265,18 +230,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
       "message": "proof command exited 1",
@@ -285,66 +238,6 @@
       "severity": "critical",
       "remediationEffort": "medium",
       "exactClosureAction": "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -409,18 +302,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
       "message": "proof command exited 1",
@@ -465,18 +346,6 @@
       "severity": "critical",
       "remediationEffort": "medium",
       "exactClosureAction": "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -553,42 +422,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "proof-command-failed",
       "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
       "message": "proof command exited 1",
@@ -597,18 +430,6 @@
       "severity": "critical",
       "remediationEffort": "medium",
       "exactClosureAction": "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -705,18 +526,6 @@
       "severity": "critical",
       "remediationEffort": "medium",
       "exactClosureAction": "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "observability-proof-signal",
-      "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
-      "message": "observability proof lacks captured trace/log/metric evidence",
-      "closureTrack": "observability",
-      "proofLevelBand": "L3 Behaviour Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },

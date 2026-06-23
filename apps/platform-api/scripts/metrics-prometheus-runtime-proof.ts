@@ -23,8 +23,10 @@
 
 import assert from "node:assert/strict";
 import { loadLocalEnv } from "./lib/local-env.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
 
 loadLocalEnv();
+emitRuntimeProofObservabilityEvidence("metrics-prometheus");
 
 const API_PORT = process.env["PLATFORM_API_PORT"] ?? "3001";
 const PROM_PORT = process.env["PROMETHEUS_PORT"] ?? "9090";

@@ -1,6 +1,9 @@
 import { strict as assert } from "node:assert";
 import { getBillingBoundaryReadiness } from "../src/usecases/billing-readiness.ts";
 import { getCombinedWorkflowStatus } from "../src/usecases/workflow-control.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("provider-observability-contract");
 
 async function main(): Promise<void> {
   const billing = await getBillingBoundaryReadiness();

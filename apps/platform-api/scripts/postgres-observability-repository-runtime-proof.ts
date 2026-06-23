@@ -8,8 +8,11 @@
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
 
-import "./observability-signals-runtime-proof.ts";
+emitRuntimeProofObservabilityEvidence("postgres-observability-repository");
+
+await import("./observability-signals-runtime-proof.ts");
 
 const proofSource = readFileSync(
   "apps/platform-api/scripts/observability-signals-runtime-proof.ts",

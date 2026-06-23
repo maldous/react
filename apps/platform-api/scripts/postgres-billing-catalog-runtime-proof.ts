@@ -9,8 +9,11 @@
 
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
 
-import "./billing-catalog-runtime-proof.ts";
+emitRuntimeProofObservabilityEvidence("postgres-billing-catalog");
+
+await import("./billing-catalog-runtime-proof.ts");
 
 const proofSource = readFileSync(
   "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",

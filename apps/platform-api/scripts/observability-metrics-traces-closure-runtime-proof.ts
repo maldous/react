@@ -1,6 +1,9 @@
 import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import { routes } from "../src/server/routes.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("observability-metrics-traces-closure");
 
 async function main(): Promise<void> {
   const compose = readFileSync(new URL("../../../compose.yaml", import.meta.url), "utf8");

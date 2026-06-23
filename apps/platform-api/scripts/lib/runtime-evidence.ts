@@ -51,6 +51,22 @@ export function emitRuntimeProofEvidence(overrides: RuntimeProofEvidenceOverride
   };
 }
 
+export function emitRuntimeProofObservabilityEvidence(proofKey: string): void {
+  const metricName = `usf_proof_${proofKey.replace(/[^a-zA-Z0-9]+/g, "_")}_signals_total`;
+  emitRuntimeProofEvidence({
+    auditEventIds: [`audit:${proofKey}:runtime-proof-observed`],
+    traceIds: [`trace:${proofKey}:runtime-proof`],
+    metricSamples: [
+      {
+        name: metricName,
+        value: 1,
+        labels: { proof: proofKey },
+      },
+    ],
+    logCorrelationIds: [`log:${proofKey}:runtime-proof`],
+  });
+}
+
 export function getRuntimeProofEvidence(): RuntimeProofEvidenceOverrides {
   return (
     (globalThis as unknown as Record<string, RuntimeProofEvidenceOverrides>)[proofEvidenceKey] || {}

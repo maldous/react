@@ -25,6 +25,9 @@ import {
 } from "../src/usecases/tenant-observability.ts";
 import type { ObservabilitySignalStatus } from "@platform/contracts-admin";
 import { loadLocalEnv } from "./lib/local-env.ts";
+import { emitRuntimeProofObservabilityEvidence } from "./lib/runtime-evidence.ts";
+
+emitRuntimeProofObservabilityEvidence("tenant-observability");
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {

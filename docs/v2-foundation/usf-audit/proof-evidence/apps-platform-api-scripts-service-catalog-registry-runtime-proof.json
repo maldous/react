@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L0",
   "commandExecuted": "npm run proof:service-catalog-registry",
-  "startedAt": "2026-06-23T12:05:55.873Z",
-  "endedAt": "2026-06-23T12:05:55.907Z",
+  "startedAt": "2026-06-23T12:14:24.800Z",
+  "endedAt": "2026-06-23T12:14:24.838Z",
   "exitStatus": 0,
-  "commit": "097fd83478697e00fa5531b0fb9696893f254ae6",
+  "commit": "e273d656c23329b2ba8fa614979071857046dbd8",
   "realImplementationPathExecuted": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -35,32 +35,48 @@
   "sideEffectsAsserted": false,
   "tenantBoundaryAsserted": false,
   "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "auditEventIds": ["audit:service-catalog-registry:runtime-proof-observed"],
+  "traceIds": ["trace:service-catalog-registry:runtime-proof"],
+  "metricSamples": [
+    {
+      "name": "usf_proof_service_catalog_registry_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "service-catalog-registry"
+      }
+    }
+  ],
+  "logCorrelationIds": ["log:service-catalog-registry:runtime-proof"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:05:55.907Z",
+  "generatedAt": "2026-06-23T12:14:24.838Z",
   "sourceFileRefs": ["apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782216314477-4093810",
+  "collectorRunId": "proof-run-1782216823696-4144796",
   "assertionsObserved": false,
   "expectedOutputsAsserted": false,
   "environment": "test",
   "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:05:55.873Z",
-  "endTime": "2026-06-23T12:05:55.907Z",
-  "gitCommit": "097fd83478697e00fa5531b0fb9696893f254ae6",
-  "executionTimestamp": "2026-06-23T12:05:55.907Z",
+  "startTime": "2026-06-23T12:14:24.800Z",
+  "endTime": "2026-06-23T12:14:24.838Z",
+  "gitCommit": "e273d656c23329b2ba8fa614979071857046dbd8",
+  "executionTimestamp": "2026-06-23T12:14:24.838Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "d24d7f314bb3fcfb203db5d86aa7a04799939777acb172f4c7f3f45342c359ca"
+  "auditIds": ["audit:service-catalog-registry:runtime-proof-observed"],
+  "metricEvidence": [
+    {
+      "name": "usf_proof_service_catalog_registry_signals_total",
+      "value": 1,
+      "labels": {
+        "proof": "service-catalog-registry"
+      }
+    }
+  ],
+  "logEvidence": ["log:service-catalog-registry:runtime-proof"],
+  "evidenceSignature": "8de25c34ab68bd525d3178442f68390e464d99d44c8f45c2258ecb7e433c2e5a"
 }
