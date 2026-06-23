@@ -1,9 +1,9 @@
 {
   "artefact": "proof-claim-vs-observed-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:01:18.995Z",
+  "generatedAt": "2026-06-23T08:17:37.790Z",
   "status": "FAIL",
-  "mismatchCount": 161,
+  "mismatchCount": 160,
   "mismatches": [
     {
       "proofId": "proof:apps-platform-api-scripts-alert-incident-closure-runtime-proof-ts",
@@ -427,15 +427,6 @@
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-provider-runtime-proof.json",
       "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"]
-    },
-    {
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subjectId": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L1",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-provider-runtime-proof.json",
-      "sourceFileRefs": ["apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",

@@ -1,21 +1,21 @@
 {
   "artefact": "v2-formal-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:01:19.001Z",
+  "generatedAt": "2026-06-23T08:17:37.796Z",
   "status": "FAIL",
   "summary": {
     "evidenceRecords": 161,
     "requiredProofs": 161,
     "missingEvidence": 0,
     "staleEvidence": 0,
-    "claimMismatches": 161,
+    "claimMismatches": 160,
     "inMemoryProviderParityGaps": 15,
     "routeProofSubjectGaps": 0,
-    "proofLadderComplianceGaps": 1045,
-    "environmentProofConsistencyGaps": 119,
+    "proofLadderComplianceGaps": 1039,
+    "environmentProofConsistencyGaps": 118,
     "capabilityReadinessComputed": 70,
     "capabilityReadinessStatus": "FAIL",
-    "capabilityReadinessGaps": 159,
+    "capabilityReadinessGaps": 89,
     "fullyProvenCapabilities": 0,
     "fullServiceVerifiedCapabilities": 0,
     "weakProofBacklogStatus": "FAIL",
@@ -1620,41 +1620,6 @@
     {
       "kind": "missing-failure-path",
       "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-      "message": "L3+ proof requires an exercised failure path"
-    },
-    {
-      "kind": "proof-claim-overstated",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "claimed L3 exceeds observed L1"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider"
-    },
-    {
-      "kind": "missing-before-after-state",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires before and after state snapshots"
-    },
-    {
-      "kind": "missing-before-state",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires a before state snapshot"
-    },
-    {
-      "kind": "missing-after-state",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires an after state snapshot"
-    },
-    {
-      "kind": "missing-side-effect-evidence",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires asserted state diff and side-effect assertion"
-    },
-    {
-      "kind": "missing-failure-path",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "message": "L3+ proof requires an exercised failure path"
     },
     {
@@ -6904,11 +6869,6 @@
     },
     {
       "kind": "proof-claim-overstated",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "claimed L3 exceeds observed L1"
-    },
-    {
-      "kind": "proof-claim-overstated",
       "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
       "message": "claimed L3 exceeds observed L1"
     },
@@ -8904,36 +8864,6 @@
     },
     {
       "kind": "proof-claim-overstated",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "claimed L3 exceeds observed L1"
-    },
-    {
-      "kind": "missing-before-state",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires before state"
-    },
-    {
-      "kind": "missing-after-state",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires after state"
-    },
-    {
-      "kind": "missing-state-diff",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires state diff"
-    },
-    {
-      "kind": "missing-failure-path",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires failure path"
-    },
-    {
-      "kind": "missing-side-effect-evidence",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "L3+ proof requires side-effect evidence"
-    },
-    {
-      "kind": "proof-claim-overstated",
       "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
       "message": "claimed L3 exceeds observed L1"
     },
@@ -12859,11 +12789,6 @@
     },
     {
       "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
       "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
       "message": "DEV proof evidence must use an in-memory semantic provider"
     },
@@ -13368,799 +13293,449 @@
       "message": "in-memory provider lacks complete emitted real-provider parity evidence"
     },
     {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant identity (record + FQDN)",
-      "message": "Tenant identity (record + FQDN) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant identity (record + FQDN)",
-      "message": "Tenant identity (record + FQDN) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "User identity + tenant membership",
-      "message": "User identity + tenant membership is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant identity (record + FQDN) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "User identity + tenant membership",
-      "message": "User identity + tenant membership is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "End-user profile + preferences self-service",
-      "message": "End-user profile + preferences self-service is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "End-user profile + preferences self-service",
-      "message": "End-user profile + preferences self-service is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "API keys / personal access tokens",
-      "message": "API keys / personal access tokens is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "End-user profile + preferences self-service is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "API keys / personal access tokens",
-      "message": "API keys / personal access tokens is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant groups",
-      "message": "Tenant groups is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "API keys / personal access tokens is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant groups",
-      "message": "Tenant groups is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Sub-organisations",
-      "message": "Sub-organisations is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant groups is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Sub-organisations",
-      "message": "Sub-organisations is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "RBAC (roles + permissions)",
-      "message": "RBAC (roles + permissions) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Sub-organisations is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "RBAC (roles + permissions)",
-      "message": "RBAC (roles + permissions) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "ABAC / Policy Decision Point",
-      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "RBAC (roles + permissions) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "ABAC / Policy Decision Point",
-      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "ABAC / Policy Decision Point",
-      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Delegated administration roles",
-      "message": "Delegated administration roles is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Delegated administration roles",
-      "message": "Delegated administration roles is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Entitlement engine",
-      "message": "Entitlement engine is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Delegated administration roles is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Entitlement engine",
-      "message": "Entitlement engine is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Support-mode / break-glass access",
-      "message": "Support-mode / break-glass access is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Entitlement engine is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Support-mode / break-glass access",
-      "message": "Support-mode / break-glass access is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Audit of privileged access",
-      "message": "Audit of privileged access is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Support-mode / break-glass access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Audit of privileged access",
-      "message": "Audit of privileged access is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Platform login + session",
-      "message": "Platform login + session is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Audit of privileged access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Platform login + session",
-      "message": "Platform login + session is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Platform login + session is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Platform login + session",
-      "message": "Platform login + session is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "IdP brokering + OIDC provider management",
-      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Platform login + session is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "IdP brokering + OIDC provider management",
-      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "IdP brokering + OIDC provider management is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "IdP brokering + OIDC provider management",
-      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Claim mapping + group/role mapping",
-      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "IdP brokering + OIDC provider management is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Claim mapping + group/role mapping",
-      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Claim mapping + group/role mapping",
-      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "MFA + session policy + lockout",
-      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "MFA + session policy + lockout",
-      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "MFA + session policy + lockout is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "MFA + session policy + lockout",
-      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Configuration registry + history",
-      "message": "Configuration registry + history is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "MFA + session policy + lockout is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Configuration registry + history",
-      "message": "Configuration registry + history is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Branding + theming",
-      "message": "Branding + theming is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Configuration registry + history is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Branding + theming",
-      "message": "Branding + theming is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Custom domains, DNS ownership, TLS, canonical",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Branding + theming is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Custom domains, DNS ownership, TLS, canonical",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Custom domains, DNS ownership, TLS, canonical is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Custom domains, DNS ownership, TLS, canonical",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Write-only secret settings",
-      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Custom domains, DNS ownership, TLS, canonical is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Write-only secret settings",
-      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Write-only secret settings",
-      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Product catalog, plans, prices",
-      "message": "Product catalog, plans, prices is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Product catalog, plans, prices",
-      "message": "Product catalog, plans, prices is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Subscriptions, invoices, payment methods, dunning",
-      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Subscriptions, invoices, payment methods, dunning",
-      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Subscriptions, invoices, payment methods, dunning",
-      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Usage metering + meter event ingestion",
-      "message": "Usage metering + meter event ingestion is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Usage metering + meter event ingestion",
-      "message": "Usage metering + meter event ingestion is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Quota enforcement",
-      "message": "Quota enforcement is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Usage metering + meter event ingestion is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Quota enforcement",
-      "message": "Quota enforcement is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Relational storage + migrations + RLS",
-      "message": "Relational storage + migrations + RLS is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Quota enforcement is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Relational storage + migrations + RLS",
-      "message": "Relational storage + migrations + RLS is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Backup + restore",
-      "message": "Backup + restore is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Backup + restore",
-      "message": "Backup + restore is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "PITR, retention, legal hold, data residency",
-      "message": "PITR, retention, legal hold, data residency is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Backup + restore is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "PITR, retention, legal hold, data residency",
-      "message": "PITR, retention, legal hold, data residency is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "PITR, retention, legal hold, data residency is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant data import / export",
-      "message": "Tenant data import / export is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant data import / export",
-      "message": "Tenant data import / export is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Search + indexing (product search)",
-      "message": "Search + indexing (product search) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant data import / export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Search + indexing (product search)",
-      "message": "Search + indexing (product search) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Object storage + tenant prefixes + signed URLs",
-      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Search + indexing (product search) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Object storage + tenant prefixes + signed URLs",
-      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Object storage + tenant prefixes + signed URLs",
-      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Event bus, durable queues, DLQ, redrive",
-      "message": "Event bus, durable queues, DLQ, redrive is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Event bus, durable queues, DLQ, redrive",
-      "message": "Event bus, durable queues, DLQ, redrive is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Workflow engine, scheduled jobs, approvals",
-      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Event bus, durable queues, DLQ, redrive is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Workflow engine, scheduled jobs, approvals",
-      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Workflow engine, scheduled jobs, approvals",
-      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Scheduled jobs (built-in, on the event substrate)",
-      "message": "Scheduled jobs (built-in, on the event substrate) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Scheduled jobs (built-in, on the event substrate)",
-      "message": "Scheduled jobs (built-in, on the event substrate) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Notification delivery + preferences + channels",
-      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Scheduled jobs (built-in, on the event substrate) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Notification delivery + preferences + channels",
-      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Notification delivery + preferences + channels is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Notification delivery + preferences + channels",
-      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Background workers / job runner",
-      "message": "Background workers / job runner is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Notification delivery + preferences + channels is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Background workers / job runner",
-      "message": "Background workers / job runner is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Runtime secrets management",
-      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Background workers / job runner is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Runtime secrets management",
-      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Runtime secrets management is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Runtime secrets management",
-      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Logs (aggregation + tenant-scoped search)",
-      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Runtime secrets management is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Logs (aggregation + tenant-scoped search)",
-      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Logs (aggregation + tenant-scoped search) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Logs (aggregation + tenant-scoped search)",
-      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Metrics + traces",
-      "message": "Metrics + traces is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Logs (aggregation + tenant-scoped search) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Metrics + traces",
-      "message": "Metrics + traces is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Metrics + traces is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Metrics + traces",
-      "message": "Metrics + traces is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Observability — built-in alerting + incidents",
-      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Metrics + traces is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Observability — built-in alerting + incidents",
-      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Observability — built-in alerting + incidents is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Observability — built-in alerting + incidents",
-      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Internal service catalog + readiness",
-      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Observability — built-in alerting + incidents is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Internal service catalog + readiness",
-      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Internal service catalog + readiness is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Internal service catalog + readiness",
-      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Code quality + secret + dependency scanning",
-      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Internal service catalog + readiness is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Code quality + secret + dependency scanning",
-      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Code quality + secret + dependency scanning",
-      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Compliance reports, access reviews, evidence packs",
-      "message": "Compliance reports, access reviews, evidence packs is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant isolation proof",
-      "message": "Tenant isolation proof is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant isolation proof",
-      "message": "Tenant isolation proof is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Webhooks (developer-facing)",
-      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant isolation proof is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Webhooks (developer-facing)",
-      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Webhooks (developer-facing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Webhooks (developer-facing)",
-      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "API docs, developer portal, SDKs, rate limits",
-      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Webhooks (developer-facing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "API docs, developer portal, SDKs, rate limits",
-      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "API docs, developer portal, SDKs, rate limits",
-      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Rate limiting (API)",
-      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Rate limiting (API)",
-      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Rate limiting (API) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Rate limiting (API)",
-      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant lifecycle: provision, suspend, delete, export",
-      "message": "Tenant lifecycle: provision, suspend, delete, export is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Rate limiting (API) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant lifecycle: provision, suspend, delete, export",
-      "message": "Tenant lifecycle: provision, suspend, delete, export is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Support tickets, customer health, announcements",
-      "message": "Support tickets, customer health, announcements is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant lifecycle: provision, suspend, delete, export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Support tickets, customer health, announcements",
-      "message": "Support tickets, customer health, announcements is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Universal Service Foundation scope + principles",
-      "message": "Universal Service Foundation scope + principles is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Build-versus-compose decision framework",
-      "message": "Build-versus-compose decision framework is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Service catalog + provider integration model",
-      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Support tickets, customer health, announcements is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Service catalog + provider integration model",
-      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Service catalog + provider integration model is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Service catalog + provider integration model",
-      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Environment-specific vs shared service model",
-      "message": "Environment-specific vs shared service model is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Provider configuration plane",
-      "message": "Provider configuration plane is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Service catalog + provider integration model is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Provider configuration plane",
-      "message": "Provider configuration plane is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Composed provider readiness spine",
-      "message": "Composed provider readiness spine is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Provider configuration plane is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Composed provider readiness spine",
-      "message": "Composed provider readiness spine is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "History read-model (read-only projection)",
-      "message": "History read-model (read-only projection) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Composed provider readiness spine is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "History read-model (read-only projection)",
-      "message": "History read-model (read-only projection) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "OIDC discovery / issuer / JWKS validation",
-      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "History read-model (read-only projection) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "OIDC discovery / issuer / JWKS validation",
-      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "OIDC discovery / issuer / JWKS validation is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "OIDC discovery / issuer / JWKS validation",
-      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "OIDC test connection + callback display",
-      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "OIDC discovery / issuer / JWKS validation is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "OIDC test connection + callback display",
-      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "OIDC test connection + callback display is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "OIDC test connection + callback display",
-      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant host identity resolution",
-      "message": "Tenant host identity resolution is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "OIDC test connection + callback display is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant host identity resolution",
-      "message": "Tenant host identity resolution is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant domain activation (auth-client)",
-      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant host identity resolution is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant domain activation (auth-client)",
-      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant domain activation (auth-client) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Tenant domain activation (auth-client)",
-      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant canonical domain set/unset",
-      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant domain activation (auth-client) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant canonical domain set/unset",
-      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant canonical domain set/unset is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Tenant canonical domain set/unset",
-      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant custom-domain auth callback",
-      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant canonical domain set/unset is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant custom-domain auth callback",
-      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant custom-domain auth callback is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Tenant custom-domain auth callback",
-      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Tenant service clickthrough policy",
-      "message": "Tenant service clickthrough policy is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant custom-domain auth callback is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Tenant service clickthrough policy",
-      "message": "Tenant service clickthrough policy is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Environment registry + bootstrap",
-      "message": "Environment registry + bootstrap is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant service clickthrough policy is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Environment registry + bootstrap",
-      "message": "Environment registry + bootstrap is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Provider environment classification",
-      "message": "Provider environment classification is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Environment registry + bootstrap is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Provider environment classification",
-      "message": "Provider environment classification is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "E2E confidence ladder (stage-aware)",
-      "message": "E2E confidence ladder (stage-aware) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "OpenAPI drift hard gate",
-      "message": "OpenAPI drift hard gate is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "i18n runtime + validation",
-      "message": "i18n runtime + validation is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Accessibility (a11y) gate",
-      "message": "Accessibility (a11y) gate is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Provider environment classification is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     }
   ]
 }

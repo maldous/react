@@ -1,7 +1,7 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:01:18.996Z",
+  "generatedAt": "2026-06-23T08:17:37.791Z",
   "status": "FAIL",
   "environmentModel": {
     "dev": {
@@ -237,12 +237,6 @@
       "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
       "message": "DEV proof evidence must use an in-memory semantic provider",
       "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts"
-    },
-    {
-      "kind": "dev-provider-not-in-memory",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-      "message": "DEV proof evidence must use an in-memory semantic provider",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts"
     },
     {
       "kind": "dev-provider-not-in-memory",
@@ -1523,17 +1517,11 @@
       "subjectId": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "environment": "dev",
       "providerMode": "semantic-dev",
-      "providerEvidenceClass": "contract-or-unit-proof",
+      "providerEvidenceClass": "in-memory-provider-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L1",
-      "environmentValid": false,
-      "gaps": [
-        {
-          "kind": "dev-provider-not-in-memory",
-          "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
-          "message": "DEV proof evidence must use an in-memory semantic provider"
-        }
-      ],
+      "proofLevelObserved": "L3",
+      "environmentValid": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-provider-runtime-proof.json"
     },
     {

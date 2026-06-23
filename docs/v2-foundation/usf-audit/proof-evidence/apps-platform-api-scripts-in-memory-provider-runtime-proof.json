@@ -4,63 +4,419 @@
   "subjectIds": [
     "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
     "package.json#proof:in-memory-provider-runtime",
-    "proof:in-memory-provider-runtime"
+    "proof:in-memory-provider-runtime",
+    "provider:in-memory-identity-repository",
+    "provider:in-memory-event-bus",
+    "provider:in-memory-secret-store",
+    "provider:in-memory-object-storage",
+    "provider:in-memory-antivirus",
+    "provider:in-memory-rate-limit-repository",
+    "provider:in-memory-notification-transport",
+    "provider:in-memory-webhook-dispatcher",
+    "provider:in-memory-observability-repository",
+    "provider:in-memory-search-repository",
+    "provider:in-memory-backup-restore-provider",
+    "workflow:wf-proof",
+    "event:thing.created",
+    "storage:tenant-semantic-dev/hello.txt"
   ],
   "subjectId": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
   "capabilityId": "capability:in-memory-provider-runtime",
-  "providerId": "in-memory-provider",
+  "providerId": "semantic-dev-in-memory-provider-set",
   "routeIds": [],
-  "workflowIds": [],
-  "eventIds": [],
-  "storageIds": [],
+  "workflowIds": ["workflow:wf-proof"],
+  "eventIds": ["event:thing.created"],
+  "storageIds": ["storage:tenant-semantic-dev/hello.txt"],
   "environmentMode": "dev",
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-provider-runtime",
-  "startedAt": "2026-06-23T08:01:37.501Z",
-  "endedAt": "2026-06-23T08:01:37.680Z",
+  "startedAt": "2026-06-23T08:17:01.854Z",
+  "endedAt": "2026-06-23T08:17:02.039Z",
   "exitStatus": 0,
-  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "commit": "e7083353f4082dada4f5516f24ec3d5a1613e9a1",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
-  "inMemoryProviderUsed": false,
+  "inMemoryProviderUsed": true,
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "not-emitted-by-proof"
+  "beforeState": {
+    "tenant": "tenant-semantic-dev",
+    "providerMode": "semantic-dev",
+    "sessions": 0,
+    "storageObjects": 0,
+    "eventsProcessed": 0,
+    "deadLetters": 0,
+    "workflows": 0,
+    "notifications": 0,
+    "webhookDeliveries": 0,
+    "searchResults": 0,
+    "secretVersions": 0,
+    "observabilitySamples": 0,
+    "rateLimitCount": 0,
+    "backups": 0,
+    "auditEvents": 0
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "tenant": "tenant-semantic-dev",
+    "providerMode": "semantic-dev",
+    "sessionFound": true,
+    "storageObjectLifecycleCompleted": true,
+    "eventsProcessed": 1,
+    "deadLetters": 1,
+    "workflowStatus": "failed",
+    "billingReady": "ready",
+    "notifications": 1,
+    "webhookDeliveries": 1,
+    "searchResults": 1,
+    "secretDeleted": true,
+    "observabilitySamples": 42,
+    "rateLimitCount": 2,
+    "backupRestored": true,
+    "auditEvents": 8
+  },
+  "assertedStateDiff": {
+    "sessionCreated": true,
+    "storageObjectWrittenReadDeleted": true,
+    "eventConsumedAndDeadLettered": true,
+    "workflowFailedByDeniedApproval": true,
+    "billingAccountEnsured": true,
+    "notificationSent": true,
+    "webhookDelivered": true,
+    "searchIndexedAndQueried": true,
+    "secretCreatedRevokedRotatedDeleted": true,
+    "observabilitySampleCaptured": true,
+    "rateLimitIncremented": true,
+    "backupRestoreRoundTrip": true
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "in-memory-audit-event-port:storage.object.scan.clean:0",
+    "in-memory-audit-event-port:storage.object.download:1",
+    "in-memory-audit-event-port:storage.object.delete:2",
+    "in-memory-audit-event-port:search.queried:3",
+    "in-memory-audit-event-port:secret_ref.created:4",
+    "in-memory-audit-event-port:secret_ref.revoked:5",
+    "in-memory-audit-event-port:secret_ref.created:6",
+    "in-memory-audit-event-port:secret_ref.deleted:7"
+  ],
+  "traceIds": [
+    "trace:storage.storage.put:operation",
+    "trace:in-memory-antivirus.scan:observed",
+    "trace:storage.storage.download:operation",
+    "trace:storage.storage.delete:operation"
+  ],
+  "metricSamples": [
+    {
+      "name": "session_store_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-session-store",
+        "operation": "create"
+      }
+    },
+    {
+      "name": "antivirus_scans_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-antivirus",
+        "operation": "scan"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "storage_operation_total",
+      "value": 1,
+      "labels": {
+        "operation": "put",
+        "outcome": "success"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "storage_operation_total",
+      "value": 1,
+      "labels": {
+        "operation": "download",
+        "outcome": "success"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "storage_operation_total",
+      "value": 1,
+      "labels": {
+        "operation": "delete",
+        "outcome": "success"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "rate_limit_counter_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-rate-limit-repository",
+        "operation": "increment"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "rate_limit_counter_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-rate-limit-repository",
+        "operation": "increment"
+      }
+    }
+  ],
+  "logCorrelationIds": ["log:storage.info:tenant-semantic-dev/hello.txt"],
+  "cleanupResult": {
+    "status": "verified",
+    "resetSupported": true,
+    "providersChecked": 14
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T08:01:37.680Z",
+  "generatedAt": "2026-06-23T08:17:02.039Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782201682139-2612279",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782202606028-2702969",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "dev",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T08:01:37.501Z",
-  "endTime": "2026-06-23T08:01:37.680Z",
-  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
-  "executionTimestamp": "2026-06-23T08:01:37.680Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "dbb23931b85f23d42a3c2016642352e203692599dce24860a83efcfe9958d259"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T08:17:01.854Z",
+  "endTime": "2026-06-23T08:17:02.039Z",
+  "gitCommit": "e7083353f4082dada4f5516f24ec3d5a1613e9a1",
+  "executionTimestamp": "2026-06-23T08:17:02.039Z",
+  "stateDiff": {
+    "sessionCreated": true,
+    "storageObjectWrittenReadDeleted": true,
+    "eventConsumedAndDeadLettered": true,
+    "workflowFailedByDeniedApproval": true,
+    "billingAccountEnsured": true,
+    "notificationSent": true,
+    "webhookDelivered": true,
+    "searchIndexedAndQueried": true,
+    "secretCreatedRevokedRotatedDeleted": true,
+    "observabilitySampleCaptured": true,
+    "rateLimitIncremented": true,
+    "backupRestoreRoundTrip": true
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "in-memory-audit-event-port:storage.object.scan.clean:0",
+    "in-memory-audit-event-port:storage.object.download:1",
+    "in-memory-audit-event-port:storage.object.delete:2",
+    "in-memory-audit-event-port:search.queried:3",
+    "in-memory-audit-event-port:secret_ref.created:4",
+    "in-memory-audit-event-port:secret_ref.revoked:5",
+    "in-memory-audit-event-port:secret_ref.created:6",
+    "in-memory-audit-event-port:secret_ref.deleted:7"
+  ],
+  "metricEvidence": [
+    {
+      "name": "session_store_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-session-store",
+        "operation": "create"
+      }
+    },
+    {
+      "name": "antivirus_scans_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-antivirus",
+        "operation": "scan"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "storage_operation_total",
+      "value": 1,
+      "labels": {
+        "operation": "put",
+        "outcome": "success"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "storage_operation_total",
+      "value": 1,
+      "labels": {
+        "operation": "download",
+        "outcome": "success"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "storage_operation_total",
+      "value": 1,
+      "labels": {
+        "operation": "delete",
+        "outcome": "success"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "rate_limit_counter_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-rate-limit-repository",
+        "operation": "increment"
+      }
+    },
+    {
+      "name": "audit_events_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-audit-event-port",
+        "operation": "emit"
+      }
+    },
+    {
+      "name": "rate_limit_counter_total",
+      "value": 1,
+      "labels": {
+        "provider": "in-memory-rate-limit-repository",
+        "operation": "increment"
+      }
+    }
+  ],
+  "logEvidence": ["log:storage.info:tenant-semantic-dev/hello.txt"],
+  "evidenceSignature": "f86c7738aa7626047cc8cf2091328c0dbfeef19e618707cf7f0d398da22d3ef9"
 }

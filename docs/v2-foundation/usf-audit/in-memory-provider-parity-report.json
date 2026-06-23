@@ -1,7 +1,7 @@
 {
   "artefact": "in-memory-provider-parity-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:01:18.998Z",
+  "generatedAt": "2026-06-23T08:17:37.793Z",
   "status": "FAIL",
   "providers": [
     {
@@ -10,10 +10,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "clamav-antivirus",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -34,10 +34,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "backup-restore-scripts",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -58,10 +58,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-event-bus",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -70,10 +70,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-identity-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -82,10 +82,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "smtp-email-adapter",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -94,10 +94,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "s3-object-storage-adapter",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -106,10 +106,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-observability-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -118,10 +118,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "redis-rate-limit-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -130,10 +130,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-search-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -142,10 +142,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "openbao-secret-store",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -154,10 +154,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-static-provider-factory",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -166,10 +166,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-shared-provider-substrate",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -178,10 +178,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "http-webhook-dispatcher",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     }
   ],
@@ -192,10 +192,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "clamav-antivirus",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -216,10 +216,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "backup-restore-scripts",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -240,10 +240,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-event-bus",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -252,10 +252,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-identity-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -264,10 +264,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "smtp-email-adapter",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -276,10 +276,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "s3-object-storage-adapter",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -288,10 +288,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-observability-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -300,10 +300,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "redis-rate-limit-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -312,10 +312,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "postgres-search-repository",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -324,10 +324,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "openbao-secret-store",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -336,10 +336,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-static-provider-factory",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -348,10 +348,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "not-runtime-shared-provider-substrate",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     },
     {
@@ -360,10 +360,10 @@
       "proof": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "correspondingRealProvider": "http-webhook-dispatcher",
       "samePortInterface": false,
-      "sameSemanticOutcomes": false,
-      "sameFailureSemantics": false,
-      "sameEventAuditObservabilityContract": false,
-      "semanticDevProofMode": "missing",
+      "sameSemanticOutcomes": true,
+      "sameFailureSemantics": true,
+      "sameEventAuditObservabilityContract": true,
+      "semanticDevProofMode": "in-memory-provider-proof",
       "realProviderParityProofMode": "missing"
     }
   ]

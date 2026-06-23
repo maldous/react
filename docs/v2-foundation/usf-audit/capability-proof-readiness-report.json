@@ -1,7 +1,7 @@
 {
   "artefact": "capability-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:01:18.997Z",
+  "generatedAt": "2026-06-23T08:17:37.793Z",
   "status": "FAIL",
   "modelConsistencyStatus": "PASS",
   "migrationReadinessStatus": "FAIL",
@@ -9,1121 +9,631 @@
   "fullyProvenCapabilityCount": 0,
   "fullServiceVerifiedCapabilityCount": 0,
   "readinessCounts": {
-    "PARTIALLY_PROVEN": 70
+    "SEMANTIC_PROVEN": 70
   },
   "gaps": [
     {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant identity (record + FQDN)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant identity (record + FQDN) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant identity (record + FQDN)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant identity (record + FQDN) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "User identity + tenant membership",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "User identity + tenant membership is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant identity (record + FQDN) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "User identity + tenant membership",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "User identity + tenant membership is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "End-user profile + preferences self-service",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "End-user profile + preferences self-service is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "End-user profile + preferences self-service",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "End-user profile + preferences self-service is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "API keys / personal access tokens",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "API keys / personal access tokens is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "End-user profile + preferences self-service is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "API keys / personal access tokens",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "API keys / personal access tokens is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant groups",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant groups is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "API keys / personal access tokens is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant groups",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant groups is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Sub-organisations",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Sub-organisations is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant groups is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Sub-organisations",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Sub-organisations is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "RBAC (roles + permissions)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "RBAC (roles + permissions) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Sub-organisations is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "RBAC (roles + permissions)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "RBAC (roles + permissions) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "ABAC / Policy Decision Point",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "RBAC (roles + permissions) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "ABAC / Policy Decision Point",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "ABAC / Policy Decision Point",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Delegated administration roles",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Delegated administration roles is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Delegated administration roles",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Delegated administration roles is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Entitlement engine",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Entitlement engine is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Delegated administration roles is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Entitlement engine",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Entitlement engine is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Support-mode / break-glass access",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Support-mode / break-glass access is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Entitlement engine is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Support-mode / break-glass access",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Support-mode / break-glass access is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Audit of privileged access",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Audit of privileged access is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Support-mode / break-glass access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Audit of privileged access",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Audit of privileged access is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Platform login + session",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Platform login + session is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Audit of privileged access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Platform login + session",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Platform login + session is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Platform login + session is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Platform login + session",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Platform login + session is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "IdP brokering + OIDC provider management",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Platform login + session is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "IdP brokering + OIDC provider management",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "IdP brokering + OIDC provider management is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "IdP brokering + OIDC provider management",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Claim mapping + group/role mapping",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "IdP brokering + OIDC provider management is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Claim mapping + group/role mapping",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Claim mapping + group/role mapping",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "MFA + session policy + lockout",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "MFA + session policy + lockout",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "MFA + session policy + lockout is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "MFA + session policy + lockout",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Configuration registry + history",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Configuration registry + history is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "MFA + session policy + lockout is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Configuration registry + history",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Configuration registry + history is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Branding + theming",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Branding + theming is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Configuration registry + history is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Branding + theming",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Branding + theming is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Branding + theming is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Custom domains, DNS ownership, TLS, canonical is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Write-only secret settings",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Custom domains, DNS ownership, TLS, canonical is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Write-only secret settings",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Write-only secret settings",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Product catalog, plans, prices",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Product catalog, plans, prices is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Product catalog, plans, prices",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Product catalog, plans, prices is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Subscriptions, invoices, payment methods, dunning",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Subscriptions, invoices, payment methods, dunning",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Subscriptions, invoices, payment methods, dunning",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Usage metering + meter event ingestion",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Usage metering + meter event ingestion is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Usage metering + meter event ingestion",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Usage metering + meter event ingestion is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Quota enforcement",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Quota enforcement is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Usage metering + meter event ingestion is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Quota enforcement",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Quota enforcement is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Relational storage + migrations + RLS",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Relational storage + migrations + RLS is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Quota enforcement is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Relational storage + migrations + RLS",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Relational storage + migrations + RLS is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Backup + restore",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Backup + restore is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Backup + restore",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Backup + restore is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "PITR, retention, legal hold, data residency",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "PITR, retention, legal hold, data residency is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Backup + restore is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "PITR, retention, legal hold, data residency",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "PITR, retention, legal hold, data residency is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "PITR, retention, legal hold, data residency is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant data import / export",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant data import / export is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant data import / export",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant data import / export is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Search + indexing (product search)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Search + indexing (product search) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant data import / export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Search + indexing (product search)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Search + indexing (product search) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Object storage + tenant prefixes + signed URLs",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Search + indexing (product search) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Object storage + tenant prefixes + signed URLs",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Object storage + tenant prefixes + signed URLs",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Event bus, durable queues, DLQ, redrive",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Event bus, durable queues, DLQ, redrive is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Event bus, durable queues, DLQ, redrive",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Event bus, durable queues, DLQ, redrive is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Workflow engine, scheduled jobs, approvals",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Event bus, durable queues, DLQ, redrive is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Workflow engine, scheduled jobs, approvals",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Workflow engine, scheduled jobs, approvals",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Scheduled jobs (built-in, on the event substrate)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Scheduled jobs (built-in, on the event substrate) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Scheduled jobs (built-in, on the event substrate)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Scheduled jobs (built-in, on the event substrate) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Notification delivery + preferences + channels",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Scheduled jobs (built-in, on the event substrate) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Notification delivery + preferences + channels",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Notification delivery + preferences + channels is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Notification delivery + preferences + channels",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Background workers / job runner",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Background workers / job runner is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Notification delivery + preferences + channels is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Background workers / job runner",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Background workers / job runner is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Runtime secrets management",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Background workers / job runner is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Runtime secrets management",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Runtime secrets management is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Runtime secrets management",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Logs (aggregation + tenant-scoped search)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Runtime secrets management is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Logs (aggregation + tenant-scoped search)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Logs (aggregation + tenant-scoped search) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Logs (aggregation + tenant-scoped search)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Metrics + traces",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Metrics + traces is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Logs (aggregation + tenant-scoped search) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Metrics + traces",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Metrics + traces is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Metrics + traces is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Metrics + traces",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Metrics + traces is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Observability — built-in alerting + incidents",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Metrics + traces is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Observability — built-in alerting + incidents",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Observability — built-in alerting + incidents is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Observability — built-in alerting + incidents",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Internal service catalog + readiness",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Observability — built-in alerting + incidents is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Internal service catalog + readiness",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Internal service catalog + readiness is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Internal service catalog + readiness",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Code quality + secret + dependency scanning",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Internal service catalog + readiness is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Code quality + secret + dependency scanning",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Code quality + secret + dependency scanning",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Compliance reports, access reviews, evidence packs",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Compliance reports, access reviews, evidence packs is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant isolation proof",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant isolation proof is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant isolation proof",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant isolation proof is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Webhooks (developer-facing)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant isolation proof is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Webhooks (developer-facing)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Webhooks (developer-facing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Webhooks (developer-facing)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "API docs, developer portal, SDKs, rate limits",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Webhooks (developer-facing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "API docs, developer portal, SDKs, rate limits",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "API docs, developer portal, SDKs, rate limits",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Rate limiting (API)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Rate limiting (API)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Rate limiting (API) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Rate limiting (API)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant lifecycle: provision, suspend, delete, export",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant lifecycle: provision, suspend, delete, export is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Rate limiting (API) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant lifecycle: provision, suspend, delete, export is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Support tickets, customer health, announcements",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Support tickets, customer health, announcements is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant lifecycle: provision, suspend, delete, export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Support tickets, customer health, announcements",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Support tickets, customer health, announcements is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Universal Service Foundation scope + principles",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Universal Service Foundation scope + principles is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Build-versus-compose decision framework",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Build-versus-compose decision framework is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Service catalog + provider integration model",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Support tickets, customer health, announcements is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Service catalog + provider integration model",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Service catalog + provider integration model is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Service catalog + provider integration model",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Environment-specific vs shared service model",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Environment-specific vs shared service model is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Provider configuration plane",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Provider configuration plane is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Service catalog + provider integration model is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Provider configuration plane",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Provider configuration plane is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Composed provider readiness spine",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Composed provider readiness spine is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Provider configuration plane is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Composed provider readiness spine",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Composed provider readiness spine is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "History read-model (read-only projection)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "History read-model (read-only projection) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Composed provider readiness spine is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "History read-model (read-only projection)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "History read-model (read-only projection) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "OIDC discovery / issuer / JWKS validation",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "History read-model (read-only projection) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "OIDC discovery / issuer / JWKS validation",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "OIDC discovery / issuer / JWKS validation is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "OIDC discovery / issuer / JWKS validation",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "OIDC test connection + callback display",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "OIDC discovery / issuer / JWKS validation is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "OIDC test connection + callback display",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "OIDC test connection + callback display is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "OIDC test connection + callback display",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant host identity resolution",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant host identity resolution is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "OIDC test connection + callback display is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant host identity resolution",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant host identity resolution is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant domain activation (auth-client)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant host identity resolution is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant domain activation (auth-client)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant domain activation (auth-client) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Tenant domain activation (auth-client)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant canonical domain set/unset",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant domain activation (auth-client) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant canonical domain set/unset",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant canonical domain set/unset is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Tenant canonical domain set/unset",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant custom-domain auth callback",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant canonical domain set/unset is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant custom-domain auth callback",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant custom-domain auth callback is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Tenant custom-domain auth callback",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Tenant service clickthrough policy",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Tenant service clickthrough policy is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant custom-domain auth callback is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Tenant service clickthrough policy",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant service clickthrough policy is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Environment registry + bootstrap",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Environment registry + bootstrap is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Tenant service clickthrough policy is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Environment registry + bootstrap",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Environment registry + bootstrap is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Provider environment classification",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Provider environment classification is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Environment registry + bootstrap is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Provider environment classification",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Provider environment classification is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "E2E confidence ladder (stage-aware)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "E2E confidence ladder (stage-aware) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "OpenAPI drift hard gate",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "OpenAPI drift hard gate is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "i18n runtime + validation",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "i18n runtime + validation is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Accessibility (a11y) gate",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Accessibility (a11y) gate is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
-    },
-    {
-      "kind": "capability-semantic-proof-missing",
-      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "readiness": "PARTIALLY_PROVEN",
-      "missingBand": "semantic-L3",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+      "message": "Provider environment classification is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "kind": "capability-external-sandbox-proof-missing",
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
     }
   ],
   "capabilities": [
@@ -1131,11 +641,11 @@
       "capability": "Tenant identity (record + FQDN)",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1144,36 +654,36 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "User identity + tenant membership",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "End-user profile + preferences self-service",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1182,18 +692,18 @@
         "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
         "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "API keys / personal access tokens",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1202,72 +712,72 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Tenant groups",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Sub-organisations",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "RBAC (roles + permissions)",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1275,18 +785,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Delegated administration roles",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1294,18 +804,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Entitlement engine",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1316,18 +826,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Support-mode / break-glass access",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1335,36 +845,36 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Audit of privileged access",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Platform login + session",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1372,18 +882,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "IdP brokering + OIDC provider management",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1392,36 +902,36 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Claim mapping + group/role mapping",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "MFA + session policy + lockout",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1429,54 +939,54 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Configuration registry + history",
       "category": "configuration",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Branding + theming",
       "category": "configuration",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
       "category": "configuration",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1487,36 +997,36 @@
         "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Write-only secret settings",
       "category": "configuration",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Product catalog, plans, prices",
       "category": "entitlements-billing",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1524,18 +1034,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "category": "entitlements-billing",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1544,18 +1054,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Usage metering + meter event ingestion",
       "category": "entitlements-billing",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1564,18 +1074,18 @@
         "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Quota enforcement",
       "category": "entitlements-billing",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1584,36 +1094,36 @@
         "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Relational storage + migrations + RLS",
       "category": "data-platform",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Backup + restore",
       "category": "data-platform",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1621,18 +1131,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1641,18 +1151,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
       "category": "data-platform",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1660,18 +1170,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Tenant data import / export",
       "category": "data-platform",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1679,18 +1189,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Search + indexing (product search)",
       "category": "search",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1700,18 +1210,18 @@
         "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
       "category": "storage",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1719,18 +1229,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
       "category": "events-workflow",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1739,18 +1249,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
       "category": "events-workflow",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1758,18 +1268,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
       "category": "events-workflow",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1778,18 +1288,18 @@
         "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Notification delivery + preferences + channels",
       "category": "events-workflow",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1801,18 +1311,18 @@
         "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Background workers / job runner",
       "category": "compute-runtime",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1820,18 +1330,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Runtime secrets management",
       "category": "compute-runtime",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1841,18 +1351,18 @@
         "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
         "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
       "category": "observability-ops",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1860,18 +1370,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Metrics + traces",
       "category": "observability-ops",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1880,18 +1390,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Observability — built-in alerting + incidents",
       "category": "observability-ops",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1902,18 +1412,18 @@
         "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
         "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Internal service catalog + readiness",
       "category": "observability-ops",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1922,54 +1432,54 @@
         "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Code quality + secret + dependency scanning",
       "category": "security-governance",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "Tenant isolation proof",
       "category": "security-governance",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1977,18 +1487,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Webhooks (developer-facing)",
       "category": "developer-platform",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -1997,36 +1507,36 @@
         "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
         "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
       "category": "developer-platform",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Rate limiting (API)",
       "category": "developer-platform",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2036,18 +1546,18 @@
         "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
       "category": "support-admin",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2055,72 +1565,72 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Support tickets, customer health, announcements",
       "category": "support-admin",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Universal Service Foundation scope + principles",
       "category": "foundation",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "Build-versus-compose decision framework",
       "category": "foundation",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "Service catalog + provider integration model",
       "category": "foundation",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2131,36 +1641,36 @@
         "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Environment-specific vs shared service model",
       "category": "foundation",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "Provider configuration plane",
       "category": "foundation",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2169,18 +1679,18 @@
         "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Composed provider readiness spine",
       "category": "foundation",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2188,18 +1698,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "History read-model (read-only projection)",
       "category": "data-platform",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2207,18 +1717,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2226,18 +1736,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "OIDC test connection + callback display",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2245,18 +1755,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Tenant host identity resolution",
       "category": "identity-access",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2265,18 +1775,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Tenant domain activation (auth-client)",
       "category": "configuration",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2284,18 +1794,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Tenant canonical domain set/unset",
       "category": "configuration",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2303,18 +1813,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Tenant custom-domain auth callback",
       "category": "authentication",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2322,18 +1832,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     },
     {
       "capability": "Tenant service clickthrough policy",
       "category": "observability-ops",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2342,18 +1852,18 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Environment registry + bootstrap",
       "category": "foundation",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2363,18 +1873,18 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "Provider environment classification",
       "category": "foundation",
       "requiredBands": ["semantic-L3", "provider-L4"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
@@ -2382,98 +1892,98 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4"]
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
       "category": "foundation",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "OpenAPI drift hard gate",
       "category": "developer-platform",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "i18n runtime + validation",
       "category": "foundation",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "Accessibility (a11y) gate",
       "category": "foundation",
       "requiredBands": ["semantic-L3"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": []
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "category": "observability-ops",
       "requiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"],
-      "highestSemanticLevelAchieved": "L1",
+      "highestSemanticLevelAchieved": "L3",
       "highestProviderLevelAchieved": "L0",
       "highestSandboxLevelAchieved": "L0",
       "highestJourneyLevelAchieved": "L0",
-      "readiness": "PARTIALLY_PROVEN",
+      "readiness": "SEMANTIC_PROVEN",
       "fullServiceVerified": false,
       "fullyProven": false,
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
-      "missingBands": ["semantic-L3", "provider-L4", "sandbox-L5", "journey-L6"],
-      "missingRequiredBands": ["semantic-L3", "provider-L4", "sandbox-L5"]
+      "missingBands": ["provider-L4", "sandbox-L5", "journey-L6"],
+      "missingRequiredBands": ["provider-L4", "sandbox-L5"]
     }
   ]
 }

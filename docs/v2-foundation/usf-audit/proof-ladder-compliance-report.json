@@ -1,7 +1,7 @@
 {
   "artefact": "proof-ladder-compliance-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T08:01:18.995Z",
+  "generatedAt": "2026-06-23T08:17:37.790Z",
   "status": "FAIL",
   "ladder": [
     {
@@ -1798,42 +1798,6 @@
       "message": "L3+ proof requires side-effect evidence",
       "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
       "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"
-    },
-    {
-      "kind": "proof-claim-overstated",
-      "message": "claimed L3 exceeds observed L1",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    },
-    {
-      "kind": "missing-before-state",
-      "message": "L3+ proof requires before state",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    },
-    {
-      "kind": "missing-after-state",
-      "message": "L3+ proof requires after state",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    },
-    {
-      "kind": "missing-state-diff",
-      "message": "L3+ proof requires state diff",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    },
-    {
-      "kind": "missing-failure-path",
-      "message": "L3+ proof requires failure path",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
-    },
-    {
-      "kind": "missing-side-effect-evidence",
-      "message": "L3+ proof requires side-effect evidence",
-      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"
     },
     {
       "kind": "proof-claim-overstated",
@@ -8069,34 +8033,9 @@
       "environment": "dev",
       "providerMode": "semantic-dev",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L1",
-      "compliant": false,
-      "gaps": [
-        {
-          "kind": "proof-claim-overstated",
-          "message": "claimed L3 exceeds observed L1"
-        },
-        {
-          "kind": "missing-before-state",
-          "message": "L3+ proof requires before state"
-        },
-        {
-          "kind": "missing-after-state",
-          "message": "L3+ proof requires after state"
-        },
-        {
-          "kind": "missing-state-diff",
-          "message": "L3+ proof requires state diff"
-        },
-        {
-          "kind": "missing-failure-path",
-          "message": "L3+ proof requires failure path"
-        },
-        {
-          "kind": "missing-side-effect-evidence",
-          "message": "L3+ proof requires side-effect evidence"
-        }
-      ],
+      "proofLevelObserved": "L3",
+      "compliant": true,
+      "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-provider-runtime-proof.json"
     },
     {
