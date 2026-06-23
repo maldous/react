@@ -4,7 +4,8 @@ set -euo pipefail
 # Starts the given compose profile for ENV with retry on failure.
 # PROFILE values: default | identity | observability |
 #                 cloud | external-sentry | external-sonar |
-#                 external-mocks | external-web | web
+#                 external-mocks | external-web | web |
+#                 workflow-provider | pitr-provider
 
 ENV="${1:?ENV required}"
 PROFILE="${2:?PROFILE required}"
@@ -119,6 +120,18 @@ case "$PROFILE" in
     PROFILE_FLAG="--profile observability-provider"
     TIMEOUT=180
     ;;
+  workflow-provider)
+    # Windmill + Temporal composed workflow backends (ADR-0071 / ADR-0059).
+    SERVICES="windmill-postgres windmill-redis windmill temporal-postgres temporal"
+    PROFILE_FLAG="--profile workflow-provider"
+    TIMEOUT=420
+    ;;
+  pitr-provider)
+    # pgBackRest composed PITR backend. Depends on the default Postgres/MinIO services.
+    SERVICES="pgbackrest"
+    PROFILE_FLAG="--profile pitr-provider"
+    TIMEOUT=180
+    ;;
   antivirus-provider)
     SERVICES="clamav"
     PROFILE_FLAG="--profile antivirus-provider"
@@ -135,10 +148,10 @@ printf '%sStarting %s profile for %s...%s\n' "$GREEN" "$PROFILE" "$ENV" "$RESET"
 # shellcheck disable=SC2086
 if ! $COMPOSE_CMD $PROFILE_FLAG up -d $EXTRA_FLAGS --wait \
         --wait-timeout "$TIMEOUT" $SERVICES "$@"; then
-    printf '%s⚠ %s profile failed for %s — retrying after down...%s\n' \
+    printf '%s⚠ %s profile failed for %s — retrying after removing profile services...%s\n' \
         "$YELLOW" "$PROFILE" "$ENV" "$RESET"
     # shellcheck disable=SC2086
-    $COMPOSE_CMD $PROFILE_FLAG down --timeout 30 >/dev/null 2>&1 || true
+    $COMPOSE_CMD $PROFILE_FLAG rm -sf $SERVICES >/dev/null 2>&1 || true
     sleep 2
     # shellcheck disable=SC2086
     $COMPOSE_CMD $PROFILE_FLAG up -d $EXTRA_FLAGS --wait \

@@ -259,14 +259,20 @@ export class TemporalWorkflowProviderAdapter implements WorkflowOrchestratorPort
         handle.describe()
       );
       const statusName = String(description.status.name);
+      const normalizedStatusName = statusName.toLowerCase();
       const status =
-        statusName === "Running"
+        normalizedStatusName === "running" ||
+        normalizedStatusName === "workflow_execution_status_running"
           ? "running"
-          : statusName === "Completed"
+          : normalizedStatusName === "completed" ||
+              normalizedStatusName === "workflow_execution_status_completed"
             ? "completed"
-            : statusName === "Failed"
+            : normalizedStatusName === "failed" ||
+                normalizedStatusName === "workflow_execution_status_failed"
               ? "failed"
-              : statusName === "Canceled"
+              : normalizedStatusName === "canceled" ||
+                  normalizedStatusName === "cancelled" ||
+                  normalizedStatusName === "workflow_execution_status_canceled"
                 ? "cancelled"
                 : "waiting";
       this.recordAudit(workflowId, "workflow.status_observed", `provider->${status}`);

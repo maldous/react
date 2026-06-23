@@ -5,8 +5,8 @@
  * adapter-confirmed lifecycle (ADR-0070):
  *  - each provider with a reachable health endpoint reports `ready`;
  *  - a wired-but-unreachable provider reports `degraded`;
- *  - a provider with NO endpoint wired (Windmill/Temporal here) reports `not_configured`
- *    and lifecycle `candidate` (a candidate is never a delivered capability);
+ *  - a provider with NO endpoint wired reports `not_configured` and lifecycle
+ *    `candidate` (a candidate is never a delivered capability);
  *  - the derived lifecycle is adapter-confirmed (ready⇒ready, degraded⇒degraded);
  *  - NO secret (Meilisearch master key, etc.) appears in any readiness payload.
  *
@@ -105,17 +105,33 @@ async function main(): Promise<void> {
     )
   );
 
-  // unwired providers are not_configured + candidate (never auto-ready)
-  check(
-    "windmill (no endpoint) is not_configured / candidate",
-    byKey["windmill"]?.status === "not_configured" &&
-      byKey["windmill"]?.lifecycleState === "candidate"
-  );
-  check(
-    "temporal (no endpoint) is not_configured / candidate",
-    byKey["temporal"]?.status === "not_configured" &&
-      byKey["temporal"]?.lifecycleState === "candidate"
-  );
+  // Heavy providers stay candidates unless explicitly wired; once wired, the
+  // same readiness contract must report the live probe result honestly.
+  if (process.env["WINDMILL_URL"]) {
+    check(
+      "windmill reports ready when endpoint is configured and reachable",
+      byKey["windmill"]?.status === "ready" && byKey["windmill"]?.lifecycleState === "ready"
+    );
+  } else {
+    check(
+      "windmill (no endpoint) is not_configured / candidate",
+      byKey["windmill"]?.status === "not_configured" &&
+        byKey["windmill"]?.lifecycleState === "candidate"
+    );
+  }
+  if (process.env["TEMPORAL_HTTP_URL"]) {
+    check(
+      "temporal reports honest readiness when endpoint is configured",
+      byKey["temporal"]?.status !== "not_configured" &&
+        byKey["temporal"]?.lifecycleState !== "candidate"
+    );
+  } else {
+    check(
+      "temporal (no endpoint) is not_configured / candidate",
+      byKey["temporal"]?.status === "not_configured" &&
+        byKey["temporal"]?.lifecycleState === "candidate"
+    );
+  }
 
   // no secret in any readiness payload
   check(

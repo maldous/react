@@ -698,9 +698,7 @@ services:
     image: ghcr.io/windmill-labs/windmill:1.734
     profiles: [workflow-provider]
     depends_on:
-      windmill-postgres:
-        condition: service_healthy
-      windmill-redis:
+      windmill:
         condition: service_healthy
     environment:
       DATABASE_URL: postgresql://${WINDMILL_DB_USER:-windmill}:${WINDMILL_DB_PASSWORD:-windmillpassword}@windmill-postgres:5432/${WINDMILL_DB_NAME:-windmill}
@@ -737,7 +735,8 @@ services:
       temporal-postgres:
         condition: service_healthy
     environment:
-      DB: postgresql
+      DB: postgres12
+      DB_PORT: "5432"
       POSTGRES_SEEDS: temporal-postgres
       POSTGRES_USER: ${TEMPORAL_DB_USER:-temporal}
       POSTGRES_PWD: ${TEMPORAL_DB_PASSWORD:-temporalpassword}

@@ -275,6 +275,7 @@
     "proof:support-approval": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-approval-runtime-proof.ts",
     "proof:workflow-adapters": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
     "proof:workflow-provider-live": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-provider-live-proof.ts",
+    "proof:l4-substrate-closure": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
     "proof:http-engine-providers": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
     "proof:composed-provider-runtime-closure": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
     "proof:temporal-workflow-provider": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
