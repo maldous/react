@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:39:45.696Z",
-  "endedAt": "2026-06-23T21:39:46.302Z",
+  "startedAt": "2026-06-23T21:53:26.117Z",
+  "endedAt": "2026-06-23T21:53:26.727Z",
   "exitStatus": 0,
-  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:39:46.302Z",
+  "generatedAt": "2026-06-23T21:53:26.727Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782250631847-3878273",
+  "collectorRunId": "proof-run-1782251451965-3995168",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:39:45.696Z",
-  "endTime": "2026-06-23T21:39:46.302Z",
-  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
-  "executionTimestamp": "2026-06-23T21:39:46.302Z",
+  "startTime": "2026-06-23T21:53:26.117Z",
+  "endTime": "2026-06-23T21:53:26.727Z",
+  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "executionTimestamp": "2026-06-23T21:53:26.727Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts": {
@@ -112,5 +112,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
-  "evidenceSignature": "e17b3b1a16c2a0b029dd467333251826a45e28859c92d674764ac0bdf13f50e1"
+  "evidenceSignature": "9175fc3aea5832546826e1f2f495b5b1945922bb376f7f2b115f7fcdf774cf4e"
 }

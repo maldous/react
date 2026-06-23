@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:39:45.206Z",
-  "endedAt": "2026-06-23T21:39:45.443Z",
+  "startedAt": "2026-06-23T21:53:25.634Z",
+  "endedAt": "2026-06-23T21:53:25.858Z",
   "exitStatus": 0,
-  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:39:45.443Z",
+  "generatedAt": "2026-06-23T21:53:25.858Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782250631847-3878273",
+  "collectorRunId": "proof-run-1782251451965-3995168",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:39:45.206Z",
-  "endTime": "2026-06-23T21:39:45.443Z",
-  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
-  "executionTimestamp": "2026-06-23T21:39:45.443Z",
+  "startTime": "2026-06-23T21:53:25.634Z",
+  "endTime": "2026-06-23T21:53:25.858Z",
+  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "executionTimestamp": "2026-06-23T21:53:25.858Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts": {
@@ -116,5 +116,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
-  "evidenceSignature": "a946cc2d68aa827b681c4d249260f9b07c24da0731b04fe7d9e6fc4975fb6fd0"
+  "evidenceSignature": "ca474f6267c37ec79e4760c26f60f800ae3fdcfdc29e000f5d5b5fd1a9175ace"
 }
