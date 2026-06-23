@@ -232,6 +232,48 @@ test("required runtime proof with deleted evidence fails", () => {
   assert.ok(gaps.some((gap) => gap.kind === "missing-evidence"));
 });
 
+test("mutation route evidence must name the exact route state transition", () => {
+  const routeSubjectMap = {
+    routes: [
+      {
+        routeId: "route:post-api-fixture",
+        method: "POST",
+        path: "/api/fixture",
+        proofRefs: ["proof:fixture"],
+        mutationBeforeAfterRequired: true,
+      },
+    ],
+  };
+  const genericState = validateEvidenceSet({
+    ctx,
+    records: [validRecord({ subjectIds: ["proof:fixture"], routeIds: [] })],
+    requiredProofs: [],
+    routeSubjectMap,
+  }).gaps;
+  assert.ok(genericState.some((gap) => gap.kind === "mutation-state-evidence"));
+
+  const routeSpecificState = validateEvidenceSet({
+    ctx,
+    records: [
+      validRecord({
+        subjectIds: ["proof:fixture"],
+        routeIds: ["route:post-api-fixture"],
+        beforeState: { routeMutations: { "route:post-api-fixture": { rows: 0 } } },
+        afterState: { routeMutations: { "route:post-api-fixture": { rows: 1 } } },
+        assertedStateDiff: {
+          routeMutations: { "route:post-api-fixture": { rows: { before: 0, after: 1 } } },
+        },
+      }),
+    ],
+    requiredProofs: [],
+    routeSubjectMap,
+  }).gaps;
+  assert.equal(
+    routeSpecificState.some((gap) => gap.kind === "mutation-state-evidence"),
+    false
+  );
+});
+
 test("capability readiness locks on Behaviour Proven before future substrate work", () => {
   const capabilityCtx = {
     foundation: {

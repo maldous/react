@@ -275,9 +275,29 @@ export function buildProofEvidenceAssurance(ctx, audit) {
   const ladderCompliance = buildProofLadderComplianceReport(evidence.records);
   const environmentConsistency = buildEnvironmentProofConsistencyReport(evidence.records);
   const ladderMigration = buildProofLadderMigrationReport();
+  const behaviourQuality = buildBehaviourProofQualityReport(ctx, evidence.records);
   const behaviourLocking = buildBehaviourProofLockingReport(evidence.records);
-  const behaviourReadiness = buildBehaviourProofReadinessReport(ctx, evidence.records);
+  const behaviourReadiness = buildBehaviourProofReadinessReport(
+    ctx,
+    evidence.records,
+    behaviourQuality
+  );
   const capabilityReadiness = buildCapabilityProofReadinessReport(ctx, evidence.records);
+  const behaviourCertification = buildBehaviourProofCertificationReport({
+    behaviourQuality,
+    behaviourLocking,
+    behaviourReadiness,
+    capabilityReadiness,
+    ladderCompliance,
+    environmentConsistency,
+    claimVsObserved,
+  });
+  const substrateRoadmap = buildSubstrateProofRoadmap({
+    ctx,
+    records: evidence.records,
+    capabilityReadiness,
+    behaviourCertification,
+  });
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
   const weakProofBacklog = buildWeakProofBacklog(
     requiredProofs,
@@ -305,8 +325,11 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     ladderCompliance,
     environmentConsistency,
     ladderMigration,
+    behaviourQuality,
     behaviourLocking,
     behaviourReadiness,
+    behaviourCertification,
+    substrateRoadmap,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -324,8 +347,11 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     ladderCompliance,
     environmentConsistency,
     ladderMigration,
+    behaviourQuality,
     behaviourLocking,
     behaviourReadiness,
+    behaviourCertification,
+    substrateRoadmap,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -579,14 +605,13 @@ export function validateEvidenceSet({
       });
     }
     if (route.mutationBeforeAfterRequired) {
-      const hasState = matching.some(
-        (record) => isMeaningfulObject(record.beforeState) && isMeaningfulObject(record.afterState)
-      );
+      const hasState = matching.some((record) => hasMutationRouteStateEvidence(record, route));
       if (!hasState) {
         gaps.push({
           kind: "mutation-state-evidence",
           subject: `${route.method} ${route.path}`,
-          message: "mutation proof lacks emitted before/after state evidence",
+          message:
+            "mutation proof lacks emitted route-specific before/after state and asserted diff evidence",
         });
       }
     }
@@ -971,7 +996,7 @@ function buildProofLadderMigrationReport() {
 }
 
 function buildBehaviourProofLockingReport(records) {
-  const candidates = records.filter((record) => isBehaviourCandidate(record));
+  const candidates = records.filter((record) => isClassifiedAtLeast(record, 3));
   const proofs = candidates.map((record) => {
     const gaps = behaviourGaps(record);
     const delegatedBehaviourImports = delegatedRuntimeProofImports(record);
@@ -1042,20 +1067,171 @@ function buildBehaviourProofLockingReport(records) {
   };
 }
 
-function buildBehaviourProofReadinessReport(ctx, records) {
+export function buildBehaviourProofQualityReport(ctx, records) {
+  const candidates = records.filter((record) => isClassifiedAtLeast(record, 3));
+  const capabilityLookup = capabilityLookupForRecords(ctx, records);
+  const proofRecords = candidates.map((record) =>
+    behaviourQualityRecord(record, capabilityLookup.get(record.proofId) || [])
+  );
+  const blocking = proofRecords.filter((record) => record.blockingIssues.length > 0);
+  const weak = proofRecords.filter((record) => record.weakBehaviouralEvidence);
+  return {
+    artefact: "behaviour-proof-quality-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: blocking.length === 0 && weak.length === 0 ? "PASS" : "FAIL",
+    scope: "proofs classified as L3 or higher by claimed or observed proof level",
+    totalProofsAudited: proofRecords.length,
+    validBehaviourProofs: proofRecords.filter((record) => record.validBehaviourProof).length,
+    invalidBehaviourProofs: proofRecords.filter((record) => !record.validBehaviourProof).length,
+    weakBehaviouralEvidenceProofs: weak.length,
+    delegatedBehaviourProofs: proofRecords.filter((record) => record.flags.delegatedProofImports)
+      .length,
+    wrapperOnlyProofs: proofRecords.filter((record) => record.flags.wrapperOnlyProof).length,
+    metadataOnlyProofs: proofRecords.filter((record) => record.flags.metadataOnlyProof).length,
+    evidenceInflationProofs: proofRecords.filter((record) => record.flags.evidenceInflation).length,
+    blockingIssues: uniq(blocking.flatMap((record) => record.blockingIssues)),
+    proofs: proofRecords,
+  };
+}
+
+function behaviourQualityRecord(record, capabilities) {
+  const gaps = behaviourGaps(record);
+  const inconsistencies = behaviourInconsistencies(record, gaps);
+  const source = sourceEvidence(record);
+  const delegatedImports = delegatedRuntimeProofImports(record);
+  const strictDefinition = {
+    beforeStateCaptured: isMeaningfulObject(record.beforeState),
+    afterStateCaptured: isMeaningfulObject(record.afterState),
+    stateDiffAsserted: isMeaningfulObject(record.assertedStateDiff),
+    sideEffectsAsserted: record.sideEffectsAsserted === true,
+    failurePathExercised: record.failurePathExercised === true,
+    auditEvidenceAsserted: (record.auditEventIds || []).length > 0,
+    metricEvidenceAsserted: (record.metricSamples || []).length > 0,
+    traceEvidenceAsserted: (record.traceIds || []).length > 0,
+    tenantBoundariesAsserted: record.tenantBoundaryAsserted === true,
+    securityBoundariesAsserted: record.securityBoundaryAsserted === true,
+    deterministicReplaySupported: record.deterministicReplaySupported === true,
+  };
+  const sourceAssertions = source.assertionCount > 0 || record.assertionsObserved === true;
+  const sourceExecutesBehaviour = source.awaitCount > 0 || source.domainOperationCount > 0;
+  const sourceFailureEvidence =
+    source.failurePatternCount > 0 || isMeaningfulEvidence(record.failureMode);
+  const observableSideEffects =
+    (record.auditEventIds || []).length > 0 &&
+    (record.metricSamples || []).length > 0 &&
+    (record.traceIds || []).length > 0 &&
+    (record.logCorrelationIds || []).length > 0;
+  const flags = {
+    delegatedProofImports: delegatedImports.length > 0,
+    wrapperOnlyProof: source.wrapperOnly,
+    metadataOnlyProof: !sourceExecutesBehaviour && source.emitEvidenceCount > 0,
+    assertionFreeProof: !sourceAssertions,
+    weakStateTransitionProof:
+      gaps.some((gap) =>
+        ["missing-before-state", "missing-after-state", "missing-asserted-state-diff"].includes(
+          gap.kind
+        )
+      ) || !stateTransitionWouldFailOnRegression(record, source),
+    syntheticFailurePath:
+      record.failurePathExercised === true &&
+      !sourceFailureEvidence &&
+      !failureStateEvidence(record),
+    nonObservableSideEffects: record.sideEffectsAsserted === true && !observableSideEffects,
+    evidenceInflation:
+      proofLevelNumber(record.proofLevelClaimed) > observedLevelFromEvidence(record) ||
+      (proofLevelNumber(record.proofLevelClaimed) >= 3 && gaps.length > 0),
+    behaviourClaimsUnsupportedByAssertions:
+      proofLevelNumber(record.proofLevelClaimed) >= 3 && !sourceAssertions,
+  };
+  const wouldFailOnBehaviourRegression =
+    sourceAssertions &&
+    sourceExecutesBehaviour &&
+    stateTransitionWouldFailOnRegression(record, source) &&
+    sourceFailureEvidence &&
+    observableSideEffects &&
+    gaps.length === 0 &&
+    inconsistencies.length === 0;
+  const blockingIssues = [
+    ...gaps.map((gap) => gap.kind),
+    ...inconsistencies.map((gap) => gap.kind),
+    ...Object.entries(flags)
+      .filter(([, value]) => value === true)
+      .map(([kind]) => kind),
+    ...(wouldFailOnBehaviourRegression ? [] : ["weak-behavioural-evidence"]),
+  ];
+  const positiveSignals = Object.values(strictDefinition).filter(Boolean).length;
+  const qualityScore = Math.max(
+    0,
+    Math.min(
+      100,
+      Math.round((positiveSignals / Object.keys(strictDefinition).length) * 70) +
+        (sourceAssertions ? 8 : 0) +
+        (sourceExecutesBehaviour ? 8 : 0) +
+        (sourceFailureEvidence ? 6 : 0) +
+        (observableSideEffects ? 5 : 0) +
+        (wouldFailOnBehaviourRegression ? 3 : 0) -
+        blockingIssues.length * 8
+    )
+  );
+  const confidenceScore = Math.max(
+    0,
+    Math.min(100, Math.round((qualityScore + (wouldFailOnBehaviourRegression ? 100 : 40)) / 2))
+  );
+  return {
+    proofId: record.proofId,
+    capability: capabilities.join("; ") || record.capabilityId || record.subjectId,
+    capabilities,
+    currentLevel: proofLevelId(
+      Math.max(proofLevelNumber(record.proofLevelClaimed), observedLevelFromEvidence(record))
+    ),
+    proofLevelClaimed: record.proofLevelClaimed,
+    proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
+    qualityScore,
+    confidenceScore,
+    validBehaviourProof: blockingIssues.length === 0,
+    weakBehaviouralEvidence: !wouldFailOnBehaviourRegression,
+    wouldFailIfImplementationRegressed: wouldFailOnBehaviourRegression,
+    strictDefinition,
+    flags,
+    sourceEvidence: source,
+    delegatedBehaviourProofImports: delegatedImports,
+    blockingIssues,
+    recommendedRemediation:
+      blockingIssues.length === 0
+        ? "No action required; preserve this proof as the L3 behavioural contract for future L4 substrate work."
+        : behaviourClosureAction(gaps, inconsistencies),
+    evidenceFile: record.evidenceFile,
+    sourceFileRefs: record.sourceFileRefs,
+  };
+}
+
+function buildBehaviourProofReadinessReport(ctx, records, behaviourQuality = null) {
   const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
   const bySubject = recordsBySubject(records);
+  const qualityByProofId = new Map(
+    (behaviourQuality?.proofs || []).map((proof) => [proof.proofId, proof])
+  );
   const rows = capabilities.map((capability) => {
     const capabilityRecords = uniqRecords([
       ...recordsForRefs(bySubject, capability.dev?.requiredProofs || []),
       ...recordsForRefs(bySubject, capability.test?.requiredProofs || []),
       ...recordsForRefs(bySubject, capability.staging?.requiredProofs || []),
     ]);
-    const candidates = capabilityRecords.filter((record) => isBehaviourCandidate(record));
-    const complete = candidates.filter((record) => behaviourGaps(record).length === 0);
-    const incomplete = candidates.filter((record) => behaviourGaps(record).length > 0);
+    const candidates = capabilityRecords.filter((record) => isClassifiedAtLeast(record, 3));
+    const complete = candidates.filter((record) => {
+      const quality = qualityByProofId.get(record.proofId);
+      return quality ? quality.validBehaviourProof : behaviourGaps(record).length === 0;
+    });
+    const incomplete = candidates.filter((record) => {
+      const quality = qualityByProofId.get(record.proofId);
+      return quality ? !quality.validBehaviourProof : behaviourGaps(record).length > 0;
+    });
     const blockingDeficiencies = uniq(
-      incomplete.flatMap((record) => behaviourGaps(record).map((gap) => gap.kind))
+      incomplete.flatMap((record) => {
+        const quality = qualityByProofId.get(record.proofId);
+        return quality ? quality.blockingIssues : behaviourGaps(record).map((gap) => gap.kind);
+      })
     );
     return {
       capability: capability.capability,
@@ -1078,9 +1254,18 @@ function buildBehaviourProofReadinessReport(ctx, records) {
       evidenceProofIds: uniq(capabilityRecords.map((record) => record.proofId)),
     };
   });
-  const totalCandidates = rows.reduce((sum, row) => sum + row.l3CandidateProofs, 0);
-  const completeCandidates = rows.reduce((sum, row) => sum + row.completeL3Proofs, 0);
-  const incompleteCandidates = rows.reduce((sum, row) => sum + row.incompleteL3Proofs, 0);
+  const uniqueCandidates = uniqRecords(records.filter((record) => isClassifiedAtLeast(record, 3)));
+  const completeUniqueCandidates = uniqueCandidates.filter((record) => {
+    const quality = qualityByProofId.get(record.proofId);
+    return quality ? quality.validBehaviourProof : behaviourGaps(record).length === 0;
+  });
+  const incompleteUniqueCandidates = uniqueCandidates.filter((record) => {
+    const quality = qualityByProofId.get(record.proofId);
+    return quality ? !quality.validBehaviourProof : behaviourGaps(record).length > 0;
+  });
+  const totalCandidates = uniqueCandidates.length;
+  const completeCandidates = completeUniqueCandidates.length;
+  const incompleteCandidates = incompleteUniqueCandidates.length;
   const gaps = rows
     .filter((row) => !row.behaviourProven)
     .map((row) => ({
@@ -1100,12 +1285,166 @@ function buildBehaviourProofReadinessReport(ctx, records) {
     milestone: "L3 Behaviour Proven",
     l4ExpansionBlockedUntilStatusPass: true,
     totalL3Candidates: totalCandidates,
+    validL3Proofs: completeCandidates,
+    invalidL3Proofs: incompleteCandidates,
     completeL3Proofs: completeCandidates,
     incompleteL3Proofs: incompleteCandidates,
     blockingDeficiencies: uniq(gaps.flatMap((gap) => gap.blockingDeficiencies)),
+    remediationEffortEstimate: behaviourRemediationEffort(
+      uniq(
+        incompleteUniqueCandidates.flatMap((record) => behaviourGaps(record).map((gap) => gap.kind))
+      ).map((kind) => ({ kind })),
+      []
+    ),
     closurePercentage:
       totalCandidates === 0 ? 0 : Math.round((completeCandidates / totalCandidates) * 10000) / 100,
     remainingClosureWork: gaps,
+    capabilities: rows,
+  };
+}
+
+function buildBehaviourProofCertificationReport({
+  behaviourQuality,
+  behaviourLocking,
+  behaviourReadiness,
+  capabilityReadiness,
+  ladderCompliance,
+  environmentConsistency,
+  claimVsObserved,
+}) {
+  const delegated = behaviourQuality.proofs.filter((proof) => proof.flags.delegatedProofImports);
+  const weak = behaviourQuality.proofs.filter((proof) => proof.weakBehaviouralEvidence);
+  const inflated = behaviourQuality.proofs.filter((proof) => proof.flags.evidenceInflation);
+  const blockingIssues = [
+    ...behaviourQuality.blockingIssues,
+    ...(behaviourLocking.status === "PASS" ? [] : ["behaviour-locking-failed"]),
+    ...(behaviourReadiness.status === "PASS" ? [] : ["behaviour-readiness-failed"]),
+    ...(delegated.length === 0 ? [] : ["delegated-behavioural-proofs"]),
+    ...(weak.length === 0 ? [] : ["weak-behavioural-classifications"]),
+    ...(inflated.length === 0 ? [] : ["behavioural-evidence-inflation"]),
+    ...(claimVsObserved.status === "PASS" ? [] : ["proof-claim-overstated"]),
+  ];
+  const pass = blockingIssues.length === 0;
+  return {
+    artefact: "behaviour-proof-certification-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: pass ? "PASS" : "FAIL",
+    milestone: "L3 Behaviour Proven",
+    prerequisiteForFutureL4Work: pass,
+    l4ImplementationWorkPermitted: pass,
+    requirements: {
+      allL3BlockersClosed: pass,
+      noDelegatedBehaviouralProofs: delegated.length === 0,
+      noWeakBehaviouralClassifications: weak.length === 0,
+      noBehaviouralEvidenceInflation: inflated.length === 0,
+      behaviourReadinessPassesStrictGate: behaviourReadiness.status === "PASS",
+    },
+    summary: {
+      qualityStatus: behaviourQuality.status,
+      readinessStatus: behaviourReadiness.status,
+      lockingStatus: behaviourLocking.status,
+      capabilityReadinessStatus: capabilityReadiness.status,
+      l3ProofsAudited: behaviourQuality.totalProofsAudited,
+      validL3Proofs: behaviourQuality.validBehaviourProofs,
+      invalidL3Proofs: behaviourQuality.invalidBehaviourProofs,
+      delegatedBehaviouralProofs: delegated.length,
+      weakBehaviouralClassifications: weak.length,
+      behaviouralEvidenceInflationProofs: inflated.length,
+      proofClaimMismatches: claimVsObserved.mismatchCount,
+      ladderComplianceStatus: ladderCompliance.status,
+      environmentConsistencyStatus: environmentConsistency.status,
+    },
+    blockingIssues: uniq(blockingIssues),
+    blockers: behaviourQuality.proofs
+      .filter((proof) => proof.blockingIssues.length > 0)
+      .map((proof) => ({
+        proofId: proof.proofId,
+        capability: proof.capability,
+        currentLevel: proof.currentLevel,
+        blockingIssues: proof.blockingIssues,
+        recommendedRemediation: proof.recommendedRemediation,
+      })),
+    certifiedProofs: behaviourQuality.proofs
+      .filter((proof) => proof.validBehaviourProof)
+      .map((proof) => ({
+        proofId: proof.proofId,
+        capability: proof.capability,
+        currentLevel: proof.currentLevel,
+        qualityScore: proof.qualityScore,
+        confidenceScore: proof.confidenceScore,
+      })),
+  };
+}
+
+function buildSubstrateProofRoadmap({ ctx, records, capabilityReadiness, behaviourCertification }) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const capabilityRows = new Map(
+    (capabilityReadiness.capabilities || []).map((row) => [row.capability, row])
+  );
+  const bySubject = recordsBySubject(records);
+  const rows = capabilities.map((capability) => {
+    const capabilityRecords = uniqRecords([
+      ...recordsForRefs(bySubject, capability.dev?.requiredProofs || []),
+      ...recordsForRefs(bySubject, capability.test?.requiredProofs || []),
+      ...recordsForRefs(bySubject, capability.staging?.requiredProofs || []),
+    ]);
+    const existingL3Proofs = capabilityRecords
+      .filter((record) => isClassifiedAtLeast(record, 3))
+      .map((record) => record.proofId);
+    const composeProviders = uniq([
+      capability.test?.providerClass === "compose-local" ? capability.test?.provider : null,
+      capability.staging?.providerClass === "compose-local" ? capability.staging?.provider : null,
+      capability.prod?.providerClass === "compose-local" ? capability.prod?.provider : null,
+    ]);
+    const requiredComposeSubstrates = substrateServicesForProviders(composeProviders);
+    const realImplementations = uniq([
+      capability.test?.provider,
+      capability.staging?.provider,
+      capability.prod?.provider,
+      ...(capability.sourceFileRefs || []).filter((ref) =>
+        /adapter|repository|provider/i.test(ref)
+      ),
+    ]);
+    return {
+      capability: capability.capability,
+      category: capability.category,
+      l3BehaviourPrerequisiteProofs: existingL3Proofs,
+      behaviourCertified: behaviourCertification.status === "PASS" && existingL3Proofs.length > 0,
+      requiredComposeSubstrates,
+      requiredRealImplementations: realImplementations,
+      substrateDependencies: uniq([
+        capability.test?.externalDependencyRisk,
+        capability.staging?.externalDependencyRisk,
+      ]),
+      implementationRisks: uniq([
+        capability.test?.securityRisk,
+        capability.test?.externalDependencyRisk,
+        capability.staging?.secretPolicy,
+        capability.staging?.networkPolicy,
+      ]),
+      migrationEffort: substrateMigrationEffort(requiredComposeSubstrates, realImplementations),
+      substrateProofStrategy:
+        existingL3Proofs.length === 0
+          ? "Blocked: establish L3 behavioural contract before designing substrate proof."
+          : "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      futureProofLevel: "L4 Substrate Proven",
+      l4ImplementationStatus: "not-started",
+      l4ImplementationProhibitedUntilCertificationPasses: behaviourCertification.status !== "PASS",
+      capabilityReadiness: capabilityRows.get(capability.capability)?.readiness || "UNPROVEN",
+    };
+  });
+  return {
+    artefact: "substrate-proof-roadmap",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: behaviourCertification.status === "PASS" ? "PASS" : "BLOCKED",
+    prerequisite: "behaviour-proof-certification-report.status == PASS",
+    l4ProofsImplementedByThisArtifact: false,
+    roadmapScope:
+      "Planning only. No L4 proof implementation is introduced before Behaviour Proven certification.",
+    capabilityCount: rows.length,
+    requiredComposeSubstrates: uniq(rows.flatMap((row) => row.requiredComposeSubstrates)),
     capabilities: rows,
   };
 }
@@ -2278,6 +2617,24 @@ function recordsBySubject(records) {
   return bySubject;
 }
 
+function hasMutationRouteStateEvidence(record, route) {
+  if (!(record.routeIds || []).includes(route.routeId)) return false;
+  return (
+    routeStatePart(record.beforeState, route) &&
+    routeStatePart(record.afterState, route) &&
+    routeStatePart(record.assertedStateDiff, route)
+  );
+}
+
+function routeStatePart(state, route) {
+  if (!isMeaningfulObject(state)) return false;
+  const routeMutations = state.routeMutations;
+  if (isMeaningfulObject(routeMutations) && isMeaningfulEvidence(routeMutations[route.routeId])) {
+    return true;
+  }
+  return isMeaningfulEvidence(state[route.routeId]);
+}
+
 function isBehaviourCandidate(record) {
   return (
     proofLevelNumber(record.proofLevelClaimed) >= 3 ||
@@ -2289,6 +2646,128 @@ function isBehaviourCandidate(record) {
     record.tenantBoundaryAsserted === true ||
     record.securityBoundaryAsserted === true
   );
+}
+
+function isClassifiedAtLeast(record, level) {
+  return (
+    proofLevelNumber(record.proofLevelClaimed) >= level ||
+    observedLevelFromEvidence(record) >= level
+  );
+}
+
+function sourceEvidence(record) {
+  const files = (record.sourceFileRefs || []).filter((ref) => fs.existsSync(ref));
+  const text = files.map((file) => fs.readFileSync(file, "utf8")).join("\n");
+  const assertionCount = countMatches(
+    text,
+    /\bassert\.(?:equal|deepEqual|ok|match|rejects|doesNotReject|throws|doesNotThrow|notEqual|notDeepEqual)\b|\bassert\s*\(/g
+  );
+  const awaitCount = countMatches(text, /\bawait\b/g);
+  const emitEvidenceCount = countMatches(text, /\bemitRuntimeProofEvidence\s*\(/g);
+  const failurePatternCount = countMatches(
+    text,
+    /\bassert\.rejects\b|\binjectFailure\b|\bdeadLettered\b|\bfail(?:ed|ure)?\b|\bunavailable\b|\binvalid\b|\bnot_found\b|\bdenied\b|\bcancelled\b|\bROLLBACK\b/g
+  );
+  const domainOperationCount = countMatches(
+    text,
+    /\.(?:create|upsert|put|delete|publish|process|start|signal|charge|refund|index|record|register|increment|backup|restore|run|cancel|ensure|validate)\s*\(/g
+  );
+  const execWrapperCount = countMatches(text, /\bexec(?:File|Sync|FileSync)?\b|\bspawn\b/g);
+  const importRuntimeProofCount = countMatches(
+    text,
+    /from\s+["'][^"']*runtime-proof[^"']*["']|import\s*\([^)]*runtime-proof[^)]*\)/g
+  );
+  const wrapperOnly =
+    importRuntimeProofCount > 0 ||
+    (execWrapperCount > 0 && assertionCount === 0 && domainOperationCount === 0);
+  return {
+    sourceFilesChecked: files,
+    assertionCount,
+    awaitCount,
+    emitEvidenceCount,
+    failurePatternCount,
+    domainOperationCount,
+    execWrapperCount,
+    importedRuntimeProofCount: importRuntimeProofCount,
+    wrapperOnly,
+  };
+}
+
+function countMatches(text, pattern) {
+  return (text.match(pattern) || []).length;
+}
+
+function stateTransitionWouldFailOnRegression(record, source) {
+  if (!isMeaningfulObject(record.beforeState)) return false;
+  if (!isMeaningfulObject(record.afterState)) return false;
+  if (!isMeaningfulObject(record.assertedStateDiff)) return false;
+  if (source.assertionCount <= 0 && record.assertionsObserved !== true) return false;
+  return stateChanged(record.beforeState, record.afterState) || source.domainOperationCount > 0;
+}
+
+function stateChanged(beforeState, afterState) {
+  return canonicalJson(beforeState) !== canonicalJson(afterState);
+}
+
+function failureStateEvidence(record) {
+  return /fail|error|invalid|unavailable|dead|denied|not_found|cancelled/i.test(
+    canonicalJson({
+      failureMode: record.failureMode,
+      afterState: record.afterState,
+      assertedStateDiff: record.assertedStateDiff,
+      cleanupResult: record.cleanupResult,
+    })
+  );
+}
+
+function capabilityLookupForRecords(ctx, records) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const lookup = new Map(records.map((record) => [record.proofId, []]));
+  const bySubject = recordsBySubject(records);
+  for (const capability of capabilities) {
+    const capabilityRecords = uniqRecords([
+      ...recordsForRefs(bySubject, capability.dev?.requiredProofs || []),
+      ...recordsForRefs(bySubject, capability.test?.requiredProofs || []),
+      ...recordsForRefs(bySubject, capability.staging?.requiredProofs || []),
+    ]);
+    for (const record of capabilityRecords) {
+      lookup.set(
+        record.proofId,
+        uniq([...(lookup.get(record.proofId) || []), capability.capability])
+      );
+    }
+  }
+  return lookup;
+}
+
+function substrateServicesForProviders(providers) {
+  const services = [];
+  for (const provider of providers) {
+    const text = String(provider || "").toLowerCase();
+    if (!text) continue;
+    if (text.includes("postgres")) services.push("Postgres");
+    if (text.includes("redis") || text.includes("rate-limit")) services.push("Redis");
+    if (text.includes("s3") || text.includes("object-storage") || text.includes("minio")) {
+      services.push("MinIO");
+    }
+    if (text.includes("openbao") || text.includes("secret")) services.push("OpenBao");
+    if (text.includes("keycloak") || text.includes("idp") || text.includes("oidc")) {
+      services.push("Keycloak");
+    }
+    if (text.includes("temporal") || text.includes("workflow")) services.push("Temporal");
+    if (text.includes("windmill") || text.includes("automation")) services.push("Windmill");
+    if (text.includes("smtp") || text.includes("email")) services.push("SMTP");
+    if (text.includes("clamav") || text.includes("antivirus")) services.push("ClamAV");
+    if (text.includes("lago") || text.includes("billing")) services.push("Lago");
+  }
+  return uniq(services.length > 0 ? services : providers);
+}
+
+function substrateMigrationEffort(substrates, implementations) {
+  const weight = substrates.length + Math.ceil(implementations.length / 3);
+  if (weight <= 2) return "small";
+  if (weight <= 5) return "medium";
+  return "large";
 }
 
 function delegatedRuntimeProofImports(record) {

@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   151 |
+| formal proof readiness gaps                 |   153 |
 | capability proof readiness gaps             |     0 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -83,109 +83,111 @@ The adversarial runtime inventory status is reported separately from formal proo
 - proof-command-failed: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/webhook-worker-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/webhooks-runtime-proof.ts - proof command exited 1
-- mutation-state-evidence: POST /api/admin/alerts - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/alerts/:alertId/evaluate - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/admin/data/legal-holds - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/data/legal-holds - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/data/residency - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/admin/data/retention-policies - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/data/retention-policies - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/events/:eventId/redrive - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/governance/catalog - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/governance/catalog/classify - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/governance/dsr - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/governance/dsr/:dsrId/fulfill - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/admin/incidents/:incidentId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/provider-configs - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/provider-configs/:id/delete - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/provider-configs/:id/lifecycle - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/scheduled-jobs - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/admin/scheduled-jobs/:jobId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/scheduled-jobs/:jobId/run - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/search/reindex - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/secrets - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/secrets/delete - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/secrets/revoke - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/sub-tenants - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/support-session - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/support-session/approval-grant - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/support-session/approval-request - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/support/tickets - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/announcements - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/auth-settings-credential/repair - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/delegations - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/admin/tenants/:tenantId/delegations/:delegationId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/delete - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/admin/tenants/:tenantId/entitlements - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/import - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/meter-events - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/notifications/test - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/admin/tenants/:tenantId/quotas - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/admin/tenants/:tenantId/rate-limits - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/:tenantId/suspend - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/tenants/auth-settings-credential - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/workflows/:workflowId/cancel - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/workflows/:workflowId/signal - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/admin/workflows/start - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/auth/settings/domains - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/auth/settings/domains/:domain - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/auth/settings/domains/challenges - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/auth/settings/domains/verify - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/auth/settings/idps - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/auth/settings/idps/:alias - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/idps/:alias - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/idps/:alias/mapping - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/auth/settings/idps/:alias/test-connection - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/auth/settings/idps/oidc/discover - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/lockout - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/mfa - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/providers - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/resource-policies - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/session - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/auth/settings/sysadmin-brokering - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/graphql - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/me/notification-preferences - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/me/profile - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/api-keys - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/api-keys/:keyId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/config/:key - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/config/:key - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/domains - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/domains/:domain - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/domains/:domain/activate - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/domains/:domain/canonical - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/domains/:domain/canonical - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/domains/:domain/deactivate - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/domains/:domain/probe-routing-local - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/domains/:domain/verify - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/email-sender - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/email-sender/test - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/features/:featureKey - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/groups - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/groups/:groupId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/groups/:groupId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/members/:userId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/members/:userId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/members/:userId/status - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/members/:userId/username - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/members/invite - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/members/resend-invite - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/search - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/storage/objects - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/storage/objects/:objectKey - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/storage/objects/:objectKey/scan - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/storage/probe - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/sub-organisations - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/sub-organisations/:subOrgId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/sub-organisations/:subOrgId - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/webhooks - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: DELETE /api/org/webhooks/:id - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/org/webhooks/:id - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/webhooks/:id/redrive-dead - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/webhooks/:id/rotate-secret - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /api/org/webhooks/:id/test - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: PATCH /api/organisation/profile - mutation proof lacks emitted before/after state evidence
-- mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted before/after state evidence
+- mutation-state-evidence: POST /api/admin/alerts - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/alerts/:alertId/evaluate - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/billing/catalog/plans - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/billing/catalog/prices - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/billing/catalog/products - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/admin/data/legal-holds - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/data/legal-holds - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/data/residency - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/admin/data/retention-policies - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/data/retention-policies - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/events/:eventId/redrive - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/governance/catalog - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/governance/catalog/classify - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/governance/dsr - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/governance/dsr/:dsrId/fulfill - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/admin/incidents/:incidentId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/provider-configs - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/provider-configs/:id/delete - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/provider-configs/:id/lifecycle - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/scheduled-jobs - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/admin/scheduled-jobs/:jobId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/scheduled-jobs/:jobId/run - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/search/reindex - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/secrets - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/secrets/delete - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/secrets/revoke - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/sub-tenants - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/support-session - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/support-session/approval-grant - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/support-session/approval-request - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/support/tickets - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/announcements - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/auth-settings-credential/repair - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/auth-settings-credential/rotate - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/delegations - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/admin/tenants/:tenantId/delegations/:delegationId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/delete - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/import - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/meter-events - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/notifications/test - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/admin/tenants/:tenantId/quotas - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/admin/tenants/:tenantId/rate-limits - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/:tenantId/suspend - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/tenants/auth-settings-credential - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/workflows/:workflowId/cancel - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/workflows/:workflowId/signal - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/admin/workflows/start - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/auth/settings/domains - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/auth/settings/domains/:domain - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/auth/settings/domains/challenges - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/auth/settings/domains/verify - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/auth/settings/idps - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/auth/settings/idps/:alias - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/idps/:alias - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/idps/:alias/mapping - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/auth/settings/idps/:alias/test-connection - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/auth/settings/idps/oidc/discover - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/lockout - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/mfa - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/providers - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/resource-policies - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/session - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/auth/settings/sysadmin-brokering - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/graphql - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/me/notification-preferences - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/me/profile - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/api-keys - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/api-keys/:keyId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/config/:key - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/config/:key - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/domains - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/domains/:domain - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/domains/:domain/activate - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/domains/:domain/canonical - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/domains/:domain/canonical - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/domains/:domain/deactivate - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/domains/:domain/probe-routing-local - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/domains/:domain/verify - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/email-sender - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/email-sender/test - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/features/:featureKey - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/groups - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/groups/:groupId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/groups/:groupId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/members/:userId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/members/:userId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/members/:userId/status - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/members/:userId/username - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/members/invite - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/members/resend-invite - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/search - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/storage/objects - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/storage/objects/:objectKey - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/storage/objects/:objectKey/scan - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/storage/probe - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/sub-organisations - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/sub-organisations/:subOrgId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/sub-organisations/:subOrgId - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/webhooks - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: DELETE /api/org/webhooks/:id - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/org/webhooks/:id - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/webhooks/:id/deliveries/:deliveryId/redrive - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/webhooks/:id/redrive-dead - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/webhooks/:id/rotate-secret - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /api/org/webhooks/:id/test - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: PATCH /api/organisation/profile - mutation proof lacks emitted route-specific before/after state and asserted diff evidence
+- mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted route-specific before/after state and asserted diff evidence

@@ -4,23 +4,24 @@
   "subjectIds": [
     "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
     "package.json#proof:entitlement-policy-chain",
-    "proof:entitlement-policy-chain"
+    "proof:entitlement-policy-chain",
+    "route:patch-api-admin-tenants-tenantid-entitlements"
   ],
   "subjectId": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "capabilityId": "capability:entitlement-policy-chain",
-  "providerId": "not-applicable",
-  "routeIds": [],
+  "providerId": "entitlement-policy-chain-hermetic",
+  "routeIds": ["route:patch-api-admin-tenants-tenantid-entitlements"],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L0",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlement-policy-chain",
-  "startedAt": "2026-06-23T12:25:58.091Z",
-  "endedAt": "2026-06-23T12:25:58.220Z",
+  "startedAt": "2026-06-23T12:41:05.518Z",
+  "endedAt": "2026-06-23T12:41:05.645Z",
   "exitStatus": 0,
-  "commit": "b994c5905b334202b1643561d8b7aee2eb0195e1",
+  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,39 +29,222 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
-  "cleanupResult": {
-    "status": "not-emitted-by-proof"
+  "beforeState": {
+    "routeMutations": {
+      "route:patch-api-admin-tenants-tenantid-entitlements": {
+        "tenant": "11111111-1111-1111-1111-111111111111",
+        "entitlementKey": "webhooks",
+        "grantBefore": null,
+        "tenantBBefore": null,
+        "auditEvents": 0
+      }
+    }
   },
-  "deterministicReplaySupported": false,
+  "afterState": {
+    "routeMutations": {
+      "route:patch-api-admin-tenants-tenantid-entitlements": {
+        "tenant": "11111111-1111-1111-1111-111111111111",
+        "grantAfterSet": {
+          "organisationId": "11111111-1111-1111-1111-111111111111",
+          "entitlementKey": "webhooks",
+          "state": "granted",
+          "source": "system",
+          "metadata": {},
+          "updatedAt": "2026-06-13T00:00:00.000Z",
+          "updatedBy": "op-1"
+        },
+        "grantAfterRevoke": {
+          "organisationId": "11111111-1111-1111-1111-111111111111",
+          "entitlementKey": "webhooks",
+          "state": "revoked",
+          "source": "system",
+          "metadata": {},
+          "updatedAt": "2026-06-13T00:00:00.000Z",
+          "updatedBy": "op-1"
+        },
+        "tenantBAfter": null,
+        "missingPermissionDecision": {
+          "allowed": false,
+          "decidedBy": "permission",
+          "reason": "missing permission",
+          "quota": {
+            "status": "not_enforced"
+          }
+        },
+        "notEntitledDecision": {
+          "allowed": false,
+          "decidedBy": "entitlement",
+          "reason": "not entitled",
+          "quota": {
+            "status": "not_enforced"
+          }
+        },
+        "allowedDecision": {
+          "allowed": true,
+          "decidedBy": "quota",
+          "reason": "allowed",
+          "quota": {
+            "status": "not_enforced"
+          }
+        },
+        "revokedDecision": {
+          "allowed": false,
+          "decidedBy": "entitlement",
+          "reason": "not entitled",
+          "quota": {
+            "status": "not_enforced"
+          }
+        },
+        "tenantBDecision": {
+          "allowed": false,
+          "decidedBy": "entitlement",
+          "reason": "not entitled",
+          "quota": {
+            "status": "not_enforced"
+          }
+        },
+        "unknownKeyResult": {
+          "kind": "unknown_key"
+        },
+        "assertEntitlementFailure": "api.error.notEntitled",
+        "auditEvents": 2
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "route:patch-api-admin-tenants-tenantid-entitlements": {
+        "grant": {
+          "before": null,
+          "after": "granted"
+        },
+        "revoke": {
+          "before": "granted",
+          "after": "revoked"
+        },
+        "auditBeforeChange": true,
+        "missingPermissionDeniedBeforeEntitlement": true,
+        "denyByDefaultBeforeGrant": true,
+        "allowAfterGrant": true,
+        "denyByDefaultAfterRevoke": true,
+        "tenantBoundary": true,
+        "unknownKeyFailsClosed": true,
+        "assertEntitlementFailsClosed": true
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "entitlement.granted:11111111-1111-1111-1111-111111111111:entitlement:webhooks",
+    "entitlement.revoked:11111111-1111-1111-1111-111111111111:entitlement:webhooks"
+  ],
+  "traceIds": [
+    "trace:entitlement-policy-chain:permission-denied",
+    "trace:entitlement-policy-chain:grant",
+    "trace:entitlement-policy-chain:quota",
+    "trace:entitlement-policy-chain:revoke",
+    "trace:entitlement-policy-chain:tenant-boundary"
+  ],
+  "metricSamples": [
+    {
+      "name": "entitlement_policy_chain.permission_denied_total",
+      "value": 1
+    },
+    {
+      "name": "entitlement_policy_chain.entitlement_denied_total",
+      "value": 3
+    },
+    {
+      "name": "entitlement_policy_chain.allowed_total",
+      "value": 1
+    },
+    {
+      "name": "entitlement_policy_chain.audit_events_total",
+      "value": 2
+    }
+  ],
+  "logCorrelationIds": [
+    "log:entitlement-policy-chain:permission-denied",
+    "log:entitlement-policy-chain:grant",
+    "log:entitlement-policy-chain:revoke",
+    "log:entitlement-policy-chain:tenant-boundary"
+  ],
+  "cleanupResult": {
+    "status": "verified",
+    "deterministicTenantIds": [
+      "11111111-1111-1111-1111-111111111111",
+      "22222222-2222-4222-8222-222222222222"
+    ],
+    "finalGrantState": "revoked"
+  },
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:25:58.220Z",
+  "generatedAt": "2026-06-23T12:41:05.645Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782217547898-31545",
-  "assertionsObserved": false,
-  "expectedOutputsAsserted": false,
+  "collectorRunId": "proof-run-1782218455374-114497",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
   "environment": "test",
-  "proofLevelObserved": "L1",
-  "startTime": "2026-06-23T12:25:58.091Z",
-  "endTime": "2026-06-23T12:25:58.220Z",
-  "gitCommit": "b994c5905b334202b1643561d8b7aee2eb0195e1",
-  "executionTimestamp": "2026-06-23T12:25:58.220Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "a215cc5c529b102601706199efef80e65af6896d12539dca7d00ca3af7fdbc68"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T12:41:05.518Z",
+  "endTime": "2026-06-23T12:41:05.645Z",
+  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "executionTimestamp": "2026-06-23T12:41:05.645Z",
+  "stateDiff": {
+    "routeMutations": {
+      "route:patch-api-admin-tenants-tenantid-entitlements": {
+        "grant": {
+          "before": null,
+          "after": "granted"
+        },
+        "revoke": {
+          "before": "granted",
+          "after": "revoked"
+        },
+        "auditBeforeChange": true,
+        "missingPermissionDeniedBeforeEntitlement": true,
+        "denyByDefaultBeforeGrant": true,
+        "allowAfterGrant": true,
+        "denyByDefaultAfterRevoke": true,
+        "tenantBoundary": true,
+        "unknownKeyFailsClosed": true,
+        "assertEntitlementFailsClosed": true
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "entitlement.granted:11111111-1111-1111-1111-111111111111:entitlement:webhooks",
+    "entitlement.revoked:11111111-1111-1111-1111-111111111111:entitlement:webhooks"
+  ],
+  "metricEvidence": [
+    {
+      "name": "entitlement_policy_chain.permission_denied_total",
+      "value": 1
+    },
+    {
+      "name": "entitlement_policy_chain.entitlement_denied_total",
+      "value": 3
+    },
+    {
+      "name": "entitlement_policy_chain.allowed_total",
+      "value": 1
+    },
+    {
+      "name": "entitlement_policy_chain.audit_events_total",
+      "value": 2
+    }
+  ],
+  "logEvidence": [
+    "log:entitlement-policy-chain:permission-denied",
+    "log:entitlement-policy-chain:grant",
+    "log:entitlement-policy-chain:revoke",
+    "log:entitlement-policy-chain:tenant-boundary"
+  ],
+  "evidenceSignature": "22413bc14ed47875efc462b02f831cb16895c7f8a6cb6fe0bc4594863b21852c"
 }

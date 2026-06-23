@@ -1,0 +1,2062 @@
+{
+  "artefact": "substrate-proof-roadmap",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-23T12:42:14.000Z",
+  "status": "PASS",
+  "prerequisite": "behaviour-proof-certification-report.status == PASS",
+  "l4ProofsImplementedByThisArtifact": false,
+  "roadmapScope": "Planning only. No L4 proof implementation is introduced before Behaviour Proven certification.",
+  "capabilityCount": 70,
+  "requiredComposeSubstrates": [
+    "Keycloak",
+    "Lago",
+    "MinIO",
+    "OpenBao",
+    "Postgres",
+    "Redis",
+    "Temporal",
+    "backup-restore-scripts",
+    "browser-telemetry-provider",
+    "caddy-local-routing-probe",
+    "http-provider-readiness-probe",
+    "notification-transports",
+    "openapi-drift-validator",
+    "playwright-adapter",
+    "playwright-axe-adapter",
+    "prometheus-metrics",
+    "react-i18n-provider",
+    "static-assurance-provider",
+    "tenant-lifecycle-coordinator"
+  ],
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+        "postgres-identity-repository"
+      ],
+      "substrateDependencies": [
+        "Tenant identity (record + FQDN) depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant identity (record + FQDN) depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+        "postgres-identity-repository"
+      ],
+      "substrateDependencies": [
+        "User identity + tenant membership depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "User identity + tenant membership depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-profile-repository.ts",
+        "apps/platform-api/src/ports/profile-repository.ts",
+        "postgres-profile-repository"
+      ],
+      "substrateDependencies": [
+        "End-user profile + preferences self-service depends on PostgresProfileAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "End-user profile + preferences self-service depends on PostgresProfileAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-api-key-repository.ts",
+        "apps/platform-api/src/ports/api-key-repository.ts",
+        "postgres-api-key-repository"
+      ],
+      "substrateDependencies": [
+        "API keys / personal access tokens depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "API keys / personal access tokens depends on n/a; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "secret material must remain write-only and masked in logs, proofs, UI, and evidence",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant groups",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+        "postgres-identity-repository"
+      ],
+      "substrateDependencies": [
+        "Tenant groups depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant groups depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Sub-organisations",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+        "postgres-identity-repository"
+      ],
+      "substrateDependencies": [
+        "Sub-organisations depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Sub-organisations depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-identity-repository.ts",
+        "postgres-identity-repository"
+      ],
+      "substrateDependencies": [
+        "RBAC (roles + permissions) depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "RBAC (roles + permissions) depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "ABAC / Policy Decision Point depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "ABAC / Policy Decision Point depends on n/a; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Delegated administration roles",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-delegated-admin-roles.ts",
+        "postgres-delegated-admin-roles"
+      ],
+      "substrateDependencies": [
+        "Delegated administration roles depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Delegated administration roles depends on PostgresIdentityAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Entitlement engine",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-entitlement-repository.ts",
+        "apps/platform-api/src/ports/entitlement-repository.ts",
+        "postgres-entitlement-repository"
+      ],
+      "substrateDependencies": [
+        "Entitlement engine depends on PostgresEntitlementAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Entitlement engine depends on PostgresEntitlementAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Temporal"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/in-memory-workflow-orchestrator.ts",
+        "in-memory-workflow-orchestrator"
+      ],
+      "substrateDependencies": [
+        "Support-mode / break-glass access depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Support-mode / break-glass access depends on n/a; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Audit of privileged access",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-history-repository.ts",
+        "postgres-history-repository"
+      ],
+      "substrateDependencies": [
+        "Audit of privileged access depends on PostgresAuditAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Audit of privileged access depends on PostgresAuditAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Platform login + session",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "Platform login + session depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Platform login + session depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "IdP brokering + OIDC provider management depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "IdP brokering + OIDC provider management depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "Claim mapping + group/role mapping depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Claim mapping + group/role mapping depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "MFA + session policy + lockout depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "MFA + session policy + lockout depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Configuration registry + history",
+      "category": "configuration",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-provider-config-repository.ts",
+        "postgres-provider-config-repository"
+      ],
+      "substrateDependencies": [
+        "Configuration registry + history depends on PostgresConfigAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Configuration registry + history depends on PostgresConfigAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Branding + theming",
+      "category": "configuration",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-provider-config-repository.ts",
+        "postgres-provider-config-repository"
+      ],
+      "substrateDependencies": [
+        "Branding + theming depends on PostgresConfigAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Branding + theming depends on PostgresConfigAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "category": "configuration",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+        "postgres-tenant-domain-registry"
+      ],
+      "substrateDependencies": [
+        "Custom domains, DNS ownership, TLS, canonical depends on KeycloakAuthClientAdapter / DnsChallengeAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Custom domains, DNS ownership, TLS, canonical depends on KeycloakAuthClientAdapter / DnsChallengeAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Write-only secret settings",
+      "category": "configuration",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["OpenBao", "Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-secret-store.ts",
+        "postgres-secret-store"
+      ],
+      "substrateDependencies": [
+        "Write-only secret settings depends on OpenBaoSecretAdapter / PostgresSecretAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Write-only secret settings depends on OpenBaoSecretAdapter / PostgresSecretAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "secret material must remain write-only and masked in logs, proofs, UI, and evidence",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "medium",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "category": "entitlements-billing",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Lago", "Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-billing-catalog.ts",
+        "postgres-billing-catalog"
+      ],
+      "substrateDependencies": [
+        "Product catalog, plans, prices depends on PostgresBillingCatalogAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Product catalog, plans, prices depends on PostgresBillingCatalogAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "medium",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "category": "entitlements-billing",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Lago"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/lago-billing-provider.ts",
+        "apps/platform-api/src/ports/billing-provider.ts",
+        "lago-billing-provider"
+      ],
+      "substrateDependencies": [
+        "Subscriptions, invoices, payment methods, dunning depends on LagoBillingProviderAdapter / InMemoryPaymentProvider; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Subscriptions, invoices, payment methods, dunning depends on LagoBillingProviderAdapter / InMemoryPaymentProvider; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "category": "entitlements-billing",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-metering-repository.ts",
+        "postgres-metering-repository"
+      ],
+      "substrateDependencies": [
+        "Usage metering + meter event ingestion depends on PostgresMeterAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Usage metering + meter event ingestion depends on PostgresMeterAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Quota enforcement",
+      "category": "entitlements-billing",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-quota-repository.ts",
+        "postgres-quota-repository"
+      ],
+      "substrateDependencies": [
+        "Quota enforcement depends on PostgresQuotaAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Quota enforcement depends on PostgresQuotaAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "category": "data-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-migration-storage-provider.ts",
+        "postgres-migration-storage-provider"
+      ],
+      "substrateDependencies": [
+        "Relational storage + migrations + RLS depends on MinioStorageAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Relational storage + migrations + RLS depends on MinioStorageAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Backup + restore",
+      "category": "data-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["backup-restore-scripts"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/backup-restore-scripts.ts",
+        "backup-restore-scripts"
+      ],
+      "substrateDependencies": [
+        "Backup + restore depends on pg_dump/pg_restore scripts; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Backup + restore depends on pg_dump/pg_restore scripts; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "category": "data-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-retention.ts",
+        "postgres-retention"
+      ],
+      "substrateDependencies": [
+        "PITR, retention, legal hold, data residency depends on PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "PITR, retention, legal hold, data residency depends on PostgresRetentionAdapter / PostgresLegalHoldRepository / org residency column; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "category": "data-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/PostgresDataGovernanceAdapter.ts",
+        "apps/platform-api/src/adapters/postgres-data-governance.ts",
+        "postgres-data-governance"
+      ],
+      "substrateDependencies": [
+        "Data governance: catalog, lineage, classification, PII, DSR/GDPR depends on PostgresDataGovernanceAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Data governance: catalog, lineage, classification, PII, DSR/GDPR depends on PostgresDataGovernanceAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant data import / export",
+      "category": "data-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-portable-tenant-import-applier.ts",
+        "postgres-portable-tenant-import-applier"
+      ],
+      "substrateDependencies": [
+        "Tenant data import / export depends on encrypted tar.gz archive builder + Postgres portable import applier; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant data import / export depends on encrypted tar.gz archive builder + Postgres portable import applier; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "category": "search",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-search-repository.ts",
+        "postgres-search-repository"
+      ],
+      "substrateDependencies": [
+        "Search + indexing (product search) depends on PostgresFtsSearchAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Search + indexing (product search) depends on PostgresFtsSearchAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "category": "storage",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["MinIO"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-storage-object-repository.ts",
+        "apps/platform-api/src/adapters/s3-object-storage-adapter.ts",
+        "s3-object-storage-adapter"
+      ],
+      "substrateDependencies": [
+        "Object storage + tenant prefixes + signed URLs depends on S3ObjectStorageAdapter + PostgresStorageObjectRepository; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Object storage + tenant prefixes + signed URLs depends on S3ObjectStorageAdapter + PostgresStorageObjectRepository; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "category": "events-workflow",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-event-bus.ts",
+        "postgres-event-bus"
+      ],
+      "substrateDependencies": [
+        "Event bus, durable queues, DLQ, redrive depends on PostgresEventBusAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Event bus, durable queues, DLQ, redrive depends on PostgresEventBusAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "category": "events-workflow",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Temporal"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/temporal-workflow-provider.ts",
+        "temporal-workflow-provider"
+      ],
+      "substrateDependencies": [
+        "Workflow engine, scheduled jobs, approvals depends on TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Workflow engine, scheduled jobs, approvals depends on TemporalWorkflowProviderAdapter / InMemoryWorkflowOrchestrator; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "category": "events-workflow",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-scheduled-job-repository.ts",
+        "postgres-scheduled-job-repository"
+      ],
+      "substrateDependencies": [
+        "Scheduled jobs (built-in, on the event substrate) depends on PostgresEventBusAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Scheduled jobs (built-in, on the event substrate) depends on PostgresEventBusAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "category": "events-workflow",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["notification-transports"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/notification-transports.ts",
+        "notification-transports"
+      ],
+      "substrateDependencies": [
+        "Notification delivery + preferences + channels depends on EmailTransportAdapter / WebhookTransportAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Notification delivery + preferences + channels depends on EmailTransportAdapter / WebhookTransportAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Background workers / job runner",
+      "category": "compute-runtime",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-scheduled-job-repository.ts",
+        "postgres-scheduled-job-repository"
+      ],
+      "substrateDependencies": [
+        "Background workers / job runner depends on PostgresJobAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Background workers / job runner depends on PostgresJobAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Runtime secrets management",
+      "category": "compute-runtime",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["OpenBao"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/openbao-secret-store.ts",
+        "openbao-secret-store"
+      ],
+      "substrateDependencies": [
+        "Runtime secrets management depends on OpenBaoSecretAdapter / PostgresSecretAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Runtime secrets management depends on OpenBaoSecretAdapter / PostgresSecretAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "secret material must remain write-only and masked in logs, proofs, UI, and evidence",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "category": "observability-ops",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-observability-repository.ts",
+        "postgres-observability-repository"
+      ],
+      "substrateDependencies": [
+        "Logs (aggregation + tenant-scoped search) depends on PostgresFtsSearchAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Logs (aggregation + tenant-scoped search) depends on PostgresFtsSearchAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Metrics + traces",
+      "category": "observability-ops",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["prometheus-metrics"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/prometheus-metrics.ts",
+        "prometheus-metrics"
+      ],
+      "substrateDependencies": [
+        "Metrics + traces depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Metrics + traces depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "category": "observability-ops",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-observability-repository.ts",
+        "postgres-observability-repository"
+      ],
+      "substrateDependencies": [
+        "Observability — built-in alerting + incidents depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Observability — built-in alerting + incidents depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "category": "observability-ops",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["http-provider-readiness-probe"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/http-provider-readiness-probe.ts",
+        "http-provider-readiness-probe"
+      ],
+      "substrateDependencies": [
+        "Internal service catalog + readiness depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Internal service catalog + readiness depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "category": "security-governance",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["OpenBao"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/openbao-secret-store.ts",
+        "openbao-secret-store"
+      ],
+      "substrateDependencies": [
+        "Code quality + secret + dependency scanning depends on OpenBaoSecretAdapter / PostgresSecretAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Code quality + secret + dependency scanning depends on OpenBaoSecretAdapter / PostgresSecretAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "secret material must remain write-only and masked in logs, proofs, UI, and evidence",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "category": "security-governance",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["static-assurance-provider"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/static-assurance-provider.ts",
+        "static-assurance-provider"
+      ],
+      "substrateDependencies": [
+        "Compliance reports, access reviews, evidence packs depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Compliance reports, access reviews, evidence packs depends on n/a; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "category": "security-governance",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-migration-storage-provider.ts",
+        "postgres-migration-storage-provider"
+      ],
+      "substrateDependencies": [
+        "Tenant isolation proof depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant isolation proof depends on n/a; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "category": "developer-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-webhook-store.ts",
+        "postgres-webhook-store"
+      ],
+      "substrateDependencies": [
+        "Webhooks (developer-facing) depends on PostgresWebhookAdapter + DeliveryWorker; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Webhooks (developer-facing) depends on PostgresWebhookAdapter + DeliveryWorker; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "category": "developer-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Redis"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/redis-rate-limit-repository.ts",
+        "redis-rate-limit-repository"
+      ],
+      "substrateDependencies": [
+        "API docs, developer portal, SDKs, rate limits depends on RedisRateLimitAdapter / PostgresRateLimitAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "API docs, developer portal, SDKs, rate limits depends on RedisRateLimitAdapter / PostgresRateLimitAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "category": "developer-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Redis"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/redis-rate-limit-repository.ts",
+        "apps/platform-api/src/ports/rate-limit-repository.ts",
+        "redis-rate-limit-repository"
+      ],
+      "substrateDependencies": [
+        "Rate limiting (API) depends on RedisRateLimitAdapter / PostgresRateLimitAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Rate limiting (API) depends on RedisRateLimitAdapter / PostgresRateLimitAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "category": "support-admin",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["tenant-lifecycle-coordinator"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/tenant-lifecycle-coordinator.ts",
+        "tenant-lifecycle-coordinator"
+      ],
+      "substrateDependencies": [
+        "Tenant lifecycle: provision, suspend, delete, export depends on Postgres lifecycle coordinator + portable export; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant lifecycle: provision, suspend, delete, export depends on Postgres lifecycle coordinator + portable export; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "category": "support-admin",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-notification-repository.ts",
+        "postgres-notification-repository"
+      ],
+      "substrateDependencies": [
+        "Support tickets, customer health, announcements depends on Postgres support tickets + customer-health read-model; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Support tickets, customer health, announcements depends on Postgres support tickets + customer-health read-model; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["static-assurance-provider"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/static-assurance-provider.ts",
+        "static-assurance-provider"
+      ],
+      "substrateDependencies": [
+        "Universal Service Foundation scope + principles depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Universal Service Foundation scope + principles depends on n/a; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["static-assurance-provider"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/static-assurance-provider.ts",
+        "static-assurance-provider"
+      ],
+      "substrateDependencies": ["none beyond repository code and deterministic test runtime"],
+      "implementationRisks": [
+        "configuration and operational state must not bypass capability permissions",
+        "none beyond repository code and deterministic test runtime",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["http-provider-readiness-probe"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/http-provider-readiness-probe.ts",
+        "http-provider-readiness-probe"
+      ],
+      "substrateDependencies": [
+        "Service catalog + provider integration model depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Service catalog + provider integration model depends on LokiAdapter / OtelCollector; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["static-assurance-provider"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/static-assurance-provider.ts",
+        "static-assurance-provider"
+      ],
+      "substrateDependencies": [
+        "Environment-specific vs shared service model depends on n/a; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Environment-specific vs shared service model depends on n/a; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Provider configuration plane",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-provider-config-repository.ts",
+        "postgres-provider-config-repository"
+      ],
+      "substrateDependencies": [
+        "Provider configuration plane depends on HttpHealthProbeAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Provider configuration plane depends on HttpHealthProbeAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["http-provider-readiness-probe"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/http-provider-readiness-probe.ts",
+        "http-provider-readiness-probe"
+      ],
+      "substrateDependencies": ["none beyond repository code and deterministic test runtime"],
+      "implementationRisks": [
+        "configuration and operational state must not bypass capability permissions",
+        "none beyond repository code and deterministic test runtime",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "category": "data-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-history-repository.ts",
+        "postgres-history-repository"
+      ],
+      "substrateDependencies": [
+        "History read-model (read-only projection) depends on PostgresAuditAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "History read-model (read-only projection) depends on PostgresAuditAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "OIDC discovery / issuer / JWKS validation depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "OIDC discovery / issuer / JWKS validation depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Keycloak"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/keycloak-realm-admin-adapter.ts",
+        "keycloak-realm-admin-adapter"
+      ],
+      "substrateDependencies": [
+        "OIDC test connection + callback display depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "OIDC test connection + callback display depends on KeycloakAdminAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "category": "identity-access",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+        "postgres-tenant-domain-registry"
+      ],
+      "substrateDependencies": [
+        "Tenant host identity resolution depends on SlugAndCustomDomainResolver; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant host identity resolution depends on SlugAndCustomDomainResolver; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "category": "configuration",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+        "postgres-tenant-domain-registry"
+      ],
+      "substrateDependencies": [
+        "Tenant domain activation (auth-client) depends on KeycloakAuthClientAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant domain activation (auth-client) depends on KeycloakAuthClientAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "category": "configuration",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+        "postgres-tenant-domain-registry"
+      ],
+      "substrateDependencies": [
+        "Tenant canonical domain set/unset depends on KeycloakAuthClientAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant canonical domain set/unset depends on KeycloakAuthClientAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "category": "authentication",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-tenant-domain-registry.ts",
+        "postgres-tenant-domain-registry"
+      ],
+      "substrateDependencies": [
+        "Tenant custom-domain auth callback depends on KeycloakAuthClientAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant custom-domain auth callback depends on KeycloakAuthClientAdapter; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "category": "observability-ops",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["caddy-local-routing-probe"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/caddy-local-routing-probe.ts",
+        "caddy-local-routing-probe"
+      ],
+      "substrateDependencies": [
+        "Tenant service clickthrough policy depends on CaddyfileReconciler; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Tenant service clickthrough policy depends on CaddyfileReconciler; failures must fail closed or degrade explicitly",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal",
+        "tenant data access must preserve permission checks, RLS/tenant isolation, and audit evidence"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-environment-registry-repository.ts",
+        "postgres-environment-registry-repository"
+      ],
+      "substrateDependencies": [
+        "Environment registry + bootstrap depends on ManifestEnvAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Environment registry + bootstrap depends on ManifestEnvAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Provider environment classification",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["Postgres"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/postgres-provider-config-repository.ts",
+        "docs/evidence/platform/provider-environment-classification.md",
+        "postgres-provider-config-repository"
+      ],
+      "substrateDependencies": [
+        "Provider environment classification depends on ManifestEnvAdapter; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Provider environment classification depends on ManifestEnvAdapter; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["playwright-adapter"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/playwright-adapter.ts",
+        "playwright-adapter"
+      ],
+      "substrateDependencies": ["none beyond repository code and deterministic test runtime"],
+      "implementationRisks": [
+        "configuration and operational state must not bypass capability permissions",
+        "none beyond repository code and deterministic test runtime",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "category": "developer-platform",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["openapi-drift-validator"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/openapi-drift-validator.ts",
+        "openapi-drift-validator"
+      ],
+      "substrateDependencies": ["none beyond repository code and deterministic test runtime"],
+      "implementationRisks": [
+        "configuration and operational state must not bypass capability permissions",
+        "none beyond repository code and deterministic test runtime",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["react-i18n-provider"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/react-i18n-provider.ts",
+        "react-i18n-provider"
+      ],
+      "substrateDependencies": ["none beyond repository code and deterministic test runtime"],
+      "implementationRisks": [
+        "configuration and operational state must not bypass capability permissions",
+        "none beyond repository code and deterministic test runtime",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "category": "foundation",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["playwright-axe-adapter"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/playwright-axe-adapter.ts",
+        "playwright-axe-adapter"
+      ],
+      "substrateDependencies": ["none beyond repository code and deterministic test runtime"],
+      "implementationRisks": [
+        "configuration and operational state must not bypass capability permissions",
+        "none beyond repository code and deterministic test runtime",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "category": "observability-ops",
+      "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+      ],
+      "behaviourCertified": true,
+      "requiredComposeSubstrates": ["browser-telemetry-provider"],
+      "requiredRealImplementations": [
+        "apps/platform-api/src/adapters/browser-telemetry-provider.ts",
+        "browser-telemetry-provider"
+      ],
+      "substrateDependencies": [
+        "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) depends on Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki; failures must fail closed or degrade explicitly"
+      ],
+      "implementationRisks": [
+        "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) depends on Grafana Faro web SDK + OTEL TracingInstrumentation; Alloy faro.receiver -> otel-collector -> Tempo/Loki; failures must fail closed or degrade explicitly",
+        "configuration and operational state must not bypass capability permissions",
+        "production-shape routing with sandbox external egress and observability enabled",
+        "staging uses the real secret-manager pattern with sandbox credentials and rotation rehearsal"
+      ],
+      "migrationEffort": "small",
+      "substrateProofStrategy": "Reuse the certified L3 behavioural contract unchanged; run the same expectations against compose-local real providers and compare behavioural parity without introducing new behavioural assertions.",
+      "futureProofLevel": "L4 Substrate Proven",
+      "l4ImplementationStatus": "not-started",
+      "l4ImplementationProhibitedUntilCertificationPasses": false,
+      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+    }
+  ]
+}

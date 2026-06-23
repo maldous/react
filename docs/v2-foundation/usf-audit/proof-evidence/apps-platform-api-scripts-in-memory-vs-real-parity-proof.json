@@ -61,10 +61,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T12:26:03.742Z",
-  "endedAt": "2026-06-23T12:26:04.060Z",
+  "startedAt": "2026-06-23T12:41:11.192Z",
+  "endedAt": "2026-06-23T12:41:11.514Z",
   "exitStatus": 0,
-  "commit": "b994c5905b334202b1643561d8b7aee2eb0195e1",
+  "commit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -108,7 +108,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T12:26:03.989Z"
+      "createdAt": "2026-06-23T12:41:11.445Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -629,18 +629,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T12:26:04.060Z",
+  "generatedAt": "2026-06-23T12:41:11.514Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782217547898-31545",
+  "collectorRunId": "proof-run-1782218455374-114497",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T12:26:03.742Z",
-  "endTime": "2026-06-23T12:26:04.060Z",
-  "gitCommit": "b994c5905b334202b1643561d8b7aee2eb0195e1",
-  "executionTimestamp": "2026-06-23T12:26:04.060Z",
+  "startTime": "2026-06-23T12:41:11.192Z",
+  "endTime": "2026-06-23T12:41:11.514Z",
+  "gitCommit": "ee44e1f7a1107394e55e0087f85c32d5c29cd980",
+  "executionTimestamp": "2026-06-23T12:41:11.514Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -921,5 +921,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "d7de23f773dd45508ca68bf1fd5a00e9562098f430d848ca004770ce9e63cc83"
+  "evidenceSignature": "26b377abbf3a37af16c9284e3652c3a66fbbac48e2f1830406037b6725567fe8"
 }
