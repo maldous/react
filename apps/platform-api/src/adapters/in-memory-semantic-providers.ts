@@ -18,6 +18,7 @@ import type { SessionStore, CreateSessionCommand, SessionRecord } from "@platfor
 import type { User, ExternalIdentity, Membership, TenantRole } from "@platform/domain-identity";
 import type { OrganisationProfile } from "@platform/contracts-organisation";
 import type { AuthStatePayload } from "@platform/adapters-redis";
+import { ConflictError } from "@platform/platform-errors";
 import type { IdentityRepository } from "../ports/identity-repository.ts";
 import type { OrganisationRepository } from "../ports/organisation-repository.ts";
 import type {
@@ -430,9 +431,16 @@ export class InMemoryIdentityRepository
     providerSubject: string;
   }) {
     this.assertAvailable("createUserAndExternalIdentity");
+    const email = input.email.toLowerCase();
+    if ([...this.users.values()].some((user) => user.email.toLowerCase() === email)) {
+      throw new ConflictError(
+        "An account with this email exists but is not linked to this identity provider. Contact an administrator to link accounts.",
+        { safeDetails: { provider: input.provider } }
+      );
+    }
     const user = {
       id: this.nextId("user"),
-      email: input.email.toLowerCase(),
+      email,
       displayName: input.displayName,
     } as User;
     const externalIdentity = {
@@ -440,7 +448,7 @@ export class InMemoryIdentityRepository
       userId: user.id,
       provider: input.provider,
       providerSubject: input.providerSubject,
-      email: input.email.toLowerCase(),
+      email,
     } as ExternalIdentity & { userId: string };
     this.users.set(user.id, user);
     this.identities.set(`${input.provider}::${input.providerSubject}`, externalIdentity);

@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   301 |
+| formal proof readiness gaps                 |   299 |
 | capability proof readiness gaps             |    89 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -246,8 +246,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted before/after state evidence
 - route-proof-evidence-missing: GET /e2e-harness - route proof has explicit subject refs but no emitted evidence record
 - in-memory-provider-parity: in-memory-backup-restore-provider - in-memory provider lacks complete emitted real-provider parity evidence
-- in-memory-provider-parity: in-memory-identity-repository - in-memory provider lacks complete emitted real-provider parity evidence
-- in-memory-provider-parity: in-memory-notification-transport - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-observability-repository - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-semantic-provider - in-memory provider lacks complete emitted real-provider parity evidence
 - capability-real-provider-proof-missing: Tenant identity (record + FQDN) - Tenant identity (record + FQDN) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
@@ -288,3 +286,5 @@ The adversarial runtime inventory status is reported separately from formal proo
 - capability-real-provider-proof-missing: Data governance: catalog, lineage, classification, PII, DSR/GDPR - Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Tenant data import / export - Tenant data import / export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Search + indexing (product search) - Search + indexing (product search) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: Object storage + tenant prefixes + signed URLs - Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-external-sandbox-proof-missing: Object storage + tenant prefixes + signed URLs - Object storage + tenant prefixes + signed URLs is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence

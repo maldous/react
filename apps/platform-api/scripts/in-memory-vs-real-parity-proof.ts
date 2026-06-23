@@ -7,13 +7,17 @@ import {
 } from "../src/adapters/in-memory-automation-runner.ts";
 import { InMemoryBillingProvider } from "../src/adapters/in-memory-billing-provider.ts";
 import {
+  createInMemoryNotificationTransport,
   InMemoryAntivirus,
   InMemoryEventBus,
+  InMemoryIdentityRepository,
   InMemoryRateLimitRepository,
   InMemorySearchRepository,
+  InMemorySemanticProviderBase,
   InMemorySecretStore,
   InMemoryWebhookDispatcher,
 } from "../src/adapters/in-memory-semantic-providers.ts";
+import { PostgresIdentityRepository } from "@platform/adapters-postgres";
 import {
   createInMemoryObjectStoragePort,
   createTenantScopedObjectStoragePort,
@@ -29,7 +33,236 @@ import {
 import { HttpWebhookDispatcher } from "../src/adapters/http-webhook-dispatcher.ts";
 import { ClamAvAdapter, getClamAvMetric } from "../src/adapters/clamav-antivirus.ts";
 import { LagoBillingProviderAdapter } from "../src/adapters/lago-billing-provider.ts";
+import { SmtpEmailAdapter } from "../src/adapters/smtp-email-adapter.ts";
 import { emitRuntimeProofEvidence } from "./lib/runtime-evidence.ts";
+
+type FakePostgresUser = {
+  id: string;
+  email: string;
+  displayName: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type FakePostgresExternalIdentity = {
+  id: string;
+  userId: string;
+  provider: string;
+  providerSubject: string;
+  createdAt: Date;
+};
+
+function createFakePostgresIdentityPool() {
+  const users = new Map<string, FakePostgresUser>();
+  const externalIdentities = new Map<string, FakePostgresExternalIdentity>();
+  const memberships = new Map<
+    string,
+    {
+      id: string;
+      userId: string;
+      organisationId: string;
+      role: string;
+      createdAt: Date;
+      updatedAt: Date;
+    }
+  >();
+  const statements: string[] = [];
+  let userSequence = 0;
+  let externalIdentitySequence = 0;
+  const now = new Date("2026-01-01T00:00:00.000Z");
+  const normalise = (email: string) => email.toLowerCase();
+  const client = {
+    escapeIdentifier(value: string) {
+      return `"${value.replaceAll('"', '""')}"`;
+    },
+    release() {
+      statements.push("RELEASE");
+    },
+    async query(sql: string, params: unknown[] = []) {
+      const compactSql = sql.replace(/\s+/g, " ").trim();
+      statements.push(compactSql);
+      if (["BEGIN", "SET LOCAL ROLE rls_bypass", "COMMIT", "ROLLBACK"].includes(compactSql)) {
+        return { rows: [] };
+      }
+      if (compactSql.startsWith("SELECT ei.id AS ei_id")) {
+        const [provider, providerSubject] = params as [string, string];
+        const identity = externalIdentities.get(`${provider}::${providerSubject}`);
+        if (!identity) return { rows: [] };
+        const user = users.get(identity.userId);
+        if (!user) return { rows: [] };
+        return {
+          rows: [
+            {
+              ei_id: identity.id,
+              ei_user_id: identity.userId,
+              ei_provider: identity.provider,
+              ei_provider_subject: identity.providerSubject,
+              ei_created_at: identity.createdAt,
+              u_id: user.id,
+              u_email: user.email,
+              u_display_name: user.displayName,
+              u_created_at: user.createdAt,
+              u_updated_at: user.updatedAt,
+            },
+          ],
+        };
+      }
+      if (compactSql.startsWith("INSERT INTO users")) {
+        const [email, displayName] = params as [string, string];
+        if ([...users.values()].some((user) => normalise(user.email) === normalise(email))) {
+          return { rows: [] };
+        }
+        userSequence += 1;
+        const user = {
+          id: `fake-pg-user-${userSequence}`,
+          email,
+          displayName,
+          createdAt: now,
+          updatedAt: now,
+        };
+        users.set(user.id, user);
+        return {
+          rows: [
+            {
+              id: user.id,
+              email: user.email,
+              display_name: user.displayName,
+              created_at: user.createdAt,
+              updated_at: user.updatedAt,
+            },
+          ],
+        };
+      }
+      if (
+        compactSql.startsWith("INSERT INTO external_identities") &&
+        compactSql.includes("ON CONFLICT")
+      ) {
+        const [userId, provider, providerSubject] = params as [string, string, string];
+        const key = `${provider}::${providerSubject}`;
+        const existing = externalIdentities.get(key);
+        const identity =
+          existing ??
+          ({
+            id: `fake-pg-external-${++externalIdentitySequence}`,
+            userId,
+            provider,
+            providerSubject,
+            createdAt: now,
+          } satisfies FakePostgresExternalIdentity);
+        identity.userId = userId;
+        externalIdentities.set(key, identity);
+        return {
+          rows: [
+            {
+              id: identity.id,
+              user_id: identity.userId,
+              provider: identity.provider,
+              provider_subject: identity.providerSubject,
+              created_at: identity.createdAt,
+            },
+          ],
+        };
+      }
+      if (compactSql.startsWith("INSERT INTO external_identities")) {
+        const [userId, provider, providerSubject] = params as [string, string, string];
+        const identity = {
+          id: `fake-pg-external-${++externalIdentitySequence}`,
+          userId,
+          provider,
+          providerSubject,
+          createdAt: now,
+        };
+        externalIdentities.set(`${provider}::${providerSubject}`, identity);
+        return {
+          rows: [
+            {
+              id: identity.id,
+              user_id: identity.userId,
+              provider: identity.provider,
+              provider_subject: identity.providerSubject,
+              created_at: identity.createdAt,
+            },
+          ],
+        };
+      }
+      if (compactSql.startsWith("SELECT id, email, display_name")) {
+        const [email] = params as [string];
+        const user = [...users.values()].find(
+          (candidate) => normalise(candidate.email) === normalise(email)
+        );
+        return {
+          rows: user
+            ? [
+                {
+                  id: user.id,
+                  email: user.email,
+                  display_name: user.displayName,
+                  created_at: user.createdAt,
+                  updated_at: user.updatedAt,
+                },
+              ]
+            : [],
+        };
+      }
+      if (compactSql.startsWith("SELECT id, user_id, organisation_id")) {
+        const [userId] = params as [string];
+        const membership = memberships.get(userId);
+        return {
+          rows: membership
+            ? [
+                {
+                  id: membership.id,
+                  user_id: membership.userId,
+                  organisation_id: membership.organisationId,
+                  role: membership.role,
+                  created_at: membership.createdAt,
+                  updated_at: membership.updatedAt,
+                },
+              ]
+            : [],
+        };
+      }
+      if (compactSql.startsWith("UPDATE public.pending_invitations")) {
+        return { rows: [] };
+      }
+      throw new Error(`unexpected fake postgres identity query: ${compactSql}`);
+    },
+  };
+  return {
+    pool: {
+      async connect() {
+        return client;
+      },
+    },
+    users,
+    externalIdentities,
+    statements,
+  };
+}
+
+function createFailingPostgresIdentityPool() {
+  const statements: string[] = [];
+  const client = {
+    release() {
+      statements.push("RELEASE");
+    },
+    async query(sql: string) {
+      const compactSql = sql.replace(/\s+/g, " ").trim();
+      statements.push(compactSql);
+      if (compactSql === "BEGIN" || compactSql === "SET LOCAL ROLE rls_bypass") return { rows: [] };
+      if (compactSql === "ROLLBACK") return { rows: [] };
+      throw new Error("fake postgres identity unavailable");
+    },
+  };
+  return {
+    pool: {
+      async connect() {
+        return client;
+      },
+    },
+    statements,
+  };
+}
 
 const requiredMethods = {
   "rate-limit-repository": [
@@ -73,6 +306,8 @@ const beforeState = {
   indexedDocuments: 0,
   automationRuns: 0,
   billingAccounts: 0,
+  notificationDeliveries: 0,
+  identityUsers: 0,
   storageObjects: 0,
   webhookDeliveries: 0,
   antivirusScans: 0,
@@ -128,6 +363,143 @@ assert.equal(await secrets.resolve(tenantB, meta.ref), null);
 secrets.injectFailure("resolve");
 await assert.rejects(() => secrets.resolve(tenantA, meta.ref), /injected failure/);
 secrets.clearFailure("resolve");
+
+const identityMethods = [
+  "findExternalIdentity",
+  "createUserAndExternalIdentity",
+  "findUserByEmail",
+  "linkExternalIdentity",
+  "findMembershipByUser",
+  "consumePendingInvitationsForUser",
+] as const;
+const inMemoryIdentity = new InMemoryIdentityRepository({ seed: "identity-parity" });
+const fakePostgresIdentityRuntime = createFakePostgresIdentityPool();
+const fakePostgresIdentity = new PostgresIdentityRepository(
+  "postgres://fake-identity-parity",
+  fakePostgresIdentityRuntime.pool as never
+);
+for (const method of identityMethods) {
+  assert.equal(typeof inMemoryIdentity[method], "function", `in-memory identity.${method}`);
+  assert.equal(typeof fakePostgresIdentity[method], "function", `postgres identity.${method}`);
+}
+const identityInput = {
+  email: "IdentityParity@Example.Test",
+  displayName: "Identity Parity",
+  provider: "keycloak",
+  providerSubject: "identity-parity-subject",
+};
+const inMemoryIdentityCreated = await inMemoryIdentity.createUserAndExternalIdentity(identityInput);
+const fakePostgresIdentityCreated =
+  await fakePostgresIdentity.createUserAndExternalIdentity(identityInput);
+assert.equal(inMemoryIdentityCreated.user.email, identityInput.email.toLowerCase());
+assert.equal(fakePostgresIdentityCreated.user.email, identityInput.email);
+assert.equal(inMemoryIdentityCreated.externalIdentity.provider, "keycloak");
+assert.equal(fakePostgresIdentityCreated.externalIdentity.provider, "keycloak");
+assert.equal(
+  (await inMemoryIdentity.findExternalIdentity("keycloak", identityInput.providerSubject))?.user.id,
+  inMemoryIdentityCreated.user.id
+);
+assert.equal(
+  (await fakePostgresIdentity.findExternalIdentity("keycloak", identityInput.providerSubject))?.user
+    .id,
+  fakePostgresIdentityCreated.user.id
+);
+assert.equal(
+  (await inMemoryIdentity.findUserByEmail("identityparity@example.test"))?.id,
+  inMemoryIdentityCreated.user.id
+);
+assert.equal(
+  (await fakePostgresIdentity.findUserByEmail("identityparity@example.test"))?.id,
+  fakePostgresIdentityCreated.user.id
+);
+assert.equal(await inMemoryIdentity.findMembershipByUser(inMemoryIdentityCreated.user.id), null);
+assert.equal(
+  await fakePostgresIdentity.findMembershipByUser(fakePostgresIdentityCreated.user.id),
+  null
+);
+assert.deepEqual(
+  await inMemoryIdentity.consumePendingInvitationsForUser(
+    inMemoryIdentityCreated.user.id,
+    identityInput.email
+  ),
+  []
+);
+assert.deepEqual(
+  await fakePostgresIdentity.consumePendingInvitationsForUser(
+    fakePostgresIdentityCreated.user.id,
+    identityInput.email
+  ),
+  []
+);
+const inMemoryLinkedIdentity = await inMemoryIdentity.linkExternalIdentity(
+  inMemoryIdentityCreated.user.id,
+  {
+    provider: "keycloak",
+    providerSubject: "identity-parity-linked-subject",
+    email: identityInput.email,
+  }
+);
+const fakePostgresLinkedIdentity = await fakePostgresIdentity.linkExternalIdentity(
+  fakePostgresIdentityCreated.user.id,
+  {
+    provider: "keycloak",
+    providerSubject: "identity-parity-linked-subject",
+    email: identityInput.email,
+  }
+);
+assert.equal(inMemoryLinkedIdentity.providerSubject, fakePostgresLinkedIdentity.providerSubject);
+let inMemoryIdentityConflict = "";
+await assert.rejects(
+  async () =>
+    inMemoryIdentity.createUserAndExternalIdentity({
+      ...identityInput,
+      providerSubject: "identity-parity-conflict",
+    }),
+  (err) => {
+    inMemoryIdentityConflict =
+      err instanceof Error && "code" in err ? String(err.code) : String(err);
+    return inMemoryIdentityConflict === "CONFLICT";
+  }
+);
+let fakePostgresIdentityConflict = "";
+await assert.rejects(
+  async () =>
+    fakePostgresIdentity.createUserAndExternalIdentity({
+      ...identityInput,
+      providerSubject: "identity-parity-conflict",
+    }),
+  (err) => {
+    fakePostgresIdentityConflict =
+      err instanceof Error && "code" in err ? String(err.code) : String(err);
+    return fakePostgresIdentityConflict === "CONFLICT";
+  }
+);
+inMemoryIdentity.injectFailure("findExternalIdentity");
+let inMemoryIdentityInjectedFailure = "";
+await assert.rejects(
+  async () => inMemoryIdentity.findExternalIdentity("keycloak", identityInput.providerSubject),
+  (err) => {
+    inMemoryIdentityInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryIdentityInjectedFailure);
+  }
+);
+inMemoryIdentity.clearFailure("findExternalIdentity");
+const fakeFailingIdentityRuntime = createFailingPostgresIdentityPool();
+const fakeFailingPostgresIdentity = new PostgresIdentityRepository(
+  "postgres://fake-identity-failure",
+  fakeFailingIdentityRuntime.pool as never
+);
+let fakePostgresIdentityFailure = "";
+await assert.rejects(
+  async () => fakeFailingPostgresIdentity.findExternalIdentity("keycloak", "unavailable"),
+  (err) => {
+    fakePostgresIdentityFailure = err instanceof Error ? err.message : String(err);
+    return /fake postgres identity unavailable/.test(fakePostgresIdentityFailure);
+  }
+);
+assert.equal(inMemoryIdentity.healthCheck().status, "ready");
+assert.equal(fakePostgresIdentityRuntime.statements.includes("SET LOCAL ROLE rls_bypass"), true);
+assert.equal(fakeFailingIdentityRuntime.statements.includes("ROLLBACK"), true);
 
 const billingMethods = [
   "readiness",
@@ -236,6 +608,133 @@ await assert.rejects(
 inMemoryBilling.clearFailure("getAccount");
 const inMemoryBillingHealth = await inMemoryBilling.healthCheck();
 assert.equal(inMemoryBillingHealth.ok, true);
+
+const notificationMethods = ["send"] as const;
+const notificationProvider = new InMemorySemanticProviderBase("in-memory-notification-transport");
+const inMemoryNotificationTransport = createInMemoryNotificationTransport(notificationProvider);
+const fakeSmtpMessages: Array<{
+  from: unknown;
+  to: unknown;
+  subject: string;
+  text?: string;
+  headers?: Record<string, string>;
+}> = [];
+let fakeSmtpVerifyCalls = 0;
+const fakeSmtpTransportFactory = (() => ({
+  async verify() {
+    fakeSmtpVerifyCalls += 1;
+    return true;
+  },
+  async sendMail(message: {
+    from: unknown;
+    to: unknown;
+    subject?: string;
+    text?: string;
+    headers?: Record<string, string>;
+  }) {
+    fakeSmtpMessages.push({
+      from: message.from,
+      to: message.to,
+      subject: message.subject ?? "",
+      text: message.text,
+      headers: message.headers,
+    });
+    return { messageId: `fake-smtp-${fakeSmtpMessages.length}` };
+  },
+})) as never;
+const fakeSmtpEmail = new SmtpEmailAdapter(
+  {
+    host: "127.0.0.1",
+    port: 2525,
+    secure: false,
+    timeoutMs: 1000,
+    retryAttempts: 1,
+    retryBackoffMs: 1,
+    configSource: "fake-smtp-parity",
+    secretSource: "no-secret-fake-smtp-parity",
+  },
+  fakeSmtpTransportFactory
+);
+for (const method of notificationMethods) {
+  assert.equal(
+    typeof inMemoryNotificationTransport,
+    "function",
+    `in-memory notification transport.${method}`
+  );
+  assert.equal(typeof fakeSmtpEmail[method], "function", `smtp email adapter.${method}`);
+}
+const notificationMessage = {
+  organisationId: tenantA,
+  userId: "user-notification-parity",
+  channel: "email" as const,
+  category: "security" as const,
+  subject: "Notification parity",
+};
+const inMemoryNotificationStatus = await inMemoryNotificationTransport(notificationMessage);
+const fakeSmtpSend = await fakeSmtpEmail.send({
+  from: { address: "noreply@example.test", displayName: "Platform" },
+  to: [{ address: "user@example.test" }],
+  subject: notificationMessage.subject,
+  text: "Notification parity",
+  headers: {
+    "x-platform-tenant": tenantA,
+    "x-platform-category": notificationMessage.category,
+  },
+});
+assert.equal(inMemoryNotificationStatus, "sent");
+assert.equal(fakeSmtpSend.messageId, "fake-smtp-1");
+const fakeSmtpHealth = await fakeSmtpEmail.healthCheck();
+assert.equal(fakeSmtpHealth.ok, true);
+notificationProvider.injectFailure("send");
+let inMemoryNotificationInjectedFailure = "";
+await assert.rejects(
+  async () => inMemoryNotificationTransport(notificationMessage),
+  (err) => {
+    inMemoryNotificationInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryNotificationInjectedFailure);
+  }
+);
+notificationProvider.clearFailure("send");
+const failingSmtpEmail = new SmtpEmailAdapter(
+  {
+    host: "127.0.0.1",
+    port: 2526,
+    secure: false,
+    timeoutMs: 50,
+    retryAttempts: 1,
+    retryBackoffMs: 1,
+    configSource: "fake-smtp-failure-parity",
+    secretSource: "no-secret-fake-smtp-failure-parity",
+  },
+  (() => ({
+    async verify() {
+      throw new Error("fake smtp unavailable");
+    },
+    async sendMail() {
+      throw new Error("fake smtp send unavailable");
+    },
+  })) as never
+);
+const failingSmtpHealth = await failingSmtpEmail.healthCheck();
+assert.equal(failingSmtpHealth.ok, false);
+let fakeSmtpFailure = "";
+await assert.rejects(
+  async () =>
+    failingSmtpEmail.send({
+      from: { address: "noreply@example.test" },
+      to: [{ address: "user@example.test" }],
+      subject: "Notification failure parity",
+      text: "failure path",
+    }),
+  (err) => {
+    fakeSmtpFailure = err instanceof Error ? err.message : String(err);
+    return /fail-closed|SMTP provider unavailable/.test(fakeSmtpFailure);
+  }
+);
+assert.equal(fakeSmtpMessages.length, 1);
+assert.equal(fakeSmtpMessages[0]?.headers?.["x-platform-tenant"], tenantA);
+assert.equal(fakeSmtpVerifyCalls, 1);
+assert.equal(notificationProvider.healthCheck().status, "ready");
 
 const automationMethods = ["runScript", "runFlow", "getRunStatus", "cancelRun"] as const;
 const inMemoryAutomation = new InMemoryAutomationRunner();
@@ -742,6 +1241,17 @@ const billingAuditEvents = inMemoryBilling
   .map(
     (event, index) => `in-memory-billing:${event.action}:${event.tenantId ?? "global"}:${index}`
   );
+const notificationAuditEvents = notificationProvider
+  .getAuditEvents()
+  .map(
+    (event, index) =>
+      `in-memory-notification-transport:${event.action}:${event.tenantId ?? "global"}:${index}`
+  );
+const identityAuditEvents = inMemoryIdentity
+  .getAuditEvents()
+  .map(
+    (event, index) => `in-memory-identity:${event.action}:${event.tenantId ?? "global"}:${index}`
+  );
 const webhookAuditEvents = inMemoryWebhookDispatcher
   .getAuditEvents()
   .map((event, index) => `in-memory-webhook:${event.action}:${index}`);
@@ -779,6 +1289,38 @@ const automationMetricSamples = [
   {
     name: "fake_lago_billing_http_request_total",
     value: fakeLagoRequests.length,
+  },
+  {
+    name: "in_memory_notification_transport_sent_total",
+    value: notificationProvider
+      .getAuditEvents()
+      .filter((event) => event.action === "notification.transport.sent").length,
+  },
+  {
+    name: "fake_smtp_email_sent_total",
+    value: fakeSmtpMessages.length,
+  },
+  {
+    name: "fake_smtp_health_check_total",
+    value: fakeSmtpVerifyCalls,
+  },
+  {
+    name: "in_memory_identity_user_created_total",
+    value: inMemoryIdentity
+      .getAuditEvents()
+      .filter((event) => event.action === "identity.user_created").length,
+  },
+  {
+    name: "in_memory_identity_external_linked_total",
+    value: inMemoryIdentity
+      .getAuditEvents()
+      .filter((event) => event.action === "identity.external_linked").length,
+  },
+  {
+    name: "fake_postgres_identity_system_admin_query_total",
+    value: fakePostgresIdentityRuntime.statements.filter(
+      (statement) => statement === "SET LOCAL ROLE rls_bypass"
+    ).length,
   },
   {
     name: "s3_object_storage_put_success_total",
@@ -838,6 +1380,10 @@ fakeLagoCustomers.clear();
 assert.equal(fakeLagoCustomers.size, 0);
 inMemoryBilling.reset();
 assert.equal(inMemoryBilling.getAuditEvents().length, 0);
+notificationProvider.reset();
+assert.equal(notificationProvider.getAuditEvents().length, 0);
+inMemoryIdentity.reset();
+assert.equal(inMemoryIdentity.getAuditEvents().length, 0);
 inMemoryWebhookDispatcher.reset();
 assert.equal(inMemoryWebhookDispatcher.deliveries.length, 0);
 inMemoryAntivirus.reset();
@@ -851,6 +1397,8 @@ emitRuntimeProofEvidence({
     "provider:in-memory-search-repository",
     "provider:in-memory-automation-runner",
     "provider:in-memory-billing-provider",
+    "provider:in-memory-notification-transport",
+    "provider:in-memory-identity-repository",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
     "provider:in-memory-antivirus",
@@ -860,6 +1408,8 @@ emitRuntimeProofEvidence({
     "in-memory-search-repository",
     "in-memory-automation-runner",
     "in-memory-billing-provider",
+    "in-memory-notification-transport",
+    "in-memory-identity-repository",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
     "in-memory-antivirus",
@@ -867,6 +1417,10 @@ emitRuntimeProofEvidence({
     "windmill-automation-provider",
     "provider:lago-billing-provider",
     "lago-billing-provider",
+    "provider:smtp-email-adapter",
+    "smtp-email-adapter",
+    "provider:postgres-identity-repository",
+    "postgres-identity-repository",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
@@ -901,6 +1455,33 @@ emitRuntimeProofEvidence({
     fakeLagoRequests: fakeLagoRequests.length,
     fakeLagoCustomers: fakeLagoCustomers.size,
     inMemoryBillingEventsAfterCleanup: inMemoryBilling.getAuditEvents().length,
+    notificationContractMethods: notificationMethods.length,
+    inMemoryNotificationStatus,
+    fakeSmtpMessageId: fakeSmtpSend.messageId,
+    fakeSmtpHealth,
+    inMemoryNotificationInjectedFailure,
+    failingSmtpHealth,
+    fakeSmtpFailure,
+    fakeSmtpMessages: fakeSmtpMessages.length,
+    fakeSmtpVerifyCalls,
+    inMemoryNotificationEventsAfterCleanup: notificationProvider.getAuditEvents().length,
+    identityContractMethods: identityMethods.length,
+    inMemoryIdentityUserId: inMemoryIdentityCreated.user.id,
+    fakePostgresIdentityUserId: fakePostgresIdentityCreated.user.id,
+    inMemoryIdentityEmailNormalised: inMemoryIdentityCreated.user.email,
+    fakePostgresIdentityEmail: fakePostgresIdentityCreated.user.email,
+    identityLinkedProviderSubject: inMemoryLinkedIdentity.providerSubject,
+    fakePostgresLinkedProviderSubject: fakePostgresLinkedIdentity.providerSubject,
+    inMemoryIdentityConflict,
+    fakePostgresIdentityConflict,
+    inMemoryIdentityInjectedFailure,
+    fakePostgresIdentityFailure,
+    fakePostgresIdentitySystemAdminStatements: fakePostgresIdentityRuntime.statements.filter(
+      (statement) => statement === "SET LOCAL ROLE rls_bypass"
+    ).length,
+    fakePostgresIdentityRollbackObserved:
+      fakeFailingIdentityRuntime.statements.includes("ROLLBACK"),
+    inMemoryIdentityEventsAfterCleanup: inMemoryIdentity.getAuditEvents().length,
     automationContractMethods: automationMethods.length,
     inMemoryAutomationScriptStatus: "succeeded",
     fakeWindmillScriptStatus: "succeeded",
@@ -960,6 +1541,18 @@ emitRuntimeProofEvidence({
     billingTenantBoundaryParity: true,
     billingWebhookInvalidSignatureParity: true,
     billingCleanupParity: true,
+    notificationTransportPortMethodsMatch: true,
+    notificationTransportSuccessParity: true,
+    notificationTransportFailurePathParity: true,
+    notificationTransportHealthParity: true,
+    notificationTransportCleanupParity: true,
+    identityRepositoryPortMethodsMatch: true,
+    identityRepositoryCreateReadParity: true,
+    identityRepositoryEmailConflictParity: true,
+    identityRepositoryMembershipMissParity: true,
+    identityRepositoryFailurePathParity: true,
+    identityRepositorySystemAdminPathObserved: true,
+    identityRepositoryCleanupParity: true,
     objectStoragePortMethodsMatch: true,
     objectStorageLifecycleParity: true,
     objectStorageTenantIsolationParity: true,
@@ -981,6 +1574,8 @@ emitRuntimeProofEvidence({
   auditEventIds: [
     ...automationAuditEvents,
     ...billingAuditEvents,
+    ...notificationAuditEvents,
+    ...identityAuditEvents,
     ...storageEvents.audit,
     ...webhookAuditEvents,
     ...antivirusAuditEvents,
@@ -994,6 +1589,16 @@ emitRuntimeProofEvidence({
     "trace:billing-parity-account-read",
     "trace:billing-parity-tenant-miss",
     "trace:billing-parity-injected-failure",
+    "trace:notification-parity-in-memory-send",
+    "trace:notification-parity-smtp-send",
+    "trace:notification-parity-smtp-health",
+    "trace:notification-parity-injected-failure",
+    "trace:notification-parity-smtp-failure",
+    "trace:identity-parity-create-read",
+    "trace:identity-parity-email-conflict",
+    "trace:identity-parity-membership-miss",
+    "trace:identity-parity-injected-failure",
+    "trace:identity-parity-postgres-rollback",
     ...storageEvents.trace,
     "trace:webhook-parity-dispatch-success",
     "trace:webhook-parity-dispatch-failure",
@@ -1012,6 +1617,16 @@ emitRuntimeProofEvidence({
     "log:billing-parity-account-read",
     "log:billing-parity-tenant-miss",
     "log:billing-parity-injected-failure",
+    "log:notification-parity-in-memory-send",
+    "log:notification-parity-smtp-send",
+    "log:notification-parity-smtp-health",
+    "log:notification-parity-injected-failure",
+    "log:notification-parity-smtp-failure",
+    "log:identity-parity-create-read",
+    "log:identity-parity-email-conflict",
+    "log:identity-parity-membership-miss",
+    "log:identity-parity-injected-failure",
+    "log:identity-parity-postgres-rollback",
     ...storageEvents.log,
     "log:webhook-parity-dispatch-success",
     "log:webhook-parity-dispatch-failure",

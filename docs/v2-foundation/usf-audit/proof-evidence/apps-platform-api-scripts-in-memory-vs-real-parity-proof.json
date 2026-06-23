@@ -11,6 +11,8 @@
     "provider:in-memory-search-repository",
     "provider:in-memory-automation-runner",
     "provider:in-memory-billing-provider",
+    "provider:in-memory-notification-transport",
+    "provider:in-memory-identity-repository",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
     "provider:in-memory-antivirus",
@@ -20,6 +22,8 @@
     "in-memory-search-repository",
     "in-memory-automation-runner",
     "in-memory-billing-provider",
+    "in-memory-notification-transport",
+    "in-memory-identity-repository",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
     "in-memory-antivirus",
@@ -27,6 +31,10 @@
     "windmill-automation-provider",
     "provider:lago-billing-provider",
     "lago-billing-provider",
+    "provider:smtp-email-adapter",
+    "smtp-email-adapter",
+    "provider:postgres-identity-repository",
+    "postgres-identity-repository",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
     "provider:http-webhook-dispatcher",
@@ -45,10 +53,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T09:36:54.265Z",
-  "endedAt": "2026-06-23T09:36:54.543Z",
+  "startedAt": "2026-06-23T09:53:34.626Z",
+  "endedAt": "2026-06-23T09:53:34.924Z",
   "exitStatus": 0,
-  "commit": "ad45e624a085e736de1be268f551bc03b213490b",
+  "commit": "73261afa1cc6ff16c0b6246cb8c3d3fd0b389897",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -62,6 +70,8 @@
     "indexedDocuments": 0,
     "automationRuns": 0,
     "billingAccounts": 0,
+    "notificationDeliveries": 0,
+    "identityUsers": 0,
     "storageObjects": 0,
     "webhookDeliveries": 0,
     "antivirusScans": 0,
@@ -89,7 +99,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T09:36:54.471Z"
+      "createdAt": "2026-06-23T09:53:34.855Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -105,6 +115,38 @@
     "fakeLagoRequests": 4,
     "fakeLagoCustomers": 0,
     "inMemoryBillingEventsAfterCleanup": 0,
+    "notificationContractMethods": 1,
+    "inMemoryNotificationStatus": "sent",
+    "fakeSmtpMessageId": "fake-smtp-1",
+    "fakeSmtpHealth": {
+      "ok": true,
+      "degradedMode": "none",
+      "recoveryAction": "none required"
+    },
+    "inMemoryNotificationInjectedFailure": "in-memory-notification-transport injected failure for send; fail closed",
+    "failingSmtpHealth": {
+      "ok": false,
+      "degradedMode": "unavailable",
+      "recoveryAction": "operator recover SMTP provider by validating fake-smtp-failure-parity, rotating no-secret-fake-smtp-failure-parity, and retrying readiness probe"
+    },
+    "fakeSmtpFailure": "SMTP provider unavailable after retry budget; fail-closed with no fallback or degraded delivery (fake-smtp-failure-parity; secret source no-secret-fake-smtp-failure-parity)",
+    "fakeSmtpMessages": 1,
+    "fakeSmtpVerifyCalls": 1,
+    "inMemoryNotificationEventsAfterCleanup": 0,
+    "identityContractMethods": 6,
+    "inMemoryIdentityUserId": "user_8ad5685e83ad",
+    "fakePostgresIdentityUserId": "fake-pg-user-1",
+    "inMemoryIdentityEmailNormalised": "identityparity@example.test",
+    "fakePostgresIdentityEmail": "IdentityParity@Example.Test",
+    "identityLinkedProviderSubject": "identity-parity-linked-subject",
+    "fakePostgresLinkedProviderSubject": "identity-parity-linked-subject",
+    "inMemoryIdentityConflict": "CONFLICT",
+    "fakePostgresIdentityConflict": "CONFLICT",
+    "inMemoryIdentityInjectedFailure": "in-memory-identity-repository injected failure for findExternalIdentity; fail closed",
+    "fakePostgresIdentityFailure": "fake postgres identity unavailable",
+    "fakePostgresIdentitySystemAdminStatements": 7,
+    "fakePostgresIdentityRollbackObserved": true,
+    "inMemoryIdentityEventsAfterCleanup": 0,
     "automationContractMethods": 4,
     "inMemoryAutomationScriptStatus": "succeeded",
     "fakeWindmillScriptStatus": "succeeded",
@@ -201,6 +243,18 @@
     "billingTenantBoundaryParity": true,
     "billingWebhookInvalidSignatureParity": true,
     "billingCleanupParity": true,
+    "notificationTransportPortMethodsMatch": true,
+    "notificationTransportSuccessParity": true,
+    "notificationTransportFailurePathParity": true,
+    "notificationTransportHealthParity": true,
+    "notificationTransportCleanupParity": true,
+    "identityRepositoryPortMethodsMatch": true,
+    "identityRepositoryCreateReadParity": true,
+    "identityRepositoryEmailConflictParity": true,
+    "identityRepositoryMembershipMissParity": true,
+    "identityRepositoryFailurePathParity": true,
+    "identityRepositorySystemAdminPathObserved": true,
+    "identityRepositoryCleanupParity": true,
     "objectStoragePortMethodsMatch": true,
     "objectStorageLifecycleParity": true,
     "objectStorageTenantIsolationParity": true,
@@ -234,6 +288,9 @@
     "in-memory-billing:billing.account.get:tenant-a:1",
     "in-memory-billing:billing.account.get:tenant-b:2",
     "in-memory-billing:billing.webhook.validate:global:3",
+    "in-memory-notification-transport:notification.transport.sent:tenant-a:0",
+    "in-memory-identity:identity.user_created:global:0",
+    "in-memory-identity:identity.external_linked:global:1",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
     "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
     "in-memory:storage.object.download:clean:tenant-a/object.txt",
@@ -256,6 +313,16 @@
     "trace:billing-parity-account-read",
     "trace:billing-parity-tenant-miss",
     "trace:billing-parity-injected-failure",
+    "trace:notification-parity-in-memory-send",
+    "trace:notification-parity-smtp-send",
+    "trace:notification-parity-smtp-health",
+    "trace:notification-parity-injected-failure",
+    "trace:notification-parity-smtp-failure",
+    "trace:identity-parity-create-read",
+    "trace:identity-parity-email-conflict",
+    "trace:identity-parity-membership-miss",
+    "trace:identity-parity-injected-failure",
+    "trace:identity-parity-postgres-rollback",
     "trace:in-memory:storage.put",
     "trace:fake-s3:storage.put",
     "trace:in-memory:storage.download",
@@ -300,6 +367,30 @@
     {
       "name": "fake_lago_billing_http_request_total",
       "value": 4
+    },
+    {
+      "name": "in_memory_notification_transport_sent_total",
+      "value": 1
+    },
+    {
+      "name": "fake_smtp_email_sent_total",
+      "value": 1
+    },
+    {
+      "name": "fake_smtp_health_check_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_identity_user_created_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_identity_external_linked_total",
+      "value": 1
+    },
+    {
+      "name": "fake_postgres_identity_system_admin_query_total",
+      "value": 7
     },
     {
       "name": "s3_object_storage_put_success_total",
@@ -379,6 +470,16 @@
     "log:billing-parity-account-read",
     "log:billing-parity-tenant-miss",
     "log:billing-parity-injected-failure",
+    "log:notification-parity-in-memory-send",
+    "log:notification-parity-smtp-send",
+    "log:notification-parity-smtp-health",
+    "log:notification-parity-injected-failure",
+    "log:notification-parity-smtp-failure",
+    "log:identity-parity-create-read",
+    "log:identity-parity-email-conflict",
+    "log:identity-parity-membership-miss",
+    "log:identity-parity-injected-failure",
+    "log:identity-parity-postgres-rollback",
     "log:in-memory:info:put:storage.operation.complete",
     "log:fake-s3:info:put:storage.operation.complete",
     "log:in-memory:info:download:storage.operation.complete",
@@ -402,18 +503,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T09:36:54.543Z",
+  "generatedAt": "2026-06-23T09:53:34.924Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782207397770-3181021",
+  "collectorRunId": "proof-run-1782208398700-3281307",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T09:36:54.265Z",
-  "endTime": "2026-06-23T09:36:54.543Z",
-  "gitCommit": "ad45e624a085e736de1be268f551bc03b213490b",
-  "executionTimestamp": "2026-06-23T09:36:54.543Z",
+  "startTime": "2026-06-23T09:53:34.626Z",
+  "endTime": "2026-06-23T09:53:34.924Z",
+  "gitCommit": "73261afa1cc6ff16c0b6246cb8c3d3fd0b389897",
+  "executionTimestamp": "2026-06-23T09:53:34.924Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -428,6 +529,18 @@
     "billingTenantBoundaryParity": true,
     "billingWebhookInvalidSignatureParity": true,
     "billingCleanupParity": true,
+    "notificationTransportPortMethodsMatch": true,
+    "notificationTransportSuccessParity": true,
+    "notificationTransportFailurePathParity": true,
+    "notificationTransportHealthParity": true,
+    "notificationTransportCleanupParity": true,
+    "identityRepositoryPortMethodsMatch": true,
+    "identityRepositoryCreateReadParity": true,
+    "identityRepositoryEmailConflictParity": true,
+    "identityRepositoryMembershipMissParity": true,
+    "identityRepositoryFailurePathParity": true,
+    "identityRepositorySystemAdminPathObserved": true,
+    "identityRepositoryCleanupParity": true,
     "objectStoragePortMethodsMatch": true,
     "objectStorageLifecycleParity": true,
     "objectStorageTenantIsolationParity": true,
@@ -458,6 +571,9 @@
     "in-memory-billing:billing.account.get:tenant-a:1",
     "in-memory-billing:billing.account.get:tenant-b:2",
     "in-memory-billing:billing.webhook.validate:global:3",
+    "in-memory-notification-transport:notification.transport.sent:tenant-a:0",
+    "in-memory-identity:identity.user_created:global:0",
+    "in-memory-identity:identity.external_linked:global:1",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
     "fake-s3:storage.object.scan.clean:clean:tenant-a/object.txt",
     "in-memory:storage.object.download:clean:tenant-a/object.txt",
@@ -499,6 +615,30 @@
     {
       "name": "fake_lago_billing_http_request_total",
       "value": 4
+    },
+    {
+      "name": "in_memory_notification_transport_sent_total",
+      "value": 1
+    },
+    {
+      "name": "fake_smtp_email_sent_total",
+      "value": 1
+    },
+    {
+      "name": "fake_smtp_health_check_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_identity_user_created_total",
+      "value": 1
+    },
+    {
+      "name": "in_memory_identity_external_linked_total",
+      "value": 1
+    },
+    {
+      "name": "fake_postgres_identity_system_admin_query_total",
+      "value": 7
     },
     {
       "name": "s3_object_storage_put_success_total",
@@ -578,6 +718,16 @@
     "log:billing-parity-account-read",
     "log:billing-parity-tenant-miss",
     "log:billing-parity-injected-failure",
+    "log:notification-parity-in-memory-send",
+    "log:notification-parity-smtp-send",
+    "log:notification-parity-smtp-health",
+    "log:notification-parity-injected-failure",
+    "log:notification-parity-smtp-failure",
+    "log:identity-parity-create-read",
+    "log:identity-parity-email-conflict",
+    "log:identity-parity-membership-miss",
+    "log:identity-parity-injected-failure",
+    "log:identity-parity-postgres-rollback",
     "log:in-memory:info:put:storage.operation.complete",
     "log:fake-s3:info:put:storage.operation.complete",
     "log:in-memory:info:download:storage.operation.complete",
@@ -594,5 +744,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "748d3ffeacbf80a77222d88f72c840025bddc77bd3688d0d979026af0bcd47ae"
+  "evidenceSignature": "badd3453b24e0c246b213db58f58b4487e59074c7f56900fef1187bbfdb2536e"
 }
