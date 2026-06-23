@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:provider-binding-report-route",
-  "startedAt": "2026-06-23T22:00:44.485Z",
-  "endedAt": "2026-06-23T22:00:44.991Z",
+  "startedAt": "2026-06-23T23:01:06.651Z",
+  "endedAt": "2026-06-23T23:01:07.156Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,18 +83,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:44.991Z",
+  "generatedAt": "2026-06-23T23:01:07.156Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:44.485Z",
-  "endTime": "2026-06-23T22:00:44.991Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:44.991Z",
+  "startTime": "2026-06-23T23:01:06.651Z",
+  "endTime": "2026-06-23T23:01:07.156Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:07.156Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-provider-bindings": {
@@ -120,5 +121,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts"],
-  "evidenceSignature": "aed6f95e254e0b6732ca3a44d66e2a041fc76057c9deae0041831706155a5704"
+  "evidenceSignature": "316e699787cc9f3b25a2d9f4f8410da481b1ab03865f2b1f4348a524bbb030ba"
 }

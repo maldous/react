@@ -90,10 +90,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:route-contracts",
-  "startedAt": "2026-06-23T22:00:50.634Z",
-  "endedAt": "2026-06-23T22:00:51.159Z",
+  "startedAt": "2026-06-23T23:01:12.941Z",
+  "endedAt": "2026-06-23T23:01:13.452Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -875,18 +875,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:51.159Z",
+  "generatedAt": "2026-06-23T23:01:13.452Z",
   "sourceFileRefs": ["apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:50.634Z",
-  "endTime": "2026-06-23T22:00:51.159Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:51.159Z",
+  "startTime": "2026-06-23T23:01:12.941Z",
+  "endTime": "2026-06-23T23:01:13.452Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:13.452Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-config-key": {
@@ -1330,5 +1331,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
-  "evidenceSignature": "21b3009f50a830b5f902090b433ba282c7f2c0495b208437aca171aa635afd74"
+  "evidenceSignature": "ecbf9e2e77c5626ceac1183e116d903fee2e9f5c820116a103d5c6ad6e146d96"
 }

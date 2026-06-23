@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:observability-metrics-traces-closure",
-  "startedAt": "2026-06-23T21:59:59.352Z",
-  "endedAt": "2026-06-23T21:59:59.862Z",
+  "startedAt": "2026-06-23T23:00:21.224Z",
+  "endedAt": "2026-06-23T23:00:21.745Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,20 +81,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:59:59.862Z",
+  "generatedAt": "2026-06-23T23:00:21.745Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:59:59.352Z",
-  "endTime": "2026-06-23T21:59:59.862Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:59:59.862Z",
+  "startTime": "2026-06-23T23:00:21.224Z",
+  "endTime": "2026-06-23T23:00:21.745Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:21.745Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts": {
@@ -122,5 +123,5 @@
     }
   ],
   "logEvidence": ["log:observability-metrics-traces-closure:runtime-proof"],
-  "evidenceSignature": "bc96add3241f413820d9f2678d29cd816f78ea419da6082c454cd06f99f7fe0e"
+  "evidenceSignature": "0b283e6415c89979f1a9aa919f554899c93e3ee5a0b059973a2c398b1c8877ed"
 }

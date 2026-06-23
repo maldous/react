@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:58:10.016Z",
-  "endedAt": "2026-06-23T21:58:10.049Z",
+  "startedAt": "2026-06-23T22:58:32.853Z",
+  "endedAt": "2026-06-23T22:58:32.890Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:10.049Z",
+  "generatedAt": "2026-06-23T22:58:32.890Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:10.016Z",
-  "endTime": "2026-06-23T21:58:10.049Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:10.049Z",
+  "startTime": "2026-06-23T22:58:32.853Z",
+  "endTime": "2026-06-23T22:58:32.890Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:32.890Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/compliance-report-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
-  "evidenceSignature": "ef2eb5e2cf44291f900de996a7a219fc6d3b4b7206172369c7a7c2c15c33674e"
+  "evidenceSignature": "3689d5df33dc6a654e0d8e972361f10489d6eddc3ff34079d8da91aa95665845"
 }

@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:webhooks",
-  "startedAt": "2026-06-23T22:01:02.861Z",
-  "endedAt": "2026-06-23T22:01:03.004Z",
+  "startedAt": "2026-06-23T23:01:25.428Z",
+  "endedAt": "2026-06-23T23:01:25.566Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -301,18 +301,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:01:03.004Z",
+  "generatedAt": "2026-06-23T23:01:25.566Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:01:02.861Z",
-  "endTime": "2026-06-23T22:01:03.004Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:01:03.004Z",
+  "startTime": "2026-06-23T23:01:25.428Z",
+  "endTime": "2026-06-23T23:01:25.566Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:25.566Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-webhooks-id": {
@@ -459,5 +460,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/webhooks-runtime-proof.ts"],
-  "evidenceSignature": "2cbdf52bfb60c2e20071e0a00abac1fb434d0bfb3522911992f8fad33d565c31"
+  "evidenceSignature": "19aaaffb0a813d50e47c4c31551428cf05b9f3dd3f8c97fc1fc6ed0b54924856"
 }

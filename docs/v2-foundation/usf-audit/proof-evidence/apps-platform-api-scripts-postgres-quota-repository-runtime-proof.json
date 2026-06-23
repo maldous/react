@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:41.077Z",
-  "endedAt": "2026-06-23T22:00:41.339Z",
+  "startedAt": "2026-06-23T23:01:03.216Z",
+  "endedAt": "2026-06-23T23:01:03.474Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:41.339Z",
+  "generatedAt": "2026-06-23T23:01:03.474Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:41.077Z",
-  "endTime": "2026-06-23T22:00:41.339Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:41.339Z",
+  "startTime": "2026-06-23T23:01:03.216Z",
+  "endTime": "2026-06-23T23:01:03.474Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:03.474Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"],
-  "evidenceSignature": "f39bef42335d4c6b425824d2fa4c5b130c40cb947fc7def5214592ed660e5707"
+  "evidenceSignature": "e64d3a8b825fc9b2cb4b8395e54658125a35d49660fb39e4a5cfc59d6a5d03d1"
 }

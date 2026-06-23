@@ -19,10 +19,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-automation-runner",
-  "startedAt": "2026-06-23T21:58:21.120Z",
-  "endedAt": "2026-06-23T21:58:21.184Z",
+  "startedAt": "2026-06-23T22:58:43.971Z",
+  "endedAt": "2026-06-23T22:58:44.042Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -174,18 +174,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:21.184Z",
+  "generatedAt": "2026-06-23T22:58:44.042Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:21.120Z",
-  "endTime": "2026-06-23T21:58:21.184Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:21.184Z",
+  "startTime": "2026-06-23T22:58:43.971Z",
+  "endTime": "2026-06-23T22:58:44.042Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:44.042Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts": {
@@ -245,5 +246,5 @@
     "log:automation-proof-flow-run",
     "log:automation-proof-missing-run"
   ],
-  "evidenceSignature": "6686112b2b2a8c803b771ed900bd7b4b46932a0b87eda476e421304ea8d44c29"
+  "evidenceSignature": "f0c4d12cd7cb4598923cf98a0d9ddca999880e1df2e48423f1fc0017c56ccb23"
 }

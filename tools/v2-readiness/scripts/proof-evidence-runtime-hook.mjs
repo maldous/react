@@ -106,6 +106,7 @@ if (evidenceFile && rawMetadata) {
           proofOverrides.expectedOutputsAsserted === true ||
           defaultEvidence?.expectedOutputsAsserted === true ||
           (suppressDefaultBehaviourEvidence && code === 0),
+        perCapabilityL4Evidence: proofOverrides.perCapabilityL4Evidence || [],
       });
       fs.writeFileSync(evidenceFile, `${JSON.stringify(record, null, 2)}\n`);
     });

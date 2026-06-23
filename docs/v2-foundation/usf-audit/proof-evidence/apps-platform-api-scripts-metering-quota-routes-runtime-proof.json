@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:metering-quota-routes",
-  "startedAt": "2026-06-23T21:59:51.469Z",
-  "endedAt": "2026-06-23T21:59:52.090Z",
+  "startedAt": "2026-06-23T23:00:13.293Z",
+  "endedAt": "2026-06-23T23:00:13.907Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,18 +201,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:59:52.090Z",
+  "generatedAt": "2026-06-23T23:00:13.907Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:59:51.469Z",
-  "endTime": "2026-06-23T21:59:52.090Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:59:52.090Z",
+  "startTime": "2026-06-23T23:00:13.293Z",
+  "endTime": "2026-06-23T23:00:13.907Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:13.907Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-usage": {
@@ -304,5 +305,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
-  "evidenceSignature": "25f65447a100be80ce480b3f9f41aa05e46e3222a9eeb268a1b5b62ae86624f4"
+  "evidenceSignature": "af48ea1662a4af36521dd92e06ba141c20d81dc658f3f41a7ccc8618ec4a2382"
 }

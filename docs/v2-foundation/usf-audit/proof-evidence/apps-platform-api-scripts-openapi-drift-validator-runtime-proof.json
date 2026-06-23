@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:02.255Z",
-  "endedAt": "2026-06-23T22:00:02.283Z",
+  "startedAt": "2026-06-23T23:00:24.133Z",
+  "endedAt": "2026-06-23T23:00:24.160Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:02.283Z",
+  "generatedAt": "2026-06-23T23:00:24.160Z",
   "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:02.255Z",
-  "endTime": "2026-06-23T22:00:02.283Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:02.283Z",
+  "startTime": "2026-06-23T23:00:24.133Z",
+  "endTime": "2026-06-23T23:00:24.160Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:24.160Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
-  "evidenceSignature": "64dfa759a7ae079b54c068754984293b703a0f6e09dc351b0f9708c8445ea9e3"
+  "evidenceSignature": "dc3114e68c88e5c7eff16c77f34a5e6aa53e33799f6024ea933bed2002ecca53"
 }

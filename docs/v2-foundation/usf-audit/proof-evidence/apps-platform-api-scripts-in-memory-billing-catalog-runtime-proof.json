@@ -40,10 +40,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-billing-catalog",
-  "startedAt": "2026-06-23T21:58:21.347Z",
-  "endedAt": "2026-06-23T21:58:21.383Z",
+  "startedAt": "2026-06-23T22:58:44.210Z",
+  "endedAt": "2026-06-23T22:58:44.249Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -258,18 +258,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:21.383Z",
+  "generatedAt": "2026-06-23T22:58:44.249Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:21.347Z",
-  "endTime": "2026-06-23T21:58:21.383Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:21.383Z",
+  "startTime": "2026-06-23T22:58:44.210Z",
+  "endTime": "2026-06-23T22:58:44.249Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:44.249Z",
   "stateDiff": {
     "routeMutations": {
       "route:post-api-admin-billing-catalog-products": {
@@ -390,5 +391,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:semantic-dev"],
-  "evidenceSignature": "900e91c8b2558ff4310493d6a58653a66e4a7dbac9664b618892bd243fe860bf"
+  "evidenceSignature": "e8ed35bfa414cee5f07090dbd85ace921c1ad70716f6ee8f3cd14ae63519b115"
 }

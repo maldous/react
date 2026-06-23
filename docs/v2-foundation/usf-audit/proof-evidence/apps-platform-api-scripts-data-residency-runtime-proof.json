@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:data-residency",
-  "startedAt": "2026-06-23T21:58:12.960Z",
-  "endedAt": "2026-06-23T21:58:13.001Z",
+  "startedAt": "2026-06-23T22:58:35.775Z",
+  "endedAt": "2026-06-23T22:58:35.817Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,18 +201,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:13.001Z",
+  "generatedAt": "2026-06-23T22:58:35.817Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-residency-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:12.960Z",
-  "endTime": "2026-06-23T21:58:13.001Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:13.001Z",
+  "startTime": "2026-06-23T22:58:35.775Z",
+  "endTime": "2026-06-23T22:58:35.817Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:35.817Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-admin-data-legal-holds": {
@@ -304,5 +305,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
-  "evidenceSignature": "8c6e95862526a9b6521abeff54730f128d8f745b9f82f2b585017cb91697a7e8"
+  "evidenceSignature": "7388a3adab4effcd92229436082d130d3457b18e69307a1fa6db7cd96a781093"
 }

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:observability-provider-closure",
-  "startedAt": "2026-06-23T22:00:00.030Z",
-  "endedAt": "2026-06-23T22:00:00.544Z",
+  "startedAt": "2026-06-23T23:00:21.915Z",
+  "endedAt": "2026-06-23T23:00:22.443Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,18 +81,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:00.544Z",
+  "generatedAt": "2026-06-23T23:00:22.443Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:00.030Z",
-  "endTime": "2026-06-23T22:00:00.544Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:00.544Z",
+  "startTime": "2026-06-23T23:00:21.915Z",
+  "endTime": "2026-06-23T23:00:22.443Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:22.443Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts": {
@@ -120,5 +121,5 @@
     }
   ],
   "logEvidence": ["log:observability-provider-closure:runtime-proof"],
-  "evidenceSignature": "32c74c02ef6ea9d7285cef6eb6a8bff48e69cd7751342878abf69a69dd1c09e0"
+  "evidenceSignature": "8a0b8af3c5c2c89b259e04a425005ab250eaf2ec5b12e5f8aec251cb59161b87"
 }

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-custom-domain-auth-origin",
-  "startedAt": "2026-06-23T22:00:57.625Z",
-  "endedAt": "2026-06-23T22:00:58.000Z",
+  "startedAt": "2026-06-23T23:01:20.005Z",
+  "endedAt": "2026-06-23T23:01:20.377Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,18 +83,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:58.000Z",
+  "generatedAt": "2026-06-23T23:01:20.377Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:57.625Z",
-  "endTime": "2026-06-23T22:00:58.000Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:58.000Z",
+  "startTime": "2026-06-23T23:01:20.005Z",
+  "endTime": "2026-06-23T23:01:20.377Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:20.377Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts": {
@@ -122,5 +123,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"
   ],
-  "evidenceSignature": "a3a057b33f76052c20316ae8da5de15b83ee7a99e510012576d46d4e11e2ecf0"
+  "evidenceSignature": "c2d6a35fd8dcfb5a36080e042b9b9afd170522561e4ce9694e784540e6d8e93a"
 }

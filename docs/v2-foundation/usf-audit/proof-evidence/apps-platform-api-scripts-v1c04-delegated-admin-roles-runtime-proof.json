@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:delegated-admin",
-  "startedAt": "2026-06-23T22:01:01.953Z",
-  "endedAt": "2026-06-23T22:01:01.988Z",
+  "startedAt": "2026-06-23T23:01:24.506Z",
+  "endedAt": "2026-06-23T23:01:24.544Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -123,18 +123,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:01:01.988Z",
+  "generatedAt": "2026-06-23T23:01:24.544Z",
   "sourceFileRefs": ["apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:01:01.953Z",
-  "endTime": "2026-06-23T22:01:01.988Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:01:01.988Z",
+  "startTime": "2026-06-23T23:01:24.506Z",
+  "endTime": "2026-06-23T23:01:24.544Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:24.544Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-admin-tenants-tenantid-delegations-delegationid": {
@@ -182,5 +183,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
-  "evidenceSignature": "c9e7d133abd94a19007d6b866d0dc2b63ae45ce41cd4a76982d2886c9d86eaf5"
+  "evidenceSignature": "79f800319d988a89c948520e4332822a5f0f32d19df1295cc7bc7b9757747b71"
 }

@@ -284,11 +284,23 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     behaviourQuality,
     l0DiscoveryReadiness
   );
+  let l4SubstrateEvidence = buildL4SubstrateEvidenceReport({
+    ctx,
+    records: evidence.records,
+    l0DiscoveryReadiness,
+  });
   const capabilityReadiness = buildCapabilityProofReadinessReport(
     ctx,
     evidence.records,
-    l0DiscoveryReadiness
+    l0DiscoveryReadiness,
+    l4SubstrateEvidence
   );
+  l4SubstrateEvidence = buildL4SubstrateEvidenceReport({
+    ctx,
+    records: evidence.records,
+    l0DiscoveryReadiness,
+    capabilityReadiness,
+  });
   const behaviourCertification = buildBehaviourProofCertificationReport({
     behaviourQuality,
     behaviourLocking,
@@ -303,6 +315,12 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     records: evidence.records,
     capabilityReadiness,
     behaviourCertification,
+  });
+  const substrateProofReadiness = buildSubstrateProofReadinessReport({
+    l4SubstrateEvidence,
+    capabilityReadiness,
+    strengthMatrix,
+    ladderCompliance,
   });
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
   const weakProofBacklog = buildWeakProofBacklog(
@@ -338,6 +356,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     behaviourReadiness,
     behaviourCertification,
     substrateRoadmap,
+    substrateProofReadiness,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -350,6 +369,10 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     capabilityReadiness,
     formalGapTaxonomy,
     substrateRoadmap,
+    substrateProofReadiness,
+    l4SubstrateEvidence,
+    strengthMatrix,
+    ladderCompliance,
     l0DiscoveryReadiness,
   });
 
@@ -368,6 +391,8 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     behaviourReadiness,
     behaviourCertification,
     substrateRoadmap,
+    substrateProofReadiness,
+    l4SubstrateEvidence,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -1546,11 +1571,205 @@ function buildSubstrateProofRoadmap({ ctx, records, capabilityReadiness, behavio
   };
 }
 
+function buildL4SubstrateEvidenceReport({
+  ctx,
+  records,
+  l0DiscoveryReadiness,
+  capabilityReadiness = null,
+}) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const bySubject = recordsBySubject(records);
+  const l0ByCapability = new Map(
+    (l0DiscoveryReadiness?.nodes || []).map((node) => [node.capability, node])
+  );
+  const readinessByCapability = new Map(
+    (capabilityReadiness?.capabilities || []).map((row) => [row.capability, row])
+  );
+  const umbrellaL4Proofs = records
+    .filter((record) => observedLevelFromEvidence(record) >= 4)
+    .map((record) => {
+      const perCapability = normalizePerCapabilityL4Evidence(record.perCapabilityL4Evidence);
+      return {
+        proofId: record.proofId,
+        subjectId: record.subjectId,
+        commandExecuted: record.commandExecuted,
+        providerMode: record.providerMode,
+        subjectIdsCount: (record.subjectIds || []).length,
+        perCapabilityEvidenceCount: perCapability.length,
+        capabilitiesEnumerated: uniq(perCapability.map((entry) => entry.capability)),
+        conclusion:
+          perCapability.length > 0
+            ? "umbrella-proof-with-per-capability-evidence"
+            : "umbrella-proof-does-not-certify-capabilities-without-per-capability-evidence",
+      };
+    });
+  const perCapabilityL4Evidence = capabilities.map((capability) => {
+    const l0Node = l0ByCapability.get(capability.capability);
+    const l0Pass = l0Node?.l0DiscoveryProven === true;
+    const devRecords = recordsForRefs(bySubject, capability.dev?.requiredProofs || []);
+    const testRecords = recordsForRefs(bySubject, capability.test?.requiredProofs || []);
+    const stagingRecords = recordsForRefs(bySubject, capability.staging?.requiredProofs || []);
+    const allCapabilityRecords = uniqRecords([...devRecords, ...testRecords, ...stagingRecords]);
+    const highestLevel = l0Pass ? maxObserved(allCapabilityRecords) : 0;
+    const behaviourCandidates = allCapabilityRecords.filter((record) =>
+      isBehaviourCandidate(record)
+    );
+    const l1Pass = l0Pass && highestLevel >= 1;
+    const l2Pass = l0Pass && highestLevel >= 2;
+    const l3Pass =
+      l2Pass &&
+      behaviourCandidates.length > 0 &&
+      behaviourCandidates.every((record) => behaviourGaps(record).length === 0);
+    const l4Candidates = allCapabilityRecords.filter(
+      (record) =>
+        observedLevelFromEvidence(record) >= 4 || proofLevelNumber(record.proofLevelClaimed) >= 4
+    );
+    const evaluations = l4Candidates.map((record) =>
+      evaluateCapabilityL4Evidence(capability, record)
+    );
+    const validEvaluations = evaluations.filter((evaluation) => evaluation.valid);
+    const l4Pass = l3Pass && validEvaluations.length > 0;
+    const currentReadiness =
+      readinessByCapability.get(capability.capability)?.readiness ||
+      capabilityReadinessState({
+        discovery: l0Pass ? 0 : -1,
+        executable: l1Pass ? 1 : 0,
+        contract: l2Pass ? 2 : 0,
+        behaviour: l3Pass ? 3 : Math.min(highestLevel, 2),
+        substrate: l4Pass ? 4 : 0,
+        resilience: 0,
+        foundation: 0,
+      });
+    const l4EvidenceProofIds = uniq(validEvaluations.map((evaluation) => evaluation.proofId));
+    const candidateProofIds = uniq(evaluations.map((evaluation) => evaluation.proofId));
+    const gaps = [];
+    if (!l0Pass) gaps.push("l4-blocked-by-missing-l0");
+    if (!l1Pass) gaps.push("l4-blocked-by-missing-l1");
+    if (!l2Pass) gaps.push("l4-blocked-by-missing-l2");
+    if (!l3Pass) gaps.push("l4-blocked-by-missing-l3");
+    if (l3Pass && l4Candidates.length === 0) gaps.push("missing-l4-substrate-proof");
+    if (l3Pass && l4Candidates.length > 0 && validEvaluations.length === 0) {
+      gaps.push("missing-per-capability-l4-evidence");
+    }
+    for (const evaluation of evaluations) {
+      for (const gap of evaluation.gaps) gaps.push(gap);
+    }
+    const substrateProviderMode = uniq(
+      validEvaluations.map((evaluation) => evaluation.providerMode)
+    );
+    return {
+      capability: capability.capability,
+      currentReadiness,
+      l0Pass,
+      l1Pass,
+      l2Pass,
+      l3Pass,
+      l4Pass,
+      l4EvidenceProofIds,
+      candidateL4ProofIds: candidateProofIds,
+      substrateProviderMode: substrateProviderMode.length > 0 ? substrateProviderMode : ["none"],
+      realImplementationPathExecuted:
+        validEvaluations.length > 0 &&
+        validEvaluations.every((evaluation) => evaluation.realImplementationPathExecuted),
+      composeLocalEvidence:
+        validEvaluations.length > 0 &&
+        validEvaluations.every((evaluation) => evaluation.composeLocalEvidence),
+      stateDiffEvidence:
+        validEvaluations.length > 0 &&
+        validEvaluations.every((evaluation) => evaluation.stateDiffEvidence),
+      sideEffectsEvidence:
+        validEvaluations.length > 0 &&
+        validEvaluations.every((evaluation) => evaluation.sideEffectsEvidence),
+      failurePathEvidence:
+        validEvaluations.length > 0 &&
+        validEvaluations.every((evaluation) => evaluation.failurePathEvidence),
+      observabilityEvidence:
+        validEvaluations.length > 0 &&
+        validEvaluations.every((evaluation) => evaluation.observabilityEvidence),
+      conclusion: l4Pass
+        ? "SUBSTRATE_PROVEN"
+        : l3Pass
+          ? "BEHAVIOUR_PROVEN_ONLY"
+          : "NOT_ELIGIBLE_FOR_L4",
+      gaps: uniq(gaps),
+    };
+  });
+  const invalidL4ClaimDetails = perCapabilityL4Evidence.filter(
+    (row) => row.currentReadiness === "SUBSTRATE_PROVEN" && row.l4Pass !== true
+  );
+  const substrateProvenCapabilities = perCapabilityL4Evidence.filter((row) => row.l4Pass).length;
+  const behaviourOnlyCapabilities = perCapabilityL4Evidence.filter(
+    (row) => row.l3Pass && !row.l4Pass
+  ).length;
+  const gaps = perCapabilityL4Evidence.flatMap((row) =>
+    row.gaps.map((gap) => ({
+      kind: gap,
+      capability: row.capability,
+      message: l4CapabilityGapMessage(gap, row.capability),
+    }))
+  );
+  return {
+    artefact: "l4-substrate-evidence-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status:
+      capabilities.length > 0 &&
+      substrateProvenCapabilities === capabilities.length &&
+      invalidL4ClaimDetails.length === 0
+        ? "PASS"
+        : "FAIL",
+    totalCapabilities: capabilities.length,
+    substrateProvenCapabilities,
+    behaviourOnlyCapabilities,
+    invalidL4Claims: invalidL4ClaimDetails.length,
+    invalidL4ClaimDetails,
+    umbrellaL4Proofs,
+    observedL4ProofCount: umbrellaL4Proofs.length,
+    perCapabilityL4Evidence,
+    gaps,
+  };
+}
+
+function buildSubstrateProofReadinessReport({
+  l4SubstrateEvidence,
+  capabilityReadiness,
+  strengthMatrix,
+  ladderCompliance,
+}) {
+  const consistencyGaps = buildReadinessConsistencyGaps({
+    capabilityReadiness,
+    l4SubstrateEvidence,
+    strengthMatrix,
+    ladderCompliance,
+  });
+  return {
+    artefact: "substrate-proof-readiness-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: l4SubstrateEvidence.status === "PASS" && consistencyGaps.length === 0 ? "PASS" : "FAIL",
+    totalCapabilities: l4SubstrateEvidence.totalCapabilities,
+    substrateProvenCapabilityCount: l4SubstrateEvidence.substrateProvenCapabilities,
+    behaviourOnlyCapabilityCount: l4SubstrateEvidence.behaviourOnlyCapabilities,
+    invalidL4Claims: l4SubstrateEvidence.invalidL4Claims,
+    observedL4ProofCount: l4SubstrateEvidence.observedL4ProofCount,
+    proofStrengthObservedL4Count: strengthMatrix.byObservedLevel?.L4 || 0,
+    capabilityReadinessL4Count: capabilityReadiness.ladderLevelDistribution?.L4 || 0,
+    consistencyStatus: consistencyGaps.length === 0 ? "PASS" : "FAIL",
+    consistencyGaps,
+    gaps: l4SubstrateEvidence.gaps,
+    capabilities: l4SubstrateEvidence.perCapabilityL4Evidence,
+  };
+}
+
 function buildV2ReadinessSummary({
   behaviourReadiness,
   capabilityReadiness,
   formalGapTaxonomy,
   substrateRoadmap,
+  substrateProofReadiness,
+  l4SubstrateEvidence,
+  strengthMatrix,
+  ladderCompliance,
   l0DiscoveryReadiness,
 }) {
   const l3Complete =
@@ -1561,7 +1780,16 @@ function buildV2ReadinessSummary({
     formalGapTaxonomy.status === "PASS" && formalGapTaxonomy.totalGapCount === 0;
   const allCapabilitiesEligibleForL4 =
     capabilityReadiness.status === "PASS" &&
-    capabilityReadiness.readinessCounts?.BEHAVIOUR_PROVEN === capabilityReadiness.capabilityCount;
+    capabilityReadiness.substrateEligibleCapabilityCount === capabilityReadiness.capabilityCount;
+  const allCapabilitiesSubstrateProven =
+    substrateProofReadiness.status === "PASS" &&
+    l4SubstrateEvidence.substrateProvenCapabilities === capabilityReadiness.capabilityCount;
+  const consistencyGaps = buildReadinessConsistencyGaps({
+    capabilityReadiness,
+    l4SubstrateEvidence,
+    strengthMatrix,
+    ladderCompliance,
+  });
   return {
     artefact: "v2-readiness-summary",
     schemaVersion: 1,
@@ -1569,19 +1797,22 @@ function buildV2ReadinessSummary({
     status:
       l3Complete &&
       formalBlockersClosed &&
-      allCapabilitiesEligibleForL4 &&
-      formalGapTaxonomy.futureSubstrateExpansionBlocked === false
+      allCapabilitiesSubstrateProven &&
+      formalGapTaxonomy.futureSubstrateExpansionBlocked === false &&
+      consistencyGaps.length === 0
         ? "PASS"
         : "FAIL",
     answers: {
       isL3Complete: l3Complete,
       areAllFormalBlockersClosed: formalBlockersClosed,
       areAllCapabilitiesEligibleForL4: allCapabilitiesEligibleForL4,
+      areAllCapabilitiesSubstrateProven: allCapabilitiesSubstrateProven,
       isSubstrateExpansionUnblocked: formalGapTaxonomy.futureSubstrateExpansionBlocked === false,
-      nextExactMilestone:
-        "Start L4 Substrate Proven implementation from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
+      nextExactMilestone: allCapabilitiesSubstrateProven
+        ? "Start L5 Resilience Proven planning only after preserving L4 per-capability substrate evidence."
+        : "Implement per-capability L4 Substrate Proven proofs from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
       whatRemainsBeforeFoundationProven: [
-        "Implement and pass L4 Substrate Proven proofs for the 70 BEHAVIOUR_PROVEN capabilities.",
+        `Implement and pass L4 Substrate Proven proofs for ${l4SubstrateEvidence.behaviourOnlyCapabilities} BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.`,
         "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
         "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
       ],
@@ -1594,8 +1825,14 @@ function buildV2ReadinessSummary({
       futureSubstrateExpansionBlocked: formalGapTaxonomy.futureSubstrateExpansionBlocked,
       capabilityCount: capabilityReadiness.capabilityCount,
       behaviourProvenCapabilityCount: capabilityReadiness.readinessCounts?.BEHAVIOUR_PROVEN || 0,
+      substrateProvenCapabilityCount: l4SubstrateEvidence.substrateProvenCapabilities,
+      invalidL4Claims: l4SubstrateEvidence.invalidL4Claims,
+      observedL4ProofCount: strengthMatrix.byObservedLevel?.L4 || 0,
       substrateRoadmapStatus: substrateRoadmap.status,
       substrateRoadmapCapabilityCount: substrateRoadmap.capabilityCount,
+      substrateProofReadinessStatus: substrateProofReadiness.status,
+      readinessConsistencyStatus: consistencyGaps.length === 0 ? "PASS" : "FAIL",
+      readinessConsistencyGaps: consistencyGaps,
       l0DiscoveryStatus: l0DiscoveryReadiness.status,
       l0RuntimeNodes: l0DiscoveryReadiness.runtimeNodes,
       l0RuntimeNodesMissingInMemoryImplementation:
@@ -1726,11 +1963,19 @@ export function buildL0DiscoveryReadinessReport(ctx, records) {
   };
 }
 
-export function buildCapabilityProofReadinessReport(ctx, records, l0DiscoveryReadiness = null) {
+export function buildCapabilityProofReadinessReport(
+  ctx,
+  records,
+  l0DiscoveryReadiness = null,
+  l4SubstrateEvidence = null
+) {
   const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
   const bySubject = recordsBySubject(records);
   const l0ByCapability = new Map(
     (l0DiscoveryReadiness?.nodes || []).map((node) => [node.capability, node])
+  );
+  const l4ByCapability = new Map(
+    (l4SubstrateEvidence?.perCapabilityL4Evidence || []).map((row) => [row.capability, row])
   );
   const rows = capabilities.map((capability) => {
     const l0Node = l0ByCapability.get(capability.capability);
@@ -1750,9 +1995,8 @@ export function buildCapabilityProofReadinessReport(ctx, records, l0DiscoveryRea
       behaviourCandidates.length > 0 &&
       behaviourCandidates.every((record) => behaviourGaps(record).length === 0);
     const substrateEligible = behaviourComplete;
-    const substrateProven =
-      behaviourComplete &&
-      allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 4);
+    const l4Evidence = l4ByCapability.get(capability.capability);
+    const substrateProven = behaviourComplete && l4Evidence?.l4Pass === true;
     const resilienceProven =
       substrateProven &&
       allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 5);
@@ -1860,6 +2104,15 @@ function buildStrengthMatrix(records) {
       proofLevelClaimed: record.proofLevelClaimed,
       proofLevelObserved: observed,
       providerEvidenceClass: evidenceClass,
+      perCapabilityL4EvidenceCount: normalizePerCapabilityL4Evidence(record.perCapabilityL4Evidence)
+        .length,
+      l4CapabilityEvidenceMode:
+        observed === "L4" &&
+        normalizePerCapabilityL4Evidence(record.perCapabilityL4Evidence).length === 0
+          ? "umbrella-or-record-level-only"
+          : observed === "L4"
+            ? "per-capability-evidence-present"
+            : "not-l4",
       evidenceFile: record.evidenceFile,
     };
   });
@@ -1870,6 +2123,8 @@ function buildStrengthMatrix(records) {
     status: overclaimCount === 0 ? "PASS" : "FAIL",
     levels: PROOF_LEVELS,
     overclaimCount,
+    observedL4ProofCount: byObserved.L4,
+    localRealProviderProofCount: byClass["local-real-provider-proof"] || 0,
     byObservedLevel: byObserved,
     byProviderEvidenceClass: byClass,
     records: rows,
@@ -2639,6 +2894,243 @@ function formalGapClassification(kind) {
       blocksFutureSubstrateExpansion: true,
     }
   );
+}
+
+function normalizePerCapabilityL4Evidence(value) {
+  if (!value) return [];
+  if (Array.isArray(value)) return value.filter((entry) => entry && typeof entry === "object");
+  if (typeof value === "object") {
+    return Object.entries(value).map(([capability, entry]) => ({
+      capability,
+      ...(entry && typeof entry === "object" ? entry : {}),
+    }));
+  }
+  return [];
+}
+
+function evaluateCapabilityL4Evidence(capability, record) {
+  const perCapability = normalizePerCapabilityL4Evidence(record.perCapabilityL4Evidence);
+  const matchingEntries = perCapability.filter((entry) =>
+    sameCapabilityName(
+      entry.capability || entry.capabilityId || entry.capabilityName,
+      capability.capability
+    )
+  );
+  const directMatch =
+    matchingEntries.length === 0 && directCapabilityRecordMatch(capability, record) ? [record] : [];
+  const entries = matchingEntries.length > 0 ? matchingEntries : directMatch;
+  const gaps = [];
+  if (observedLevelFromEvidence(record) < 4) gaps.push("l4-proof-not-observed");
+  if (entries.length === 0) {
+    gaps.push(
+      perCapability.length > 0
+        ? "l4-proof-missing-this-capability"
+        : "umbrella-l4-proof-missing-per-capability-evidence"
+    );
+  }
+  const entryEvaluations = entries.map((entry) => evaluateL4Entry(record, entry));
+  for (const entryEvaluation of entryEvaluations) {
+    for (const gap of entryEvaluation.gaps) gaps.push(gap);
+  }
+  const valid = gaps.length === 0 && entryEvaluations.length > 0;
+  return {
+    proofId: record.proofId,
+    providerMode: record.providerMode,
+    valid,
+    gaps: uniq(gaps),
+    realImplementationPathExecuted:
+      valid &&
+      entryEvaluations.every((entryEvaluation) => entryEvaluation.realImplementationPathExecuted),
+    composeLocalEvidence:
+      valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.composeLocalEvidence),
+    stateDiffEvidence:
+      valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.stateDiffEvidence),
+    sideEffectsEvidence:
+      valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.sideEffectsEvidence),
+    failurePathEvidence:
+      valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.failurePathEvidence),
+    observabilityEvidence:
+      valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.observabilityEvidence),
+  };
+}
+
+function evaluateL4Entry(record, entry) {
+  const gaps = [];
+  const substrate = firstMeaningful(
+    entry.substrateUsed,
+    entry.substrate,
+    entry.requiredComposeSubstrates,
+    entry.composeSubstrate,
+    entry.composeService
+  );
+  const realAdapter = firstMeaningful(
+    entry.realAdapterProviderUsed,
+    entry.realAdapterOrProviderUsed,
+    entry.realProviderUsed,
+    entry.realImplementationPathExecuted,
+    entry.realImplementationPath,
+    record.realImplementationPathExecuted
+  );
+  const l3Contract = firstMeaningful(
+    entry.l3ContractProofReused,
+    entry.l3ContractProofIds,
+    entry.l3BehaviourContractProofIds,
+    entry.l3ProofHarnessReused,
+    entry.existingL3ProofHarnessToReuse
+  );
+  const beforeState = entry.beforeState || entry.before;
+  const afterState = entry.afterState || entry.after;
+  const stateDiff = entry.stateDiff || entry.assertedStateDiff || entry.diff;
+  const sideEffects = firstMeaningful(
+    entry.sideEffectsEvidence,
+    entry.sideEffectsAsserted,
+    entry.sideEffects
+  );
+  const failurePath = firstMeaningful(
+    entry.failurePathEvidence,
+    entry.failurePathExercised,
+    entry.failureMode
+  );
+  const auditEvidence = firstMeaningful(entry.auditEvidence, entry.auditEventIds, entry.auditIds);
+  const metricEvidence = firstMeaningful(entry.metricEvidence, entry.metricSamples, entry.metrics);
+  const traceEvidence = firstMeaningful(entry.traceEvidence, entry.traceIds, entry.traces);
+  const logEvidence = firstMeaningful(entry.logEvidence, entry.logCorrelationIds, entry.logs);
+  const result = String(entry.result || entry.status || "PASS").toUpperCase();
+  if (!isMeaningfulEvidence(substrate)) gaps.push("missing-l4-substrate-used");
+  if (!isMeaningfulEvidence(realAdapter)) gaps.push("missing-l4-real-adapter-provider");
+  if (!isMeaningfulEvidence(l3Contract)) gaps.push("missing-l4-l3-contract-reuse");
+  if (!isMeaningfulObject(beforeState)) gaps.push("missing-l4-before-state");
+  if (!isMeaningfulObject(afterState)) gaps.push("missing-l4-after-state");
+  if (!isMeaningfulObject(stateDiff)) gaps.push("missing-l4-state-diff");
+  if (!isMeaningfulEvidence(sideEffects)) gaps.push("missing-l4-side-effects");
+  if (!isMeaningfulEvidence(failurePath)) gaps.push("missing-l4-failure-path");
+  if (!isMeaningfulEvidence(auditEvidence)) gaps.push("missing-l4-audit-evidence");
+  if (!isMeaningfulEvidence(metricEvidence)) gaps.push("missing-l4-metric-evidence");
+  if (!isMeaningfulEvidence(traceEvidence) && !isMeaningfulEvidence(logEvidence)) {
+    gaps.push("missing-l4-trace-log-evidence");
+  }
+  if (result !== "PASS" && result !== "PASSED") gaps.push("l4-per-capability-result-not-pass");
+  return {
+    gaps,
+    realImplementationPathExecuted: isMeaningfulEvidence(realAdapter),
+    composeLocalEvidence:
+      record.providerMode === "compose-local" && record.realLocalProviderUsed === true,
+    stateDiffEvidence: isMeaningfulObject(stateDiff),
+    sideEffectsEvidence: isMeaningfulEvidence(sideEffects),
+    failurePathEvidence: isMeaningfulEvidence(failurePath),
+    observabilityEvidence:
+      isMeaningfulEvidence(auditEvidence) &&
+      isMeaningfulEvidence(metricEvidence) &&
+      (isMeaningfulEvidence(traceEvidence) || isMeaningfulEvidence(logEvidence)),
+  };
+}
+
+function directCapabilityRecordMatch(capability, record) {
+  const directNames = [
+    record.capability,
+    record.capabilityName,
+    record.capabilityId,
+    String(record.capabilityId || "").replace(/^capability:/, ""),
+  ];
+  return (
+    directNames.some((name) => sameCapabilityName(name, capability.capability)) &&
+    isMeaningfulEvidence(
+      record.l3ContractProofReused ||
+        record.l3ContractProofIds ||
+        record.l3BehaviourContractProofIds ||
+        record.l3ProofHarnessReused
+    )
+  );
+}
+
+function sameCapabilityName(left, right) {
+  return normalizeCapabilityName(left) === normalizeCapabilityName(right);
+}
+
+function normalizeCapabilityName(value) {
+  return String(value || "")
+    .replace(/^capability:/, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function firstMeaningful(...values) {
+  return values.find(isMeaningfulEvidence);
+}
+
+function l4CapabilityGapMessage(kind, capability) {
+  const messages = {
+    "l4-blocked-by-missing-l0": "L4 blocked because L0 Discovery Proven is missing.",
+    "l4-blocked-by-missing-l1": "L4 blocked because L1 Executable Proven is missing.",
+    "l4-blocked-by-missing-l2": "L4 blocked because L2 Contract Proven is missing.",
+    "l4-blocked-by-missing-l3": "L4 blocked because L3 Behaviour Proven is missing.",
+    "missing-l4-substrate-proof": "No L4 proof evidence is mapped to this capability.",
+    "missing-per-capability-l4-evidence":
+      "Mapped L4 proof evidence does not include a valid per-capability substrate evidence record.",
+    "umbrella-l4-proof-missing-per-capability-evidence":
+      "Umbrella L4 proof cannot certify this capability without explicit per-capability evidence.",
+    "l4-proof-missing-this-capability":
+      "L4 proof has per-capability evidence but does not enumerate this capability.",
+    "l4-proof-not-observed": "Mapped proof did not observe L4 strength.",
+    "missing-l4-substrate-used": "Per-capability L4 evidence must name the real substrate used.",
+    "missing-l4-real-adapter-provider":
+      "Per-capability L4 evidence must name the real adapter/provider executed.",
+    "missing-l4-l3-contract-reuse":
+      "Per-capability L4 evidence must identify the certified L3 contract reused.",
+    "missing-l4-before-state": "Per-capability L4 evidence must capture before-state.",
+    "missing-l4-after-state": "Per-capability L4 evidence must capture after-state.",
+    "missing-l4-state-diff": "Per-capability L4 evidence must assert state diff.",
+    "missing-l4-side-effects": "Per-capability L4 evidence must assert side effects.",
+    "missing-l4-failure-path": "Per-capability L4 evidence must exercise a failure path.",
+    "missing-l4-audit-evidence": "Per-capability L4 evidence must include audit evidence.",
+    "missing-l4-metric-evidence": "Per-capability L4 evidence must include metric evidence.",
+    "missing-l4-trace-log-evidence":
+      "Per-capability L4 evidence must include trace or log evidence.",
+    "l4-per-capability-result-not-pass": "Per-capability L4 evidence result is not PASS.",
+  };
+  return `${capability}: ${messages[kind] || kind}`;
+}
+
+function buildReadinessConsistencyGaps({
+  capabilityReadiness,
+  l4SubstrateEvidence,
+  strengthMatrix,
+  ladderCompliance,
+}) {
+  const gaps = [];
+  const capabilityL4Count = capabilityReadiness.ladderLevelDistribution?.L4 || 0;
+  const readinessL4Count = capabilityReadiness.readinessCounts?.SUBSTRATE_PROVEN || 0;
+  const l4EvidenceCount = l4SubstrateEvidence.substrateProvenCapabilities || 0;
+  const strengthL4Count = strengthMatrix.byObservedLevel?.L4 || 0;
+  const ladderObservedL4Count = (ladderCompliance.records || []).filter(
+    (record) => record.proofLevelObserved === "L4"
+  ).length;
+  if (capabilityL4Count !== readinessL4Count) {
+    gaps.push({
+      kind: "capability-readiness-l4-count-disagreement",
+      message: `ladderLevelDistribution.L4=${capabilityL4Count} but readinessCounts.SUBSTRATE_PROVEN=${readinessL4Count}`,
+    });
+  }
+  if (capabilityL4Count !== l4EvidenceCount) {
+    gaps.push({
+      kind: "capability-l4-evidence-disagreement",
+      message: `capability readiness L4 count ${capabilityL4Count} disagrees with l4-substrate-evidence-report count ${l4EvidenceCount}`,
+    });
+  }
+  if (strengthL4Count !== l4SubstrateEvidence.observedL4ProofCount) {
+    gaps.push({
+      kind: "proof-strength-l4-observed-disagreement",
+      message: `proof-strength-matrix observed L4 count ${strengthL4Count} disagrees with l4 evidence observed proof count ${l4SubstrateEvidence.observedL4ProofCount}`,
+    });
+  }
+  if (ladderObservedL4Count !== strengthL4Count) {
+    gaps.push({
+      kind: "ladder-compliance-strength-l4-disagreement",
+      message: `proof-ladder-compliance observed L4 count ${ladderObservedL4Count} disagrees with proof-strength-matrix observed L4 count ${strengthL4Count}`,
+    });
+  }
+  return gaps;
 }
 
 function proofAliasForScript(scriptPath, packageJsonScripts = {}) {

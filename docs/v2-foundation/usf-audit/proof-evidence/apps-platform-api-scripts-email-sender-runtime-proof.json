@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:email-sender",
-  "startedAt": "2026-06-23T21:58:13.478Z",
-  "endedAt": "2026-06-23T21:58:14.254Z",
+  "startedAt": "2026-06-23T22:58:36.295Z",
+  "endedAt": "2026-06-23T22:58:37.071Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:14.254Z",
+  "generatedAt": "2026-06-23T22:58:37.071Z",
   "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:13.478Z",
-  "endTime": "2026-06-23T21:58:14.254Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:14.254Z",
+  "startTime": "2026-06-23T22:58:36.295Z",
+  "endTime": "2026-06-23T22:58:37.071Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:37.071Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/email-sender-runtime-proof.ts": {
@@ -116,5 +117,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/email-sender-runtime-proof.ts"],
-  "evidenceSignature": "3729e7c1543d0bc1c37bf6ed78080f4250361900f4ead9e2db517d38d4cf8520"
+  "evidenceSignature": "b0cc96db0fe878bd2415a2063094b167827957184af08bfe446866677df98b34"
 }

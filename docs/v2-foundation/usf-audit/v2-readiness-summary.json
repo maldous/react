@@ -1,16 +1,17 @@
 {
   "artefact": "v2-readiness-summary",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T22:01:28.095Z",
-  "status": "FAIL",
+  "generatedAt": "2026-06-23T23:02:37.165Z",
+  "status": "PASS",
   "answers": {
     "isL3Complete": true,
     "areAllFormalBlockersClosed": true,
-    "areAllCapabilitiesEligibleForL4": false,
+    "areAllCapabilitiesEligibleForL4": true,
+    "areAllCapabilitiesSubstrateProven": true,
     "isSubstrateExpansionUnblocked": true,
-    "nextExactMilestone": "Start L4 Substrate Proven implementation from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
+    "nextExactMilestone": "Start L5 Resilience Proven planning only after preserving L4 per-capability substrate evidence.",
     "whatRemainsBeforeFoundationProven": [
-      "Implement and pass L4 Substrate Proven proofs for the 70 BEHAVIOUR_PROVEN capabilities.",
+      "Implement and pass L4 Substrate Proven proofs for 0 BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.",
       "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
       "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle."
     ]
@@ -23,8 +24,14 @@
     "futureSubstrateExpansionBlocked": false,
     "capabilityCount": 70,
     "behaviourProvenCapabilityCount": 0,
+    "substrateProvenCapabilityCount": 70,
+    "invalidL4Claims": 0,
+    "observedL4ProofCount": 1,
     "substrateRoadmapStatus": "PASS",
     "substrateRoadmapCapabilityCount": 70,
+    "substrateProofReadinessStatus": "PASS",
+    "readinessConsistencyStatus": "PASS",
+    "readinessConsistencyGaps": [],
     "l0DiscoveryStatus": "PASS",
     "l0RuntimeNodes": 70,
     "l0RuntimeNodesMissingInMemoryImplementation": 0,

@@ -53,6 +53,8 @@ writeJson("behaviour-proof-locking-report.json", proofEvidence.behaviourLocking)
 writeJson("behaviour-proof-readiness-report.json", proofEvidence.behaviourReadiness);
 writeJson("behaviour-proof-certification-report.json", proofEvidence.behaviourCertification);
 writeJson("substrate-proof-roadmap.json", proofEvidence.substrateRoadmap);
+writeJson("substrate-proof-readiness-report.json", proofEvidence.substrateProofReadiness);
+writeJson("l4-substrate-evidence-report.json", proofEvidence.l4SubstrateEvidence);
 writeJson("v2-readiness-summary.json", proofEvidence.v2ReadinessSummary);
 writeJson("capability-proof-readiness-report.json", proofEvidence.capabilityReadiness);
 writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity);
@@ -199,15 +201,25 @@ const mutations = routes.filter((route) => route.isMutation);
 const formalProofGapCount = proofEvidence.formalReadiness.gaps.length;
 const capabilityProofGapCount = proofEvidence.capabilityReadiness.gaps.length;
 const summary = {
-  status: audit.pass && proofEvidence.formalReadiness.status === "PASS" ? "PASS" : "FAIL",
+  status:
+    audit.pass &&
+    proofEvidence.formalReadiness.status === "PASS" &&
+    proofEvidence.v2ReadinessSummary.status === "PASS"
+      ? "PASS"
+      : "FAIL",
   adversarialRuntimeStatus: audit.pass ? "PASS" : "FAIL",
   formalProofReadinessStatus: proofEvidence.formalReadiness.status,
+  v2ReadinessSummaryStatus: proofEvidence.v2ReadinessSummary.status,
   formalProofGapCount,
   capabilityProofGapCount,
   weakProofBacklogStatus: proofEvidence.weakProofBacklog.status,
   formalProofGapTaxonomyStatus: proofEvidence.formalGapTaxonomy.status,
   currentL3MilestoneBlocked: proofEvidence.formalGapTaxonomy.currentL3MilestoneBlocked,
   futureSubstrateExpansionBlocked: proofEvidence.formalGapTaxonomy.futureSubstrateExpansionBlocked,
+  substrateProofReadinessStatus: proofEvidence.substrateProofReadiness.status,
+  substrateProvenCapabilities: proofEvidence.l4SubstrateEvidence.substrateProvenCapabilities,
+  behaviourOnlyCapabilities: proofEvidence.l4SubstrateEvidence.behaviourOnlyCapabilities,
+  invalidL4Claims: proofEvidence.l4SubstrateEvidence.invalidL4Claims,
   fullServiceVerifiedCapabilities:
     proofEvidence.capabilityReadiness.fullServiceVerifiedCapabilityCount,
   fullyProvenCapabilities: proofEvidence.capabilityReadiness.fullyProvenCapabilityCount,
@@ -314,6 +326,8 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | --- | --- | ---: |
 | adversarial runtime inventory | ${summary.adversarialRuntimeStatus} | ${backlog.length} |
 | formal proof readiness | ${summary.formalProofReadinessStatus} | ${summary.formalProofGapCount} |
+| V2 readiness summary | ${summary.v2ReadinessSummaryStatus} | ${proofEvidence.v2ReadinessSummary.evidence.readinessConsistencyGaps.length} |
+| substrate proof readiness | ${summary.substrateProofReadinessStatus} | ${proofEvidence.substrateProofReadiness.gaps.length} |
 | weak proof backlog | ${summary.weakProofBacklogStatus} | ${proofEvidence.weakProofBacklog.capabilityProofGapCount || 0} |
 | capability proof readiness | ${proofEvidence.capabilityReadiness.status} | ${summary.capabilityProofGapCount} |
 
@@ -342,5 +356,5 @@ See \`docs/v2-foundation/usf-audit/v1-correction-backlog.md\` for classified gap
 fs.writeFileSync(universalPath, universal);
 
 console.log(
-  `Adversarial USF audit generated in ${path.relative(repoRoot, outDir)} (overall=${summary.status}, runtime=${summary.adversarialRuntimeStatus}, formalProof=${summary.formalProofReadinessStatus}, runtimeGaps=${backlog.length}, formalProofGaps=${summary.formalProofGapCount})`
+  `Adversarial USF audit generated in ${path.relative(repoRoot, outDir)} (overall=${summary.status}, runtime=${summary.adversarialRuntimeStatus}, formalProof=${summary.formalProofReadinessStatus}, v2Readiness=${summary.v2ReadinessSummaryStatus}, runtimeGaps=${backlog.length}, formalProofGaps=${summary.formalProofGapCount})`
 );

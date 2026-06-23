@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:webhook-redrive",
-  "startedAt": "2026-06-23T22:01:02.145Z",
-  "endedAt": "2026-06-23T22:01:02.321Z",
+  "startedAt": "2026-06-23T23:01:24.702Z",
+  "endedAt": "2026-06-23T23:01:24.890Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -301,18 +301,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:01:02.321Z",
+  "generatedAt": "2026-06-23T23:01:24.890Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:01:02.145Z",
-  "endTime": "2026-06-23T22:01:02.321Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:01:02.321Z",
+  "startTime": "2026-06-23T23:01:24.702Z",
+  "endTime": "2026-06-23T23:01:24.890Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:24.890Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-webhooks-id": {
@@ -459,5 +460,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"],
-  "evidenceSignature": "0ac250b8853c845f8d7533a067beb366d433bb00d9d666948b95e02a695a2f3b"
+  "evidenceSignature": "66b50ed2f11db8f3092e1d4db93a142745b22e33e9e32c9ebd1f3ba48ac8e68c"
 }

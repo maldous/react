@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:data-portability",
-  "startedAt": "2026-06-23T21:58:12.272Z",
-  "endedAt": "2026-06-23T21:58:12.794Z",
+  "startedAt": "2026-06-23T22:58:35.105Z",
+  "endedAt": "2026-06-23T22:58:35.607Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:12.794Z",
+  "generatedAt": "2026-06-23T22:58:35.607Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-portability-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:12.272Z",
-  "endTime": "2026-06-23T21:58:12.794Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:12.794Z",
+  "startTime": "2026-06-23T22:58:35.105Z",
+  "endTime": "2026-06-23T22:58:35.607Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:35.607Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/data-portability-runtime-proof.ts": {
@@ -116,5 +117,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/data-portability-runtime-proof.ts"],
-  "evidenceSignature": "2636dfe1ac35be263d64e07df839efccbc1e6be27e3105331269354a75e70b16"
+  "evidenceSignature": "abe9e9ae9e52dc4f00939b3d4a3d6c980b8a857d8fc24b6982877a13722ca2c8"
 }

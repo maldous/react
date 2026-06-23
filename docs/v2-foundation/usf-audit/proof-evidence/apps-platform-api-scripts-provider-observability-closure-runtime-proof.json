@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:provider-observability-closure",
-  "startedAt": "2026-06-23T22:00:45.610Z",
-  "endedAt": "2026-06-23T22:00:45.646Z",
+  "startedAt": "2026-06-23T23:01:07.786Z",
+  "endedAt": "2026-06-23T23:01:07.822Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,18 +81,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:45.646Z",
+  "generatedAt": "2026-06-23T23:01:07.822Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:45.610Z",
-  "endTime": "2026-06-23T22:00:45.646Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:45.646Z",
+  "startTime": "2026-06-23T23:01:07.786Z",
+  "endTime": "2026-06-23T23:01:07.822Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:07.822Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts": {
@@ -120,5 +121,5 @@
     }
   ],
   "logEvidence": ["log:provider-observability-closure:runtime-proof"],
-  "evidenceSignature": "7c022717355c0079a2e5146b63a0610c6c68c1d7a930df3c144393ef7107d61b"
+  "evidenceSignature": "e9cda8ad52e687c6c0cd54ea58676aba7d051f1fe700da7b50fc970c288a9816"
 }

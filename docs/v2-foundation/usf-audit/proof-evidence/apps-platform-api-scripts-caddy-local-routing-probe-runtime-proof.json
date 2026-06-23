@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:58:08.084Z",
-  "endedAt": "2026-06-23T21:58:08.288Z",
+  "startedAt": "2026-06-23T22:58:30.959Z",
+  "endedAt": "2026-06-23T22:58:31.150Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:08.288Z",
+  "generatedAt": "2026-06-23T22:58:31.150Z",
   "sourceFileRefs": ["apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:08.084Z",
-  "endTime": "2026-06-23T21:58:08.288Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:08.288Z",
+  "startTime": "2026-06-23T22:58:30.959Z",
+  "endTime": "2026-06-23T22:58:31.150Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:31.150Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"],
-  "evidenceSignature": "7a222769bbba121e46d4ad02592ca70088ae20462e5f30a3084529f468389d3d"
+  "evidenceSignature": "e0b179f7cc7a039e6973fc8f1ad9fa8e4ff2fc4fc47a965b2999edccbd7e77dd"
 }

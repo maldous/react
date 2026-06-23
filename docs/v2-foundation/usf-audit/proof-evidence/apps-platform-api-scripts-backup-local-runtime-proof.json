@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:backup-local",
-  "startedAt": "2026-06-23T21:58:05.101Z",
-  "endedAt": "2026-06-23T21:58:05.335Z",
+  "startedAt": "2026-06-23T22:58:28.034Z",
+  "endedAt": "2026-06-23T22:58:28.281Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:05.335Z",
+  "generatedAt": "2026-06-23T22:58:28.281Z",
   "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:05.101Z",
-  "endTime": "2026-06-23T21:58:05.335Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:05.335Z",
+  "startTime": "2026-06-23T22:58:28.034Z",
+  "endTime": "2026-06-23T22:58:28.281Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:28.281Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/backup-local-runtime-proof.ts": {
@@ -116,5 +117,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/backup-local-runtime-proof.ts"],
-  "evidenceSignature": "c11602342d1348d82d50037ed6c3b4f4dffa5798a4fa294900561d16517d1877"
+  "evidenceSignature": "0939ee3b8417ddae924270539af6228a657966f98171eb59f70125b2d07250d6"
 }

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:provider-observability-contract",
-  "startedAt": "2026-06-23T22:00:45.806Z",
-  "endedAt": "2026-06-23T22:00:45.869Z",
+  "startedAt": "2026-06-23T23:01:07.980Z",
+  "endedAt": "2026-06-23T23:01:08.048Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,18 +81,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:45.869Z",
+  "generatedAt": "2026-06-23T23:01:08.048Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:45.806Z",
-  "endTime": "2026-06-23T22:00:45.869Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:45.869Z",
+  "startTime": "2026-06-23T23:01:07.980Z",
+  "endTime": "2026-06-23T23:01:08.048Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:08.048Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts": {
@@ -120,5 +121,5 @@
     }
   ],
   "logEvidence": ["log:provider-observability-contract:runtime-proof"],
-  "evidenceSignature": "cd124770bb7a6b233edb72aa18da86896d4aca7dce9cde2a9a427a2ec496780a"
+  "evidenceSignature": "81b107720a41072277fa13fbf3b52073a4f43017f8db73ac3084d9619b8a9710"
 }

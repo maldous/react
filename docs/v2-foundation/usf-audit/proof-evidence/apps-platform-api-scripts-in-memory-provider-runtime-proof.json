@@ -35,10 +35,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-provider-runtime",
-  "startedAt": "2026-06-23T21:58:21.643Z",
-  "endedAt": "2026-06-23T21:58:21.819Z",
+  "startedAt": "2026-06-23T22:58:44.513Z",
+  "endedAt": "2026-06-23T22:58:44.693Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -279,18 +279,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:21.819Z",
+  "generatedAt": "2026-06-23T22:58:44.693Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:21.643Z",
-  "endTime": "2026-06-23T21:58:21.819Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:21.819Z",
+  "startTime": "2026-06-23T22:58:44.513Z",
+  "endTime": "2026-06-23T22:58:44.693Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:44.693Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-provider-runtime-proof.ts": {
@@ -460,5 +461,5 @@
     }
   ],
   "logEvidence": ["log:storage.info:tenant-semantic-dev/hello.txt"],
-  "evidenceSignature": "ab26b95aa7ff23e8acf8b3250fa71b28369f28187d0c864d264f82f453ba755c"
+  "evidenceSignature": "f44e89063906510659deb7a7709e9b15142392a896582816ab7aae5c1d6fd61b"
 }

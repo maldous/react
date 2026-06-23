@@ -15,10 +15,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:40.063Z",
-  "endedAt": "2026-06-23T22:00:40.592Z",
+  "startedAt": "2026-06-23T23:01:02.212Z",
+  "endedAt": "2026-06-23T23:01:02.749Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,20 +83,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:40.592Z",
+  "generatedAt": "2026-06-23T23:01:02.749Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:40.063Z",
-  "endTime": "2026-06-23T22:00:40.592Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:40.592Z",
+  "startTime": "2026-06-23T23:01:02.212Z",
+  "endTime": "2026-06-23T23:01:02.749Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:02.749Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts": {
@@ -126,5 +127,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
   ],
-  "evidenceSignature": "522bcb99a3f47c191cb398a6bd04ae85266069e4c6cbc0b4f7c2e572ac9f8785"
+  "evidenceSignature": "2b8a87066240792e556b199df757a8ccfc58298376954a435eec1d0df678c5fa"
 }

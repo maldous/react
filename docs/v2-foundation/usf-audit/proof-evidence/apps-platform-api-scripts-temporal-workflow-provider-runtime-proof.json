@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:temporal-workflow-provider",
-  "startedAt": "2026-06-23T22:00:57.334Z",
-  "endedAt": "2026-06-23T22:00:57.440Z",
+  "startedAt": "2026-06-23T23:01:19.707Z",
+  "endedAt": "2026-06-23T23:01:19.815Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,18 +81,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:57.440Z",
+  "generatedAt": "2026-06-23T23:01:19.815Z",
   "sourceFileRefs": ["apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:57.334Z",
-  "endTime": "2026-06-23T22:00:57.440Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:57.440Z",
+  "startTime": "2026-06-23T23:01:19.707Z",
+  "endTime": "2026-06-23T23:01:19.815Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:19.815Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts": {
@@ -118,5 +119,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts"],
-  "evidenceSignature": "b68ac82dc6ca7bad275d8b45e6cd5374af5f26e07aaf51f7b1f8322816469975"
+  "evidenceSignature": "7e7b73ec34202474dc3f48f46ea6cc062c1f27e85843e554e8c7f02c863c7767"
 }

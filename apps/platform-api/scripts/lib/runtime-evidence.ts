@@ -26,6 +26,7 @@ type RuntimeProofEvidenceOverrides = {
   deterministicReplaySupported?: boolean;
   assertionsObserved?: boolean;
   expectedOutputsAsserted?: boolean;
+  perCapabilityL4Evidence?: Array<Record<string, unknown>>;
 };
 
 const proofEvidenceKey = "__USF_PROOF_EVIDENCE_OVERRIDES__";

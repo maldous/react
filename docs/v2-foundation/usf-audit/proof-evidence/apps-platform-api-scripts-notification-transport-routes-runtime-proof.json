@@ -23,10 +23,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:notification-transport-routes",
-  "startedAt": "2026-06-23T21:59:55.099Z",
-  "endedAt": "2026-06-23T21:59:55.772Z",
+  "startedAt": "2026-06-23T23:00:16.998Z",
+  "endedAt": "2026-06-23T23:00:17.667Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -165,18 +165,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:59:55.772Z",
+  "generatedAt": "2026-06-23T23:00:17.667Z",
   "sourceFileRefs": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:59:55.099Z",
-  "endTime": "2026-06-23T21:59:55.772Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:59:55.772Z",
+  "startTime": "2026-06-23T23:00:16.998Z",
+  "endTime": "2026-06-23T23:00:17.667Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:17.667Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-email": {
@@ -246,5 +247,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
-  "evidenceSignature": "3415b900f50c833be0b286467c6529af248376f80cd2a846712d3ac51e4c4962"
+  "evidenceSignature": "3858016c5c5180ec23dee698776df19120733fbe3b12080256380776b687fe67"
 }

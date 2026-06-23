@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/retention-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:50.416Z",
-  "endedAt": "2026-06-23T22:00:50.484Z",
+  "startedAt": "2026-06-23T23:01:12.712Z",
+  "endedAt": "2026-06-23T23:01:12.785Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/retention-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:50.484Z",
+  "generatedAt": "2026-06-23T23:01:12.785Z",
   "sourceFileRefs": ["apps/platform-api/scripts/retention-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:50.416Z",
-  "endTime": "2026-06-23T22:00:50.484Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:50.484Z",
+  "startTime": "2026-06-23T23:01:12.712Z",
+  "endTime": "2026-06-23T23:01:12.785Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:12.785Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/retention-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/retention-runtime-proof.ts"],
-  "evidenceSignature": "27c357074b495bb9e4186ed7e24f853602ae445a439c6b2f66a2fd9fa751cc37"
+  "evidenceSignature": "e3675c97c8c9fbcec1f8969586b73db51fa16c8e2487b6a96ec55cf0b0d4ad4d"
 }

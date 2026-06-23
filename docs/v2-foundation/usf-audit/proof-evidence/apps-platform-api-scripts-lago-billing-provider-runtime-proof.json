@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:lago-billing-provider",
-  "startedAt": "2026-06-23T21:59:51.061Z",
-  "endedAt": "2026-06-23T21:59:51.147Z",
+  "startedAt": "2026-06-23T23:00:12.888Z",
+  "endedAt": "2026-06-23T23:00:12.972Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:59:51.147Z",
+  "generatedAt": "2026-06-23T23:00:12.972Z",
   "sourceFileRefs": ["apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:59:51.061Z",
-  "endTime": "2026-06-23T21:59:51.147Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:59:51.147Z",
+  "startTime": "2026-06-23T23:00:12.888Z",
+  "endTime": "2026-06-23T23:00:12.972Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:12.972Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts": {
@@ -116,5 +117,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts"],
-  "evidenceSignature": "2b17f46a5bc2e579f15f8170855e4fc9f63b4710b8ff67521e47184988654d99"
+  "evidenceSignature": "5988a3898b57d51e74e2102e9f649e95298fe4df2ed4d1f04d71eba35d3bbee5"
 }

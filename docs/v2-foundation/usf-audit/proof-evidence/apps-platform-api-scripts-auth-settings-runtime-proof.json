@@ -27,10 +27,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:auth-settings",
-  "startedAt": "2026-06-23T21:58:03.698Z",
-  "endedAt": "2026-06-23T21:58:04.263Z",
+  "startedAt": "2026-06-23T22:58:26.619Z",
+  "endedAt": "2026-06-23T22:58:27.188Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -241,18 +241,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:04.263Z",
+  "generatedAt": "2026-06-23T22:58:27.188Z",
   "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:03.698Z",
-  "endTime": "2026-06-23T21:58:04.263Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:04.263Z",
+  "startTime": "2026-06-23T22:58:26.619Z",
+  "endTime": "2026-06-23T22:58:27.188Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:27.188Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-auth": {
@@ -366,5 +367,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/auth-settings-runtime-proof.ts"],
-  "evidenceSignature": "e97212b607397b8f0e492d1cc872c9da8bdf37f4d0da1fd3380600d622ffc512"
+  "evidenceSignature": "bc7c0588fb7eed0b5451bd0487aaebbb8462df03f9e3fc22ecb553fe32d41f0d"
 }

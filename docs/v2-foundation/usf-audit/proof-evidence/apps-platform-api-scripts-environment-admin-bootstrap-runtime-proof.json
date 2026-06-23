@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:environment-admin-bootstrap",
-  "startedAt": "2026-06-23T21:58:16.153Z",
-  "endedAt": "2026-06-23T21:58:16.475Z",
+  "startedAt": "2026-06-23T22:58:39.027Z",
+  "endedAt": "2026-06-23T22:58:39.246Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,18 +81,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:16.475Z",
+  "generatedAt": "2026-06-23T22:58:39.246Z",
   "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:16.153Z",
-  "endTime": "2026-06-23T21:58:16.475Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:16.475Z",
+  "startTime": "2026-06-23T22:58:39.027Z",
+  "endTime": "2026-06-23T22:58:39.246Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:39.246Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts": {
@@ -118,5 +119,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
-  "evidenceSignature": "b9cd3357fdda631b560ffe73701c4fa24b62b094a405c1f93f3bfda4b7efdec6"
+  "evidenceSignature": "39764dbe65e07661e7fc6433b0b510c99958f5b7faa23672894c012e0302bcee"
 }

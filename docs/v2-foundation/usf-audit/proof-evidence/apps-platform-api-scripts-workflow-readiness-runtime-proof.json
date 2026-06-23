@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:01:05.826Z",
-  "endedAt": "2026-06-23T22:01:05.891Z",
+  "startedAt": "2026-06-23T23:01:28.290Z",
+  "endedAt": "2026-06-23T23:01:28.360Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:01:05.891Z",
+  "generatedAt": "2026-06-23T23:01:28.360Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:01:05.826Z",
-  "endTime": "2026-06-23T22:01:05.891Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:01:05.891Z",
+  "startTime": "2026-06-23T23:01:28.290Z",
+  "endTime": "2026-06-23T23:01:28.360Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:28.360Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/workflow-readiness-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/workflow-readiness-runtime-proof.ts"],
-  "evidenceSignature": "26cbd3a42bf486b8f3aef4565571794fc5a701abbdd04e82ca404788f1e6aedb"
+  "evidenceSignature": "af3653efad7a2de960840577e8fc4e29aaeeac9ce158a659bd6d63c1ce534c1c"
 }

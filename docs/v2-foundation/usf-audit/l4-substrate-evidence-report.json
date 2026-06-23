@@ -1,0 +1,1778 @@
+{
+  "artefact": "l4-substrate-evidence-report",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-23T23:02:37.158Z",
+  "status": "PASS",
+  "totalCapabilities": 70,
+  "substrateProvenCapabilities": 70,
+  "behaviourOnlyCapabilities": 0,
+  "invalidL4Claims": 0,
+  "invalidL4ClaimDetails": [],
+  "umbrellaL4Proofs": [
+    {
+      "proofId": "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+      "commandExecuted": "npm run proof:l4-substrate-closure",
+      "providerMode": "compose-local",
+      "subjectIdsCount": 103,
+      "perCapabilityEvidenceCount": 70,
+      "capabilitiesEnumerated": [
+        "ABAC / Policy Decision Point",
+        "API docs, developer portal, SDKs, rate limits",
+        "API keys / personal access tokens",
+        "Accessibility (a11y) gate",
+        "Audit of privileged access",
+        "Background workers / job runner",
+        "Backup + restore",
+        "Branding + theming",
+        "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+        "Build-versus-compose decision framework",
+        "Claim mapping + group/role mapping",
+        "Code quality + secret + dependency scanning",
+        "Compliance reports, access reviews, evidence packs",
+        "Composed provider readiness spine",
+        "Configuration registry + history",
+        "Custom domains, DNS ownership, TLS, canonical",
+        "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+        "Delegated administration roles",
+        "E2E confidence ladder (stage-aware)",
+        "End-user profile + preferences self-service",
+        "Entitlement engine",
+        "Environment registry + bootstrap",
+        "Environment-specific vs shared service model",
+        "Event bus, durable queues, DLQ, redrive",
+        "History read-model (read-only projection)",
+        "IdP brokering + OIDC provider management",
+        "Internal service catalog + readiness",
+        "Logs (aggregation + tenant-scoped search)",
+        "MFA + session policy + lockout",
+        "Metrics + traces",
+        "Notification delivery + preferences + channels",
+        "OIDC discovery / issuer / JWKS validation",
+        "OIDC test connection + callback display",
+        "Object storage + tenant prefixes + signed URLs",
+        "Observability — built-in alerting + incidents",
+        "OpenAPI drift hard gate",
+        "PITR, retention, legal hold, data residency",
+        "Platform login + session",
+        "Product catalog, plans, prices",
+        "Provider configuration plane",
+        "Provider environment classification",
+        "Quota enforcement",
+        "RBAC (roles + permissions)",
+        "Rate limiting (API)",
+        "Relational storage + migrations + RLS",
+        "Runtime secrets management",
+        "Scheduled jobs (built-in, on the event substrate)",
+        "Search + indexing (product search)",
+        "Service catalog + provider integration model",
+        "Sub-organisations",
+        "Subscriptions, invoices, payment methods, dunning",
+        "Support tickets, customer health, announcements",
+        "Support-mode / break-glass access",
+        "Tenant canonical domain set/unset",
+        "Tenant custom-domain auth callback",
+        "Tenant data import / export",
+        "Tenant domain activation (auth-client)",
+        "Tenant groups",
+        "Tenant host identity resolution",
+        "Tenant identity (record + FQDN)",
+        "Tenant isolation proof",
+        "Tenant lifecycle: provision, suspend, delete, export",
+        "Tenant service clickthrough policy",
+        "Universal Service Foundation scope + principles",
+        "Usage metering + meter event ingestion",
+        "User identity + tenant membership",
+        "Webhooks (developer-facing)",
+        "Workflow engine, scheduled jobs, approvals",
+        "Write-only secret settings",
+        "i18n runtime + validation"
+      ],
+      "conclusion": "umbrella-proof-with-per-capability-evidence"
+    }
+  ],
+  "observedL4ProofCount": 1,
+  "perCapabilityL4Evidence": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant groups",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Sub-organisations",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Delegated administration roles",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Entitlement engine",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Audit of privileged access",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Platform login + session",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Configuration registry + history",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Branding + theming",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Write-only secret settings",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Quota enforcement",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Backup + restore",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant data import / export",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Background workers / job runner",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Runtime secrets management",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Metrics + traces",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Provider configuration plane",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Provider environment classification",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "currentReadiness": "SUBSTRATE_PROVEN",
+      "l0Pass": true,
+      "l1Pass": true,
+      "l2Pass": true,
+      "l3Pass": true,
+      "l4Pass": true,
+      "l4EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "candidateL4ProofIds": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "substrateProviderMode": ["compose-local"],
+      "realImplementationPathExecuted": true,
+      "composeLocalEvidence": true,
+      "stateDiffEvidence": true,
+      "sideEffectsEvidence": true,
+      "failurePathEvidence": true,
+      "observabilityEvidence": true,
+      "conclusion": "SUBSTRATE_PROVEN",
+      "gaps": []
+    }
+  ],
+  "gaps": []
+}

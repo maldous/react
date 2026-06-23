@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:38.517Z",
-  "endedAt": "2026-06-23T22:00:38.582Z",
+  "startedAt": "2026-06-23T23:01:00.563Z",
+  "endedAt": "2026-06-23T23:01:00.639Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:38.582Z",
+  "generatedAt": "2026-06-23T23:01:00.639Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:38.517Z",
-  "endTime": "2026-06-23T22:00:38.582Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:38.582Z",
+  "startTime": "2026-06-23T23:01:00.563Z",
+  "endTime": "2026-06-23T23:01:00.639Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:00.639Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"],
-  "evidenceSignature": "727428f6ec61f1fa6250a63e335577349ec16134618003d97e8f9440f2e83af0"
+  "evidenceSignature": "a4226a56d3d24efc05c64a51ba8833e5539604b98ae0ecb5300630d2b7c88c8a"
 }

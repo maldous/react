@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:48.873Z",
-  "endedAt": "2026-06-23T22:00:50.349Z",
+  "startedAt": "2026-06-23T23:01:11.129Z",
+  "endedAt": "2026-06-23T23:01:12.644Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,18 +77,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:50.349Z",
+  "generatedAt": "2026-06-23T23:01:12.644Z",
   "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:48.873Z",
-  "endTime": "2026-06-23T22:00:50.349Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:50.349Z",
+  "startTime": "2026-06-23T23:01:11.129Z",
+  "endTime": "2026-06-23T23:01:12.644Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:12.644Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts": {
@@ -114,5 +115,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"],
-  "evidenceSignature": "e1b642a1614bdfa103a5acf55bc59c64b15074edd234e4a211e9f3430865ac3d"
+  "evidenceSignature": "c4cfd60a83a59d2b832fe74c13c65f137f7169839b8e8a5085e79383d0b94674"
 }

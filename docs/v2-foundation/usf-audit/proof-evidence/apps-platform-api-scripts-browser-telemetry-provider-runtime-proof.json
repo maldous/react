@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:58:07.988Z",
-  "endedAt": "2026-06-23T21:58:08.018Z",
+  "startedAt": "2026-06-23T22:58:30.858Z",
+  "endedAt": "2026-06-23T22:58:30.887Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,18 +77,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:08.018Z",
+  "generatedAt": "2026-06-23T22:58:30.887Z",
   "sourceFileRefs": ["apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:07.988Z",
-  "endTime": "2026-06-23T21:58:08.018Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:08.018Z",
+  "startTime": "2026-06-23T22:58:30.858Z",
+  "endTime": "2026-06-23T22:58:30.887Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:30.887Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts": {
@@ -114,5 +115,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"],
-  "evidenceSignature": "b2e003fefb873d4377633dec67a4b0cf3ab70bb12e78b23ff8174669b8e44892"
+  "evidenceSignature": "faebe7dfa886494acf9cca2a60109531f88d367da3fadbd3b8e316e1d5145218"
 }

@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:metering",
-  "startedAt": "2026-06-23T21:59:52.252Z",
-  "endedAt": "2026-06-23T21:59:52.485Z",
+  "startedAt": "2026-06-23T23:00:14.079Z",
+  "endedAt": "2026-06-23T23:00:14.308Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metering-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,18 +141,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:59:52.485Z",
+  "generatedAt": "2026-06-23T23:00:14.308Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:59:52.252Z",
-  "endTime": "2026-06-23T21:59:52.485Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:59:52.485Z",
+  "startTime": "2026-06-23T23:00:14.079Z",
+  "endTime": "2026-06-23T23:00:14.308Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:14.308Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-usage": {
@@ -211,5 +212,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/metering-runtime-proof.ts"],
-  "evidenceSignature": "c303d1b8e815a212459ee2efd39f7c26a0e7c0d31953736282fc40704a4272cc"
+  "evidenceSignature": "d48e3479019bcf30b5abd7a6b958df8a34b258e79af4748c05c91ba489dd7a57"
 }

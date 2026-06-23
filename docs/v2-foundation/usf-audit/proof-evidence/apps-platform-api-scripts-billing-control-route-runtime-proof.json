@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-control-route",
-  "startedAt": "2026-06-23T21:58:06.497Z",
-  "endedAt": "2026-06-23T21:58:07.021Z",
+  "startedAt": "2026-06-23T22:58:29.393Z",
+  "endedAt": "2026-06-23T22:58:29.917Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:07.021Z",
+  "generatedAt": "2026-06-23T22:58:29.917Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:06.497Z",
-  "endTime": "2026-06-23T21:58:07.021Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:07.021Z",
+  "startTime": "2026-06-23T22:58:29.393Z",
+  "endTime": "2026-06-23T22:58:29.917Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:29.917Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-billing": {
@@ -116,5 +117,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
-  "evidenceSignature": "082256be8b60ae56dc251b0fc2423eceead4798f23657698a524bab263cd645d"
+  "evidenceSignature": "2abe019f9c33608229fb53fe1b84ca1ec193ee6735a63158cf0c126692aeffc1"
 }

@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:00:34.455Z",
-  "endedAt": "2026-06-23T22:00:34.483Z",
+  "startedAt": "2026-06-23T23:00:56.206Z",
+  "endedAt": "2026-06-23T23:00:56.238Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:34.483Z",
+  "generatedAt": "2026-06-23T23:00:56.238Z",
   "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:34.455Z",
-  "endTime": "2026-06-23T22:00:34.483Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:34.483Z",
+  "startTime": "2026-06-23T23:00:56.206Z",
+  "endTime": "2026-06-23T23:00:56.238Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:56.238Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts": {
@@ -112,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"],
-  "evidenceSignature": "7cd4bd6309f0059e0cc5fe240083f97b6d6f4e10dab465d25613fe71c089caeb"
+  "evidenceSignature": "7f4183df525da4d02025ac6cf49294f2d7912cfdb8f111e9fba6ec1f4e642318"
 }

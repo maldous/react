@@ -23,10 +23,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:scheduled-jobs",
-  "startedAt": "2026-06-23T22:00:52.441Z",
-  "endedAt": "2026-06-23T22:00:52.626Z",
+  "startedAt": "2026-06-23T23:01:14.722Z",
+  "endedAt": "2026-06-23T23:01:14.918Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -161,18 +161,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:52.626Z",
+  "generatedAt": "2026-06-23T23:01:14.918Z",
   "sourceFileRefs": ["apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:52.441Z",
-  "endTime": "2026-06-23T22:00:52.626Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:52.626Z",
+  "startTime": "2026-06-23T23:01:14.722Z",
+  "endTime": "2026-06-23T23:01:14.918Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:14.918Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-scheduled-jobs": {
@@ -242,5 +243,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"],
-  "evidenceSignature": "088873083f1ba9f9b96c63265f972140d36783e8341bb698b596fada9c1cca93"
+  "evidenceSignature": "f8f044e09a65f5b24786ec42b747f693ce81de9304ffbe246f912327553d0664"
 }

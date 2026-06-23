@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:workflow-provider-live",
-  "startedAt": "2026-06-23T22:01:04.763Z",
-  "endedAt": "2026-06-23T22:01:05.075Z",
+  "startedAt": "2026-06-23T23:01:27.364Z",
+  "endedAt": "2026-06-23T23:01:27.537Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,18 +121,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:01:05.075Z",
+  "generatedAt": "2026-06-23T23:01:27.537Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-provider-live-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:01:04.763Z",
-  "endTime": "2026-06-23T22:01:05.075Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:01:05.075Z",
+  "startTime": "2026-06-23T23:01:27.364Z",
+  "endTime": "2026-06-23T23:01:27.537Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:01:27.537Z",
   "stateDiff": {
     "routeMutations": {
       "route:post-api-admin-workflows-start": {
@@ -180,5 +181,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/workflow-provider-live-proof.ts"],
-  "evidenceSignature": "28daa26205ca8c3dc44c7b96b08b191a8163401df89e661ecf5d7c77afd1c448"
+  "evidenceSignature": "c6ccd44bd8dc73f0aa5d87c1433df2cd7b40555abb1aa1de3597f032326f2acb"
 }

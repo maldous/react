@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:pitr-restore-drill",
-  "startedAt": "2026-06-23T22:00:02.669Z",
-  "endedAt": "2026-06-23T22:00:34.004Z",
+  "startedAt": "2026-06-23T23:00:24.558Z",
+  "endedAt": "2026-06-23T23:00:55.733Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,18 +201,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:00:34.004Z",
+  "generatedAt": "2026-06-23T23:00:55.733Z",
   "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:00:02.669Z",
-  "endTime": "2026-06-23T22:00:34.004Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T22:00:34.004Z",
+  "startTime": "2026-06-23T23:00:24.558Z",
+  "endTime": "2026-06-23T23:00:55.733Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T23:00:55.733Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-admin-data-legal-holds": {
@@ -304,5 +305,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
-  "evidenceSignature": "45cd0ff3c0b4cae9e67a29358525afb26c610726265ec99ae32468d55c09993e"
+  "evidenceSignature": "afe34c1133b0040e4112485c0d30f2085e31a474ff4b287d3f891a6e4208fc47"
 }

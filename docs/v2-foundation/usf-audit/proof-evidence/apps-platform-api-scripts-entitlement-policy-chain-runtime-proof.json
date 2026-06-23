@@ -39,10 +39,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlement-policy-chain",
-  "startedAt": "2026-06-23T21:58:14.441Z",
-  "endedAt": "2026-06-23T21:58:14.569Z",
+  "startedAt": "2026-06-23T22:58:37.274Z",
+  "endedAt": "2026-06-23T22:58:37.405Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -565,18 +565,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:14.569Z",
+  "generatedAt": "2026-06-23T22:58:37.405Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:14.441Z",
-  "endTime": "2026-06-23T21:58:14.569Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:14.569Z",
+  "startTime": "2026-06-23T22:58:37.274Z",
+  "endTime": "2026-06-23T22:58:37.405Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:37.405Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-auth-settings-domains-domain": {
@@ -837,5 +838,5 @@
     "log:entitlement-policy-chain:revoke",
     "log:entitlement-policy-chain:tenant-boundary"
   ],
-  "evidenceSignature": "880102735a5eed165d368d695cbfa989b5c7bfc1443c733e90636d8bb3b8c25b"
+  "evidenceSignature": "61c82b88671ab448d00cb9d97bd1069d8b9760ab6ed45385db071780e7b4963f"
 }

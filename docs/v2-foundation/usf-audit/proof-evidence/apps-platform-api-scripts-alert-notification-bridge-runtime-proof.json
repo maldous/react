@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:alert-notification-bridge",
-  "startedAt": "2026-06-23T21:58:01.696Z",
-  "endedAt": "2026-06-23T21:58:01.918Z",
+  "startedAt": "2026-06-23T22:58:24.623Z",
+  "endedAt": "2026-06-23T22:58:24.848Z",
   "exitStatus": 0,
-  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -181,18 +181,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:58:01.918Z",
+  "generatedAt": "2026-06-23T22:58:24.848Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251881178-4057827",
+  "collectorRunId": "proof-run-1782255504099-325829",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:58:01.696Z",
-  "endTime": "2026-06-23T21:58:01.918Z",
-  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
-  "executionTimestamp": "2026-06-23T21:58:01.918Z",
+  "startTime": "2026-06-23T22:58:24.623Z",
+  "endTime": "2026-06-23T22:58:24.848Z",
+  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "executionTimestamp": "2026-06-23T22:58:24.848Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-alerts": {
@@ -273,5 +274,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
-  "evidenceSignature": "c11299b43e4f4ecf3afc9015514370f728afc90ad46ab38f4aac90e45b0eceb1"
+  "evidenceSignature": "ba91948b4803eeb15d20d18940f55d6cc7b1913efffb764652b703e92c4a20e0"
 }
