@@ -38,6 +38,7 @@ export const PROOF_LADDER = [
   "proof:compliance-report-route",
   "proof:http-engine-providers",
   "proof:lago-billing-provider",
+  "proof:l4-substrate-closure",
   "proof:temporal-workflow-provider",
   "proof:windmill-automation-provider",
   "proof:workflow-adapters",

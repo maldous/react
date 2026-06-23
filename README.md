@@ -180,6 +180,7 @@ proof:in-memory-automation-runner
 proof:in-memory-billing-catalog
 proof:in-memory-provider-runtime
 proof:in-memory-vs-real-parity
+proof:l4-substrate-closure
 proof:lago-billing-provider
 proof:metering
 proof:metering-quota-routes
