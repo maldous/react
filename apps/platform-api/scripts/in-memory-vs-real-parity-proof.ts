@@ -13,6 +13,7 @@ import {
   InMemoryBackupRestoreProvider,
   InMemoryEventBus,
   InMemoryIdentityRepository,
+  InMemoryObservabilityRepository,
   InMemoryRateLimitRepository,
   InMemorySearchRepository,
   InMemorySemanticProviderBase,
@@ -20,6 +21,7 @@ import {
   InMemoryWebhookDispatcher,
 } from "../src/adapters/in-memory-semantic-providers.ts";
 import { PostgresIdentityRepository } from "@platform/adapters-postgres";
+import { PostgresObservabilityRepository } from "../src/adapters/postgres-observability-repository.ts";
 import {
   createInMemoryObjectStoragePort,
   createTenantScopedObjectStoragePort,
@@ -266,6 +268,327 @@ function createFailingPostgresIdentityPool() {
   };
 }
 
+function createFakePostgresObservabilityPool() {
+  const signals = new Map<
+    string,
+    {
+      organisationId: string;
+      signalKey: string;
+      displayName: string;
+      unit: string;
+      kind: string;
+      description: string;
+    }
+  >();
+  const samples = new Map<string, { value: number; observedAt: Date }>();
+  const rules = new Map<
+    string,
+    {
+      id: string;
+      organisationId: string;
+      ruleKey: string;
+      signalKey: string;
+      comparator: string;
+      threshold: number;
+      severity: string;
+      enabled: boolean;
+      notifyUserId: string | null;
+      notifyCategory: string;
+      updatedAt: Date;
+      updatedBy: string;
+    }
+  >();
+  const incidents = new Map<
+    string,
+    {
+      id: string;
+      organisationId: string;
+      alertRuleId: string;
+      ruleKey: string;
+      title: string;
+      severity: string;
+      status: string;
+      observedValue: number;
+      threshold: number;
+      openedAt: Date;
+      acknowledgedAt: Date | null;
+      resolvedAt: Date | null;
+      updatedBy: string | null;
+    }
+  >();
+  const statements: string[] = [];
+  let ruleSequence = 0;
+  let incidentSequence = 0;
+  const now = new Date("2026-01-01T00:00:00.000Z");
+  const signalRow = (signal: typeof signals extends Map<string, infer V> ? V : never) => {
+    const sample = samples.get(`${signal.organisationId}::${signal.signalKey}`);
+    return {
+      signal_key: signal.signalKey,
+      display_name: signal.displayName,
+      unit: signal.unit,
+      kind: signal.kind,
+      description: signal.description,
+      latest_value: sample?.value ?? null,
+    };
+  };
+  const ruleRow = (rule: typeof rules extends Map<string, infer V> ? V : never) => ({
+    id: rule.id,
+    organisation_id: rule.organisationId,
+    rule_key: rule.ruleKey,
+    signal_key: rule.signalKey,
+    comparator: rule.comparator,
+    threshold: rule.threshold,
+    severity: rule.severity,
+    enabled: rule.enabled,
+    notify_user_id: rule.notifyUserId,
+    notify_category: rule.notifyCategory,
+    updated_at: rule.updatedAt,
+    updated_by: rule.updatedBy,
+  });
+  const incidentRow = (incident: typeof incidents extends Map<string, infer V> ? V : never) => ({
+    id: incident.id,
+    organisation_id: incident.organisationId,
+    alert_rule_id: incident.alertRuleId,
+    rule_key: incident.ruleKey,
+    title: incident.title,
+    severity: incident.severity,
+    status: incident.status,
+    observed_value: incident.observedValue,
+    threshold: incident.threshold,
+    opened_at: incident.openedAt,
+    acknowledged_at: incident.acknowledgedAt,
+    resolved_at: incident.resolvedAt,
+    updated_by: incident.updatedBy,
+  });
+  const client = {
+    escapeIdentifier(value: string) {
+      return `"${value.replaceAll('"', '""')}"`;
+    },
+    release() {
+      statements.push("RELEASE");
+    },
+    async query(sql: string, params: unknown[] = []) {
+      const compactSql = sql.replace(/\s+/g, " ").trim();
+      statements.push(compactSql);
+      if (
+        compactSql === "BEGIN" ||
+        compactSql === "COMMIT" ||
+        compactSql === "ROLLBACK" ||
+        compactSql === "SET LOCAL ROLE rls_bypass" ||
+        compactSql.startsWith("SET LOCAL search_path") ||
+        compactSql.startsWith("SELECT set_config('app.current_tenant_id'") ||
+        compactSql.startsWith("SET LOCAL statement_timeout")
+      ) {
+        return { rows: [] };
+      }
+      if (compactSql.startsWith("INSERT INTO public.metric_signals")) {
+        const [organisationId, signalKey, displayName, unit, kind, description] = params as [
+          string,
+          string,
+          string,
+          string,
+          string,
+          string,
+        ];
+        signals.set(`${organisationId}::${signalKey}`, {
+          organisationId,
+          signalKey,
+          displayName,
+          unit,
+          kind,
+          description,
+        });
+        return { rows: [] };
+      }
+      if (compactSql.startsWith("SELECT s.signal_key")) {
+        const [organisationId] = params as [string];
+        return {
+          rows: [...signals.values()]
+            .filter((signal) => signal.organisationId === organisationId)
+            .sort((left, right) => left.signalKey.localeCompare(right.signalKey))
+            .map(signalRow),
+        };
+      }
+      if (compactSql.startsWith("INSERT INTO public.metric_samples")) {
+        const [organisationId, signalKey, value] = params as [string, string, number];
+        samples.set(`${organisationId}::${signalKey}`, { value, observedAt: now });
+        return { rows: [] };
+      }
+      if (compactSql.startsWith("SELECT value FROM public.metric_samples")) {
+        const [organisationId, signalKey] = params as [string, string];
+        const sample = samples.get(`${organisationId}::${signalKey}`);
+        return { rows: sample ? [{ value: sample.value }] : [] };
+      }
+      if (compactSql === "SELECT count(*)::text AS n FROM public.metric_signals") {
+        return { rows: [{ n: String(signals.size) }] };
+      }
+      if (compactSql.startsWith("INSERT INTO public.alert_rules")) {
+        const [
+          organisationId,
+          ruleKey,
+          signalKey,
+          comparator,
+          threshold,
+          severity,
+          enabled,
+          notifyUserId,
+          notifyCategory,
+          updatedBy,
+        ] = params as [
+          string,
+          string,
+          string,
+          string,
+          number,
+          string,
+          boolean,
+          string | null,
+          string,
+          string,
+        ];
+        const key = `${organisationId}::${ruleKey}`;
+        const existing = rules.get(key);
+        rules.set(key, {
+          id: existing?.id ?? `fake-pg-rule-${++ruleSequence}`,
+          organisationId,
+          ruleKey,
+          signalKey,
+          comparator,
+          threshold,
+          severity,
+          enabled,
+          notifyUserId,
+          notifyCategory,
+          updatedAt: now,
+          updatedBy,
+        });
+        return { rows: [] };
+      }
+      if (compactSql.startsWith("SELECT * FROM public.alert_rules WHERE organisation_id")) {
+        const [organisationId] = params as [string];
+        return {
+          rows: [...rules.values()]
+            .filter((rule) => rule.organisationId === organisationId)
+            .sort((left, right) => left.ruleKey.localeCompare(right.ruleKey))
+            .map(ruleRow),
+        };
+      }
+      if (compactSql.startsWith("SELECT * FROM public.alert_rules WHERE id")) {
+        const [ruleId] = params as [string];
+        const rule = [...rules.values()].find((candidate) => candidate.id === ruleId);
+        return { rows: rule ? [ruleRow(rule)] : [] };
+      }
+      if (compactSql.startsWith("INSERT INTO public.incidents")) {
+        const [organisationId, alertRuleId, ruleKey, title, severity, observedValue, threshold] =
+          params as [string, string, string, string, string, number, number];
+        const incident = {
+          id: `fake-pg-incident-${++incidentSequence}`,
+          organisationId,
+          alertRuleId,
+          ruleKey,
+          title,
+          severity,
+          status: "open",
+          observedValue,
+          threshold,
+          openedAt: now,
+          acknowledgedAt: null,
+          resolvedAt: null,
+          updatedBy: null,
+        };
+        incidents.set(incident.id, incident);
+        return { rows: [incidentRow(incident)] };
+      }
+      if (compactSql.startsWith("SELECT * FROM public.incidents WHERE organisation_id")) {
+        const [organisationId] = params as [string];
+        return {
+          rows: [...incidents.values()]
+            .filter((incident) => incident.organisationId === organisationId)
+            .map(incidentRow),
+        };
+      }
+      if (compactSql.startsWith("SELECT * FROM public.incidents WHERE id")) {
+        const [incidentId] = params as [string];
+        const incident = incidents.get(incidentId);
+        return { rows: incident ? [incidentRow(incident)] : [] };
+      }
+      if (compactSql.startsWith("UPDATE public.incidents")) {
+        const [incidentId, status, updatedBy] = params as [string, string, string];
+        const incident = incidents.get(incidentId);
+        if (!incident) return { rows: [] };
+        incident.status = status;
+        incident.updatedBy = updatedBy;
+        if (status === "acknowledged" && !incident.acknowledgedAt) incident.acknowledgedAt = now;
+        if (status === "resolved" && !incident.resolvedAt) incident.resolvedAt = now;
+        return { rows: [incidentRow(incident)] };
+      }
+      if (
+        compactSql === "SELECT count(*)::text AS n FROM public.incidents WHERE status <> 'resolved'"
+      ) {
+        return {
+          rows: [
+            {
+              n: String(
+                [...incidents.values()].filter((incident) => incident.status !== "resolved").length
+              ),
+            },
+          ],
+        };
+      }
+      if (compactSql.startsWith("SELECT 1 FROM information_schema.tables")) {
+        return { rows: [{ "?column?": 1 }] };
+      }
+      throw new Error(`unexpected fake postgres observability query: ${compactSql}`);
+    },
+  };
+  return {
+    pool: {
+      async connect() {
+        return client;
+      },
+    },
+    signals,
+    samples,
+    rules,
+    incidents,
+    statements,
+  };
+}
+
+function createFailingPostgresObservabilityPool() {
+  const statements: string[] = [];
+  const client = {
+    escapeIdentifier(value: string) {
+      return `"${value.replaceAll('"', '""')}"`;
+    },
+    release() {
+      statements.push("RELEASE");
+    },
+    async query(sql: string) {
+      const compactSql = sql.replace(/\s+/g, " ").trim();
+      statements.push(compactSql);
+      if (
+        compactSql === "BEGIN" ||
+        compactSql === "SET LOCAL ROLE rls_bypass" ||
+        compactSql.startsWith("SET LOCAL search_path") ||
+        compactSql.startsWith("SELECT set_config('app.current_tenant_id'")
+      ) {
+        return { rows: [] };
+      }
+      if (compactSql === "ROLLBACK") return { rows: [] };
+      throw new Error("fake postgres observability unavailable");
+    },
+  };
+  return {
+    pool: {
+      async connect() {
+        return client;
+      },
+    },
+    statements,
+  };
+}
+
 function runRefusedBackupScript(script: string, env: Record<string, string>): string {
   try {
     execFileSync("bash", [script], {
@@ -300,6 +623,24 @@ const requiredMethods = {
   ],
   "secret-store": ["put", "getMetadata", "list", "resolve", "revoke", "delete", "readiness"],
   "search-repository": ["index", "remove", "reindex", "countAll", "search"],
+  "observability-repository": [
+    "registerSignal",
+    "listSignals",
+    "listSignalsAsOperator",
+    "recordSample",
+    "latestValue",
+    "countSignals",
+    "upsertRule",
+    "listRules",
+    "listRulesAsOperator",
+    "findRuleById",
+    "open",
+    "listForTenant",
+    "listForTenantAsOperator",
+    "findById",
+    "updateStatus",
+    "countOpen",
+  ],
 };
 
 const providers = {
@@ -307,6 +648,7 @@ const providers = {
   "event-bus": new InMemoryEventBus(),
   "secret-store": new InMemorySecretStore(),
   "search-repository": new InMemorySearchRepository(),
+  "observability-repository": new InMemoryObservabilityRepository({ seed: "observability-parity" }),
 };
 
 async function listen(server: http.Server | net.Server): Promise<number> {
@@ -367,6 +709,197 @@ await search.index({
 });
 assert.equal((await search.search(tenantA, { q: "visible", permissions: [] })).total, 1);
 assert.equal((await search.search(tenantB, { q: "visible", permissions: [] })).total, 0);
+
+const observabilityMethods = requiredMethods["observability-repository"];
+const inMemoryObservability = providers["observability-repository"];
+const fakePostgresObservabilityRuntime = createFakePostgresObservabilityPool();
+const fakePostgresObservability = new PostgresObservabilityRepository(
+  fakePostgresObservabilityRuntime.pool as never,
+  { retryAttempts: 0, retryBackoffMs: 1, statementTimeoutMs: 250 }
+);
+const observabilityTenantA = "11111111-1111-4111-8111-111111111111";
+const observabilityTenantB = "22222222-2222-4222-8222-222222222222";
+for (const method of observabilityMethods) {
+  assert.equal(
+    typeof inMemoryObservability[method as never],
+    "function",
+    `in-memory observability.${method}`
+  );
+  assert.equal(
+    typeof fakePostgresObservability[method as never],
+    "function",
+    `postgres observability.${method}`
+  );
+}
+const observabilitySignal = {
+  organisationId: observabilityTenantA,
+  signalKey: "requests.total",
+  displayName: "Requests Total",
+  unit: "count",
+  kind: "counter" as const,
+  description: "Parity request count",
+};
+await inMemoryObservability.registerSignal(observabilitySignal);
+await fakePostgresObservability.registerSignal(observabilitySignal);
+await inMemoryObservability.recordSample(observabilityTenantA, observabilitySignal.signalKey, 42);
+await fakePostgresObservability.recordSample(
+  observabilityTenantA,
+  observabilitySignal.signalKey,
+  42
+);
+assert.equal(
+  await inMemoryObservability.latestValue(observabilityTenantA, observabilitySignal.signalKey),
+  42
+);
+assert.equal(
+  await fakePostgresObservability.latestValue(observabilityTenantA, observabilitySignal.signalKey),
+  42
+);
+assert.equal(
+  await inMemoryObservability.latestValue(observabilityTenantB, observabilitySignal.signalKey),
+  null
+);
+assert.equal(
+  await fakePostgresObservability.latestValue(observabilityTenantB, observabilitySignal.signalKey),
+  null
+);
+assert.equal((await inMemoryObservability.listSignals(observabilityTenantA)).length, 1);
+assert.equal((await fakePostgresObservability.listSignals(observabilityTenantA)).length, 1);
+assert.equal((await inMemoryObservability.listSignalsAsOperator(observabilityTenantA)).length, 1);
+assert.equal(
+  (await fakePostgresObservability.listSignalsAsOperator(observabilityTenantA)).length,
+  1
+);
+assert.equal(await inMemoryObservability.countSignals(), 1);
+assert.equal(await fakePostgresObservability.countSignals(), 1);
+
+const observabilityRule = {
+  organisationId: observabilityTenantA,
+  ruleKey: "requests-high",
+  signalKey: observabilitySignal.signalKey,
+  comparator: "gt" as const,
+  threshold: 40,
+  severity: "warning" as const,
+  enabled: true,
+  notifyUserId: "user-observability-parity",
+  notifyCategory: "operations" as const,
+  updatedBy: "observability-parity-proof",
+};
+await inMemoryObservability.upsertRule(observabilityRule);
+await fakePostgresObservability.upsertRule(observabilityRule);
+const inMemoryObservabilityRule = (await inMemoryObservability.listRules(observabilityTenantA))[0]!;
+const fakePostgresObservabilityRule = (
+  await fakePostgresObservability.listRules(observabilityTenantA)
+)[0]!;
+assert.equal(inMemoryObservabilityRule.ruleKey, observabilityRule.ruleKey);
+assert.equal(fakePostgresObservabilityRule.ruleKey, observabilityRule.ruleKey);
+assert.equal((await inMemoryObservability.listRules(observabilityTenantB)).length, 0);
+assert.equal((await fakePostgresObservability.listRules(observabilityTenantB)).length, 0);
+assert.equal(
+  (await inMemoryObservability.findRuleById(inMemoryObservabilityRule.id))?.organisationId,
+  observabilityTenantA
+);
+assert.equal(
+  (await fakePostgresObservability.findRuleById(fakePostgresObservabilityRule.id))?.organisationId,
+  observabilityTenantA
+);
+
+const inMemoryIncident = await inMemoryObservability.open({
+  organisationId: observabilityTenantA,
+  alertRuleId: inMemoryObservabilityRule.id,
+  ruleKey: observabilityRule.ruleKey,
+  title: "Requests high",
+  severity: "warning",
+  observedValue: 42,
+  threshold: observabilityRule.threshold,
+});
+const fakePostgresIncident = await fakePostgresObservability.open({
+  organisationId: observabilityTenantA,
+  alertRuleId: fakePostgresObservabilityRule.id,
+  ruleKey: observabilityRule.ruleKey,
+  title: "Requests high",
+  severity: "warning",
+  observedValue: 42,
+  threshold: observabilityRule.threshold,
+});
+assert.equal(inMemoryIncident.status, "open");
+assert.equal(fakePostgresIncident.status, "open");
+assert.equal((await inMemoryObservability.listForTenant(observabilityTenantA)).length, 1);
+assert.equal((await fakePostgresObservability.listForTenant(observabilityTenantA)).length, 1);
+assert.equal((await inMemoryObservability.listForTenant(observabilityTenantB)).length, 0);
+assert.equal((await fakePostgresObservability.listForTenant(observabilityTenantB)).length, 0);
+assert.equal(await inMemoryObservability.countOpen(), 1);
+assert.equal(await fakePostgresObservability.countOpen(), 1);
+const inMemoryAcknowledgedIncident = await inMemoryObservability.updateStatus(
+  inMemoryIncident.id,
+  "acknowledged",
+  "observability-parity-proof"
+);
+const fakePostgresAcknowledgedIncident = await fakePostgresObservability.updateStatus(
+  fakePostgresIncident.id,
+  "acknowledged",
+  "observability-parity-proof"
+);
+assert.equal(inMemoryAcknowledgedIncident?.status, "acknowledged");
+assert.equal(fakePostgresAcknowledgedIncident?.status, "acknowledged");
+assert.equal(await inMemoryObservability.countOpen(), 1);
+assert.equal(await fakePostgresObservability.countOpen(), 1);
+await inMemoryObservability.updateStatus(
+  inMemoryIncident.id,
+  "resolved",
+  "observability-parity-proof"
+);
+await fakePostgresObservability.updateStatus(
+  fakePostgresIncident.id,
+  "resolved",
+  "observability-parity-proof"
+);
+const inMemoryObservabilityCountOpenAfterResolve = await inMemoryObservability.countOpen();
+const fakePostgresObservabilityCountOpenAfterResolve = await fakePostgresObservability.countOpen();
+const inMemoryObservabilityResolvedIncident = await inMemoryObservability.findById(
+  inMemoryIncident.id
+);
+const fakePostgresObservabilityResolvedIncident = await fakePostgresObservability.findById(
+  fakePostgresIncident.id
+);
+assert.equal(inMemoryObservabilityCountOpenAfterResolve, 0);
+assert.equal(fakePostgresObservabilityCountOpenAfterResolve, 0);
+assert.equal(inMemoryObservabilityResolvedIncident?.status, "resolved");
+assert.equal(fakePostgresObservabilityResolvedIncident?.status, "resolved");
+
+inMemoryObservability.injectFailure("latestValue");
+let inMemoryObservabilityInjectedFailure = "";
+await assert.rejects(
+  async () =>
+    inMemoryObservability.latestValue(observabilityTenantA, observabilitySignal.signalKey),
+  (err) => {
+    inMemoryObservabilityInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryObservabilityInjectedFailure);
+  }
+);
+inMemoryObservability.clearFailure("latestValue");
+const fakeFailingObservabilityRuntime = createFailingPostgresObservabilityPool();
+const fakeFailingPostgresObservability = new PostgresObservabilityRepository(
+  fakeFailingObservabilityRuntime.pool as never,
+  { retryAttempts: 0, retryBackoffMs: 1, statementTimeoutMs: 250 }
+);
+let fakePostgresObservabilityFailure = "";
+await assert.rejects(
+  async () => fakeFailingPostgresObservability.healthCheck(),
+  (err) => {
+    fakePostgresObservabilityFailure = err instanceof Error ? err.message : String(err);
+    return /fake postgres observability unavailable/.test(fakePostgresObservabilityFailure);
+  }
+);
+const inMemoryObservabilityHealth = inMemoryObservability.healthCheck();
+const fakePostgresObservabilityHealth = await fakePostgresObservability.healthCheck();
+assert.equal(inMemoryObservabilityHealth.status, "ready");
+assert.equal(fakePostgresObservabilityHealth.status, "ready");
+assert.equal(
+  fakePostgresObservabilityRuntime.statements.includes("SET LOCAL ROLE rls_bypass"),
+  true
+);
+assert.equal(fakeFailingObservabilityRuntime.statements.includes("ROLLBACK"), true);
 
 const secrets = providers["secret-store"];
 const meta = await secrets.put({
@@ -1314,6 +1847,12 @@ const identityAuditEvents = inMemoryIdentity
   .map(
     (event, index) => `in-memory-identity:${event.action}:${event.tenantId ?? "global"}:${index}`
   );
+const observabilityAuditEvents = inMemoryObservability
+  .getAuditEvents()
+  .map(
+    (event, index) =>
+      `in-memory-observability:${event.action}:${event.tenantId ?? "global"}:${index}`
+  );
 const backupAuditEvents = inMemoryBackupRestore
   .getAuditEvents()
   .map(
@@ -1387,6 +1926,22 @@ const automationMetricSamples = [
   {
     name: "fake_postgres_identity_system_admin_query_total",
     value: fakePostgresIdentityRuntime.statements.filter(
+      (statement) => statement === "SET LOCAL ROLE rls_bypass"
+    ).length,
+  },
+  {
+    name: "in_memory_observability_sample_recorded_total",
+    value: inMemoryObservability
+      .getAuditEvents()
+      .filter((event) => event.action === "observability.sample_recorded").length,
+  },
+  {
+    name: "fake_postgres_observability_statement_total",
+    value: fakePostgresObservabilityRuntime.statements.length,
+  },
+  {
+    name: "fake_postgres_observability_system_admin_query_total",
+    value: fakePostgresObservabilityRuntime.statements.filter(
       (statement) => statement === "SET LOCAL ROLE rls_bypass"
     ).length,
   },
@@ -1470,6 +2025,8 @@ notificationProvider.reset();
 assert.equal(notificationProvider.getAuditEvents().length, 0);
 inMemoryIdentity.reset();
 assert.equal(inMemoryIdentity.getAuditEvents().length, 0);
+inMemoryObservability.reset();
+assert.equal(inMemoryObservability.getAuditEvents().length, 0);
 inMemoryBackupRestore.reset();
 assert.equal(inMemoryBackupRestore.getAuditEvents().length, 0);
 inMemoryWebhookDispatcher.reset();
@@ -1487,6 +2044,7 @@ emitRuntimeProofEvidence({
     "provider:in-memory-billing-provider",
     "provider:in-memory-notification-transport",
     "provider:in-memory-identity-repository",
+    "provider:in-memory-observability-repository",
     "provider:in-memory-backup-restore-provider",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
@@ -1499,6 +2057,7 @@ emitRuntimeProofEvidence({
     "in-memory-billing-provider",
     "in-memory-notification-transport",
     "in-memory-identity-repository",
+    "in-memory-observability-repository",
     "in-memory-backup-restore-provider",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
@@ -1511,6 +2070,8 @@ emitRuntimeProofEvidence({
     "smtp-email-adapter",
     "provider:postgres-identity-repository",
     "postgres-identity-repository",
+    "provider:postgres-observability-repository",
+    "postgres-observability-repository",
     "provider:backup-restore-scripts",
     "backup-restore-scripts",
     "provider:s3-object-storage-adapter",
@@ -1574,6 +2135,31 @@ emitRuntimeProofEvidence({
     fakePostgresIdentityRollbackObserved:
       fakeFailingIdentityRuntime.statements.includes("ROLLBACK"),
     inMemoryIdentityEventsAfterCleanup: inMemoryIdentity.getAuditEvents().length,
+    observabilityContractMethods: observabilityMethods.length,
+    inMemoryObservabilityLatestValue: 42,
+    fakePostgresObservabilityLatestValue: 42,
+    inMemoryObservabilityTenantBLatestValue: null,
+    fakePostgresObservabilityTenantBLatestValue: null,
+    inMemoryObservabilityRuleKey: inMemoryObservabilityRule.ruleKey,
+    fakePostgresObservabilityRuleKey: fakePostgresObservabilityRule.ruleKey,
+    inMemoryObservabilityIncidentResolved:
+      inMemoryObservabilityResolvedIncident?.status === "resolved",
+    fakePostgresObservabilityIncidentResolved:
+      fakePostgresObservabilityResolvedIncident?.status === "resolved",
+    inMemoryObservabilityCountOpenAfterResolve,
+    fakePostgresObservabilityCountOpenAfterResolve,
+    inMemoryObservabilityInjectedFailure,
+    fakePostgresObservabilityFailure,
+    inMemoryObservabilityHealth,
+    fakePostgresObservabilityHealth,
+    fakePostgresObservabilityStatements: fakePostgresObservabilityRuntime.statements.length,
+    fakePostgresObservabilitySystemAdminStatements:
+      fakePostgresObservabilityRuntime.statements.filter(
+        (statement) => statement === "SET LOCAL ROLE rls_bypass"
+      ).length,
+    fakePostgresObservabilityRollbackObserved:
+      fakeFailingObservabilityRuntime.statements.includes("ROLLBACK"),
+    inMemoryObservabilityEventsAfterCleanup: inMemoryObservability.getAuditEvents().length,
     backupRestoreContractMethods: backupMethods.length,
     inMemoryBackupId: inMemoryBackup.backupId,
     inMemoryRestore,
@@ -1655,6 +2241,14 @@ emitRuntimeProofEvidence({
     identityRepositoryFailurePathParity: true,
     identityRepositorySystemAdminPathObserved: true,
     identityRepositoryCleanupParity: true,
+    observabilityRepositoryPortMethodsMatch: true,
+    observabilityRepositorySignalSampleParity: true,
+    observabilityRepositoryTenantBoundaryParity: true,
+    observabilityRepositoryRuleIncidentParity: true,
+    observabilityRepositoryFailurePathParity: true,
+    observabilityRepositorySystemAdminPathObserved: true,
+    observabilityRepositoryHealthParity: true,
+    observabilityRepositoryCleanupParity: true,
     backupRestorePortMethodsMatch: true,
     backupRestoreLifecycleParity: true,
     backupRestoreTenantBoundaryParity: true,
@@ -1684,6 +2278,7 @@ emitRuntimeProofEvidence({
     ...billingAuditEvents,
     ...notificationAuditEvents,
     ...identityAuditEvents,
+    ...observabilityAuditEvents,
     ...backupAuditEvents,
     ...storageEvents.audit,
     ...webhookAuditEvents,
@@ -1708,6 +2303,11 @@ emitRuntimeProofEvidence({
     "trace:identity-parity-membership-miss",
     "trace:identity-parity-injected-failure",
     "trace:identity-parity-postgres-rollback",
+    "trace:observability-parity-signal-sample",
+    "trace:observability-parity-tenant-boundary",
+    "trace:observability-parity-rule-incident",
+    "trace:observability-parity-injected-failure",
+    "trace:observability-parity-postgres-rollback",
     "trace:backup-parity-in-memory-backup",
     "trace:backup-parity-in-memory-restore",
     "trace:backup-parity-cross-tenant-restore",
@@ -1741,6 +2341,11 @@ emitRuntimeProofEvidence({
     "log:identity-parity-membership-miss",
     "log:identity-parity-injected-failure",
     "log:identity-parity-postgres-rollback",
+    "log:observability-parity-signal-sample",
+    "log:observability-parity-tenant-boundary",
+    "log:observability-parity-rule-incident",
+    "log:observability-parity-injected-failure",
+    "log:observability-parity-postgres-rollback",
     "log:backup-parity-in-memory-backup",
     "log:backup-parity-in-memory-restore",
     "log:backup-parity-cross-tenant-restore",

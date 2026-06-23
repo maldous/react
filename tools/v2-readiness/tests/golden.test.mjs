@@ -63,14 +63,10 @@ test("golden: base consistency clean; formal proof gaps truthfully reported; R9 
     "formal proof assurance must not rely on inventory-derived overclaims once proofs emit their own claim"
   );
   assert.ok(
-    formalProof.some(
-      (f) =>
-        f.subject === "in-memory-observability-repository" &&
-        f.message.includes(
-          "in-memory provider lacks complete emitted real-provider parity evidence"
-        )
+    !formalProof.some((f) =>
+      f.message.includes("in-memory provider lacks complete emitted real-provider parity evidence")
     ),
-    "formal proof assurance must still fail missing in-memory-to-real provider parity evidence"
+    "formal proof assurance must close in-memory provider parity gaps before reporting broader L4/L5 gaps"
   );
 
   const adversarial = findings.filter((f) => adversarialRule(f.ruleId));

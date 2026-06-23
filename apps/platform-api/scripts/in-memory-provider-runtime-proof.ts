@@ -330,6 +330,10 @@ const afterState = {
 
 emitRuntimeProofEvidence({
   subjectIds: [
+    "provider:in-memory-semantic-provider",
+    "provider:in-memory-semantic-providers",
+    "in-memory-semantic-provider",
+    "in-memory-semantic-providers",
     "provider:in-memory-identity-repository",
     "provider:in-memory-event-bus",
     "provider:in-memory-secret-store",

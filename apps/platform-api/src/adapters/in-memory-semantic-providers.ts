@@ -1579,7 +1579,7 @@ export class InMemoryObservabilityRepository
 
   async countOpen(): Promise<number> {
     this.assertAvailable("countOpen");
-    return [...this.incidents.values()].filter((i) => i.status === "open").length;
+    return [...this.incidents.values()].filter((i) => i.status !== "resolved").length;
   }
 }
 

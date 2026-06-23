@@ -31,7 +31,7 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | Assurance surface             | Status | Gaps |
 | ----------------------------- | ------ | ---: |
 | adversarial runtime inventory | PASS   |    0 |
-| formal proof readiness        | FAIL   |  298 |
+| formal proof readiness        | FAIL   |  296 |
 | weak proof backlog            | FAIL   |   89 |
 | capability proof readiness    | FAIL   |   89 |
 

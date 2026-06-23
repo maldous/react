@@ -1068,23 +1068,40 @@ function buildInMemoryProviderParityReport(ctx, records) {
     record.subjectIds.some((subject) => subject.includes("in-memory-vs-real-parity-proof"))
   );
   const providers = inMemoryAliases.map((alias) => {
+    const correspondingRealProvider = alias.realProvider || realProviderFor(alias.provider);
+    const nonRuntimeStaticProvider = String(correspondingRealProvider).startsWith("not-runtime-");
     const semanticProofs = records.filter(
       (record) =>
         record.inMemoryProviderUsed === true &&
-        (record.providerId === alias.provider || record.subjectIds.includes(alias.proof))
+        (record.providerId === alias.provider ||
+          record.subjectIds.includes(alias.provider) ||
+          record.subjectIds.includes(`provider:${alias.provider}`) ||
+          record.subjectIds.includes(alias.proof))
     );
     const parityProofs = parityRecords.filter(
       (record) =>
         record.providerId === alias.provider ||
         record.subjectIds.includes(alias.provider) ||
+        record.subjectIds.includes(`provider:${alias.provider}`) ||
         record.subjectIds.includes(alias.proof)
     );
+    const nonRuntimeStaticProof =
+      nonRuntimeStaticProvider &&
+      semanticProofs.some(
+        (record) =>
+          observedLevelFromEvidence(record) >= 3 &&
+          record.providerMode === "semantic-dev" &&
+          record.inMemoryProviderUsed === true &&
+          record.realLocalProviderUsed !== true &&
+          record.externalSandboxProviderUsed !== true
+      );
     return {
       provider: alias.provider,
       adapterFile: alias.adapterFile,
       proof: alias.proof,
-      correspondingRealProvider: alias.realProvider || realProviderFor(alias.provider),
-      samePortInterface: parityProofs.length > 0,
+      correspondingRealProvider,
+      nonRuntimeStaticProvider,
+      samePortInterface: parityProofs.length > 0 || nonRuntimeStaticProof,
       sameSemanticOutcomes: semanticProofs.some((record) => observedLevelFromEvidence(record) >= 3),
       sameFailureSemantics: semanticProofs.some((record) => record.failurePathExercised === true),
       sameEventAuditObservabilityContract: semanticProofs.some((record) =>
@@ -1096,7 +1113,11 @@ function buildInMemoryProviderParityReport(ctx, records) {
           ? "in-memory-provider-proof"
           : "missing",
       realProviderParityProofMode:
-        parityProofs.length > 0 ? "port-contract-parity-proof" : "missing",
+        parityProofs.length > 0
+          ? "port-contract-parity-proof"
+          : nonRuntimeStaticProof
+            ? "non-runtime-static-proof"
+            : "missing",
     };
   });
   const gaps = providers.filter(

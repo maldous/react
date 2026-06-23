@@ -13,6 +13,7 @@
     "provider:in-memory-billing-provider",
     "provider:in-memory-notification-transport",
     "provider:in-memory-identity-repository",
+    "provider:in-memory-observability-repository",
     "provider:in-memory-backup-restore-provider",
     "provider:in-memory-object-storage",
     "provider:in-memory-webhook-dispatcher",
@@ -25,6 +26,7 @@
     "in-memory-billing-provider",
     "in-memory-notification-transport",
     "in-memory-identity-repository",
+    "in-memory-observability-repository",
     "in-memory-backup-restore-provider",
     "in-memory-object-storage",
     "in-memory-webhook-dispatcher",
@@ -37,6 +39,8 @@
     "smtp-email-adapter",
     "provider:postgres-identity-repository",
     "postgres-identity-repository",
+    "provider:postgres-observability-repository",
+    "postgres-observability-repository",
     "provider:backup-restore-scripts",
     "backup-restore-scripts",
     "provider:s3-object-storage-adapter",
@@ -57,10 +61,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T10:02:57.422Z",
-  "endedAt": "2026-06-23T10:02:57.734Z",
+  "startedAt": "2026-06-23T10:29:55.730Z",
+  "endedAt": "2026-06-23T10:29:56.056Z",
   "exitStatus": 0,
-  "commit": "5604c27177c0085f4084aedf4e43e44c38c75bcd",
+  "commit": "7146bb1c7d872b020a4cbf68b4986e4192facfcb",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -104,7 +108,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T10:02:57.663Z"
+      "createdAt": "2026-06-23T10:29:55.983Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -152,6 +156,33 @@
     "fakePostgresIdentitySystemAdminStatements": 7,
     "fakePostgresIdentityRollbackObserved": true,
     "inMemoryIdentityEventsAfterCleanup": 0,
+    "observabilityContractMethods": 16,
+    "inMemoryObservabilityLatestValue": 42,
+    "fakePostgresObservabilityLatestValue": 42,
+    "inMemoryObservabilityTenantBLatestValue": null,
+    "fakePostgresObservabilityTenantBLatestValue": null,
+    "inMemoryObservabilityRuleKey": "requests-high",
+    "fakePostgresObservabilityRuleKey": "requests-high",
+    "inMemoryObservabilityIncidentResolved": true,
+    "fakePostgresObservabilityIncidentResolved": true,
+    "inMemoryObservabilityCountOpenAfterResolve": 0,
+    "fakePostgresObservabilityCountOpenAfterResolve": 0,
+    "inMemoryObservabilityInjectedFailure": "in-memory-observability-repository injected failure for latestValue; fail closed",
+    "fakePostgresObservabilityFailure": "postgres-observability-repository unavailable; no fallback is allowed for metrics, alerts, or incidents, fail-closed after retry attempts: fake postgres observability unavailable",
+    "inMemoryObservabilityHealth": {
+      "provider": "in-memory-observability-repository",
+      "status": "ready",
+      "detail": "in-memory-observability-repository ready with deterministic seed observability-parity",
+      "operatorRecovery": "operator recovery: reset in-memory-observability-repository, clear failure injection, or switch USF_PROVIDER_MODE to compose for real-local parity proof"
+    },
+    "fakePostgresObservabilityHealth": {
+      "status": "ready",
+      "provider": "postgres-observability-repository"
+    },
+    "fakePostgresObservabilityStatements": 133,
+    "fakePostgresObservabilitySystemAdminStatements": 14,
+    "fakePostgresObservabilityRollbackObserved": true,
+    "inMemoryObservabilityEventsAfterCleanup": 0,
     "backupRestoreContractMethods": 2,
     "inMemoryBackupId": "backup_10b0d446d2eb",
     "inMemoryRestore": {
@@ -260,7 +291,7 @@
     "fakeClamAvLegalHoldChecks": 2,
     "inMemoryAntivirusEventsAfterCleanup": 0,
     "failurePathExercised": true,
-    "healthChecks": ["ready", "ready", "ready", "ready"],
+    "healthChecks": ["ready", "ready", "ready", "ready", "ready"],
     "resetVerified": true
   },
   "assertedStateDiff": {
@@ -289,6 +320,14 @@
     "identityRepositoryFailurePathParity": true,
     "identityRepositorySystemAdminPathObserved": true,
     "identityRepositoryCleanupParity": true,
+    "observabilityRepositoryPortMethodsMatch": true,
+    "observabilityRepositorySignalSampleParity": true,
+    "observabilityRepositoryTenantBoundaryParity": true,
+    "observabilityRepositoryRuleIncidentParity": true,
+    "observabilityRepositoryFailurePathParity": true,
+    "observabilityRepositorySystemAdminPathObserved": true,
+    "observabilityRepositoryHealthParity": true,
+    "observabilityRepositoryCleanupParity": true,
     "backupRestorePortMethodsMatch": true,
     "backupRestoreLifecycleParity": true,
     "backupRestoreTenantBoundaryParity": true,
@@ -331,6 +370,7 @@
     "in-memory-notification-transport:notification.transport.sent:tenant-a:0",
     "in-memory-identity:identity.user_created:global:0",
     "in-memory-identity:identity.external_linked:global:1",
+    "in-memory-observability:observability.sample_recorded:11111111-1111-4111-8111-111111111111:0",
     "in-memory-backup-restore:backup.created:tenant-a:0",
     "in-memory-backup-restore:backup.restored:tenant-a:1",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
@@ -365,6 +405,11 @@
     "trace:identity-parity-membership-miss",
     "trace:identity-parity-injected-failure",
     "trace:identity-parity-postgres-rollback",
+    "trace:observability-parity-signal-sample",
+    "trace:observability-parity-tenant-boundary",
+    "trace:observability-parity-rule-incident",
+    "trace:observability-parity-injected-failure",
+    "trace:observability-parity-postgres-rollback",
     "trace:backup-parity-in-memory-backup",
     "trace:backup-parity-in-memory-restore",
     "trace:backup-parity-cross-tenant-restore",
@@ -438,6 +483,18 @@
     {
       "name": "fake_postgres_identity_system_admin_query_total",
       "value": 7
+    },
+    {
+      "name": "in_memory_observability_sample_recorded_total",
+      "value": 1
+    },
+    {
+      "name": "fake_postgres_observability_statement_total",
+      "value": 133
+    },
+    {
+      "name": "fake_postgres_observability_system_admin_query_total",
+      "value": 14
     },
     {
       "name": "in_memory_backup_restore_snapshot_total",
@@ -539,6 +596,11 @@
     "log:identity-parity-membership-miss",
     "log:identity-parity-injected-failure",
     "log:identity-parity-postgres-rollback",
+    "log:observability-parity-signal-sample",
+    "log:observability-parity-tenant-boundary",
+    "log:observability-parity-rule-incident",
+    "log:observability-parity-injected-failure",
+    "log:observability-parity-postgres-rollback",
     "log:backup-parity-in-memory-backup",
     "log:backup-parity-in-memory-restore",
     "log:backup-parity-cross-tenant-restore",
@@ -567,18 +629,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T10:02:57.734Z",
+  "generatedAt": "2026-06-23T10:29:56.056Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782208961572-3338396",
+  "collectorRunId": "proof-run-1782210579921-3498309",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T10:02:57.422Z",
-  "endTime": "2026-06-23T10:02:57.734Z",
-  "gitCommit": "5604c27177c0085f4084aedf4e43e44c38c75bcd",
-  "executionTimestamp": "2026-06-23T10:02:57.734Z",
+  "startTime": "2026-06-23T10:29:55.730Z",
+  "endTime": "2026-06-23T10:29:56.056Z",
+  "gitCommit": "7146bb1c7d872b020a4cbf68b4986e4192facfcb",
+  "executionTimestamp": "2026-06-23T10:29:56.056Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -605,6 +667,14 @@
     "identityRepositoryFailurePathParity": true,
     "identityRepositorySystemAdminPathObserved": true,
     "identityRepositoryCleanupParity": true,
+    "observabilityRepositoryPortMethodsMatch": true,
+    "observabilityRepositorySignalSampleParity": true,
+    "observabilityRepositoryTenantBoundaryParity": true,
+    "observabilityRepositoryRuleIncidentParity": true,
+    "observabilityRepositoryFailurePathParity": true,
+    "observabilityRepositorySystemAdminPathObserved": true,
+    "observabilityRepositoryHealthParity": true,
+    "observabilityRepositoryCleanupParity": true,
     "backupRestorePortMethodsMatch": true,
     "backupRestoreLifecycleParity": true,
     "backupRestoreTenantBoundaryParity": true,
@@ -644,6 +714,7 @@
     "in-memory-notification-transport:notification.transport.sent:tenant-a:0",
     "in-memory-identity:identity.user_created:global:0",
     "in-memory-identity:identity.external_linked:global:1",
+    "in-memory-observability:observability.sample_recorded:11111111-1111-4111-8111-111111111111:0",
     "in-memory-backup-restore:backup.created:tenant-a:0",
     "in-memory-backup-restore:backup.restored:tenant-a:1",
     "in-memory:storage.object.scan.clean:clean:tenant-a/object.txt",
@@ -711,6 +782,18 @@
     {
       "name": "fake_postgres_identity_system_admin_query_total",
       "value": 7
+    },
+    {
+      "name": "in_memory_observability_sample_recorded_total",
+      "value": 1
+    },
+    {
+      "name": "fake_postgres_observability_statement_total",
+      "value": 133
+    },
+    {
+      "name": "fake_postgres_observability_system_admin_query_total",
+      "value": 14
     },
     {
       "name": "in_memory_backup_restore_snapshot_total",
@@ -812,6 +895,11 @@
     "log:identity-parity-membership-miss",
     "log:identity-parity-injected-failure",
     "log:identity-parity-postgres-rollback",
+    "log:observability-parity-signal-sample",
+    "log:observability-parity-tenant-boundary",
+    "log:observability-parity-rule-incident",
+    "log:observability-parity-injected-failure",
+    "log:observability-parity-postgres-rollback",
     "log:backup-parity-in-memory-backup",
     "log:backup-parity-in-memory-restore",
     "log:backup-parity-cross-tenant-restore",
@@ -833,5 +921,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "3bb5f1394fe3e249cf170e6609167f724161b50ee38328d81246a179348bf3e4"
+  "evidenceSignature": "c45765fb56755643d34bc64235a9ca7313189e0d766978b7a44bd53b20fd7c3f"
 }

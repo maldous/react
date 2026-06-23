@@ -1,7 +1,7 @@
 {
   "artefact": "v2-formal-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T10:02:28.292Z",
+  "generatedAt": "2026-06-23T10:29:34.152Z",
   "status": "FAIL",
   "summary": {
     "evidenceRecords": 162,
@@ -9,7 +9,7 @@
     "missingEvidence": 0,
     "staleEvidence": 0,
     "claimMismatches": 0,
-    "inMemoryProviderParityGaps": 2,
+    "inMemoryProviderParityGaps": 0,
     "routeProofSubjectGaps": 0,
     "proofLadderComplianceGaps": 0,
     "environmentProofConsistencyGaps": 0,
@@ -1056,16 +1056,6 @@
       "kind": "route-proof-evidence-missing",
       "subject": "GET /e2e-harness",
       "message": "route proof has explicit subject refs but no emitted evidence record"
-    },
-    {
-      "kind": "in-memory-provider-parity",
-      "subject": "in-memory-observability-repository",
-      "message": "in-memory provider lacks complete emitted real-provider parity evidence"
-    },
-    {
-      "kind": "in-memory-provider-parity",
-      "subject": "in-memory-semantic-provider",
-      "message": "in-memory provider lacks complete emitted real-provider parity evidence"
     },
     {
       "kind": "capability-real-provider-proof-missing",
