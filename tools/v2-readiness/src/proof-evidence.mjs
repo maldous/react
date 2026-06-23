@@ -112,15 +112,15 @@ export const ENVIRONMENT_PROOF_MODEL = {
     purpose: "Substrate validation after L3 closure",
     providerModes: ["compose-local", "hermetic", "route-contract"],
     minStrictProviderLevel: 4,
-    maxLevel: 5,
-    forbiddenLevels: ["L6"],
+    maxLevel: 4,
+    forbiddenLevels: ["L5", "L6"],
   },
   staging: {
-    purpose: "Foundation and production-rehearsal assurance after L3/L4 closure",
+    purpose: "Resilience and production-rehearsal assurance after L3/L4 closure",
     providerModes: ["external-sandbox", "sandbox-external", "compose-local", "prod-shaped-sandbox"],
     minStrictProviderLevel: 5,
-    maxLevel: 6,
-    forbiddenLevels: [],
+    maxLevel: 5,
+    forbiddenLevels: ["L6 unless complete journey evidence is emitted"],
   },
   prod: {
     purpose: "Operational assurance",
@@ -750,10 +750,21 @@ export function observedLevelFromEvidence(record) {
     record.providerMode === "compose-local" &&
     record.realLocalProviderUsed === true &&
     record.fakeProviderUsed !== true;
-  const hasResilience = hasRealLocal && resilienceGaps(record).length === 0;
-  const hasFoundation = hasResilience && foundationGaps(record).length === 0;
+  const hasStagingResilience =
+    hasBehaviour &&
+    env === "staging" &&
+    (record.providerMode === "external-sandbox" ||
+      record.providerMode === "sandbox-external" ||
+      record.providerMode === "prod-shaped-sandbox") &&
+    record.externalSandboxProviderUsed === true &&
+    (record.externalSandboxRequestIds || []).length > 0 &&
+    resilienceGaps(record).length === 0;
+  const hasFoundation =
+    proofLevelNumber(record.proofLevelClaimed) >= 6 &&
+    l6CorrelationComplete(record) &&
+    foundationGaps(record).length === 0;
   if (hasFoundation) return 6;
-  if (hasResilience) return 5;
+  if (hasStagingResilience) return 5;
   if (hasRealLocal) return 4;
   if (hasBehaviour) return 3;
   if (hasContract) return 2;
@@ -777,14 +788,18 @@ function environmentConsistencyGaps(record) {
       },
     ];
   }
-  if (claimed > model.maxLevel) {
+  const stagingCompleteJourneyClaim =
+    env === "staging" && claimed === 6 && l6CorrelationComplete(record);
+  const stagingCompleteJourneyObserved =
+    env === "staging" && observed === 6 && l6CorrelationComplete(record);
+  if (claimed > model.maxLevel && !stagingCompleteJourneyClaim) {
     gaps.push({
       kind: "environment-level-forbidden",
       subject: record.subjectId,
       message: `${env.toUpperCase()} proof cannot claim ${proofLevelId(claimed)}`,
     });
   }
-  if (observed > model.maxLevel && env !== "staging") {
+  if (observed > model.maxLevel && !stagingCompleteJourneyObserved) {
     gaps.push({
       kind: "environment-observed-level-forbidden",
       subject: record.subjectId,
@@ -2144,25 +2159,31 @@ function contractGaps(record) {
 
 function substrateGaps(record) {
   const gaps = [];
+  const priorSubstrateEvidence =
+    proofLevelNumber(record.proofLevelClaimed) >= 5 &&
+    isMeaningfulEvidence(record.substrateProofIds || record.l4EvidenceProofIds);
   if (behaviourGaps(record).length > 0) {
     gaps.push({
       kind: "l3-behaviour-incomplete",
       message: "L4 Substrate Proven requires complete L3 Behaviour Proven evidence first",
     });
   }
-  if (record.realLocalProviderUsed !== true) {
+  if (record.realLocalProviderUsed !== true && !priorSubstrateEvidence) {
     gaps.push({
       kind: "missing-real-local-substrate",
       message: "L4 Substrate Proven requires real local substrate evidence",
     });
   }
-  if (record.providerMode !== "compose-local") {
+  if (record.providerMode !== "compose-local" && !priorSubstrateEvidence) {
     gaps.push({
       kind: "missing-compose-local-provider-mode",
       message: "L4 Substrate Proven requires compose-local provider mode",
     });
   }
-  if (record.fakeProviderUsed === true || record.inMemoryProviderUsed === true) {
+  if (
+    (record.fakeProviderUsed === true || record.inMemoryProviderUsed === true) &&
+    !priorSubstrateEvidence
+  ) {
     gaps.push({
       kind: "substrate-provider-class-overclaim",
       message: "L4 Substrate Proven cannot be backed by fake or in-memory provider evidence",

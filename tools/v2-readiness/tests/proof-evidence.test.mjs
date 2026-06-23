@@ -87,6 +87,30 @@ test("observed level is calculated from emitted evidence fields only", () => {
         environmentMode: "staging",
         environment: "staging",
         providerMode: "external-sandbox",
+        proofLevelClaimed: "L5",
+        realLocalProviderUsed: false,
+        externalSandboxProviderUsed: true,
+        externalSandboxRequestIds: ["sandbox-request-1", "sandbox-response-1"],
+        substrateProofIds: ["proof:fixture-substrate-l4"],
+        restartEvidence: { status: "verified" },
+        timeoutEvidence: { status: "verified" },
+        retryEvidence: { status: "verified" },
+        concurrencyEvidence: { status: "verified" },
+        recoveryEvidence: { status: "verified" },
+        backupRestoreEvidence: { status: "verified" },
+        degradedModeEvidence: { status: "verified" },
+        failureInjectionEvidence: { status: "verified" },
+      })
+    ),
+    5,
+    "L5 resilience is a staging proof that cites prior L4 substrate evidence"
+  );
+  assert.equal(
+    observedLevelFromEvidence(
+      validRecord({
+        environmentMode: "staging",
+        environment: "staging",
+        providerMode: "external-sandbox",
         realLocalProviderUsed: false,
         externalSandboxProviderUsed: true,
         externalSandboxRequestIds: ["sandbox-request-1", "sandbox-response-1"],
@@ -144,6 +168,9 @@ test("negative controls are caught by emitted-evidence validation", () => {
   );
   assert.ok(
     gapKinds(validRecord({ proofLevelClaimed: "L5" })).includes("missing-restart-evidence")
+  );
+  assert.ok(
+    gapKinds(validRecord({ proofLevelClaimed: "L5" })).includes("environment-level-forbidden")
   );
   assert.ok(
     gapKinds(validRecord({ auditEventIds: [], proofLevelClaimed: "L6" })).includes(

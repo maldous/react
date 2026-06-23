@@ -1,7 +1,7 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T12:14:55.545Z",
+  "generatedAt": "2026-06-23T12:25:45.065Z",
   "status": "PASS",
   "environmentModel": {
     "dev": {
@@ -15,11 +15,11 @@
       "purpose": "Substrate validation after L3 closure",
       "providerModes": ["compose-local", "hermetic", "route-contract"],
       "minStrictProviderLevel": 4,
-      "maxLevel": 5,
-      "forbiddenLevels": ["L6"]
+      "maxLevel": 4,
+      "forbiddenLevels": ["L5", "L6"]
     },
     "staging": {
-      "purpose": "Foundation and production-rehearsal assurance after L3/L4 closure",
+      "purpose": "Resilience and production-rehearsal assurance after L3/L4 closure",
       "providerModes": [
         "external-sandbox",
         "sandbox-external",
@@ -27,8 +27,8 @@
         "prod-shaped-sandbox"
       ],
       "minStrictProviderLevel": 5,
-      "maxLevel": 6,
-      "forbiddenLevels": []
+      "maxLevel": 5,
+      "forbiddenLevels": ["L6 unless complete journey evidence is emitted"]
     },
     "prod": {
       "purpose": "Operational assurance",
