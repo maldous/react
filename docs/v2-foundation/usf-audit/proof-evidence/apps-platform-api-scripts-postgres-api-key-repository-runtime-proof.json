@@ -13,78 +13,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T07:42:08.623Z",
-  "endedAt": "2026-06-23T07:42:09.623Z",
+  "startedAt": "2026-06-23T08:01:47.734Z",
+  "endedAt": "2026-06-23T08:01:47.806Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-postgres-api-key-repository-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-postgres-api-key-repository-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-postgres-api-key-repository-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.623Z",
+  "generatedAt": "2026-06-23T08:01:47.806Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.623Z",
-  "endTime": "2026-06-23T07:42:09.623Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.623Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-postgres-api-key-repository-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-postgres-api-key-repository-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-postgres-api-key-repository-runtime-proof"],
-  "evidenceSignature": "edd838f07e741b2131b93a13cc7aa62ba72997cfaa222fcec4c256922e83ee9a"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:47.734Z",
+  "endTime": "2026-06-23T08:01:47.806Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:47.806Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "3cabcab8ad4a321e94c899e99b0555342c8d55dd34da3d1d1424cf0238524059"
 }

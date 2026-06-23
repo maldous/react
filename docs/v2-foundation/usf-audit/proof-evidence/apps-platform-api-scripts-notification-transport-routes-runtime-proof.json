@@ -4,23 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
     "package.json#proof:notification-transport-routes",
-    "proof:notification-transport-routes",
-    "route:get-admin-email",
-    "route:get-api-admin-notifications-readiness",
-    "route:post-api-admin-tenants-tenantid-notifications-test",
-    "route:get-api-me-notification-preferences",
-    "route:patch-api-me-notification-preferences"
+    "proof:notification-transport-routes"
   ],
   "subjectId": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
   "capabilityId": "capability:notification-transport-routes",
   "providerId": "notification-transport-routes",
-  "routeIds": [
-    "route:get-admin-email",
-    "route:get-api-admin-notifications-readiness",
-    "route:post-api-admin-tenants-tenantid-notifications-test",
-    "route:get-api-me-notification-preferences",
-    "route:patch-api-me-notification-preferences"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -28,92 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:notification-transport-routes",
-  "startedAt": "2026-06-23T07:42:08.600Z",
-  "endedAt": "2026-06-23T07:42:09.600Z",
+  "startedAt": "2026-06-23T08:01:41.766Z",
+  "endedAt": "2026-06-23T08:01:42.289Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-    "routeCount": 5,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpub3Rp"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-    "routeCount": 5,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpub3Rp"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-    "command": "npm run proof:notification-transport-routes",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-email",
-      "route:get-api-admin-notifications-readiness",
-      "route:post-api-admin-tenants-tenantid-notifications-test",
-      "route:get-api-me-notification-preferences",
-      "route:patch-api-me-notification-preferences"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-notification-transport-routes-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-notification-transport-routes-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": [
-    "log-apps-platform-api-scripts-notification-transport-routes-runtime-proof"
-  ],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.600Z",
+  "generatedAt": "2026-06-23T08:01:42.289Z",
   "sourceFileRefs": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.600Z",
-  "endTime": "2026-06-23T07:42:09.600Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.600Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
-    "command": "npm run proof:notification-transport-routes",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-email",
-      "route:get-api-admin-notifications-readiness",
-      "route:post-api-admin-tenants-tenantid-notifications-test",
-      "route:get-api-me-notification-preferences",
-      "route:patch-api-me-notification-preferences"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-notification-transport-routes-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-notification-transport-routes-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-notification-transport-routes-runtime-proof"],
-  "evidenceSignature": "4281d8af77fb32e1836e75100ead52cbfc570a335ac8fa0ff8e66095f5b1bdd1"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:41.766Z",
+  "endTime": "2026-06-23T08:01:42.289Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:42.289Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "40ebc7791896222c3297f2f60721680cbf4150d4415b5b1bdde0c0e1768b021f"
 }

@@ -4,25 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
     "package.json#proof:observability-signals",
-    "proof:observability-signals",
-    "route:get-api-admin-alerts",
-    "route:post-api-admin-alerts",
-    "route:post-api-admin-alerts-alertid-evaluate",
-    "route:get-api-admin-incidents",
-    "route:patch-api-admin-incidents-incidentid",
-    "route:get-api-admin-observability-signals"
+    "proof:observability-signals"
   ],
   "subjectId": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
   "capabilityId": "capability:observability-signals",
   "providerId": "not-applicable",
-  "routeIds": [
-    "route:get-api-admin-alerts",
-    "route:post-api-admin-alerts",
-    "route:post-api-admin-alerts-alertid-evaluate",
-    "route:get-api-admin-incidents",
-    "route:patch-api-admin-incidents-incidentid",
-    "route:get-api-admin-observability-signals"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -30,92 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:observability-signals",
-  "startedAt": "2026-06-23T07:42:08.612Z",
-  "endedAt": "2026-06-23T07:42:09.612Z",
+  "startedAt": "2026-06-23T08:01:45.926Z",
+  "endedAt": "2026-06-23T08:01:46.084Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-    "routeCount": 6,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYnNl"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-    "routeCount": 6,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYnNl"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-    "command": "npm run proof:observability-signals",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-api-admin-alerts",
-      "route:post-api-admin-alerts",
-      "route:post-api-admin-alerts-alertid-evaluate",
-      "route:get-api-admin-incidents",
-      "route:patch-api-admin-incidents-incidentid",
-      "route:get-api-admin-observability-signals"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-observability-signals-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-observability-signals-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-observability-signals-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.612Z",
+  "generatedAt": "2026-06-23T08:01:46.084Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-signals-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.612Z",
-  "endTime": "2026-06-23T07:42:09.612Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.612Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
-    "command": "npm run proof:observability-signals",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-api-admin-alerts",
-      "route:post-api-admin-alerts",
-      "route:post-api-admin-alerts-alertid-evaluate",
-      "route:get-api-admin-incidents",
-      "route:patch-api-admin-incidents-incidentid",
-      "route:get-api-admin-observability-signals"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-observability-signals-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-observability-signals-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-observability-signals-runtime-proof"],
-  "evidenceSignature": "622773beaaf70206e8250916d17bbd3c553f11ddee47e16aac64aabd1d25e991"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:45.926Z",
+  "endTime": "2026-06-23T08:01:46.084Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:46.084Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "7cde65e9dc8c6e7747139a973b3dd31292b39e77788c6c92af082048b1443721"
 }

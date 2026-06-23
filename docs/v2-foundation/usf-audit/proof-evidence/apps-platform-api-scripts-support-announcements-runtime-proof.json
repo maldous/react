@@ -10,13 +10,13 @@
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
-  "providerMode": "hermetic",
+  "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-  "startedAt": "2026-06-23T07:42:08.698Z",
-  "endedAt": "2026-06-23T07:42:09.698Z",
+  "startedAt": "2026-06-23T08:02:03.418Z",
+  "endedAt": "2026-06-23T08:02:03.487Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -24,67 +24,39 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-support-announcements-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-support-announcements-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-support-announcements-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.698Z",
+  "generatedAt": "2026-06-23T08:02:03.487Z",
   "sourceFileRefs": ["apps/platform-api/scripts/support-announcements-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T07:42:08.698Z",
-  "endTime": "2026-06-23T07:42:09.698Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.698Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-support-announcements-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-support-announcements-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-support-announcements-runtime-proof"],
-  "evidenceSignature": "16361d1c0843c5c5070ac413a8f2b4ddb869ee6d63bab28c822a3eab1196b612"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:02:03.418Z",
+  "endTime": "2026-06-23T08:02:03.487Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:02:03.487Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "2a63198ed2fb354e8aba4d8fc8f472cd89080484f1422739c37ae8b0473f9ba5"
 }

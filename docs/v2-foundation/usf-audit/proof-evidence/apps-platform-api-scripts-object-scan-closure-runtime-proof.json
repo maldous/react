@@ -14,13 +14,13 @@
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
-  "providerMode": "hermetic",
+  "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:object-scan-closure",
-  "startedAt": "2026-06-23T07:42:08.605Z",
-  "endedAt": "2026-06-23T07:42:09.605Z",
+  "startedAt": "2026-06-23T08:01:42.888Z",
+  "endedAt": "2026-06-23T08:01:42.956Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -28,67 +28,39 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYmpl"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYmpl"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
-    "command": "npm run proof:object-scan-closure",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-object-scan-closure-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-object-scan-closure-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-object-scan-closure-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.605Z",
+  "generatedAt": "2026-06-23T08:01:42.956Z",
   "sourceFileRefs": ["apps/platform-api/scripts/object-scan-closure-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T07:42:08.605Z",
-  "endTime": "2026-06-23T07:42:09.605Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.605Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
-    "command": "npm run proof:object-scan-closure",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-object-scan-closure-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-object-scan-closure-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-object-scan-closure-runtime-proof"],
-  "evidenceSignature": "f544d99744b42b22b4762434ab2e2c6f3898dd023e5ccd36e234ed3c6b7f0a51"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:42.888Z",
+  "endTime": "2026-06-23T08:01:42.956Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:42.956Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "5da8c9ff482d86b4f9cbd7080a90ed0a10befdd75371170a102e7eac769a6f23"
 }

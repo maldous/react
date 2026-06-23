@@ -1,14 +1,10 @@
 {
   "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
   "subjectType": "runtime-proof",
-  "subjectIds": [
-    "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "postgres-legal-hold",
-    "provider:postgres-legal-hold"
-  ],
+  "subjectIds": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"],
   "subjectId": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
   "capabilityId": "unknown",
-  "providerId": "postgres-legal-hold",
+  "providerId": "not-applicable",
   "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
@@ -17,78 +13,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-  "startedAt": "2026-06-23T07:42:08.636Z",
-  "endedAt": "2026-06-23T07:42:09.636Z",
+  "startedAt": "2026-06-23T08:01:50.707Z",
+  "endedAt": "2026-06-23T08:01:50.774Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": ["postgres-legal-hold"],
-    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": ["postgres-legal-hold"],
-    "commandHash": "bm9kZSAtLWxvYWRlciAiJChw"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": ["postgres-legal-hold"]
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-postgres-legal-hold-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-postgres-legal-hold-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-postgres-legal-hold-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.636Z",
+  "generatedAt": "2026-06-23T08:01:50.774Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.636Z",
-  "endTime": "2026-06-23T07:42:09.636Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.636Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": ["postgres-legal-hold"]
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-postgres-legal-hold-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-postgres-legal-hold-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-postgres-legal-hold-runtime-proof"],
-  "evidenceSignature": "ad8151f07aa14acda57d33d11b359b5a5a01a15c835524ecdb86d3b6c969065d"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:50.707Z",
+  "endTime": "2026-06-23T08:01:50.774Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:50.774Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "4dcc42c7d040dd8850d0248d1ed1541e7407c98a42ed39ae5a11f40237760535"
 }

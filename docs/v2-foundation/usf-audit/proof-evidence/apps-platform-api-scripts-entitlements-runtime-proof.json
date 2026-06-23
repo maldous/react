@@ -4,32 +4,23 @@
   "subjectIds": [
     "apps/platform-api/scripts/entitlements-runtime-proof.ts",
     "package.json#proof:entitlements",
-    "proof:entitlements",
-    "route:get-admin-entitlements",
-    "route:get-api-admin-tenants-tenantid-entitlements",
-    "route:patch-api-admin-tenants-tenantid-entitlements",
-    "route:get-api-org-entitlements"
+    "proof:entitlements"
   ],
   "subjectId": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
   "capabilityId": "capability:entitlements",
   "providerId": "not-applicable",
-  "routeIds": [
-    "route:get-admin-entitlements",
-    "route:get-api-admin-tenants-tenantid-entitlements",
-    "route:patch-api-admin-tenants-tenantid-entitlements",
-    "route:get-api-org-entitlements"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
-  "providerMode": "hermetic",
+  "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlements",
-  "startedAt": "2026-06-23T07:42:08.555Z",
-  "endedAt": "2026-06-23T07:42:09.555Z",
+  "startedAt": "2026-06-23T08:01:33.686Z",
+  "endedAt": "2026-06-23T08:01:33.814Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -37,71 +28,39 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
-    "routeCount": 4,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjplbnRp"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
-    "routeCount": 4,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjplbnRp"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
-    "command": "npm run proof:entitlements",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-entitlements",
-      "route:get-api-admin-tenants-tenantid-entitlements",
-      "route:patch-api-admin-tenants-tenantid-entitlements",
-      "route:get-api-org-entitlements"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-entitlements-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    { "name": "proof.apps-platform-api-scripts-entitlements-runtime-proof.passed", "value": 1 }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-entitlements-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.555Z",
+  "generatedAt": "2026-06-23T08:01:33.814Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlements-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T07:42:08.555Z",
-  "endTime": "2026-06-23T07:42:09.555Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.555Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
-    "command": "npm run proof:entitlements",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-entitlements",
-      "route:get-api-admin-tenants-tenantid-entitlements",
-      "route:patch-api-admin-tenants-tenantid-entitlements",
-      "route:get-api-org-entitlements"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-entitlements-runtime-proof"],
-  "metricEvidence": [
-    { "name": "proof.apps-platform-api-scripts-entitlements-runtime-proof.passed", "value": 1 }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-entitlements-runtime-proof"],
-  "evidenceSignature": "e5e2578c3a3b72ebd45d97f2e096f4c89a9e2b6334e8a6b8d5646b9aa29fbec2"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:33.686Z",
+  "endTime": "2026-06-23T08:01:33.814Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:33.814Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "20188645f712b88def107b46818d9da53249cc3ef5452a040a63f82fcc4ccb64"
 }

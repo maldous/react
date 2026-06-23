@@ -4,27 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
     "package.json#proof:tenant-domains-routing",
-    "proof:tenant-domains-routing",
-    "route:get-admin-domains",
-    "route:get-api-org-domains",
-    "route:post-api-org-domains",
-    "route:delete-api-org-domains-domain",
-    "route:post-api-org-domains-domain-probe-routing-local",
-    "route:post-api-org-domains-domain-verify",
-    "route:get-api-org-domains-readiness"
+    "proof:tenant-domains-routing"
   ],
   "subjectId": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "capabilityId": "capability:tenant-domains-routing",
   "providerId": "not-applicable",
-  "routeIds": [
-    "route:get-admin-domains",
-    "route:get-api-org-domains",
-    "route:post-api-org-domains",
-    "route:delete-api-org-domains-domain",
-    "route:post-api-org-domains-domain-probe-routing-local",
-    "route:post-api-org-domains-domain-verify",
-    "route:get-api-org-domains-readiness"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -32,94 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-domains-routing",
-  "startedAt": "2026-06-23T07:42:08.710Z",
-  "endedAt": "2026-06-23T07:42:09.710Z",
+  "startedAt": "2026-06-23T08:02:05.527Z",
+  "endedAt": "2026-06-23T08:02:05.619Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
-    "routeCount": 7,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
-    "routeCount": 7,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
-    "command": "npm run proof:tenant-domains-routing",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-domains",
-      "route:get-api-org-domains",
-      "route:post-api-org-domains",
-      "route:delete-api-org-domains-domain",
-      "route:post-api-org-domains-domain-probe-routing-local",
-      "route:post-api-org-domains-domain-verify",
-      "route:get-api-org-domains-readiness"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-tenant-domains-routing-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-tenant-domains-routing-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-tenant-domains-routing-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.710Z",
+  "generatedAt": "2026-06-23T08:02:05.619Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.710Z",
-  "endTime": "2026-06-23T07:42:09.710Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.710Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
-    "command": "npm run proof:tenant-domains-routing",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-domains",
-      "route:get-api-org-domains",
-      "route:post-api-org-domains",
-      "route:delete-api-org-domains-domain",
-      "route:post-api-org-domains-domain-probe-routing-local",
-      "route:post-api-org-domains-domain-verify",
-      "route:get-api-org-domains-readiness"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-tenant-domains-routing-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-tenant-domains-routing-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-tenant-domains-routing-runtime-proof"],
-  "evidenceSignature": "67dc2680667b4f8dad15873e10a93bbb1306af0d07ef4207e26fe0190146607a"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:02:05.527Z",
+  "endTime": "2026-06-23T08:02:05.619Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:02:05.619Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "a3f93d5ae5e6003df49058f0684a644ef26da781d828aa5265ab3963b1977882"
 }

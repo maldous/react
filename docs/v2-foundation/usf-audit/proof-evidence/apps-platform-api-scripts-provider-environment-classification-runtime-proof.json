@@ -17,86 +17,52 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:provider-environment-classification",
-  "startedAt": "2026-06-23T07:42:08.666Z",
-  "endedAt": "2026-06-23T07:42:09.666Z",
+  "startedAt": "2026-06-23T08:01:56.438Z",
+  "endedAt": "2026-06-23T08:01:56.476Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-    "command": "npm run proof:provider-environment-classification",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": [
-    "audit-apps-platform-api-scripts-provider-environment-classification-runtime-proof"
-  ],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-provider-environment-classification-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": [
-    "log-apps-platform-api-scripts-provider-environment-classification-runtime-proof"
-  ],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.666Z",
+  "generatedAt": "2026-06-23T08:01:56.476Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
   ],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.666Z",
-  "endTime": "2026-06-23T07:42:09.666Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.666Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
-    "command": "npm run proof:provider-environment-classification",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-provider-environment-classification-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-provider-environment-classification-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": [
-    "log-apps-platform-api-scripts-provider-environment-classification-runtime-proof"
-  ],
-  "evidenceSignature": "6686eccc2a90d01902d476b546d67ad43cfc62479234a4222fb476a92c44edc9"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:56.438Z",
+  "endTime": "2026-06-23T08:01:56.476Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:56.476Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "5a60003d6d6ab53c75ce2731fdbc3b316469dc389283f96ddafa1b4bd2102ace"
 }

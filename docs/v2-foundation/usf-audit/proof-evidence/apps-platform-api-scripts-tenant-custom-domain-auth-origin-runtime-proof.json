@@ -17,82 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-custom-domain-auth-origin",
-  "startedAt": "2026-06-23T07:42:08.704Z",
-  "endedAt": "2026-06-23T07:42:09.704Z",
-  "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "startedAt": "2026-06-23T08:02:04.321Z",
+  "endedAt": "2026-06-23T08:02:04.616Z",
+  "exitStatus": 1,
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "failed"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-    "command": "npm run proof:tenant-custom-domain-auth-origin",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": [
-    "audit-apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof"
-  ],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": [
-    "log-apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof"
-  ],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.704Z",
+  "generatedAt": "2026-06-23T08:02:04.616Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.704Z",
-  "endTime": "2026-06-23T07:42:09.704Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.704Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
-    "command": "npm run proof:tenant-custom-domain-auth-origin",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof"],
-  "evidenceSignature": "546076cd4a188da75cc6d6c15c4392e83e62fab78d13b1a72056237d309eb0fc"
+  "proofLevelObserved": "L0",
+  "startTime": "2026-06-23T08:02:04.321Z",
+  "endTime": "2026-06-23T08:02:04.616Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:02:04.616Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "7071e4347e84b1660b2f1746fee9f2b75deab7a147785366ba5c498b569c0667"
 }

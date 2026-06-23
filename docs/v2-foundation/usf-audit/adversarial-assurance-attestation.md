@@ -10,9 +10,9 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |    48 |
-| capability proof readiness gaps             |    48 |
-| full-service/provider-verified capabilities |    41 |
+| formal proof readiness gaps                 |  2828 |
+| capability proof readiness gaps             |   159 |
+| full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
 | routes discovered                           |   235 |
 | routes without tracing                      |     0 |
@@ -38,51 +38,253 @@ The adversarial runtime inventory status is reported separately from formal proo
 
 ## Formal Proof Readiness Gaps Identified
 
-- capability-real-provider-proof-missing: User identity + tenant membership - User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Tenant groups - Tenant groups is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Sub-organisations - Sub-organisations is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: RBAC (roles + permissions) - RBAC (roles + permissions) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: ABAC / Policy Decision Point - ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: ABAC / Policy Decision Point - ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Support-mode / break-glass access - Support-mode / break-glass access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Audit of privileged access - Audit of privileged access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Platform login + session - Platform login + session is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: IdP brokering + OIDC provider management - IdP brokering + OIDC provider management is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Claim mapping + group/role mapping - Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Claim mapping + group/role mapping - Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: MFA + session policy + lockout - MFA + session policy + lockout is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Configuration registry + history - Configuration registry + history is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Branding + theming - Branding + theming is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Custom domains, DNS ownership, TLS, canonical - Custom domains, DNS ownership, TLS, canonical is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Write-only secret settings - Write-only secret settings is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Write-only secret settings - Write-only secret settings is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Product catalog, plans, prices - Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Subscriptions, invoices, payment methods, dunning - Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Subscriptions, invoices, payment methods, dunning - Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Relational storage + migrations + RLS - Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Data governance: catalog, lineage, classification, PII, DSR/GDPR - Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Object storage + tenant prefixes + signed URLs - Object storage + tenant prefixes + signed URLs is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Workflow engine, scheduled jobs, approvals - Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Workflow engine, scheduled jobs, approvals - Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Notification delivery + preferences + channels - Notification delivery + preferences + channels is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Runtime secrets management - Runtime secrets management is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Logs (aggregation + tenant-scoped search) - Logs (aggregation + tenant-scoped search) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Metrics + traces - Metrics + traces is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Observability — built-in alerting + incidents - Observability — built-in alerting + incidents is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Internal service catalog + readiness - Internal service catalog + readiness is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Code quality + secret + dependency scanning - Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Code quality + secret + dependency scanning - Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Webhooks (developer-facing) - Webhooks (developer-facing) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: API docs, developer portal, SDKs, rate limits - API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: API docs, developer portal, SDKs, rate limits - API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Rate limiting (API) - Rate limiting (API) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Tenant lifecycle: provision, suspend, delete, export - Tenant lifecycle: provision, suspend, delete, export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-real-provider-proof-missing: Support tickets, customer health, announcements - Support tickets, customer health, announcements is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Service catalog + provider integration model - Service catalog + provider integration model is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: OIDC discovery / issuer / JWKS validation - OIDC discovery / issuer / JWKS validation is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: OIDC test connection + callback display - OIDC test connection + callback display is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Tenant domain activation (auth-client) - Tenant domain activation (auth-client) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Tenant canonical domain set/unset - Tenant canonical domain set/unset is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-external-sandbox-proof-missing: Tenant custom-domain auth callback - Tenant custom-domain auth callback is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence
-- capability-real-provider-proof-missing: Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) - Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
-- capability-external-sandbox-proof-missing: Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) - Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence
+- proof-command-failed: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/alerting-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/alerting-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/alerting-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/alerting-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/alerting-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/alerting-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/alerting-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/alerting-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/api-key-routes-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/api-keys-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/api-keys-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/api-keys-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/api-keys-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/api-keys-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/api-keys-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/api-keys-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/api-keys-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/auth-settings-runtime-proof.ts - proof command exited 2
+- proof-claim-overstated: apps/platform-api/scripts/auth-settings-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/auth-settings-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/backup-control-route-runtime-proof.ts - claimed L2 exceeds observed L1
+- proof-command-failed: apps/platform-api/scripts/backup-local-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/backup-local-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/backup-local-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/backup-local-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/backup-local-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/backup-local-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/backup-local-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/backup-local-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/backup-local-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/billing-catalog-runtime-proof.ts - claimed L2 exceeds observed L1
+- observability-proof-signal: apps/platform-api/scripts/billing-catalog-runtime-proof.ts - observability proof lacks captured trace/log/metric evidence
+- proof-claim-overstated: apps/platform-api/scripts/billing-control-route-runtime-proof.ts - claimed L2 exceeds observed L1
+- proof-claim-overstated: apps/platform-api/scripts/billing-provider-runtime-proof.ts - claimed L2 exceeds observed L1
+- proof-claim-overstated: apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts - claimed L2 exceeds observed L1
+- proof-claim-overstated: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - claimed L3 exceeds observed L0
+- missing-before-after-state: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts - L3+ proof requires an exercised failure path
+- proof-command-failed: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/clickthrough-services-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/compliance-report-route-runtime-proof.ts - claimed L2 exceeds observed L1
+- proof-claim-overstated: apps/platform-api/scripts/compliance-report-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/compliance-report-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts - claimed L2 exceeds observed L1
+- proof-command-failed: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - proof command exited 2
+- proof-claim-overstated: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/dashboards-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/dashboards-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/dashboards-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/dashboards-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/dashboards-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/dashboards-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/dashboards-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/dashboards-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/dashboards-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/data-governance-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/data-governance-runtime-proof.ts - claimed L3 exceeds observed L0
+- missing-before-after-state: apps/platform-api/scripts/data-governance-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/data-governance-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/data-governance-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/data-governance-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/data-governance-runtime-proof.ts - L3+ proof requires an exercised failure path
+- proof-claim-overstated: apps/platform-api/scripts/data-portability-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/data-portability-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/data-portability-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/data-portability-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/data-portability-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/data-portability-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/data-portability-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/data-portability-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/data-residency-runtime-proof.ts - claimed L2 exceeds observed L1
+- proof-command-failed: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - proof command exited 1
+- proof-claim-overstated: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-command-failed: apps/platform-api/scripts/email-sender-runtime-proof.ts - proof command exited 2
+- proof-claim-overstated: apps/platform-api/scripts/email-sender-runtime-proof.ts - claimed L4 exceeds observed L0
+- test-l4-provider-mode: apps/platform-api/scripts/email-sender-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/email-sender-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/email-sender-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/email-sender-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/email-sender-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/email-sender-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/email-sender-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts - claimed L3 exceeds observed L1
+- missing-before-after-state: apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts - L3+ proof requires an exercised failure path
+- proof-claim-overstated: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/entitlements-routes-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/entitlements-runtime-proof.ts - claimed L3 exceeds observed L1
+- missing-before-after-state: apps/platform-api/scripts/entitlements-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/entitlements-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/entitlements-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/entitlements-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/entitlements-runtime-proof.ts - L3+ proof requires an exercised failure path
+- proof-claim-overstated: apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts - claimed L3 exceeds observed L1
+- missing-before-after-state: apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts - L3+ proof requires an exercised failure path
+- proof-claim-overstated: apps/platform-api/scripts/environment-operations-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/environment-operations-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/environment-registry-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/environment-registry-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/event-bus-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/event-bus-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/event-bus-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/event-bus-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/event-bus-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/event-bus-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/event-bus-runtime-proof.ts - L3+ proof requires an exercised failure path
+- missing-real-local-substrate: apps/platform-api/scripts/event-bus-runtime-proof.ts - L4 proof requires real local substrate evidence
+- proof-claim-overstated: apps/platform-api/scripts/event-redrive-runtime-proof.ts - claimed L4 exceeds observed L1
+- test-l4-provider-mode: apps/platform-api/scripts/event-redrive-runtime-proof.ts - L4 TEST proof must use compose-local real local substrate evidence
+- missing-before-after-state: apps/platform-api/scripts/event-redrive-runtime-proof.ts - L3+ proof requires before and after state snapshots
+- missing-before-state: apps/platform-api/scripts/event-redrive-runtime-proof.ts - L3+ proof requires a before state snapshot
+- missing-after-state: apps/platform-api/scripts/event-redrive-runtime-proof.ts - L3+ proof requires an after state snapshot
+- missing-side-effect-evidence: apps/platform-api/scripts/event-redrive-runtime-proof.ts - L3+ proof requires asserted state diff and side-effect assertion
+- missing-failure-path: apps/platform-api/scripts/event-redrive-runtime-proof.ts - L3+ proof requires an exercised failure path

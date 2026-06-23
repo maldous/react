@@ -46,20 +46,25 @@ test("golden: base consistency clean; formal proof gaps truthfully reported; R9 
   );
 
   const formalProof = findings.filter((f) => f.ruleId === "R62-formal-proof-evidence-assurance");
-  assert.equal(formalProof.length, 48, "formal proof assurance must report every required gap");
   assert.ok(
-    formalProof.some(
-      (f) =>
-        f.subject === "User identity + tenant membership" &&
-        f.message.includes("missing provider-L4")
-    ),
-    "formal proof assurance must fail missing real-provider evidence"
+    formalProof.length > 100,
+    "formal proof assurance must report runtime evidence gaps instead of accepting generated proof constants"
   );
   assert.ok(
     formalProof.some(
-      (f) => f.subject === "Platform login + session" && f.message.includes("missing sandbox-L5")
+      (f) =>
+        f.subject === "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts" &&
+        f.message.includes("proof command exited")
     ),
-    "formal proof assurance must fail missing external sandbox evidence"
+    "formal proof assurance must fail real provider proof commands that cannot reach their substrate"
+  );
+  assert.ok(
+    formalProof.some(
+      (f) =>
+        f.subject === "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts" &&
+        f.message.includes("claimed L4 exceeds observed L1")
+    ),
+    "formal proof assurance must fail proof level overclaims from proof-process evidence"
   );
 
   const adversarial = findings.filter((f) => adversarialRule(f.ruleId));

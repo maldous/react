@@ -4,19 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
     "package.json#proof:rate-limits-redis",
-    "proof:rate-limits-redis",
-    "route:get-api-admin-tenants-tenantid-rate-limits",
-    "route:patch-api-admin-tenants-tenantid-rate-limits",
-    "route:get-api-org-rate-limits"
+    "proof:rate-limits-redis"
   ],
   "subjectId": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
   "capabilityId": "capability:rate-limits-redis",
   "providerId": "rate-limits-redis",
-  "routeIds": [
-    "route:get-api-admin-tenants-tenantid-rate-limits",
-    "route:patch-api-admin-tenants-tenantid-rate-limits",
-    "route:get-api-org-rate-limits"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -24,80 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:rate-limits-redis",
-  "startedAt": "2026-06-23T07:42:08.674Z",
-  "endedAt": "2026-06-23T07:42:09.674Z",
+  "startedAt": "2026-06-23T08:01:57.837Z",
+  "endedAt": "2026-06-23T08:01:58.027Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-    "routeCount": 3,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpyYXRl"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-    "routeCount": 3,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpyYXRl"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-    "command": "npm run proof:rate-limits-redis",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-api-admin-tenants-tenantid-rate-limits",
-      "route:patch-api-admin-tenants-tenantid-rate-limits",
-      "route:get-api-org-rate-limits"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-rate-limits-redis-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    { "name": "proof.apps-platform-api-scripts-rate-limits-redis-runtime-proof.passed", "value": 1 }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-rate-limits-redis-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.674Z",
+  "generatedAt": "2026-06-23T08:01:58.027Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.674Z",
-  "endTime": "2026-06-23T07:42:09.674Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.674Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
-    "command": "npm run proof:rate-limits-redis",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-api-admin-tenants-tenantid-rate-limits",
-      "route:patch-api-admin-tenants-tenantid-rate-limits",
-      "route:get-api-org-rate-limits"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-rate-limits-redis-runtime-proof"],
-  "metricEvidence": [
-    { "name": "proof.apps-platform-api-scripts-rate-limits-redis-runtime-proof.passed", "value": 1 }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-rate-limits-redis-runtime-proof"],
-  "evidenceSignature": "7c63dea8d8edc203774438d2cd95cf8c7303806799aeda0f37269961c2015a7e"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:57.837Z",
+  "endTime": "2026-06-23T08:01:58.027Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:58.027Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "eb5ccd8d173f3095fefbb73f1e2f61361af77cc3bb00d3eea99f14bb66a09cf7"
 }

@@ -4,27 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
     "package.json#proof:pitr-restore-drill",
-    "proof:pitr-restore-drill",
-    "route:delete-api-admin-data-legal-holds",
-    "route:get-api-admin-data-legal-holds",
-    "route:post-api-admin-data-legal-holds",
-    "route:post-api-admin-data-residency",
-    "route:delete-api-admin-data-retention-policies",
-    "route:get-api-admin-data-retention-policies",
-    "route:post-api-admin-data-retention-policies"
+    "proof:pitr-restore-drill"
   ],
   "subjectId": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "capabilityId": "capability:pitr-restore-drill",
   "providerId": "pitr-restore-drill",
-  "routeIds": [
-    "route:delete-api-admin-data-legal-holds",
-    "route:get-api-admin-data-legal-holds",
-    "route:post-api-admin-data-legal-holds",
-    "route:post-api-admin-data-residency",
-    "route:delete-api-admin-data-retention-policies",
-    "route:get-api-admin-data-retention-policies",
-    "route:post-api-admin-data-retention-policies"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -32,94 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:pitr-restore-drill",
-  "startedAt": "2026-06-23T07:42:08.617Z",
-  "endedAt": "2026-06-23T07:42:09.617Z",
-  "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "startedAt": "2026-06-23T08:01:46.803Z",
+  "endedAt": "2026-06-23T08:01:47.185Z",
+  "exitStatus": 1,
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-    "routeCount": 7,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwaXRy"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "failed"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-    "routeCount": 7,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwaXRy"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-    "command": "npm run proof:pitr-restore-drill",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:delete-api-admin-data-legal-holds",
-      "route:get-api-admin-data-legal-holds",
-      "route:post-api-admin-data-legal-holds",
-      "route:post-api-admin-data-residency",
-      "route:delete-api-admin-data-retention-policies",
-      "route:get-api-admin-data-retention-policies",
-      "route:post-api-admin-data-retention-policies"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-pitr-restore-drill-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.617Z",
+  "generatedAt": "2026-06-23T08:01:47.185Z",
   "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.617Z",
-  "endTime": "2026-06-23T07:42:09.617Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.617Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
-    "command": "npm run proof:pitr-restore-drill",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:delete-api-admin-data-legal-holds",
-      "route:get-api-admin-data-legal-holds",
-      "route:post-api-admin-data-legal-holds",
-      "route:post-api-admin-data-residency",
-      "route:delete-api-admin-data-retention-policies",
-      "route:get-api-admin-data-retention-policies",
-      "route:post-api-admin-data-retention-policies"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-pitr-restore-drill-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
-  "evidenceSignature": "a47918ab58d1cabe05e629c2fd0b96b985a49489940455876abcbdec3614db2d"
+  "proofLevelObserved": "L0",
+  "startTime": "2026-06-23T08:01:46.803Z",
+  "endTime": "2026-06-23T08:01:47.185Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:47.185Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "52a66405e6f25b6b4059ae8b89576d5aff25c36e6f29b0a5720479f0c83d98a0"
 }

@@ -58,6 +58,10 @@ function validRecord(overrides = {}) {
       skipReason: null,
       generatedAt: "2026-01-01T00:00:01.000Z",
       sourceFileRefs: ["apps/platform-api/scripts/fixture-runtime-proof.ts"],
+      evidenceEmitter: "proof-process",
+      collectorRunId: "test-run",
+      assertionsObserved: true,
+      expectedOutputsAsserted: true,
       ...overrides,
     })
   );
@@ -94,6 +98,23 @@ test("observed level is calculated from emitted evidence fields only", () => {
     3
   );
   assert.equal(observedLevelFromEvidence(validRecord({ beforeState: {} })), 2);
+  assert.equal(
+    observedLevelFromEvidence(
+      validRecord({
+        beforeState: {},
+        afterState: {},
+        assertedStateDiff: {},
+        stateDiff: {},
+        failurePathExercised: false,
+        failureMode: "not-exercised",
+        sideEffectsAsserted: false,
+        assertionsObserved: false,
+        expectedOutputsAsserted: false,
+      })
+    ),
+    1,
+    "exit-zero execution receipt alone is only L1 shape evidence"
+  );
 });
 
 test("negative controls are caught by emitted-evidence validation", () => {
@@ -156,6 +177,12 @@ test("negative controls are caught by emitted-evidence validation", () => {
       "skipped-proof-marked-pass"
     )
   );
+  assert.ok(
+    gapKinds(validRecord({ evidenceEmitter: "collector" })).includes(
+      "collector-fabricated-evidence"
+    )
+  );
+  assert.ok(gapKinds(validRecord({ collectorRunId: null })).includes("missing-collector-run-id"));
 });
 
 test("required runtime proof with deleted evidence fails", () => {

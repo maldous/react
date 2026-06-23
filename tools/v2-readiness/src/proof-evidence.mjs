@@ -107,6 +107,10 @@ export const PROOF_EVIDENCE_REQUIRED_FIELDS = [
   "skipReason",
   "generatedAt",
   "sourceFileRefs",
+  "evidenceEmitter",
+  "collectorRunId",
+  "assertionsObserved",
+  "expectedOutputsAsserted",
   "evidenceSignature",
 ];
 
@@ -310,7 +314,10 @@ export function readEvidenceRecords(repoRoot) {
   if (!fs.existsSync(dir)) return [];
   return walkFiles(dir)
     .filter(
-      (file) => file.endsWith(".json") && !file.includes(`${path.sep}negative-controls${path.sep}`)
+      (file) =>
+        file.endsWith(".json") &&
+        !path.basename(file).startsWith("_") &&
+        !file.includes(`${path.sep}negative-controls${path.sep}`)
     )
     .map((file) => {
       const parsed = JSON.parse(fs.readFileSync(file, "utf8"));
@@ -358,6 +365,10 @@ export function normalizeEvidenceRecord(record) {
     logEvidence: record.logEvidence || logCorrelationIds,
     externalSandboxRequestIds: record.externalSandboxRequestIds || [],
     sourceFileRefs: record.sourceFileRefs || [],
+    evidenceEmitter: record.evidenceEmitter || "unknown",
+    collectorRunId: record.collectorRunId || null,
+    assertionsObserved: record.assertionsObserved === true,
+    expectedOutputsAsserted: record.expectedOutputsAsserted === true,
     proofLevelClaimed: proofLevelId(record.proofLevelClaimed),
     proofLevelObserved: record.proofLevelObserved || observed,
     startedAt,
@@ -459,6 +470,20 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       kind: "evidence-signature-invalid",
       subject: record.subjectId,
       message: "proof evidence signature does not match the structured payload",
+    });
+  }
+  if (record.evidenceEmitter !== "proof-process" && !allowNegativeControls) {
+    gaps.push({
+      kind: "collector-fabricated-evidence",
+      subject: record.subjectId,
+      message: "proof evidence must be emitted by the executed proof process",
+    });
+  }
+  if (!record.collectorRunId && !allowNegativeControls) {
+    gaps.push({
+      kind: "missing-collector-run-id",
+      subject: record.subjectId,
+      message: "proof evidence must carry the collector run id that executed the command",
     });
   }
   if (
@@ -636,13 +661,19 @@ export function observedLevelFromEvidence(record) {
   const hasShape = Boolean(
     record.proofId && record.commandExecuted && record.startedAt && record.endedAt
   );
-  const hasBehaviour = hasShape && record.exitStatus === 0;
   const hasState =
     isMeaningfulObject(record.beforeState) &&
     isMeaningfulObject(record.afterState) &&
     isMeaningfulObject(record.assertedStateDiff) &&
     record.sideEffectsAsserted === true &&
     record.failurePathExercised === true;
+  const hasBehaviour =
+    hasShape &&
+    record.exitStatus === 0 &&
+    (hasState ||
+      (record.assertionsObserved === true &&
+        record.expectedOutputsAsserted === true &&
+        record.failurePathExercised === true));
   const hasRealLocal =
     hasState &&
     env === "test" &&
@@ -968,9 +999,11 @@ export function buildCapabilityProofReadinessReport(ctx, records) {
 function buildStrengthMatrix(records) {
   const byObserved = Object.fromEntries(PROOF_LEVELS.map((level) => [level.id, 0]));
   const byClass = {};
+  let overclaimCount = 0;
   const rows = records.map((record) => {
     const observed = proofLevelId(observedLevelFromEvidence(record));
     const evidenceClass = providerEvidenceClass(record);
+    if (proofLevelNumber(record.proofLevelClaimed) > proofLevelNumber(observed)) overclaimCount++;
     byObserved[observed] += 1;
     byClass[evidenceClass] = (byClass[evidenceClass] || 0) + 1;
     return {
@@ -987,8 +1020,9 @@ function buildStrengthMatrix(records) {
     artefact: "proof-strength-matrix",
     schemaVersion: 2,
     generatedAt: new Date().toISOString(),
-    status: "PASS",
+    status: overclaimCount === 0 ? "PASS" : "FAIL",
     levels: PROOF_LEVELS,
+    overclaimCount,
     byObservedLevel: byObserved,
     byProviderEvidenceClass: byClass,
     records: rows,
@@ -1051,9 +1085,11 @@ function buildInMemoryProviderParityReport(ctx, records) {
       sameEventAuditObservabilityContract: semanticProofs.some((record) =>
         observabilityComplete(record)
       ),
-      semanticDevProofMode: semanticProofs.every((record) => record.providerMode === "semantic-dev")
-        ? "in-memory-provider-proof"
-        : "missing",
+      semanticDevProofMode:
+        semanticProofs.length > 0 &&
+        semanticProofs.every((record) => record.providerMode === "semantic-dev")
+          ? "in-memory-provider-proof"
+          : "missing",
       realProviderParityProofMode:
         parityProofs.length > 0 ? "port-contract-parity-proof" : "missing",
     };
@@ -1469,6 +1505,10 @@ function validFixtureRecord(ctx) {
     skipReason: null,
     generatedAt: "2026-01-01T00:00:01.000Z",
     sourceFileRefs: ["negative-control.js"],
+    evidenceEmitter: "proof-process",
+    collectorRunId: "negative-control-run",
+    assertionsObserved: true,
+    expectedOutputsAsserted: true,
   };
 }
 
@@ -1510,6 +1550,10 @@ function withEvidenceAliases(record) {
     metricEvidence: record.metricEvidence || metricSamples,
     logCorrelationIds,
     logEvidence: record.logEvidence || logCorrelationIds,
+    evidenceEmitter: record.evidenceEmitter || "unknown",
+    collectorRunId: record.collectorRunId || null,
+    assertionsObserved: record.assertionsObserved === true,
+    expectedOutputsAsserted: record.expectedOutputsAsserted === true,
   };
 }
 

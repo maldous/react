@@ -4,21 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
     "package.json#proof:metrics-prometheus",
-    "proof:metrics-prometheus",
-    "route:get-admin-monitoring",
-    "route:get-admin-observability",
-    "route:get-api-admin-observability",
-    "route:get-api-admin-observability-readiness"
+    "proof:metrics-prometheus"
   ],
   "subjectId": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "capabilityId": "capability:metrics-prometheus",
   "providerId": "not-applicable",
-  "routeIds": [
-    "route:get-admin-monitoring",
-    "route:get-admin-observability",
-    "route:get-api-admin-observability",
-    "route:get-api-admin-observability-readiness"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -26,88 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:metrics-prometheus",
-  "startedAt": "2026-06-23T07:42:08.593Z",
-  "endedAt": "2026-06-23T07:42:09.593Z",
-  "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "startedAt": "2026-06-23T08:01:40.190Z",
+  "endedAt": "2026-06-23T08:01:40.254Z",
+  "exitStatus": 1,
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-    "routeCount": 4,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjptZXRy"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "failed"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-    "routeCount": 4,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjptZXRy"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-    "command": "npm run proof:metrics-prometheus",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-monitoring",
-      "route:get-admin-observability",
-      "route:get-api-admin-observability",
-      "route:get-api-admin-observability-readiness"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-metrics-prometheus-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-metrics-prometheus-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-metrics-prometheus-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.593Z",
+  "generatedAt": "2026-06-23T08:01:40.254Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.593Z",
-  "endTime": "2026-06-23T07:42:09.593Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.593Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
-    "command": "npm run proof:metrics-prometheus",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-monitoring",
-      "route:get-admin-observability",
-      "route:get-api-admin-observability",
-      "route:get-api-admin-observability-readiness"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-metrics-prometheus-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-metrics-prometheus-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-metrics-prometheus-runtime-proof"],
-  "evidenceSignature": "a65e987b93bf7b58cbf2cc20ae7a12e2c1d33509cb6ba6b8e1734fbaeb2e7f1a"
+  "proofLevelObserved": "L0",
+  "startTime": "2026-06-23T08:01:40.190Z",
+  "endTime": "2026-06-23T08:01:40.254Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:40.254Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "eabc8cd490c1909d6e9d90c50b7f5df9f04ca3b0bd65b2e84820def49a70a891"
 }

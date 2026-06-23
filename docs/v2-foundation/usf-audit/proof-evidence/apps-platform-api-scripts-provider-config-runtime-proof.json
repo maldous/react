@@ -4,21 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/provider-config-runtime-proof.ts",
     "package.json#proof:provider-config",
-    "proof:provider-config",
-    "route:get-api-admin-provider-configs",
-    "route:post-api-admin-provider-configs",
-    "route:post-api-admin-provider-configs-id-delete",
-    "route:post-api-admin-provider-configs-id-lifecycle"
+    "proof:provider-config"
   ],
   "subjectId": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
   "capabilityId": "capability:provider-config",
   "providerId": "provider-config",
-  "routeIds": [
-    "route:get-api-admin-provider-configs",
-    "route:post-api-admin-provider-configs",
-    "route:post-api-admin-provider-configs-id-delete",
-    "route:post-api-admin-provider-configs-id-lifecycle"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -26,82 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:provider-config",
-  "startedAt": "2026-06-23T07:42:08.664Z",
-  "endedAt": "2026-06-23T07:42:09.664Z",
+  "startedAt": "2026-06-23T08:01:56.217Z",
+  "endedAt": "2026-06-23T08:01:56.285Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
-    "routeCount": 4,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
-    "routeCount": 4,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm92"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
-    "command": "npm run proof:provider-config",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-api-admin-provider-configs",
-      "route:post-api-admin-provider-configs",
-      "route:post-api-admin-provider-configs-id-delete",
-      "route:post-api-admin-provider-configs-id-lifecycle"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-provider-config-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    { "name": "proof.apps-platform-api-scripts-provider-config-runtime-proof.passed", "value": 1 }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-provider-config-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.664Z",
+  "generatedAt": "2026-06-23T08:01:56.285Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-config-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.664Z",
-  "endTime": "2026-06-23T07:42:09.664Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.664Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
-    "command": "npm run proof:provider-config",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-api-admin-provider-configs",
-      "route:post-api-admin-provider-configs",
-      "route:post-api-admin-provider-configs-id-delete",
-      "route:post-api-admin-provider-configs-id-lifecycle"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-provider-config-runtime-proof"],
-  "metricEvidence": [
-    { "name": "proof.apps-platform-api-scripts-provider-config-runtime-proof.passed", "value": 1 }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-provider-config-runtime-proof"],
-  "evidenceSignature": "0d9747b115dbd191c8d038bb3fecbec2f762b228555eb5928c71ab65ca3a218d"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:56.217Z",
+  "endTime": "2026-06-23T08:01:56.285Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:56.285Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "bc46bb74b1cc9a24ad38f2e61ac8f2b7382cb42b3bd3277f8aca07bc44909ad3"
 }

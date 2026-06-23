@@ -4,13 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
     "package.json#proof:composed-provider-readiness",
-    "proof:composed-provider-readiness",
-    "route:get-api-admin-providers-readiness"
+    "proof:composed-provider-readiness"
   ],
   "subjectId": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
   "capabilityId": "capability:composed-provider-readiness",
   "providerId": "composed-provider-readiness",
-  "routeIds": ["route:get-api-admin-providers-readiness"],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -18,78 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:composed-provider-readiness",
-  "startedAt": "2026-06-23T07:42:08.532Z",
-  "endedAt": "2026-06-23T07:42:09.532Z",
+  "startedAt": "2026-06-23T08:01:29.169Z",
+  "endedAt": "2026-06-23T08:01:29.247Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpjb21w"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpjb21w"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-    "command": "npm run proof:composed-provider-readiness",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-providers-readiness"],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-composed-provider-readiness-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-composed-provider-readiness-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-composed-provider-readiness-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.532Z",
+  "generatedAt": "2026-06-23T08:01:29.247Z",
   "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.532Z",
-  "endTime": "2026-06-23T07:42:09.532Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.532Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
-    "command": "npm run proof:composed-provider-readiness",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-providers-readiness"],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-composed-provider-readiness-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-composed-provider-readiness-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-composed-provider-readiness-runtime-proof"],
-  "evidenceSignature": "1d2c110a1d2140b84498b00d2c2fb770ed2fb98c9b9bac8a3b2442c2e3d01667"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:29.169Z",
+  "endTime": "2026-06-23T08:01:29.247Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:29.247Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "eb0cd4dd7166111118d307b85a2b9a91fa3a27f7348b3e4b039d6e3e934f65a7"
 }

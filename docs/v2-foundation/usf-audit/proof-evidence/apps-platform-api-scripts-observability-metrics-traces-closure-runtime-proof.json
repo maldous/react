@@ -17,88 +17,52 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:observability-metrics-traces-closure",
-  "startedAt": "2026-06-23T07:42:08.607Z",
-  "endedAt": "2026-06-23T07:42:09.607Z",
+  "startedAt": "2026-06-23T08:01:43.859Z",
+  "endedAt": "2026-06-23T08:01:44.390Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYnNl"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-    "routeCount": 0,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYnNl"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-    "command": "npm run proof:observability-metrics-traces-closure",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": [
-    "audit-apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof"
-  ],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": [
-    "log-apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof"
-  ],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.607Z",
+  "generatedAt": "2026-06-23T08:01:44.390Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts"
   ],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.607Z",
-  "endTime": "2026-06-23T07:42:09.607Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.607Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
-    "command": "npm run proof:observability-metrics-traces-closure",
-    "expectedExitStatus": 0,
-    "routeIds": [],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": [
-    "audit-apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof"
-  ],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": [
-    "log-apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof"
-  ],
-  "evidenceSignature": "26e2dc7107f38cb15a61df5654d24409e9743618f66a27de6638f2a5765b1f2a"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:43.859Z",
+  "endTime": "2026-06-23T08:01:44.390Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:44.390Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "eff0d430db40ad00e97357edca22945af8e96462fe69a08c2fd2f0e3592a7ee9"
 }

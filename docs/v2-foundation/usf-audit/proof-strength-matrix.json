@@ -1,8 +1,8 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T07:42:05.323Z",
-  "status": "PASS",
+  "generatedAt": "2026-06-23T08:01:18.995Z",
+  "status": "FAIL",
   "levels": [
     {
       "level": 0,
@@ -40,19 +40,18 @@
       "name": "end-to-end journey"
     }
   ],
+  "overclaimCount": 161,
   "byObservedLevel": {
-    "L0": 0,
-    "L1": 0,
-    "L2": 126,
-    "L3": 156,
-    "L4": 114,
+    "L0": 45,
+    "L1": 116,
+    "L2": 0,
+    "L3": 0,
+    "L4": 0,
     "L5": 0,
     "L6": 0
   },
   "byProviderEvidenceClass": {
-    "local-real-provider-proof": 114,
-    "contract-or-unit-proof": 277,
-    "in-memory-provider-proof": 5
+    "contract-or-unit-proof": 161
   },
   "records": [
     {
@@ -60,8 +59,8 @@
       "subjectId": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alert-incident-closure-runtime-proof.json"
     },
     {
@@ -69,8 +68,8 @@
       "subjectId": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alert-notification-bridge-runtime-proof.json"
     },
     {
@@ -78,8 +77,8 @@
       "subjectId": "apps/platform-api/scripts/alerting-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alerting-runtime-proof.json"
     },
     {
@@ -87,8 +86,8 @@
       "subjectId": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-api-key-routes-runtime-proof.json"
     },
     {
@@ -96,8 +95,8 @@
       "subjectId": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-api-keys-runtime-proof.json"
     },
     {
@@ -105,8 +104,8 @@
       "subjectId": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-auth-settings-runtime-proof.json"
     },
     {
@@ -114,7 +113,7 @@
       "subjectId": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-control-route-runtime-proof.json"
     },
@@ -123,8 +122,8 @@
       "subjectId": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-local-runtime-proof.json"
     },
     {
@@ -132,8 +131,8 @@
       "subjectId": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-restore-scripts-runtime-proof.json"
     },
     {
@@ -141,7 +140,7 @@
       "subjectId": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-catalog-runtime-proof.json"
     },
@@ -150,7 +149,7 @@
       "subjectId": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-control-route-runtime-proof.json"
     },
@@ -159,7 +158,7 @@
       "subjectId": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-provider-runtime-proof.json"
     },
@@ -168,7 +167,7 @@
       "subjectId": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-readiness-route-runtime-proof.json"
     },
@@ -177,8 +176,8 @@
       "subjectId": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-browser-telemetry-provider-runtime-proof.json"
     },
     {
@@ -186,7 +185,7 @@
       "subjectId": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof.json"
     },
@@ -195,8 +194,8 @@
       "subjectId": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-clamav-antivirus-runtime-proof.json"
     },
     {
@@ -204,8 +203,8 @@
       "subjectId": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-clickthrough-services-runtime-proof.json"
     },
     {
@@ -213,7 +212,7 @@
       "subjectId": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compliance-report-route-runtime-proof.json"
     },
@@ -222,8 +221,8 @@
       "subjectId": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compliance-report-runtime-proof.json"
     },
     {
@@ -231,8 +230,8 @@
       "subjectId": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compose-environment-operation-runtime-proof.json"
     },
     {
@@ -240,8 +239,8 @@
       "subjectId": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-composed-provider-readiness-runtime-proof.json"
     },
     {
@@ -249,7 +248,7 @@
       "subjectId": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-composed-provider-runtime-closure-proof.json"
     },
@@ -258,8 +257,8 @@
       "subjectId": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-credential-lifecycle-runtime-proof.json"
     },
     {
@@ -267,8 +266,8 @@
       "subjectId": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-dashboards-runtime-proof.json"
     },
     {
@@ -276,7 +275,7 @@
       "subjectId": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-governance-runtime-proof.json"
     },
@@ -285,8 +284,8 @@
       "subjectId": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-portability-runtime-proof.json"
     },
     {
@@ -294,7 +293,7 @@
       "subjectId": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-residency-runtime-proof.json"
     },
@@ -303,8 +302,8 @@
       "subjectId": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-domain-identity-matrix-runtime-proof.json"
     },
     {
@@ -312,8 +311,8 @@
       "subjectId": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-email-sender-runtime-proof.json"
     },
     {
@@ -321,7 +320,7 @@
       "subjectId": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlement-policy-chain-runtime-proof.json"
     },
@@ -330,8 +329,8 @@
       "subjectId": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-postgres-runtime-proof.json"
     },
     {
@@ -339,8 +338,8 @@
       "subjectId": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-routes-runtime-proof.json"
     },
     {
@@ -348,7 +347,7 @@
       "subjectId": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-runtime-proof.json"
     },
@@ -357,7 +356,7 @@
       "subjectId": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof.json"
     },
@@ -366,8 +365,8 @@
       "subjectId": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-operations-runtime-proof.json"
     },
     {
@@ -375,8 +374,8 @@
       "subjectId": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-registry-runtime-proof.json"
     },
     {
@@ -384,8 +383,8 @@
       "subjectId": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-bus-runtime-proof.json"
     },
     {
@@ -393,8 +392,8 @@
       "subjectId": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-redrive-runtime-proof.json"
     },
     {
@@ -402,8 +401,8 @@
       "subjectId": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-worker-runtime-proof.json"
     },
     {
@@ -411,8 +410,8 @@
       "subjectId": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-full-observability-contract-runtime-proof.json"
     },
     {
@@ -420,8 +419,8 @@
       "subjectId": "apps/platform-api/scripts/history-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-history-runtime-proof.json"
     },
     {
@@ -429,7 +428,7 @@
       "subjectId": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-engine-provider-runtime-proof.json"
     },
@@ -438,8 +437,8 @@
       "subjectId": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof.json"
     },
     {
@@ -447,7 +446,7 @@
       "subjectId": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-webhook-dispatcher-runtime-proof.json"
     },
@@ -456,8 +455,8 @@
       "subjectId": "apps/platform-api/scripts/idp-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-idp-runtime-proof.json"
     },
     {
@@ -465,8 +464,8 @@
       "subjectId": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-automation-runner-runtime-proof.json"
     },
     {
@@ -474,8 +473,8 @@
       "subjectId": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-provider-runtime-proof.json"
     },
     {
@@ -483,8 +482,8 @@
       "subjectId": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-provider-runtime-proof.json"
     },
     {
@@ -492,8 +491,8 @@
       "subjectId": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-vs-real-parity-proof.json"
     },
     {
@@ -501,8 +500,8 @@
       "subjectId": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "in-memory-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof.json"
     },
     {
@@ -510,8 +509,8 @@
       "subjectId": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-incident-foundation-runtime-proof.json"
     },
     {
@@ -519,7 +518,7 @@
       "subjectId": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof.json"
     },
@@ -528,7 +527,7 @@
       "subjectId": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-lago-billing-provider-runtime-proof.json"
     },
@@ -537,8 +536,8 @@
       "subjectId": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-legal-hold-runtime-proof.json"
     },
     {
@@ -546,8 +545,8 @@
       "subjectId": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metering-quota-routes-runtime-proof.json"
     },
     {
@@ -555,8 +554,8 @@
       "subjectId": "apps/platform-api/scripts/metering-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metering-runtime-proof.json"
     },
     {
@@ -564,8 +563,8 @@
       "subjectId": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metrics-prometheus-runtime-proof.json"
     },
     {
@@ -573,8 +572,8 @@
       "subjectId": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-dispatch-runtime-proof.json"
     },
     {
@@ -582,8 +581,8 @@
       "subjectId": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-email-transport-runtime-proof.json"
     },
     {
@@ -591,8 +590,8 @@
       "subjectId": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-preferences-runtime-proof.json"
     },
     {
@@ -600,8 +599,8 @@
       "subjectId": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-transport-routes-runtime-proof.json"
     },
     {
@@ -609,7 +608,7 @@
       "subjectId": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-transports-runtime-proof.json"
     },
@@ -618,8 +617,8 @@
       "subjectId": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-webhook-transport-runtime-proof.json"
     },
     {
@@ -627,7 +626,7 @@
       "subjectId": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-object-scan-closure-runtime-proof.json"
     },
@@ -636,7 +635,7 @@
       "subjectId": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-control-route-runtime-proof.json"
     },
@@ -645,8 +644,8 @@
       "subjectId": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof.json"
     },
     {
@@ -654,8 +653,8 @@
       "subjectId": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-provider-closure-runtime-proof.json"
     },
     {
@@ -663,7 +662,7 @@
       "subjectId": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-readiness-route-runtime-proof.json"
     },
@@ -672,8 +671,8 @@
       "subjectId": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-signals-runtime-proof.json"
     },
     {
@@ -681,8 +680,8 @@
       "subjectId": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-oidc-enterprise-runtime-proof.json"
     },
     {
@@ -690,7 +689,7 @@
       "subjectId": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-openapi-drift-validator-runtime-proof.json"
     },
@@ -699,8 +698,8 @@
       "subjectId": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-openbao-secret-store-runtime-proof.json"
     },
     {
@@ -708,8 +707,8 @@
       "subjectId": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-pitr-restore-drill-runtime-proof.json"
     },
     {
@@ -717,8 +716,8 @@
       "subjectId": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-platform-services-runtime-proof.json"
     },
     {
@@ -726,7 +725,7 @@
       "subjectId": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-playwright-adapter-runtime-proof.json"
     },
@@ -735,7 +734,7 @@
       "subjectId": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-playwright-axe-adapter-runtime-proof.json"
     },
@@ -744,8 +743,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-api-key-repository-runtime-proof.json"
     },
     {
@@ -753,8 +752,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-billing-catalog-runtime-proof.json"
     },
     {
@@ -762,8 +761,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-data-governance-runtime-proof.json"
     },
     {
@@ -771,8 +770,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof.json"
     },
     {
@@ -780,8 +779,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-email-sender-store-runtime-proof.json"
     },
     {
@@ -789,8 +788,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof.json"
     },
     {
@@ -798,8 +797,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof.json"
     },
     {
@@ -807,8 +806,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-event-bus-runtime-proof.json"
     },
     {
@@ -816,8 +815,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-history-repository-runtime-proof.json"
     },
     {
@@ -825,8 +824,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-identity-repository-runtime-proof.json"
     },
     {
@@ -834,8 +833,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-legal-hold-runtime-proof.json"
     },
     {
@@ -843,8 +842,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-metering-repository-runtime-proof.json"
     },
     {
@@ -852,8 +851,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof.json"
     },
     {
@@ -861,8 +860,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-notification-repository-runtime-proof.json"
     },
     {
@@ -870,8 +869,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-observability-repository-runtime-proof.json"
     },
     {
@@ -879,8 +878,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof.json"
     },
     {
@@ -888,8 +887,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-profile-repository-runtime-proof.json"
     },
     {
@@ -897,8 +896,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof.json"
     },
     {
@@ -906,8 +905,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-quota-repository-runtime-proof.json"
     },
     {
@@ -915,8 +914,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof.json"
     },
     {
@@ -924,8 +923,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-retention-runtime-proof.json"
     },
     {
@@ -933,8 +932,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof.json"
     },
     {
@@ -942,8 +941,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-search-repository-runtime-proof.json"
     },
     {
@@ -951,8 +950,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-secret-store-runtime-proof.json"
     },
     {
@@ -960,8 +959,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof.json"
     },
     {
@@ -969,8 +968,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof.json"
     },
     {
@@ -978,8 +977,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof.json"
     },
     {
@@ -987,8 +986,8 @@
       "subjectId": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-webhook-store-runtime-proof.json"
     },
     {
@@ -996,8 +995,8 @@
       "subjectId": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-profile-self-service-runtime-proof.json"
     },
     {
@@ -1005,8 +1004,8 @@
       "subjectId": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-prometheus-metrics-runtime-proof.json"
     },
     {
@@ -1014,7 +1013,7 @@
       "subjectId": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-binding-report-route-runtime-proof.json"
     },
@@ -1023,8 +1022,8 @@
       "subjectId": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-config-runtime-proof.json"
     },
     {
@@ -1032,8 +1031,8 @@
       "subjectId": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-environment-classification-runtime-proof.json"
     },
     {
@@ -1041,8 +1040,8 @@
       "subjectId": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-observability-closure-runtime-proof.json"
     },
     {
@@ -1050,8 +1049,8 @@
       "subjectId": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-observability-contract-runtime-proof.json"
     },
     {
@@ -1059,7 +1058,7 @@
       "subjectId": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-readiness-contract-runtime-proof.json"
     },
@@ -1068,8 +1067,8 @@
       "subjectId": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-secrets-readiness-runtime-proof.json"
     },
     {
@@ -1077,8 +1076,8 @@
       "subjectId": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-quota-enforcement-runtime-proof.json"
     },
     {
@@ -1086,8 +1085,8 @@
       "subjectId": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-rate-limits-redis-runtime-proof.json"
     },
     {
@@ -1095,8 +1094,8 @@
       "subjectId": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-rate-limits-runtime-proof.json"
     },
     {
@@ -1104,7 +1103,7 @@
       "subjectId": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-react-i18n-provider-runtime-proof.json"
     },
@@ -1113,8 +1112,8 @@
       "subjectId": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof.json"
     },
     {
@@ -1122,8 +1121,8 @@
       "subjectId": "apps/platform-api/scripts/retention-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-retention-runtime-proof.json"
     },
     {
@@ -1131,8 +1130,8 @@
       "subjectId": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof.json"
     },
     {
@@ -1140,8 +1139,8 @@
       "subjectId": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-scheduled-job-routes-runtime-proof.json"
     },
     {
@@ -1149,8 +1148,8 @@
       "subjectId": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-scheduled-jobs-runtime-proof.json"
     },
     {
@@ -1158,8 +1157,8 @@
       "subjectId": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-isolation-runtime-proof.json"
     },
     {
@@ -1167,8 +1166,8 @@
       "subjectId": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-routes-runtime-proof.json"
     },
     {
@@ -1176,8 +1175,8 @@
       "subjectId": "apps/platform-api/scripts/search-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-runtime-proof.json"
     },
     {
@@ -1185,8 +1184,8 @@
       "subjectId": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-secret-store-contract-runtime-proof.json"
     },
     {
@@ -1194,8 +1193,8 @@
       "subjectId": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-secrets-openbao-runtime-proof.json"
     },
     {
@@ -1203,7 +1202,7 @@
       "subjectId": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-security-control-route-runtime-proof.json"
     },
@@ -1212,8 +1211,8 @@
       "subjectId": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-service-catalog-registry-runtime-proof.json"
     },
     {
@@ -1221,8 +1220,8 @@
       "subjectId": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-service-clickthrough-policy-runtime-proof.json"
     },
     {
@@ -1230,7 +1229,7 @@
       "subjectId": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-smtp-email-adapter-runtime-proof.json"
     },
@@ -1239,7 +1238,7 @@
       "subjectId": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-static-assurance-provider-runtime-proof.json"
     },
@@ -1248,7 +1247,7 @@
       "subjectId": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-support-announcements-runtime-proof.json"
     },
@@ -1257,7 +1256,7 @@
       "subjectId": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-support-approval-runtime-proof.json"
     },
@@ -1266,7 +1265,7 @@
       "subjectId": "apps/platform-api/scripts/support-tickets-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-support-tickets-runtime-proof.json"
     },
@@ -1275,8 +1274,8 @@
       "subjectId": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-temporal-workflow-provider-runtime-proof.json"
     },
     {
@@ -1284,8 +1283,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof.json"
     },
     {
@@ -1293,8 +1292,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof.json"
     },
     {
@@ -1302,8 +1301,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domain-canonical-runtime-proof.json"
     },
     {
@@ -1311,8 +1310,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof.json"
     },
     {
@@ -1320,8 +1319,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domains-routing-runtime-proof.json"
     },
     {
@@ -1329,8 +1328,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domains-runtime-proof.json"
     },
     {
@@ -1338,7 +1337,7 @@
       "subjectId": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L0",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof.json"
     },
@@ -1347,7 +1346,7 @@
       "subjectId": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-lifecycle-runtime-proof.json"
     },
@@ -1356,8 +1355,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-observability-runtime-proof.json"
     },
     {
@@ -1365,7 +1364,7 @@
       "subjectId": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-secret-crypto-runtime-proof.json"
     },
@@ -1374,8 +1373,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-storage-objects-runtime-proof.json"
     },
     {
@@ -1383,8 +1382,8 @@
       "subjectId": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-storage-runtime-proof.json"
     },
     {
@@ -1392,8 +1391,8 @@
       "subjectId": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-typed-secret-resolution-runtime-proof.json"
     },
     {
@@ -1401,8 +1400,8 @@
       "subjectId": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof.json"
     },
     {
@@ -1410,8 +1409,8 @@
       "subjectId": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhook-redrive-runtime-proof.json"
     },
     {
@@ -1419,8 +1418,8 @@
       "subjectId": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhook-worker-runtime-proof.json"
     },
     {
@@ -1428,8 +1427,8 @@
       "subjectId": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L0",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhooks-runtime-proof.json"
     },
     {
@@ -1437,7 +1436,7 @@
       "subjectId": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-windmill-automation-provider-runtime-proof.json"
     },
@@ -1446,7 +1445,7 @@
       "subjectId": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-adapters-runtime-proof.json"
     },
@@ -1455,8 +1454,8 @@
       "subjectId": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-closure-runtime-proof.json"
     },
     {
@@ -1464,7 +1463,7 @@
       "subjectId": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-control-route-runtime-proof.json"
     },
@@ -1473,7 +1472,7 @@
       "subjectId": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-control-runtime-proof.json"
     },
@@ -1482,7 +1481,7 @@
       "subjectId": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-provider-live-proof.json"
     },
@@ -1491,7 +1490,7 @@
       "subjectId": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
+      "proofLevelObserved": "L1",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-route-runtime-proof.json"
     },
@@ -1500,2124 +1499,9 @@
       "subjectId": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
       "subjectType": "runtime-proof",
       "proofLevelClaimed": "L4",
-      "proofLevelObserved": "L4",
-      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelObserved": "L1",
+      "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-runtime-proof.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-admin-data-legal-holds",
-      "subjectId": "route:delete-api-admin-data-legal-holds",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-admin-data-legal-holds.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-admin-data-retention-policies",
-      "subjectId": "route:delete-api-admin-data-retention-policies",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-admin-data-retention-policies.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-admin-tenants-tenantid-delegations-delegationid",
-      "subjectId": "route:delete-api-admin-tenants-tenantid-delegations-delegationid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-admin-tenants-tenantid-delegations-delegationid.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-auth-settings-domains-domain",
-      "subjectId": "route:delete-api-auth-settings-domains-domain",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-auth-settings-domains-domain.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-auth-settings-idps-alias",
-      "subjectId": "route:delete-api-auth-settings-idps-alias",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-auth-settings-idps-alias.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-api-keys-keyid",
-      "subjectId": "route:delete-api-org-api-keys-keyid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-api-keys-keyid.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-config-key",
-      "subjectId": "route:delete-api-org-config-key",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-config-key.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-domains-domain",
-      "subjectId": "route:delete-api-org-domains-domain",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-domains-domain.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-domains-domain-canonical",
-      "subjectId": "route:delete-api-org-domains-domain-canonical",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-domains-domain-canonical.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-groups-groupid",
-      "subjectId": "route:delete-api-org-groups-groupid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-groups-groupid.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-members-userid",
-      "subjectId": "route:delete-api-org-members-userid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-members-userid.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-storage-objects-objectkey",
-      "subjectId": "route:delete-api-org-storage-objects-objectkey",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-storage-objects-objectkey.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-sub-organisations-suborgid",
-      "subjectId": "route:delete-api-org-sub-organisations-suborgid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-sub-organisations-suborgid.json"
-    },
-    {
-      "proofId": "route-proof:route:delete-api-org-webhooks-id",
-      "subjectId": "route:delete-api-org-webhooks-id",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-delete-api-org-webhooks-id.json"
-    },
-    {
-      "proofId": "route-proof:route:get",
-      "subjectId": "route:get",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin",
-      "subjectId": "route:get-admin",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-account",
-      "subjectId": "route:get-admin-account",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-account.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-auth",
-      "subjectId": "route:get-admin-auth",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-auth.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-clickthrough",
-      "subjectId": "route:get-admin-clickthrough",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-clickthrough.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-config",
-      "subjectId": "route:get-admin-config",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-config.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-developer",
-      "subjectId": "route:get-admin-developer",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-developer.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-domains",
-      "subjectId": "route:get-admin-domains",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-domains.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-email",
-      "subjectId": "route:get-admin-email",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-email.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-entitlements",
-      "subjectId": "route:get-admin-entitlements",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-entitlements.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-events",
-      "subjectId": "route:get-admin-events",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-events.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-features",
-      "subjectId": "route:get-admin-features",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-features.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-logs",
-      "subjectId": "route:get-admin-logs",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-logs.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-members",
-      "subjectId": "route:get-admin-members",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-members.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-monitoring",
-      "subjectId": "route:get-admin-monitoring",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-monitoring.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-observability",
-      "subjectId": "route:get-admin-observability",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-observability.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-platform",
-      "subjectId": "route:get-admin-platform",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-platform.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-readiness",
-      "subjectId": "route:get-admin-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-scheduled-jobs",
-      "subjectId": "route:get-admin-scheduled-jobs",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-scheduled-jobs.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-search",
-      "subjectId": "route:get-admin-search",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-search.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-storage",
-      "subjectId": "route:get-admin-storage",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-storage.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-usage",
-      "subjectId": "route:get-admin-usage",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-usage.json"
-    },
-    {
-      "proofId": "route-proof:route:get-admin-webhooks",
-      "subjectId": "route:get-admin-webhooks",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-admin-webhooks.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-alerts",
-      "subjectId": "route:get-api-admin-alerts",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-alerts.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-backup",
-      "subjectId": "route:get-api-admin-backup",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-backup.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-billing",
-      "subjectId": "route:get-api-admin-billing",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-billing.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-billing-catalog-plans",
-      "subjectId": "route:get-api-admin-billing-catalog-plans",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-billing-catalog-plans.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-billing-catalog-prices",
-      "subjectId": "route:get-api-admin-billing-catalog-prices",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-billing-catalog-prices.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-billing-catalog-products",
-      "subjectId": "route:get-api-admin-billing-catalog-products",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-billing-catalog-products.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-billing-readiness",
-      "subjectId": "route:get-api-admin-billing-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-billing-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-clickthrough",
-      "subjectId": "route:get-api-admin-clickthrough",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-clickthrough.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-data-compliance-report",
-      "subjectId": "route:get-api-admin-data-compliance-report",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-data-compliance-report.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-data-legal-holds",
-      "subjectId": "route:get-api-admin-data-legal-holds",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-data-legal-holds.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-data-retention-policies",
-      "subjectId": "route:get-api-admin-data-retention-policies",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-data-retention-policies.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-events",
-      "subjectId": "route:get-api-admin-events",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-events.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-events-dead-letter",
-      "subjectId": "route:get-api-admin-events-dead-letter",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-events-dead-letter.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-governance-catalog",
-      "subjectId": "route:get-api-admin-governance-catalog",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-governance-catalog.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-governance-dsr",
-      "subjectId": "route:get-api-admin-governance-dsr",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-governance-dsr.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-incidents",
-      "subjectId": "route:get-api-admin-incidents",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-incidents.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-logs-search",
-      "subjectId": "route:get-api-admin-logs-search",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-logs-search.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-notifications-readiness",
-      "subjectId": "route:get-api-admin-notifications-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-notifications-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-observability",
-      "subjectId": "route:get-api-admin-observability",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-observability.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-observability-readiness",
-      "subjectId": "route:get-api-admin-observability-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-observability-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-observability-signals",
-      "subjectId": "route:get-api-admin-observability-signals",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-observability-signals.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-provider-bindings",
-      "subjectId": "route:get-api-admin-provider-bindings",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-provider-bindings.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-provider-configs",
-      "subjectId": "route:get-api-admin-provider-configs",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-provider-configs.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-providers-readiness",
-      "subjectId": "route:get-api-admin-providers-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-providers-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-scheduled-jobs",
-      "subjectId": "route:get-api-admin-scheduled-jobs",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-scheduled-jobs.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-search-readiness",
-      "subjectId": "route:get-api-admin-search-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-search-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-secrets",
-      "subjectId": "route:get-api-admin-secrets",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-secrets.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-secrets-readiness",
-      "subjectId": "route:get-api-admin-secrets-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-secrets-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-security",
-      "subjectId": "route:get-api-admin-security",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-security.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-support-health",
-      "subjectId": "route:get-api-admin-support-health",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-support-health.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-support-tickets",
-      "subjectId": "route:get-api-admin-support-tickets",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-support-tickets.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants",
-      "subjectId": "route:get-api-admin-tenants",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-resources",
-      "subjectId": "route:get-api-admin-tenants-resources",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-resources.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-announcements",
-      "subjectId": "route:get-api-admin-tenants-tenantid-announcements",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-announcements.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-api-keys",
-      "subjectId": "route:get-api-admin-tenants-tenantid-api-keys",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-api-keys.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-auth-settings-credential-readiness",
-      "subjectId": "route:get-api-admin-tenants-tenantid-auth-settings-credential-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-auth-settings-credential-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-delegations",
-      "subjectId": "route:get-api-admin-tenants-tenantid-delegations",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-delegations.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-entitlements",
-      "subjectId": "route:get-api-admin-tenants-tenantid-entitlements",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-entitlements.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-export",
-      "subjectId": "route:get-api-admin-tenants-tenantid-export",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-export.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-history",
-      "subjectId": "route:get-api-admin-tenants-tenantid-history",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-history.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-quotas",
-      "subjectId": "route:get-api-admin-tenants-tenantid-quotas",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-quotas.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-rate-limits",
-      "subjectId": "route:get-api-admin-tenants-tenantid-rate-limits",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-rate-limits.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-tenants-tenantid-usage",
-      "subjectId": "route:get-api-admin-tenants-tenantid-usage",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-tenants-tenantid-usage.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-workers",
-      "subjectId": "route:get-api-admin-workers",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-workers.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-workflows",
-      "subjectId": "route:get-api-admin-workflows",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-workflows.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-workflows-readiness",
-      "subjectId": "route:get-api-admin-workflows-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-workflows-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-admin-workflows-workflowid",
-      "subjectId": "route:get-api-admin-workflows-workflowid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-admin-workflows-workflowid.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-providers",
-      "subjectId": "route:get-api-auth-providers",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-providers.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-idps",
-      "subjectId": "route:get-api-auth-settings-idps",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-idps.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-idps-alias-callback-url",
-      "subjectId": "route:get-api-auth-settings-idps-alias-callback-url",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-idps-alias-callback-url.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-idps-alias-mapping",
-      "subjectId": "route:get-api-auth-settings-idps-alias-mapping",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-idps-alias-mapping.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-lockout",
-      "subjectId": "route:get-api-auth-settings-lockout",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-lockout.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-mfa",
-      "subjectId": "route:get-api-auth-settings-mfa",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-mfa.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-providers",
-      "subjectId": "route:get-api-auth-settings-providers",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-providers.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-readiness",
-      "subjectId": "route:get-api-auth-settings-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-resource-policies",
-      "subjectId": "route:get-api-auth-settings-resource-policies",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-resource-policies.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-session",
-      "subjectId": "route:get-api-auth-settings-session",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-session.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-auth-settings-sysadmin-brokering",
-      "subjectId": "route:get-api-auth-settings-sysadmin-brokering",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-auth-settings-sysadmin-brokering.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-host-identity",
-      "subjectId": "route:get-api-host-identity",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-host-identity.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-me-notification-preferences",
-      "subjectId": "route:get-api-me-notification-preferences",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-me-notification-preferences.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-me-profile",
-      "subjectId": "route:get-api-me-profile",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-me-profile.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-api-keys",
-      "subjectId": "route:get-api-org-api-keys",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-api-keys.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-audit",
-      "subjectId": "route:get-api-org-audit",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-audit.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-billing-catalog",
-      "subjectId": "route:get-api-org-billing-catalog",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-billing-catalog.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-config",
-      "subjectId": "route:get-api-org-config",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-config.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-developer",
-      "subjectId": "route:get-api-org-developer",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-developer.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-domains",
-      "subjectId": "route:get-api-org-domains",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-domains.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-domains-readiness",
-      "subjectId": "route:get-api-org-domains-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-domains-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-email-sender",
-      "subjectId": "route:get-api-org-email-sender",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-email-sender.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-email-sender-readiness",
-      "subjectId": "route:get-api-org-email-sender-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-email-sender-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-entitlements",
-      "subjectId": "route:get-api-org-entitlements",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-entitlements.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-features",
-      "subjectId": "route:get-api-org-features",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-features.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-groups",
-      "subjectId": "route:get-api-org-groups",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-groups.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-history",
-      "subjectId": "route:get-api-org-history",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-history.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-members",
-      "subjectId": "route:get-api-org-members",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-members.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-members-userid-external-identities",
-      "subjectId": "route:get-api-org-members-userid-external-identities",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-members-userid-external-identities.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-observability-readiness",
-      "subjectId": "route:get-api-org-observability-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-observability-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-platform-services-readiness",
-      "subjectId": "route:get-api-org-platform-services-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-platform-services-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-quotas",
-      "subjectId": "route:get-api-org-quotas",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-quotas.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-rate-limits",
-      "subjectId": "route:get-api-org-rate-limits",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-rate-limits.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-readiness",
-      "subjectId": "route:get-api-org-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-storage-objects",
-      "subjectId": "route:get-api-org-storage-objects",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-storage-objects.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-storage-objects-objectkey",
-      "subjectId": "route:get-api-org-storage-objects-objectkey",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-storage-objects-objectkey.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-storage-readiness",
-      "subjectId": "route:get-api-org-storage-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-storage-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-sub-organisations",
-      "subjectId": "route:get-api-org-sub-organisations",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-sub-organisations.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-usage",
-      "subjectId": "route:get-api-org-usage",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-usage.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-webhooks",
-      "subjectId": "route:get-api-org-webhooks",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-webhooks.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-webhooks-id-deliveries",
-      "subjectId": "route:get-api-org-webhooks-id-deliveries",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-webhooks-id-deliveries.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-webhooks-id-metrics",
-      "subjectId": "route:get-api-org-webhooks-id-metrics",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-webhooks-id-metrics.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-org-webhooks-readiness",
-      "subjectId": "route:get-api-org-webhooks-readiness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-org-webhooks-readiness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-organisation-profile",
-      "subjectId": "route:get-api-organisation-profile",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-organisation-profile.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-platform-service-catalog",
-      "subjectId": "route:get-api-platform-service-catalog",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-platform-service-catalog.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-session",
-      "subjectId": "route:get-api-session",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-session.json"
-    },
-    {
-      "proofId": "route-proof:route:get-api-theme",
-      "subjectId": "route:get-api-theme",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-api-theme.json"
-    },
-    {
-      "proofId": "route-proof:route:get-auth-callback",
-      "subjectId": "route:get-auth-callback",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-auth-callback.json"
-    },
-    {
-      "proofId": "route-proof:route:get-auth-login",
-      "subjectId": "route:get-auth-login",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-auth-login.json"
-    },
-    {
-      "proofId": "route-proof:route:get-e2e-harness",
-      "subjectId": "route:get-e2e-harness",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-e2e-harness.json"
-    },
-    {
-      "proofId": "route-proof:route:get-healthz",
-      "subjectId": "route:get-healthz",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-healthz.json"
-    },
-    {
-      "proofId": "route-proof:route:get-internal-auth-forward",
-      "subjectId": "route:get-internal-auth-forward",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-internal-auth-forward.json"
-    },
-    {
-      "proofId": "route-proof:route:get-login",
-      "subjectId": "route:get-login",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-login.json"
-    },
-    {
-      "proofId": "route-proof:route:get-organisation-profile",
-      "subjectId": "route:get-organisation-profile",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-organisation-profile.json"
-    },
-    {
-      "proofId": "route-proof:route:get-readyz",
-      "subjectId": "route:get-readyz",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-readyz.json"
-    },
-    {
-      "proofId": "route-proof:route:get-version",
-      "subjectId": "route:get-version",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L2",
-      "proofLevelObserved": "L2",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-get-version.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-admin-incidents-incidentid",
-      "subjectId": "route:patch-api-admin-incidents-incidentid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-admin-incidents-incidentid.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-admin-scheduled-jobs-jobid",
-      "subjectId": "route:patch-api-admin-scheduled-jobs-jobid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-admin-scheduled-jobs-jobid.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-admin-tenants-tenantid-entitlements",
-      "subjectId": "route:patch-api-admin-tenants-tenantid-entitlements",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-admin-tenants-tenantid-entitlements.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-admin-tenants-tenantid-quotas",
-      "subjectId": "route:patch-api-admin-tenants-tenantid-quotas",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-admin-tenants-tenantid-quotas.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-admin-tenants-tenantid-rate-limits",
-      "subjectId": "route:patch-api-admin-tenants-tenantid-rate-limits",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-admin-tenants-tenantid-rate-limits.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-idps-alias",
-      "subjectId": "route:patch-api-auth-settings-idps-alias",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-idps-alias.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-idps-alias-mapping",
-      "subjectId": "route:patch-api-auth-settings-idps-alias-mapping",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-idps-alias-mapping.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-lockout",
-      "subjectId": "route:patch-api-auth-settings-lockout",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-lockout.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-mfa",
-      "subjectId": "route:patch-api-auth-settings-mfa",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-mfa.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-providers",
-      "subjectId": "route:patch-api-auth-settings-providers",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-providers.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-resource-policies",
-      "subjectId": "route:patch-api-auth-settings-resource-policies",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-resource-policies.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-session",
-      "subjectId": "route:patch-api-auth-settings-session",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-session.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-auth-settings-sysadmin-brokering",
-      "subjectId": "route:patch-api-auth-settings-sysadmin-brokering",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-auth-settings-sysadmin-brokering.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-me-notification-preferences",
-      "subjectId": "route:patch-api-me-notification-preferences",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-me-notification-preferences.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-me-profile",
-      "subjectId": "route:patch-api-me-profile",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-me-profile.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-config-key",
-      "subjectId": "route:patch-api-org-config-key",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-config-key.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-email-sender",
-      "subjectId": "route:patch-api-org-email-sender",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-email-sender.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-features-featurekey",
-      "subjectId": "route:patch-api-org-features-featurekey",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-features-featurekey.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-groups-groupid",
-      "subjectId": "route:patch-api-org-groups-groupid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-groups-groupid.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-members-userid",
-      "subjectId": "route:patch-api-org-members-userid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-members-userid.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-members-userid-status",
-      "subjectId": "route:patch-api-org-members-userid-status",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-members-userid-status.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-members-userid-username",
-      "subjectId": "route:patch-api-org-members-userid-username",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-members-userid-username.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-sub-organisations-suborgid",
-      "subjectId": "route:patch-api-org-sub-organisations-suborgid",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-sub-organisations-suborgid.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-org-webhooks-id",
-      "subjectId": "route:patch-api-org-webhooks-id",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-org-webhooks-id.json"
-    },
-    {
-      "proofId": "route-proof:route:patch-api-organisation-profile",
-      "subjectId": "route:patch-api-organisation-profile",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-patch-api-organisation-profile.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-alerts",
-      "subjectId": "route:post-api-admin-alerts",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-alerts.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-alerts-alertid-evaluate",
-      "subjectId": "route:post-api-admin-alerts-alertid-evaluate",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-alerts-alertid-evaluate.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-billing-catalog-plans",
-      "subjectId": "route:post-api-admin-billing-catalog-plans",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-billing-catalog-plans.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-billing-catalog-prices",
-      "subjectId": "route:post-api-admin-billing-catalog-prices",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-billing-catalog-prices.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-billing-catalog-products",
-      "subjectId": "route:post-api-admin-billing-catalog-products",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-billing-catalog-products.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-data-legal-holds",
-      "subjectId": "route:post-api-admin-data-legal-holds",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-data-legal-holds.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-data-residency",
-      "subjectId": "route:post-api-admin-data-residency",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-data-residency.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-data-retention-policies",
-      "subjectId": "route:post-api-admin-data-retention-policies",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-data-retention-policies.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-events-eventid-redrive",
-      "subjectId": "route:post-api-admin-events-eventid-redrive",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-events-eventid-redrive.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-governance-catalog",
-      "subjectId": "route:post-api-admin-governance-catalog",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-governance-catalog.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-governance-catalog-classify",
-      "subjectId": "route:post-api-admin-governance-catalog-classify",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-governance-catalog-classify.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-governance-dsr",
-      "subjectId": "route:post-api-admin-governance-dsr",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-governance-dsr.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-governance-dsr-dsrid-fulfill",
-      "subjectId": "route:post-api-admin-governance-dsr-dsrid-fulfill",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-governance-dsr-dsrid-fulfill.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-provider-configs",
-      "subjectId": "route:post-api-admin-provider-configs",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-provider-configs.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-provider-configs-id-delete",
-      "subjectId": "route:post-api-admin-provider-configs-id-delete",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-provider-configs-id-delete.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-provider-configs-id-lifecycle",
-      "subjectId": "route:post-api-admin-provider-configs-id-lifecycle",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-provider-configs-id-lifecycle.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-scheduled-jobs",
-      "subjectId": "route:post-api-admin-scheduled-jobs",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-scheduled-jobs.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-scheduled-jobs-jobid-run",
-      "subjectId": "route:post-api-admin-scheduled-jobs-jobid-run",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-scheduled-jobs-jobid-run.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-search-reindex",
-      "subjectId": "route:post-api-admin-search-reindex",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-search-reindex.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-secrets",
-      "subjectId": "route:post-api-admin-secrets",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-secrets.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-secrets-delete",
-      "subjectId": "route:post-api-admin-secrets-delete",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-secrets-delete.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-secrets-revoke",
-      "subjectId": "route:post-api-admin-secrets-revoke",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-secrets-revoke.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-sub-tenants",
-      "subjectId": "route:post-api-admin-sub-tenants",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-sub-tenants.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-support-session",
-      "subjectId": "route:post-api-admin-support-session",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-support-session.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-support-session-approval-grant",
-      "subjectId": "route:post-api-admin-support-session-approval-grant",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-support-session-approval-grant.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-support-session-approval-request",
-      "subjectId": "route:post-api-admin-support-session-approval-request",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-support-session-approval-request.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-support-tickets",
-      "subjectId": "route:post-api-admin-support-tickets",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-support-tickets.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants",
-      "subjectId": "route:post-api-admin-tenants",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-auth-settings-credential",
-      "subjectId": "route:post-api-admin-tenants-auth-settings-credential",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-auth-settings-credential.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-announcements",
-      "subjectId": "route:post-api-admin-tenants-tenantid-announcements",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-announcements.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-auth-settings-credential-repair",
-      "subjectId": "route:post-api-admin-tenants-tenantid-auth-settings-credential-repair",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-auth-settings-credential-repair.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-auth-settings-credential-rotate",
-      "subjectId": "route:post-api-admin-tenants-tenantid-auth-settings-credential-rotate",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-auth-settings-credential-rotate.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-delegations",
-      "subjectId": "route:post-api-admin-tenants-tenantid-delegations",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-delegations.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-delete",
-      "subjectId": "route:post-api-admin-tenants-tenantid-delete",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-delete.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-import",
-      "subjectId": "route:post-api-admin-tenants-tenantid-import",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-import.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-meter-events",
-      "subjectId": "route:post-api-admin-tenants-tenantid-meter-events",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-meter-events.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-notifications-test",
-      "subjectId": "route:post-api-admin-tenants-tenantid-notifications-test",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-notifications-test.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-tenants-tenantid-suspend",
-      "subjectId": "route:post-api-admin-tenants-tenantid-suspend",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-tenants-tenantid-suspend.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-workflows-start",
-      "subjectId": "route:post-api-admin-workflows-start",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-workflows-start.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-workflows-workflowid-cancel",
-      "subjectId": "route:post-api-admin-workflows-workflowid-cancel",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-workflows-workflowid-cancel.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-admin-workflows-workflowid-signal",
-      "subjectId": "route:post-api-admin-workflows-workflowid-signal",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-admin-workflows-workflowid-signal.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-auth-settings-domains",
-      "subjectId": "route:post-api-auth-settings-domains",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-auth-settings-domains.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-auth-settings-domains-challenges",
-      "subjectId": "route:post-api-auth-settings-domains-challenges",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-auth-settings-domains-challenges.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-auth-settings-domains-verify",
-      "subjectId": "route:post-api-auth-settings-domains-verify",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-auth-settings-domains-verify.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-auth-settings-idps",
-      "subjectId": "route:post-api-auth-settings-idps",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-auth-settings-idps.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-auth-settings-idps-alias-test-connection",
-      "subjectId": "route:post-api-auth-settings-idps-alias-test-connection",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-auth-settings-idps-alias-test-connection.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-auth-settings-idps-oidc-discover",
-      "subjectId": "route:post-api-auth-settings-idps-oidc-discover",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-auth-settings-idps-oidc-discover.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-graphql",
-      "subjectId": "route:post-api-graphql",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-graphql.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-api-keys",
-      "subjectId": "route:post-api-org-api-keys",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-api-keys.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-domains",
-      "subjectId": "route:post-api-org-domains",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-domains.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-domains-domain-activate",
-      "subjectId": "route:post-api-org-domains-domain-activate",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-domains-domain-activate.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-domains-domain-canonical",
-      "subjectId": "route:post-api-org-domains-domain-canonical",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-domains-domain-canonical.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-domains-domain-deactivate",
-      "subjectId": "route:post-api-org-domains-domain-deactivate",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-domains-domain-deactivate.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-domains-domain-probe-routing-local",
-      "subjectId": "route:post-api-org-domains-domain-probe-routing-local",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-domains-domain-probe-routing-local.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-domains-domain-verify",
-      "subjectId": "route:post-api-org-domains-domain-verify",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-domains-domain-verify.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-email-sender-test",
-      "subjectId": "route:post-api-org-email-sender-test",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-email-sender-test.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-groups",
-      "subjectId": "route:post-api-org-groups",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-groups.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-members-invite",
-      "subjectId": "route:post-api-org-members-invite",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-members-invite.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-members-resend-invite",
-      "subjectId": "route:post-api-org-members-resend-invite",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-members-resend-invite.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-search",
-      "subjectId": "route:post-api-org-search",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-search.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-storage-objects",
-      "subjectId": "route:post-api-org-storage-objects",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-storage-objects.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-storage-objects-objectkey-scan",
-      "subjectId": "route:post-api-org-storage-objects-objectkey-scan",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-storage-objects-objectkey-scan.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-storage-probe",
-      "subjectId": "route:post-api-org-storage-probe",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-storage-probe.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-sub-organisations",
-      "subjectId": "route:post-api-org-sub-organisations",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-sub-organisations.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-webhooks",
-      "subjectId": "route:post-api-org-webhooks",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-webhooks.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
-      "subjectId": "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-webhooks-id-deliveries-deliveryid-redrive.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-webhooks-id-redrive-dead",
-      "subjectId": "route:post-api-org-webhooks-id-redrive-dead",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-webhooks-id-redrive-dead.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-webhooks-id-rotate-secret",
-      "subjectId": "route:post-api-org-webhooks-id-rotate-secret",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-webhooks-id-rotate-secret.json"
-    },
-    {
-      "proofId": "route-proof:route:post-api-org-webhooks-id-test",
-      "subjectId": "route:post-api-org-webhooks-id-test",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-api-org-webhooks-id-test.json"
-    },
-    {
-      "proofId": "route-proof:route:post-auth-logout",
-      "subjectId": "route:post-auth-logout",
-      "subjectType": "route-proof",
-      "proofLevelClaimed": "L3",
-      "proofLevelObserved": "L3",
-      "providerEvidenceClass": "contract-or-unit-proof",
-      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/route-post-auth-logout.json"
     }
   ]
 }

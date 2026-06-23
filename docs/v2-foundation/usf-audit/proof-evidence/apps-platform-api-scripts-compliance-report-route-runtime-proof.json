@@ -4,24 +4,23 @@
   "subjectIds": [
     "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
     "package.json#proof:compliance-report-route",
-    "proof:compliance-report-route",
-    "route:get-api-admin-data-compliance-report"
+    "proof:compliance-report-route"
   ],
   "subjectId": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
   "capabilityId": "capability:compliance-report-route",
   "providerId": "not-applicable",
-  "routeIds": ["route:get-api-admin-data-compliance-report"],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
-  "providerMode": "hermetic",
+  "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:compliance-report-route",
-  "startedAt": "2026-06-23T07:42:08.527Z",
-  "endedAt": "2026-06-23T07:42:09.527Z",
+  "startedAt": "2026-06-23T08:01:28.290Z",
+  "endedAt": "2026-06-23T08:01:28.804Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,67 +28,39 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpjb21w"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpjb21w"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-    "command": "npm run proof:compliance-report-route",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-data-compliance-report"],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-compliance-report-route-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-compliance-report-route-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-compliance-report-route-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.527Z",
+  "generatedAt": "2026-06-23T08:01:28.804Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-route-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T07:42:08.527Z",
-  "endTime": "2026-06-23T07:42:09.527Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.527Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
-    "command": "npm run proof:compliance-report-route",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-data-compliance-report"],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-compliance-report-route-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-compliance-report-route-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-compliance-report-route-runtime-proof"],
-  "evidenceSignature": "634ee7ea0df3d2dd729c3e517d7aecc789af49b2e6de82d8c8f299d3f3298396"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:28.290Z",
+  "endTime": "2026-06-23T08:01:28.804Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:28.804Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "ed0ad9da08ef0e5b5ab33b6fcde9141e606c0eda9203b2cde520ac76d1b9df09"
 }

@@ -4,15 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
     "package.json#proof:profile-self-service",
-    "proof:profile-self-service",
-    "route:get-admin-account",
-    "route:get-api-me-profile",
-    "route:patch-api-me-profile"
+    "proof:profile-self-service"
   ],
   "subjectId": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
   "capabilityId": "capability:profile-self-service",
   "providerId": "not-applicable",
-  "routeIds": ["route:get-admin-account", "route:get-api-me-profile", "route:patch-api-me-profile"],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -20,86 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:profile-self-service",
-  "startedAt": "2026-06-23T07:42:08.660Z",
-  "endedAt": "2026-06-23T07:42:09.660Z",
+  "startedAt": "2026-06-23T08:01:55.191Z",
+  "endedAt": "2026-06-23T08:01:55.260Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
-    "routeCount": 3,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm9m"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
-    "routeCount": 3,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpwcm9m"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
-    "command": "npm run proof:profile-self-service",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-account",
-      "route:get-api-me-profile",
-      "route:patch-api-me-profile"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-profile-self-service-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-profile-self-service-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-profile-self-service-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.660Z",
+  "generatedAt": "2026-06-23T08:01:55.260Z",
   "sourceFileRefs": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.660Z",
-  "endTime": "2026-06-23T07:42:09.660Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.660Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
-    "command": "npm run proof:profile-self-service",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-account",
-      "route:get-api-me-profile",
-      "route:patch-api-me-profile"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-profile-self-service-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-profile-self-service-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-profile-self-service-runtime-proof"],
-  "evidenceSignature": "937033402a47ee73b2ce55fdd598db0d235c8b61d99b50180e135f0e02b1caae"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:55.191Z",
+  "endTime": "2026-06-23T08:01:55.260Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:55.260Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "918ddbf2526d2c4c2d08d687d6e25fa5e98f40a0620c7783c9fae9581955f65d"
 }

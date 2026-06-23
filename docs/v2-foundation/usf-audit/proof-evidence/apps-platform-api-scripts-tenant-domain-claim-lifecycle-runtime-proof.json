@@ -4,27 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
     "package.json#proof:tenant-domain-claim-lifecycle",
-    "proof:tenant-domain-claim-lifecycle",
-    "route:get-admin-domains",
-    "route:get-api-org-domains",
-    "route:post-api-org-domains",
-    "route:delete-api-org-domains-domain",
-    "route:post-api-org-domains-domain-probe-routing-local",
-    "route:post-api-org-domains-domain-verify",
-    "route:get-api-org-domains-readiness"
+    "proof:tenant-domain-claim-lifecycle"
   ],
   "subjectId": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
   "capabilityId": "capability:tenant-domain-claim-lifecycle",
   "providerId": "not-applicable",
-  "routeIds": [
-    "route:get-admin-domains",
-    "route:get-api-org-domains",
-    "route:post-api-org-domains",
-    "route:delete-api-org-domains-domain",
-    "route:post-api-org-domains-domain-probe-routing-local",
-    "route:post-api-org-domains-domain-verify",
-    "route:get-api-org-domains-readiness"
-  ],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -32,96 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-domain-claim-lifecycle",
-  "startedAt": "2026-06-23T07:42:08.709Z",
-  "endedAt": "2026-06-23T07:42:09.709Z",
-  "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "startedAt": "2026-06-23T08:02:05.293Z",
+  "endedAt": "2026-06-23T08:02:05.365Z",
+  "exitStatus": 1,
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
-    "routeCount": 7,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "failed"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
-    "routeCount": 7,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjp0ZW5h"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
-    "command": "npm run proof:tenant-domain-claim-lifecycle",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-domains",
-      "route:get-api-org-domains",
-      "route:post-api-org-domains",
-      "route:delete-api-org-domains-domain",
-      "route:post-api-org-domains-domain-probe-routing-local",
-      "route:post-api-org-domains-domain-verify",
-      "route:get-api-org-domains-readiness"
-    ],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": [
-    "log-apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof"
-  ],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.709Z",
+  "generatedAt": "2026-06-23T08:02:05.365Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.709Z",
-  "endTime": "2026-06-23T07:42:09.709Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.709Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
-    "command": "npm run proof:tenant-domain-claim-lifecycle",
-    "expectedExitStatus": 0,
-    "routeIds": [
-      "route:get-admin-domains",
-      "route:get-api-org-domains",
-      "route:post-api-org-domains",
-      "route:delete-api-org-domains-domain",
-      "route:post-api-org-domains-domain-probe-routing-local",
-      "route:post-api-org-domains-domain-verify",
-      "route:get-api-org-domains-readiness"
-    ],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof"],
-  "evidenceSignature": "3ed430cc6d00c03adef3071744c33e35488ea8c34c07ef95bb98a014daa56e0b"
+  "proofLevelObserved": "L0",
+  "startTime": "2026-06-23T08:02:05.293Z",
+  "endTime": "2026-06-23T08:02:05.365Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:02:05.365Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "8f1804073e1cd50d072940a67fd7a09dee1a157172300deb6423f0006487c278"
 }

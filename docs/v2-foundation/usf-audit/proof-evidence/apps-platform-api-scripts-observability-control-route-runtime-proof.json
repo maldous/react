@@ -4,24 +4,23 @@
   "subjectIds": [
     "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
     "package.json#proof:observability-control-route",
-    "proof:observability-control-route",
-    "route:get-api-admin-observability"
+    "proof:observability-control-route"
   ],
   "subjectId": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
   "capabilityId": "capability:observability-control-route",
   "providerId": "not-applicable",
-  "routeIds": ["route:get-api-admin-observability"],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
-  "providerMode": "hermetic",
+  "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:observability-control-route",
-  "startedAt": "2026-06-23T07:42:08.606Z",
-  "endedAt": "2026-06-23T07:42:09.606Z",
+  "startedAt": "2026-06-23T08:01:43.117Z",
+  "endedAt": "2026-06-23T08:01:43.682Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,67 +28,39 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYnNl"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpvYnNl"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-    "command": "npm run proof:observability-control-route",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-observability"],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-observability-control-route-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-observability-control-route-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-observability-control-route-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.606Z",
+  "generatedAt": "2026-06-23T08:01:43.682Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-control-route-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T07:42:08.606Z",
-  "endTime": "2026-06-23T07:42:09.606Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.606Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
-    "command": "npm run proof:observability-control-route",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-observability"],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-observability-control-route-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-observability-control-route-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-observability-control-route-runtime-proof"],
-  "evidenceSignature": "25645898458a7b3638880671bc0f58ba4e1bc56d04f4b61efc245f0f308cceef"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:01:43.117Z",
+  "endTime": "2026-06-23T08:01:43.682Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:01:43.682Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "a9b2adb73463ed499a1dc49bbf0c44c6e38bb78e0cc82a03ff167390059a73b4"
 }

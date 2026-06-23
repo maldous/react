@@ -31,9 +31,9 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | Assurance surface             | Status | Gaps |
 | ----------------------------- | ------ | ---: |
 | adversarial runtime inventory | PASS   |    0 |
-| formal proof readiness        | FAIL   |   48 |
-| weak proof backlog            | FAIL   |   48 |
-| capability proof readiness    | FAIL   |   48 |
+| formal proof readiness        | FAIL   | 2828 |
+| weak proof backlog            | FAIL   |  159 |
+| capability proof readiness    | FAIL   |  159 |
 
 ## Known Gaps Identified
 
@@ -51,7 +51,7 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | Show every storage operation without lifecycle proof.             |                        0 |
 | Show every event without DLQ/retry proof.                         |                        0 |
 | Show every alert without runbook.                                 |                        0 |
-| Show every capability missing required real-provider L4 proof.    |                       21 |
+| Show every capability missing required real-provider L4 proof.    |                       62 |
 | Show every capability missing required external-sandbox L5 proof. |                       27 |
 | Show every capability missing required end-to-end L6 proof.       |                        0 |
 

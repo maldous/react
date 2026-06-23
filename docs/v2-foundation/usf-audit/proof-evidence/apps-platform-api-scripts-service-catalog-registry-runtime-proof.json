@@ -4,14 +4,12 @@
   "subjectIds": [
     "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
     "package.json#proof:service-catalog-registry",
-    "proof:service-catalog-registry",
-    "route:get-admin-platform",
-    "route:get-api-platform-service-catalog"
+    "proof:service-catalog-registry"
   ],
   "subjectId": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
   "capabilityId": "capability:service-catalog-registry",
   "providerId": "not-applicable",
-  "routeIds": ["route:get-admin-platform", "route:get-api-platform-service-catalog"],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
@@ -19,78 +17,50 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:service-catalog-registry",
-  "startedAt": "2026-06-23T07:42:08.693Z",
-  "endedAt": "2026-06-23T07:42:09.693Z",
+  "startedAt": "2026-06-23T08:02:02.734Z",
+  "endedAt": "2026-06-23T08:02:02.774Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
   "inMemoryProviderUsed": false,
-  "realLocalProviderUsed": true,
+  "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-    "routeCount": 2,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpzZXJ2"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-    "routeCount": 2,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpzZXJ2"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-    "command": "npm run proof:service-catalog-registry",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-admin-platform", "route:get-api-platform-service-catalog"],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-service-catalog-registry-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-service-catalog-registry-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-service-catalog-registry-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.693Z",
+  "generatedAt": "2026-06-23T08:02:02.774Z",
   "sourceFileRefs": ["apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T07:42:08.693Z",
-  "endTime": "2026-06-23T07:42:09.693Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.693Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
-    "command": "npm run proof:service-catalog-registry",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-admin-platform", "route:get-api-platform-service-catalog"],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-service-catalog-registry-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-service-catalog-registry-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-service-catalog-registry-runtime-proof"],
-  "evidenceSignature": "f7c7fd6a7ba03fb7baebe21a315e1392da76f09d9cf7a34f260193febacf500a"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:02:02.734Z",
+  "endTime": "2026-06-23T08:02:02.774Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:02:02.774Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "679cd77069e9766379e20bc08c89ca9b79fd874cd77d825453a9c6688e5f80a3"
 }

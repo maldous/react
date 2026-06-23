@@ -4,24 +4,23 @@
   "subjectIds": [
     "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
     "package.json#proof:security-control-route",
-    "proof:security-control-route",
-    "route:get-api-admin-security"
+    "proof:security-control-route"
   ],
   "subjectId": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
   "capabilityId": "capability:security-control-route",
   "providerId": "not-applicable",
-  "routeIds": ["route:get-api-admin-security"],
+  "routeIds": [],
   "workflowIds": [],
   "eventIds": [],
   "storageIds": [],
   "environmentMode": "test",
-  "providerMode": "hermetic",
+  "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:security-control-route",
-  "startedAt": "2026-06-23T07:42:08.692Z",
-  "endedAt": "2026-06-23T07:42:09.692Z",
+  "startedAt": "2026-06-23T08:02:02.005Z",
+  "endedAt": "2026-06-23T08:02:02.548Z",
   "exitStatus": 0,
-  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "commit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
   "realImplementationPathExecuted": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -29,67 +28,39 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {
-    "phase": "before",
-    "proofFile": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpzZWN1"
+  "beforeState": {},
+  "afterState": {},
+  "assertedStateDiff": {},
+  "failurePathExercised": false,
+  "sideEffectsAsserted": false,
+  "tenantBoundaryAsserted": false,
+  "securityBoundaryAsserted": false,
+  "auditEventIds": [],
+  "traceIds": [],
+  "metricSamples": [],
+  "logCorrelationIds": [],
+  "cleanupResult": {
+    "status": "not-emitted-by-proof"
   },
-  "afterState": {
-    "phase": "after",
-    "proofFile": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-    "routeCount": 1,
-    "providerSubjects": [],
-    "commandHash": "bnBtIHJ1biBwcm9vZjpzZWN1"
-  },
-  "assertedStateDiff": {
-    "exercised": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-    "command": "npm run proof:security-control-route",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-security"],
-    "providerSubjects": []
-  },
-  "failurePathExercised": true,
-  "sideEffectsAsserted": true,
-  "tenantBoundaryAsserted": true,
-  "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit-apps-platform-api-scripts-security-control-route-runtime-proof"],
-  "traceIds": ["617070732f706c6174666f726d2d6170"],
-  "metricSamples": [
-    {
-      "name": "proof.apps-platform-api-scripts-security-control-route-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logCorrelationIds": ["log-apps-platform-api-scripts-security-control-route-runtime-proof"],
-  "cleanupResult": { "status": "verified", "disposableStateCleared": true },
-  "deterministicReplaySupported": true,
+  "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T07:42:09.692Z",
+  "generatedAt": "2026-06-23T08:02:02.548Z",
   "sourceFileRefs": ["apps/platform-api/scripts/security-control-route-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782201682139-2612279",
+  "assertionsObserved": false,
+  "expectedOutputsAsserted": false,
   "environment": "test",
-  "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T07:42:08.692Z",
-  "endTime": "2026-06-23T07:42:09.692Z",
-  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
-  "executionTimestamp": "2026-06-23T07:42:09.692Z",
-  "stateDiff": {
-    "exercised": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
-    "command": "npm run proof:security-control-route",
-    "expectedExitStatus": 0,
-    "routeIds": ["route:get-api-admin-security"],
-    "providerSubjects": []
-  },
-  "failureMode": "exercised",
-  "auditIds": ["audit-apps-platform-api-scripts-security-control-route-runtime-proof"],
-  "metricEvidence": [
-    {
-      "name": "proof.apps-platform-api-scripts-security-control-route-runtime-proof.passed",
-      "value": 1
-    }
-  ],
-  "logEvidence": ["log-apps-platform-api-scripts-security-control-route-runtime-proof"],
-  "evidenceSignature": "3830d92809d605584d129a4b7e5fab1955b8513e0ba7f5580de05f14225d6ccb"
+  "proofLevelObserved": "L1",
+  "startTime": "2026-06-23T08:02:02.005Z",
+  "endTime": "2026-06-23T08:02:02.548Z",
+  "gitCommit": "03c9a270e828c00ca02c0319a19da775f7d2b845",
+  "executionTimestamp": "2026-06-23T08:02:02.548Z",
+  "stateDiff": {},
+  "failureMode": "not-exercised",
+  "auditIds": [],
+  "metricEvidence": [],
+  "logEvidence": [],
+  "evidenceSignature": "834660b58f5a39d63a28e09203ba481da85c3984bf144637a5c9aff0cbed8ca7"
 }

@@ -1,350 +1,3061 @@
 {
   "artefact": "weak-proof-backlog",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T07:42:05.327Z",
+  "generatedAt": "2026-06-23T08:01:18.998Z",
   "status": "FAIL",
   "requiredProofCount": 161,
-  "missingOrStaleCount": 0,
-  "overclaimCount": 0,
-  "capabilityProofGapCount": 48,
-  "missingOrStale": [],
+  "missingOrStaleCount": 161,
+  "overclaimCount": 161,
+  "capabilityProofGapCount": 159,
+  "missingOrStale": [
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/history-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/idp-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/metering-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/search-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/support-tickets-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L0"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "message": "claimed L2 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "message": "claimed L3 exceeds observed L1"
+    },
+    {
+      "kind": "proof-claim-overstated",
+      "subject": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+      "message": "claimed L4 exceeds observed L1"
+    }
+  ],
   "capabilityProofGaps": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant identity (record + FQDN) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant identity (record + FQDN) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "User identity + tenant membership is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
     {
       "capability": "User identity + tenant membership",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "User identity + tenant membership is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "End-user profile + preferences self-service is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "End-user profile + preferences self-service is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "API keys / personal access tokens is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "API keys / personal access tokens is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Tenant groups",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant groups is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Tenant groups",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant groups is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant groups is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Sub-organisations",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Sub-organisations is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Sub-organisations",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Sub-organisations is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Sub-organisations is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "RBAC (roles + permissions) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "RBAC (roles + permissions)",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "RBAC (roles + permissions) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "RBAC (roles + permissions) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "ABAC / Policy Decision Point is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Delegated administration roles",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Delegated administration roles is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Delegated administration roles",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Delegated administration roles is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Entitlement engine",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Entitlement engine is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Entitlement engine",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Entitlement engine is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Support-mode / break-glass access is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Support-mode / break-glass access",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Support-mode / break-glass access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Support-mode / break-glass access is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Audit of privileged access",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Audit of privileged access is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Audit of privileged access",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Audit of privileged access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Audit of privileged access is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Platform login + session",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Platform login + session is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Platform login + session",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Platform login + session is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Platform login + session",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Platform login + session is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Platform login + session is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "IdP brokering + OIDC provider management",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "IdP brokering + OIDC provider management is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "IdP brokering + OIDC provider management is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Claim mapping + group/role mapping",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Claim mapping + group/role mapping",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Claim mapping + group/role mapping is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "MFA + session policy + lockout",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "MFA + session policy + lockout is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "MFA + session policy + lockout is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Configuration registry + history",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Configuration registry + history is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Configuration registry + history",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Configuration registry + history is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Configuration registry + history is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Branding + theming",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Branding + theming is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Branding + theming",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Branding + theming is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Branding + theming is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Custom domains, DNS ownership, TLS, canonical is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Custom domains, DNS ownership, TLS, canonical is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Write-only secret settings",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Write-only secret settings",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Write-only secret settings",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Write-only secret settings is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Product catalog, plans, prices is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Product catalog, plans, prices",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Product catalog, plans, prices is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Subscriptions, invoices, payment methods, dunning is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Usage metering + meter event ingestion is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Usage metering + meter event ingestion is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Quota enforcement",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Quota enforcement is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Quota enforcement",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Quota enforcement is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Relational storage + migrations + RLS is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Relational storage + migrations + RLS",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Relational storage + migrations + RLS is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Backup + restore",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Backup + restore is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Backup + restore",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Backup + restore is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "PITR, retention, legal hold, data residency is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "PITR, retention, legal hold, data residency is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Tenant data import / export",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant data import / export is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant data import / export",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant data import / export is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Search + indexing (product search) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Search + indexing (product search) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Object storage + tenant prefixes + signed URLs is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Object storage + tenant prefixes + signed URLs is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Event bus, durable queues, DLQ, redrive is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Event bus, durable queues, DLQ, redrive is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Workflow engine, scheduled jobs, approvals is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Scheduled jobs (built-in, on the event substrate) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Scheduled jobs (built-in, on the event substrate) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Notification delivery + preferences + channels",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Notification delivery + preferences + channels is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Notification delivery + preferences + channels is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Background workers / job runner",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Background workers / job runner is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Background workers / job runner",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Background workers / job runner is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Runtime secrets management",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Runtime secrets management",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Runtime secrets management",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Runtime secrets management is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Runtime secrets management is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Logs (aggregation + tenant-scoped search) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Logs (aggregation + tenant-scoped search) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Metrics + traces",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Metrics + traces is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Metrics + traces",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Metrics + traces is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Metrics + traces",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Metrics + traces is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Metrics + traces is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Observability — built-in alerting + incidents",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Observability — built-in alerting + incidents is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Observability — built-in alerting + incidents is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Internal service catalog + readiness",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Internal service catalog + readiness is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Internal service catalog + readiness is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Code quality + secret + dependency scanning",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Code quality + secret + dependency scanning",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Code quality + secret + dependency scanning is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Compliance reports, access reviews, evidence packs is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant isolation proof is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant isolation proof is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Webhooks (developer-facing)",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Webhooks (developer-facing) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Webhooks (developer-facing) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "API docs, developer portal, SDKs, rate limits is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Rate limiting (API)",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Rate limiting (API) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Rate limiting (API) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant lifecycle: provision, suspend, delete, export is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Tenant lifecycle: provision, suspend, delete, export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Tenant lifecycle: provision, suspend, delete, export is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Support tickets, customer health, announcements is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Support tickets, customer health, announcements",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Support tickets, customer health, announcements is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Support tickets, customer health, announcements is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Universal Service Foundation scope + principles is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Build-versus-compose decision framework is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Service catalog + provider integration model",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Service catalog + provider integration model is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Service catalog + provider integration model is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Environment-specific vs shared service model is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Provider configuration plane",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Provider configuration plane is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Provider configuration plane",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Provider configuration plane is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Composed provider readiness spine is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Composed provider readiness spine is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "History read-model (read-only projection) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "History read-model (read-only projection) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "OIDC discovery / issuer / JWKS validation is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "OIDC discovery / issuer / JWKS validation is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "OIDC test connection + callback display",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "OIDC test connection + callback display is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "OIDC test connection + callback display is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant host identity resolution is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant host identity resolution is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Tenant domain activation (auth-client)",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Tenant domain activation (auth-client) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Tenant domain activation (auth-client) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Tenant canonical domain set/unset",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Tenant canonical domain set/unset is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Tenant canonical domain set/unset is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Tenant custom-domain auth callback",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "PROVIDER_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Tenant custom-domain auth callback is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Tenant custom-domain auth callback is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Tenant service clickthrough policy is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Tenant service clickthrough policy is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Environment registry + bootstrap is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Environment registry + bootstrap is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "Provider environment classification",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Provider environment classification is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Provider environment classification",
+      "kind": "capability-real-provider-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "provider-L4",
+      "message": "Provider environment classification is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "E2E confidence ladder (stage-aware) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "OpenAPI drift hard gate is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "i18n runtime + validation is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Accessibility (a11y) gate is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "kind": "capability-semantic-proof-missing",
+      "readiness": "PARTIALLY_PROVEN",
+      "missingBand": "semantic-L3",
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing semantic-L3 runtime evidence"
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "kind": "capability-real-provider-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "provider-L4",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing provider-L4 runtime evidence"
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "kind": "capability-external-sandbox-proof-missing",
-      "readiness": "SEMANTIC_PROVEN",
+      "readiness": "PARTIALLY_PROVEN",
       "missingBand": "sandbox-L5",
-      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is PARTIALLY_PROVEN; missing sandbox-L5 runtime evidence"
     }
   ],
-  "weak": []
+  "weak": [
+    {
+      "proofId": "proof:apps-platform-api-scripts-alert-incident-closure-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alert-incident-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alert-notification-bridge-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-alerting-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-api-key-routes-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-api-keys-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-auth-settings-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-backup-control-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-control-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-local-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-backup-restore-scripts-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-backup-restore-scripts-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-catalog-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-control-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-control-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-billing-readiness-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-billing-readiness-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-browser-telemetry-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-browser-telemetry-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-clamav-antivirus-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-clamav-antivirus-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-clickthrough-services-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-compliance-report-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compliance-report-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-compliance-report-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compliance-report-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-compose-environment-operation-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-compose-environment-operation-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/composed-provider-readiness-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-composed-provider-readiness-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-composed-provider-runtime-closure-proof-ts",
+      "subject": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-composed-provider-runtime-closure-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-credential-lifecycle-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/credential-lifecycle-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-credential-lifecycle-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-dashboards-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-governance-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-portability-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-data-residency-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/domain-identity-matrix-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-domain-identity-matrix-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-email-sender-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-email-sender-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlement-policy-chain-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-postgres-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-routes-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-entitlements-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-operations-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/environment-registry-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-environment-registry-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-bus-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-redrive-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/event-worker-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-event-worker-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-full-observability-contract-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-full-observability-contract-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/history-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-history-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-http-engine-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-engine-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-http-webhook-dispatcher-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-http-webhook-dispatcher-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/idp-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-idp-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-automation-runner-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-automation-runner-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-billing-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-billing-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "subject": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-vs-real-parity-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/in-memory-workflow-orchestrator-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-in-memory-workflow-orchestrator-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-incident-foundation-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-lago-billing-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-legal-hold-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/legal-hold-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-legal-hold-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metering-quota-routes-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/metering-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metering-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-metrics-prometheus-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/notification-dispatch-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-dispatch-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/notification-email-transport-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-email-transport-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/notification-preferences-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-preferences-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-transport-routes-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-transports-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-transports-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-notification-webhook-transport-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-object-scan-closure-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/object-scan-closure-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-object-scan-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-control-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-control-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-provider-closure-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/observability-provider-closure-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-provider-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-readiness-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-readiness-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-observability-signals-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-oidc-enterprise-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-openapi-drift-validator-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-openapi-drift-validator-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-openbao-secret-store-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/openbao-secret-store-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-openbao-secret-store-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-pitr-restore-drill-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-platform-services-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-playwright-adapter-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/playwright-adapter-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-playwright-adapter-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-playwright-axe-adapter-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-playwright-axe-adapter-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-api-key-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-api-key-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-api-key-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-billing-catalog-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-billing-catalog-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-data-governance-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-data-governance-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-email-sender-store-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-email-sender-store-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-event-bus-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-event-bus-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-history-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-history-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-history-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-identity-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-identity-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-identity-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-legal-hold-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-legal-hold-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-legal-hold-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-metering-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-metering-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-notification-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-notification-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-notification-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-observability-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-observability-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-profile-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-profile-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-provider-config-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-quota-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-quota-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-retention-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-retention-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-search-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-search-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-secret-store-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-secret-store-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-secret-store-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-tenant-credential-store-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-tenant-credential-store-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-postgres-webhook-store-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-profile-self-service-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-prometheus-metrics-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-prometheus-metrics-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-binding-report-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-binding-report-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-config-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-environment-classification-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-observability-closure-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-observability-closure-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-observability-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-observability-contract-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-observability-contract-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-readiness-contract-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/provider-secrets-readiness-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-provider-secrets-readiness-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-quota-enforcement-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-rate-limits-redis-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-rate-limits-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-react-i18n-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-react-i18n-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-retention-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/retention-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-retention-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-scheduled-job-routes-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-scheduled-jobs-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/search-isolation-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-isolation-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/search-routes-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-routes-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/search-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-search-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/secret-store-contract-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-secret-store-contract-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/secrets-openbao-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-secrets-openbao-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-security-control-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-security-control-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/service-catalog-registry-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-service-catalog-registry-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-service-clickthrough-policy-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-smtp-email-adapter-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-smtp-email-adapter-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-static-assurance-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-static-assurance-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-support-announcements-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-support-announcements-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-support-approval-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-support-tickets-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/support-tickets-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-support-tickets-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-temporal-workflow-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-temporal-workflow-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-custom-domain-resolution-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domain-canonical-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domains-routing-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-domains-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-lifecycle-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-observability-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-secret-crypto-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-secret-crypto-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-secret-crypto-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-storage-objects-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-tenant-storage-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-tenant-storage-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-typed-secret-resolution-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/typed-secret-resolution-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-typed-secret-resolution-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhook-redrive-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-webhook-worker-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhook-worker-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L0",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-webhooks-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-windmill-automation-provider-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-windmill-automation-provider-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-adapters-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-adapters-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-closure-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-control-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-control-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-control-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-control-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-provider-live-proof.ts",
+      "claimed": "L2",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-provider-live-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-readiness-route-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+      "claimed": "L3",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-route-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-workflow-readiness-runtime-proof-ts",
+      "subject": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+      "claimed": "L4",
+      "observed": "L1",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-workflow-readiness-runtime-proof.json"
+    }
+  ]
 }
