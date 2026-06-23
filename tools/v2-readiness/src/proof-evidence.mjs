@@ -271,6 +271,18 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     capabilityReadiness
   );
   const negativeControls = buildNegativeControlReport(ctx);
+  const formalGapTaxonomy = buildFormalProofGapTaxonomyReport({
+    evidence,
+    claimVsObserved,
+    ladderCompliance,
+    environmentConsistency,
+    behaviourLocking,
+    behaviourReadiness,
+    capabilityReadiness,
+    inMemoryParity,
+    routeSubjectMap,
+    negativeControls,
+  });
   const formalReadiness = buildFormalProofReadinessReport({
     evidence,
     strengthMatrix,
@@ -285,6 +297,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     routeSubjectMap,
     weakProofBacklog,
     negativeControls,
+    formalGapTaxonomy,
   });
 
   return {
@@ -303,6 +316,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     routeSubjectMap,
     weakProofBacklog,
     negativeControls,
+    formalGapTaxonomy,
     formalReadiness,
     gaps: formalReadiness.gaps,
   };
@@ -1555,6 +1569,92 @@ function buildNegativeControlReport(ctx) {
   };
 }
 
+export function buildFormalProofGapTaxonomyReport({
+  evidence,
+  claimVsObserved,
+  ladderCompliance,
+  environmentConsistency,
+  behaviourLocking,
+  behaviourReadiness,
+  capabilityReadiness,
+  inMemoryParity,
+  routeSubjectMap,
+  negativeControls,
+}) {
+  const gaps = buildFormalProofReadinessGaps({
+    evidence,
+    claimVsObserved,
+    ladderCompliance,
+    environmentConsistency,
+    behaviourLocking,
+    behaviourReadiness,
+    capabilityReadiness,
+    inMemoryParity,
+    routeSubjectMap,
+    negativeControls,
+  });
+  const gapsByKind = countBy(gaps, (gap) => gap.kind);
+  const rows = gaps.map((gap) => {
+    const classification = formalGapClassification(gap.kind);
+    return {
+      kind: gap.kind,
+      subject: gap.subject,
+      message: gap.message,
+      closureTrack: classification.closureTrack,
+      proofLevelBand: classification.proofLevelBand,
+      severity: classification.severity,
+      remediationEffort: classification.remediationEffort,
+      exactClosureAction: classification.exactClosureAction,
+      blocksCurrentL3Milestone: classification.blocksCurrentL3Milestone,
+      blocksFutureSubstrateExpansion: classification.blocksFutureSubstrateExpansion,
+    };
+  });
+  const byClosureTrack = Object.values(
+    rows.reduce((acc, row) => {
+      if (!acc[row.closureTrack]) {
+        acc[row.closureTrack] = {
+          closureTrack: row.closureTrack,
+          gapCount: 0,
+          blocksCurrentL3Milestone: false,
+          blocksFutureSubstrateExpansion: false,
+          proofLevelBands: [],
+          exactClosureActions: [],
+        };
+      }
+      acc[row.closureTrack].gapCount += 1;
+      acc[row.closureTrack].blocksCurrentL3Milestone ||= row.blocksCurrentL3Milestone;
+      acc[row.closureTrack].blocksFutureSubstrateExpansion ||= row.blocksFutureSubstrateExpansion;
+      acc[row.closureTrack].proofLevelBands = uniq([
+        ...acc[row.closureTrack].proofLevelBands,
+        row.proofLevelBand,
+      ]);
+      acc[row.closureTrack].exactClosureActions = uniq([
+        ...acc[row.closureTrack].exactClosureActions,
+        row.exactClosureAction,
+      ]);
+      return acc;
+    }, {})
+  ).sort((a, b) => a.closureTrack.localeCompare(b.closureTrack));
+  const currentL3MilestoneBlocked = rows.some((row) => row.blocksCurrentL3Milestone);
+  const futureSubstrateExpansionBlocked = rows.some((row) => row.blocksFutureSubstrateExpansion);
+  return {
+    artefact: "formal-proof-gap-taxonomy-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    activeMilestone: "L3 Behaviour Proven",
+    totalGapCount: gaps.length,
+    currentL3MilestoneBlocked,
+    futureSubstrateExpansionBlocked,
+    behaviourReadinessStatus: behaviourReadiness.status,
+    behaviourClosurePercentage: behaviourReadiness.closurePercentage,
+    inMemoryParityStatus: inMemoryParity.status,
+    gapsByKind,
+    byClosureTrack,
+    rows,
+  };
+}
+
 function buildFormalProofReadinessReport({
   evidence,
   claimVsObserved,
@@ -1567,8 +1667,71 @@ function buildFormalProofReadinessReport({
   routeSubjectMap,
   weakProofBacklog,
   negativeControls,
+  formalGapTaxonomy,
 }) {
-  const gaps = [
+  const gaps = buildFormalProofReadinessGaps({
+    evidence,
+    claimVsObserved,
+    ladderCompliance,
+    environmentConsistency,
+    behaviourLocking,
+    behaviourReadiness,
+    capabilityReadiness,
+    inMemoryParity,
+    routeSubjectMap,
+    negativeControls,
+  });
+  return {
+    artefact: "v2-formal-proof-readiness-report",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    summary: {
+      evidenceRecords: evidence.recordCount,
+      requiredProofs: evidence.requiredProofCount,
+      missingEvidence: evidence.missingEvidence.length,
+      staleEvidence: evidence.staleEvidence.length,
+      claimMismatches: claimVsObserved.mismatchCount,
+      inMemoryProviderParityGaps: inMemoryParity.gaps.length,
+      routeProofSubjectGaps: routeSubjectMap.gaps.length,
+      proofLadderComplianceGaps: ladderCompliance.gaps.length,
+      environmentProofConsistencyGaps: environmentConsistency.gaps.length,
+      behaviourProofLockingGaps: behaviourLocking.gaps.length,
+      behaviourReadinessStatus: behaviourReadiness.status,
+      behaviourReadinessGaps: behaviourReadiness.remainingClosureWork.length,
+      behaviourClosurePercentage: behaviourReadiness.closurePercentage,
+      capabilityReadinessComputed: capabilityReadiness.capabilityCount,
+      capabilityReadinessStatus: capabilityReadiness.status,
+      capabilityReadinessGaps: capabilityReadiness.gaps.length,
+      fullyProvenCapabilities: capabilityReadiness.fullyProvenCapabilityCount,
+      fullServiceVerifiedCapabilities: capabilityReadiness.fullServiceVerifiedCapabilityCount,
+      weakProofBacklogStatus: weakProofBacklog.status,
+      negativeControls: negativeControls.status,
+      formalGapTaxonomyStatus: formalGapTaxonomy.status,
+      currentL3MilestoneBlocked: formalGapTaxonomy.currentL3MilestoneBlocked,
+      futureSubstrateExpansionBlocked: formalGapTaxonomy.futureSubstrateExpansionBlocked,
+      remainingFormalGapTracks: formalGapTaxonomy.byClosureTrack.map((track) => ({
+        closureTrack: track.closureTrack,
+        gapCount: track.gapCount,
+      })),
+    },
+    gaps,
+  };
+}
+
+function buildFormalProofReadinessGaps({
+  evidence,
+  claimVsObserved,
+  ladderCompliance,
+  environmentConsistency,
+  behaviourLocking,
+  behaviourReadiness,
+  capabilityReadiness,
+  inMemoryParity,
+  routeSubjectMap,
+  negativeControls,
+}) {
+  return [
     ...evidence.gaps,
     ...claimVsObserved.mismatches.map((mismatch) => ({
       kind: "proof-claim-overstated",
@@ -1616,35 +1779,93 @@ function buildFormalProofReadinessReport({
       message: "proof evidence validator did not catch the deliberate failing fixture",
     })),
   ];
-  return {
-    artefact: "v2-formal-proof-readiness-report",
-    schemaVersion: 2,
-    generatedAt: new Date().toISOString(),
-    status: gaps.length === 0 ? "PASS" : "FAIL",
-    summary: {
-      evidenceRecords: evidence.recordCount,
-      requiredProofs: evidence.requiredProofCount,
-      missingEvidence: evidence.missingEvidence.length,
-      staleEvidence: evidence.staleEvidence.length,
-      claimMismatches: claimVsObserved.mismatchCount,
-      inMemoryProviderParityGaps: inMemoryParity.gaps.length,
-      routeProofSubjectGaps: routeSubjectMap.gaps.length,
-      proofLadderComplianceGaps: ladderCompliance.gaps.length,
-      environmentProofConsistencyGaps: environmentConsistency.gaps.length,
-      behaviourProofLockingGaps: behaviourLocking.gaps.length,
-      behaviourReadinessStatus: behaviourReadiness.status,
-      behaviourReadinessGaps: behaviourReadiness.remainingClosureWork.length,
-      behaviourClosurePercentage: behaviourReadiness.closurePercentage,
-      capabilityReadinessComputed: capabilityReadiness.capabilityCount,
-      capabilityReadinessStatus: capabilityReadiness.status,
-      capabilityReadinessGaps: capabilityReadiness.gaps.length,
-      fullyProvenCapabilities: capabilityReadiness.fullyProvenCapabilityCount,
-      fullServiceVerifiedCapabilities: capabilityReadiness.fullServiceVerifiedCapabilityCount,
-      weakProofBacklogStatus: weakProofBacklog.status,
-      negativeControls: negativeControls.status,
+}
+
+function formalGapClassification(kind) {
+  const classifications = {
+    "proof-command-failed": {
+      closureTrack: "execution",
+      proofLevelBand: "L1 Executable Proven",
+      severity: "critical",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
+      blocksCurrentL3Milestone: false,
+      blocksFutureSubstrateExpansion: true,
     },
-    gaps,
+    "observability-proof-signal": {
+      closureTrack: "observability",
+      proofLevelBand: "L3 Behaviour Proven",
+      severity: "high",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Emit correlated trace, metric, and log evidence from the proof process for the observability subject.",
+      blocksCurrentL3Milestone: false,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "route-proof-evidence-missing": {
+      closureTrack: "route-evidence",
+      proofLevelBand: "L1 Executable Proven",
+      severity: "high",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
+      blocksCurrentL3Milestone: false,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "mutation-state-evidence": {
+      closureTrack: "mutation-state",
+      proofLevelBand: "L3 Behaviour Proven",
+      severity: "high",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
+      blocksCurrentL3Milestone: false,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "behaviour-proof-incomplete": {
+      closureTrack: "behaviour-closure",
+      proofLevelBand: "L3 Behaviour Proven",
+      severity: "critical",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Close the missing behavioural evidence fields before any substrate proof can be promoted.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "capability-behaviour-proof-missing": {
+      closureTrack: "behaviour-closure",
+      proofLevelBand: "L3 Behaviour Proven",
+      severity: "critical",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Add complete Behaviour Proven evidence for the capability or remove the unsupported behavioural claim.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
+    "in-memory-provider-parity": {
+      closureTrack: "in-memory-parity",
+      proofLevelBand: "L2 Contract Proven",
+      severity: "critical",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Restore provider parity evidence showing port, semantic, failure, event, audit, and observability contract alignment.",
+      blocksCurrentL3Milestone: true,
+      blocksFutureSubstrateExpansion: true,
+    },
   };
+  return (
+    classifications[kind] || {
+      closureTrack: "formal-assurance",
+      proofLevelBand: "cross-level",
+      severity: "high",
+      remediationEffort: "medium",
+      exactClosureAction:
+        "Repair the emitted runtime evidence or explicit proof mapping so the strict formal gate can validate it.",
+      blocksCurrentL3Milestone: kind.includes("behaviour"),
+      blocksFutureSubstrateExpansion: true,
+    }
+  );
 }
 
 function proofAliasForScript(scriptPath, packageJsonScripts = {}) {
@@ -2185,6 +2406,14 @@ function isMeaningfulEvidence(value) {
   if (value === true) return true;
   if (typeof value === "string") return value.length > 0;
   return isMeaningfulObject(value);
+}
+
+function countBy(values, selector) {
+  return values.reduce((acc, value) => {
+    const key = selector(value);
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
 }
 
 function uniq(values) {

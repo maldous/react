@@ -61,10 +61,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T10:59:21.725Z",
-  "endedAt": "2026-06-23T10:59:22.048Z",
+  "startedAt": "2026-06-23T11:15:13.610Z",
+  "endedAt": "2026-06-23T11:15:13.922Z",
   "exitStatus": 0,
-  "commit": "bc8fbcff83d5b6ea061234fe385c7f038d508974",
+  "commit": "83db766386191bf621479df8d9d6caeb4c52e60e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -108,7 +108,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T10:59:21.979Z"
+      "createdAt": "2026-06-23T11:15:13.854Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -629,18 +629,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T10:59:22.048Z",
+  "generatedAt": "2026-06-23T11:15:13.922Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782212345925-3665898",
+  "collectorRunId": "proof-run-1782213297787-3768711",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T10:59:21.725Z",
-  "endTime": "2026-06-23T10:59:22.048Z",
-  "gitCommit": "bc8fbcff83d5b6ea061234fe385c7f038d508974",
-  "executionTimestamp": "2026-06-23T10:59:22.048Z",
+  "startTime": "2026-06-23T11:15:13.610Z",
+  "endTime": "2026-06-23T11:15:13.922Z",
+  "gitCommit": "83db766386191bf621479df8d9d6caeb4c52e60e",
+  "executionTimestamp": "2026-06-23T11:15:13.922Z",
   "stateDiff": {
     "searchTenantIsolation": true,
     "secretTenantIsolation": true,
@@ -921,5 +921,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "3e1d0e80cc01d9ab9cccd16f6e0796797236f50a4d2aa1ab800e90cf4388c409"
+  "evidenceSignature": "4cb249c3d19d196ab8b1d78b2531f91822e10e1fce5218e4c9fa6704004f60e9"
 }

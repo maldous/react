@@ -6503,6 +6503,42 @@
       "v2Target": "tools/v2-readiness/tests/rules.test.mjs",
       "protectingTests": ["tools/v2-readiness/tests/rules.test.mjs"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/behaviour-proof-locking-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated USF Behaviour Proven L3 proof-locking assurance report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/behaviour-proof-locking-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/behaviour-proof-readiness-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated USF Behaviour Proven L3 closure readiness report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/behaviour-proof-readiness-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-ladder-migration-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated USF proof ladder migration report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-ladder-migration-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/formal-proof-gap-taxonomy-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated taxonomy for remaining formal proof readiness gaps after L3 closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/formal-proof-gap-taxonomy-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -6885,6 +6921,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 692,
+  "additionCount": 696,
   "deletionCount": 54
 }

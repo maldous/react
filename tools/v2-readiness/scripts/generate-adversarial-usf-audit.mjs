@@ -54,6 +54,7 @@ writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity)
 writeJson("route-proof-subject-map.json", proofEvidence.routeSubjectMap);
 writeJson("weak-proof-backlog.json", proofEvidence.weakProofBacklog);
 writeJson("proof-negative-control-report.json", proofEvidence.negativeControls);
+writeJson("formal-proof-gap-taxonomy-report.json", proofEvidence.formalGapTaxonomy);
 writeJson("v2-formal-proof-readiness-report.json", proofEvidence.formalReadiness);
 
 const semanticDevProviders = [
@@ -199,6 +200,9 @@ const summary = {
   formalProofGapCount,
   capabilityProofGapCount,
   weakProofBacklogStatus: proofEvidence.weakProofBacklog.status,
+  formalProofGapTaxonomyStatus: proofEvidence.formalGapTaxonomy.status,
+  currentL3MilestoneBlocked: proofEvidence.formalGapTaxonomy.currentL3MilestoneBlocked,
+  futureSubstrateExpansionBlocked: proofEvidence.formalGapTaxonomy.futureSubstrateExpansionBlocked,
   fullServiceVerifiedCapabilities:
     proofEvidence.capabilityReadiness.fullServiceVerifiedCapabilityCount,
   fullyProvenCapabilities: proofEvidence.capabilityReadiness.fullyProvenCapabilityCount,

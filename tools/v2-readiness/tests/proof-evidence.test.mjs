@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   buildCapabilityProofReadinessReport,
+  buildFormalProofGapTaxonomyReport,
   buildWeakProofBacklog,
   normalizeEvidenceRecord,
   observedLevelFromEvidence,
@@ -292,3 +293,92 @@ test("weak proof backlog includes capability-level proof gaps", () => {
     },
   ]);
 });
+
+test("formal proof gap taxonomy separates L3 closure from future formal backlog", () => {
+  const taxonomy = buildFormalProofGapTaxonomyReport({
+    evidence: {
+      gaps: [
+        {
+          kind: "proof-command-failed",
+          subject: "apps/platform-api/scripts/failing-runtime-proof.ts",
+          message: "proof command exited 1",
+        },
+        {
+          kind: "observability-proof-signal",
+          subject: "observability:fixture",
+          message: "observability proof lacks captured trace/log/metric evidence",
+        },
+        {
+          kind: "route-proof-evidence-missing",
+          subject: "POST /api/fixture",
+          message: "route proof has explicit subject refs but no emitted evidence record",
+        },
+        {
+          kind: "mutation-state-evidence",
+          subject: "POST /api/fixture",
+          message: "mutation proof lacks emitted before/after state evidence",
+        },
+      ],
+    },
+    claimVsObserved: { mismatches: [] },
+    ladderCompliance: { gaps: [] },
+    environmentConsistency: { gaps: [] },
+    behaviourLocking: { gaps: [] },
+    behaviourReadiness: { status: "PASS", remainingClosureWork: [], closurePercentage: 100 },
+    capabilityReadiness: { gaps: [] },
+    inMemoryParity: { status: "PASS", gaps: [] },
+    routeSubjectMap: { gaps: [] },
+    negativeControls: { failed: [] },
+  });
+
+  assert.equal(taxonomy.status, "FAIL");
+  assert.equal(taxonomy.totalGapCount, 4);
+  assert.equal(taxonomy.currentL3MilestoneBlocked, false);
+  assert.equal(taxonomy.futureSubstrateExpansionBlocked, true);
+  assert.deepEqual(taxonomy.gapsByKind, {
+    "mutation-state-evidence": 1,
+    "observability-proof-signal": 1,
+    "proof-command-failed": 1,
+    "route-proof-evidence-missing": 1,
+  });
+  assert.deepEqual(
+    taxonomy.byClosureTrack.map((track) => [track.closureTrack, track.gapCount]),
+    [
+      ["execution", 1],
+      ["mutation-state", 1],
+      ["observability", 1],
+      ["route-evidence", 1],
+    ]
+  );
+
+  const behaviourBlocking = buildFormalProofGapTaxonomyReport({
+    ...taxonomyFixture(),
+    behaviourReadiness: {
+      status: "FAIL",
+      closurePercentage: 99,
+      remainingClosureWork: [
+        {
+          kind: "capability-behaviour-proof-missing",
+          capability: "Fixture capability",
+          message: "Fixture capability has incomplete L3 Behaviour Proven evidence",
+        },
+      ],
+    },
+  });
+  assert.equal(behaviourBlocking.currentL3MilestoneBlocked, true);
+});
+
+function taxonomyFixture() {
+  return {
+    evidence: { gaps: [] },
+    claimVsObserved: { mismatches: [] },
+    ladderCompliance: { gaps: [] },
+    environmentConsistency: { gaps: [] },
+    behaviourLocking: { gaps: [] },
+    behaviourReadiness: { status: "PASS", remainingClosureWork: [], closurePercentage: 100 },
+    capabilityReadiness: { gaps: [] },
+    inMemoryParity: { status: "PASS", gaps: [] },
+    routeSubjectMap: { gaps: [] },
+    negativeControls: { failed: [] },
+  };
+}
