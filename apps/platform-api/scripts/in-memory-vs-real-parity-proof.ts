@@ -9,6 +9,7 @@ import {
   InMemoryRateLimitRepository,
   InMemorySearchRepository,
   InMemorySecretStore,
+  InMemoryWebhookDispatcher,
 } from "../src/adapters/in-memory-semantic-providers.ts";
 import {
   createInMemoryObjectStoragePort,
@@ -22,6 +23,7 @@ import {
   getWindmillAutomationProviderMetric,
   WindmillAutomationProviderAdapter,
 } from "../src/adapters/windmill-automation-provider.ts";
+import { HttpWebhookDispatcher } from "../src/adapters/http-webhook-dispatcher.ts";
 import { emitRuntimeProofEvidence } from "./lib/runtime-evidence.ts";
 
 const requiredMethods = {
@@ -66,6 +68,7 @@ const beforeState = {
   indexedDocuments: 0,
   automationRuns: 0,
   storageObjects: 0,
+  webhookDeliveries: 0,
   secretReadableAcrossTenant: false,
   failurePathExercised: false,
 };
@@ -414,12 +417,102 @@ await fakeS3TenantStorage.delete(storageKey);
 assert.equal(await inMemoryObjectStorage.get(storageKey), null);
 assert.equal(await fakeS3Storage.get(storageKey), null);
 
+const webhookMethods = ["dispatch"] as const;
+const inMemoryWebhookDispatcher = new InMemoryWebhookDispatcher();
+const webhookReceiverRequests: Array<{
+  method: string;
+  url: string;
+  body: string;
+  eventHeader: string | null;
+}> = [];
+const webhookReceiver = http.createServer((req, res) => {
+  void (async () => {
+    const chunks: Buffer[] = [];
+    for await (const chunk of req) chunks.push(Buffer.from(chunk));
+    const body = Buffer.concat(chunks).toString("utf8");
+    webhookReceiverRequests.push({
+      method: req.method ?? "GET",
+      url: req.url ?? "/",
+      body,
+      eventHeader: req.headers["x-platform-event"]?.toString() ?? null,
+    });
+    const status = req.url === "/fail" ? 500 : 202;
+    res.writeHead(status, { "content-type": "application/json" });
+    res.end(JSON.stringify({ ok: status < 400, status }));
+  })().catch((err) => {
+    res.writeHead(500, { "content-type": "application/json" });
+    res.end(JSON.stringify({ error: String(err) }));
+  });
+});
+const webhookReceiverPort = await listen(webhookReceiver);
+const fakeHttpWebhookDispatcher = new HttpWebhookDispatcher(fetch);
+for (const method of webhookMethods) {
+  assert.equal(
+    typeof inMemoryWebhookDispatcher[method],
+    "function",
+    `in-memory webhook dispatcher.${method}`
+  );
+  assert.equal(
+    typeof fakeHttpWebhookDispatcher[method],
+    "function",
+    `http webhook dispatcher.${method}`
+  );
+}
+
+const webhookSuccessRequest = {
+  url: `http://127.0.0.1:${webhookReceiverPort}/webhook`,
+  headers: {
+    "content-type": "application/json",
+    "x-platform-event": "platform.parity",
+  },
+  body: JSON.stringify({ event: "platform.parity", tenantId: tenantA }),
+};
+const inMemoryWebhookSuccess = await inMemoryWebhookDispatcher.dispatch(webhookSuccessRequest);
+const fakeHttpWebhookSuccess = await fakeHttpWebhookDispatcher.dispatch(webhookSuccessRequest);
+assert.deepEqual(inMemoryWebhookSuccess, { ok: true, status: 202, error: null });
+assert.deepEqual(fakeHttpWebhookSuccess, { ok: true, status: 202, error: null });
+
+const webhookFailureRequest = {
+  ...webhookSuccessRequest,
+  url: `http://127.0.0.1:${webhookReceiverPort}/fail`,
+  body: JSON.stringify({ event: "platform.parity.fail", tenantId: tenantA }),
+};
+const inMemoryWebhookFailure = await inMemoryWebhookDispatcher.dispatch({
+  ...webhookFailureRequest,
+  url: "https://fail.example.test/webhook",
+});
+const fakeHttpWebhookFailure = await fakeHttpWebhookDispatcher.dispatch(webhookFailureRequest);
+assert.equal(inMemoryWebhookFailure.ok, false);
+assert.equal(inMemoryWebhookFailure.status, 500);
+assert.equal(fakeHttpWebhookFailure.ok, false);
+assert.equal(fakeHttpWebhookFailure.status, 500);
+
+inMemoryWebhookDispatcher.injectFailure("dispatch");
+let inMemoryWebhookInjectedFailure = "";
+await assert.rejects(
+  async () => inMemoryWebhookDispatcher.dispatch(webhookSuccessRequest),
+  (err) => {
+    inMemoryWebhookInjectedFailure = err instanceof Error ? err.message : String(err);
+    return /injected failure/.test(inMemoryWebhookInjectedFailure);
+  }
+);
+inMemoryWebhookDispatcher.clearFailure("dispatch");
+const inMemoryWebhookHealth = inMemoryWebhookDispatcher.healthCheck();
+assert.equal(inMemoryWebhookHealth.status, "ready");
+assert.equal(webhookReceiverRequests.length, 2);
+assert.equal(webhookReceiverRequests[0]?.method, "POST");
+assert.equal(webhookReceiverRequests[0]?.eventHeader, "platform.parity");
+assert.equal(webhookReceiverRequests[1]?.url, "/fail");
+
 const automationAuditEvents = [
   ...inMemoryAutomation
     .getAuditEvents()
     .map((event, index) => `in-memory:${event.action}:${index}`),
   ...fakeWindmill.getAuditEvents().map((event, index) => `fake-windmill:${event.action}:${index}`),
 ];
+const webhookAuditEvents = inMemoryWebhookDispatcher
+  .getAuditEvents()
+  .map((event, index) => `in-memory-webhook:${event.action}:${index}`);
 const automationMetricSamples = [
   {
     name: "in_memory_automation_run_script_success_total",
@@ -445,6 +538,20 @@ const automationMetricSamples = [
     name: "s3_object_storage_delete_success_total",
     value: getStorageOperationMetric("delete", "success") - s3MetricBeforeDelete,
   },
+  {
+    name: "in_memory_webhook_dispatch_success_total",
+    value: inMemoryWebhookDispatcher.deliveries.filter((delivery) => !delivery.url.includes("fail"))
+      .length,
+  },
+  {
+    name: "in_memory_webhook_dispatch_failure_total",
+    value: inMemoryWebhookDispatcher.deliveries.filter((delivery) => delivery.url.includes("fail"))
+      .length,
+  },
+  {
+    name: "http_webhook_dispatch_attempt_total",
+    value: webhookReceiverRequests.length,
+  },
   ...[...storageEvents.metric.entries()].map(([name, value]) => ({ name, value })),
 ];
 for (const sample of automationMetricSamples) {
@@ -459,6 +566,9 @@ for (const [name, provider] of Object.entries(providers)) {
   assert.equal((await provider.healthCheck()).status, "ready", `${name} must be ready after reset`);
 }
 await new Promise<void>((resolve) => windmillServer.close(() => resolve()));
+await new Promise<void>((resolve) => webhookReceiver.close(() => resolve()));
+inMemoryWebhookDispatcher.reset();
+assert.equal(inMemoryWebhookDispatcher.deliveries.length, 0);
 
 emitRuntimeProofEvidence({
   subjectIds: [
@@ -468,16 +578,20 @@ emitRuntimeProofEvidence({
     "provider:in-memory-search-repository",
     "provider:in-memory-automation-runner",
     "provider:in-memory-object-storage",
+    "provider:in-memory-webhook-dispatcher",
     "in-memory-rate-limit-repository",
     "in-memory-event-bus",
     "in-memory-secret-store",
     "in-memory-search-repository",
     "in-memory-automation-runner",
     "in-memory-object-storage",
+    "in-memory-webhook-dispatcher",
     "provider:windmill-automation-provider",
     "windmill-automation-provider",
     "provider:s3-object-storage-adapter",
     "s3-object-storage-adapter",
+    "provider:http-webhook-dispatcher",
+    "http-webhook-dispatcher",
     "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   ],
   storageIds: [`storage:${storageKey}`],
@@ -516,6 +630,15 @@ emitRuntimeProofEvidence({
     fakeS3SignedUrlIssued: fakeS3SignedUrl.startsWith("http://127.0.0.1:9/"),
     fakeS3Requests: fakeS3Requests.length,
     fakeS3ObjectsAfterCleanup: fakeS3Objects.size,
+    webhookContractMethods: webhookMethods.length,
+    inMemoryWebhookSuccess,
+    fakeHttpWebhookSuccess,
+    inMemoryWebhookFailure,
+    fakeHttpWebhookFailure,
+    inMemoryWebhookInjectedFailure,
+    inMemoryWebhookHealth,
+    fakeHttpWebhookRequests: webhookReceiverRequests.length,
+    inMemoryWebhookDeliveriesAfterCleanup: inMemoryWebhookDispatcher.deliveries.length,
     failurePathExercised: true,
     healthChecks: healthChecks.map((health) => health.status),
     resetVerified: true,
@@ -532,17 +655,24 @@ emitRuntimeProofEvidence({
     objectStorageLifecycleParity: true,
     objectStorageTenantIsolationParity: true,
     objectStorageCleanupParity: true,
+    webhookDispatcherPortMethodsMatch: true,
+    webhookDispatcherSuccessParity: true,
+    webhookDispatcherFailureParity: true,
+    webhookDispatcherCleanupParity: true,
   },
   failurePathExercised: true,
   sideEffectsAsserted: true,
   tenantBoundaryAsserted: true,
   securityBoundaryAsserted: true,
-  auditEventIds: [...automationAuditEvents, ...storageEvents.audit],
+  auditEventIds: [...automationAuditEvents, ...storageEvents.audit, ...webhookAuditEvents],
   traceIds: [
     "trace:automation-parity-script-run",
     "trace:automation-parity-flow-run",
     "trace:automation-parity-missing-run",
     ...storageEvents.trace,
+    "trace:webhook-parity-dispatch-success",
+    "trace:webhook-parity-dispatch-failure",
+    "trace:webhook-parity-dispatch-injected-failure",
   ],
   metricSamples: automationMetricSamples,
   logCorrelationIds: [
@@ -550,6 +680,9 @@ emitRuntimeProofEvidence({
     "log:automation-parity-flow-run",
     "log:automation-parity-missing-run",
     ...storageEvents.log,
+    "log:webhook-parity-dispatch-success",
+    "log:webhook-parity-dispatch-failure",
+    "log:webhook-parity-dispatch-injected-failure",
   ],
   cleanupResult: { status: "verified", resetSupported: true },
   deterministicReplaySupported: true,

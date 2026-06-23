@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   304 |
+| formal proof readiness gaps                 |   303 |
 | capability proof readiness gaps             |    89 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -252,7 +252,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - in-memory-provider-parity: in-memory-notification-transport - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-observability-repository - in-memory provider lacks complete emitted real-provider parity evidence
 - in-memory-provider-parity: in-memory-semantic-provider - in-memory provider lacks complete emitted real-provider parity evidence
-- in-memory-provider-parity: in-memory-webhook-dispatcher - in-memory provider lacks complete emitted real-provider parity evidence
 - capability-real-provider-proof-missing: Tenant identity (record + FQDN) - Tenant identity (record + FQDN) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: User identity + tenant membership - User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: End-user profile + preferences self-service - End-user profile + preferences self-service is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
@@ -288,3 +287,4 @@ The adversarial runtime inventory status is reported separately from formal proo
 - capability-real-provider-proof-missing: Relational storage + migrations + RLS - Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: Backup + restore - Backup + restore is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
 - capability-real-provider-proof-missing: PITR, retention, legal hold, data residency - PITR, retention, legal hold, data residency is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
+- capability-real-provider-proof-missing: Data governance: catalog, lineage, classification, PII, DSR/GDPR - Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence
