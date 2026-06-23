@@ -110,7 +110,7 @@
   "capabilityId": "capability:l4-substrate-closure",
   "providerId": "compose-local-substrate-closure",
   "routeIds": [],
-  "workflowIds": ["temporal:default:usf-l4-usf-l4-1782251474565-dd5648dd"],
+  "workflowIds": ["temporal:default:usf-l4-usf-l4-1782251903706-fad03ed9"],
   "eventIds": [
     "keycloak:platform-test:discovery",
     "observability:prometheus:ready",
@@ -120,19 +120,19 @@
     "windmill:health-and-auth-boundary"
   ],
   "storageIds": [
-    "postgres:usf_l4_substrate_probe:usf-l4-1782251474565-dd5648dd",
-    "redis:usf:l4:usf-l4-1782251474565-dd5648dd",
-    "minio:usf-l4-usf-l4-1782251474565-dd5648dd/state/probe.txt",
-    "openbao:sys/health:usf-l4-1782251474565-dd5648dd"
+    "postgres:usf_l4_substrate_probe:usf-l4-1782251903706-fad03ed9",
+    "redis:usf:l4:usf-l4-1782251903706-fad03ed9",
+    "minio:usf-l4-usf-l4-1782251903706-fad03ed9/state/probe.txt",
+    "openbao:sys/health:usf-l4-1782251903706-fad03ed9"
   ],
   "environmentMode": "test",
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:l4-substrate-closure",
-  "startedAt": "2026-06-23T21:51:14.275Z",
-  "endedAt": "2026-06-23T21:52:39.772Z",
+  "startedAt": "2026-06-23T21:58:23.414Z",
+  "endedAt": "2026-06-23T21:59:50.895Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -147,7 +147,7 @@
         "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
       }
     },
-    "marker": "usf-l4-1782251474565-dd5648dd",
+    "marker": "usf-l4-1782251903706-fad03ed9",
     "capabilityCount": 70,
     "roadmapCapabilityCount": 70,
     "substrateCounts": {
@@ -304,7 +304,7 @@
       "tempo": 200
     },
     "temporal": {
-      "workflowId": "usf-l4-usf-l4-1782251474565-dd5648dd",
+      "workflowId": "usf-l4-usf-l4-1782251903706-fad03ed9",
       "status": "RUNNING"
     },
     "windmill": {
@@ -345,11 +345,11 @@
       "updatedValue": "before->after"
     },
     "redis": {
-      "set": "usf:l4:usf-l4-1782251474565-dd5648dd",
+      "set": "usf:l4:usf-l4-1782251903706-fad03ed9",
       "value": "before->after"
     },
     "minio": {
-      "bucketCreated": "usf-l4-usf-l4-1782251474565-dd5648dd",
+      "bucketCreated": "usf-l4-usf-l4-1782251903706-fad03ed9",
       "objectWritten": "state/probe.txt"
     },
     "keycloak": {
@@ -387,18 +387,18 @@
   "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
   "auditEventIds": [
-    "audit:usf-l4-1782251474565-dd5648dd:postgres-state-diff",
-    "audit:usf-l4-1782251474565-dd5648dd:redis-state-diff",
-    "audit:usf-l4-1782251474565-dd5648dd:minio-state-diff",
-    "audit:usf-l4-1782251474565-dd5648dd:openbao-health",
-    "audit:usf-l4-1782251474565-dd5648dd:workflow-provider-boundary"
+    "audit:usf-l4-1782251903706-fad03ed9:postgres-state-diff",
+    "audit:usf-l4-1782251903706-fad03ed9:redis-state-diff",
+    "audit:usf-l4-1782251903706-fad03ed9:minio-state-diff",
+    "audit:usf-l4-1782251903706-fad03ed9:openbao-health",
+    "audit:usf-l4-1782251903706-fad03ed9:workflow-provider-boundary"
   ],
   "traceIds": [
-    "trace:usf-l4-1782251474565-dd5648dd:postgres",
-    "trace:usf-l4-1782251474565-dd5648dd:redis",
-    "trace:usf-l4-1782251474565-dd5648dd:minio",
-    "trace:usf-l4-1782251474565-dd5648dd:temporal",
-    "trace:usf-l4-1782251474565-dd5648dd:observability"
+    "trace:usf-l4-1782251903706-fad03ed9:postgres",
+    "trace:usf-l4-1782251903706-fad03ed9:redis",
+    "trace:usf-l4-1782251903706-fad03ed9:minio",
+    "trace:usf-l4-1782251903706-fad03ed9:temporal",
+    "trace:usf-l4-1782251903706-fad03ed9:observability"
   ],
   "metricSamples": [
     {
@@ -422,7 +422,7 @@
       "value": 77
     }
   ],
-  "logCorrelationIds": ["log:usf-l4-1782251474565-dd5648dd:l4-substrate-closure"],
+  "logCorrelationIds": ["log:usf-l4-1782251903706-fad03ed9:l4-substrate-closure"],
   "cleanupResult": {
     "status": "completed",
     "postgres": "probe-row-deleted",
@@ -432,18 +432,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:52:39.772Z",
+  "generatedAt": "2026-06-23T21:59:50.895Z",
   "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T21:51:14.275Z",
-  "endTime": "2026-06-23T21:52:39.772Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:52:39.772Z",
+  "startTime": "2026-06-23T21:58:23.414Z",
+  "endTime": "2026-06-23T21:59:50.895Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T21:59:50.895Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts": {
@@ -467,11 +467,11 @@
       "updatedValue": "before->after"
     },
     "redis": {
-      "set": "usf:l4:usf-l4-1782251474565-dd5648dd",
+      "set": "usf:l4:usf-l4-1782251903706-fad03ed9",
       "value": "before->after"
     },
     "minio": {
-      "bucketCreated": "usf-l4-usf-l4-1782251474565-dd5648dd",
+      "bucketCreated": "usf-l4-usf-l4-1782251903706-fad03ed9",
       "objectWritten": "state/probe.txt"
     },
     "keycloak": {
@@ -506,11 +506,11 @@
   },
   "failureMode": "exercised",
   "auditIds": [
-    "audit:usf-l4-1782251474565-dd5648dd:postgres-state-diff",
-    "audit:usf-l4-1782251474565-dd5648dd:redis-state-diff",
-    "audit:usf-l4-1782251474565-dd5648dd:minio-state-diff",
-    "audit:usf-l4-1782251474565-dd5648dd:openbao-health",
-    "audit:usf-l4-1782251474565-dd5648dd:workflow-provider-boundary"
+    "audit:usf-l4-1782251903706-fad03ed9:postgres-state-diff",
+    "audit:usf-l4-1782251903706-fad03ed9:redis-state-diff",
+    "audit:usf-l4-1782251903706-fad03ed9:minio-state-diff",
+    "audit:usf-l4-1782251903706-fad03ed9:openbao-health",
+    "audit:usf-l4-1782251903706-fad03ed9:workflow-provider-boundary"
   ],
   "metricEvidence": [
     {
@@ -534,6 +534,6 @@
       "value": 77
     }
   ],
-  "logEvidence": ["log:usf-l4-1782251474565-dd5648dd:l4-substrate-closure"],
-  "evidenceSignature": "e6b54cc9e1c174609ea24e0486d721e0a68fc98304953494c17a436985c749ef"
+  "logEvidence": ["log:usf-l4-1782251903706-fad03ed9:l4-substrate-closure"],
+  "evidenceSignature": "791c2f7411c03324a36215c5ea2f82e40c51fa4f0b9bbe8b030be01070e72106"
 }

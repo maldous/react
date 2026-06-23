@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:53:37.679Z",
-  "endedAt": "2026-06-23T21:53:39.162Z",
+  "startedAt": "2026-06-23T22:00:48.873Z",
+  "endedAt": "2026-06-23T22:00:50.349Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,18 +77,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:53:39.162Z",
+  "generatedAt": "2026-06-23T22:00:50.349Z",
   "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:53:37.679Z",
-  "endTime": "2026-06-23T21:53:39.162Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:53:39.162Z",
+  "startTime": "2026-06-23T22:00:48.873Z",
+  "endTime": "2026-06-23T22:00:50.349Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:50.349Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts": {
@@ -114,5 +114,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"],
-  "evidenceSignature": "e78b4e987448889b0797620289fc6390a7b17ccba104813864934248357c2912"
+  "evidenceSignature": "e1b642a1614bdfa103a5acf55bc59c64b15074edd234e4a211e9f3430865ac3d"
 }

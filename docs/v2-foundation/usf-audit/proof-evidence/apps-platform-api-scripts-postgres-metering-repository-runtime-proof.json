@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:53:27.369Z",
-  "endedAt": "2026-06-23T21:53:27.609Z",
+  "startedAt": "2026-06-23T22:00:38.651Z",
+  "endedAt": "2026-06-23T22:00:38.880Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:53:27.609Z",
+  "generatedAt": "2026-06-23T22:00:38.880Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:53:27.369Z",
-  "endTime": "2026-06-23T21:53:27.609Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:53:27.609Z",
+  "startTime": "2026-06-23T22:00:38.651Z",
+  "endTime": "2026-06-23T22:00:38.880Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:38.880Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts": {
@@ -116,5 +116,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
-  "evidenceSignature": "2d1c03def2ec494caeb8da362bbcf31a4999a8e25155302261d7601f6a1db595"
+  "evidenceSignature": "761dd045afa6f9dbaa8bc8bd842d46fe5a4dde58039f4f3ee88e1614d5612769"
 }

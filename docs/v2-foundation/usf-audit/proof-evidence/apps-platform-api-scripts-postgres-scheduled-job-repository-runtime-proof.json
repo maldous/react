@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:53:30.537Z",
-  "endedAt": "2026-06-23T21:53:30.734Z",
+  "startedAt": "2026-06-23T22:00:41.789Z",
+  "endedAt": "2026-06-23T22:00:41.972Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,20 +81,20 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:53:30.734Z",
+  "generatedAt": "2026-06-23T22:00:41.972Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:53:30.537Z",
-  "endTime": "2026-06-23T21:53:30.734Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:53:30.734Z",
+  "startTime": "2026-06-23T22:00:41.789Z",
+  "endTime": "2026-06-23T22:00:41.972Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:41.972Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts": {
@@ -124,5 +124,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "372eb3627babaf86cf0da0c0b9eae4ac071928effb21c29359d0cd6dca6e6213"
+  "evidenceSignature": "0c5f2af1da519786952a390c3ca280bf9a5803776733009e3114622f44254ba4"
 }

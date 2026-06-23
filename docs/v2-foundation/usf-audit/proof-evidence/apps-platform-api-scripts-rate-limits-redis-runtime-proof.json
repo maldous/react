@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:rate-limits-redis",
-  "startedAt": "2026-06-23T21:53:35.700Z",
-  "endedAt": "2026-06-23T21:53:37.183Z",
+  "startedAt": "2026-06-23T22:00:46.902Z",
+  "endedAt": "2026-06-23T22:00:48.372Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,18 +121,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:53:37.183Z",
+  "generatedAt": "2026-06-23T22:00:48.372Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:53:35.700Z",
-  "endTime": "2026-06-23T21:53:37.183Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:53:37.183Z",
+  "startTime": "2026-06-23T22:00:46.902Z",
+  "endTime": "2026-06-23T22:00:48.372Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:48.372Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-rate-limits": {
@@ -180,5 +180,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
-  "evidenceSignature": "db33d230c5887cf83aaeafaddffb047264c270ceea62eee9638fda0d4e0a8f80"
+  "evidenceSignature": "b469e711c1ea63bed6516ef1dbbb4247e0c4315cf8b8bf2ca7de11a7e9511e4f"
 }

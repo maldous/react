@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:51:10.252Z",
-  "endedAt": "2026-06-23T21:51:11.021Z",
+  "startedAt": "2026-06-23T21:58:19.430Z",
+  "endedAt": "2026-06-23T21:58:20.203Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:51:11.021Z",
+  "generatedAt": "2026-06-23T21:58:20.203Z",
   "sourceFileRefs": ["apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:51:10.252Z",
-  "endTime": "2026-06-23T21:51:11.021Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:51:11.021Z",
+  "startTime": "2026-06-23T21:58:19.430Z",
+  "endTime": "2026-06-23T21:58:20.203Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T21:58:20.203Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts": {
@@ -112,5 +112,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
-  "evidenceSignature": "e0d6c223c9ccbdb71dcc867f5c4d7fd6db6f47cc113fbd1f12e07c4663921a27"
+  "evidenceSignature": "6de4e5e32bddcfe0391eb041cc6626a742a25de0e898ace448413d922a0e5d05"
 }

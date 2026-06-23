@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:53:25.634Z",
-  "endedAt": "2026-06-23T21:53:25.858Z",
+  "startedAt": "2026-06-23T22:00:36.936Z",
+  "endedAt": "2026-06-23T22:00:37.159Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:53:25.858Z",
+  "generatedAt": "2026-06-23T22:00:37.159Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:53:25.634Z",
-  "endTime": "2026-06-23T21:53:25.858Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:53:25.858Z",
+  "startTime": "2026-06-23T22:00:36.936Z",
+  "endTime": "2026-06-23T22:00:37.159Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:37.159Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts": {
@@ -116,5 +116,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
-  "evidenceSignature": "ca474f6267c37ec79e4760c26f60f800ae3fdcfdc29e000f5d5b5fd1a9175ace"
+  "evidenceSignature": "79592738114b936301e1bbf22a0c687773c3b9b5dff7acccfd59b9604de65dd6"
 }

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:observability-control-route",
-  "startedAt": "2026-06-23T21:52:47.522Z",
-  "endedAt": "2026-06-23T21:52:48.037Z",
+  "startedAt": "2026-06-23T21:59:58.675Z",
+  "endedAt": "2026-06-23T21:59:59.189Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,18 +81,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:52:48.037Z",
+  "generatedAt": "2026-06-23T21:59:59.189Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:52:47.522Z",
-  "endTime": "2026-06-23T21:52:48.037Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:52:48.037Z",
+  "startTime": "2026-06-23T21:59:58.675Z",
+  "endTime": "2026-06-23T21:59:59.189Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T21:59:59.189Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-observability": {
@@ -120,5 +120,5 @@
     }
   ],
   "logEvidence": ["log:observability-control-route:runtime-proof"],
-  "evidenceSignature": "e190a1dcd93a363baf935a9dc81134dee69ff0891777c17037a6fc9c44899db7"
+  "evidenceSignature": "3f81bc5426327f0bbf51856192fe4fca7dba607a25294d005058b85b278e907c"
 }

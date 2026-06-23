@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:52:51.120Z",
-  "endedAt": "2026-06-23T21:52:51.153Z",
+  "startedAt": "2026-06-23T22:00:02.255Z",
+  "endedAt": "2026-06-23T22:00:02.283Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:52:51.153Z",
+  "generatedAt": "2026-06-23T22:00:02.283Z",
   "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:52:51.120Z",
-  "endTime": "2026-06-23T21:52:51.153Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:52:51.153Z",
+  "startTime": "2026-06-23T22:00:02.255Z",
+  "endTime": "2026-06-23T22:00:02.283Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:02.283Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts": {
@@ -112,5 +112,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
-  "evidenceSignature": "50d4c48dc887870cd138653c0c901233e3e283b1a68b6e8dcb2a9e89408bd8f2"
+  "evidenceSignature": "64dfa759a7ae079b54c068754984293b703a0f6e09dc351b0f9708c8445ea9e3"
 }

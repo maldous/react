@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T21:53:30.155Z",
-  "endedAt": "2026-06-23T21:53:30.329Z",
+  "startedAt": "2026-06-23T22:00:41.412Z",
+  "endedAt": "2026-06-23T22:00:41.577Z",
   "exitStatus": 0,
-  "commit": "697c297188b48bfd9ea485503cd6d6326dd52906",
+  "commit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,18 +79,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T21:53:30.329Z",
+  "generatedAt": "2026-06-23T22:00:41.577Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782251451965-3995168",
+  "collectorRunId": "proof-run-1782251881178-4057827",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T21:53:30.155Z",
-  "endTime": "2026-06-23T21:53:30.329Z",
-  "gitCommit": "697c297188b48bfd9ea485503cd6d6326dd52906",
-  "executionTimestamp": "2026-06-23T21:53:30.329Z",
+  "startTime": "2026-06-23T22:00:41.412Z",
+  "endTime": "2026-06-23T22:00:41.577Z",
+  "gitCommit": "50e6e25ad35c92df24abeb09e908a3c6b5e564f7",
+  "executionTimestamp": "2026-06-23T22:00:41.577Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts": {
@@ -116,5 +116,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"],
-  "evidenceSignature": "3544328b0fdf46ed8d0de13bddf499baff558faa2e7cf2beb0f3b26f9493864e"
+  "evidenceSignature": "58f1f8d19dd4b0078676cae1a2092936ca927e6b8dcf81bdf4a995bfa55988b3"
 }
