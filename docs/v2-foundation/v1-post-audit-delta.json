@@ -998,6 +998,15 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json",
+      "introducingCommit": "e233972d",
+      "purpose": "post-audit generated L4 substrate closure proof evidence emitted by npm run proof:l4-substrate-closure",
+      "v2Disposition": "archive-evidence",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json",
+      "protectingTests": ["npm run proof:l4-substrate-closure", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
@@ -7020,6 +7029,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 707,
+  "additionCount": 708,
   "deletionCount": 54
 }
