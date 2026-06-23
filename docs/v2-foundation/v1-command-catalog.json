@@ -5229,6 +5229,28 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm proof:l4-substrate-closure",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for L4 Substrate Proven closure by replaying certified L3 behaviour harnesses against compose-local real substrates.",
+    "inputs": ["running app/backend", "compose-local substrate services"],
+    "outputs": ["proof evidence (stdout/registry)"],
+    "prerequisites": [
+      "platform-api loader",
+      "L3 behaviour certification",
+      "reachable compose-local substrates"
+    ],
+    "sideEffects": ["exercises live runtime and replayed L3 behavioural proofs"],
+    "envScope": "test",
+    "failureSemantics": "exit-nonzero on proof failure; no skipped L3 replay accepted",
+    "idempotent": true,
+    "safetyControls": ["isolated test fixtures", "cleanup of probe rows/keys/objects"],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
     "name": "npm proof:workflow-readiness-route",
     "kind": "npm",
     "purpose": "Runtime proof harness for workflow readiness route.",
