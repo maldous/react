@@ -12,7 +12,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | formal proof readiness status               |  PASS |
 | formal proof readiness gaps                 |     0 |
 | capability proof readiness gaps             |     0 |
-| full-service/provider-verified capabilities |     0 |
+| full-service/provider-verified capabilities |    70 |
 | fully proven capabilities                   |     0 |
 | routes discovered                           |   235 |
 | routes without tracing                      |     0 |

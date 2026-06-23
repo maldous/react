@@ -1,12 +1,12 @@
 {
   "artefact": "v2-readiness-summary",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T20:33:03.732Z",
-  "status": "PASS",
+  "generatedAt": "2026-06-23T21:40:36.569Z",
+  "status": "FAIL",
   "answers": {
     "isL3Complete": true,
     "areAllFormalBlockersClosed": true,
-    "areAllCapabilitiesEligibleForL4": true,
+    "areAllCapabilitiesEligibleForL4": false,
     "isSubstrateExpansionUnblocked": true,
     "nextExactMilestone": "Start L4 Substrate Proven implementation from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
     "whatRemainsBeforeFoundationProven": [
@@ -22,7 +22,7 @@
     "totalFormalGapCount": 0,
     "futureSubstrateExpansionBlocked": false,
     "capabilityCount": 70,
-    "behaviourProvenCapabilityCount": 70,
+    "behaviourProvenCapabilityCount": 0,
     "substrateRoadmapStatus": "PASS",
     "substrateRoadmapCapabilityCount": 70,
     "l0DiscoveryStatus": "PASS",

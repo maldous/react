@@ -1,7 +1,7 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T20:33:03.702Z",
+  "generatedAt": "2026-06-23T21:40:36.535Z",
   "status": "PASS",
   "levels": [
     {
@@ -53,14 +53,15 @@
     "L1": 0,
     "L2": 16,
     "L3": 150,
-    "L4": 0,
+    "L4": 1,
     "L5": 0,
     "L6": 0
   },
   "byProviderEvidenceClass": {
     "contract-or-unit-proof": 160,
     "in-memory-provider-proof": 5,
-    "fake-http-adapter-proof": 1
+    "fake-http-adapter-proof": 1,
+    "local-real-provider-proof": 1
   },
   "records": [
     {
@@ -539,6 +540,15 @@
       "proofLevelObserved": "L2",
       "providerEvidenceClass": "contract-or-unit-proof",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L4",
+      "proofLevelObserved": "L4",
+      "providerEvidenceClass": "local-real-provider-proof",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",

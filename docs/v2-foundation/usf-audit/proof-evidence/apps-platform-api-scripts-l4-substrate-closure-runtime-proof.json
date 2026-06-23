@@ -1,0 +1,539 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+    "package.json#proof:l4-substrate-closure",
+    "proof:l4-substrate-closure",
+    "proof:domain-identity-matrix",
+    "proof:tenant-custom-domain-resolution",
+    "proof:in-memory-provider-runtime",
+    "proof:in-memory-vs-real-parity",
+    "apps/platform-api/tests/unit/members.test.ts",
+    "packages/domain-identity/tests/domain-identity.test.ts",
+    "proof:profile-self-service",
+    "proof:notification-dispatch",
+    "proof:api-keys",
+    "proof:api-key-routes",
+    "proof:ui-semantic-groups",
+    "proof:ui-semantic-sub-organisations",
+    "proof:entitlement-policy-chain",
+    "proof:delegated-admin",
+    "proof:entitlements",
+    "proof:entitlements-postgres",
+    "proof:entitlements-routes",
+    "proof:support-approval",
+    "apps/platform-api/tests/unit/audit.test.ts",
+    "proof:auth-settings",
+    "proof:auth-idps",
+    "proof:auth-oidc-enterprise",
+    "proof:ui-semantic-claim-mapping",
+    "apps/platform-api/tests/unit/platform-config.test.ts",
+    "theme + platform-config tests",
+    "proof:tenant-domains",
+    "proof:tenant-domain-canonical",
+    "proof:tenant-domain-claim-lifecycle",
+    "proof:tenant-domains-routing",
+    "token-crypto + auth-settings-audit tests",
+    "proof:billing-catalog",
+    "proof:billing-provider",
+    "proof:lago-billing-provider",
+    "proof:metering",
+    "proof:metering-quota-routes",
+    "proof:quota-enforcement",
+    "postgres repository substrate tests",
+    "proof:backup-local",
+    "proof:pitr-restore-drill",
+    "proof:retention",
+    "proof:legal-hold",
+    "proof:data-residency",
+    "proof:data-governance",
+    "proof:data-portability",
+    "proof:search",
+    "proof:search-isolation",
+    "proof:search-routes",
+    "proof:tenant-storage-objects",
+    "proof:event-bus",
+    "proof:event-redrive",
+    "proof:workflow-provider-live",
+    "proof:scheduled-jobs",
+    "proof:scheduled-job-routes",
+    "proof:notification-preferences",
+    "proof:notification-email-transport",
+    "proof:notification-webhook-transport",
+    "proof:notification-transport-routes",
+    "proof:event-worker",
+    "proof:secret-store-contract",
+    "proof:secrets-openbao",
+    "proof:provider-secrets-readiness",
+    "proof:tenant-observability",
+    "proof:metrics-prometheus",
+    "proof:dashboards",
+    "proof:observability-signals",
+    "proof:alerting",
+    "proof:incident-foundation",
+    "proof:alert-notification-bridge",
+    "proof:platform-services",
+    "proof:service-clickthrough-policy",
+    "semgrep:gate; npm audit; OSV scan",
+    "proof:compliance-report",
+    "proof:tenant-storage isolation",
+    "proof:webhooks",
+    "proof:webhook-redrive",
+    "openapi:drift (not complete)",
+    "proof:rate-limits",
+    "proof:rate-limits-redis",
+    "proof:tenant-lifecycle",
+    "apps/platform-api/tests/unit/support-tickets.test.ts",
+    "this matrix + registry + validation test",
+    "docs/architecture/build-versus-compose-decision-framework.md",
+    "proof:service-catalog-registry",
+    "docs/architecture/environment-service-classification.md",
+    "proof:provider-config",
+    "proof:provider-readiness-contract",
+    "proof:composed-provider-readiness",
+    "proof:history",
+    "proof:tenant-custom-domain-auth-origin",
+    "proof:clickthrough",
+    "proof:environment-registry",
+    "proof:environment-admin-bootstrap",
+    "proof:environment-operations",
+    "proof:provider-environment-classification",
+    "scripts/evidence/tests/verify-ladder.test.mjs",
+    "scripts/tests/tests/aggregate-confidence.test.mjs",
+    "tools/architecture/validate-openapi-drift/tests/validate-openapi-drift.test.mjs",
+    "packages/i18n-runtime",
+    "e2e accessibility spec",
+    "tools/e2e/observability-correlation"
+  ],
+  "subjectId": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+  "capabilityId": "capability:l4-substrate-closure",
+  "providerId": "compose-local-substrate-closure",
+  "routeIds": [],
+  "workflowIds": ["temporal:default:usf-l4-usf-l4-1782250654448-5d0672a5"],
+  "eventIds": [
+    "keycloak:platform-test:discovery",
+    "observability:prometheus:ready",
+    "observability:grafana:ready",
+    "observability:loki:ready",
+    "observability:tempo:ready",
+    "windmill:health-and-auth-boundary"
+  ],
+  "storageIds": [
+    "postgres:usf_l4_substrate_probe:usf-l4-1782250654448-5d0672a5",
+    "redis:usf:l4:usf-l4-1782250654448-5d0672a5",
+    "minio:usf-l4-usf-l4-1782250654448-5d0672a5/state/probe.txt",
+    "openbao:sys/health:usf-l4-1782250654448-5d0672a5"
+  ],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L4",
+  "commandExecuted": "npm run proof:l4-substrate-closure",
+  "startedAt": "2026-06-23T21:37:34.160Z",
+  "endedAt": "2026-06-23T21:38:59.245Z",
+  "exitStatus": 0,
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
+      }
+    },
+    "marker": "usf-l4-1782250654448-5d0672a5",
+    "capabilityCount": 70,
+    "roadmapCapabilityCount": 70,
+    "substrateCounts": {
+      "backup-restore-scripts": 1,
+      "browser-telemetry-provider": 1,
+      "caddy-local-routing-probe": 1,
+      "http-provider-readiness-probe": 3,
+      "Keycloak": 7,
+      "Lago": 2,
+      "MinIO": 1,
+      "notification-transports": 1,
+      "openapi-drift-validator": 1,
+      "OpenBao": 3,
+      "playwright-adapter": 1,
+      "playwright-axe-adapter": 1,
+      "Postgres": 38,
+      "prometheus-metrics": 1,
+      "react-i18n-provider": 1,
+      "Redis": 2,
+      "static-assurance-provider": 4,
+      "Temporal": 2,
+      "tenant-lifecycle-coordinator": 1
+    },
+    "l3BehaviourReplay": {
+      "mode": "planned",
+      "commandCount": 77,
+      "capabilityCount": 70,
+      "commandTimeoutMs": 180000,
+      "commands": [
+        "npm run proof:alert-notification-bridge",
+        "npm run proof:alerting",
+        "npm run proof:api-key-routes",
+        "npm run proof:api-keys",
+        "npm run proof:approval-workflow",
+        "npm run proof:auth-idps",
+        "npm run proof:auth-oidc-enterprise",
+        "npm run proof:auth-settings",
+        "npm run proof:backup-local",
+        "npm run proof:billing-catalog",
+        "npm run proof:billing-provider",
+        "npm run proof:clickthrough",
+        "npm run proof:composed-provider-readiness",
+        "npm run proof:dashboards",
+        "npm run proof:data-governance",
+        "npm run proof:data-portability",
+        "npm run proof:data-residency",
+        "npm run proof:delegated-admin",
+        "npm run proof:domain-identity-matrix",
+        "npm run proof:entitlement-policy-chain",
+        "npm run proof:entitlements",
+        "npm run proof:entitlements-postgres",
+        "npm run proof:entitlements-routes",
+        "npm run proof:environment-admin-bootstrap",
+        "npm run proof:environment-operations",
+        "npm run proof:environment-registry",
+        "npm run proof:event-bus",
+        "npm run proof:event-redrive",
+        "npm run proof:event-worker",
+        "npm run proof:history",
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:incident-foundation",
+        "npm run proof:lago-billing-provider",
+        "npm run proof:metering",
+        "npm run proof:metering-quota-routes",
+        "npm run proof:metrics-prometheus",
+        "npm run proof:notification-dispatch",
+        "npm run proof:notification-email-transport",
+        "npm run proof:notification-preferences",
+        "npm run proof:notification-transport-routes",
+        "npm run proof:notification-webhook-transport",
+        "npm run proof:observability-signals",
+        "npm run proof:pitr-restore-drill",
+        "npm run proof:platform-services",
+        "npm run proof:profile-self-service",
+        "npm run proof:provider-config",
+        "npm run proof:provider-environment-classification",
+        "npm run proof:provider-readiness-contract",
+        "npm run proof:provider-secrets-readiness",
+        "npm run proof:quota-enforcement",
+        "npm run proof:rate-limits",
+        "npm run proof:rate-limits-redis",
+        "npm run proof:route-contracts",
+        "npm run proof:scheduled-job-routes",
+        "npm run proof:scheduled-jobs",
+        "npm run proof:search",
+        "npm run proof:search-isolation",
+        "npm run proof:search-routes",
+        "npm run proof:secret-store-contract",
+        "npm run proof:secrets-openbao",
+        "npm run proof:service-catalog-registry",
+        "npm run proof:service-clickthrough-policy",
+        "npm run proof:tenant-custom-domain-auth-origin",
+        "npm run proof:tenant-custom-domain-resolution",
+        "npm run proof:tenant-domain-canonical",
+        "npm run proof:tenant-domain-claim-lifecycle",
+        "npm run proof:tenant-domains",
+        "npm run proof:tenant-domains-routing",
+        "npm run proof:tenant-lifecycle",
+        "npm run proof:tenant-observability",
+        "npm run proof:tenant-storage-objects",
+        "npm run proof:ui-semantic-claim-mapping",
+        "npm run proof:ui-semantic-groups",
+        "npm run proof:ui-semantic-sub-organisations",
+        "npm run proof:webhook-redrive",
+        "npm run proof:webhooks",
+        "npm run proof:workflow-provider-live"
+      ]
+    },
+    "postgres": {
+      "markerExists": false
+    },
+    "redis": {
+      "keyExists": false
+    },
+    "minio": {
+      "bucketExists": false
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
+      }
+    },
+    "roadmapClosure": {
+      "capabilitiesCertifiedForL4": 70,
+      "noNewBehaviourAssertionsIntroduced": true
+    },
+    "postgres": {
+      "markerExists": true,
+      "value": "after"
+    },
+    "redis": {
+      "keyExists": true,
+      "value": "after"
+    },
+    "minio": {
+      "bucketExists": true,
+      "objectValue": "after"
+    },
+    "keycloak": {
+      "realm": "platform-test",
+      "discoveryReachable": true
+    },
+    "openbao": {
+      "reachable": true,
+      "healthStatus": 200
+    },
+    "observability": {
+      "prometheus": 200,
+      "grafana": 200,
+      "loki": 200,
+      "tempo": 200
+    },
+    "temporal": {
+      "workflowId": "usf-l4-usf-l4-1782250654448-5d0672a5",
+      "status": "RUNNING"
+    },
+    "windmill": {
+      "healthReachable": true,
+      "unauthenticatedRunStatus": 401
+    },
+    "staticSubstrates": {
+      "filesVerified": 5
+    },
+    "l3BehaviourReplay": {
+      "mode": "completed",
+      "commandCount": 77,
+      "passed": 77,
+      "skipped": 0,
+      "failed": 0
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "roadmap": {
+      "allCapabilitiesMapped": true,
+      "l3ContractReusedUnchanged": true
+    },
+    "postgres": {
+      "inserted": 1,
+      "updatedValue": "before->after"
+    },
+    "redis": {
+      "set": "usf:l4:usf-l4-1782250654448-5d0672a5",
+      "value": "before->after"
+    },
+    "minio": {
+      "bucketCreated": "usf-l4-usf-l4-1782250654448-5d0672a5",
+      "objectWritten": "state/probe.txt"
+    },
+    "keycloak": {
+      "realRealmDiscoveryAsserted": true
+    },
+    "openbao": {
+      "sysHealthAsserted": true
+    },
+    "observability": {
+      "liveProviderHealthAsserted": ["grafana", "loki", "prometheus", "tempo"]
+    },
+    "temporal": {
+      "workflowStartedAndCancelled": true
+    },
+    "windmill": {
+      "securityBoundaryFailClosed": true
+    },
+    "staticSubstrates": {
+      "sourceAssetsPresent": [
+        "docs/api/openapi.json",
+        "tools/ui-reference-harness/playwright/groups.spec.ts",
+        "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+        "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+        "apps/react-enterprise-app/src/observability/faro.ts"
+      ]
+    },
+    "l3BehaviourReplay": {
+      "replayedCertifiedL3HarnessesAgainstComposeLocal": 77,
+      "nonReplayableCommandsExcluded": 6,
+      "perCapabilityReplayCoverage": 70
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:usf-l4-1782250654448-5d0672a5:postgres-state-diff",
+    "audit:usf-l4-1782250654448-5d0672a5:redis-state-diff",
+    "audit:usf-l4-1782250654448-5d0672a5:minio-state-diff",
+    "audit:usf-l4-1782250654448-5d0672a5:openbao-health",
+    "audit:usf-l4-1782250654448-5d0672a5:workflow-provider-boundary"
+  ],
+  "traceIds": [
+    "trace:usf-l4-1782250654448-5d0672a5:postgres",
+    "trace:usf-l4-1782250654448-5d0672a5:redis",
+    "trace:usf-l4-1782250654448-5d0672a5:minio",
+    "trace:usf-l4-1782250654448-5d0672a5:temporal",
+    "trace:usf-l4-1782250654448-5d0672a5:observability"
+  ],
+  "metricSamples": [
+    {
+      "name": "usf_l4_capabilities_closed_total",
+      "value": 70
+    },
+    {
+      "name": "usf_l4_roadmap_rows_verified_total",
+      "value": 70
+    },
+    {
+      "name": "usf_l4_compose_substrates_verified_total",
+      "value": 19
+    },
+    {
+      "name": "usf_l4_real_provider_mutations_total",
+      "value": 5
+    },
+    {
+      "name": "usf_l4_l3_replay_commands_passed_total",
+      "value": 77
+    }
+  ],
+  "logCorrelationIds": ["log:usf-l4-1782250654448-5d0672a5:l4-substrate-closure"],
+  "cleanupResult": {
+    "status": "completed",
+    "postgres": "probe-row-deleted",
+    "redis": "probe-key-deleted",
+    "minio": "probe-bucket-deleted"
+  },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-23T21:38:59.245Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782250631847-3878273",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T21:37:34.160Z",
+  "endTime": "2026-06-23T21:38:59.245Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:38:59.245Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "roadmap": {
+      "allCapabilitiesMapped": true,
+      "l3ContractReusedUnchanged": true
+    },
+    "postgres": {
+      "inserted": 1,
+      "updatedValue": "before->after"
+    },
+    "redis": {
+      "set": "usf:l4:usf-l4-1782250654448-5d0672a5",
+      "value": "before->after"
+    },
+    "minio": {
+      "bucketCreated": "usf-l4-usf-l4-1782250654448-5d0672a5",
+      "objectWritten": "state/probe.txt"
+    },
+    "keycloak": {
+      "realRealmDiscoveryAsserted": true
+    },
+    "openbao": {
+      "sysHealthAsserted": true
+    },
+    "observability": {
+      "liveProviderHealthAsserted": ["grafana", "loki", "prometheus", "tempo"]
+    },
+    "temporal": {
+      "workflowStartedAndCancelled": true
+    },
+    "windmill": {
+      "securityBoundaryFailClosed": true
+    },
+    "staticSubstrates": {
+      "sourceAssetsPresent": [
+        "docs/api/openapi.json",
+        "tools/ui-reference-harness/playwright/groups.spec.ts",
+        "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
+        "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
+        "apps/react-enterprise-app/src/observability/faro.ts"
+      ]
+    },
+    "l3BehaviourReplay": {
+      "replayedCertifiedL3HarnessesAgainstComposeLocal": 77,
+      "nonReplayableCommandsExcluded": 6,
+      "perCapabilityReplayCoverage": 70
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit:usf-l4-1782250654448-5d0672a5:postgres-state-diff",
+    "audit:usf-l4-1782250654448-5d0672a5:redis-state-diff",
+    "audit:usf-l4-1782250654448-5d0672a5:minio-state-diff",
+    "audit:usf-l4-1782250654448-5d0672a5:openbao-health",
+    "audit:usf-l4-1782250654448-5d0672a5:workflow-provider-boundary"
+  ],
+  "metricEvidence": [
+    {
+      "name": "usf_l4_capabilities_closed_total",
+      "value": 70
+    },
+    {
+      "name": "usf_l4_roadmap_rows_verified_total",
+      "value": 70
+    },
+    {
+      "name": "usf_l4_compose_substrates_verified_total",
+      "value": 19
+    },
+    {
+      "name": "usf_l4_real_provider_mutations_total",
+      "value": 5
+    },
+    {
+      "name": "usf_l4_l3_replay_commands_passed_total",
+      "value": 77
+    }
+  ],
+  "logEvidence": ["log:usf-l4-1782250654448-5d0672a5:l4-substrate-closure"],
+  "evidenceSignature": "e6f6f92bd33f77f7a959c84a60ccc6e0b78247000813b90ba1e416f95f07853d"
+}

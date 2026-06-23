@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T20:32:15.646Z",
-  "endedAt": "2026-06-23T20:32:15.707Z",
+  "startedAt": "2026-06-23T21:39:47.245Z",
+  "endedAt": "2026-06-23T21:39:47.307Z",
   "exitStatus": 0,
-  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,20 +81,20 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T20:32:15.707Z",
+  "generatedAt": "2026-06-23T21:39:47.307Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782246666428-3325139",
+  "collectorRunId": "proof-run-1782250631847-3878273",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T20:32:15.646Z",
-  "endTime": "2026-06-23T20:32:15.707Z",
-  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
-  "executionTimestamp": "2026-06-23T20:32:15.707Z",
+  "startTime": "2026-06-23T21:39:47.245Z",
+  "endTime": "2026-06-23T21:39:47.307Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:39:47.307Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts": {
@@ -124,5 +124,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
   ],
-  "evidenceSignature": "3f84c3041f0e292c49dc3b52accb23d2f947977f43d558b2b5677b8376b48629"
+  "evidenceSignature": "96d0bdfe30bc3f122e5316fcc041ee672d8aad14966e44bc0e14827ed603f95e"
 }

@@ -61,10 +61,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T20:31:26.838Z",
-  "endedAt": "2026-06-23T20:31:27.149Z",
+  "startedAt": "2026-06-23T21:37:32.716Z",
+  "endedAt": "2026-06-23T21:37:33.029Z",
   "exitStatus": 0,
-  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -120,7 +120,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T20:31:27.079Z"
+      "createdAt": "2026-06-23T21:37:32.955Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -654,18 +654,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T20:31:27.149Z",
+  "generatedAt": "2026-06-23T21:37:33.029Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782246666428-3325139",
+  "collectorRunId": "proof-run-1782250631847-3878273",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T20:31:26.838Z",
-  "endTime": "2026-06-23T20:31:27.149Z",
-  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
-  "executionTimestamp": "2026-06-23T20:31:27.149Z",
+  "startTime": "2026-06-23T21:37:32.716Z",
+  "endTime": "2026-06-23T21:37:33.029Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:37:33.029Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts": {
@@ -959,5 +959,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "2095998e036a08c2a2f75bfeb237c6b067916cd9824059858013fbbaa93cd37f"
+  "evidenceSignature": "642c3c53c878e96d73d3535bd0a897188007d50aef5840258c845181d4ce8f78"
 }

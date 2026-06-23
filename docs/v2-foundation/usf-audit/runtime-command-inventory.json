@@ -582,6 +582,12 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:proof-l4-substrate-closure",
+    "name": "npm run proof:l4-substrate-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:proof-lago-billing-provider",
     "name": "npm run proof:lago-billing-provider",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",

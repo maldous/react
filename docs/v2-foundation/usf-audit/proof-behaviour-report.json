@@ -865,6 +865,21 @@
       "sourceFileRefs": ["apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+      "level": 4,
+      "classification": "live substrate behaviour",
+      "routeRefs": [],
+      "subjectRefs": [
+        "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+        "proof:l4-substrate-closure"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
       "file": "apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",
       "level": 2,

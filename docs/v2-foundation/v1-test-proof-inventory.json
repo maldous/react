@@ -9634,6 +9634,39 @@
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected semantic contract is broken"
   },
   {
+    "id": "package.json#proof:l4-substrate-closure",
+    "path": "package.json#proof:l4-substrate-closure",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-local substrate services (Postgres, Redis, MinIO, OpenBao, Keycloak, Temporal, Windmill, observability stack)",
+    "stageCoverage": "compose-local L4 substrate closure proof script (npm run proof:l4-substrate-closure)",
+    "failureEvidence": "runtime evidence JSON plus assertion output from real-substrate probes and replayed L3 behaviour harnesses",
+    "proofLevel": 4,
+    "proofLevelRationale": "L4 Substrate Proven evidence reuses certified L3 behavioural contracts unchanged, executes them against compose-local real substrates, rejects skipped/failed L3 replay, and asserts stateful substrate side effects plus audit, trace, metric, tenant-boundary, and security-boundary evidence.",
+    "capabilitiesProven": [
+      "Universal Service Foundation L4 substrate closure",
+      "All 70 BEHAVIOUR_PROVEN capabilities",
+      "Compose-local provider substrate readiness"
+    ],
+    "semanticFacetsProven": [
+      "substrateParity",
+      "providerContract",
+      "stateModel",
+      "tenantIsolation",
+      "securityBoundary",
+      "auditTraceMetric",
+      "deterministicReplay"
+    ],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "npm run proof:l4-substrate-closure",
+    "scriptPath": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero if any required compose-local substrate is unreachable, any substrate state diff assertion fails, any certified L3 behaviour replay fails or skips, or the L4 proof attempts to introduce unsupported behaviour claims"
+  },
+  {
     "id": "package.json#proof:workflow-readiness-route",
     "path": "package.json#proof:workflow-readiness-route",
     "kind": "proof",

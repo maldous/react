@@ -989,6 +989,15 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+      "introducingCommit": "cc0a7605",
+      "purpose": "post-audit L4 substrate closure proof that replays certified L3 behaviour harnesses against compose-local real substrates",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
+      "protectingTests": ["npm run proof:l4-substrate-closure", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
       "introducingCommit": "unknown",
       "purpose": "post-audit addition",
@@ -7011,6 +7020,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 706,
+  "additionCount": 707,
   "deletionCount": 54
 }

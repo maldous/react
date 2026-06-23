@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T20:32:32.166Z",
-  "endedAt": "2026-06-23T20:32:32.941Z",
+  "startedAt": "2026-06-23T21:40:04.151Z",
+  "endedAt": "2026-06-23T21:40:04.937Z",
   "exitStatus": 0,
-  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
   "realImplementationPathExecuted": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T20:32:32.941Z",
+  "generatedAt": "2026-06-23T21:40:04.937Z",
   "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782246666428-3325139",
+  "collectorRunId": "proof-run-1782250631847-3878273",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T20:32:32.166Z",
-  "endTime": "2026-06-23T20:32:32.941Z",
-  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
-  "executionTimestamp": "2026-06-23T20:32:32.941Z",
+  "startTime": "2026-06-23T21:40:04.151Z",
+  "endTime": "2026-06-23T21:40:04.937Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:40:04.937Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts": {
@@ -112,5 +112,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"],
-  "evidenceSignature": "d2d3a752e4e2de74789a100f88f3fc53b7cd71b94cf2240e5354b298f69acdb9"
+  "evidenceSignature": "c2f523959e5df64fb8ef1dcd9682e05892aae919533397bb5c6277e949d10c6e"
 }

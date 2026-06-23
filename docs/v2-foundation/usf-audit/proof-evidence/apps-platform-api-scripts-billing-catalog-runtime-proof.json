@@ -27,10 +27,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-catalog",
-  "startedAt": "2026-06-23T20:31:10.893Z",
-  "endedAt": "2026-06-23T20:31:11.400Z",
+  "startedAt": "2026-06-23T21:37:16.510Z",
+  "endedAt": "2026-06-23T21:37:17.027Z",
   "exitStatus": 0,
-  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -243,18 +243,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T20:31:11.400Z",
+  "generatedAt": "2026-06-23T21:37:17.027Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782246666428-3325139",
+  "collectorRunId": "proof-run-1782250631847-3878273",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T20:31:10.893Z",
-  "endTime": "2026-06-23T20:31:11.400Z",
-  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
-  "executionTimestamp": "2026-06-23T20:31:11.400Z",
+  "startTime": "2026-06-23T21:37:16.510Z",
+  "endTime": "2026-06-23T21:37:17.027Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:37:17.027Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-billing": {
@@ -370,5 +370,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:runtime-proof"],
-  "evidenceSignature": "06e0fa925375aa0795c441e4487e7814694341ced2fe7b77dfe9ca93078e2b13"
+  "evidenceSignature": "4e63c8811540b7987ce030b17b30db9fa563036da3927f139c886aa85686af23"
 }

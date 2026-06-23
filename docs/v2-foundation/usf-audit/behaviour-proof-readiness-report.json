@@ -1,14 +1,14 @@
 {
   "artefact": "behaviour-proof-readiness-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T20:33:03.724Z",
+  "generatedAt": "2026-06-23T21:40:36.560Z",
   "status": "PASS",
   "milestone": "L3 Behaviour Proven",
   "l4ExpansionBlockedUntilStatusPass": true,
-  "totalL3Candidates": 150,
-  "validL3Proofs": 150,
+  "totalL3Candidates": 151,
+  "validL3Proofs": 151,
   "invalidL3Proofs": 0,
-  "completeL3Proofs": 150,
+  "completeL3Proofs": 151,
   "incompleteL3Proofs": 0,
   "blockingDeficiencies": [],
   "remediationEffortEstimate": "none",
@@ -19,8 +19,8 @@
       "capability": "Tenant identity (record + FQDN)",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -31,6 +31,7 @@
         "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
       ]
     },
@@ -38,25 +39,8 @@
       "capability": "User identity + tenant membership",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "End-user profile + preferences self-service",
-      "category": "identity-access",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -66,6 +50,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "category": "identity-access",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
         "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts"
       ]
@@ -74,8 +77,8 @@
       "capability": "API keys / personal access tokens",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -86,15 +89,16 @@
         "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Tenant groups",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -104,6 +108,7 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-groups-spec-ts"
       ]
     },
@@ -111,6 +116,25 @@
       "capability": "Sub-organisations",
       "category": "identity-access",
       "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
+      ]
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "category": "identity-access",
+      "l0DiscoveryProven": true,
       "l3CandidateProofs": 3,
       "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
@@ -122,32 +146,15 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
-      ]
-    },
-    {
-      "capability": "RBAC (roles + permissions)",
-      "category": "identity-access",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -157,15 +164,16 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Delegated administration roles",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -175,6 +183,7 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts"
       ]
     },
@@ -182,8 +191,8 @@
       "capability": "Entitlement engine",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 6,
-      "completeL3Proofs": 6,
+      "l3CandidateProofs": 7,
+      "completeL3Proofs": 7,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -196,15 +205,16 @@
         "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Support-mode / break-glass access",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -214,6 +224,7 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts"
       ]
     },
@@ -221,8 +232,8 @@
       "capability": "Audit of privileged access",
       "category": "identity-access",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -231,15 +242,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Platform login + session",
       "category": "authentication",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -249,306 +261,13 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "IdP brokering + OIDC provider management",
       "category": "authentication",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Claim mapping + group/role mapping",
-      "category": "authentication",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts"
-      ]
-    },
-    {
-      "capability": "MFA + session policy + lockout",
-      "category": "authentication",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Configuration registry + history",
-      "category": "configuration",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Branding + theming",
-      "category": "configuration",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "category": "configuration",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 6,
-      "completeL3Proofs": 6,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Write-only secret settings",
-      "category": "configuration",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Product catalog, plans, prices",
-      "category": "entitlements-billing",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Subscriptions, invoices, payment methods, dunning",
-      "category": "entitlements-billing",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Usage metering + meter event ingestion",
-      "category": "entitlements-billing",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-metering-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Quota enforcement",
-      "category": "entitlements-billing",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Relational storage + migrations + RLS",
-      "category": "data-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Backup + restore",
-      "category": "data-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "PITR, retention, legal hold, data residency",
-      "category": "data-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "category": "data-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Tenant data import / export",
-      "category": "data-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Search + indexing (product search)",
-      "category": "search",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 5,
       "completeL3Proofs": 5,
@@ -559,71 +278,16 @@
       "closurePercentage": 100,
       "remainingClosureWork": [],
       "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-search-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ]
     },
     {
-      "capability": "Object storage + tenant prefixes + signed URLs",
-      "category": "storage",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Event bus, durable queues, DLQ, redrive",
-      "category": "events-workflow",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Workflow engine, scheduled jobs, approvals",
-      "category": "events-workflow",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts"
-      ]
-    },
-    {
-      "capability": "Scheduled jobs (built-in, on the event substrate)",
-      "category": "events-workflow",
+      "capability": "Claim mapping + group/role mapping",
+      "category": "authentication",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 4,
       "completeL3Proofs": 4,
@@ -636,13 +300,69 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts"
       ]
     },
     {
-      "capability": "Notification delivery + preferences + channels",
-      "category": "events-workflow",
+      "capability": "MFA + session policy + lockout",
+      "category": "authentication",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Configuration registry + history",
+      "category": "configuration",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Branding + theming",
+      "category": "configuration",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "category": "configuration",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 7,
       "completeL3Proofs": 7,
@@ -655,16 +375,16 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts"
       ]
     },
     {
-      "capability": "Background workers / job runner",
-      "category": "compute-runtime",
+      "capability": "Write-only secret settings",
+      "category": "configuration",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 3,
       "completeL3Proofs": 3,
@@ -675,14 +395,54 @@
       "closurePercentage": 100,
       "remainingClosureWork": [],
       "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
-      "capability": "Runtime secrets management",
-      "category": "compute-runtime",
+      "capability": "Product catalog, plans, prices",
+      "category": "entitlements-billing",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "category": "entitlements-billing",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "category": "entitlements-billing",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 5,
       "completeL3Proofs": 5,
@@ -695,14 +455,34 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-metering-runtime-proof-ts"
       ]
     },
     {
-      "capability": "Logs (aggregation + tenant-scoped search)",
-      "category": "observability-ops",
+      "capability": "Quota enforcement",
+      "category": "entitlements-billing",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "category": "data-platform",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 3,
       "completeL3Proofs": 3,
@@ -715,11 +495,250 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
-      "capability": "Metrics + traces",
+      "capability": "Backup + restore",
+      "category": "data-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "category": "data-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "category": "data-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Tenant data import / export",
+      "category": "data-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "category": "search",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 6,
+      "completeL3Proofs": 6,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-search-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "category": "storage",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "category": "events-workflow",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "category": "events-workflow",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts"
+      ]
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "category": "events-workflow",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "category": "events-workflow",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 8,
+      "completeL3Proofs": 8,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Background workers / job runner",
+      "category": "compute-runtime",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Runtime secrets management",
+      "category": "compute-runtime",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 6,
+      "completeL3Proofs": 6,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
       "category": "observability-ops",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 4,
@@ -731,9 +750,29 @@
       "closurePercentage": 100,
       "remainingClosureWork": [],
       "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Metrics + traces",
+      "category": "observability-ops",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
         "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts"
       ]
     },
@@ -741,8 +780,8 @@
       "capability": "Observability — built-in alerting + incidents",
       "category": "observability-ops",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 6,
-      "completeL3Proofs": 6,
+      "l3CandidateProofs": 7,
+      "completeL3Proofs": 7,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -755,6 +794,7 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts"
       ]
     },
@@ -762,8 +802,8 @@
       "capability": "Internal service catalog + readiness",
       "category": "observability-ops",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -773,6 +813,7 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
       ]
@@ -781,8 +822,8 @@
       "capability": "Code quality + secret + dependency scanning",
       "category": "security-governance",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -791,15 +832,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -808,15 +850,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Tenant isolation proof",
       "category": "security-governance",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -826,48 +869,12 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Webhooks (developer-facing)",
-      "category": "developer-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "API docs, developer portal, SDKs, rate limits",
-      "category": "developer-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Rate limiting (API)",
       "category": "developer-platform",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 5,
@@ -879,15 +886,74 @@
       "closurePercentage": 100,
       "remainingClosureWork": [],
       "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "category": "developer-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "category": "developer-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 6,
+      "completeL3Proofs": 6,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
         "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts"
       ]
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "category": "support-admin",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
       "category": "support-admin",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 3,
@@ -901,32 +967,15 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Support tickets, customer health, announcements",
-      "category": "support-admin",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Universal Service Foundation scope + principles",
       "category": "foundation",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -935,15 +984,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Build-versus-compose decision framework",
       "category": "foundation",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -952,11 +1002,245 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Service catalog + provider integration model",
+      "category": "foundation",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 7,
+      "completeL3Proofs": 7,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "category": "foundation",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Provider configuration plane",
+      "category": "foundation",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "category": "foundation",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "category": "data-platform",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "category": "authentication",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "category": "authentication",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "category": "identity-access",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "category": "configuration",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "category": "configuration",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "category": "authentication",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "category": "observability-ops",
+      "l0DiscoveryProven": true,
+      "l3CandidateProofs": 5,
+      "completeL3Proofs": 5,
+      "incompleteL3Proofs": 0,
+      "behaviourProven": true,
+      "eligibleForSubstrateProvenWork": true,
+      "blockingDeficiencies": [],
+      "closurePercentage": 100,
+      "remainingClosureWork": [],
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
+      ]
+    },
+    {
+      "capability": "Environment registry + bootstrap",
       "category": "foundation",
       "l0DiscoveryProven": true,
       "l3CandidateProofs": 6,
@@ -968,240 +1252,20 @@
       "closurePercentage": 100,
       "remainingClosureWork": [],
       "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Environment-specific vs shared service model",
-      "category": "foundation",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "Provider configuration plane",
-      "category": "foundation",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Composed provider readiness spine",
-      "category": "foundation",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "History read-model (read-only projection)",
-      "category": "data-platform",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-history-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
-      ]
-    },
-    {
-      "capability": "OIDC discovery / issuer / JWKS validation",
-      "category": "authentication",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "OIDC test connection + callback display",
-      "category": "authentication",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Tenant host identity resolution",
-      "category": "identity-access",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Tenant domain activation (auth-client)",
-      "category": "configuration",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Tenant canonical domain set/unset",
-      "category": "configuration",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Tenant custom-domain auth callback",
-      "category": "authentication",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Tenant service clickthrough policy",
-      "category": "observability-ops",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 4,
-      "completeL3Proofs": 4,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
-      ]
-    },
-    {
-      "capability": "Environment registry + bootstrap",
-      "category": "foundation",
-      "l0DiscoveryProven": true,
-      "l3CandidateProofs": 5,
-      "completeL3Proofs": 5,
-      "incompleteL3Proofs": 0,
-      "behaviourProven": true,
-      "eligibleForSubstrateProvenWork": true,
-      "blockingDeficiencies": [],
-      "closurePercentage": 100,
-      "remainingClosureWork": [],
-      "evidenceProofIds": [
         "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
         "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
         "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Provider environment classification",
       "category": "foundation",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 3,
-      "completeL3Proofs": 3,
+      "l3CandidateProofs": 4,
+      "completeL3Proofs": 4,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -1211,6 +1275,7 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
       ]
     },
@@ -1218,8 +1283,8 @@
       "capability": "E2E confidence ladder (stage-aware)",
       "category": "foundation",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -1228,15 +1293,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "OpenAPI drift hard gate",
       "category": "developer-platform",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -1245,15 +1311,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "i18n runtime + validation",
       "category": "foundation",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -1262,15 +1329,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Accessibility (a11y) gate",
       "category": "foundation",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -1279,15 +1347,16 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "category": "observability-ops",
       "l0DiscoveryProven": true,
-      "l3CandidateProofs": 2,
-      "completeL3Proofs": 2,
+      "l3CandidateProofs": 3,
+      "completeL3Proofs": 3,
       "incompleteL3Proofs": 0,
       "behaviourProven": true,
       "eligibleForSubstrateProvenWork": true,
@@ -1296,7 +1365,8 @@
       "remainingClosureWork": [],
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ]
     }
   ]

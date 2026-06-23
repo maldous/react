@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
-  "startedAt": "2026-06-23T20:32:12.867Z",
-  "endedAt": "2026-06-23T20:32:13.633Z",
+  "startedAt": "2026-06-23T21:39:44.333Z",
+  "endedAt": "2026-06-23T21:39:45.100Z",
   "exitStatus": 0,
-  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,18 +77,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T20:32:13.633Z",
+  "generatedAt": "2026-06-23T21:39:45.100Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782246666428-3325139",
+  "collectorRunId": "proof-run-1782250631847-3878273",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T20:32:12.867Z",
-  "endTime": "2026-06-23T20:32:13.633Z",
-  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
-  "executionTimestamp": "2026-06-23T20:32:13.633Z",
+  "startTime": "2026-06-23T21:39:44.333Z",
+  "endTime": "2026-06-23T21:39:45.100Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:39:45.100Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts": {
@@ -114,5 +114,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
-  "evidenceSignature": "cda2745cae8a02d373a335cc251806070e9c07fe592aebe5d87da883d5682775"
+  "evidenceSignature": "fb7d4e4cd20e53dcec07ff14a24dc5ca93e10595c9a56e958893bed0330c77ce"
 }

@@ -1,7 +1,7 @@
 {
   "artefact": "substrate-proof-roadmap",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T20:33:03.728Z",
+  "generatedAt": "2026-06-23T21:40:36.565Z",
   "status": "PASS",
   "prerequisite": "behaviour-proof-certification-report.status == PASS",
   "l4ProofsImplementedByThisArtifact": false,
@@ -34,6 +34,7 @@
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -42,6 +43,7 @@
         "npm run proof:domain-identity-matrix",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-custom-domain-resolution"
       ],
       "behaviourCertified": true,
@@ -89,18 +91,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "User identity + tenant membership",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -147,12 +151,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "End-user profile + preferences self-service",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -161,6 +166,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:notification-dispatch",
         "npm run proof:profile-self-service"
       ],
@@ -211,13 +217,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "API keys / personal access tokens",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -226,7 +233,8 @@
         "npm run proof:api-key-routes",
         "npm run proof:api-keys",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -275,12 +283,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant groups",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -288,6 +297,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:ui-semantic-groups"
       ],
       "behaviourCertified": true,
@@ -335,12 +345,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Sub-organisations",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -348,6 +359,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:ui-semantic-sub-organisations"
       ],
       "behaviourCertified": true,
@@ -395,18 +407,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "RBAC (roles + permissions)",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -453,20 +467,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:entitlement-policy-chain",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Keycloak"],
@@ -513,12 +529,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Delegated administration roles",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -526,7 +543,8 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:delegated-admin",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -573,13 +591,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Entitlement engine",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
         "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
         "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
@@ -592,7 +611,8 @@
         "npm run proof:entitlements-postgres",
         "npm run proof:entitlements-routes",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -641,12 +661,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Support-mode / break-glass access",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -654,7 +675,8 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:approval-workflow",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Temporal"],
@@ -701,18 +723,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Audit of privileged access",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -759,20 +783,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Platform login + session",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:auth-settings",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Keycloak"],
@@ -819,13 +845,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "IdP brokering + OIDC provider management",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -834,7 +861,8 @@
         "npm run proof:auth-idps",
         "npm run proof:auth-oidc-enterprise",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Keycloak"],
@@ -881,12 +909,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Claim mapping + group/role mapping",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -894,6 +923,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:ui-semantic-claim-mapping"
       ],
       "behaviourCertified": true,
@@ -941,20 +971,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "MFA + session policy + lockout",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:auth-settings",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Keycloak"],
@@ -1001,18 +1033,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Configuration registry + history",
       "category": "configuration",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -1059,12 +1093,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Branding + theming",
       "category": "configuration",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -1072,6 +1107,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:route-contracts"
       ],
       "behaviourCertified": true,
@@ -1119,12 +1155,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
       "category": "configuration",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
@@ -1135,6 +1172,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-domain-canonical",
         "npm run proof:tenant-domain-claim-lifecycle",
         "npm run proof:tenant-domains",
@@ -1185,18 +1223,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Write-only secret settings",
       "category": "configuration",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["OpenBao", "Postgres"],
@@ -1243,7 +1283,7 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Product catalog, plans, prices",
@@ -1251,6 +1291,7 @@
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
@@ -1258,7 +1299,8 @@
         "npm run proof:billing-catalog",
         "npm run proof:in-memory-billing-catalog",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Lago", "Postgres"],
@@ -1305,13 +1347,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "category": "entitlements-billing",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -1320,6 +1363,7 @@
         "npm run proof:billing-provider",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:lago-billing-provider"
       ],
       "behaviourCertified": true,
@@ -1369,12 +1413,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Usage metering + meter event ingestion",
       "category": "entitlements-billing",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -1383,6 +1428,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:metering",
         "npm run proof:metering-quota-routes"
       ],
@@ -1431,12 +1477,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Quota enforcement",
       "category": "entitlements-billing",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -1445,6 +1492,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:metering-quota-routes",
         "npm run proof:quota-enforcement"
       ],
@@ -1493,18 +1541,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Relational storage + migrations + RLS",
       "category": "data-platform",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -1551,20 +1601,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Backup + restore",
       "category": "data-platform",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:backup-local",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["backup-restore-scripts"],
@@ -1611,12 +1663,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
         "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -1626,6 +1679,7 @@
         "npm run proof:data-residency",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:pitr-restore-drill"
       ],
       "behaviourCertified": true,
@@ -1673,20 +1727,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
       "category": "data-platform",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:data-governance",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -1735,20 +1791,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant data import / export",
       "category": "data-platform",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:data-portability",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -1795,12 +1853,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Search + indexing (product search)",
       "category": "search",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
@@ -1810,6 +1869,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:search",
         "npm run proof:search-isolation",
         "npm run proof:search-routes"
@@ -1859,12 +1919,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
       "category": "storage",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -1872,6 +1933,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-storage-objects"
       ],
       "behaviourCertified": true,
@@ -1921,13 +1983,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
       "category": "events-workflow",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -1936,7 +1999,8 @@
         "npm run proof:event-bus",
         "npm run proof:event-redrive",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -1983,12 +2047,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
       "category": "events-workflow",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -1996,6 +2061,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:workflow-provider-live"
       ],
       "behaviourCertified": true,
@@ -2043,12 +2109,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
       "category": "events-workflow",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
         "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -2057,6 +2124,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:scheduled-job-routes",
         "npm run proof:scheduled-jobs"
       ],
@@ -2105,12 +2173,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Notification delivery + preferences + channels",
       "category": "events-workflow",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
@@ -2122,6 +2191,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:notification-dispatch",
         "npm run proof:notification-email-transport",
         "npm run proof:notification-preferences",
@@ -2173,20 +2243,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Background workers / job runner",
       "category": "compute-runtime",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:event-worker",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -2233,12 +2305,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Runtime secrets management",
       "category": "compute-runtime",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
         "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
@@ -2248,6 +2321,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:provider-secrets-readiness",
         "npm run proof:secret-store-contract",
         "npm run proof:secrets-openbao"
@@ -2297,12 +2371,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
       "category": "observability-ops",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -2310,6 +2385,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-observability"
       ],
       "behaviourCertified": true,
@@ -2357,12 +2433,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Metrics + traces",
       "category": "observability-ops",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
         "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -2372,6 +2449,7 @@
         "npm run proof:dashboards",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:metrics-prometheus"
       ],
       "behaviourCertified": true,
@@ -2419,12 +2497,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Observability — built-in alerting + incidents",
       "category": "observability-ops",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
         "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
         "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
@@ -2438,6 +2517,7 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:incident-foundation",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:observability-signals"
       ],
       "behaviourCertified": true,
@@ -2485,12 +2565,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Internal service catalog + readiness",
       "category": "observability-ops",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -2499,6 +2580,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:platform-services",
         "npm run proof:service-clickthrough-policy"
       ],
@@ -2547,18 +2629,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Code quality + secret + dependency scanning",
       "category": "security-governance",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["OpenBao"],
@@ -2605,18 +2689,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["static-assurance-provider"],
@@ -2663,20 +2749,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant isolation proof",
       "category": "security-governance",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:domain-identity-matrix",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -2723,12 +2811,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Webhooks (developer-facing)",
       "category": "developer-platform",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
         "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -2737,6 +2826,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:webhook-redrive",
         "npm run proof:webhooks"
       ],
@@ -2785,12 +2875,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
       "category": "developer-platform",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -2798,6 +2889,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:route-contracts"
       ],
       "behaviourCertified": true,
@@ -2845,12 +2937,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Rate limiting (API)",
       "category": "developer-platform",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
         "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
@@ -2861,6 +2954,7 @@
         "npm run proof:api-key-routes",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:rate-limits",
         "npm run proof:rate-limits-redis"
       ],
@@ -2911,12 +3005,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
       "category": "support-admin",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -2924,6 +3019,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-lifecycle"
       ],
       "behaviourCertified": true,
@@ -2971,18 +3067,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Support tickets, customer health, announcements",
       "category": "support-admin",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -3029,18 +3127,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Universal Service Foundation scope + principles",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["static-assurance-provider"],
@@ -3087,18 +3187,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Build-versus-compose decision framework",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["static-assurance-provider"],
@@ -3143,12 +3245,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Service catalog + provider integration model",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
@@ -3160,6 +3263,7 @@
         "npm run proof:entitlements-routes",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:platform-services",
         "npm run proof:service-catalog-registry",
         "npm run proof:service-clickthrough-policy"
@@ -3209,18 +3313,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Environment-specific vs shared service model",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["static-assurance-provider"],
@@ -3267,12 +3373,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Provider configuration plane",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -3281,6 +3388,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:provider-config",
         "npm run proof:provider-readiness-contract"
       ],
@@ -3329,20 +3437,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Composed provider readiness spine",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:composed-provider-readiness",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["http-provider-readiness-probe"],
@@ -3387,20 +3497,22 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "History read-model (read-only projection)",
       "category": "data-platform",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:history",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -3447,12 +3559,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3460,7 +3573,8 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:auth-oidc-enterprise",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Keycloak"],
@@ -3507,12 +3621,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "OIDC test connection + callback display",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3520,7 +3635,8 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:auth-oidc-enterprise",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Keycloak"],
@@ -3567,13 +3683,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant host identity resolution",
       "category": "identity-access",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3582,6 +3699,7 @@
         "npm run proof:domain-identity-matrix",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-custom-domain-resolution"
       ],
       "behaviourCertified": true,
@@ -3629,12 +3747,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant domain activation (auth-client)",
       "category": "configuration",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3642,6 +3761,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-domain-canonical"
       ],
       "behaviourCertified": true,
@@ -3689,12 +3809,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant canonical domain set/unset",
       "category": "configuration",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3702,6 +3823,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-domain-canonical"
       ],
       "behaviourCertified": true,
@@ -3749,12 +3871,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant custom-domain auth callback",
       "category": "authentication",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3762,6 +3885,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:tenant-custom-domain-auth-origin"
       ],
       "behaviourCertified": true,
@@ -3809,12 +3933,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Tenant service clickthrough policy",
       "category": "observability-ops",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
         "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -3824,6 +3949,7 @@
         "npm run proof:clickthrough",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:service-clickthrough-policy"
       ],
       "behaviourCertified": true,
@@ -3871,13 +3997,14 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Environment registry + bootstrap",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
         "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
         "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
@@ -3888,7 +4015,8 @@
         "npm run proof:environment-operations",
         "npm run proof:environment-registry",
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["Postgres"],
@@ -3935,12 +4063,13 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Provider environment classification",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
@@ -3948,6 +4077,7 @@
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure",
         "npm run proof:provider-environment-classification"
       ],
       "behaviourCertified": true,
@@ -3997,18 +4127,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["playwright-adapter"],
@@ -4053,18 +4185,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "OpenAPI drift hard gate",
       "category": "developer-platform",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["openapi-drift-validator"],
@@ -4109,18 +4243,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "i18n runtime + validation",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["react-i18n-provider"],
@@ -4165,18 +4301,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Accessibility (a11y) gate",
       "category": "foundation",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["playwright-axe-adapter"],
@@ -4221,18 +4359,20 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "category": "observability-ops",
       "l3BehaviourPrerequisiteProofs": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
       ],
       "existingL3ProofHarnessToReuse": [
         "npm run proof:in-memory-provider-runtime",
-        "npm run proof:in-memory-vs-real-parity"
+        "npm run proof:in-memory-vs-real-parity",
+        "npm run proof:l4-substrate-closure"
       ],
       "behaviourCertified": true,
       "requiredComposeSubstrates": ["browser-telemetry-provider"],
@@ -4279,7 +4419,7 @@
       "futureProofLevel": "L4 Substrate Proven",
       "l4ImplementationStatus": "not-started",
       "l4ImplementationProhibitedUntilCertificationPasses": false,
-      "capabilityReadiness": "BEHAVIOUR_PROVEN"
+      "capabilityReadiness": "SUBSTRATE_PROVEN"
     }
   ]
 }

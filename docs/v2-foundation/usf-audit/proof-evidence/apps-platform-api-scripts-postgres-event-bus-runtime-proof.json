@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
-  "startedAt": "2026-06-23T20:32:14.188Z",
-  "endedAt": "2026-06-23T20:32:14.752Z",
+  "startedAt": "2026-06-23T21:39:45.696Z",
+  "endedAt": "2026-06-23T21:39:46.302Z",
   "exitStatus": 0,
-  "commit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
+  "commit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,18 +75,18 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T20:32:14.752Z",
+  "generatedAt": "2026-06-23T21:39:46.302Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782246666428-3325139",
+  "collectorRunId": "proof-run-1782250631847-3878273",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T20:32:14.188Z",
-  "endTime": "2026-06-23T20:32:14.752Z",
-  "gitCommit": "69e708c3dac90dc1b7cdb289ccd7c0d024268e7a",
-  "executionTimestamp": "2026-06-23T20:32:14.752Z",
+  "startTime": "2026-06-23T21:39:45.696Z",
+  "endTime": "2026-06-23T21:39:46.302Z",
+  "gitCommit": "f5782b4440c102a1a6d77f3af233605dc6fc8d63",
+  "executionTimestamp": "2026-06-23T21:39:46.302Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts": {
@@ -112,5 +112,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
-  "evidenceSignature": "bd471d65046922fd59bb996699448314871ba77fb53f26805a49d9fc8f4ab152"
+  "evidenceSignature": "e17b3b1a16c2a0b029dd467333251826a45e28859c92d674764ac0bdf13f50e1"
 }
