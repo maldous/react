@@ -1,10 +1,10 @@
 {
   "artefact": "formal-proof-gap-taxonomy-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T11:31:07.910Z",
+  "generatedAt": "2026-06-23T11:53:07.190Z",
   "status": "FAIL",
   "activeMilestone": "L3 Behaviour Proven",
-  "totalGapCount": 193,
+  "totalGapCount": 166,
   "currentL3MilestoneBlocked": false,
   "futureSubstrateExpansionBlocked": true,
   "behaviourReadinessStatus": "PASS",
@@ -13,7 +13,6 @@
   "gapsByKind": {
     "proof-command-failed": 45,
     "observability-proof-signal": 15,
-    "route-proof-evidence-missing": 27,
     "mutation-state-evidence": 106
   },
   "byClosureTrack": [
@@ -45,16 +44,6 @@
       "proofLevelBands": ["L3 Behaviour Proven"],
       "exactClosureActions": [
         "Emit correlated trace, metric, and log evidence from the proof process for the observability subject."
-      ]
-    },
-    {
-      "closureTrack": "route-evidence",
-      "gapCount": 27,
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true,
-      "proofLevelBands": ["L1 Executable Proven"],
-      "exactClosureActions": [
-        "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference."
       ]
     }
   ],
@@ -776,54 +765,6 @@
       "severity": "critical",
       "remediationEffort": "medium",
       "exactClosureAction": "Make the proof command execute successfully or reclassify it as an explicit skipped/future proof with non-passing strength.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /admin/config",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /admin/developer",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /admin/features",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /admin/members",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -1572,18 +1513,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/graphql",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/graphql",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -1644,42 +1573,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/audit",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/config",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "DELETE /api/org/config/:key",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "DELETE /api/org/config/:key",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -1692,18 +1585,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/config/:key",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "PATCH /api/org/config/:key",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -1712,18 +1593,6 @@
       "severity": "high",
       "remediationEffort": "medium",
       "exactClosureAction": "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/developer",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -1824,30 +1693,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/email-sender",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/email-sender",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "PATCH /api/org/email-sender",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -1860,30 +1705,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/email-sender/readiness",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/org/email-sender/test",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/org/email-sender/test",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -1892,30 +1713,6 @@
       "severity": "high",
       "remediationEffort": "medium",
       "exactClosureAction": "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/features",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/features/:featureKey",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -1968,30 +1765,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/members",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "DELETE /api/org/members/:userId",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "DELETE /api/org/members/:userId",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -2000,18 +1773,6 @@
       "severity": "high",
       "remediationEffort": "medium",
       "exactClosureAction": "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/members/:userId",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -2028,30 +1789,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/members/:userId/external-identities",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/members/:userId/status",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "PATCH /api/org/members/:userId/status",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -2060,18 +1797,6 @@
       "severity": "high",
       "remediationEffort": "medium",
       "exactClosureAction": "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "PATCH /api/org/members/:userId/username",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -2088,18 +1813,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/org/members/invite",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/org/members/invite",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -2112,18 +1825,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "POST /api/org/members/resend-invite",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /api/org/members/resend-invite",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -2132,18 +1833,6 @@
       "severity": "high",
       "remediationEffort": "medium",
       "exactClosureAction": "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/org/readiness",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     },
@@ -2340,18 +2029,6 @@
       "blocksFutureSubstrateExpansion": true
     },
     {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /api/theme",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
       "kind": "mutation-state-evidence",
       "subject": "POST /auth/logout",
       "message": "mutation proof lacks emitted before/after state evidence",
@@ -2360,18 +2037,6 @@
       "severity": "high",
       "remediationEffort": "medium",
       "exactClosureAction": "Emit before-state and after-state snapshots for the mutation route proof and assert the state diff.",
-      "blocksCurrentL3Milestone": false,
-      "blocksFutureSubstrateExpansion": true
-    },
-    {
-      "kind": "route-proof-evidence-missing",
-      "subject": "GET /e2e-harness",
-      "message": "route proof has explicit subject refs but no emitted evidence record",
-      "closureTrack": "route-evidence",
-      "proofLevelBand": "L1 Executable Proven",
-      "severity": "high",
-      "remediationEffort": "medium",
-      "exactClosureAction": "Emit runtime evidence whose explicit subjectIds include the inventoried route proof reference.",
       "blocksCurrentL3Milestone": false,
       "blocksFutureSubstrateExpansion": true
     }

@@ -78,6 +78,7 @@ export const PROOF_LADDER = [
   "proof:rate-limits-redis",
   "proof:provider-environment-classification",
   "proof:api-key-routes",
+  "proof:route-contracts",
   "proof:search",
   "proof:search-isolation",
   "proof:search-routes",

@@ -6541,6 +6541,24 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "runtime route-contract proof for routes previously represented only by legacy proof labels",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+      "protectingTests": ["npm run proof:route-contracts", "npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-route-contracts-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for the route-contract proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-route-contracts-runtime-proof.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-claim-mapping-spec.json",
       "introducingCommit": "pending",
       "purpose": "generated runtime proof evidence for UI semantic claim-mapping proof",
@@ -6948,6 +6966,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 699,
+  "additionCount": 701,
   "deletionCount": 54
 }

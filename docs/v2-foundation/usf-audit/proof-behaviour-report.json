@@ -1921,6 +1921,21 @@
       "sourceFileRefs": ["apps/platform-api/scripts/retention-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
+      "file": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+      "level": 2,
+      "classification": "isolated unit behaviour",
+      "routeRefs": [],
+      "subjectRefs": [
+        "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+        "proof:route-contracts"
+      ],
+      "assertsSideEffects": true,
+      "assertsFailureMode": true,
+      "assertsObservabilityOrAudit": true,
+      "sourceFileRefs": ["apps/platform-api/scripts/route-contracts-runtime-proof.ts"]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",
       "file": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
       "level": 4,

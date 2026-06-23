@@ -10,7 +10,7 @@ The adversarial runtime inventory status is reported separately from formal proo
 | ------------------------------------------- | ----: |
 | adversarial runtime status                  |  PASS |
 | formal proof readiness status               |  FAIL |
-| formal proof readiness gaps                 |   193 |
+| formal proof readiness gaps                 |   166 |
 | capability proof readiness gaps             |     0 |
 | full-service/provider-verified capabilities |     0 |
 | fully proven capabilities                   |     0 |
@@ -98,10 +98,6 @@ The adversarial runtime inventory status is reported separately from formal proo
 - proof-command-failed: apps/platform-api/scripts/webhook-redrive-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/webhook-worker-runtime-proof.ts - proof command exited 1
 - proof-command-failed: apps/platform-api/scripts/webhooks-runtime-proof.ts - proof command exited 1
-- route-proof-evidence-missing: GET /admin/config - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: GET /admin/developer - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: GET /admin/features - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: GET /admin/members - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/admin/alerts - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/admin/alerts/:alertId/evaluate - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: DELETE /api/admin/data/legal-holds - mutation proof lacks emitted before/after state evidence
@@ -164,19 +160,13 @@ The adversarial runtime inventory status is reported separately from formal proo
 - mutation-state-evidence: PATCH /api/auth/settings/resource-policies - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: PATCH /api/auth/settings/session - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: PATCH /api/auth/settings/sysadmin-brokering - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: POST /api/graphql - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/graphql - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: PATCH /api/me/notification-preferences - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: PATCH /api/me/profile - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/api-keys - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: DELETE /api/org/api-keys/:keyId - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/audit - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: GET /api/org/config - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: DELETE /api/org/config/:key - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: DELETE /api/org/config/:key - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: PATCH /api/org/config/:key - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: PATCH /api/org/config/:key - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/developer - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/org/domains - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: DELETE /api/org/domains/:domain - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/domains/:domain/activate - mutation proof lacks emitted before/after state evidence
@@ -185,33 +175,18 @@ The adversarial runtime inventory status is reported separately from formal proo
 - mutation-state-evidence: POST /api/org/domains/:domain/deactivate - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/domains/:domain/probe-routing-local - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/domains/:domain/verify - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/email-sender - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: PATCH /api/org/email-sender - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: PATCH /api/org/email-sender - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/email-sender/readiness - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: POST /api/org/email-sender/test - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/org/email-sender/test - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/features - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: PATCH /api/org/features/:featureKey - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: PATCH /api/org/features/:featureKey - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/groups - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: DELETE /api/org/groups/:groupId - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: PATCH /api/org/groups/:groupId - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/members - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: DELETE /api/org/members/:userId - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: DELETE /api/org/members/:userId - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: PATCH /api/org/members/:userId - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: PATCH /api/org/members/:userId - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/members/:userId/external-identities - route proof has explicit subject refs but no emitted evidence record
-- route-proof-evidence-missing: PATCH /api/org/members/:userId/status - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: PATCH /api/org/members/:userId/status - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: PATCH /api/org/members/:userId/username - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: PATCH /api/org/members/:userId/username - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: POST /api/org/members/invite - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/org/members/invite - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: POST /api/org/members/resend-invite - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/org/members/resend-invite - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/org/readiness - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /api/org/search - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/storage/objects - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: DELETE /api/org/storage/objects/:objectKey - mutation proof lacks emitted before/after state evidence
@@ -228,6 +203,4 @@ The adversarial runtime inventory status is reported separately from formal proo
 - mutation-state-evidence: POST /api/org/webhooks/:id/rotate-secret - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: POST /api/org/webhooks/:id/test - mutation proof lacks emitted before/after state evidence
 - mutation-state-evidence: PATCH /api/organisation/profile - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /api/theme - route proof has explicit subject refs but no emitted evidence record
 - mutation-state-evidence: POST /auth/logout - mutation proof lacks emitted before/after state evidence
-- route-proof-evidence-missing: GET /e2e-harness - route proof has explicit subject refs but no emitted evidence record

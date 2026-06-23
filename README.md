@@ -208,6 +208,7 @@ proof:provider-secrets-readiness
 proof:quota-enforcement
 proof:rate-limits
 proof:rate-limits-redis
+proof:route-contracts
 proof:scheduled-job-routes
 proof:scheduled-jobs
 proof:search

@@ -1,7 +1,7 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T11:31:07.901Z",
+  "generatedAt": "2026-06-23T11:53:07.180Z",
   "status": "PASS",
   "environmentModel": {
     "dev": {
@@ -1486,6 +1486,18 @@
       "environmentValid": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-retention-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+      "environment": "test",
+      "providerMode": "route-contract",
+      "providerEvidenceClass": "contract-or-unit-proof",
+      "proofLevelClaimed": "L2",
+      "proofLevelObserved": "L2",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-route-contracts-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof-ts",

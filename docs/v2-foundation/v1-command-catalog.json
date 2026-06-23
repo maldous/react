@@ -4580,6 +4580,24 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm proof:route-contracts",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for explicit route contracts formerly represented by legacy route proof labels.",
+    "inputs": ["platform-api route table"],
+    "outputs": ["structured proof evidence JSON and stdout route contract summary"],
+    "prerequisites": ["platform-api loader"],
+    "sideEffects": ["read-only route table assertions"],
+    "envScope": "test",
+    "failureSemantics": "exit-nonzero when an expected route is missing, duplicated, or has mismatched auth/permission/scope metadata",
+    "idempotent": true,
+    "safetyControls": ["read-only proof; no provider calls; no persisted mutations"],
+    "testCoverage": "npm run proof:route-contracts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
     "name": "npm proof:scheduled-job-routes",
     "kind": "npm",
     "purpose": "Runtime proof harness for scheduled job routes (live-proof; honest skip/degrade when backend unreachable).",

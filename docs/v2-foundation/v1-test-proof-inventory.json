@@ -8822,6 +8822,31 @@
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected semantic contract is broken"
   },
   {
+    "id": "package.json#proof:route-contracts",
+    "path": "package.json#proof:route-contracts",
+    "kind": "proof",
+    "behaviourProtected": false,
+    "fixtureEnvDependency": "none (route table contract proof)",
+    "stageCoverage": "proof script (npm run proof:route-contracts)",
+    "failureEvidence": "proof script assertion output",
+    "proofLevel": 2,
+    "proofLevelRationale": "route contract proof imports the real platform API route table and asserts exact method, path, auth, permission, scope, resource, UMA scope, and operation metadata for routes previously covered only by legacy route proof labels",
+    "capabilitiesProven": [
+      "Route contract inventory",
+      "Platform configuration registry",
+      "User identity + tenant membership"
+    ],
+    "semanticFacetsProven": ["contracts", "validation", "errorModel"],
+    "environment": "test",
+    "providerClass": "hermetic",
+    "liveSubstrateUsed": false,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "npm run proof:route-contracts",
+    "scriptPath": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero when an expected route is missing, duplicated, or has mismatched route contract metadata"
+  },
+  {
     "id": "package.json#proof:scheduled-job-routes",
     "path": "package.json#proof:scheduled-job-routes",
     "kind": "proof",

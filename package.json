@@ -217,6 +217,7 @@
     "proof:rate-limits-redis": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
     "proof:provider-environment-classification": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
     "proof:api-key-routes": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+    "proof:route-contracts": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/route-contracts-runtime-proof.ts",
     "proof:search": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/search-runtime-proof.ts",
     "proof:search-isolation": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/search-isolation-runtime-proof.ts",
     "proof:search-routes": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/search-routes-runtime-proof.ts",

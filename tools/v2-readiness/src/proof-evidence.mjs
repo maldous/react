@@ -141,6 +141,14 @@ export const ENVIRONMENT_PROOF_MODEL = {
 export const PROOF_EVIDENCE_DIR = "docs/v2-foundation/usf-audit/proof-evidence";
 
 export const LEGACY_ROUTE_PROOF_ALIASES = {
+  "proof:route-contracts": [
+    "platform-config + config-contracts tests",
+    "members unit + substrate tests",
+    "openapi:drift (not complete)",
+    "audit unit tests",
+    "theme + platform-config tests",
+    "make all (e2e gates)",
+  ],
   "proof:tenant-domain-canonical": ["proof:tenant-domain-canonical (local routing only)"],
   "proof:ui-semantic-claim-mapping": ["proof:ui-semantic-claim-mapping (headless journey)"],
   "proof:ui-semantic-groups": ["proof:ui-semantic-groups (headless journey)"],

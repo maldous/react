@@ -750,6 +750,12 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:proof-route-contracts",
+    "name": "npm run proof:route-contracts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/route-contracts-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:proof-scheduled-job-routes",
     "name": "npm run proof:scheduled-job-routes",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",

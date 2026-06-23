@@ -377,6 +377,8 @@ test("required runtime proofs include explicit UI proof scripts with route-proof
           "playwright test --config tools/ui-reference-harness/playwright.config.ts tools/ui-reference-harness/playwright/groups.spec.ts",
         "proof:tenant-domain-canonical":
           'node --loader "$(pwd)/apps/platform-api/loader.mjs" apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts',
+        "proof:route-contracts":
+          'node --loader "$(pwd)/apps/platform-api/loader.mjs" apps/platform-api/scripts/route-contracts-runtime-proof.ts',
       },
     },
     { inventory: { proofs: [] } }
@@ -396,6 +398,15 @@ test("required runtime proofs include explicit UI proof scripts with route-proof
   assert.equal(canonical.proofLevelClaimed, "L3");
   assert.ok(canonical.subjectIds.includes("proof:tenant-domain-canonical"));
   assert.ok(canonical.subjectIds.includes("proof:tenant-domain-canonical (local routing only)"));
+
+  const routeContracts = proofs.find(
+    (proof) => proof.file === "apps/platform-api/scripts/route-contracts-runtime-proof.ts"
+  );
+  assert.equal(routeContracts.commandExecuted, "npm run proof:route-contracts");
+  assert.equal(routeContracts.proofLevelClaimed, "L3");
+  assert.ok(routeContracts.subjectIds.includes("proof:route-contracts"));
+  assert.ok(routeContracts.subjectIds.includes("members unit + substrate tests"));
+  assert.ok(routeContracts.subjectIds.includes("platform-config + config-contracts tests"));
 });
 
 function taxonomyFixture() {
