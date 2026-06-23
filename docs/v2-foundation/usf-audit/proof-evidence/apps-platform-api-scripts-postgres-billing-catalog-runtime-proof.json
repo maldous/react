@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.016Z",
-  "endedAt": "2026-06-23T06:45:52.016Z",
+  "startedAt": "2026-06-23T07:42:08.624Z",
+  "endedAt": "2026-06-23T07:42:09.624Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.016Z",
+  "generatedAt": "2026-06-23T07:42:09.624Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"],
-  "evidenceSignature": "4949c504dc77f2af453b776a03187ec25050266fb5c311b753f6d185a748f818"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.624Z",
+  "endTime": "2026-06-23T07:42:09.624Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.624Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-billing-catalog-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-billing-catalog-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-billing-catalog-runtime-proof"],
+  "evidenceSignature": "3b228d044c36bb2d5b8edec4e070da3563802d49b499210b9474c1399e1b4ea8"
 }

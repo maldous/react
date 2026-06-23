@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.062Z",
-  "endedAt": "2026-06-23T06:45:52.062Z",
+  "startedAt": "2026-06-23T07:42:08.678Z",
+  "endedAt": "2026-06-23T07:42:09.678Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.062Z",
+  "generatedAt": "2026-06-23T07:42:09.678Z",
   "sourceFileRefs": ["apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts"],
-  "evidenceSignature": "acd08f8f240ef77043646b395d7d35c88f90a70617cda88188cca0cba16f4aae"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.678Z",
+  "endTime": "2026-06-23T07:42:09.678Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.678Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/redis-rate-limit-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-redis-rate-limit-repository-runtime-proof"],
+  "evidenceSignature": "8a82d369e261a87f6071a7cc82f4fc0d31433e4fb525614750e308ec42c9d9bd"
 }

@@ -8509,6 +8509,33 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/usf-audit/proof-ladder-compliance-report.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit generated proof-of-proofs ladder compliance report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-ladder-compliance-report.json",
+      "protectingTests": ["npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/environment-proof-consistency-report.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit generated proof-of-proofs environment consistency report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/environment-proof-consistency-report.json",
+      "protectingTests": ["npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/capability-proof-readiness-report.json",
+      "introducingCommit": "pending",
+      "purpose": "post-audit generated capability proof readiness report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/capability-proof-readiness-report.json",
+      "protectingTests": ["npm run v2:readiness -- --strict"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/usf-audit/weak-proof-backlog.json",
       "introducingCommit": "pending",
       "purpose": "post-audit generated proof-strength assurance report",
@@ -8916,6 +8943,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 919,
+  "additionCount": 922,
   "deletionCount": 54
 }

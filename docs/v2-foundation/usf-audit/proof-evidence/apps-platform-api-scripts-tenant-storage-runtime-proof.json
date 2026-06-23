@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-storage",
-  "startedAt": "2026-06-23T06:45:51.097Z",
-  "endedAt": "2026-06-23T06:45:52.097Z",
+  "startedAt": "2026-06-23T07:42:08.720Z",
+  "endedAt": "2026-06-23T07:42:09.720Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -67,7 +67,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.097Z",
+  "generatedAt": "2026-06-23T07:42:09.720Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-runtime-proof.ts"],
-  "evidenceSignature": "2b8032b86a17104ac9c3d39a7a9845e2bcd81d568fdf1b94dd4aae1a94887eca"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.720Z",
+  "endTime": "2026-06-23T07:42:09.720Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.720Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-storage-runtime-proof.ts",
+    "command": "npm run proof:tenant-storage",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-storage-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-tenant-storage-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-storage-runtime-proof"],
+  "evidenceSignature": "4170cce141bed713ffeaba8b5044226b0863130ed7c238e27cd516b8c9464218"
 }

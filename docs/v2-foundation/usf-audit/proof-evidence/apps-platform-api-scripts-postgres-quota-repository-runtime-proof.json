@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.035Z",
-  "endedAt": "2026-06-23T06:45:52.035Z",
+  "startedAt": "2026-06-23T07:42:08.647Z",
+  "endedAt": "2026-06-23T07:42:09.647Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.035Z",
+  "generatedAt": "2026-06-23T07:42:09.647Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts"],
-  "evidenceSignature": "42f130fb4cdf49cba18278b4e15023bd15c049d1c963953607083d9e252b5cf5"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.647Z",
+  "endTime": "2026-06-23T07:42:09.647Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.647Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-quota-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-quota-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-quota-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-quota-repository-runtime-proof"],
+  "evidenceSignature": "f0abebea0711f9fcf86c4e7bb06f03058b71cce207e3c154e1f31d6022d0a535"
 }

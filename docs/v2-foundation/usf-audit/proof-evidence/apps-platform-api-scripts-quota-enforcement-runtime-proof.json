@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:quota-enforcement",
-  "startedAt": "2026-06-23T06:45:51.057Z",
-  "endedAt": "2026-06-23T06:45:52.057Z",
+  "startedAt": "2026-06-23T07:42:08.672Z",
+  "endedAt": "2026-06-23T07:42:09.672Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -74,7 +74,30 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.057Z",
+  "generatedAt": "2026-06-23T07:42:09.672Z",
   "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
-  "evidenceSignature": "8875e9f88dfcb3175c6276b698fe9523cec9adc28d0116b7fc8ae59dc27cc6ed"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.672Z",
+  "endTime": "2026-06-23T07:42:09.672Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.672Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
+    "command": "npm run proof:quota-enforcement",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-quotas",
+      "route:patch-api-admin-tenants-tenantid-quotas",
+      "route:get-api-org-quotas"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-quota-enforcement-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-quota-enforcement-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-quota-enforcement-runtime-proof"],
+  "evidenceSignature": "c6cf3b58ab806eebc47d8f65127bc351ce3f2466f0e399694e7ba7f103deb276"
 }

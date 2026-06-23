@@ -27,7 +27,7 @@ function expectedBlockerSubjects(ctx) {
 
 const adversarialRule = (ruleId) => /^R5[1-9]-|^R6[0-1]-/.test(ruleId);
 
-test("golden: base consistency clean; adversarial runtime gaps closed; R9 exact", () => {
+test("golden: base consistency clean; formal proof gaps truthfully reported; R9 exact", () => {
   const ctx = loadContext({ repoRoot, strict: true });
   const findings = runRules(ctx);
 
@@ -36,12 +36,30 @@ test("golden: base consistency clean; adversarial runtime gaps closed; R9 exact"
       f.ruleId !== "R9-branch-cut-blocker" &&
       f.ruleId !== "R22-semantic-completeness" &&
       f.ruleId !== "R23-proof-classification" &&
+      f.ruleId !== "R62-formal-proof-evidence-assurance" &&
       !adversarialRule(f.ruleId)
   );
   assert.deepEqual(
     consistency,
     [],
     `base consistency rules must be clean; got:\n${consistency.map((f) => `${f.ruleId} ${f.subject}: ${f.message}`).join("\n")}`
+  );
+
+  const formalProof = findings.filter((f) => f.ruleId === "R62-formal-proof-evidence-assurance");
+  assert.equal(formalProof.length, 48, "formal proof assurance must report every required gap");
+  assert.ok(
+    formalProof.some(
+      (f) =>
+        f.subject === "User identity + tenant membership" &&
+        f.message.includes("missing provider-L4")
+    ),
+    "formal proof assurance must fail missing real-provider evidence"
+  );
+  assert.ok(
+    formalProof.some(
+      (f) => f.subject === "Platform login + session" && f.message.includes("missing sandbox-L5")
+    ),
+    "formal proof assurance must fail missing external sandbox evidence"
   );
 
   const adversarial = findings.filter((f) => adversarialRule(f.ruleId));

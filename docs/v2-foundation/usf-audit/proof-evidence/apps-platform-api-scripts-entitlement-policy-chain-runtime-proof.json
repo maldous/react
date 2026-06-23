@@ -58,10 +58,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlement-policy-chain",
-  "startedAt": "2026-06-23T06:45:50.952Z",
-  "endedAt": "2026-06-23T06:45:51.952Z",
+  "startedAt": "2026-06-23T07:42:08.549Z",
+  "endedAt": "2026-06-23T07:42:09.549Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -128,7 +128,50 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.952Z",
+  "generatedAt": "2026-06-23T07:42:09.549Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"],
-  "evidenceSignature": "664518092b55445ef8929efa94f9b2de6b86c5319abcca4cd6766149d189db2d"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.549Z",
+  "endTime": "2026-06-23T07:42:09.549Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.549Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
+    "command": "npm run proof:entitlement-policy-chain",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-entitlements",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-auth-providers",
+      "route:post-api-auth-settings-domains",
+      "route:delete-api-auth-settings-domains-domain",
+      "route:post-api-auth-settings-domains-challenges",
+      "route:post-api-auth-settings-domains-verify",
+      "route:get-api-auth-settings-lockout",
+      "route:patch-api-auth-settings-lockout",
+      "route:get-api-auth-settings-providers",
+      "route:patch-api-auth-settings-providers",
+      "route:get-api-auth-settings-readiness",
+      "route:get-api-auth-settings-resource-policies",
+      "route:patch-api-auth-settings-resource-policies",
+      "route:get-api-auth-settings-session",
+      "route:patch-api-auth-settings-session",
+      "route:get-api-auth-settings-sysadmin-brokering",
+      "route:patch-api-auth-settings-sysadmin-brokering",
+      "route:get-api-org-entitlements"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-entitlement-policy-chain-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-entitlement-policy-chain-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-entitlement-policy-chain-runtime-proof"],
+  "evidenceSignature": "b3a7361d5b9e5a00bc5f85b408d002040d206df8df613ddc9d0eab4948df133a"
 }

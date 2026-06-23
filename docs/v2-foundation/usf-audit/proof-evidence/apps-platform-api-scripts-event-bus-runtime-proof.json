@@ -34,10 +34,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:event-bus",
-  "startedAt": "2026-06-23T06:45:50.962Z",
-  "endedAt": "2026-06-23T06:45:51.962Z",
+  "startedAt": "2026-06-23T07:42:08.561Z",
+  "endedAt": "2026-06-23T07:42:09.561Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -85,7 +85,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.962Z",
+  "generatedAt": "2026-06-23T07:42:09.561Z",
   "sourceFileRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"],
-  "evidenceSignature": "c8736d0d3579bf6f1461a9f8d4057212713e025c6a7669e0bc13ba4167f8a5ff"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.561Z",
+  "endTime": "2026-06-23T07:42:09.561Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.561Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
+    "command": "npm run proof:event-bus",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-events",
+      "route:get-api-admin-events",
+      "route:post-api-admin-events-eventid-redrive",
+      "route:get-api-admin-events-dead-letter"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-event-bus-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-event-bus-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-event-bus-runtime-proof"],
+  "evidenceSignature": "0b58bb8788be1d7ce87f2e1cd27f237dae9813d91f4e9bf1e24f7daaae840860"
 }

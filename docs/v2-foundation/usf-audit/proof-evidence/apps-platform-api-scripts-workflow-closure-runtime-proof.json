@@ -23,10 +23,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:workflow-closure",
-  "startedAt": "2026-06-23T06:45:51.107Z",
-  "endedAt": "2026-06-23T06:45:52.107Z",
+  "startedAt": "2026-06-23T07:42:08.732Z",
+  "endedAt": "2026-06-23T07:42:09.732Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -69,7 +69,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.107Z",
+  "generatedAt": "2026-06-23T07:42:09.732Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-closure-runtime-proof.ts"],
-  "evidenceSignature": "61bb16e2db3b3ac5acc1aba7b76e83b09fc8d980abd4b4b3a9ec90144634a053"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.732Z",
+  "endTime": "2026-06-23T07:42:09.732Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.732Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-closure-runtime-proof.ts",
+    "command": "npm run proof:workflow-closure",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-workflow-closure-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-workflow-closure-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-workflow-closure-runtime-proof"],
+  "evidenceSignature": "7617206b26c38842b1db54f3c10e5552b688b68ea3cd6276cd4462e7e8dcd7a7"
 }

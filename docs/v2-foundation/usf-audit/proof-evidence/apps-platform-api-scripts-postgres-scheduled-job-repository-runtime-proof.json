@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.039Z",
-  "endedAt": "2026-06-23T06:45:52.039Z",
+  "startedAt": "2026-06-23T07:42:08.651Z",
+  "endedAt": "2026-06-23T07:42:09.651Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,9 +66,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.039Z",
+  "generatedAt": "2026-06-23T07:42:09.651Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "bbbe2580d6ed4aebbaf976251f4355b2c0fc2659c10afa6da84580c048edc5ca"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.651Z",
+  "endTime": "2026-06-23T07:42:09.651Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.651Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-scheduled-job-repository-runtime-proof"],
+  "evidenceSignature": "61759142d561de070d81de19f7c7d819de051f4000c0460d3056739d0e045046"
 }

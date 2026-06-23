@@ -36,10 +36,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:auth-settings",
-  "startedAt": "2026-06-23T06:45:50.907Z",
-  "endedAt": "2026-06-23T06:45:51.907Z",
+  "startedAt": "2026-06-23T07:42:08.500Z",
+  "endedAt": "2026-06-23T07:42:09.500Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -92,7 +92,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.907Z",
+  "generatedAt": "2026-06-23T07:42:09.500Z",
   "sourceFileRefs": ["apps/platform-api/scripts/auth-settings-runtime-proof.ts"],
-  "evidenceSignature": "d8af91a0e6d5ca3eb7fd26b5f68a059979c1d5016b4288ee9458523152ac7cdd"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.500Z",
+  "endTime": "2026-06-23T07:42:09.500Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.500Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/auth-settings-runtime-proof.ts",
+    "command": "npm run proof:auth-settings",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-auth",
+      "route:get-api-auth-settings-mfa",
+      "route:patch-api-auth-settings-mfa",
+      "route:get-api-session",
+      "route:get-auth-callback",
+      "route:get-auth-login",
+      "route:post-auth-logout",
+      "route:get-internal-auth-forward",
+      "route:get-login"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-auth-settings-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-auth-settings-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-auth-settings-runtime-proof"],
+  "evidenceSignature": "c13ae5e2d3caad0f4565daa1c258bf4c496bb18273c47eb26af76460f16aabab"
 }

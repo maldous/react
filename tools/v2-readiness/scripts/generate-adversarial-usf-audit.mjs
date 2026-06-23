@@ -44,6 +44,9 @@ writeJson("semantic-orphan-runtime-report.json", audit.reports.semanticOrphan);
 writeJson("proof-evidence-index.json", proofEvidence.evidenceIndex);
 writeJson("proof-strength-matrix.json", proofEvidence.strengthMatrix);
 writeJson("proof-claim-vs-observed-report.json", proofEvidence.claimVsObserved);
+writeJson("proof-ladder-compliance-report.json", proofEvidence.ladderCompliance);
+writeJson("environment-proof-consistency-report.json", proofEvidence.environmentConsistency);
+writeJson("capability-proof-readiness-report.json", proofEvidence.capabilityReadiness);
 writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity);
 writeJson("route-proof-subject-map.json", proofEvidence.routeSubjectMap);
 writeJson("weak-proof-backlog.json", proofEvidence.weakProofBacklog);
@@ -147,7 +150,12 @@ const mdList = (items) =>
     ? "- none"
     : items
         .slice(0, 2500)
-        .map((item) => `- ${item.id}: ${item.subject} - ${item.message}`)
+        .map((item) => {
+          const id = item.id || item.kind || item.rule || "gap";
+          const subject =
+            item.subject || item.capability || item.provider || item.route || "unknown";
+          return `- ${id}: ${subject} - ${item.message}`;
+        })
         .join("\n");
 
 const backlogMd = `# V1 Correction Backlog
@@ -179,8 +187,18 @@ fs.writeFileSync(path.join(outDir, "v1-correction-backlog.md"), backlogMd);
 const count = (items, predicate) => items.filter(predicate).length;
 const routes = audit.inventory.routes;
 const mutations = routes.filter((route) => route.isMutation);
+const formalProofGapCount = proofEvidence.formalReadiness.gaps.length;
+const capabilityProofGapCount = proofEvidence.capabilityReadiness.gaps.length;
 const summary = {
-  status: audit.pass ? "PASS" : "FAIL",
+  status: audit.pass && proofEvidence.formalReadiness.status === "PASS" ? "PASS" : "FAIL",
+  adversarialRuntimeStatus: audit.pass ? "PASS" : "FAIL",
+  formalProofReadinessStatus: proofEvidence.formalReadiness.status,
+  formalProofGapCount,
+  capabilityProofGapCount,
+  weakProofBacklogStatus: proofEvidence.weakProofBacklog.status,
+  fullServiceVerifiedCapabilities:
+    proofEvidence.capabilityReadiness.fullServiceVerifiedCapabilityCount,
+  fullyProvenCapabilities: proofEvidence.capabilityReadiness.fullyProvenCapabilityCount,
   routesDiscovered: routes.length,
   routesWithoutTracing: count(routes, (route) => route.traceSpan === "unknown"),
   routesWithoutLogging: count(routes, (route) => route.logEvent === "unknown"),
@@ -210,10 +228,17 @@ const attestation = `# Adversarial USF Assurance Attestation
 Status: ${summary.status}
 
 This attestation is generated from runtime-derived inventories under \`docs/v2-foundation/usf-audit/\`.
-PASS is not allowed unless runtime/interface-level route, security, ownership, audit, proof, storage, workflow, event, metrics, data-governance, provider, and orphan checks all have zero gaps.
+Overall PASS is not allowed unless runtime/interface-level route, security, ownership, audit, proof, storage, workflow, event, metrics, data-governance, provider, orphan, and formal proof-readiness checks all have zero gaps.
+The adversarial runtime inventory status is reported separately from formal proof readiness so runtime inventory closure cannot be mistaken for full migration proof.
 
 | Measure | Count |
 | --- | ---: |
+| adversarial runtime status | ${summary.adversarialRuntimeStatus} |
+| formal proof readiness status | ${summary.formalProofReadinessStatus} |
+| formal proof readiness gaps | ${summary.formalProofGapCount} |
+| capability proof readiness gaps | ${summary.capabilityProofGapCount} |
+| full-service/provider-verified capabilities | ${summary.fullServiceVerifiedCapabilities} |
+| fully proven capabilities | ${summary.fullyProvenCapabilities} |
 | routes discovered | ${summary.routesDiscovered} |
 | routes without tracing | ${summary.routesWithoutTracing} |
 | routes without logging | ${summary.routesWithoutLogging} |
@@ -232,9 +257,13 @@ PASS is not allowed unless runtime/interface-level route, security, ownership, a
 | obsolete-runtime-artifact items | ${summary.obsoleteRuntimeArtifacts} |
 | must-fix-in-v1 items | ${summary.mustFixInV1Items} |
 
-## Known Gaps Identified
+## Runtime Audit Gaps Identified
 
 ${mdList(backlog.slice(0, 250))}
+
+## Formal Proof Readiness Gaps Identified
+
+${mdList(proofEvidence.formalReadiness.gaps.slice(0, 250))}
 `;
 fs.writeFileSync(path.join(outDir, "adversarial-assurance-attestation.md"), attestation);
 
@@ -257,13 +286,24 @@ const semanticSection = previousUniversal
     ""
   )
   .trimEnd();
-const universal = `${semanticSection}
+const universalSemanticSection = semanticSection.replace(
+  /^Status: .+$/m,
+  `Status: ${summary.status}`
+);
+const universal = `${universalSemanticSection}
 
 ${adversarialRuntimeHeading}
 
 Status: ${summary.status}
 
-The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories and adversarial reports are generated under \`docs/v2-foundation/usf-audit/\`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, or orphan evidence is classified as a gap.
+The semantic USF graph is not treated as sufficient proof. Runtime-derived inventories, adversarial reports, and formal proof-readiness reports are generated under \`docs/v2-foundation/usf-audit/\`. Any unknown route-level, interface-level, provider, workflow, storage, event, ownership, proof, orphan, or proof-readiness evidence is classified as a gap.
+
+| Assurance surface | Status | Gaps |
+| --- | --- | ---: |
+| adversarial runtime inventory | ${summary.adversarialRuntimeStatus} | ${backlog.length} |
+| formal proof readiness | ${summary.formalProofReadinessStatus} | ${summary.formalProofGapCount} |
+| weak proof backlog | ${summary.weakProofBacklogStatus} | ${proofEvidence.weakProofBacklog.capabilityProofGapCount || 0} |
+| capability proof readiness | ${proofEvidence.capabilityReadiness.status} | ${summary.capabilityProofGapCount} |
 
 ${knownGapsHeading}
 
@@ -281,11 +321,14 @@ ${knownGapsHeading}
 | Show every storage operation without lifecycle proof. | ${summary.storageProofGaps} |
 | Show every event without DLQ/retry proof. | ${summary.eventRuntimeGaps} |
 | Show every alert without runbook. | ${audit.reports.metricsAlerts.gaps.filter((item) => item.message.includes("runbook") || item.message.includes("alert")).length} |
+| Show every capability missing required real-provider L4 proof. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-real-provider-proof-missing").length} |
+| Show every capability missing required external-sandbox L5 proof. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-external-sandbox-proof-missing").length} |
+| Show every capability missing required end-to-end L6 proof. | ${proofEvidence.capabilityReadiness.gaps.filter((item) => item.kind === "capability-end-to-end-journey-proof-missing").length} |
 
 See \`docs/v2-foundation/usf-audit/v1-correction-backlog.md\` for classified gaps.
 `;
 fs.writeFileSync(universalPath, universal);
 
 console.log(
-  `Adversarial USF audit generated in ${path.relative(repoRoot, outDir)} (${summary.status}, gaps=${backlog.length})`
+  `Adversarial USF audit generated in ${path.relative(repoRoot, outDir)} (overall=${summary.status}, runtime=${summary.adversarialRuntimeStatus}, formalProof=${summary.formalProofReadinessStatus}, runtimeGaps=${backlog.length}, formalProofGaps=${summary.formalProofGapCount})`
 );

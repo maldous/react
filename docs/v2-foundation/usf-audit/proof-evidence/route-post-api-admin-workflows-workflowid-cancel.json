@@ -16,10 +16,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L3",
   "commandExecuted": "route-subject evidence collection for POST /api/admin/workflows/:workflowId/cancel",
-  "startedAt": "2026-06-23T06:45:51.232Z",
-  "endedAt": "2026-06-23T06:45:52.232Z",
+  "startedAt": "2026-06-23T07:42:08.876Z",
+  "endedAt": "2026-06-23T07:42:09.876Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8790",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -53,7 +53,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.232Z",
+  "generatedAt": "2026-06-23T07:42:09.876Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8790", "docs/api/openapi.json"],
-  "evidenceSignature": "4028434511650044f47f5ccdf3357fdf523b943f71fdd962806616e0989a5c53"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.876Z",
+  "endTime": "2026-06-23T07:42:09.876Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.876Z",
+  "stateDiff": {
+    "routeId": "route:post-api-admin-workflows-workflowid-cancel",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": ["route handler audit evidence"],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "489d7361cfce1101ebdccbf153be77b134cc6a298fd5fa76123a543412339350"
 }

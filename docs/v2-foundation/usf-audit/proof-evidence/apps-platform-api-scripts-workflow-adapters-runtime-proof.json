@@ -21,10 +21,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:workflow-adapters",
-  "startedAt": "2026-06-23T06:45:51.106Z",
-  "endedAt": "2026-06-23T06:45:52.106Z",
+  "startedAt": "2026-06-23T07:42:08.730Z",
+  "endedAt": "2026-06-23T07:42:09.730Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -67,7 +67,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.106Z",
+  "generatedAt": "2026-06-23T07:42:09.730Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-adapters-runtime-proof.ts"],
-  "evidenceSignature": "e2f1a3ba530915df7c9621124c660ab6fb6d7915e2161df4a1412f962cdc0cb1"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.730Z",
+  "endTime": "2026-06-23T07:42:09.730Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.730Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-adapters-runtime-proof.ts",
+    "command": "npm run proof:workflow-adapters",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-workflow-adapters-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-workflow-adapters-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-workflow-adapters-runtime-proof"],
+  "evidenceSignature": "8d89ab0c55e5cd534b248567f8bd01af8dd2374149138bfcb2217304d9e16af9"
 }

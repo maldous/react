@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:entitlements-routes",
-  "startedAt": "2026-06-23T06:45:50.955Z",
-  "endedAt": "2026-06-23T06:45:51.955Z",
+  "startedAt": "2026-06-23T07:42:08.554Z",
+  "endedAt": "2026-06-23T07:42:09.554Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.955Z",
+  "generatedAt": "2026-06-23T07:42:09.554Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlements-routes-runtime-proof.ts"],
-  "evidenceSignature": "22704c64191ade63bb48f2f9dae1fa7d7d52af951e632044f81a13a0b6f16420"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.554Z",
+  "endTime": "2026-06-23T07:42:09.554Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.554Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/entitlements-routes-runtime-proof.ts",
+    "command": "npm run proof:entitlements-routes",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-entitlements",
+      "route:get-admin-platform",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-org-entitlements",
+      "route:get-api-platform-service-catalog"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-entitlements-routes-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-entitlements-routes-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-entitlements-routes-runtime-proof"],
+  "evidenceSignature": "a737ec1e44240da64d46b0b51c2ae9511d87ca945cc78f7f1b7ae8bc132adb67"
 }

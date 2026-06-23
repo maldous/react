@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.078Z",
-  "endedAt": "2026-06-23T06:45:52.078Z",
+  "startedAt": "2026-06-23T07:42:08.697Z",
+  "endedAt": "2026-06-23T07:42:09.697Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.078Z",
+  "generatedAt": "2026-06-23T07:42:09.697Z",
   "sourceFileRefs": ["apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts"],
-  "evidenceSignature": "b84383a3aa53392062cf3d7fa5f6c650eac9f5a0031c8a7906a5eb39110dd71d"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.697Z",
+  "endTime": "2026-06-23T07:42:09.697Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.697Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/static-assurance-provider-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-static-assurance-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-static-assurance-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-static-assurance-provider-runtime-proof"],
+  "evidenceSignature": "ce008a1de5273f84df5630423e79e7e3d3c9652475c994824f80c23bf1371179"
 }

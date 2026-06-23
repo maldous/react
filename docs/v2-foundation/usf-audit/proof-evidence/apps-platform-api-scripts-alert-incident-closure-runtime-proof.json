@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:alert-incident-closure",
-  "startedAt": "2026-06-23T06:45:50.854Z",
-  "endedAt": "2026-06-23T06:45:51.854Z",
+  "startedAt": "2026-06-23T07:42:08.449Z",
+  "endedAt": "2026-06-23T07:42:09.449Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.854Z",
+  "generatedAt": "2026-06-23T07:42:09.449Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts"],
-  "evidenceSignature": "0ac6b50655f81fd95ce320b1414831b641aa66dbae0b9469b1e824466a478d53"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.449Z",
+  "endTime": "2026-06-23T07:42:09.449Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.449Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
+    "command": "npm run proof:alert-incident-closure",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-alert-incident-closure-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-alert-incident-closure-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-alert-incident-closure-runtime-proof"],
+  "evidenceSignature": "67a2fa07bb12a4ab280789d10f2005e52178c75ee48422faac9823bb45e09ce5"
 }

@@ -28,10 +28,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:scheduled-jobs",
-  "startedAt": "2026-06-23T06:45:51.066Z",
-  "endedAt": "2026-06-23T06:45:52.066Z",
+  "startedAt": "2026-06-23T07:42:08.684Z",
+  "endedAt": "2026-06-23T07:42:09.684Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -80,7 +80,32 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.066Z",
+  "generatedAt": "2026-06-23T07:42:09.684Z",
   "sourceFileRefs": ["apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts"],
-  "evidenceSignature": "3765fbb396c339fd945320833e7a378ad824df6129db910711f4efa05e6f0671"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.684Z",
+  "endTime": "2026-06-23T07:42:09.684Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.684Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/scheduled-jobs-runtime-proof.ts",
+    "command": "npm run proof:scheduled-jobs",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-scheduled-jobs",
+      "route:get-api-admin-scheduled-jobs",
+      "route:post-api-admin-scheduled-jobs",
+      "route:patch-api-admin-scheduled-jobs-jobid",
+      "route:post-api-admin-scheduled-jobs-jobid-run"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-scheduled-jobs-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-scheduled-jobs-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-scheduled-jobs-runtime-proof"],
+  "evidenceSignature": "9757fd60cb259781e054d1b4ba4a5232ba66802669c84a96f67b9ac3f5e13b4b"
 }

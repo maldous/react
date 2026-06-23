@@ -17,10 +17,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.974Z",
-  "endedAt": "2026-06-23T06:45:51.974Z",
+  "startedAt": "2026-06-23T07:42:08.576Z",
+  "endedAt": "2026-06-23T07:42:09.576Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.974Z",
+  "generatedAt": "2026-06-23T07:42:09.576Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts"],
-  "evidenceSignature": "ba2f0ad9d0735045961a50bb9f6132ed174912d2815d6320de4f39803941c3d3"
+  "environment": "dev",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.576Z",
+  "endTime": "2026-06-23T07:42:09.576Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.576Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-automation-runner-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["in-memory-automation-runner"]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-in-memory-automation-runner-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-in-memory-automation-runner-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-in-memory-automation-runner-runtime-proof"],
+  "evidenceSignature": "878882fd044a70d5ebfad3ee51f7afd200a3b50712f04faf7570737ee2c5add0"
 }

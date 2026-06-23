@@ -18,10 +18,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:provider-binding-report-route",
-  "startedAt": "2026-06-23T06:45:51.049Z",
-  "endedAt": "2026-06-23T06:45:52.049Z",
+  "startedAt": "2026-06-23T07:42:08.663Z",
+  "endedAt": "2026-06-23T07:42:09.663Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -69,7 +69,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.049Z",
+  "generatedAt": "2026-06-23T07:42:09.663Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts"],
-  "evidenceSignature": "d9df57d669f304cf1b1d75a9e1432a7b512dca2948ef7668e35ec58a60d622ec"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.663Z",
+  "endTime": "2026-06-23T07:42:09.663Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.663Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-binding-report-route-runtime-proof.ts",
+    "command": "npm run proof:provider-binding-report-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-provider-bindings"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-provider-binding-report-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-provider-binding-report-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-provider-binding-report-route-runtime-proof"],
+  "evidenceSignature": "3a77213bef97e4420f29796ec21573af6ab5ade160417a9f19216dc78fbe1950"
 }

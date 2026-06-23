@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:full-observability-contract",
-  "startedAt": "2026-06-23T06:45:50.966Z",
-  "endedAt": "2026-06-23T06:45:51.966Z",
+  "startedAt": "2026-06-23T07:42:08.566Z",
+  "endedAt": "2026-06-23T07:42:09.566Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.966Z",
+  "generatedAt": "2026-06-23T07:42:09.566Z",
   "sourceFileRefs": ["apps/platform-api/scripts/full-observability-contract-runtime-proof.ts"],
-  "evidenceSignature": "b84fd202e3d4c5c22b66f53b859350e4cca77cd1de98cfe2207aebb9440416cf"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.566Z",
+  "endTime": "2026-06-23T07:42:09.566Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.566Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
+    "command": "npm run proof:full-observability-contract",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-full-observability-contract-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-full-observability-contract-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-full-observability-contract-runtime-proof"],
+  "evidenceSignature": "78df4389e56ba830e6cbb4cd2363b84f972e3d347000dede7c6e63a4c4b3ed48"
 }

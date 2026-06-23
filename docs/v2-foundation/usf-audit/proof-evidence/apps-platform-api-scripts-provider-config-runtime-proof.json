@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:provider-config",
-  "startedAt": "2026-06-23T06:45:51.050Z",
-  "endedAt": "2026-06-23T06:45:52.050Z",
+  "startedAt": "2026-06-23T07:42:08.664Z",
+  "endedAt": "2026-06-23T07:42:09.664Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.050Z",
+  "generatedAt": "2026-06-23T07:42:09.664Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-config-runtime-proof.ts"],
-  "evidenceSignature": "885def7f94dc3825c88662d7aceb16287863ea75795e9db80ab595ef31700cd6"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.664Z",
+  "endTime": "2026-06-23T07:42:09.664Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.664Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
+    "command": "npm run proof:provider-config",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs-id-delete",
+      "route:post-api-admin-provider-configs-id-lifecycle"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-provider-config-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-provider-config-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-provider-config-runtime-proof"],
+  "evidenceSignature": "0d9747b115dbd191c8d038bb3fecbec2f762b228555eb5928c71ab65ca3a218d"
 }

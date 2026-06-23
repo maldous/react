@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:rate-limits",
-  "startedAt": "2026-06-23T06:45:51.060Z",
-  "endedAt": "2026-06-23T06:45:52.060Z",
+  "startedAt": "2026-06-23T07:42:08.675Z",
+  "endedAt": "2026-06-23T07:42:09.675Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -74,7 +74,30 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.060Z",
+  "generatedAt": "2026-06-23T07:42:09.675Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
-  "evidenceSignature": "b52993ca53d7367871325e846068c601346b793c6a9d0e4fbfc24473dda6c982"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.675Z",
+  "endTime": "2026-06-23T07:42:09.675Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.675Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
+    "command": "npm run proof:rate-limits",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-rate-limits",
+      "route:patch-api-admin-tenants-tenantid-rate-limits",
+      "route:get-api-org-rate-limits"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-rate-limits-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-rate-limits-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-rate-limits-runtime-proof"],
+  "evidenceSignature": "5d54900378888664715507c29c9ed52db5d4ceb030490c0b012e37c6b6636037"
 }

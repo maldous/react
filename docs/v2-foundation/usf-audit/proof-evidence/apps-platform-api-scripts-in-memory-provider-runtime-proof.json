@@ -43,10 +43,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-provider-runtime",
-  "startedAt": "2026-06-23T06:45:50.977Z",
-  "endedAt": "2026-06-23T06:45:51.977Z",
+  "startedAt": "2026-06-23T07:42:08.579Z",
+  "endedAt": "2026-06-23T07:42:09.579Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -134,7 +134,43 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.977Z",
+  "generatedAt": "2026-06-23T07:42:09.579Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"],
-  "evidenceSignature": "1833ba0d2e8b1c3d46af969e6d810c92769f1550649ce7cd12acabb1b6227f3c"
+  "environment": "dev",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.579Z",
+  "endTime": "2026-06-23T07:42:09.579Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.579Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
+    "command": "npm run proof:in-memory-provider-runtime",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": [
+      "in-memory-antivirus",
+      "in-memory-backup-restore-provider",
+      "in-memory-event-bus",
+      "in-memory-identity-repository",
+      "in-memory-notification-transport",
+      "in-memory-object-storage",
+      "in-memory-observability-repository",
+      "in-memory-rate-limit-repository",
+      "in-memory-search-repository",
+      "in-memory-secret-store",
+      "in-memory-semantic-provider",
+      "in-memory-semantic-providers",
+      "in-memory-webhook-dispatcher"
+    ]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-in-memory-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-in-memory-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-in-memory-provider-runtime-proof"],
+  "evidenceSignature": "5dee71fe10d62fcb4ecb8add0e88ddc8aa4297bdcc79f282629e40d52b8ee4c2"
 }

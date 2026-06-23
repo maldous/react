@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.927Z",
-  "endedAt": "2026-06-23T06:45:51.927Z",
+  "startedAt": "2026-06-23T07:42:08.519Z",
+  "endedAt": "2026-06-23T07:42:09.519Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.927Z",
+  "generatedAt": "2026-06-23T07:42:09.519Z",
   "sourceFileRefs": ["apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts"],
-  "evidenceSignature": "01a177080830cf8c5b7f4c7c31d25629631f5309b07974231e20c9b2a0088bd3"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.519Z",
+  "endTime": "2026-06-23T07:42:09.519Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.519Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/browser-telemetry-provider-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-browser-telemetry-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-browser-telemetry-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-browser-telemetry-provider-runtime-proof"],
+  "evidenceSignature": "a0f39eef15913fd410074f0e81b15ca5e1dc8e519e292c3033f685469efa5576"
 }

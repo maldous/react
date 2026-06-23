@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.021Z",
-  "endedAt": "2026-06-23T06:45:52.021Z",
+  "startedAt": "2026-06-23T07:42:08.629Z",
+  "endedAt": "2026-06-23T07:42:09.629Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.021Z",
+  "generatedAt": "2026-06-23T07:42:09.629Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
-  "evidenceSignature": "47bd2bcf0fc97b0008aa2b22039515d1f558db3b75cd5a98475460c94b4c799c"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.629Z",
+  "endTime": "2026-06-23T07:42:09.629Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.629Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-entitlement-repository-runtime-proof"],
+  "evidenceSignature": "7a17df270e0dbe907ffc7a9a9b9d329de2857f1348a7503ec41016a07252791e"
 }

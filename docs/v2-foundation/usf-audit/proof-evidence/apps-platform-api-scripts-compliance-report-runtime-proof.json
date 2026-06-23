@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.935Z",
-  "endedAt": "2026-06-23T06:45:51.935Z",
+  "startedAt": "2026-06-23T07:42:08.529Z",
+  "endedAt": "2026-06-23T07:42:09.529Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -59,7 +59,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.935Z",
+  "generatedAt": "2026-06-23T07:42:09.529Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
-  "evidenceSignature": "61c8dd3940399711c818eaf0e19504d0509280a915f7854ee400340bbea883c1"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.529Z",
+  "endTime": "2026-06-23T07:42:09.529Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.529Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compliance-report-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-compliance-report-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-compliance-report-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-compliance-report-runtime-proof"],
+  "evidenceSignature": "7e2b49d805441727a17f973113c458e79e44b7714339024f56557ff73accfafa"
 }

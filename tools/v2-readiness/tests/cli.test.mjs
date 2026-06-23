@@ -50,8 +50,12 @@ test("live repo reports --json readiness shape", () => {
   assert.ok(Array.isArray(report.findings));
   if (!report.ok)
     assert.ok(
-      report.findings.some((f) => f.ruleId === "R51-route-observability-assurance"),
-      "a non-ready live repo must expose adversarial route-observability gaps explicitly"
+      report.findings.some((f) =>
+        ["R51-route-observability-assurance", "R62-formal-proof-evidence-assurance"].includes(
+          f.ruleId
+        )
+      ),
+      "a non-ready live repo must expose adversarial or formal proof gaps explicitly"
     );
   assert.equal(report.auditBaseCommit, AUDITED_V1_COMMIT);
   assert.match(report.cutCandidateCommit, /^[0-9a-f]{7,40}$/);

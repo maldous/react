@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.915Z",
-  "endedAt": "2026-06-23T06:45:51.915Z",
+  "startedAt": "2026-06-23T07:42:08.508Z",
+  "endedAt": "2026-06-23T07:42:09.508Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.915Z",
+  "generatedAt": "2026-06-23T07:42:09.508Z",
   "sourceFileRefs": ["apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts"],
-  "evidenceSignature": "c84a1d06cc6c92c41900599a0cc46a73d273e1c182bc3640a015b1d7949ed32c"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.508Z",
+  "endTime": "2026-06-23T07:42:09.508Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.508Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/backup-restore-scripts-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-backup-restore-scripts-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-backup-restore-scripts-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-backup-restore-scripts-runtime-proof"],
+  "evidenceSignature": "0d5ebaeb5510cfe814330cb7570abcc89587e973b7f183cd3693f8877f953c77"
 }

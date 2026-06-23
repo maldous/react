@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:webhook-worker",
-  "startedAt": "2026-06-23T06:45:51.102Z",
-  "endedAt": "2026-06-23T06:45:52.102Z",
+  "startedAt": "2026-06-23T07:42:08.726Z",
+  "endedAt": "2026-06-23T07:42:09.726Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.102Z",
+  "generatedAt": "2026-06-23T07:42:09.726Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhook-worker-runtime-proof.ts"],
-  "evidenceSignature": "3e807f74a3468d5aea40dedd24c3e263e9621a8ea16c3402536e373deaf6fa7e"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.726Z",
+  "endTime": "2026-06-23T07:42:09.726Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.726Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
+    "command": "npm run proof:webhook-worker",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-webhook-worker-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-webhook-worker-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-webhook-worker-runtime-proof"],
+  "evidenceSignature": "43c510b4124ad6719b86c3ed02d5d495b996c741c14062e115ed44e2aa95d0d1"
 }

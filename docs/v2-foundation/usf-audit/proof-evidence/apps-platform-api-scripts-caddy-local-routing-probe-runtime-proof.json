@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.929Z",
-  "endedAt": "2026-06-23T06:45:51.929Z",
+  "startedAt": "2026-06-23T07:42:08.521Z",
+  "endedAt": "2026-06-23T07:42:09.521Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.929Z",
+  "generatedAt": "2026-06-23T07:42:09.521Z",
   "sourceFileRefs": ["apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts"],
-  "evidenceSignature": "e7b58aceaf3426918d3a301643d586490072ebe2b41a14dbd7371e76787748bd"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.521Z",
+  "endTime": "2026-06-23T07:42:09.521Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.521Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/caddy-local-routing-probe-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-caddy-local-routing-probe-runtime-proof"],
+  "evidenceSignature": "515fb16e853b9c675c8635dd25dd0b45335fbd73a8222487832a43b7221bcf08"
 }

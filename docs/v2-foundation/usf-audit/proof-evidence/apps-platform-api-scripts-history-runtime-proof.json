@@ -19,10 +19,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:history",
-  "startedAt": "2026-06-23T06:45:50.968Z",
-  "endedAt": "2026-06-23T06:45:51.968Z",
+  "startedAt": "2026-06-23T07:42:08.568Z",
+  "endedAt": "2026-06-23T07:42:09.568Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/history-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -65,7 +65,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.968Z",
+  "generatedAt": "2026-06-23T07:42:09.568Z",
   "sourceFileRefs": ["apps/platform-api/scripts/history-runtime-proof.ts"],
-  "evidenceSignature": "fc759f37c09459404bf6549638ea7857997d8ed527ef32e3bef20ae706d69825"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.568Z",
+  "endTime": "2026-06-23T07:42:09.568Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.568Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/history-runtime-proof.ts",
+    "command": "npm run proof:history",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-tenants-tenantid-history", "route:get-api-org-history"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-history-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-history-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-history-runtime-proof"],
+  "evidenceSignature": "ddfb085e94d8d694b0213209580e806b0fc6855bb773f09e140184dbdbe62039"
 }

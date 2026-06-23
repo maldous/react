@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:alerting",
-  "startedAt": "2026-06-23T06:45:50.896Z",
-  "endedAt": "2026-06-23T06:45:51.896Z",
+  "startedAt": "2026-06-23T07:42:08.490Z",
+  "endedAt": "2026-06-23T07:42:09.490Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alerting-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,7 +83,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.896Z",
+  "generatedAt": "2026-06-23T07:42:09.490Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"],
-  "evidenceSignature": "31f33b02d425501e4a1e0bbc5d60f19e17fce84a55488279868d936dd4ce22b9"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.490Z",
+  "endTime": "2026-06-23T07:42:09.490Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.490Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/alerting-runtime-proof.ts",
+    "command": "npm run proof:alerting",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-alerting-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-alerting-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-alerting-runtime-proof"],
+  "evidenceSignature": "2ae86f180aaf889161ccec962fe029b5e88b208da934046083ee8f6cf56f0979"
 }

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:backup-local",
-  "startedAt": "2026-06-23T06:45:50.913Z",
-  "endedAt": "2026-06-23T06:45:51.913Z",
+  "startedAt": "2026-06-23T07:42:08.506Z",
+  "endedAt": "2026-06-23T07:42:09.506Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.913Z",
+  "generatedAt": "2026-06-23T07:42:09.506Z",
   "sourceFileRefs": ["apps/platform-api/scripts/backup-local-runtime-proof.ts"],
-  "evidenceSignature": "6b920d9b84bd7da0cee929266daf47f1d493f57732ee14fa604c466d6a7fc1bd"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.506Z",
+  "endTime": "2026-06-23T07:42:09.506Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.506Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/backup-local-runtime-proof.ts",
+    "command": "npm run proof:backup-local",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-backup-local-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-backup-local-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-backup-local-runtime-proof"],
+  "evidenceSignature": "9e19c033042cbc4957a8a4c3dffff02682543bd12d1687ce9b60383422884b67"
 }

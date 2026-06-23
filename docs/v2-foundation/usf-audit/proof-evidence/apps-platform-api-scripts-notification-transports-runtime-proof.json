@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-transports-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.996Z",
-  "endedAt": "2026-06-23T06:45:51.996Z",
+  "startedAt": "2026-06-23T07:42:08.602Z",
+  "endedAt": "2026-06-23T07:42:09.602Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.996Z",
+  "generatedAt": "2026-06-23T07:42:09.602Z",
   "sourceFileRefs": ["apps/platform-api/scripts/notification-transports-runtime-proof.ts"],
-  "evidenceSignature": "815e327c203154b0fa3fcf96b157cbbd45941ea0a7b8ec7eadf6a2037a4d16ae"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.602Z",
+  "endTime": "2026-06-23T07:42:09.602Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.602Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/notification-transports-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-notification-transports-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-notification-transports-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-notification-transports-runtime-proof"],
+  "evidenceSignature": "90adf7bc04df4496aff021e305bb76c9a67fc33f28afef939c081207df170066"
 }

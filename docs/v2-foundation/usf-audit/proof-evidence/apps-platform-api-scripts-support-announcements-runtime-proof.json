@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-announcements-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.079Z",
-  "endedAt": "2026-06-23T06:45:52.079Z",
+  "startedAt": "2026-06-23T07:42:08.698Z",
+  "endedAt": "2026-06-23T07:42:09.698Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.079Z",
+  "generatedAt": "2026-06-23T07:42:09.698Z",
   "sourceFileRefs": ["apps/platform-api/scripts/support-announcements-runtime-proof.ts"],
-  "evidenceSignature": "8d21bb8bf351e2a307e65ee8e64a5be5da642415f5d84c2c971c1292f9925e15"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.698Z",
+  "endTime": "2026-06-23T07:42:09.698Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.698Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/support-announcements-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/support-announcements-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-support-announcements-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-support-announcements-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-support-announcements-runtime-proof"],
+  "evidenceSignature": "16361d1c0843c5c5070ac413a8f2b4ddb869ee6d63bab28c822a3eab1196b612"
 }

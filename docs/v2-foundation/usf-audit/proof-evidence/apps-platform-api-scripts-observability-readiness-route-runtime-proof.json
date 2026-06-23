@@ -18,10 +18,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:observability-readiness-route",
-  "startedAt": "2026-06-23T06:45:51.003Z",
-  "endedAt": "2026-06-23T06:45:52.003Z",
+  "startedAt": "2026-06-23T07:42:08.610Z",
+  "endedAt": "2026-06-23T07:42:09.610Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -69,7 +69,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.003Z",
+  "generatedAt": "2026-06-23T07:42:09.610Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts"],
-  "evidenceSignature": "734bfcc66e19214515c7090fccc1a1c1b6814f3660b76788541e297e4043612d"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.610Z",
+  "endTime": "2026-06-23T07:42:09.610Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.610Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
+    "command": "npm run proof:observability-readiness-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-observability-readiness"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-observability-readiness-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-observability-readiness-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-observability-readiness-route-runtime-proof"],
+  "evidenceSignature": "8f6b3b6b984eb882b1332b861413098bb82f613feb86a9430c7ee555b73df2ef"
 }

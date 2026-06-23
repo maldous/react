@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.029Z",
-  "endedAt": "2026-06-23T06:45:52.029Z",
+  "startedAt": "2026-06-23T07:42:08.639Z",
+  "endedAt": "2026-06-23T07:42:09.639Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,9 +66,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.029Z",
+  "generatedAt": "2026-06-23T07:42:09.639Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
   ],
-  "evidenceSignature": "7e1e765ed416ca8cdeb8c69d7aaa5a1a17f24fe59ced1ff1213cc8853da84fc7"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.639Z",
+  "endTime": "2026-06-23T07:42:09.639Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.639Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log-apps-platform-api-scripts-postgres-migration-storage-provider-runtime-proof"
+  ],
+  "evidenceSignature": "392a4dc592d08d7690acabf0204b958afa440f6d9166cb105f56e07fb51e99c9"
 }

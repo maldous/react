@@ -36,10 +36,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:api-key-routes",
-  "startedAt": "2026-06-23T06:45:50.901Z",
-  "endedAt": "2026-06-23T06:45:51.901Z",
+  "startedAt": "2026-06-23T07:42:08.494Z",
+  "endedAt": "2026-06-23T07:42:09.494Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -92,7 +92,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.901Z",
+  "generatedAt": "2026-06-23T07:42:09.494Z",
   "sourceFileRefs": ["apps/platform-api/scripts/api-key-routes-runtime-proof.ts"],
-  "evidenceSignature": "72e1dce58c5f1ae2f80374e9b82bb3b27864557e9aac17b1f0fd69ba5b1c3d6c"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.494Z",
+  "endTime": "2026-06-23T07:42:09.494Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.494Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/api-key-routes-runtime-proof.ts",
+    "command": "npm run proof:api-key-routes",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-announcements",
+      "route:post-api-admin-tenants-tenantid-announcements",
+      "route:get-api-admin-tenants-tenantid-api-keys",
+      "route:get-api-admin-tenants-tenantid-rate-limits",
+      "route:patch-api-admin-tenants-tenantid-rate-limits",
+      "route:get-api-org-api-keys",
+      "route:post-api-org-api-keys",
+      "route:delete-api-org-api-keys-keyid",
+      "route:get-api-org-rate-limits"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-api-key-routes-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-api-key-routes-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-api-key-routes-runtime-proof"],
+  "evidenceSignature": "dfce587997e23a1b916ba09cfd6ba079bdd67d976a092aeddd999410ce0b08bd"
 }

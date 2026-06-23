@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.044Z",
-  "endedAt": "2026-06-23T06:45:52.044Z",
+  "startedAt": "2026-06-23T07:42:08.657Z",
+  "endedAt": "2026-06-23T07:42:09.657Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.044Z",
+  "generatedAt": "2026-06-23T07:42:09.657Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
-  "evidenceSignature": "db023ad9980326c6b38f4dddf4ea5b9b968492fc03a3f0bd66608032aa6393ac"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.657Z",
+  "endTime": "2026-06-23T07:42:09.657Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.657Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof"],
+  "evidenceSignature": "58400f91cfd0a5d295b33f08bd4c296603adea07fd34b6b3a1aa98452567b9de"
 }

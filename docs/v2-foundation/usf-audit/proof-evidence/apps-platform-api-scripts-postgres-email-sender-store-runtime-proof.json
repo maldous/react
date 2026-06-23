@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.019Z",
-  "endedAt": "2026-06-23T06:45:52.019Z",
+  "startedAt": "2026-06-23T07:42:08.628Z",
+  "endedAt": "2026-06-23T07:42:09.628Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.019Z",
+  "generatedAt": "2026-06-23T07:42:09.628Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
-  "evidenceSignature": "6d3f29f615c5f3d04b31eec698313b6ca29c8a8a3af0a606a84169adba34a1d5"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.628Z",
+  "endTime": "2026-06-23T07:42:09.628Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.628Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["postgres-email-sender-store"]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-email-sender-store-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-email-sender-store-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-email-sender-store-runtime-proof"],
+  "evidenceSignature": "15c267a4c20fe56cf42097e70dac2432ab6c06a9426d0056f54e79231b79ece4"
 }

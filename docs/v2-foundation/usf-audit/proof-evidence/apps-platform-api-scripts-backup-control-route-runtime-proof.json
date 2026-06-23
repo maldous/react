@@ -18,10 +18,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:backup-control-route",
-  "startedAt": "2026-06-23T06:45:50.910Z",
-  "endedAt": "2026-06-23T06:45:51.910Z",
+  "startedAt": "2026-06-23T07:42:08.503Z",
+  "endedAt": "2026-06-23T07:42:09.503Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -67,7 +67,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.910Z",
+  "generatedAt": "2026-06-23T07:42:09.503Z",
   "sourceFileRefs": ["apps/platform-api/scripts/backup-control-route-runtime-proof.ts"],
-  "evidenceSignature": "a586aa3c11affc35a90abbac2889ab7cfe51cf6d1bfc8ffdea1a19ef90062f09"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.503Z",
+  "endTime": "2026-06-23T07:42:09.503Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.503Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/backup-control-route-runtime-proof.ts",
+    "command": "npm run proof:backup-control-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-backup"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-backup-control-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-backup-control-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-backup-control-route-runtime-proof"],
+  "evidenceSignature": "91af9438d44f5f23277175208429bbc2668c57034f37fd7d8e6c09fc4fcab8de"
 }

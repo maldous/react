@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-control-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.109Z",
-  "endedAt": "2026-06-23T06:45:52.109Z",
+  "startedAt": "2026-06-23T07:42:08.734Z",
+  "endedAt": "2026-06-23T07:42:09.734Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -59,7 +59,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.109Z",
+  "generatedAt": "2026-06-23T07:42:09.734Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-runtime-proof.ts"],
-  "evidenceSignature": "ba86f073480629c57546cde3dc4214c71fb00853ad0797e3b8321dd82ba5c662"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.734Z",
+  "endTime": "2026-06-23T07:42:09.734Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.734Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-control-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-workflow-control-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-workflow-control-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-workflow-control-runtime-proof"],
+  "evidenceSignature": "356f0e5de702f94c0afbf1fdc070ef59e0d4c51483961b32df7a124f484555bb"
 }

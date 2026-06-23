@@ -26,10 +26,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:provider-readiness-contract",
-  "startedAt": "2026-06-23T06:45:51.054Z",
-  "endedAt": "2026-06-23T06:45:52.054Z",
+  "startedAt": "2026-06-23T07:42:08.670Z",
+  "endedAt": "2026-06-23T07:42:09.670Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -80,7 +80,34 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.054Z",
+  "generatedAt": "2026-06-23T07:42:09.670Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts"],
-  "evidenceSignature": "4ec33f0d39f9362e31a410d787f9480cbb07568e948a47037bad1158be58aafc"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.670Z",
+  "endTime": "2026-06-23T07:42:09.670Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.670Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-readiness-contract-runtime-proof.ts",
+    "command": "npm run proof:provider-readiness-contract",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs",
+      "route:post-api-admin-provider-configs-id-delete",
+      "route:post-api-admin-provider-configs-id-lifecycle"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-provider-readiness-contract-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-provider-readiness-contract-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-provider-readiness-contract-runtime-proof"],
+  "evidenceSignature": "58c92d110a700ddb35b13f0ed42d2ba22392a1c73b5452e17b63555b777bfa03"
 }

@@ -23,10 +23,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:workflow-control-route",
-  "startedAt": "2026-06-23T06:45:51.108Z",
-  "endedAt": "2026-06-23T06:45:52.108Z",
+  "startedAt": "2026-06-23T07:42:08.733Z",
+  "endedAt": "2026-06-23T07:42:09.733Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -72,7 +72,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.108Z",
+  "generatedAt": "2026-06-23T07:42:09.733Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-route-runtime-proof.ts"],
-  "evidenceSignature": "c06a02f991d3635a452fa4b79221ca3bc7b0efa1d8b92e89e51aced1d0903dcb"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.733Z",
+  "endTime": "2026-06-23T07:42:09.733Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.733Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-control-route-runtime-proof.ts",
+    "command": "npm run proof:workflow-control-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-workflows"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-workflow-control-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-workflow-control-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-workflow-control-route-runtime-proof"],
+  "evidenceSignature": "933615f47ac6334b914d8234d7632b6a226069c1b9e554808bcffdee75ace2ef"
 }

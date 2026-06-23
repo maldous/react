@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:pitr-restore-drill",
-  "startedAt": "2026-06-23T06:45:51.009Z",
-  "endedAt": "2026-06-23T06:45:52.009Z",
+  "startedAt": "2026-06-23T07:42:08.617Z",
+  "endedAt": "2026-06-23T07:42:09.617Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -89,7 +89,37 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.009Z",
+  "generatedAt": "2026-06-23T07:42:09.617Z",
   "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
-  "evidenceSignature": "3034c966931b3fa91bc98698c4e766000fbb5b2142391ccbc05aba3768d0c118"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.617Z",
+  "endTime": "2026-06-23T07:42:09.617Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.617Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
+    "command": "npm run proof:pitr-restore-drill",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:delete-api-admin-data-legal-holds",
+      "route:get-api-admin-data-legal-holds",
+      "route:post-api-admin-data-legal-holds",
+      "route:post-api-admin-data-residency",
+      "route:delete-api-admin-data-retention-policies",
+      "route:get-api-admin-data-retention-policies",
+      "route:post-api-admin-data-retention-policies"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-pitr-restore-drill-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-pitr-restore-drill-runtime-proof"],
+  "evidenceSignature": "a47918ab58d1cabe05e629c2fd0b96b985a49489940455876abcbdec3614db2d"
 }

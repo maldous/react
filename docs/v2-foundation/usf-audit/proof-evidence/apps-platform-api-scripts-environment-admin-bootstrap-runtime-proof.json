@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:environment-admin-bootstrap",
-  "startedAt": "2026-06-23T06:45:50.958Z",
-  "endedAt": "2026-06-23T06:45:51.958Z",
+  "startedAt": "2026-06-23T07:42:08.557Z",
+  "endedAt": "2026-06-23T07:42:09.557Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.958Z",
+  "generatedAt": "2026-06-23T07:42:09.557Z",
   "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
-  "evidenceSignature": "6c6ad5d53c3cbc7ab8082a0bdd8ac0506c3abd1d4ae1fc04ad98673c0536662f"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.557Z",
+  "endTime": "2026-06-23T07:42:09.557Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.557Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
+    "command": "npm run proof:environment-admin-bootstrap",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof"],
+  "evidenceSignature": "52908dd685b2cdf9948e29a3965e19a7f8c37e30c815dc2846342ae917201648"
 }

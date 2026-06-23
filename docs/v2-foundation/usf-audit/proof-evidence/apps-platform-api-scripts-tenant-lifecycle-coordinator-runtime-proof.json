@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.091Z",
-  "endedAt": "2026-06-23T06:45:52.091Z",
+  "startedAt": "2026-06-23T07:42:08.713Z",
+  "endedAt": "2026-06-23T07:42:09.713Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.091Z",
+  "generatedAt": "2026-06-23T07:42:09.713Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts"],
-  "evidenceSignature": "6b2ba8ced8c8f73e12c21bed80ff395e4e4b6e48a66add0cfae57c7a20db0324"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.713Z",
+  "endTime": "2026-06-23T07:42:09.713Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.713Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/tenant-lifecycle-coordinator-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-lifecycle-coordinator-runtime-proof"],
+  "evidenceSignature": "5bcef50f3e54c25dc74e6d348681f429f0552c8535396591e95c45bb666ac45f"
 }

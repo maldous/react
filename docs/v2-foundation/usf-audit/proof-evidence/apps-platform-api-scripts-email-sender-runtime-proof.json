@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:email-sender",
-  "startedAt": "2026-06-23T06:45:50.951Z",
-  "endedAt": "2026-06-23T06:45:51.951Z",
+  "startedAt": "2026-06-23T07:42:08.547Z",
+  "endedAt": "2026-06-23T07:42:09.547Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.951Z",
+  "generatedAt": "2026-06-23T07:42:09.547Z",
   "sourceFileRefs": ["apps/platform-api/scripts/email-sender-runtime-proof.ts"],
-  "evidenceSignature": "6494fc4a60a84d114f52a6095c4e3a900b43d63162740204899ec33fa62714e0"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.547Z",
+  "endTime": "2026-06-23T07:42:09.547Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.547Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/email-sender-runtime-proof.ts",
+    "command": "npm run proof:email-sender",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-email-sender-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-email-sender-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-email-sender-runtime-proof"],
+  "evidenceSignature": "1e0a81e0d5c1e763487e6e59f94d50b228ccb910b1afb1c7aedd5ffa33d69da6"
 }

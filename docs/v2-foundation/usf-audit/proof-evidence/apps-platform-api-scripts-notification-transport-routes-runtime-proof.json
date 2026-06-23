@@ -28,10 +28,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:notification-transport-routes",
-  "startedAt": "2026-06-23T06:45:50.995Z",
-  "endedAt": "2026-06-23T06:45:51.995Z",
+  "startedAt": "2026-06-23T07:42:08.600Z",
+  "endedAt": "2026-06-23T07:42:09.600Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -85,7 +85,35 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.995Z",
+  "generatedAt": "2026-06-23T07:42:09.600Z",
   "sourceFileRefs": ["apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts"],
-  "evidenceSignature": "cb3b94c2c8e06d4976b3782e288e31db5bd07198b15e6243a19f3c3541d43eda"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.600Z",
+  "endTime": "2026-06-23T07:42:09.600Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.600Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/notification-transport-routes-runtime-proof.ts",
+    "command": "npm run proof:notification-transport-routes",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-notification-transport-routes-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-notification-transport-routes-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-notification-transport-routes-runtime-proof"],
+  "evidenceSignature": "4281d8af77fb32e1836e75100ead52cbfc570a335ac8fa0ff8e66095f5b1bdd1"
 }

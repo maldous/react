@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.971Z",
-  "endedAt": "2026-06-23T06:45:51.971Z",
+  "startedAt": "2026-06-23T07:42:08.571Z",
+  "endedAt": "2026-06-23T07:42:09.571Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -64,7 +64,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.971Z",
+  "generatedAt": "2026-06-23T07:42:09.571Z",
   "sourceFileRefs": ["apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts"],
-  "evidenceSignature": "ef3a553084b0ca46628e655cf9ddd0e6913a715ef386f36324dbb6a5156747b8"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.571Z",
+  "endTime": "2026-06-23T07:42:09.571Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.571Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-provider-readiness-probe-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-http-provider-readiness-probe-runtime-proof"],
+  "evidenceSignature": "29f56fe652baacc02cc6be077238b49087ca1129a7ce1927b08339c6b37638f4"
 }

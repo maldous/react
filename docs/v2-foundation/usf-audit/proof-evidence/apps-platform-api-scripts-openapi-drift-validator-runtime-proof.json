@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.007Z",
-  "endedAt": "2026-06-23T06:45:52.007Z",
+  "startedAt": "2026-06-23T07:42:08.615Z",
+  "endedAt": "2026-06-23T07:42:09.615Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.007Z",
+  "generatedAt": "2026-06-23T07:42:09.615Z",
   "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
-  "evidenceSignature": "6c3d1f83b039054a35b9923137fee61446763a50d92d632c8443d6cfd7c92636"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.615Z",
+  "endTime": "2026-06-23T07:42:09.615Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.615Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-openapi-drift-validator-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-openapi-drift-validator-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-openapi-drift-validator-runtime-proof"],
+  "evidenceSignature": "0f6554a5ff90ae1fa6d1d61ca83f4f130e47ba79866288709da3f5c4bf4d226b"
 }

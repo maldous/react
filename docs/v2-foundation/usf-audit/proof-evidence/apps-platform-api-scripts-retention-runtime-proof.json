@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/retention-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.063Z",
-  "endedAt": "2026-06-23T06:45:52.063Z",
+  "startedAt": "2026-06-23T07:42:08.680Z",
+  "endedAt": "2026-06-23T07:42:09.680Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/retention-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -59,7 +59,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.063Z",
+  "generatedAt": "2026-06-23T07:42:09.680Z",
   "sourceFileRefs": ["apps/platform-api/scripts/retention-runtime-proof.ts"],
-  "evidenceSignature": "0bd3cfa8bde1f29aadadc9f396f04c6f9130cd1d02014ff378b49886ce9b7d74"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.680Z",
+  "endTime": "2026-06-23T07:42:09.680Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.680Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/retention-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/retention-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-retention-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-retention-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-retention-runtime-proof"],
+  "evidenceSignature": "9fe283c6b96a7bbb6117abdf6fd9a6d9d43893a308ea062dc66804fb614ec192"
 }

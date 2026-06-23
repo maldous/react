@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-provider",
-  "startedAt": "2026-06-23T06:45:50.924Z",
-  "endedAt": "2026-06-23T06:45:51.924Z",
+  "startedAt": "2026-06-23T07:42:08.515Z",
+  "endedAt": "2026-06-23T07:42:09.515Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.924Z",
+  "generatedAt": "2026-06-23T07:42:09.515Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-provider-runtime-proof.ts"],
-  "evidenceSignature": "ce90eb3dbd642ca172212670586f4453eb66bc8354f42b8823bbe67fbe5c6019"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.515Z",
+  "endTime": "2026-06-23T07:42:09.515Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.515Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/billing-provider-runtime-proof.ts",
+    "command": "npm run proof:billing-provider",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-billing-provider-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-billing-provider-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-billing-provider-runtime-proof"],
+  "evidenceSignature": "1959f7e536c59a09940fd231f55ab64097f098eaa5bee9921e497b1339f32218"
 }

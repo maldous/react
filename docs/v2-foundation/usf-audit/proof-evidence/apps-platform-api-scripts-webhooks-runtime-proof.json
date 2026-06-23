@@ -42,10 +42,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:webhooks",
-  "startedAt": "2026-06-23T06:45:51.103Z",
-  "endedAt": "2026-06-23T06:45:52.103Z",
+  "startedAt": "2026-06-23T07:42:08.728Z",
+  "endedAt": "2026-06-23T07:42:09.728Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -101,7 +101,39 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.103Z",
+  "generatedAt": "2026-06-23T07:42:09.728Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhooks-runtime-proof.ts"],
-  "evidenceSignature": "a160c3c4a0f8e59536b7363da956cc684df92d6d552528a26c1e40ded119d8ca"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.728Z",
+  "endTime": "2026-06-23T07:42:09.728Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.728Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/webhooks-runtime-proof.ts",
+    "command": "npm run proof:webhooks",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-webhooks",
+      "route:get-api-org-webhooks",
+      "route:post-api-org-webhooks",
+      "route:delete-api-org-webhooks-id",
+      "route:patch-api-org-webhooks-id",
+      "route:get-api-org-webhooks-id-deliveries",
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+      "route:get-api-org-webhooks-id-metrics",
+      "route:post-api-org-webhooks-id-redrive-dead",
+      "route:post-api-org-webhooks-id-rotate-secret",
+      "route:post-api-org-webhooks-id-test",
+      "route:get-api-org-webhooks-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-webhooks-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-webhooks-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-webhooks-runtime-proof"],
+  "evidenceSignature": "b35cd59f38f4d1e19af5f4f72a8905b886f5e4cc32118b6c736905cce342cabb"
 }

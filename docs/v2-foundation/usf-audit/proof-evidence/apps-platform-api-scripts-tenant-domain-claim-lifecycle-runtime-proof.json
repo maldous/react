@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-domain-claim-lifecycle",
-  "startedAt": "2026-06-23T06:45:51.088Z",
-  "endedAt": "2026-06-23T06:45:52.088Z",
+  "startedAt": "2026-06-23T07:42:08.709Z",
+  "endedAt": "2026-06-23T07:42:09.709Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -91,7 +91,37 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.088Z",
+  "generatedAt": "2026-06-23T07:42:09.709Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "28b98f53525da14ef89826cf6e75dd3810a08e4fea042b28f43d5907a4eea240"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.709Z",
+  "endTime": "2026-06-23T07:42:09.709Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.709Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
+    "command": "npm run proof:tenant-domain-claim-lifecycle",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof"],
+  "evidenceSignature": "3ed430cc6d00c03adef3071744c33e35488ea8c34c07ef95bb98a014daa56e0b"
 }

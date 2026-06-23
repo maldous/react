@@ -31,10 +31,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:approval-workflow",
-  "startedAt": "2026-06-23T06:45:51.080Z",
-  "endedAt": "2026-06-23T06:45:52.080Z",
+  "startedAt": "2026-06-23T07:42:08.700Z",
+  "endedAt": "2026-06-23T07:42:09.700Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -84,7 +84,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.080Z",
+  "generatedAt": "2026-06-23T07:42:09.700Z",
   "sourceFileRefs": ["apps/platform-api/scripts/support-approval-runtime-proof.ts"],
-  "evidenceSignature": "a9d69ddaefc3956f4d6c76eeed3a45f4f50096e57c3f977c22f2240ed5152790"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.700Z",
+  "endTime": "2026-06-23T07:42:09.700Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.700Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
+    "command": "npm run proof:approval-workflow",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:post-api-admin-support-session",
+      "route:post-api-admin-support-session-approval-grant",
+      "route:post-api-admin-support-session-approval-request",
+      "route:get-api-admin-support-health",
+      "route:get-api-admin-support-tickets",
+      "route:post-api-admin-support-tickets"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-support-approval-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-support-approval-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-support-approval-runtime-proof"],
+  "evidenceSignature": "b8a0d09f7f31e21b7c0dfe904dac03eaf4ab394c8b219f1e5d47ab5e5bc30bc7"
 }

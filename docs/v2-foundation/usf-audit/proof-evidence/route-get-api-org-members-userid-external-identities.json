@@ -16,10 +16,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "route-subject evidence collection for GET /api/org/members/:userId/external-identities",
-  "startedAt": "2026-06-23T06:45:51.302Z",
-  "endedAt": "2026-06-23T06:45:52.302Z",
+  "startedAt": "2026-06-23T07:42:08.957Z",
+  "endedAt": "2026-06-23T07:42:09.957Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:3325",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -53,7 +53,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.302Z",
+  "generatedAt": "2026-06-23T07:42:09.957Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:3325", "docs/api/openapi.json"],
-  "evidenceSignature": "8b0e17c8116f70494f0a2b27949bb07bb0e8040e8bcfb605a99767ae883ed930"
+  "environment": "test",
+  "proofLevelObserved": "L2",
+  "startTime": "2026-06-23T07:42:08.957Z",
+  "endTime": "2026-06-23T07:42:09.957Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.957Z",
+  "stateDiff": {
+    "routeId": "route:get-api-org-members-userid-external-identities",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": [],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "7e4cec3e308e6e799b9f884683dcf458efd0ff09d77138033fd97f9c518dff44"
 }

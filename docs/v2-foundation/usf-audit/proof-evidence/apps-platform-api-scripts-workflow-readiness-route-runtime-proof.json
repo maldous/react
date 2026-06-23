@@ -28,10 +28,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:workflow-readiness-route",
-  "startedAt": "2026-06-23T06:45:51.111Z",
-  "endedAt": "2026-06-23T06:45:52.111Z",
+  "startedAt": "2026-06-23T07:42:08.737Z",
+  "endedAt": "2026-06-23T07:42:09.737Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -80,7 +80,32 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.111Z",
+  "generatedAt": "2026-06-23T07:42:09.737Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts"],
-  "evidenceSignature": "13696eaf578158a59a35112a45cd69578c1ed97f1f712d33b50fb5dc9ecce328"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.737Z",
+  "endTime": "2026-06-23T07:42:09.737Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.737Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
+    "command": "npm run proof:workflow-readiness-route",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-workflows-workflowid",
+      "route:get-api-admin-workflows-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-workflow-readiness-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-workflow-readiness-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-workflow-readiness-route-runtime-proof"],
+  "evidenceSignature": "650ac7853853f6d6dd56421c2482a95e718c08fa654637c0f335a1f37f42e25f"
 }

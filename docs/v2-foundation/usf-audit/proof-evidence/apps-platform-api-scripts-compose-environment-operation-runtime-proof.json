@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.937Z",
-  "endedAt": "2026-06-23T06:45:51.937Z",
+  "startedAt": "2026-06-23T07:42:08.531Z",
+  "endedAt": "2026-06-23T07:42:09.531Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -64,7 +64,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.937Z",
+  "generatedAt": "2026-06-23T07:42:09.531Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts"],
-  "evidenceSignature": "bdcc8cf62572a880cf99b4e2ef07cf97dafa9c315f79fc90417dc0d0710d42be"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.531Z",
+  "endTime": "2026-06-23T07:42:09.531Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.531Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compose-environment-operation-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-compose-environment-operation-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-compose-environment-operation-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-compose-environment-operation-runtime-proof"],
+  "evidenceSignature": "5c5f319617b9adf1666dace2755753bb71212c9e3e9936f3fab9951f687e035f"
 }

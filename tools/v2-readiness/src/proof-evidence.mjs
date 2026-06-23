@@ -13,6 +13,44 @@ export const PROOF_LEVELS = [
   { level: 6, id: "L6", name: "end-to-end journey" },
 ];
 
+export const ENVIRONMENT_PROOF_MODEL = {
+  dev: {
+    purpose: "Semantic capability development",
+    providerModes: ["semantic-dev", "in-memory"],
+    minStrictProviderLevel: 0,
+    maxLevel: 3,
+    forbiddenLevels: ["L4", "L5", "L6"],
+  },
+  test: {
+    purpose: "Real provider validation",
+    providerModes: ["compose-local", "hermetic", "route-contract"],
+    minStrictProviderLevel: 4,
+    maxLevel: 4,
+    forbiddenLevels: ["L5", "L6"],
+  },
+  staging: {
+    purpose: "Production rehearsal",
+    providerModes: ["external-sandbox", "sandbox-external", "compose-local", "prod-shaped-sandbox"],
+    minStrictProviderLevel: 5,
+    maxLevel: 6,
+    forbiddenLevels: [],
+  },
+  prod: {
+    purpose: "Operational assurance",
+    providerModes: ["live-readiness", "production-readiness"],
+    minStrictProviderLevel: 0,
+    maxLevel: 1,
+    forbiddenLevels: ["L2", "L3", "L4", "L5", "L6"],
+  },
+  e2e: {
+    purpose: "Dedicated end-to-end journey assurance",
+    providerModes: ["e2e", "external-sandbox", "prod-shaped-sandbox"],
+    minStrictProviderLevel: 6,
+    maxLevel: 6,
+    forbiddenLevels: [],
+  },
+};
+
 export const PROOF_EVIDENCE_DIR = "docs/v2-foundation/usf-audit/proof-evidence";
 
 export const PROOF_EVIDENCE_REQUIRED_FIELDS = [
@@ -27,13 +65,19 @@ export const PROOF_EVIDENCE_REQUIRED_FIELDS = [
   "eventIds",
   "storageIds",
   "environmentMode",
+  "environment",
   "providerMode",
   "proofLevelClaimed",
+  "proofLevelObserved",
   "commandExecuted",
   "startedAt",
+  "startTime",
   "endedAt",
+  "endTime",
   "exitStatus",
   "commit",
+  "gitCommit",
+  "executionTimestamp",
   "realImplementationPathExecuted",
   "mockProviderUsed",
   "fakeProviderUsed",
@@ -44,14 +88,19 @@ export const PROOF_EVIDENCE_REQUIRED_FIELDS = [
   "beforeState",
   "afterState",
   "assertedStateDiff",
+  "stateDiff",
   "failurePathExercised",
+  "failureMode",
   "sideEffectsAsserted",
   "tenantBoundaryAsserted",
   "securityBoundaryAsserted",
   "auditEventIds",
+  "auditIds",
   "traceIds",
   "metricSamples",
+  "metricEvidence",
   "logCorrelationIds",
+  "logEvidence",
   "cleanupResult",
   "deterministicReplaySupported",
   "skipped",
@@ -117,13 +166,24 @@ export function buildProofEvidenceAssurance(ctx, audit) {
   const evidence = buildEvidenceIndex(ctx, requiredProofs, routeSubjectMap);
   const strengthMatrix = buildStrengthMatrix(evidence.records);
   const claimVsObserved = buildClaimVsObservedReport(evidence.records);
+  const ladderCompliance = buildProofLadderComplianceReport(evidence.records);
+  const environmentConsistency = buildEnvironmentProofConsistencyReport(evidence.records);
+  const capabilityReadiness = buildCapabilityProofReadinessReport(ctx, evidence.records);
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
-  const weakProofBacklog = buildWeakProofBacklog(requiredProofs, evidence, claimVsObserved);
+  const weakProofBacklog = buildWeakProofBacklog(
+    requiredProofs,
+    evidence,
+    claimVsObserved,
+    capabilityReadiness
+  );
   const negativeControls = buildNegativeControlReport(ctx);
   const formalReadiness = buildFormalProofReadinessReport({
     evidence,
     strengthMatrix,
     claimVsObserved,
+    ladderCompliance,
+    environmentConsistency,
+    capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
     weakProofBacklog,
@@ -136,6 +196,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     evidenceIndex: evidence,
     strengthMatrix,
     claimVsObserved,
+    ladderCompliance,
+    environmentConsistency,
+    capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
     weakProofBacklog,
@@ -267,22 +330,47 @@ function walkFiles(dir) {
 
 export function normalizeEvidenceRecord(record) {
   const subjectIds = uniq(record.subjectIds || [record.subjectId].filter(Boolean));
+  const observed = proofLevelId(observedLevelFromEvidence(record));
+  const environmentMode = record.environmentMode || record.environment || "unknown";
+  const startedAt = record.startedAt || record.startTime || null;
+  const endedAt = record.endedAt || record.endTime || null;
+  const commit = record.commit || record.gitCommit || null;
+  const assertedStateDiff = record.assertedStateDiff || record.stateDiff || {};
+  const auditEventIds = record.auditEventIds || record.auditIds || [];
+  const metricSamples = record.metricSamples || record.metricEvidence || [];
+  const logCorrelationIds = record.logCorrelationIds || record.logEvidence || [];
   return {
     ...record,
     subjectIds,
     subjectId: record.subjectId || subjectIds[0] || record.proofId || "unknown",
+    environmentMode,
+    environment: record.environment || environmentMode,
     routeIds: record.routeIds || [],
     workflowIds: record.workflowIds || [],
     eventIds: record.eventIds || [],
     storageIds: record.storageIds || [],
-    auditEventIds: record.auditEventIds || [],
+    auditEventIds,
+    auditIds: record.auditIds || auditEventIds,
     traceIds: record.traceIds || [],
-    metricSamples: record.metricSamples || [],
-    logCorrelationIds: record.logCorrelationIds || [],
+    metricSamples,
+    metricEvidence: record.metricEvidence || metricSamples,
+    logCorrelationIds,
+    logEvidence: record.logEvidence || logCorrelationIds,
     externalSandboxRequestIds: record.externalSandboxRequestIds || [],
     sourceFileRefs: record.sourceFileRefs || [],
     proofLevelClaimed: proofLevelId(record.proofLevelClaimed),
-    proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
+    proofLevelObserved: record.proofLevelObserved || observed,
+    startedAt,
+    startTime: record.startTime || startedAt,
+    endedAt,
+    endTime: record.endTime || endedAt,
+    commit,
+    gitCommit: record.gitCommit || commit,
+    executionTimestamp: record.executionTimestamp || record.generatedAt || endedAt,
+    assertedStateDiff,
+    stateDiff: record.stateDiff || assertedStateDiff,
+    failureMode:
+      record.failureMode || (record.failurePathExercised === true ? "exercised" : "not-exercised"),
   };
 }
 
@@ -373,6 +461,16 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       message: "proof evidence signature does not match the structured payload",
     });
   }
+  if (
+    record.proofLevelObserved &&
+    record.proofLevelObserved !== proofLevelId(observedLevelFromEvidence(record))
+  ) {
+    gaps.push({
+      kind: "observed-level-mismatch",
+      subject: record.subjectId,
+      message: `emitted observed level ${record.proofLevelObserved} does not match calculated ${proofLevelId(observedLevelFromEvidence(record))}`,
+    });
+  }
   if (ctx?.headCommit && record.commit !== ctx.headCommit) {
     gaps.push({
       kind: "stale-evidence",
@@ -408,6 +506,7 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       message: `claimed ${record.proofLevelClaimed} exceeds observed ${proofLevelId(observedLevelFromEvidence(record))}`,
     });
   }
+  for (const gap of environmentConsistencyGaps(record)) gaps.push(gap);
   if (record.inMemoryProviderUsed && record.providerMode !== "semantic-dev") {
     gaps.push({
       kind: "in-memory-provider-mode",
@@ -437,6 +536,20 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
         message: "L3+ proof requires before and after state snapshots",
       });
     }
+    if (!isMeaningfulObject(record.beforeState)) {
+      gaps.push({
+        kind: "missing-before-state",
+        subject: record.subjectId,
+        message: "L3+ proof requires a before state snapshot",
+      });
+    }
+    if (!isMeaningfulObject(record.afterState)) {
+      gaps.push({
+        kind: "missing-after-state",
+        subject: record.subjectId,
+        message: "L3+ proof requires an after state snapshot",
+      });
+    }
     if (!isMeaningfulObject(record.assertedStateDiff) || record.sideEffectsAsserted !== true) {
       gaps.push({
         kind: "missing-side-effect-evidence",
@@ -457,6 +570,20 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
       kind: "missing-real-local-substrate",
       subject: record.subjectId,
       message: "L4 proof requires real local substrate evidence",
+    });
+  }
+  if (proofLevelNumber(record.proofLevelClaimed) >= 4 && record.environmentMode === "dev") {
+    gaps.push({
+      kind: "dev-proof-claims-l4",
+      subject: record.subjectId,
+      message: "DEV semantic-dev proof cannot claim L4/L5/L6 strength",
+    });
+  }
+  if (proofLevelNumber(record.proofLevelClaimed) >= 5 && record.environmentMode === "test") {
+    gaps.push({
+      kind: "test-proof-claims-l5",
+      subject: record.subjectId,
+      message: "TEST compose-local proof cannot claim L5/L6 external sandbox strength",
     });
   }
   if (
@@ -505,6 +632,7 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
 
 export function observedLevelFromEvidence(record) {
   if (record.skipped === true || record.exitStatus !== 0) return 0;
+  const env = record.environmentMode || record.environment || "unknown";
   const hasShape = Boolean(
     record.proofId && record.commandExecuted && record.startedAt && record.endedAt
   );
@@ -516,13 +644,19 @@ export function observedLevelFromEvidence(record) {
     record.sideEffectsAsserted === true &&
     record.failurePathExercised === true;
   const hasRealLocal =
-    hasState && record.realLocalProviderUsed === true && record.fakeProviderUsed !== true;
+    hasState &&
+    env === "test" &&
+    record.providerMode === "compose-local" &&
+    record.realLocalProviderUsed === true &&
+    record.fakeProviderUsed !== true;
   const hasSandbox =
     hasState &&
+    (env === "staging" || env === "e2e") &&
     record.externalSandboxProviderUsed === true &&
     (record.externalSandboxRequestIds || []).length > 0;
   const hasE2E =
     hasState &&
+    (env === "staging" || env === "e2e") &&
     record.fakeProviderUsed !== true &&
     (record.routeIds || []).length > 0 &&
     (record.auditEventIds || []).length > 0 &&
@@ -536,6 +670,299 @@ export function observedLevelFromEvidence(record) {
   if (hasBehaviour) return 2;
   if (hasShape) return 1;
   return 0;
+}
+
+function environmentConsistencyGaps(record) {
+  const gaps = [];
+  const env = record.environmentMode || record.environment || "unknown";
+  const model = ENVIRONMENT_PROOF_MODEL[env];
+  const claimed = proofLevelNumber(record.proofLevelClaimed);
+  const observed = observedLevelFromEvidence(record);
+  if (!model) {
+    return [
+      {
+        kind: "unknown-proof-environment",
+        subject: record.subjectId,
+        message: `proof evidence uses unknown environment ${env}`,
+      },
+    ];
+  }
+  if (claimed > model.maxLevel) {
+    gaps.push({
+      kind: "environment-level-forbidden",
+      subject: record.subjectId,
+      message: `${env.toUpperCase()} proof cannot claim ${proofLevelId(claimed)}`,
+    });
+  }
+  if (observed > model.maxLevel && env !== "staging") {
+    gaps.push({
+      kind: "environment-observed-level-forbidden",
+      subject: record.subjectId,
+      message: `${env.toUpperCase()} proof cannot observe ${proofLevelId(observed)}`,
+    });
+  }
+  if (!model.providerModes.includes(record.providerMode)) {
+    gaps.push({
+      kind: "provider-mode-environment-mismatch",
+      subject: record.subjectId,
+      message: `provider mode ${record.providerMode} is not valid for ${env}`,
+    });
+  }
+  if (env === "dev") {
+    if (record.inMemoryProviderUsed !== true) {
+      gaps.push({
+        kind: "dev-provider-not-in-memory",
+        subject: record.subjectId,
+        message: "DEV proof evidence must use an in-memory semantic provider",
+      });
+    }
+    if (record.realLocalProviderUsed || record.externalSandboxProviderUsed) {
+      gaps.push({
+        kind: "dev-provider-strength-overclaim",
+        subject: record.subjectId,
+        message: "DEV proof evidence cannot use real-local or external sandbox provider flags",
+      });
+    }
+  }
+  if (env === "test" && claimed >= 4) {
+    if (record.providerMode !== "compose-local" || record.realLocalProviderUsed !== true) {
+      gaps.push({
+        kind: "test-l4-provider-mode",
+        subject: record.subjectId,
+        message: "L4 TEST proof must use compose-local real local substrate evidence",
+      });
+    }
+  }
+  if (env === "test" && (record.externalSandboxProviderUsed || claimed >= 5)) {
+    gaps.push({
+      kind: "test-sandbox-overclaim",
+      subject: record.subjectId,
+      message: "TEST proof cannot claim external sandbox provider strength",
+    });
+  }
+  if (claimed >= 5 && env !== "staging" && env !== "e2e") {
+    gaps.push({
+      kind: "l5-environment-required",
+      subject: record.subjectId,
+      message: "L5 external sandbox proof must execute in STAGING or a dedicated E2E environment",
+    });
+  }
+  if (claimed >= 6 && env !== "staging" && env !== "e2e") {
+    gaps.push({
+      kind: "l6-environment-required",
+      subject: record.subjectId,
+      message: "L6 end-to-end journey proof must execute in STAGING or a dedicated E2E environment",
+    });
+  }
+  if (env === "prod" && claimed > 1) {
+    gaps.push({
+      kind: "prod-proof-strength-forbidden",
+      subject: record.subjectId,
+      message: "PROD evidence is readiness-only and cannot create proof strength",
+    });
+  }
+  return gaps;
+}
+
+function buildProofLadderComplianceReport(records) {
+  const rows = records.map((record) => {
+    const gaps = ladderGaps(record);
+    return {
+      proofId: record.proofId,
+      subjectId: record.subjectId,
+      environment: record.environmentMode,
+      providerMode: record.providerMode,
+      proofLevelClaimed: record.proofLevelClaimed,
+      proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
+      compliant: gaps.length === 0,
+      gaps,
+      evidenceFile: record.evidenceFile,
+    };
+  });
+  const gaps = rows.flatMap((row) =>
+    row.gaps.map((gap) => ({ ...gap, proofId: row.proofId, subject: row.subjectId }))
+  );
+  return {
+    artefact: "proof-ladder-compliance-report",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    ladder: PROOF_LEVELS,
+    environmentModel: ENVIRONMENT_PROOF_MODEL,
+    gaps,
+    records: rows,
+  };
+}
+
+function ladderGaps(record) {
+  const gaps = [];
+  const claimed = proofLevelNumber(record.proofLevelClaimed);
+  const observed = observedLevelFromEvidence(record);
+  if (claimed > observed) {
+    gaps.push({
+      kind: "proof-claim-overstated",
+      message: `claimed ${record.proofLevelClaimed} exceeds observed ${proofLevelId(observed)}`,
+    });
+  }
+  if (claimed >= 2 && record.exitStatus !== 0) {
+    gaps.push({ kind: "l2-execution-failed", message: "L2+ proof command must exit zero" });
+  }
+  if (claimed >= 3) {
+    if (!isMeaningfulObject(record.beforeState)) {
+      gaps.push({ kind: "missing-before-state", message: "L3+ proof requires before state" });
+    }
+    if (!isMeaningfulObject(record.afterState)) {
+      gaps.push({ kind: "missing-after-state", message: "L3+ proof requires after state" });
+    }
+    if (!isMeaningfulObject(record.assertedStateDiff)) {
+      gaps.push({ kind: "missing-state-diff", message: "L3+ proof requires state diff" });
+    }
+    if (record.failurePathExercised !== true) {
+      gaps.push({ kind: "missing-failure-path", message: "L3+ proof requires failure path" });
+    }
+    if (record.sideEffectsAsserted !== true) {
+      gaps.push({
+        kind: "missing-side-effect-evidence",
+        message: "L3+ proof requires side-effect evidence",
+      });
+    }
+  }
+  if (claimed >= 4 && record.realLocalProviderUsed !== true) {
+    gaps.push({
+      kind: "missing-real-local-substrate",
+      message: "L4 proof requires real local substrate",
+    });
+  }
+  if (
+    claimed >= 5 &&
+    (!record.externalSandboxProviderUsed || record.externalSandboxRequestIds.length === 0)
+  ) {
+    gaps.push({
+      kind: "missing-external-sandbox-evidence",
+      message: "L5 proof requires sandbox request/response evidence",
+    });
+  }
+  if (claimed >= 6 && !l6CorrelationComplete(record)) {
+    gaps.push({
+      kind: "missing-l6-correlation",
+      message: "L6 proof requires UI/API/state/audit/trace/metric/log correlation",
+    });
+  }
+  return gaps;
+}
+
+function buildEnvironmentProofConsistencyReport(records) {
+  const rows = records.map((record) => {
+    const gaps = environmentConsistencyGaps(record);
+    return {
+      proofId: record.proofId,
+      subjectId: record.subjectId,
+      environment: record.environmentMode,
+      providerMode: record.providerMode,
+      providerEvidenceClass: providerEvidenceClass(record),
+      proofLevelClaimed: record.proofLevelClaimed,
+      proofLevelObserved: proofLevelId(observedLevelFromEvidence(record)),
+      environmentValid: gaps.length === 0,
+      gaps,
+      evidenceFile: record.evidenceFile,
+    };
+  });
+  const gaps = rows.flatMap((row) =>
+    row.gaps.map((gap) => ({ ...gap, proofId: row.proofId, subject: row.subjectId }))
+  );
+  return {
+    artefact: "environment-proof-consistency-report",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    environmentModel: ENVIRONMENT_PROOF_MODEL,
+    gaps,
+    records: rows,
+  };
+}
+
+export function buildCapabilityProofReadinessReport(ctx, records) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const bySubject = new Map();
+  for (const record of records) {
+    for (const subject of record.subjectIds || []) {
+      if (!bySubject.has(subject)) bySubject.set(subject, []);
+      bySubject.get(subject).push(record);
+    }
+  }
+  const rows = capabilities.map((capability) => {
+    const devRecords = recordsForRefs(bySubject, capability.dev?.requiredProofs || []);
+    const testRecords = recordsForRefs(bySubject, capability.test?.requiredProofs || []);
+    const stagingRecords = recordsForRefs(bySubject, capability.staging?.requiredProofs || []);
+    const allCapabilityRecords = uniqRecords([...devRecords, ...testRecords, ...stagingRecords]);
+    const highestSemanticLevel = maxObserved(
+      devRecords.filter((record) => record.environmentMode === "dev"),
+      3
+    );
+    const highestProviderLevel = maxObserved(
+      testRecords.filter(
+        (record) => record.environmentMode === "test" && record.realLocalProviderUsed === true
+      ),
+      4
+    );
+    const highestSandboxLevel = maxObserved(
+      stagingRecords.filter(
+        (record) => record.environmentMode === "staging" && record.externalSandboxProviderUsed
+      ),
+      5
+    );
+    const highestJourneyLevel = maxObserved(
+      allCapabilityRecords.filter((record) => l6CorrelationComplete(record)),
+      6
+    );
+    const readiness = capabilityReadinessState({
+      semantic: highestSemanticLevel,
+      provider: highestProviderLevel,
+      sandbox: highestSandboxLevel,
+      journey: highestJourneyLevel,
+    });
+    const requiredBands = capabilityRequiredBands(capability);
+    const missingBands = capabilityMissingBands({
+      semantic: highestSemanticLevel,
+      provider: highestProviderLevel,
+      sandbox: highestSandboxLevel,
+      journey: highestJourneyLevel,
+    });
+    const missingRequiredBands = missingBands.filter((band) => requiredBands.includes(band));
+    return {
+      capability: capability.capability,
+      category: capability.category,
+      requiredBands,
+      highestSemanticLevelAchieved: proofLevelId(highestSemanticLevel),
+      highestProviderLevelAchieved: proofLevelId(highestProviderLevel),
+      highestSandboxLevelAchieved: proofLevelId(highestSandboxLevel),
+      highestJourneyLevelAchieved: proofLevelId(highestJourneyLevel),
+      readiness,
+      fullServiceVerified: highestProviderLevel >= 4,
+      fullyProven: readiness === "FULLY_PROVEN",
+      evidenceProofIds: uniq(allCapabilityRecords.map((record) => record.proofId)),
+      missingBands,
+      missingRequiredBands,
+    };
+  });
+  const gaps = rows.flatMap(capabilityReadinessGaps);
+  return {
+    artefact: "capability-proof-readiness-report",
+    schemaVersion: 2,
+    generatedAt: new Date().toISOString(),
+    status: rows.length === capabilities.length && gaps.length === 0 ? "PASS" : "FAIL",
+    modelConsistencyStatus: rows.length === capabilities.length ? "PASS" : "FAIL",
+    migrationReadinessStatus: gaps.length === 0 ? "PASS" : "FAIL",
+    capabilityCount: rows.length,
+    fullyProvenCapabilityCount: rows.filter((row) => row.fullyProven).length,
+    fullServiceVerifiedCapabilityCount: rows.filter((row) => row.fullServiceVerified).length,
+    readinessCounts: rows.reduce((acc, row) => {
+      acc[row.readiness] = (acc[row.readiness] || 0) + 1;
+      return acc;
+    }, {}),
+    gaps,
+    capabilities: rows,
+  };
 }
 
 function buildStrengthMatrix(records) {
@@ -650,10 +1077,22 @@ function buildInMemoryProviderParityReport(ctx, records) {
   };
 }
 
-function buildWeakProofBacklog(requiredProofs, evidence, claimVsObserved) {
+export function buildWeakProofBacklog(
+  requiredProofs,
+  evidence,
+  claimVsObserved,
+  capabilityReadiness
+) {
   const missing = evidence.gaps.filter((gap) =>
     ["missing-evidence", "stale-evidence", "proof-claim-overstated"].includes(gap.kind)
   );
+  const capabilityProofGaps = capabilityReadiness.gaps.map((gap) => ({
+    capability: gap.capability,
+    kind: gap.kind,
+    readiness: gap.readiness,
+    missingBand: gap.missingBand,
+    message: gap.message,
+  }));
   const weak = evidence.records
     .filter(
       (record) => observedLevelFromEvidence(record) < proofLevelNumber(record.proofLevelClaimed)
@@ -669,11 +1108,18 @@ function buildWeakProofBacklog(requiredProofs, evidence, claimVsObserved) {
     artefact: "weak-proof-backlog",
     schemaVersion: 2,
     generatedAt: new Date().toISOString(),
-    status: missing.length === 0 && claimVsObserved.mismatchCount === 0 ? "PASS" : "FAIL",
+    status:
+      missing.length === 0 &&
+      claimVsObserved.mismatchCount === 0 &&
+      capabilityProofGaps.length === 0
+        ? "PASS"
+        : "FAIL",
     requiredProofCount: requiredProofs.length,
     missingOrStaleCount: missing.length,
     overclaimCount: claimVsObserved.mismatchCount,
+    capabilityProofGapCount: capabilityProofGaps.length,
     missingOrStale: missing,
+    capabilityProofGaps,
     weak,
   };
 }
@@ -735,6 +1181,25 @@ function buildNegativeControlReport(ctx) {
       expectedKinds: ["in-memory-provider-mode", "in-memory-labelled-real-provider"],
     },
     {
+      id: "in-memory-labelled-l4",
+      record: {
+        ...base,
+        proofId: "negative:in-memory-labelled-l4",
+        environmentMode: "dev",
+        environment: "dev",
+        providerMode: "semantic-dev",
+        inMemoryProviderUsed: true,
+        realLocalProviderUsed: false,
+        proofLevelClaimed: "L4",
+      },
+      expectedKinds: [
+        "environment-level-forbidden",
+        "dev-proof-claims-l4",
+        "missing-real-local-substrate",
+        "proof-claim-overstated",
+      ],
+    },
+    {
       id: "missing-audit-evidence",
       record: {
         ...base,
@@ -755,9 +1220,40 @@ function buildNegativeControlReport(ctx) {
       expectedKinds: ["missing-l6-correlation"],
     },
     {
+      id: "missing-metric-evidence",
+      record: {
+        ...base,
+        proofId: "negative:missing-metric-evidence",
+        proofLevelClaimed: "L6",
+        metricSamples: [],
+        metricEvidence: [],
+      },
+      expectedKinds: ["missing-l6-correlation"],
+    },
+    {
       id: "missing-before-after-state",
       record: { ...base, proofId: "negative:missing-before-after-state", beforeState: {} },
       expectedKinds: ["missing-before-after-state", "proof-claim-overstated"],
+    },
+    {
+      id: "missing-before-state",
+      record: { ...base, proofId: "negative:missing-before-state", beforeState: {} },
+      expectedKinds: ["missing-before-after-state", "missing-before-state"],
+    },
+    {
+      id: "missing-after-state",
+      record: { ...base, proofId: "negative:missing-after-state", afterState: {} },
+      expectedKinds: ["missing-before-after-state", "missing-after-state"],
+    },
+    {
+      id: "missing-failure-path",
+      record: {
+        ...base,
+        proofId: "negative:missing-failure-path",
+        failurePathExercised: false,
+        failureMode: "not-exercised",
+      },
+      expectedKinds: ["missing-failure-path", "proof-claim-overstated"],
     },
     {
       id: "stale-evidence",
@@ -798,13 +1294,27 @@ function buildNegativeControlReport(ctx) {
         "proof-claim-overstated",
       ],
     },
+    {
+      id: "deleted-evidence",
+      records: [],
+      requiredProofs: [
+        {
+          file: "negative/deleted-evidence-runtime-proof.ts",
+          subjectIds: ["negative/deleted-evidence-runtime-proof.ts"],
+          commandExecuted: "node negative/deleted-evidence-runtime-proof.ts",
+        },
+      ],
+      expectedKinds: ["missing-evidence"],
+    },
   ];
   const results = controls.map((control) => {
-    const record = normalizeEvidenceRecord(signRecord(control.record));
+    const records =
+      control.records ||
+      (control.record ? [normalizeEvidenceRecord(signRecord(control.record))] : []);
     const { gaps } = validateEvidenceSet({
       ctx,
-      records: [record],
-      requiredProofs: [],
+      records,
+      requiredProofs: control.requiredProofs || [],
       routeSubjectMap: { routes: [] },
       allowNegativeControls: false,
     });
@@ -826,6 +1336,9 @@ function buildNegativeControlReport(ctx) {
 function buildFormalProofReadinessReport({
   evidence,
   claimVsObserved,
+  ladderCompliance,
+  environmentConsistency,
+  capabilityReadiness,
   inMemoryParity,
   routeSubjectMap,
   weakProofBacklog,
@@ -838,6 +1351,16 @@ function buildFormalProofReadinessReport({
       subject: mismatch.subjectId,
       message: `claimed ${mismatch.proofLevelClaimed} exceeds observed ${mismatch.proofLevelObserved}`,
     })),
+    ...ladderCompliance.gaps.map((gap) => ({
+      kind: gap.kind,
+      subject: gap.subject,
+      message: gap.message,
+    })),
+    ...environmentConsistency.gaps.map((gap) => ({
+      kind: gap.kind,
+      subject: gap.subject,
+      message: gap.message,
+    })),
     ...inMemoryParity.gaps.map((gap) => ({
       kind: "in-memory-provider-parity",
       subject: gap.provider,
@@ -847,6 +1370,11 @@ function buildFormalProofReadinessReport({
       kind: "route-proof-subject-map",
       subject: `${gap.method} ${gap.path}`,
       message: "route proof subject mapping is missing, broad, or fuzzy",
+    })),
+    ...capabilityReadiness.gaps.map((gap) => ({
+      kind: gap.kind,
+      subject: gap.capability,
+      message: gap.message,
     })),
     ...negativeControls.failed.map((gap) => ({
       kind: "negative-control-not-caught",
@@ -867,6 +1395,13 @@ function buildFormalProofReadinessReport({
       claimMismatches: claimVsObserved.mismatchCount,
       inMemoryProviderParityGaps: inMemoryParity.gaps.length,
       routeProofSubjectGaps: routeSubjectMap.gaps.length,
+      proofLadderComplianceGaps: ladderCompliance.gaps.length,
+      environmentProofConsistencyGaps: environmentConsistency.gaps.length,
+      capabilityReadinessComputed: capabilityReadiness.capabilityCount,
+      capabilityReadinessStatus: capabilityReadiness.status,
+      capabilityReadinessGaps: capabilityReadiness.gaps.length,
+      fullyProvenCapabilities: capabilityReadiness.fullyProvenCapabilityCount,
+      fullServiceVerifiedCapabilities: capabilityReadiness.fullServiceVerifiedCapabilityCount,
       weakProofBacklogStatus: weakProofBacklog.status,
       negativeControls: negativeControls.status,
     },
@@ -938,9 +1473,44 @@ function validFixtureRecord(ctx) {
 }
 
 export function signRecord(record) {
-  const signed = { ...record };
+  const signed = withEvidenceAliases({ ...record });
   signed.evidenceSignature = evidenceSignature(signed);
   return signed;
+}
+
+function withEvidenceAliases(record) {
+  const environmentMode = record.environmentMode || record.environment || "unknown";
+  const startedAt = record.startedAt || record.startTime || null;
+  const endedAt = record.endedAt || record.endTime || null;
+  const commit = record.commit || record.gitCommit || null;
+  const assertedStateDiff = record.assertedStateDiff || record.stateDiff || {};
+  const auditEventIds = record.auditEventIds || record.auditIds || [];
+  const metricSamples = record.metricSamples || record.metricEvidence || [];
+  const logCorrelationIds = record.logCorrelationIds || record.logEvidence || [];
+  return {
+    ...record,
+    environmentMode,
+    environment: record.environment || environmentMode,
+    proofLevelObserved:
+      record.proofLevelObserved || proofLevelId(observedLevelFromEvidence(record)),
+    startedAt,
+    startTime: record.startTime || startedAt,
+    endedAt,
+    endTime: record.endTime || endedAt,
+    commit,
+    gitCommit: record.gitCommit || commit,
+    executionTimestamp: record.executionTimestamp || record.generatedAt || endedAt,
+    assertedStateDiff,
+    stateDiff: record.stateDiff || assertedStateDiff,
+    failureMode:
+      record.failureMode || (record.failurePathExercised === true ? "exercised" : "not-exercised"),
+    auditEventIds,
+    auditIds: record.auditIds || auditEventIds,
+    metricSamples,
+    metricEvidence: record.metricEvidence || metricSamples,
+    logCorrelationIds,
+    logEvidence: record.logEvidence || logCorrelationIds,
+  };
 }
 
 function realProviderFor(provider) {
@@ -979,6 +1549,113 @@ function observabilityComplete(record) {
     (record.metricSamples || []).length > 0 &&
     (record.logCorrelationIds || []).length > 0
   );
+}
+
+function l6CorrelationComplete(record) {
+  const env = record.environmentMode || record.environment;
+  return (
+    (env === "staging" || env === "e2e") &&
+    isMeaningfulObject(record.beforeState) &&
+    isMeaningfulObject(record.afterState) &&
+    isMeaningfulObject(record.assertedStateDiff) &&
+    record.sideEffectsAsserted === true &&
+    record.failurePathExercised === true &&
+    (record.routeIds || []).length > 0 &&
+    (record.auditEventIds || []).length > 0 &&
+    (record.traceIds || []).length > 0 &&
+    (record.metricSamples || []).length > 0 &&
+    (record.logCorrelationIds || []).length > 0
+  );
+}
+
+function recordsForRefs(bySubject, refs) {
+  return uniqRecords(refs.flatMap((ref) => bySubject.get(ref) || []));
+}
+
+function uniqRecords(records) {
+  const seen = new Set();
+  const out = [];
+  for (const record of records) {
+    const key = `${record.proofId}:${record.evidenceFile || record.subjectId}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(record);
+  }
+  return out;
+}
+
+function maxObserved(records, cap = 6) {
+  return Math.min(
+    cap,
+    records.reduce((max, record) => Math.max(max, observedLevelFromEvidence(record)), 0)
+  );
+}
+
+function capabilityReadinessState({ semantic, provider, sandbox, journey }) {
+  if (semantic >= 3 && provider >= 4 && sandbox >= 5 && journey >= 6) return "FULLY_PROVEN";
+  if (semantic >= 3 && provider >= 4) return "PROVIDER_PROVEN";
+  if (semantic >= 3) return "SEMANTIC_PROVEN";
+  if (semantic > 0 || provider > 0 || sandbox > 0 || journey > 0) return "PARTIALLY_PROVEN";
+  return "UNPROVEN";
+}
+
+function capabilityMissingBands({ semantic, provider, sandbox, journey }) {
+  const missing = [];
+  if (semantic < 3) missing.push("semantic-L3");
+  if (provider < 4) missing.push("provider-L4");
+  if (sandbox < 5) missing.push("sandbox-L5");
+  if (journey < 6) missing.push("journey-L6");
+  return missing;
+}
+
+function capabilityReadinessGaps(row) {
+  return (row.missingRequiredBands || []).map((band) => ({
+    kind: capabilityGapKind(band),
+    capability: row.capability,
+    readiness: row.readiness,
+    missingBand: band,
+    message: `${row.capability} is ${row.readiness}; missing ${band} runtime evidence`,
+  }));
+}
+
+function capabilityGapKind(band) {
+  const map = {
+    "semantic-L3": "capability-semantic-proof-missing",
+    "provider-L4": "capability-real-provider-proof-missing",
+    "sandbox-L5": "capability-external-sandbox-proof-missing",
+    "journey-L6": "capability-end-to-end-journey-proof-missing",
+  };
+  return map[band] || "capability-proof-band-missing";
+}
+
+function capabilityRequiredBands(capability) {
+  const required = ["semantic-L3"];
+  if (capabilityRequiresRealProviderProof(capability)) required.push("provider-L4");
+  if (capabilityRequiresExternalSandboxProof(capability)) required.push("sandbox-L5");
+  if (Number(capability.staging?.proofLevelRequired || 0) >= 6) required.push("journey-L6");
+  return required;
+}
+
+function capabilityRequiresRealProviderProof(capability) {
+  const providerClass = capability.test?.providerClass;
+  const provider = capability.test?.provider;
+  return providerClass === "compose-local" && !isStaticOrHermeticProvider(provider);
+}
+
+function capabilityRequiresExternalSandboxProof(capability) {
+  return ["external-sandbox", "sandbox-external", "prod-shaped-sandbox"].includes(
+    capability.staging?.providerClass
+  );
+}
+
+function isStaticOrHermeticProvider(provider) {
+  return [
+    "static-assurance-provider",
+    "openapi-drift-validator",
+    "react-i18n-provider",
+    "playwright-adapter",
+    "playwright-axe-adapter",
+  ].includes(provider);
 }
 
 function isMeaningfulObject(value) {

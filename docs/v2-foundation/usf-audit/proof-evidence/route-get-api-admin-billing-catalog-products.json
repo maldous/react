@@ -13,10 +13,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "route-subject evidence collection for GET /api/admin/billing/catalog/products",
-  "startedAt": "2026-06-23T06:45:51.149Z",
-  "endedAt": "2026-06-23T06:45:52.149Z",
+  "startedAt": "2026-06-23T07:42:08.779Z",
+  "endedAt": "2026-06-23T07:42:09.779Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8279",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -50,7 +50,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.149Z",
+  "generatedAt": "2026-06-23T07:42:09.779Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8279", "docs/api/openapi.json"],
-  "evidenceSignature": "dcb7b39a7b82381bedc8ca76dea704d993f532451e9348c0cbab8316a0887660"
+  "environment": "test",
+  "proofLevelObserved": "L2",
+  "startTime": "2026-06-23T07:42:08.779Z",
+  "endTime": "2026-06-23T07:42:09.779Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.779Z",
+  "stateDiff": {
+    "routeId": "route:get-api-admin-billing-catalog-products",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": [],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "1950e031ca282f14f69aecf511c31bfd4d45eadfbb2330273f09971ef136605e"
 }

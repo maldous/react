@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-observability",
-  "startedAt": "2026-06-23T06:45:51.093Z",
-  "endedAt": "2026-06-23T06:45:52.093Z",
+  "startedAt": "2026-06-23T07:42:08.716Z",
+  "endedAt": "2026-06-23T07:42:09.716Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.093Z",
+  "generatedAt": "2026-06-23T07:42:09.716Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-observability-runtime-proof.ts"],
-  "evidenceSignature": "5e03ac2871085e5898b9356b5cf13f8d17586249a9afe407610fcb3b998b4ed8"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.716Z",
+  "endTime": "2026-06-23T07:42:09.716Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.716Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-observability-runtime-proof.ts",
+    "command": "npm run proof:tenant-observability",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-logs",
+      "route:get-api-admin-logs-search",
+      "route:get-api-org-observability-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-observability-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-observability-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-observability-runtime-proof"],
+  "evidenceSignature": "699fa7669cc493fe44446823c35b141e78cc5d64b9f53e0b121e5483128b3866"
 }

@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.077Z",
-  "endedAt": "2026-06-23T06:45:52.077Z",
+  "startedAt": "2026-06-23T07:42:08.696Z",
+  "endedAt": "2026-06-23T07:42:09.696Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.077Z",
+  "generatedAt": "2026-06-23T07:42:09.696Z",
   "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"],
-  "evidenceSignature": "9db0547bfa52133438260f40188647840b748ba02add866a85011bcd4c9c65d1"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.696Z",
+  "endTime": "2026-06-23T07:42:09.696Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.696Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["smtp-email-adapter"]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-smtp-email-adapter-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-smtp-email-adapter-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-smtp-email-adapter-runtime-proof"],
+  "evidenceSignature": "51aa0b4e68acea61378676bfc67317ee08939fd1147c8c3b9f5d55c3723b1b5e"
 }

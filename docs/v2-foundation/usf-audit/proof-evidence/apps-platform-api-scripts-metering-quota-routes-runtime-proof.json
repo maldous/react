@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:metering-quota-routes",
-  "startedAt": "2026-06-23T06:45:50.987Z",
-  "endedAt": "2026-06-23T06:45:51.987Z",
+  "startedAt": "2026-06-23T07:42:08.590Z",
+  "endedAt": "2026-06-23T07:42:09.590Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -89,7 +89,37 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.987Z",
+  "generatedAt": "2026-06-23T07:42:09.590Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts"],
-  "evidenceSignature": "4a6d39663bbf575f669255f2150d5ac08abd50225c992d73fb15c0076791a578"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.590Z",
+  "endTime": "2026-06-23T07:42:09.590Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.590Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/metering-quota-routes-runtime-proof.ts",
+    "command": "npm run proof:metering-quota-routes",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-usage",
+      "route:post-api-admin-tenants-tenantid-meter-events",
+      "route:get-api-admin-tenants-tenantid-quotas",
+      "route:patch-api-admin-tenants-tenantid-quotas",
+      "route:get-api-admin-tenants-tenantid-usage",
+      "route:get-api-org-quotas",
+      "route:get-api-org-usage"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-metering-quota-routes-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-metering-quota-routes-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-metering-quota-routes-runtime-proof"],
+  "evidenceSignature": "ccdc31c975c3fbb12a64aeb478f534bf16c8b11ce72fbe25e4dc8a48b65b22b4"
 }

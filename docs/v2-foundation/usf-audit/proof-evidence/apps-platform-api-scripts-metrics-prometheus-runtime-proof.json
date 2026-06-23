@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:metrics-prometheus",
-  "startedAt": "2026-06-23T06:45:50.989Z",
-  "endedAt": "2026-06-23T06:45:51.989Z",
+  "startedAt": "2026-06-23T07:42:08.593Z",
+  "endedAt": "2026-06-23T07:42:09.593Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -80,7 +80,34 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.989Z",
+  "generatedAt": "2026-06-23T07:42:09.593Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"],
-  "evidenceSignature": "6a05f6ac5c79f36ba479bbfe06e207ff4585cfe63be43d8acc6da7c28a895126"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.593Z",
+  "endTime": "2026-06-23T07:42:09.593Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.593Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
+    "command": "npm run proof:metrics-prometheus",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-monitoring",
+      "route:get-admin-observability",
+      "route:get-api-admin-observability",
+      "route:get-api-admin-observability-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-metrics-prometheus-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-metrics-prometheus-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-metrics-prometheus-runtime-proof"],
+  "evidenceSignature": "a65e987b93bf7b58cbf2cc20ae7a12e2c1d33509cb6ba6b8e1734fbaeb2e7f1a"
 }

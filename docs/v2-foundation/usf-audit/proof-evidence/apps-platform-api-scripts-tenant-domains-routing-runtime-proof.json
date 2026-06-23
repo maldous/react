@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-domains-routing",
-  "startedAt": "2026-06-23T06:45:51.089Z",
-  "endedAt": "2026-06-23T06:45:52.089Z",
+  "startedAt": "2026-06-23T07:42:08.710Z",
+  "endedAt": "2026-06-23T07:42:09.710Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -89,7 +89,37 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.089Z",
+  "generatedAt": "2026-06-23T07:42:09.710Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
-  "evidenceSignature": "acea4db5d39200aadb5f1531140e347afdffeaa49df890522fe27bca60c3121a"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.710Z",
+  "endTime": "2026-06-23T07:42:09.710Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.710Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
+    "command": "npm run proof:tenant-domains-routing",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-domains-routing-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-domains-routing-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-domains-routing-runtime-proof"],
+  "evidenceSignature": "67dc2680667b4f8dad15873e10a93bbb1306af0d07ef4207e26fe0190146607a"
 }

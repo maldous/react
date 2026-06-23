@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:provider-observability-contract",
-  "startedAt": "2026-06-23T06:45:51.053Z",
-  "endedAt": "2026-06-23T06:45:52.053Z",
+  "startedAt": "2026-06-23T07:42:08.668Z",
+  "endedAt": "2026-06-23T07:42:09.668Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -70,7 +70,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.053Z",
+  "generatedAt": "2026-06-23T07:42:09.668Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts"],
-  "evidenceSignature": "48b16fa3bee1a15d0024325888fa12d77ce3040c903889266f9c6555c665527d"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.668Z",
+  "endTime": "2026-06-23T07:42:09.668Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.668Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-observability-contract-runtime-proof.ts",
+    "command": "npm run proof:provider-observability-contract",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-provider-observability-contract-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-provider-observability-contract-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-provider-observability-contract-runtime-proof"],
+  "evidenceSignature": "eab65d7e5e9001718f59d5bb0d4bb1380981dc2eaedc1f19db6121a3752607e3"
 }

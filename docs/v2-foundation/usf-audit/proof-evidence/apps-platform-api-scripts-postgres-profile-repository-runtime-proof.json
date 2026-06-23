@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.033Z",
-  "endedAt": "2026-06-23T06:45:52.033Z",
+  "startedAt": "2026-06-23T07:42:08.644Z",
+  "endedAt": "2026-06-23T07:42:09.644Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.033Z",
+  "generatedAt": "2026-06-23T07:42:09.644Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts"],
-  "evidenceSignature": "ea27e6481ebd4d592115ad1a323789a8677e7bd62d859838c4c41c933429540a"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.644Z",
+  "endTime": "2026-06-23T07:42:09.644Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.644Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-profile-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-profile-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-profile-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-profile-repository-runtime-proof"],
+  "evidenceSignature": "cb5eb85ae142ea9c750c795f3752484c1d615abedbf7c6922cee45462a86e24f"
 }

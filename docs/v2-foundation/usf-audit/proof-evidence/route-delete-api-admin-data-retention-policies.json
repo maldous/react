@@ -19,10 +19,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L3",
   "commandExecuted": "route-subject evidence collection for DELETE /api/admin/data/retention-policies",
-  "startedAt": "2026-06-23T06:45:51.158Z",
-  "endedAt": "2026-06-23T06:45:52.158Z",
+  "startedAt": "2026-06-23T07:42:08.790Z",
+  "endedAt": "2026-06-23T07:42:09.790Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8085",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -56,7 +56,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.158Z",
+  "generatedAt": "2026-06-23T07:42:09.790Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8085", "docs/api/openapi.json"],
-  "evidenceSignature": "e4355cb11292889b311f65f2308b4fae0eb73b2c74e6390d529b44e1a2a27b4f"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.790Z",
+  "endTime": "2026-06-23T07:42:09.790Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.790Z",
+  "stateDiff": {
+    "routeId": "route:delete-api-admin-data-retention-policies",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": ["route handler audit evidence"],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "d6a3b9bbd5b6a80d037a5b8ea64209e4e57305fe1d98d58e6f48d60db0746da0"
 }

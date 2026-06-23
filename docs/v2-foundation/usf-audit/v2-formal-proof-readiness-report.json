@@ -1,8 +1,8 @@
 {
   "artefact": "v2-formal-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T04:40:54.023Z",
-  "status": "PASS",
+  "generatedAt": "2026-06-23T07:42:05.330Z",
+  "status": "FAIL",
   "summary": {
     "evidenceRecords": 396,
     "requiredProofs": 161,
@@ -11,8 +11,256 @@
     "claimMismatches": 0,
     "inMemoryProviderParityGaps": 0,
     "routeProofSubjectGaps": 0,
-    "weakProofBacklogStatus": "PASS",
+    "proofLadderComplianceGaps": 0,
+    "environmentProofConsistencyGaps": 0,
+    "capabilityReadinessComputed": 70,
+    "capabilityReadinessStatus": "FAIL",
+    "capabilityReadinessGaps": 48,
+    "fullyProvenCapabilities": 0,
+    "fullServiceVerifiedCapabilities": 41,
+    "weakProofBacklogStatus": "FAIL",
     "negativeControls": "PASS"
   },
-  "gaps": []
+  "gaps": [
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "User identity + tenant membership",
+      "message": "User identity + tenant membership is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Tenant groups",
+      "message": "Tenant groups is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Sub-organisations",
+      "message": "Sub-organisations is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "RBAC (roles + permissions)",
+      "message": "RBAC (roles + permissions) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "ABAC / Policy Decision Point",
+      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "ABAC / Policy Decision Point",
+      "message": "ABAC / Policy Decision Point is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Support-mode / break-glass access",
+      "message": "Support-mode / break-glass access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Audit of privileged access",
+      "message": "Audit of privileged access is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Platform login + session",
+      "message": "Platform login + session is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "IdP brokering + OIDC provider management",
+      "message": "IdP brokering + OIDC provider management is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Claim mapping + group/role mapping",
+      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Claim mapping + group/role mapping",
+      "message": "Claim mapping + group/role mapping is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "MFA + session policy + lockout",
+      "message": "MFA + session policy + lockout is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Configuration registry + history",
+      "message": "Configuration registry + history is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Branding + theming",
+      "message": "Branding + theming is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Custom domains, DNS ownership, TLS, canonical",
+      "message": "Custom domains, DNS ownership, TLS, canonical is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Write-only secret settings",
+      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Write-only secret settings",
+      "message": "Write-only secret settings is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Product catalog, plans, prices",
+      "message": "Product catalog, plans, prices is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Subscriptions, invoices, payment methods, dunning",
+      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Subscriptions, invoices, payment methods, dunning",
+      "message": "Subscriptions, invoices, payment methods, dunning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Relational storage + migrations + RLS",
+      "message": "Relational storage + migrations + RLS is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "message": "Data governance: catalog, lineage, classification, PII, DSR/GDPR is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Object storage + tenant prefixes + signed URLs",
+      "message": "Object storage + tenant prefixes + signed URLs is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Workflow engine, scheduled jobs, approvals",
+      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Workflow engine, scheduled jobs, approvals",
+      "message": "Workflow engine, scheduled jobs, approvals is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Notification delivery + preferences + channels",
+      "message": "Notification delivery + preferences + channels is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Runtime secrets management",
+      "message": "Runtime secrets management is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Logs (aggregation + tenant-scoped search)",
+      "message": "Logs (aggregation + tenant-scoped search) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Metrics + traces",
+      "message": "Metrics + traces is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Observability — built-in alerting + incidents",
+      "message": "Observability — built-in alerting + incidents is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Internal service catalog + readiness",
+      "message": "Internal service catalog + readiness is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Code quality + secret + dependency scanning",
+      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Code quality + secret + dependency scanning",
+      "message": "Code quality + secret + dependency scanning is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Webhooks (developer-facing)",
+      "message": "Webhooks (developer-facing) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "API docs, developer portal, SDKs, rate limits",
+      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "API docs, developer portal, SDKs, rate limits",
+      "message": "API docs, developer portal, SDKs, rate limits is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Rate limiting (API)",
+      "message": "Rate limiting (API) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Tenant lifecycle: provision, suspend, delete, export",
+      "message": "Tenant lifecycle: provision, suspend, delete, export is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Support tickets, customer health, announcements",
+      "message": "Support tickets, customer health, announcements is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Service catalog + provider integration model",
+      "message": "Service catalog + provider integration model is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "OIDC discovery / issuer / JWKS validation",
+      "message": "OIDC discovery / issuer / JWKS validation is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "OIDC test connection + callback display",
+      "message": "OIDC test connection + callback display is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Tenant domain activation (auth-client)",
+      "message": "Tenant domain activation (auth-client) is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Tenant canonical domain set/unset",
+      "message": "Tenant canonical domain set/unset is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Tenant custom-domain auth callback",
+      "message": "Tenant custom-domain auth callback is PROVIDER_PROVEN; missing sandbox-L5 runtime evidence"
+    },
+    {
+      "kind": "capability-real-provider-proof-missing",
+      "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing provider-L4 runtime evidence"
+    },
+    {
+      "kind": "capability-external-sandbox-proof-missing",
+      "subject": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "message": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing) is SEMANTIC_PROVEN; missing sandbox-L5 runtime evidence"
+    }
+  ]
 }

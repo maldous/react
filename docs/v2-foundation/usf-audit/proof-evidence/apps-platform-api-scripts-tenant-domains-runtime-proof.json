@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-domains",
-  "startedAt": "2026-06-23T06:45:51.090Z",
-  "endedAt": "2026-06-23T06:45:52.090Z",
+  "startedAt": "2026-06-23T07:42:08.712Z",
+  "endedAt": "2026-06-23T07:42:09.712Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,34 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.090Z",
+  "generatedAt": "2026-06-23T07:42:09.712Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-runtime-proof.ts"],
-  "evidenceSignature": "8581b126bd06ec5928fc74b529af513cb958e16c6d91f08a1c771159c438e597"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.712Z",
+  "endTime": "2026-06-23T07:42:09.712Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.712Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-domains-runtime-proof.ts",
+    "command": "npm run proof:tenant-domains",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-domains-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-tenant-domains-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-domains-runtime-proof"],
+  "evidenceSignature": "e62432822da339c0eef51ddb2d1ce32b945650a02eb8adacd045d86e8f9de913"
 }

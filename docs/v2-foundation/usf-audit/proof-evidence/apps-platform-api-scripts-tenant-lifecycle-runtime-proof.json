@@ -26,10 +26,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-lifecycle",
-  "startedAt": "2026-06-23T06:45:51.092Z",
-  "endedAt": "2026-06-23T06:45:52.092Z",
+  "startedAt": "2026-06-23T07:42:08.715Z",
+  "endedAt": "2026-06-23T07:42:09.715Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.092Z",
+  "generatedAt": "2026-06-23T07:42:09.715Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "db13494ddb5c61fc17fcdf73bacf02a266c15c8268ca73a7c6245e376f50687b"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.715Z",
+  "endTime": "2026-06-23T07:42:09.715Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.715Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
+    "command": "npm run proof:tenant-lifecycle",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:post-api-admin-tenants-tenantid-delete",
+      "route:get-api-admin-tenants-tenantid-export",
+      "route:post-api-admin-tenants-tenantid-import",
+      "route:post-api-admin-tenants-tenantid-suspend"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-lifecycle-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-tenant-lifecycle-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-lifecycle-runtime-proof"],
+  "evidenceSignature": "860b5941eb94bcee50d59baa5f92d49edcd2eacc4c4701050c3c8bc7bccb917e"
 }

@@ -32,10 +32,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:data-residency",
-  "startedAt": "2026-06-23T06:45:50.947Z",
-  "endedAt": "2026-06-23T06:45:51.947Z",
+  "startedAt": "2026-06-23T07:42:08.543Z",
+  "endedAt": "2026-06-23T07:42:09.543Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,34 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.947Z",
+  "generatedAt": "2026-06-23T07:42:09.543Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-residency-runtime-proof.ts"],
-  "evidenceSignature": "fa01d8bb3e79f6824386bc858df4984c3902164e8411aeaac5298d13f8b90d9a"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.543Z",
+  "endTime": "2026-06-23T07:42:09.543Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.543Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
+    "command": "npm run proof:data-residency",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:delete-api-admin-data-legal-holds",
+      "route:get-api-admin-data-legal-holds",
+      "route:post-api-admin-data-legal-holds",
+      "route:post-api-admin-data-residency",
+      "route:delete-api-admin-data-retention-policies",
+      "route:get-api-admin-data-retention-policies",
+      "route:post-api-admin-data-retention-policies"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-data-residency-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-data-residency-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-data-residency-runtime-proof"],
+  "evidenceSignature": "799efeeef6ef090d3d50d0f6f46796f0964bb40a3d926ba5165099262f1d3f28"
 }

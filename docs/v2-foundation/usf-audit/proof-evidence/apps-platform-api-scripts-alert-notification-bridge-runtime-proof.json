@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:alert-notification-bridge",
-  "startedAt": "2026-06-23T06:45:50.891Z",
-  "endedAt": "2026-06-23T06:45:51.891Z",
+  "startedAt": "2026-06-23T07:42:08.485Z",
+  "endedAt": "2026-06-23T07:42:09.485Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.891Z",
+  "generatedAt": "2026-06-23T07:42:09.485Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
-  "evidenceSignature": "4768462173f217110837f665ee61ed6e018d866e57310fae2f11c730aebbdd6e"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.485Z",
+  "endTime": "2026-06-23T07:42:09.485Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.485Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
+    "command": "npm run proof:alert-notification-bridge",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-alert-notification-bridge-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-alert-notification-bridge-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-alert-notification-bridge-runtime-proof"],
+  "evidenceSignature": "7d6e87916a503806f4ee8e13ee45699ea8605649c0581404154d5ff3a000132e"
 }

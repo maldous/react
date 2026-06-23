@@ -17,10 +17,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "route-subject evidence collection for GET /api/auth/settings/sysadmin-brokering",
-  "startedAt": "2026-06-23T06:45:51.260Z",
-  "endedAt": "2026-06-23T06:45:52.260Z",
+  "startedAt": "2026-06-23T07:42:08.909Z",
+  "endedAt": "2026-06-23T07:42:09.909Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:2268",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -54,7 +54,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.260Z",
+  "generatedAt": "2026-06-23T07:42:09.909Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:2268", "docs/api/openapi.json"],
-  "evidenceSignature": "79e5691e9c283eb8c1216a1c88e3138fb68a36d13709f127b0097e970a0da5ab"
+  "environment": "test",
+  "proofLevelObserved": "L2",
+  "startTime": "2026-06-23T07:42:08.909Z",
+  "endTime": "2026-06-23T07:42:09.909Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.909Z",
+  "stateDiff": {
+    "routeId": "route:get-api-auth-settings-sysadmin-brokering",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": [],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "f8e37695960e0395f80202f1f73a29b3e4c03e84f391752da15e64a138000bb0"
 }

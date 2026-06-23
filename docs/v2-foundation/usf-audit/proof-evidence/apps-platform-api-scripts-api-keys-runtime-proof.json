@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:api-keys",
-  "startedAt": "2026-06-23T06:45:50.904Z",
-  "endedAt": "2026-06-23T06:45:51.904Z",
+  "startedAt": "2026-06-23T07:42:08.497Z",
+  "endedAt": "2026-06-23T07:42:09.497Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,7 +83,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.904Z",
+  "generatedAt": "2026-06-23T07:42:09.497Z",
   "sourceFileRefs": ["apps/platform-api/scripts/api-keys-runtime-proof.ts"],
-  "evidenceSignature": "62232b6cf6d840d146a388731f0ce6d3ecb5e1f00241fd0f943f4f341cc9b01d"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.497Z",
+  "endTime": "2026-06-23T07:42:09.497Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.497Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/api-keys-runtime-proof.ts",
+    "command": "npm run proof:api-keys",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-announcements",
+      "route:post-api-admin-tenants-tenantid-announcements",
+      "route:get-api-admin-tenants-tenantid-api-keys",
+      "route:get-api-org-api-keys",
+      "route:post-api-org-api-keys",
+      "route:delete-api-org-api-keys-keyid"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-api-keys-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-api-keys-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-api-keys-runtime-proof"],
+  "evidenceSignature": "271f44b142d287ddda8a11e09fcbd014b9c8fb44933a3fc9bd58173a70f1a817"
 }

@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:observability-signals",
-  "startedAt": "2026-06-23T06:45:51.004Z",
-  "endedAt": "2026-06-23T06:45:52.004Z",
+  "startedAt": "2026-06-23T07:42:08.612Z",
+  "endedAt": "2026-06-23T07:42:09.612Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.004Z",
+  "generatedAt": "2026-06-23T07:42:09.612Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-signals-runtime-proof.ts"],
-  "evidenceSignature": "0068033d664638c1b2c064b7e916abbabd19b13700d954c5a386b7cd683d4d36"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.612Z",
+  "endTime": "2026-06-23T07:42:09.612Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.612Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
+    "command": "npm run proof:observability-signals",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-observability-signals-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-observability-signals-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-observability-signals-runtime-proof"],
+  "evidenceSignature": "622773beaaf70206e8250916d17bbd3c553f11ddee47e16aac64aabd1d25e991"
 }

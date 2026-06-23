@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:service-clickthrough-policy",
-  "startedAt": "2026-06-23T06:45:51.076Z",
-  "endedAt": "2026-06-23T06:45:52.076Z",
+  "startedAt": "2026-06-23T07:42:08.694Z",
+  "endedAt": "2026-06-23T07:42:09.694Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -89,7 +89,37 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.076Z",
+  "generatedAt": "2026-06-23T07:42:09.694Z",
   "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"],
-  "evidenceSignature": "1f2147e2d680c0c168d5340a71027b6adf28ce85c81ae50ea73d64a6b0766640"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.694Z",
+  "endTime": "2026-06-23T07:42:09.694Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.694Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
+    "command": "npm run proof:service-clickthrough-policy",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-platform",
+      "route:get-admin-readiness",
+      "route:get-api-org-platform-services-readiness",
+      "route:get-api-platform-service-catalog",
+      "route:get-healthz",
+      "route:get-readyz",
+      "route:get-version"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-service-clickthrough-policy-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-service-clickthrough-policy-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-service-clickthrough-policy-runtime-proof"],
+  "evidenceSignature": "942cfba8a3ffbeb6b94fac2724620abcf5020123a5f0fbddeb8abc2a25781292"
 }

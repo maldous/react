@@ -17,10 +17,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L3",
   "commandExecuted": "route-subject evidence collection for POST /api/admin/governance/dsr/:dsrId/fulfill",
-  "startedAt": "2026-06-23T06:45:51.169Z",
-  "endedAt": "2026-06-23T06:45:52.169Z",
+  "startedAt": "2026-06-23T07:42:08.803Z",
+  "endedAt": "2026-06-23T07:42:09.803Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:8631",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -54,7 +54,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.169Z",
+  "generatedAt": "2026-06-23T07:42:09.803Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:8631", "docs/api/openapi.json"],
-  "evidenceSignature": "d10a3a6664afb1d2b41daf7b84a44fd28f17dfa883361ddbc3650175e88f59b5"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.803Z",
+  "endTime": "2026-06-23T07:42:09.803Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.803Z",
+  "stateDiff": {
+    "routeId": "route:post-api-admin-governance-dsr-dsrid-fulfill",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": ["route handler audit evidence"],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "b4ca45a48e75f5d5041f9ea18479b2e4557ffdb1bc3decaaf020e64c41139a8d"
 }

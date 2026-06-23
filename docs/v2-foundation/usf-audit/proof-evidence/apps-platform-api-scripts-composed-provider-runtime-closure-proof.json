@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:composed-provider-runtime-closure",
-  "startedAt": "2026-06-23T06:45:50.940Z",
-  "endedAt": "2026-06-23T06:45:51.940Z",
+  "startedAt": "2026-06-23T07:42:08.534Z",
+  "endedAt": "2026-06-23T07:42:09.534Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.940Z",
+  "generatedAt": "2026-06-23T07:42:09.534Z",
   "sourceFileRefs": ["apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts"],
-  "evidenceSignature": "904eb80463d8ccf20de3bef59e8ee146dac2a9c05e37b4aec0408173eeb9484c"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.534Z",
+  "endTime": "2026-06-23T07:42:09.534Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.534Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
+    "command": "npm run proof:composed-provider-runtime-closure",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-composed-provider-runtime-closure-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-composed-provider-runtime-closure-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-composed-provider-runtime-closure-proof"],
+  "evidenceSignature": "963d7a3378c0ecd968d8c99cac3bf0440a697a60cfae353fba0b829e77dfeac0"
 }

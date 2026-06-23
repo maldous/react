@@ -36,10 +36,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-catalog",
-  "startedAt": "2026-06-23T06:45:50.918Z",
-  "endedAt": "2026-06-23T06:45:51.918Z",
+  "startedAt": "2026-06-23T07:42:08.510Z",
+  "endedAt": "2026-06-23T07:42:09.510Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -92,7 +92,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.918Z",
+  "generatedAt": "2026-06-23T07:42:09.510Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-catalog-runtime-proof.ts"],
-  "evidenceSignature": "c113e5a2720181eb4c1adfcc70529a9b7dd2848b07c31706caf78026bb0fe209"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.510Z",
+  "endTime": "2026-06-23T07:42:09.510Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.510Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/billing-catalog-runtime-proof.ts",
+    "command": "npm run proof:billing-catalog",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-billing",
+      "route:get-api-admin-billing-catalog-plans",
+      "route:post-api-admin-billing-catalog-plans",
+      "route:get-api-admin-billing-catalog-prices",
+      "route:post-api-admin-billing-catalog-prices",
+      "route:get-api-admin-billing-catalog-products",
+      "route:post-api-admin-billing-catalog-products",
+      "route:get-api-admin-billing-readiness",
+      "route:get-api-org-billing-catalog"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-billing-catalog-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-billing-catalog-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-billing-catalog-runtime-proof"],
+  "evidenceSignature": "3c25f965e7daf13cb9d86a891cdb49ffb2a3d4984dc2c2bd408634c6273795be"
 }

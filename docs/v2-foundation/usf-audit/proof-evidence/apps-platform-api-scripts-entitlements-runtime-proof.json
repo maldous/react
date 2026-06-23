@@ -26,10 +26,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlements",
-  "startedAt": "2026-06-23T06:45:50.957Z",
-  "endedAt": "2026-06-23T06:45:51.957Z",
+  "startedAt": "2026-06-23T07:42:08.555Z",
+  "endedAt": "2026-06-23T07:42:09.555Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.957Z",
+  "generatedAt": "2026-06-23T07:42:09.555Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlements-runtime-proof.ts"],
-  "evidenceSignature": "ba70eb4e559a9e599ec3c9508c448cd9e7210dec18d34047c8b637a3410217ae"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.555Z",
+  "endTime": "2026-06-23T07:42:09.555Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.555Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/entitlements-runtime-proof.ts",
+    "command": "npm run proof:entitlements",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-entitlements",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-org-entitlements"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-entitlements-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-entitlements-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-entitlements-runtime-proof"],
+  "evidenceSignature": "e5e2578c3a3b72ebd45d97f2e096f4c89a9e2b6334e8a6b8d5646b9aa29fbec2"
 }

@@ -32,10 +32,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:platform-services",
-  "startedAt": "2026-06-23T06:45:51.011Z",
-  "endedAt": "2026-06-23T06:45:52.011Z",
+  "startedAt": "2026-06-23T07:42:08.619Z",
+  "endedAt": "2026-06-23T07:42:09.619Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,34 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.011Z",
+  "generatedAt": "2026-06-23T07:42:09.619Z",
   "sourceFileRefs": ["apps/platform-api/scripts/platform-services-runtime-proof.ts"],
-  "evidenceSignature": "ce1a9640bc08b11009fe91f243dbad2dbda962ad0d946d92b424237704233af5"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.619Z",
+  "endTime": "2026-06-23T07:42:09.619Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.619Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/platform-services-runtime-proof.ts",
+    "command": "npm run proof:platform-services",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-platform",
+      "route:get-admin-readiness",
+      "route:get-api-org-platform-services-readiness",
+      "route:get-api-platform-service-catalog",
+      "route:get-healthz",
+      "route:get-readyz",
+      "route:get-version"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-platform-services-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-platform-services-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-platform-services-runtime-proof"],
+  "evidenceSignature": "812aade254703b57001056f292385609f9141d26fbf342f74d7a62afd3e69dc1"
 }

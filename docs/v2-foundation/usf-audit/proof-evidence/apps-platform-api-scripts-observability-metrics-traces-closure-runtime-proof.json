@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:observability-metrics-traces-closure",
-  "startedAt": "2026-06-23T06:45:51.001Z",
-  "endedAt": "2026-06-23T06:45:52.001Z",
+  "startedAt": "2026-06-23T07:42:08.607Z",
+  "endedAt": "2026-06-23T07:42:09.607Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -70,9 +70,35 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.001Z",
+  "generatedAt": "2026-06-23T07:42:09.607Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts"
   ],
-  "evidenceSignature": "335cf09a9bab989a8a7ada50d7655e3e21fe80d9517eff571d43eebed98556ed"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.607Z",
+  "endTime": "2026-06-23T07:42:09.607Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.607Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
+    "command": "npm run proof:observability-metrics-traces-closure",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit-apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof"
+  ],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log-apps-platform-api-scripts-observability-metrics-traces-closure-runtime-proof"
+  ],
+  "evidenceSignature": "26e2dc7107f38cb15a61df5654d24409e9743618f66a27de6638f2a5765b1f2a"
 }

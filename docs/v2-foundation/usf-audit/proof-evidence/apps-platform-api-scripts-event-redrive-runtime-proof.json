@@ -34,10 +34,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:event-redrive",
-  "startedAt": "2026-06-23T06:45:50.963Z",
-  "endedAt": "2026-06-23T06:45:51.963Z",
+  "startedAt": "2026-06-23T07:42:08.563Z",
+  "endedAt": "2026-06-23T07:42:09.563Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -85,7 +85,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.963Z",
+  "generatedAt": "2026-06-23T07:42:09.563Z",
   "sourceFileRefs": ["apps/platform-api/scripts/event-redrive-runtime-proof.ts"],
-  "evidenceSignature": "0e0058eb35027219b2066546e244685f5305a7c102e08a0c04a3c477c10d4c9b"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.563Z",
+  "endTime": "2026-06-23T07:42:09.563Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.563Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
+    "command": "npm run proof:event-redrive",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-events",
+      "route:get-api-admin-events",
+      "route:post-api-admin-events-eventid-redrive",
+      "route:get-api-admin-events-dead-letter"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-event-redrive-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-event-redrive-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-event-redrive-runtime-proof"],
+  "evidenceSignature": "fe397c8287e8c85f0b200f61952f2220e594cdca7b98ca5daf83955530e41400"
 }

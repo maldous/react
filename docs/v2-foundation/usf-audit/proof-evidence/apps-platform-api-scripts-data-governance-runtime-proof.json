@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:data-governance",
-  "startedAt": "2026-06-23T06:45:50.944Z",
-  "endedAt": "2026-06-23T06:45:51.944Z",
+  "startedAt": "2026-06-23T07:42:08.540Z",
+  "endedAt": "2026-06-23T07:42:09.540Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.944Z",
+  "generatedAt": "2026-06-23T07:42:09.540Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-governance-runtime-proof.ts"],
-  "evidenceSignature": "1a48ac08a0e5319626ea625f7ec6d2c4debdb163c331102b194aa3ede0679a32"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.540Z",
+  "endTime": "2026-06-23T07:42:09.540Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.540Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/data-governance-runtime-proof.ts",
+    "command": "npm run proof:data-governance",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-data-governance-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-data-governance-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-data-governance-runtime-proof"],
+  "evidenceSignature": "47689ebd1aab997ceeeead2b6ab5e51da7df3503f9a8e5fe94e642a67b0795c2"
 }

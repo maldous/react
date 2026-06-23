@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.040Z",
-  "endedAt": "2026-06-23T06:45:52.040Z",
+  "startedAt": "2026-06-23T07:42:08.652Z",
+  "endedAt": "2026-06-23T07:42:09.652Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.040Z",
+  "generatedAt": "2026-06-23T07:42:09.652Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"],
-  "evidenceSignature": "4f121ce29e3f458a3e17dc352f030a7b274cf7a4d5b3454adf27ce1f83f55f67"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.652Z",
+  "endTime": "2026-06-23T07:42:09.652Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.652Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-search-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-search-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-search-repository-runtime-proof"],
+  "evidenceSignature": "8f649558267949cb937e36c72d2abcbeb73607dfce1e84f47e243d2bb8228170"
 }

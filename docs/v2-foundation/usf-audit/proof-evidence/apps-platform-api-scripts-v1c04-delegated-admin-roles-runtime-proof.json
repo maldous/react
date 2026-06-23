@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:delegated-admin",
-  "startedAt": "2026-06-23T06:45:51.099Z",
-  "endedAt": "2026-06-23T06:45:52.099Z",
+  "startedAt": "2026-06-23T07:42:08.723Z",
+  "endedAt": "2026-06-23T07:42:09.723Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.099Z",
+  "generatedAt": "2026-06-23T07:42:09.723Z",
   "sourceFileRefs": ["apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts"],
-  "evidenceSignature": "1e51d6c614ebb295244bfc2691d47eb43949a8de30f1d665b1fa83e321525a36"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.723Z",
+  "endTime": "2026-06-23T07:42:09.723Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.723Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/v1c04-delegated-admin-roles-runtime-proof.ts",
+    "command": "npm run proof:delegated-admin",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-delegations",
+      "route:post-api-admin-tenants-tenantid-delegations",
+      "route:delete-api-admin-tenants-tenantid-delegations-delegationid"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof"],
+  "evidenceSignature": "a3d27cf4e108e41e2f3a8db4bec5dc7534e3beda5143cd2e781ff20619d7a4bf"
 }

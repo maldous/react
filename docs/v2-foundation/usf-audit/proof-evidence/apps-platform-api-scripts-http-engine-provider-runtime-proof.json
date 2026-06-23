@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:http-engine-providers",
-  "startedAt": "2026-06-23T06:45:50.969Z",
-  "endedAt": "2026-06-23T06:45:51.969Z",
+  "startedAt": "2026-06-23T07:42:08.570Z",
+  "endedAt": "2026-06-23T07:42:09.570Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.969Z",
+  "generatedAt": "2026-06-23T07:42:09.570Z",
   "sourceFileRefs": ["apps/platform-api/scripts/http-engine-provider-runtime-proof.ts"],
-  "evidenceSignature": "628bd110017e9a196da5edef9443d826630fa3b59d4968162c2c66a6dd23b9af"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.570Z",
+  "endTime": "2026-06-23T07:42:09.570Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.570Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
+    "command": "npm run proof:http-engine-providers",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-http-engine-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-http-engine-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-http-engine-provider-runtime-proof"],
+  "evidenceSignature": "88704765a96d91404d01e019f87936a568c07ceb349003a91ff977af53fe26d9"
 }

@@ -46,10 +46,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-storage-objects",
-  "startedAt": "2026-06-23T06:45:51.096Z",
-  "endedAt": "2026-06-23T06:45:52.096Z",
+  "startedAt": "2026-06-23T07:42:08.719Z",
+  "endedAt": "2026-06-23T07:42:09.719Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -104,7 +104,38 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.096Z",
+  "generatedAt": "2026-06-23T07:42:09.719Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
-  "evidenceSignature": "68354975879a90e703bea855b284047e4436b32360edf6e2ca377693bfda82b5"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.719Z",
+  "endTime": "2026-06-23T07:42:09.719Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.719Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
+    "command": "npm run proof:tenant-storage-objects",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-storage",
+      "route:get-api-org-storage-objects",
+      "route:post-api-org-storage-objects",
+      "route:delete-api-org-storage-objects-objectkey",
+      "route:get-api-org-storage-objects-objectkey",
+      "route:post-api-org-storage-objects-objectkey-scan",
+      "route:post-api-org-storage-probe",
+      "route:get-api-org-storage-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-storage-objects-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-storage-objects-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-storage-objects-runtime-proof"],
+  "evidenceSignature": "9e1f522e5b7c7c40cd2fc419dfe752833bf0ae9e17b0d67b619f6963c615ef64"
 }

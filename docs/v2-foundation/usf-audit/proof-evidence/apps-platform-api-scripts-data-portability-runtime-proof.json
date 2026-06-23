@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:data-portability",
-  "startedAt": "2026-06-23T06:45:50.946Z",
-  "endedAt": "2026-06-23T06:45:51.946Z",
+  "startedAt": "2026-06-23T07:42:08.541Z",
+  "endedAt": "2026-06-23T07:42:09.541Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.946Z",
+  "generatedAt": "2026-06-23T07:42:09.541Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-portability-runtime-proof.ts"],
-  "evidenceSignature": "70fc2be45975fe4b053294f7eb0798bf6767cc9921ed6616538e2cb807bb4c29"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.541Z",
+  "endTime": "2026-06-23T07:42:09.541Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.541Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/data-portability-runtime-proof.ts",
+    "command": "npm run proof:data-portability",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-data-portability-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-data-portability-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-data-portability-runtime-proof"],
+  "evidenceSignature": "5f4dce826c3edd8d054479d9955ffdcf77d325e72325a38e17877921a285940e"
 }

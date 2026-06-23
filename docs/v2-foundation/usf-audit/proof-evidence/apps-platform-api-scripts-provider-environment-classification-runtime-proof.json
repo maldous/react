@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:provider-environment-classification",
-  "startedAt": "2026-06-23T06:45:51.051Z",
-  "endedAt": "2026-06-23T06:45:52.051Z",
+  "startedAt": "2026-06-23T07:42:08.666Z",
+  "endedAt": "2026-06-23T07:42:09.666Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -70,9 +70,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.051Z",
+  "generatedAt": "2026-06-23T07:42:09.666Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
   ],
-  "evidenceSignature": "8912e033a2c107a0a83c854d147aa335e305b40aafe94c9d2144cb0156601c89"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.666Z",
+  "endTime": "2026-06-23T07:42:09.666Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.666Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
+    "command": "npm run proof:provider-environment-classification",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-provider-environment-classification-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-provider-environment-classification-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log-apps-platform-api-scripts-provider-environment-classification-runtime-proof"
+  ],
+  "evidenceSignature": "6686eccc2a90d01902d476b546d67ad43cfc62479234a4222fb476a92c44edc9"
 }

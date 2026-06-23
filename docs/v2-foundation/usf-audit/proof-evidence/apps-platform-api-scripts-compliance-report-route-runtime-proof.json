@@ -18,10 +18,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:compliance-report-route",
-  "startedAt": "2026-06-23T06:45:50.934Z",
-  "endedAt": "2026-06-23T06:45:51.934Z",
+  "startedAt": "2026-06-23T07:42:08.527Z",
+  "endedAt": "2026-06-23T07:42:09.527Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -67,7 +67,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.934Z",
+  "generatedAt": "2026-06-23T07:42:09.527Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-route-runtime-proof.ts"],
-  "evidenceSignature": "07ab06d0bfb6e08c20be2017f6cbca999b9ebab77c70c71ed2ee1ff46079b3c6"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.527Z",
+  "endTime": "2026-06-23T07:42:09.527Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.527Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/compliance-report-route-runtime-proof.ts",
+    "command": "npm run proof:compliance-report-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-data-compliance-report"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-compliance-report-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-compliance-report-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-compliance-report-route-runtime-proof"],
+  "evidenceSignature": "634ee7ea0df3d2dd729c3e517d7aecc789af49b2e6de82d8c8f299d3f3298396"
 }

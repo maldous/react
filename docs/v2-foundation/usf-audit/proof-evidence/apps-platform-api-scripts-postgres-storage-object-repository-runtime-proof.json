@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.042Z",
-  "endedAt": "2026-06-23T06:45:52.042Z",
+  "startedAt": "2026-06-23T07:42:08.655Z",
+  "endedAt": "2026-06-23T07:42:09.655Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,9 +66,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.042Z",
+  "generatedAt": "2026-06-23T07:42:09.655Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "4a18f81cc43124fbb0095c08c029a26c324c8cb454c34b3b3d4b858e093c6dd5"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.655Z",
+  "endTime": "2026-06-23T07:42:09.655Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.655Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-storage-object-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-storage-object-repository-runtime-proof"],
+  "evidenceSignature": "a7c0564cc380d1b9c2c3160b13a5fa0ea8e990ff0320dec5cb0dbf9f52a62f10"
 }

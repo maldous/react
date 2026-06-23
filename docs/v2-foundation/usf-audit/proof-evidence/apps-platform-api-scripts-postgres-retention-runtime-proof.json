@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.038Z",
-  "endedAt": "2026-06-23T06:45:52.038Z",
+  "startedAt": "2026-06-23T07:42:08.649Z",
+  "endedAt": "2026-06-23T07:42:09.649Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.038Z",
+  "generatedAt": "2026-06-23T07:42:09.649Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"],
-  "evidenceSignature": "b3a467c869f3592e5927c981bd4cf7c8afcb1db30f52eed3188a04379ac7e404"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.649Z",
+  "endTime": "2026-06-23T07:42:09.649Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.649Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-retention-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-retention-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-retention-runtime-proof"],
+  "evidenceSignature": "51a12861f952a4f701e4bcb8aed46af3ba82a12076980721b327995bbae51a78"
 }

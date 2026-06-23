@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.028Z",
-  "endedAt": "2026-06-23T06:45:52.028Z",
+  "startedAt": "2026-06-23T07:42:08.638Z",
+  "endedAt": "2026-06-23T07:42:09.638Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.028Z",
+  "generatedAt": "2026-06-23T07:42:09.638Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
-  "evidenceSignature": "aeef8189785a63a7ee6fbb7a21d52c20f9d356640f52c7a294370812eee802ef"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.638Z",
+  "endTime": "2026-06-23T07:42:09.638Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.638Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-metering-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-metering-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-metering-repository-runtime-proof"],
+  "evidenceSignature": "1e831d3bfc0d12ceb867eb4215fa63ef48c4afe2527a7a2039f78cb1b100566e"
 }

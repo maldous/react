@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.018Z",
-  "endedAt": "2026-06-23T06:45:52.018Z",
+  "startedAt": "2026-06-23T07:42:08.627Z",
+  "endedAt": "2026-06-23T07:42:09.627Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -64,7 +64,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.018Z",
+  "generatedAt": "2026-06-23T07:42:09.627Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"],
-  "evidenceSignature": "637e8a237b0557b8c2c2d37d43f9275a72c379ba1e6adc1d088eb2c25f46024e"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.627Z",
+  "endTime": "2026-06-23T07:42:09.627Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.627Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-delegated-admin-roles-runtime-proof"],
+  "evidenceSignature": "01db97a5361c1d75ed1fcb5544dd1a191716a130ffaf4b8385bc91894bf382d2"
 }

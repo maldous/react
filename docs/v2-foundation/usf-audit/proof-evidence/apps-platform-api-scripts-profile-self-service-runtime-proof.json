@@ -20,10 +20,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:profile-self-service",
-  "startedAt": "2026-06-23T06:45:51.047Z",
-  "endedAt": "2026-06-23T06:45:52.047Z",
+  "startedAt": "2026-06-23T07:42:08.660Z",
+  "endedAt": "2026-06-23T07:42:09.660Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -73,7 +73,33 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.047Z",
+  "generatedAt": "2026-06-23T07:42:09.660Z",
   "sourceFileRefs": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"],
-  "evidenceSignature": "09e0c93cac5362746d896d2bd476d0377bf0120cd1a7a1b8654fc5382c224489"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.660Z",
+  "endTime": "2026-06-23T07:42:09.660Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.660Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
+    "command": "npm run proof:profile-self-service",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-account",
+      "route:get-api-me-profile",
+      "route:patch-api-me-profile"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-profile-self-service-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-profile-self-service-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-profile-self-service-runtime-proof"],
+  "evidenceSignature": "937033402a47ee73b2ce55fdd598db0d235c8b61d99b50180e135f0e02b1caae"
 }

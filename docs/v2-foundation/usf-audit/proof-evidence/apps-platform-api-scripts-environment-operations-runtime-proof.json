@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:environment-operations",
-  "startedAt": "2026-06-23T06:45:50.959Z",
-  "endedAt": "2026-06-23T06:45:51.959Z",
+  "startedAt": "2026-06-23T07:42:08.558Z",
+  "endedAt": "2026-06-23T07:42:09.558Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.959Z",
+  "generatedAt": "2026-06-23T07:42:09.558Z",
   "sourceFileRefs": ["apps/platform-api/scripts/environment-operations-runtime-proof.ts"],
-  "evidenceSignature": "29b2708c489bf17d70604e5a21216d8f400a7c6c2f19d0ea312fc0fdc33edf9a"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.558Z",
+  "endTime": "2026-06-23T07:42:09.558Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.558Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/environment-operations-runtime-proof.ts",
+    "command": "npm run proof:environment-operations",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-environment-operations-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-environment-operations-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-environment-operations-runtime-proof"],
+  "evidenceSignature": "3e498e677f2b7713761337e3a458805edb6cfaeaf6163af88f758f1172fc1e45"
 }

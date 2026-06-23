@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.931Z",
-  "endedAt": "2026-06-23T06:45:51.931Z",
+  "startedAt": "2026-06-23T07:42:08.523Z",
+  "endedAt": "2026-06-23T07:42:09.523Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -63,7 +63,26 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.931Z",
+  "generatedAt": "2026-06-23T07:42:09.523Z",
   "sourceFileRefs": ["apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts"],
-  "evidenceSignature": "d0835f538a20f596b52ae8cefec44fac3f29f4000c04c71c5c70b47f7c254b08"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.523Z",
+  "endTime": "2026-06-23T07:42:09.523Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.523Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/clamav-antivirus-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["clamav-antivirus"]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-clamav-antivirus-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-clamav-antivirus-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-clamav-antivirus-runtime-proof"],
+  "evidenceSignature": "b45606522e5cdddac0a110611fb1d235b797540915d86a3056f4f43e611e3bc9"
 }

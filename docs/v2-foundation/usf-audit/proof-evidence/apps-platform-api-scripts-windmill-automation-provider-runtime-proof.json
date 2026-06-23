@@ -17,10 +17,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:windmill-automation-provider",
-  "startedAt": "2026-06-23T06:45:51.105Z",
-  "endedAt": "2026-06-23T06:45:52.105Z",
+  "startedAt": "2026-06-23T07:42:08.729Z",
+  "endedAt": "2026-06-23T07:42:09.729Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.105Z",
+  "generatedAt": "2026-06-23T07:42:09.729Z",
   "sourceFileRefs": ["apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts"],
-  "evidenceSignature": "7e6e04b04d3333716eedbeb9cb28e92b77321c0ccb30388f103a4fa2384ef375"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.729Z",
+  "endTime": "2026-06-23T07:42:09.729Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.729Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/windmill-automation-provider-runtime-proof.ts",
+    "command": "npm run proof:windmill-automation-provider",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-windmill-automation-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-windmill-automation-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-windmill-automation-provider-runtime-proof"],
+  "evidenceSignature": "ba75db098dd0e055663bceb2db951ae088caee6cce9c9ab89605f2e7e59ee595"
 }

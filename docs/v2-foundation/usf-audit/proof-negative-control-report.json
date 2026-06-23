@@ -1,7 +1,7 @@
 {
   "artefact": "proof-negative-control-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T04:40:54.023Z",
+  "generatedAt": "2026-06-23T07:42:05.330Z",
   "status": "PASS",
   "controls": [
     {
@@ -17,12 +17,33 @@
       "passed": true
     },
     {
+      "id": "in-memory-labelled-l4",
+      "expectedKinds": [
+        "environment-level-forbidden",
+        "dev-proof-claims-l4",
+        "missing-real-local-substrate",
+        "proof-claim-overstated"
+      ],
+      "observedKinds": [
+        "dev-proof-claims-l4",
+        "environment-level-forbidden",
+        "missing-real-local-substrate",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
       "id": "missing-audit-evidence",
       "expectedKinds": ["missing-l6-correlation"],
       "observedKinds": [
+        "environment-level-forbidden",
+        "l5-environment-required",
+        "l6-environment-required",
         "missing-external-sandbox-request",
         "missing-l6-correlation",
-        "proof-claim-overstated"
+        "proof-claim-overstated",
+        "test-proof-claims-l5",
+        "test-sandbox-overclaim"
       ],
       "passed": true
     },
@@ -30,16 +51,66 @@
       "id": "missing-trace-evidence",
       "expectedKinds": ["missing-l6-correlation"],
       "observedKinds": [
+        "environment-level-forbidden",
+        "l5-environment-required",
+        "l6-environment-required",
         "missing-external-sandbox-request",
         "missing-l6-correlation",
-        "proof-claim-overstated"
+        "proof-claim-overstated",
+        "test-proof-claims-l5",
+        "test-sandbox-overclaim"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-metric-evidence",
+      "expectedKinds": ["missing-l6-correlation"],
+      "observedKinds": [
+        "environment-level-forbidden",
+        "l5-environment-required",
+        "l6-environment-required",
+        "missing-external-sandbox-request",
+        "missing-l6-correlation",
+        "proof-claim-overstated",
+        "test-proof-claims-l5",
+        "test-sandbox-overclaim"
       ],
       "passed": true
     },
     {
       "id": "missing-before-after-state",
       "expectedKinds": ["missing-before-after-state", "proof-claim-overstated"],
-      "observedKinds": ["missing-before-after-state", "proof-claim-overstated"],
+      "observedKinds": [
+        "missing-before-after-state",
+        "missing-before-state",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-before-state",
+      "expectedKinds": ["missing-before-after-state", "missing-before-state"],
+      "observedKinds": [
+        "missing-before-after-state",
+        "missing-before-state",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-after-state",
+      "expectedKinds": ["missing-before-after-state", "missing-after-state"],
+      "observedKinds": [
+        "missing-after-state",
+        "missing-before-after-state",
+        "proof-claim-overstated"
+      ],
+      "passed": true
+    },
+    {
+      "id": "missing-failure-path",
+      "expectedKinds": ["missing-failure-path", "proof-claim-overstated"],
+      "observedKinds": ["missing-failure-path", "proof-claim-overstated"],
       "passed": true
     },
     {
@@ -52,9 +123,14 @@
       "id": "overclaimed-proof-level",
       "expectedKinds": ["proof-claim-overstated", "missing-l6-correlation"],
       "observedKinds": [
+        "environment-level-forbidden",
+        "l5-environment-required",
+        "l6-environment-required",
         "missing-external-sandbox-request",
         "missing-l6-correlation",
-        "proof-claim-overstated"
+        "proof-claim-overstated",
+        "test-proof-claims-l5",
+        "test-sandbox-overclaim"
       ],
       "passed": true
     },
@@ -76,6 +152,12 @@
         "skipped-proof-marked-pass",
         "skipped-without-reason"
       ],
+      "passed": true
+    },
+    {
+      "id": "deleted-evidence",
+      "expectedKinds": ["missing-evidence"],
+      "observedKinds": ["missing-evidence"],
       "passed": true
     }
   ],

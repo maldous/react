@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.061Z",
-  "endedAt": "2026-06-23T06:45:52.061Z",
+  "startedAt": "2026-06-23T07:42:08.677Z",
+  "endedAt": "2026-06-23T07:42:09.677Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.061Z",
+  "generatedAt": "2026-06-23T07:42:09.677Z",
   "sourceFileRefs": ["apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts"],
-  "evidenceSignature": "121984cce8d3da869cf1f44e7eab369b2a6f2ed3e279db9a66c89656434856ee"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.677Z",
+  "endTime": "2026-06-23T07:42:09.677Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.677Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/react-i18n-provider-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-react-i18n-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-react-i18n-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-react-i18n-provider-runtime-proof"],
+  "evidenceSignature": "b95aa1005d47e2d3eab8748e78f6cb5b3e95da73a123b5fccf588dd6a1d9f59e"
 }

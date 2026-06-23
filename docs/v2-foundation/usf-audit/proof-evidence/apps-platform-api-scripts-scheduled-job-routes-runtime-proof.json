@@ -28,10 +28,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:scheduled-job-routes",
-  "startedAt": "2026-06-23T06:45:51.065Z",
-  "endedAt": "2026-06-23T06:45:52.065Z",
+  "startedAt": "2026-06-23T07:42:08.682Z",
+  "endedAt": "2026-06-23T07:42:09.682Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,7 +83,35 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.065Z",
+  "generatedAt": "2026-06-23T07:42:09.682Z",
   "sourceFileRefs": ["apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts"],
-  "evidenceSignature": "2210fc0a79168e730186ca345058e9690e8bebc50513321aed911fac36290e3d"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.682Z",
+  "endTime": "2026-06-23T07:42:09.682Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.682Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/scheduled-job-routes-runtime-proof.ts",
+    "command": "npm run proof:scheduled-job-routes",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-scheduled-jobs",
+      "route:get-api-admin-scheduled-jobs",
+      "route:post-api-admin-scheduled-jobs",
+      "route:patch-api-admin-scheduled-jobs-jobid",
+      "route:post-api-admin-scheduled-jobs-jobid-run"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-scheduled-job-routes-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-scheduled-job-routes-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-scheduled-job-routes-runtime-proof"],
+  "evidenceSignature": "8d38611e4fb8b8165469491b01bb998dd97de36bbe03571e87ad261f67a23208"
 }

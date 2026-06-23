@@ -15,10 +15,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.032Z",
-  "endedAt": "2026-06-23T06:45:52.032Z",
+  "startedAt": "2026-06-23T07:42:08.643Z",
+  "endedAt": "2026-06-23T07:42:09.643Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -68,9 +68,35 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.032Z",
+  "generatedAt": "2026-06-23T07:42:09.643Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
   ],
-  "evidenceSignature": "8f762f0bfaa9d6eec5f6559e777018ccf32dad4d1fec9b7d695e3df1ed8872da"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.643Z",
+  "endTime": "2026-06-23T07:42:09.643Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.643Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit-apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof"
+  ],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log-apps-platform-api-scripts-postgres-portable-tenant-import-applier-runtime-proof"
+  ],
+  "evidenceSignature": "ef43698ee0bf9e3c96151da52cfd1ee31383007c5de24ebd25ab88ca5692f1dc"
 }

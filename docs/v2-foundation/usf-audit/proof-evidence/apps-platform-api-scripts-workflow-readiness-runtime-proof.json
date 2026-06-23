@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.113Z",
-  "endedAt": "2026-06-23T06:45:52.113Z",
+  "startedAt": "2026-06-23T07:42:08.738Z",
+  "endedAt": "2026-06-23T07:42:09.738Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.113Z",
+  "generatedAt": "2026-06-23T07:42:09.738Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-runtime-proof.ts"],
-  "evidenceSignature": "b09de1e55bf521e6f0a7525d2e1ab0dbef2ea3085d12f15a48e03ea111dfe09f"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.738Z",
+  "endTime": "2026-06-23T07:42:09.738Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.738Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-readiness-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-workflow-readiness-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-workflow-readiness-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-workflow-readiness-runtime-proof"],
+  "evidenceSignature": "399cbfe5500bbab7f43445a9c28e8baa84d5c6ba6583080a12f4c4f271d8d817"
 }

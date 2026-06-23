@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.983Z",
-  "endedAt": "2026-06-23T06:45:51.983Z",
+  "startedAt": "2026-06-23T07:42:08.586Z",
+  "endedAt": "2026-06-23T07:42:09.586Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.983Z",
+  "generatedAt": "2026-06-23T07:42:09.586Z",
   "sourceFileRefs": ["apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
-  "evidenceSignature": "4125c6869dca481be4ffae6894d67c2ec876ee40dd36e403e93536bc50c9c6e6"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.586Z",
+  "endTime": "2026-06-23T07:42:09.586Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.586Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof"],
+  "evidenceSignature": "e98e9305b08d8a7be29ff4a5c0a3315f8bb6bc0caa2060d8a2d0f52d46abcc14"
 }

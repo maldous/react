@@ -36,10 +36,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:tenant-domain-canonical",
-  "startedAt": "2026-06-23T06:45:51.086Z",
-  "endedAt": "2026-06-23T06:45:52.086Z",
+  "startedAt": "2026-06-23T07:42:08.707Z",
+  "endedAt": "2026-06-23T07:42:09.707Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -95,7 +95,39 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.086Z",
+  "generatedAt": "2026-06-23T07:42:09.707Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
-  "evidenceSignature": "aebd07da20be9cfa5ba76f1b6d24ec70c01d10989f9b3e0408edbfb6c9f6e842"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.707Z",
+  "endTime": "2026-06-23T07:42:09.707Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.707Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
+    "command": "npm run proof:tenant-domain-canonical",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-domains",
+      "route:get-api-org-domains",
+      "route:post-api-org-domains",
+      "route:delete-api-org-domains-domain",
+      "route:post-api-org-domains-domain-activate",
+      "route:post-api-org-domains-domain-deactivate",
+      "route:post-api-org-domains-domain-probe-routing-local",
+      "route:post-api-org-domains-domain-verify",
+      "route:get-api-org-domains-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-tenant-domain-canonical-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-tenant-domain-canonical-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-tenant-domain-canonical-runtime-proof"],
+  "evidenceSignature": "ff7f2434af3f58be65de0040a221d9c1640e44d706dc4da2a4414be4b47a6038"
 }

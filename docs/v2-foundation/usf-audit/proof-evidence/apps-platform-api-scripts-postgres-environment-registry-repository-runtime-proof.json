@@ -15,10 +15,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.022Z",
-  "endedAt": "2026-06-23T06:45:52.022Z",
+  "startedAt": "2026-06-23T07:42:08.631Z",
+  "endedAt": "2026-06-23T07:42:09.631Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -68,9 +68,35 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.022Z",
+  "generatedAt": "2026-06-23T07:42:09.631Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "24657c095d9e0224312bc84d5cc7820ee3ad37e3d8dfedfedde8a74c1d00ea77"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.631Z",
+  "endTime": "2026-06-23T07:42:09.631Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.631Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit-apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof"
+  ],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": [
+    "log-apps-platform-api-scripts-postgres-environment-registry-repository-runtime-proof"
+  ],
+  "evidenceSignature": "98329bc6a0c33f5b5ed1db1e61df0a76a04e80865807980bc5e10ae79cce8b2d"
 }

@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:rate-limits-redis",
-  "startedAt": "2026-06-23T06:45:51.058Z",
-  "endedAt": "2026-06-23T06:45:52.058Z",
+  "startedAt": "2026-06-23T07:42:08.674Z",
+  "endedAt": "2026-06-23T07:42:09.674Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -74,7 +74,30 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.058Z",
+  "generatedAt": "2026-06-23T07:42:09.674Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
-  "evidenceSignature": "972f84412c8f9754691b38e4f093e7141be57f41ff8113d74b4082f5ad8005f3"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.674Z",
+  "endTime": "2026-06-23T07:42:09.674Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.674Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
+    "command": "npm run proof:rate-limits-redis",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-tenants-tenantid-rate-limits",
+      "route:patch-api-admin-tenants-tenantid-rate-limits",
+      "route:get-api-org-rate-limits"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-rate-limits-redis-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-rate-limits-redis-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-rate-limits-redis-runtime-proof"],
+  "evidenceSignature": "7c63dea8d8edc203774438d2cd95cf8c7303806799aeda0f37269961c2015a7e"
 }

@@ -13,10 +13,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L3",
   "commandExecuted": "route-subject evidence collection for POST /api/org/domains/:domain/deactivate",
-  "startedAt": "2026-06-23T06:45:51.283Z",
-  "endedAt": "2026-06-23T06:45:52.283Z",
+  "startedAt": "2026-06-23T07:42:08.934Z",
+  "endedAt": "2026-06-23T07:42:09.934Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:4365",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -50,7 +50,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.283Z",
+  "generatedAt": "2026-06-23T07:42:09.934Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:4365", "docs/api/openapi.json"],
-  "evidenceSignature": "2eb33149c9607b67334c99868138a95fdfde3244c70857e44c1dcb82e6f81613"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.934Z",
+  "endTime": "2026-06-23T07:42:09.934Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.934Z",
+  "stateDiff": {
+    "routeId": "route:post-api-org-domains-domain-deactivate",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": ["route handler audit evidence"],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "b99533f022e5a955f91b1d9475b5f72a250dba625375e7735bba97bfb76383b7"
 }

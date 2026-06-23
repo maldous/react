@@ -18,10 +18,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-readiness-route",
-  "startedAt": "2026-06-23T06:45:50.926Z",
-  "endedAt": "2026-06-23T06:45:51.926Z",
+  "startedAt": "2026-06-23T07:42:08.517Z",
+  "endedAt": "2026-06-23T07:42:09.517Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -67,7 +67,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.926Z",
+  "generatedAt": "2026-06-23T07:42:09.517Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts"],
-  "evidenceSignature": "64d16c272c9d4ae65f36be5da7c9f60d64ad98f1ad3b1df550b0f7a35c809546"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.517Z",
+  "endTime": "2026-06-23T07:42:09.517Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.517Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/billing-readiness-route-runtime-proof.ts",
+    "command": "npm run proof:billing-readiness-route",
+    "expectedExitStatus": 0,
+    "routeIds": ["route:get-api-admin-billing-readiness"],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-billing-readiness-route-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-billing-readiness-route-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-billing-readiness-route-runtime-proof"],
+  "evidenceSignature": "4b8414beb7b500504cd3c2598dcaa1ef3b1f05c65b77ced7dc90bd8fbf8e9b12"
 }

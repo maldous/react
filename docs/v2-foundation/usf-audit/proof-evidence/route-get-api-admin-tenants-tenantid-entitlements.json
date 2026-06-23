@@ -19,10 +19,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "route-subject evidence collection for GET /api/admin/tenants/:tenantId/entitlements",
-  "startedAt": "2026-06-23T06:45:51.215Z",
-  "endedAt": "2026-06-23T06:45:52.215Z",
+  "startedAt": "2026-06-23T07:42:08.856Z",
+  "endedAt": "2026-06-23T07:42:09.856Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:5666",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -56,7 +56,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.215Z",
+  "generatedAt": "2026-06-23T07:42:09.856Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:5666", "docs/api/openapi.json"],
-  "evidenceSignature": "2e960bac1bdae8969f3874ae7fcf5a631abf11d41b8e2bc3448800d54043556f"
+  "environment": "test",
+  "proofLevelObserved": "L2",
+  "startTime": "2026-06-23T07:42:08.856Z",
+  "endTime": "2026-06-23T07:42:09.856Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.856Z",
+  "stateDiff": {
+    "routeId": "route:get-api-admin-tenants-tenantid-entitlements",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": [],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "250f85eb3a463e80d93dff963d19a159a1b889e064130e6c0e83e45bc3379db8"
 }

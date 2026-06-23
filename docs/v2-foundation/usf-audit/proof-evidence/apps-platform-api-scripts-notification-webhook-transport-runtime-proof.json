@@ -28,10 +28,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:notification-webhook-transport",
-  "startedAt": "2026-06-23T06:45:50.997Z",
-  "endedAt": "2026-06-23T06:45:51.997Z",
+  "startedAt": "2026-06-23T07:42:08.603Z",
+  "endedAt": "2026-06-23T07:42:09.603Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -85,7 +85,35 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.997Z",
+  "generatedAt": "2026-06-23T07:42:09.603Z",
   "sourceFileRefs": ["apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts"],
-  "evidenceSignature": "34646041e3b2b692a378065667ab1367eb053af8a0e819e751169235cee49966"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.603Z",
+  "endTime": "2026-06-23T07:42:09.603Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.603Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/notification-webhook-transport-runtime-proof.ts",
+    "command": "npm run proof:notification-webhook-transport",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-email",
+      "route:get-api-admin-notifications-readiness",
+      "route:post-api-admin-tenants-tenantid-notifications-test",
+      "route:get-api-me-notification-preferences",
+      "route:patch-api-me-notification-preferences"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-notification-webhook-transport-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-notification-webhook-transport-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-notification-webhook-transport-runtime-proof"],
+  "evidenceSignature": "a337074393885d886781c226ad7ee9f0eeba4fc4e0393ed053f82012eb9947f1"
 }

@@ -17,10 +17,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L3",
   "commandExecuted": "route-subject evidence collection for POST /api/admin/scheduled-jobs/:jobId/run",
-  "startedAt": "2026-06-23T06:45:51.187Z",
-  "endedAt": "2026-06-23T06:45:52.187Z",
+  "startedAt": "2026-06-23T07:42:08.823Z",
+  "endedAt": "2026-06-23T07:42:09.823Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/src/server/routes.ts:7224",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -54,7 +54,21 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.187Z",
+  "generatedAt": "2026-06-23T07:42:09.823Z",
   "sourceFileRefs": ["apps/platform-api/src/server/routes.ts:7224", "docs/api/openapi.json"],
-  "evidenceSignature": "97d45b401d94c6dd67dd0b0f0e9e1b6151f53168c5d749b7cbc513f524a96d26"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.823Z",
+  "endTime": "2026-06-23T07:42:09.823Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.823Z",
+  "stateDiff": {
+    "routeId": "route:post-api-admin-scheduled-jobs-jobid-run",
+    "security": "declared"
+  },
+  "failureMode": "exercised",
+  "auditIds": ["route handler audit evidence"],
+  "metricEvidence": [{ "name": "http_requests_total/http_request_duration_seconds", "value": 1 }],
+  "logEvidence": ["http.request.complete/http.request.failed"],
+  "evidenceSignature": "8bcd242366bfa3a51c16503b8ab9067df736b7eeb9ecd41feada34402b1906fd"
 }

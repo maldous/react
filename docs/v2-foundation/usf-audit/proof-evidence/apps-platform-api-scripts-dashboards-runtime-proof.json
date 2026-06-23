@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:dashboards",
-  "startedAt": "2026-06-23T06:45:50.943Z",
-  "endedAt": "2026-06-23T06:45:51.943Z",
+  "startedAt": "2026-06-23T07:42:08.538Z",
+  "endedAt": "2026-06-23T07:42:09.538Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.943Z",
+  "generatedAt": "2026-06-23T07:42:09.538Z",
   "sourceFileRefs": ["apps/platform-api/scripts/dashboards-runtime-proof.ts"],
-  "evidenceSignature": "4126a9073b92723fc23413a036497f5958dc1c03e1e3424e04bc1042f685c741"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.538Z",
+  "endTime": "2026-06-23T07:42:09.538Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.538Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/dashboards-runtime-proof.ts",
+    "command": "npm run proof:dashboards",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-monitoring",
+      "route:get-admin-observability",
+      "route:get-api-admin-observability",
+      "route:get-api-admin-observability-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-dashboards-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-dashboards-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-dashboards-runtime-proof"],
+  "evidenceSignature": "218ca356af666715eef493ea56a4dbf0f9f9ea80921c384a2fc6cdb3d7526022"
 }

@@ -17,10 +17,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:50.976Z",
-  "endedAt": "2026-06-23T06:45:51.976Z",
+  "startedAt": "2026-06-23T07:42:08.577Z",
+  "endedAt": "2026-06-23T07:42:09.577Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.976Z",
+  "generatedAt": "2026-06-23T07:42:09.577Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"],
-  "evidenceSignature": "f649f66c6e33254142977d9af7bedef9a209fa5c31302fda8f61e3ad7bfe505b"
+  "environment": "dev",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.577Z",
+  "endTime": "2026-06-23T07:42:09.577Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.577Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["in-memory-billing-provider"]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-in-memory-billing-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-in-memory-billing-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-in-memory-billing-provider-runtime-proof"],
+  "evidenceSignature": "ed5b4f73cc9064958d50a9675dfb87893587ad51f4299718125c15d3f8c50909"
 }

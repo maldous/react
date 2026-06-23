@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:metering",
-  "startedAt": "2026-06-23T06:45:50.988Z",
-  "endedAt": "2026-06-23T06:45:51.988Z",
+  "startedAt": "2026-06-23T07:42:08.592Z",
+  "endedAt": "2026-06-23T07:42:09.592Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metering-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.988Z",
+  "generatedAt": "2026-06-23T07:42:09.592Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"],
-  "evidenceSignature": "819ae11281e66ad46794012a9a29d894a549d58ba24f4b048c25099ffa4ebf7c"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.592Z",
+  "endTime": "2026-06-23T07:42:09.592Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.592Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/metering-runtime-proof.ts",
+    "command": "npm run proof:metering",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-usage",
+      "route:post-api-admin-tenants-tenantid-meter-events",
+      "route:get-api-admin-tenants-tenantid-usage",
+      "route:get-api-org-usage"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-metering-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-metering-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-metering-runtime-proof"],
+  "evidenceSignature": "abc2f43fa0b1708225e1fa3566e5ec541aaab1bd4b58273e6064102225c70d39"
 }

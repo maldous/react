@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:clickthrough",
-  "startedAt": "2026-06-23T06:45:50.932Z",
-  "endedAt": "2026-06-23T06:45:51.932Z",
+  "startedAt": "2026-06-23T07:42:08.525Z",
+  "endedAt": "2026-06-23T07:42:09.525Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -66,7 +66,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.932Z",
+  "generatedAt": "2026-06-23T07:42:09.525Z",
   "sourceFileRefs": ["apps/platform-api/scripts/clickthrough-services-runtime-proof.ts"],
-  "evidenceSignature": "822c438e864e461d2b7fc24edd1ac1d750b0cfbca95cf42bbfa6b29b7b22ccc5"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.525Z",
+  "endTime": "2026-06-23T07:42:09.525Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.525Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/clickthrough-services-runtime-proof.ts",
+    "command": "npm run proof:clickthrough",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-clickthrough-services-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-clickthrough-services-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-clickthrough-services-runtime-proof"],
+  "evidenceSignature": "8c5334a166ec0064ecb5294c162859a1a147d3ad4705205ba7a8cd10204f4baf"
 }

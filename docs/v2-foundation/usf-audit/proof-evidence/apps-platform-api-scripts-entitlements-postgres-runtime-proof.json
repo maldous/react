@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:entitlements-postgres",
-  "startedAt": "2026-06-23T06:45:50.954Z",
-  "endedAt": "2026-06-23T06:45:51.954Z",
+  "startedAt": "2026-06-23T07:42:08.552Z",
+  "endedAt": "2026-06-23T07:42:09.552Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -80,7 +80,34 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.954Z",
+  "generatedAt": "2026-06-23T07:42:09.552Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts"],
-  "evidenceSignature": "c6d8d7c52c22f3d35af25fd07dbfabaad957a1c24b4af03bbd994f41bd320ef8"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.552Z",
+  "endTime": "2026-06-23T07:42:09.552Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.552Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
+    "command": "npm run proof:entitlements-postgres",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-entitlements",
+      "route:get-api-admin-tenants-tenantid-entitlements",
+      "route:patch-api-admin-tenants-tenantid-entitlements",
+      "route:get-api-org-entitlements"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-entitlements-postgres-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-entitlements-postgres-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-entitlements-postgres-runtime-proof"],
+  "evidenceSignature": "29af7f95cc55d3c61572242b0255d0333fb125caf98dc803be97cd26826caf21"
 }

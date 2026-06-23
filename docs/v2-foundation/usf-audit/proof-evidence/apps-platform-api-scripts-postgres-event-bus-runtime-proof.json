@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.023Z",
-  "endedAt": "2026-06-23T06:45:52.023Z",
+  "startedAt": "2026-06-23T07:42:08.632Z",
+  "endedAt": "2026-06-23T07:42:09.632Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.023Z",
+  "generatedAt": "2026-06-23T07:42:09.632Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
-  "evidenceSignature": "7aba0fadb07b69a3fd785d567b1c309db560e114cc5201b2914cc8e8112d4d6f"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.632Z",
+  "endTime": "2026-06-23T07:42:09.632Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.632Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-event-bus-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-event-bus-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-event-bus-runtime-proof"],
+  "evidenceSignature": "2c29a3d5144d24c895702100f6ac72240a834e819297cf7b31ce8d78d5c89079"
 }

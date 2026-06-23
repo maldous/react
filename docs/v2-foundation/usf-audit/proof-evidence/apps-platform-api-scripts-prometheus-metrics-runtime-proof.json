@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.048Z",
-  "endedAt": "2026-06-23T06:45:52.048Z",
+  "startedAt": "2026-06-23T07:42:08.661Z",
+  "endedAt": "2026-06-23T07:42:09.661Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.048Z",
+  "generatedAt": "2026-06-23T07:42:09.661Z",
   "sourceFileRefs": ["apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts"],
-  "evidenceSignature": "48692cc150d5ae2d42b393e6d3af2994bc6076117f2eaa961a5b8009e7887551"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.661Z",
+  "endTime": "2026-06-23T07:42:09.661Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.661Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-prometheus-metrics-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-prometheus-metrics-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-prometheus-metrics-runtime-proof"],
+  "evidenceSignature": "644bec1c9342a3cde1e183fbf5916db260e532d8c118b795678018e5ac625797"
 }

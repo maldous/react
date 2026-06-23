@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:incident-foundation",
-  "startedAt": "2026-06-23T06:45:50.981Z",
-  "endedAt": "2026-06-23T06:45:51.981Z",
+  "startedAt": "2026-06-23T07:42:08.584Z",
+  "endedAt": "2026-06-23T07:42:09.584Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -86,7 +86,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:51.981Z",
+  "generatedAt": "2026-06-23T07:42:09.584Z",
   "sourceFileRefs": ["apps/platform-api/scripts/incident-foundation-runtime-proof.ts"],
-  "evidenceSignature": "25032ee75d91c0f44e4cfbfb4c91e279b6a8fc62e8317119ef9820040d3cd6f8"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.584Z",
+  "endTime": "2026-06-23T07:42:09.584Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.584Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/incident-foundation-runtime-proof.ts",
+    "command": "npm run proof:incident-foundation",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-api-admin-alerts",
+      "route:post-api-admin-alerts",
+      "route:post-api-admin-alerts-alertid-evaluate",
+      "route:get-api-admin-incidents",
+      "route:patch-api-admin-incidents-incidentid",
+      "route:get-api-admin-observability-signals"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-incident-foundation-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-incident-foundation-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-incident-foundation-runtime-proof"],
+  "evidenceSignature": "2124524c9def98ed3788ae05b7dc54da7e3a389b154158c2bb9abd6a9467a2d2"
 }

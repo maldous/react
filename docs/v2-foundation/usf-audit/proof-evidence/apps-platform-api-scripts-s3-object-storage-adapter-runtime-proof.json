@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.064Z",
-  "endedAt": "2026-06-23T06:45:52.064Z",
+  "startedAt": "2026-06-23T07:42:08.681Z",
+  "endedAt": "2026-06-23T07:42:09.681Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.064Z",
+  "generatedAt": "2026-06-23T07:42:09.681Z",
   "sourceFileRefs": ["apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts"],
-  "evidenceSignature": "da072873f1b5f464e6267417e7901212e85ac319662d0797c63b0e11ab0891bb"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.681Z",
+  "endTime": "2026-06-23T07:42:09.681Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.681Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/s3-object-storage-adapter-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-s3-object-storage-adapter-runtime-proof"],
+  "evidenceSignature": "77d11eedc7e1c265bd2a8104442ad2bc4fed4ba482e0c591ed0c693e18acc4c3"
 }

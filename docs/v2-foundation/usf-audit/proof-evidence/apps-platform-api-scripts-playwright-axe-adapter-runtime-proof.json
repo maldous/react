@@ -13,10 +13,10 @@
   "providerMode": "hermetic",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.013Z",
-  "endedAt": "2026-06-23T06:45:52.013Z",
+  "startedAt": "2026-06-23T07:42:08.622Z",
+  "endedAt": "2026-06-23T07:42:09.622Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,7 +62,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.013Z",
+  "generatedAt": "2026-06-23T07:42:09.622Z",
   "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"],
-  "evidenceSignature": "7789c9a499a92f97e0a24259837e2792c87b11d71129e247b50c4f456200bc5e"
+  "environment": "test",
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-23T07:42:08.622Z",
+  "endTime": "2026-06-23T07:42:09.622Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.622Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-playwright-axe-adapter-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-playwright-axe-adapter-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-playwright-axe-adapter-runtime-proof"],
+  "evidenceSignature": "d088fc325f72889602dfe0047bfeccbbf59d6fcc77008526785ee368e72d36a9"
 }

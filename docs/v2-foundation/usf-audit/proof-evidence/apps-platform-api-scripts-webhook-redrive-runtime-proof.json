@@ -42,10 +42,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:webhook-redrive",
-  "startedAt": "2026-06-23T06:45:51.100Z",
-  "endedAt": "2026-06-23T06:45:52.100Z",
+  "startedAt": "2026-06-23T07:42:08.725Z",
+  "endedAt": "2026-06-23T07:42:09.725Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -101,7 +101,39 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.100Z",
+  "generatedAt": "2026-06-23T07:42:09.725Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhook-redrive-runtime-proof.ts"],
-  "evidenceSignature": "85ec1015581e7fe42c08813d539db363988503a87d732fab4806b9c165f7ef78"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.725Z",
+  "endTime": "2026-06-23T07:42:09.725Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.725Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/webhook-redrive-runtime-proof.ts",
+    "command": "npm run proof:webhook-redrive",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-webhooks",
+      "route:get-api-org-webhooks",
+      "route:post-api-org-webhooks",
+      "route:delete-api-org-webhooks-id",
+      "route:patch-api-org-webhooks-id",
+      "route:get-api-org-webhooks-id-deliveries",
+      "route:post-api-org-webhooks-id-deliveries-deliveryid-redrive",
+      "route:get-api-org-webhooks-id-metrics",
+      "route:post-api-org-webhooks-id-redrive-dead",
+      "route:post-api-org-webhooks-id-rotate-secret",
+      "route:post-api-org-webhooks-id-test",
+      "route:get-api-org-webhooks-readiness"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-webhook-redrive-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-webhook-redrive-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-webhook-redrive-runtime-proof"],
+  "evidenceSignature": "a47971ef6b81d2b7e3a87cd55b332b76919606460731f38323e638db0dbb9e77"
 }

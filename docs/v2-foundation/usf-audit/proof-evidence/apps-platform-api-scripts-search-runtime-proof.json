@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:search",
-  "startedAt": "2026-06-23T06:45:51.070Z",
-  "endedAt": "2026-06-23T06:45:52.070Z",
+  "startedAt": "2026-06-23T07:42:08.688Z",
+  "endedAt": "2026-06-23T07:42:09.688Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/search-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,7 +77,31 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.070Z",
+  "generatedAt": "2026-06-23T07:42:09.688Z",
   "sourceFileRefs": ["apps/platform-api/scripts/search-runtime-proof.ts"],
-  "evidenceSignature": "334783e82eed733d957883617628b5c4e402fc6e9c8003b4b75ac120eaf6df09"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.688Z",
+  "endTime": "2026-06-23T07:42:09.688Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.688Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/search-runtime-proof.ts",
+    "command": "npm run proof:search",
+    "expectedExitStatus": 0,
+    "routeIds": [
+      "route:get-admin-search",
+      "route:get-api-admin-search-readiness",
+      "route:post-api-admin-search-reindex",
+      "route:post-api-org-search"
+    ],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-search-runtime-proof"],
+  "metricEvidence": [
+    { "name": "proof.apps-platform-api-scripts-search-runtime-proof.passed", "value": 1 }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-search-runtime-proof"],
+  "evidenceSignature": "d3d1920a54abdce579f202d554410a44c12447901c2423a4bcaedb5f6e6d19f9"
 }

@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T06:45:51.036Z",
-  "endedAt": "2026-06-23T06:45:52.036Z",
+  "startedAt": "2026-06-23T07:42:08.648Z",
+  "endedAt": "2026-06-23T07:42:09.648Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -68,7 +68,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.036Z",
+  "generatedAt": "2026-06-23T07:42:09.648Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"],
-  "evidenceSignature": "53f40e73c8f8a2947aef06e20d7c90062f52935af71cda768572bcf998d3b5ef"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.648Z",
+  "endTime": "2026-06-23T07:42:09.648Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.648Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": ["postgres-rate-limit-repository"]
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-postgres-rate-limit-repository-runtime-proof"],
+  "evidenceSignature": "8a751a303ee1d4be699979d41a8577496d1ebb445c2165c6109d065aa32aed28"
 }

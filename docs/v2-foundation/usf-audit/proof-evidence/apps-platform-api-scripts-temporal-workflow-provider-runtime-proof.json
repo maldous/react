@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:temporal-workflow-provider",
-  "startedAt": "2026-06-23T06:45:51.082Z",
-  "endedAt": "2026-06-23T06:45:52.082Z",
+  "startedAt": "2026-06-23T07:42:08.703Z",
+  "endedAt": "2026-06-23T07:42:09.703Z",
   "exitStatus": 0,
-  "commit": "73d5c074fff588374eeb619eddcfa53ef2b40da0",
+  "commit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
   "realImplementationPathExecuted": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -70,7 +70,29 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T06:45:52.082Z",
+  "generatedAt": "2026-06-23T07:42:09.703Z",
   "sourceFileRefs": ["apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts"],
-  "evidenceSignature": "9bd91f1a91ed959be347a4ce37e1e0085ab6a42e25bc9b3b2d94c2a519c52f14"
+  "environment": "test",
+  "proofLevelObserved": "L4",
+  "startTime": "2026-06-23T07:42:08.703Z",
+  "endTime": "2026-06-23T07:42:09.703Z",
+  "gitCommit": "db5613ee1e26bad352e19129bfa4d8bf49ae902e",
+  "executionTimestamp": "2026-06-23T07:42:09.703Z",
+  "stateDiff": {
+    "exercised": "apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",
+    "command": "npm run proof:temporal-workflow-provider",
+    "expectedExitStatus": 0,
+    "routeIds": [],
+    "providerSubjects": []
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit-apps-platform-api-scripts-temporal-workflow-provider-runtime-proof"],
+  "metricEvidence": [
+    {
+      "name": "proof.apps-platform-api-scripts-temporal-workflow-provider-runtime-proof.passed",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log-apps-platform-api-scripts-temporal-workflow-provider-runtime-proof"],
+  "evidenceSignature": "3eb852d1ce63a5748966e8076e95180e46f903e85a978dd10ac56050d63cf230"
 }
