@@ -277,6 +277,7 @@
     "proof:workflow-provider-live": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-provider-live-proof.ts",
     "proof:l4-substrate-closure": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
     "proof:l5-postgres-tenant-identity-resilience": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+    "proof:l5-identity-access-resilience": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
     "proof:http-engine-providers": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
     "proof:composed-provider-runtime-closure": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
     "proof:temporal-workflow-provider": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",

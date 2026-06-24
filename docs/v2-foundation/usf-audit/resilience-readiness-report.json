@@ -1,12 +1,12 @@
 {
   "artefact": "resilience-readiness-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T01:08:16.243Z",
+  "generatedAt": "2026-06-24T02:50:14.759Z",
   "status": "PASS",
   "fullL5Status": "INCOMPLETE",
   "totalCapabilities": 70,
   "l5CompleteCapabilities": 0,
-  "l5aLocalResilienceProvenCapabilities": 1,
+  "l5aLocalResilienceProvenCapabilities": 7,
   "l5bStagingCertifiedCapabilities": 0,
   "resilienceGapCount": 70,
   "pilotCapability": "Tenant identity (record + FQDN)",
@@ -19,11 +19,8 @@
     },
     {
       "capability": "User identity + tenant membership",
-      "missing": [
-        "missing-l5a-compose-local-resilience-evidence",
-        "missing-l5b-staging-resilience-certification"
-      ],
-      "nextPhase": "compose-local resilience proof"
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
     },
     {
       "capability": "End-user profile + preferences self-service",
@@ -35,35 +32,23 @@
     },
     {
       "capability": "API keys / personal access tokens",
-      "missing": [
-        "missing-l5a-compose-local-resilience-evidence",
-        "missing-l5b-staging-resilience-certification"
-      ],
-      "nextPhase": "compose-local resilience proof"
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
     },
     {
       "capability": "Tenant groups",
-      "missing": [
-        "missing-l5a-compose-local-resilience-evidence",
-        "missing-l5b-staging-resilience-certification"
-      ],
-      "nextPhase": "compose-local resilience proof"
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
     },
     {
       "capability": "Sub-organisations",
-      "missing": [
-        "missing-l5a-compose-local-resilience-evidence",
-        "missing-l5b-staging-resilience-certification"
-      ],
-      "nextPhase": "compose-local resilience proof"
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
     },
     {
       "capability": "RBAC (roles + permissions)",
-      "missing": [
-        "missing-l5a-compose-local-resilience-evidence",
-        "missing-l5b-staging-resilience-certification"
-      ],
-      "nextPhase": "compose-local resilience proof"
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
     },
     {
       "capability": "ABAC / Policy Decision Point",
@@ -107,11 +92,8 @@
     },
     {
       "capability": "Platform login + session",
-      "missing": [
-        "missing-l5a-compose-local-resilience-evidence",
-        "missing-l5b-staging-resilience-certification"
-      ],
-      "nextPhase": "compose-local resilience proof"
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
     },
     {
       "capability": "IdP brokering + OIDC provider management",
@@ -571,7 +553,7 @@
     }
   ],
   "nextRecommendedL5Pilot": {
-    "capability": "User identity + tenant membership",
+    "capability": "End-user profile + preferences self-service",
     "recommendedPhase": "compose-local resilience proof"
   },
   "gaps": ["full-l5-resilience-incomplete"]

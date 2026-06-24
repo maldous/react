@@ -1,7 +1,7 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-24T01:08:16.195Z",
+  "generatedAt": "2026-06-24T02:50:14.708Z",
   "status": "PASS",
   "environmentModel": {
     "dev": {
@@ -694,6 +694,18 @@
       "environmentValid": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+      "environment": "test",
+      "providerMode": "compose-local",
+      "providerEvidenceClass": "local-real-provider-proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof-ts",

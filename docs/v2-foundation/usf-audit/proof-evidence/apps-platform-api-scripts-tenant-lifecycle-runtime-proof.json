@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-lifecycle",
-  "startedAt": "2026-06-24T01:07:46.870Z",
-  "endedAt": "2026-06-24T01:07:46.911Z",
+  "startedAt": "2026-06-24T02:49:45.421Z",
+  "endedAt": "2026-06-24T02:49:45.457Z",
   "exitStatus": 0,
-  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T01:07:46.911Z",
+  "generatedAt": "2026-06-24T02:49:45.457Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782263085791-1316465",
+  "collectorRunId": "proof-run-1782269203982-2077766",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -165,10 +165,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T01:07:46.870Z",
-  "endTime": "2026-06-24T01:07:46.911Z",
-  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
-  "executionTimestamp": "2026-06-24T01:07:46.911Z",
+  "startTime": "2026-06-24T02:49:45.421Z",
+  "endTime": "2026-06-24T02:49:45.457Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:49:45.457Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-export": {
@@ -227,5 +227,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "b191597ab4a6087d94ddd18a372ee94bc73349ddfff26919f60eb3434176e950"
+  "evidenceSignature": "f74e0958df4fea2bae96ba5e6646c6987e60b7c387a6cf6c10fea94c568dea92"
 }

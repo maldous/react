@@ -4292,31 +4292,66 @@ function l5LocalResilienceRecordGaps(record) {
 
 function l5LocalResilienceEvidenceForCapability(record, capability) {
   const evidence = record.resilienceEvidence || {};
+  const perCapabilityEvidence = Array.isArray(evidence.perCapabilityEvidence)
+    ? evidence.perCapabilityEvidence.find((entry) =>
+        sameCapabilityName(entry?.capability, capability)
+      )
+    : null;
   const matches = resilienceRecordMatchesCapability(record, capability);
   const gaps = matches ? l5LocalResilienceRecordGaps(record) : ["capability-not-covered-by-record"];
   return {
     proofId: record.proofId,
     commandExecuted: record.commandExecuted,
     valid: gaps.length === 0,
-    capability: evidence.capability || capability,
-    substrate: evidence.substrate || null,
+    capability: perCapabilityEvidence?.capability || evidence.capability || capability,
+    substrate: perCapabilityEvidence?.substrate || evidence.substrate || null,
     environment: record.environmentMode || record.environment,
     providerMode: record.providerMode,
-    l3EvidenceProofIds: evidence.l3EvidenceProofIds || record.l3EvidenceProofIds || [],
-    l4EvidenceProofIds: evidence.l4EvidenceProofIds || record.l4EvidenceProofIds || [],
-    scenariosRun: evidence.scenariosRun || [],
-    scenariosPassed: evidence.scenariosPassed || [],
+    l3EvidenceProofIds:
+      perCapabilityEvidence?.l3EvidenceProofIds ||
+      evidence.l3EvidenceProofIds ||
+      record.l3EvidenceProofIds ||
+      [],
+    l4EvidenceProofIds:
+      perCapabilityEvidence?.l4EvidenceProofIds ||
+      evidence.l4EvidenceProofIds ||
+      record.l4EvidenceProofIds ||
+      [],
+    scenariosRun: perCapabilityEvidence?.scenariosRun || evidence.scenariosRun || [],
+    scenariosPassed: perCapabilityEvidence?.scenariosPassed || evidence.scenariosPassed || [],
+    baselineOperation: perCapabilityEvidence?.baselineOperation || null,
+    failureInjected: perCapabilityEvidence?.failureInjected || null,
+    failClosedEvidence: perCapabilityEvidence?.failClosedEvidence || null,
     restartOrReconnectEvidence:
-      evidence.restartOrReconnectEvidence || record.restartOrReconnectEvidence,
-    timeoutEvidence: evidence.timeoutEvidence || record.timeoutEvidence,
-    retryEvidence: evidence.retryEvidence || record.retryEvidence,
-    concurrencyEvidence: evidence.concurrencyEvidence || record.concurrencyEvidence,
-    degradedModeEvidence: evidence.degradedModeEvidence || record.degradedModeEvidence,
-    recoveryEvidence: evidence.recoveryEvidence || record.recoveryEvidence,
+      perCapabilityEvidence?.restartOrReconnectEvidence ||
+      evidence.restartOrReconnectEvidence ||
+      record.restartOrReconnectEvidence,
+    timeoutEvidence:
+      perCapabilityEvidence?.timeoutEvidence || evidence.timeoutEvidence || record.timeoutEvidence,
+    retryEvidence:
+      perCapabilityEvidence?.retryEvidence || evidence.retryEvidence || record.retryEvidence,
+    concurrencyEvidence:
+      perCapabilityEvidence?.concurrencyEvidence ||
+      evidence.concurrencyEvidence ||
+      record.concurrencyEvidence,
+    degradedModeEvidence:
+      perCapabilityEvidence?.degradedModeEvidence ||
+      evidence.degradedModeEvidence ||
+      record.degradedModeEvidence,
+    recoveryEvidence:
+      perCapabilityEvidence?.recoveryEvidence ||
+      evidence.recoveryEvidence ||
+      record.recoveryEvidence,
     statePreservationEvidence:
-      evidence.statePreservationEvidence || record.statePreservationEvidence,
-    observabilityEvidence: evidence.observabilityEvidence || record.observabilityEvidence,
-    conclusion: evidence.conclusion || "UNKNOWN",
+      perCapabilityEvidence?.statePreservationEvidence ||
+      evidence.statePreservationEvidence ||
+      record.statePreservationEvidence,
+    observabilityEvidence:
+      perCapabilityEvidence?.observabilityEvidence ||
+      evidence.observabilityEvidence ||
+      record.observabilityEvidence,
+    result: perCapabilityEvidence?.result || null,
+    conclusion: perCapabilityEvidence?.conclusion || evidence.conclusion || "UNKNOWN",
     gaps,
   };
 }
@@ -4324,6 +4359,9 @@ function l5LocalResilienceEvidenceForCapability(record, capability) {
 function resilienceRecordMatchesCapability(record, capability) {
   return (
     sameCapabilityName(record.resilienceEvidence?.capability, capability) ||
+    (record.resilienceEvidence?.perCapabilityEvidence || []).some((entry) =>
+      sameCapabilityName(entry?.capability, capability)
+    ) ||
     (record.subjectIds || []).some((subject) => sameCapabilityName(subject, capability))
   );
 }

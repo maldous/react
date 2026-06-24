@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:rate-limits-redis",
-  "startedAt": "2026-06-24T01:07:33.770Z",
-  "endedAt": "2026-06-24T01:07:35.249Z",
+  "startedAt": "2026-06-24T02:49:32.291Z",
+  "endedAt": "2026-06-24T02:49:33.765Z",
   "exitStatus": 0,
-  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,10 +121,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T01:07:35.249Z",
+  "generatedAt": "2026-06-24T02:49:33.765Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782263085791-1316465",
+  "collectorRunId": "proof-run-1782269203982-2077766",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -145,10 +145,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T01:07:33.770Z",
-  "endTime": "2026-06-24T01:07:35.249Z",
-  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
-  "executionTimestamp": "2026-06-24T01:07:35.249Z",
+  "startTime": "2026-06-24T02:49:32.291Z",
+  "endTime": "2026-06-24T02:49:33.765Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:49:33.765Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-rate-limits": {
@@ -196,5 +196,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
-  "evidenceSignature": "540c782ea04d612aa88c6f06d626bb9d6ff7773ffc5e82822f4a9f177c31c73a"
+  "evidenceSignature": "63281666514286c4dea64e6853f5ace2058753f68e05e8a3361bb88fd89610cb"
 }

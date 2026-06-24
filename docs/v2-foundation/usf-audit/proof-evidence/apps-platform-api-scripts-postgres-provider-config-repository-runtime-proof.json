@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T01:07:27.607Z",
-  "endedAt": "2026-06-24T01:07:27.711Z",
+  "startedAt": "2026-06-24T02:49:26.166Z",
+  "endedAt": "2026-06-24T02:49:26.271Z",
   "exitStatus": 0,
-  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,12 +81,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T01:07:27.711Z",
+  "generatedAt": "2026-06-24T02:49:26.271Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782263085791-1316465",
+  "collectorRunId": "proof-run-1782269203982-2077766",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -107,10 +107,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T01:07:27.607Z",
-  "endTime": "2026-06-24T01:07:27.711Z",
-  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
-  "executionTimestamp": "2026-06-24T01:07:27.711Z",
+  "startTime": "2026-06-24T02:49:26.166Z",
+  "endTime": "2026-06-24T02:49:26.271Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:49:26.271Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts": {
@@ -140,5 +140,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "4a78bf2c71b97831bae9059429853a98f727e9d412e1c04b5e0d49b95a888052"
+  "evidenceSignature": "9672028832181f0c6bbc16c390acb18abdca8154d61b05e1ef9e0b61e244d20a"
 }

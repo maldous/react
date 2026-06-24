@@ -6773,5 +6773,42 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:l5-identity-access-resilience",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for the L5a compose-local resilience batch for the identity/access spine across Postgres, Redis, and Keycloak.",
+    "inputs": [
+      "running app/backend",
+      "compose-local Postgres",
+      "compose-local Redis",
+      "compose-local Keycloak",
+      "certified L3 identity/access behaviour evidence",
+      "certified L4 identity/access substrate evidence"
+    ],
+    "outputs": ["proof evidence (stdout/registry)"],
+    "prerequisites": [
+      "platform-api loader",
+      "L4 substrate certification",
+      "reachable compose-local Postgres, Redis, and Keycloak"
+    ],
+    "sideEffects": [
+      "creates and cleans up marker users, memberships, API keys, sub-organisations, Redis sessions/auth-state keys, and Keycloak groups",
+      "terminates one proof-owned Postgres backend connection",
+      "disconnects and reconnects proof-owned Redis clients"
+    ],
+    "envScope": "test",
+    "failureSemantics": "exit-nonzero on resilience proof failure; no skipped resilience scenario accepted",
+    "idempotent": true,
+    "safetyControls": [
+      "marker-scoped rows and Redis keys",
+      "cleanup of proof users, memberships, API keys, sub-organisations, sessions, auth-state keys, and Keycloak groups",
+      "forced reconnect uses pg_terminate_backend on proof-owned connection only"
+    ],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

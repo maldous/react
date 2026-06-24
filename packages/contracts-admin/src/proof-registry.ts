@@ -39,6 +39,7 @@ export const PROOF_LADDER = [
   "proof:http-engine-providers",
   "proof:lago-billing-provider",
   "proof:l4-substrate-closure",
+  "proof:l5-identity-access-resilience",
   "proof:l5-postgres-tenant-identity-resilience",
   "proof:temporal-workflow-provider",
   "proof:windmill-automation-provider",

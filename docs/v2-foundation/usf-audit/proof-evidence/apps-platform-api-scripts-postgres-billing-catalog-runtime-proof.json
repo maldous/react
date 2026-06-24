@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
-  "startedAt": "2026-06-24T01:07:21.290Z",
-  "endedAt": "2026-06-24T01:07:21.821Z",
+  "startedAt": "2026-06-24T02:49:19.943Z",
+  "endedAt": "2026-06-24T02:49:20.454Z",
   "exitStatus": 0,
-  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -65,10 +65,10 @@
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T01:07:21.821Z",
+  "generatedAt": "2026-06-24T02:49:20.454Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782263085791-1316465",
+  "collectorRunId": "proof-run-1782269203982-2077766",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -89,10 +89,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L2",
-  "startTime": "2026-06-24T01:07:21.290Z",
-  "endTime": "2026-06-24T01:07:21.821Z",
-  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
-  "executionTimestamp": "2026-06-24T01:07:21.821Z",
+  "startTime": "2026-06-24T02:49:19.943Z",
+  "endTime": "2026-06-24T02:49:20.454Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:49:20.454Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
   "auditIds": [
@@ -119,5 +119,5 @@
     "log:postgres-billing-catalog:runtime-proof",
     "log:billing-catalog:runtime-proof"
   ],
-  "evidenceSignature": "8425f846ba624e4911c7c6f3c3afd41618b445e90395101a08feeead56d9705b"
+  "evidenceSignature": "b067f5cb7e1a6b51617cc830b630536b23974a2cfdceff29a2ee0abb842fa221"
 }

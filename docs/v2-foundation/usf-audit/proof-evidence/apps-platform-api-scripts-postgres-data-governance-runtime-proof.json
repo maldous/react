@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
-  "startedAt": "2026-06-24T01:07:21.903Z",
-  "endedAt": "2026-06-24T01:07:22.449Z",
+  "startedAt": "2026-06-24T02:49:20.534Z",
+  "endedAt": "2026-06-24T02:49:21.058Z",
   "exitStatus": 0,
-  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T01:07:22.449Z",
+  "generatedAt": "2026-06-24T02:49:21.058Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782263085791-1316465",
+  "collectorRunId": "proof-run-1782269203982-2077766",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -99,10 +99,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T01:07:21.903Z",
-  "endTime": "2026-06-24T01:07:22.449Z",
-  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
-  "executionTimestamp": "2026-06-24T01:07:22.449Z",
+  "startTime": "2026-06-24T02:49:20.534Z",
+  "endTime": "2026-06-24T02:49:21.058Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:49:21.058Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts": {
@@ -128,5 +128,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-data-governance-runtime-proof.ts"],
-  "evidenceSignature": "7f6149c5c7fb9f6fe2088906873ba65d7bbcd355b2056af240e5b4aa500c2b46"
+  "evidenceSignature": "600a7db0671ad8dc1be773064c479289ed4a6390686e4b882c7abd4d6d101586"
 }

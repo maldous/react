@@ -1,0 +1,1652 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+    "package.json#proof:l5-identity-access-resilience",
+    "proof:l5-identity-access-resilience",
+    "User identity + tenant membership",
+    "Platform login + session",
+    "RBAC (roles + permissions)",
+    "API keys / personal access tokens",
+    "Tenant groups",
+    "Sub-organisations",
+    "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+    "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+    "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+    "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+    "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+  ],
+  "subjectId": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+  "capabilityId": "capability:l5-identity-access-resilience",
+  "providerId": "identity-access-compose-local-resilience",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": ["postgres:l5a-ia-1782269314418-e1a584eb:backend-terminated:22288"],
+  "storageIds": [
+    "postgres:users:84c59834-05d2-4673-bfc5-dd3ee5ac1464",
+    "postgres:external_identities:ad855662-b85c-4946-be37-bb08b1c42468",
+    "postgres:memberships:84c59834-05d2-4673-bfc5-dd3ee5ac1464:00000000-0000-4000-8000-000000000001",
+    "redis:session:ddb3b114-163e-49df-8aa4-f9e04b7b410d",
+    "postgres:api_keys:f3a28d56-ce90-48f4-80eb-cf24e8eeffe7",
+    "postgres:organisations:60703c29-3373-4bcd-93e3-d4273c9db818",
+    "keycloak:groups:81bd30f2-6697-4b46-a5f8-51ea00129eda",
+    "postgres:users:ea48e7d6-d18e-41d0-906e-7075852e90fc",
+    "postgres:external_identities:db517624-4863-4f55-bd3a-c42911ddccd2",
+    "postgres:users:beb7ba6f-9a2b-48ac-adaf-c51e89103726",
+    "postgres:external_identities:e811c72a-2d50-4649-a978-e9045b4ad0ca",
+    "redis:session:4ba4fa3d-a11f-4abc-ad88-a98d921b6c27",
+    "redis:session:8bfd036a-170a-4050-b78e-8e7bdd08c71f"
+  ],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L5",
+  "commandExecuted": "npm run proof:l5-identity-access-resilience",
+  "startedAt": "2026-06-24T02:48:34.155Z",
+  "endedAt": "2026-06-24T02:48:35.263Z",
+  "exitStatus": 0,
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+      }
+    },
+    "baseline": {
+      "markerCounts": {
+        "users": 0,
+        "externalIdentities": 0,
+        "memberships": 0,
+        "apiKeys": 0,
+        "subOrgs": 0
+      }
+    },
+    "reconnect": {
+      "postgresBackendAlive": true,
+      "redisClientConnected": true
+    },
+    "timeout": {
+      "users": 1,
+      "externalIdentities": 1,
+      "memberships": 1,
+      "apiKeys": 1,
+      "subOrgs": 1
+    },
+    "retry": {
+      "postgresAttempts": 0,
+      "redisAttempts": 0
+    },
+    "concurrency": {
+      "concurrentOperations": 0
+    },
+    "degradedMode": {
+      "substratesAvailable": true
+    },
+    "recovery": {
+      "expectedUserId": "84c59834-05d2-4673-bfc5-dd3ee5ac1464",
+      "expectedSessionId": "ddb3b114-163e-49df-8aa4-f9e04b7b410d"
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+      }
+    },
+    "baseline": {
+      "markerCounts": {
+        "users": 1,
+        "externalIdentities": 1,
+        "memberships": 1,
+        "apiKeys": 1,
+        "subOrgs": 1
+      },
+      "sessionId": "ddb3b114-163e-49df-8aa4-f9e04b7b410d",
+      "keycloakGroupId": "81bd30f2-6697-4b46-a5f8-51ea00129eda",
+      "apiKeyId": "f3a28d56-ce90-48f4-80eb-cf24e8eeffe7",
+      "subOrgId": "60703c29-3373-4bcd-93e3-d4273c9db818"
+    },
+    "reconnect": {
+      "postgres": {
+        "backendPid": 22288,
+        "backendTerminated": true,
+        "stateReadableAfterReconnect": true,
+        "limitation": "forced backend termination used instead of container restart"
+      },
+      "redis": {
+        "disconnectedClient": true,
+        "reconnectedClientReadExistingSession": true
+      },
+      "keycloak": {
+        "readinessAfterLocalChecks": "ok"
+      }
+    },
+    "timeout": {
+      "users": 1,
+      "externalIdentities": 1,
+      "memberships": 1,
+      "apiKeys": 1,
+      "subOrgs": 1
+    },
+    "retry": {
+      "postgres": {
+        "attempts": 2,
+        "retrySucceeded": true
+      },
+      "redis": {
+        "attempts": 2,
+        "retrySucceeded": true
+      },
+      "keycloak": {
+        "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+      }
+    },
+    "concurrency": {
+      "concurrentUserMembershipWrites": 2,
+      "concurrentRedisSessions": 2,
+      "concurrentSubOrganisationWrites": 2,
+      "tenantBoundaryConflictRejected": true
+    },
+    "degradedMode": {
+      "postgres": {
+        "unavailablePoolRejectedIdentityRead": true,
+        "fallbackIdentityProviderUsed": false
+      },
+      "redis": {
+        "unavailableClientRejectedSessionRead": true,
+        "fallbackSessionUsed": false
+      },
+      "keycloak": {
+        "invalidBearerRejected": true,
+        "status": 401
+      },
+      "keycloakUnavailable": {
+        "badAdminUrlRejectedMutation": true,
+        "fallbackGroupProviderUsed": false
+      },
+      "apiKeys": {
+        "invalidSecretReturnedNull": true,
+        "storedHashNotAcceptedAsSecret": true
+      }
+    },
+    "recovery": {
+      "identityRecovered": true,
+      "membershipRecovered": true,
+      "sessionRecovered": true,
+      "apiKeyRecovered": true,
+      "subOrgRecovered": true,
+      "groupRecovered": true,
+      "statePreservationEvidence": {
+        "postgresIdentityAndMembershipPreserved": true,
+        "redisSessionPreservedAcrossReconnect": true,
+        "apiKeyVerificationPreserved": true,
+        "keycloakGroupPreserved": true,
+        "subOrganisationPreserved": true,
+        "tenantBoundaryPreserved": true,
+        "securityBoundaryPreserved": true
+      }
+    },
+    "batch": {
+      "markerCounts": {
+        "users": 3,
+        "externalIdentities": 3,
+        "memberships": 3,
+        "apiKeys": 1,
+        "subOrgs": 3
+      },
+      "sessionRecovered": true,
+      "keycloakGroupRecovered": true,
+      "subOrgRecovered": true
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "baseline": {
+      "userCreated": true,
+      "membershipCreated": true,
+      "apiKeyCreated": true,
+      "subOrgCreated": true,
+      "groupCreated": true,
+      "sessionCreated": true,
+      "authStateConsumedOnce": true
+    },
+    "reconnect": {
+      "postgresBackendTerminatedAndRecovered": true,
+      "redisReconnectedAndStateReadable": true,
+      "keycloakReadinessRecovered": true
+    },
+    "timeout": {
+      "partialMutationPrevented": true
+    },
+    "retry": {
+      "transientFailuresRetried": true
+    },
+    "concurrency": {
+      "concurrentWritesSucceeded": true,
+      "duplicateSubOrganisationRejected": true
+    },
+    "degradedMode": {
+      "failClosedForUnavailableSubstrates": true
+    },
+    "recovery": {
+      "statePreservedAfterReconnect": true,
+      "behaviourContinuityWithL3L4Evidence": true
+    },
+    "batch": {
+      "identityRowsCreated": true,
+      "membershipRowsCreated": true,
+      "apiKeyRowsCreated": true,
+      "subOrgRowsCreated": true,
+      "allTargetCapabilitiesHaveEvidence": true
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:l5a-ia-1782269314418-e1a584eb:baseline",
+    "audit:l5a-ia-1782269314418-e1a584eb:reconnect",
+    "audit:l5a-ia-1782269314418-e1a584eb:timeout",
+    "audit:l5a-ia-1782269314418-e1a584eb:retry",
+    "audit:l5a-ia-1782269314418-e1a584eb:concurrency",
+    "audit:l5a-ia-1782269314418-e1a584eb:degraded",
+    "audit:l5a-ia-1782269314418-e1a584eb:recovery",
+    "audit:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+    "audit:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+    "audit:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+    "audit:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+    "audit:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+    "audit:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+  ],
+  "traceIds": [
+    "trace:l5a-ia-1782269314418-e1a584eb:baseline",
+    "trace:l5a-ia-1782269314418-e1a584eb:reconnect",
+    "trace:l5a-ia-1782269314418-e1a584eb:timeout",
+    "trace:l5a-ia-1782269314418-e1a584eb:retry",
+    "trace:l5a-ia-1782269314418-e1a584eb:concurrency",
+    "trace:l5a-ia-1782269314418-e1a584eb:degraded",
+    "trace:l5a-ia-1782269314418-e1a584eb:recovery",
+    "trace:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+    "trace:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+    "trace:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+    "trace:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+    "trace:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+    "trace:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+  ],
+  "metricSamples": [
+    {
+      "name": "usf_l5a_identity_access_scenarios_run_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_identity_access_scenarios_passed_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_identity_access_capabilities_total",
+      "value": 6
+    },
+    {
+      "name": "usf_l5a_identity_access_audit_events_emitted_total",
+      "value": 6
+    }
+  ],
+  "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:l5a-identity-access-resilience"],
+  "cleanupResult": {
+    "marker": "l5a-ia-1782269314418-e1a584eb",
+    "postgres": "marker identity, membership, api key, entitlement, and sub-org rows cleaned",
+    "redis": "marker sessions and auth states cleaned",
+    "keycloak": "marker groups cleaned"
+  },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-24T02:48:35.263Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782269203982-2077766",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
+  "localResiliencePhase": "L5A_COMPOSE_LOCAL",
+  "l3EvidenceProofIds": [
+    "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+    "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+    "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+    "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
+  ],
+  "l4EvidenceProofIds": ["proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"],
+  "resilienceEvidence": {
+    "capability": "identity/access L5a compose-local resilience batch",
+    "capabilities": [
+      "User identity + tenant membership",
+      "Platform login + session",
+      "RBAC (roles + permissions)",
+      "API keys / personal access tokens",
+      "Tenant groups",
+      "Sub-organisations"
+    ],
+    "substrate": ["Postgres", "Redis", "Keycloak"],
+    "environment": "test",
+    "providerMode": "compose-local",
+    "l3EvidenceProofIds": [
+      "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
+    ],
+    "l4EvidenceProofIds": ["proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"],
+    "scenariosRun": [
+      "identity/access baseline operations",
+      "Postgres Redis Keycloak reconnect/readiness recovery",
+      "Postgres timeout without partial identity/access mutation",
+      "retry after transient identity/access substrate failure",
+      "concurrent identity/access operations",
+      "fail-closed unavailable identity/access substrates",
+      "recovery and state preservation after local substrate failures"
+    ],
+    "scenariosPassed": [
+      "identity/access baseline operations",
+      "Postgres Redis Keycloak reconnect/readiness recovery",
+      "Postgres timeout without partial identity/access mutation",
+      "retry after transient identity/access substrate failure",
+      "concurrent identity/access operations",
+      "fail-closed unavailable identity/access substrates",
+      "recovery and state preservation after local substrate failures"
+    ],
+    "restartOrReconnectEvidence": {
+      "postgres": {
+        "backendPid": 22288,
+        "backendTerminated": true,
+        "stateReadableAfterReconnect": true,
+        "limitation": "forced backend termination used instead of container restart"
+      },
+      "redis": {
+        "disconnectedClient": true,
+        "reconnectedClientReadExistingSession": true
+      },
+      "keycloak": {
+        "readinessAfterLocalChecks": "ok"
+      }
+    },
+    "timeoutEvidence": {
+      "statementTimeoutMs": 50,
+      "postgresErrorCode": "57014",
+      "markerCountsUnchanged": true
+    },
+    "retryEvidence": {
+      "postgres": {
+        "attempts": 2,
+        "retrySucceeded": true
+      },
+      "redis": {
+        "attempts": 2,
+        "retrySucceeded": true
+      },
+      "keycloak": {
+        "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+      }
+    },
+    "concurrencyEvidence": {
+      "concurrentUserMembershipWrites": 2,
+      "concurrentRedisSessions": 2,
+      "concurrentSubOrganisationWrites": 2,
+      "tenantBoundaryConflictRejected": true
+    },
+    "degradedModeEvidence": {
+      "postgres": {
+        "unavailablePoolRejectedIdentityRead": true,
+        "fallbackIdentityProviderUsed": false
+      },
+      "redis": {
+        "unavailableClientRejectedSessionRead": true,
+        "fallbackSessionUsed": false
+      },
+      "keycloak": {
+        "invalidBearerRejected": true,
+        "status": 401
+      },
+      "keycloakUnavailable": {
+        "badAdminUrlRejectedMutation": true,
+        "fallbackGroupProviderUsed": false
+      },
+      "apiKeys": {
+        "invalidSecretReturnedNull": true,
+        "storedHashNotAcceptedAsSecret": true
+      }
+    },
+    "recoveryEvidence": {
+      "identityRecovered": true,
+      "membershipRecovered": true,
+      "sessionRecovered": true,
+      "apiKeyRecovered": true,
+      "subOrgRecovered": true,
+      "groupRecovered": true,
+      "statePreservationEvidence": {
+        "postgresIdentityAndMembershipPreserved": true,
+        "redisSessionPreservedAcrossReconnect": true,
+        "apiKeyVerificationPreserved": true,
+        "keycloakGroupPreserved": true,
+        "subOrganisationPreserved": true,
+        "tenantBoundaryPreserved": true,
+        "securityBoundaryPreserved": true
+      }
+    },
+    "statePreservationEvidence": {
+      "postgresIdentityAndMembershipPreserved": true,
+      "redisSessionPreservedAcrossReconnect": true,
+      "apiKeyVerificationPreserved": true,
+      "keycloakGroupPreserved": true,
+      "subOrganisationPreserved": true,
+      "tenantBoundaryPreserved": true,
+      "securityBoundaryPreserved": true
+    },
+    "behaviouralContinuityEvidence": {
+      "l3BehaviourContractReused": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+        "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+        "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
+      ],
+      "l4SubstrateEvidenceReused": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "capabilitiesCovered": [
+        "User identity + tenant membership",
+        "Platform login + session",
+        "RBAC (roles + permissions)",
+        "API keys / personal access tokens",
+        "Tenant groups",
+        "Sub-organisations"
+      ],
+      "allBaselineOperationsRecovered": true
+    },
+    "observabilityEvidence": {
+      "classification": "proof-emitted-telemetry",
+      "note": "This L5a batch emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
+      "auditEventIds": [
+        "audit:l5a-ia-1782269314418-e1a584eb:baseline",
+        "audit:l5a-ia-1782269314418-e1a584eb:reconnect",
+        "audit:l5a-ia-1782269314418-e1a584eb:timeout",
+        "audit:l5a-ia-1782269314418-e1a584eb:retry",
+        "audit:l5a-ia-1782269314418-e1a584eb:concurrency",
+        "audit:l5a-ia-1782269314418-e1a584eb:degraded",
+        "audit:l5a-ia-1782269314418-e1a584eb:recovery",
+        "audit:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+        "audit:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+        "audit:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+        "audit:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+        "audit:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+        "audit:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+      ],
+      "metricSamples": [
+        {
+          "name": "usf_l5a_identity_access_scenarios_run_total",
+          "value": 7
+        },
+        {
+          "name": "usf_l5a_identity_access_scenarios_passed_total",
+          "value": 7
+        },
+        {
+          "name": "usf_l5a_identity_access_capabilities_total",
+          "value": 6
+        },
+        {
+          "name": "usf_l5a_identity_access_audit_events_emitted_total",
+          "value": 6
+        }
+      ],
+      "traceIds": [
+        "trace:l5a-ia-1782269314418-e1a584eb:baseline",
+        "trace:l5a-ia-1782269314418-e1a584eb:reconnect",
+        "trace:l5a-ia-1782269314418-e1a584eb:timeout",
+        "trace:l5a-ia-1782269314418-e1a584eb:retry",
+        "trace:l5a-ia-1782269314418-e1a584eb:concurrency",
+        "trace:l5a-ia-1782269314418-e1a584eb:degraded",
+        "trace:l5a-ia-1782269314418-e1a584eb:recovery",
+        "trace:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+        "trace:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+        "trace:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+        "trace:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+        "trace:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+        "trace:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+      ],
+      "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:l5a-identity-access-resilience"],
+      "observedSubstrateTelemetry": {
+        "auditRecords": [],
+        "metrics": [],
+        "traces": [],
+        "logs": []
+      }
+    },
+    "perCapabilityEvidence": [
+      {
+        "capability": "User identity + tenant membership",
+        "substrate": ["Postgres", "Redis"],
+        "environment": "test",
+        "providerMode": "compose-local",
+        "l3EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        ],
+        "l4EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        ],
+        "baselineOperation": "create user, link Keycloak identity, insert membership, resolve membership-backed session",
+        "failureInjected": "Postgres backend termination, transient connection failure, unavailable identity pool",
+        "restartOrReconnectEvidence": {
+          "postgres": {
+            "backendPid": 22288,
+            "backendTerminated": true,
+            "stateReadableAfterReconnect": true,
+            "limitation": "forced backend termination used instead of container restart"
+          },
+          "redis": {
+            "disconnectedClient": true,
+            "reconnectedClientReadExistingSession": true
+          },
+          "keycloak": {
+            "readinessAfterLocalChecks": "ok"
+          }
+        },
+        "timeoutEvidence": {
+          "statementTimeoutMs": 50,
+          "postgresErrorCode": "57014",
+          "markerCountsUnchanged": true
+        },
+        "retryEvidence": {
+          "postgres": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "redis": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "keycloak": {
+            "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+          }
+        },
+        "concurrencyEvidence": {
+          "concurrentUserMembershipWrites": 2,
+          "concurrentRedisSessions": 2,
+          "concurrentSubOrganisationWrites": 2,
+          "tenantBoundaryConflictRejected": true
+        },
+        "degradedModeEvidence": {
+          "postgres": {
+            "unavailablePoolRejectedIdentityRead": true,
+            "fallbackIdentityProviderUsed": false
+          },
+          "redis": {
+            "unavailableClientRejectedSessionRead": true,
+            "fallbackSessionUsed": false
+          },
+          "keycloak": {
+            "invalidBearerRejected": true,
+            "status": 401
+          },
+          "keycloakUnavailable": {
+            "badAdminUrlRejectedMutation": true,
+            "fallbackGroupProviderUsed": false
+          },
+          "apiKeys": {
+            "invalidSecretReturnedNull": true,
+            "storedHashNotAcceptedAsSecret": true
+          }
+        },
+        "recoveryEvidence": {
+          "identityRecovered": true,
+          "membershipRecovered": true,
+          "sessionRecovered": true,
+          "apiKeyRecovered": true,
+          "subOrgRecovered": true,
+          "groupRecovered": true,
+          "statePreservationEvidence": {
+            "postgresIdentityAndMembershipPreserved": true,
+            "redisSessionPreservedAcrossReconnect": true,
+            "apiKeyVerificationPreserved": true,
+            "keycloakGroupPreserved": true,
+            "subOrganisationPreserved": true,
+            "tenantBoundaryPreserved": true,
+            "securityBoundaryPreserved": true
+          }
+        },
+        "statePreservationEvidence": {
+          "postgresIdentityAndMembershipPreserved": true,
+          "redisSessionPreservedAcrossReconnect": true,
+          "apiKeyVerificationPreserved": true,
+          "keycloakGroupPreserved": true,
+          "subOrganisationPreserved": true,
+          "tenantBoundaryPreserved": true,
+          "securityBoundaryPreserved": true
+        },
+        "failClosedEvidence": {
+          "unavailablePoolRejectedIdentityRead": true,
+          "fallbackIdentityProviderUsed": false
+        },
+        "observabilityEvidence": {
+          "classification": "proof-emitted-telemetry",
+          "auditEventIds": ["audit:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership"],
+          "metricSamples": [
+            {
+              "name": "usf_l5a_identity_access_capability_passed",
+              "value": 1,
+              "labels": {
+                "capability": "User identity + tenant membership"
+              }
+            }
+          ],
+          "traceIds": ["trace:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership"],
+          "logCorrelationIds": [
+            "log:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership"
+          ],
+          "observedSubstrateTelemetry": {
+            "auditRecords": [],
+            "metrics": [],
+            "traces": [],
+            "logs": []
+          }
+        },
+        "result": "passed",
+        "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+      },
+      {
+        "capability": "Platform login + session",
+        "substrate": ["Redis", "Keycloak"],
+        "environment": "test",
+        "providerMode": "compose-local",
+        "l3EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        ],
+        "l4EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        ],
+        "baselineOperation": "create/read Redis session and consume auth state once",
+        "failureInjected": "Redis disconnect/reconnect and unavailable session client",
+        "restartOrReconnectEvidence": {
+          "postgres": {
+            "backendPid": 22288,
+            "backendTerminated": true,
+            "stateReadableAfterReconnect": true,
+            "limitation": "forced backend termination used instead of container restart"
+          },
+          "redis": {
+            "disconnectedClient": true,
+            "reconnectedClientReadExistingSession": true
+          },
+          "keycloak": {
+            "readinessAfterLocalChecks": "ok"
+          }
+        },
+        "timeoutEvidence": {
+          "notApplicable": "non-Postgres capability path"
+        },
+        "retryEvidence": {
+          "postgres": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "redis": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "keycloak": {
+            "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+          }
+        },
+        "concurrencyEvidence": {
+          "concurrentUserMembershipWrites": 2,
+          "concurrentRedisSessions": 2,
+          "concurrentSubOrganisationWrites": 2,
+          "tenantBoundaryConflictRejected": true
+        },
+        "degradedModeEvidence": {
+          "postgres": {
+            "unavailablePoolRejectedIdentityRead": true,
+            "fallbackIdentityProviderUsed": false
+          },
+          "redis": {
+            "unavailableClientRejectedSessionRead": true,
+            "fallbackSessionUsed": false
+          },
+          "keycloak": {
+            "invalidBearerRejected": true,
+            "status": 401
+          },
+          "keycloakUnavailable": {
+            "badAdminUrlRejectedMutation": true,
+            "fallbackGroupProviderUsed": false
+          },
+          "apiKeys": {
+            "invalidSecretReturnedNull": true,
+            "storedHashNotAcceptedAsSecret": true
+          }
+        },
+        "recoveryEvidence": {
+          "identityRecovered": true,
+          "membershipRecovered": true,
+          "sessionRecovered": true,
+          "apiKeyRecovered": true,
+          "subOrgRecovered": true,
+          "groupRecovered": true,
+          "statePreservationEvidence": {
+            "postgresIdentityAndMembershipPreserved": true,
+            "redisSessionPreservedAcrossReconnect": true,
+            "apiKeyVerificationPreserved": true,
+            "keycloakGroupPreserved": true,
+            "subOrganisationPreserved": true,
+            "tenantBoundaryPreserved": true,
+            "securityBoundaryPreserved": true
+          }
+        },
+        "statePreservationEvidence": {
+          "postgresIdentityAndMembershipPreserved": true,
+          "redisSessionPreservedAcrossReconnect": true,
+          "apiKeyVerificationPreserved": true,
+          "keycloakGroupPreserved": true,
+          "subOrganisationPreserved": true,
+          "tenantBoundaryPreserved": true,
+          "securityBoundaryPreserved": true
+        },
+        "failClosedEvidence": {
+          "unavailableClientRejectedSessionRead": true,
+          "fallbackSessionUsed": false
+        },
+        "observabilityEvidence": {
+          "classification": "proof-emitted-telemetry",
+          "auditEventIds": ["audit:l5a-ia-1782269314418-e1a584eb:platform-login-session"],
+          "metricSamples": [
+            {
+              "name": "usf_l5a_identity_access_capability_passed",
+              "value": 1,
+              "labels": {
+                "capability": "Platform login + session"
+              }
+            }
+          ],
+          "traceIds": ["trace:l5a-ia-1782269314418-e1a584eb:platform-login-session"],
+          "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:platform-login-session"],
+          "observedSubstrateTelemetry": {
+            "auditRecords": [],
+            "metrics": [],
+            "traces": [],
+            "logs": []
+          }
+        },
+        "result": "passed",
+        "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+      },
+      {
+        "capability": "RBAC (roles + permissions)",
+        "substrate": ["Postgres", "Keycloak"],
+        "environment": "test",
+        "providerMode": "compose-local",
+        "l3EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        ],
+        "l4EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        ],
+        "baselineOperation": "resolve permissions from Postgres membership role and assert denied admin permissions",
+        "failureInjected": "unavailable identity substrate plus fail-closed invalid/empty access boundary",
+        "restartOrReconnectEvidence": {
+          "postgres": {
+            "backendPid": 22288,
+            "backendTerminated": true,
+            "stateReadableAfterReconnect": true,
+            "limitation": "forced backend termination used instead of container restart"
+          },
+          "redis": {
+            "disconnectedClient": true,
+            "reconnectedClientReadExistingSession": true
+          },
+          "keycloak": {
+            "readinessAfterLocalChecks": "ok"
+          }
+        },
+        "timeoutEvidence": {
+          "statementTimeoutMs": 50,
+          "postgresErrorCode": "57014",
+          "markerCountsUnchanged": true
+        },
+        "retryEvidence": {
+          "postgres": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "redis": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "keycloak": {
+            "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+          }
+        },
+        "concurrencyEvidence": {
+          "concurrentUserMembershipWrites": 2,
+          "concurrentRedisSessions": 2,
+          "concurrentSubOrganisationWrites": 2,
+          "tenantBoundaryConflictRejected": true
+        },
+        "degradedModeEvidence": {
+          "postgres": {
+            "unavailablePoolRejectedIdentityRead": true,
+            "fallbackIdentityProviderUsed": false
+          },
+          "redis": {
+            "unavailableClientRejectedSessionRead": true,
+            "fallbackSessionUsed": false
+          },
+          "keycloak": {
+            "invalidBearerRejected": true,
+            "status": 401
+          },
+          "keycloakUnavailable": {
+            "badAdminUrlRejectedMutation": true,
+            "fallbackGroupProviderUsed": false
+          },
+          "apiKeys": {
+            "invalidSecretReturnedNull": true,
+            "storedHashNotAcceptedAsSecret": true
+          }
+        },
+        "recoveryEvidence": {
+          "identityRecovered": true,
+          "membershipRecovered": true,
+          "sessionRecovered": true,
+          "apiKeyRecovered": true,
+          "subOrgRecovered": true,
+          "groupRecovered": true,
+          "statePreservationEvidence": {
+            "postgresIdentityAndMembershipPreserved": true,
+            "redisSessionPreservedAcrossReconnect": true,
+            "apiKeyVerificationPreserved": true,
+            "keycloakGroupPreserved": true,
+            "subOrganisationPreserved": true,
+            "tenantBoundaryPreserved": true,
+            "securityBoundaryPreserved": true
+          }
+        },
+        "statePreservationEvidence": {
+          "postgresIdentityAndMembershipPreserved": true,
+          "redisSessionPreservedAcrossReconnect": true,
+          "apiKeyVerificationPreserved": true,
+          "keycloakGroupPreserved": true,
+          "subOrganisationPreserved": true,
+          "tenantBoundaryPreserved": true,
+          "securityBoundaryPreserved": true
+        },
+        "failClosedEvidence": {
+          "unavailablePoolRejectedIdentityRead": true,
+          "fallbackIdentityProviderUsed": false
+        },
+        "observabilityEvidence": {
+          "classification": "proof-emitted-telemetry",
+          "auditEventIds": ["audit:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions"],
+          "metricSamples": [
+            {
+              "name": "usf_l5a_identity_access_capability_passed",
+              "value": 1,
+              "labels": {
+                "capability": "RBAC (roles + permissions)"
+              }
+            }
+          ],
+          "traceIds": ["trace:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions"],
+          "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions"],
+          "observedSubstrateTelemetry": {
+            "auditRecords": [],
+            "metrics": [],
+            "traces": [],
+            "logs": []
+          }
+        },
+        "result": "passed",
+        "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+      },
+      {
+        "capability": "API keys / personal access tokens",
+        "substrate": ["Postgres"],
+        "environment": "test",
+        "providerMode": "compose-local",
+        "l3EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts"
+        ],
+        "l4EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        ],
+        "baselineOperation": "grant api_access entitlement, create API key, authenticate plaintext secret exactly once",
+        "failureInjected": "invalid secret returns null; unavailable Postgres would fail closed",
+        "restartOrReconnectEvidence": {
+          "postgres": {
+            "backendPid": 22288,
+            "backendTerminated": true,
+            "stateReadableAfterReconnect": true,
+            "limitation": "forced backend termination used instead of container restart"
+          },
+          "redis": {
+            "disconnectedClient": true,
+            "reconnectedClientReadExistingSession": true
+          },
+          "keycloak": {
+            "readinessAfterLocalChecks": "ok"
+          }
+        },
+        "timeoutEvidence": {
+          "statementTimeoutMs": 50,
+          "postgresErrorCode": "57014",
+          "markerCountsUnchanged": true
+        },
+        "retryEvidence": {
+          "postgres": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "redis": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "keycloak": {
+            "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+          }
+        },
+        "concurrencyEvidence": {
+          "concurrentUserMembershipWrites": 2,
+          "concurrentRedisSessions": 2,
+          "concurrentSubOrganisationWrites": 2,
+          "tenantBoundaryConflictRejected": true
+        },
+        "degradedModeEvidence": {
+          "postgres": {
+            "unavailablePoolRejectedIdentityRead": true,
+            "fallbackIdentityProviderUsed": false
+          },
+          "redis": {
+            "unavailableClientRejectedSessionRead": true,
+            "fallbackSessionUsed": false
+          },
+          "keycloak": {
+            "invalidBearerRejected": true,
+            "status": 401
+          },
+          "keycloakUnavailable": {
+            "badAdminUrlRejectedMutation": true,
+            "fallbackGroupProviderUsed": false
+          },
+          "apiKeys": {
+            "invalidSecretReturnedNull": true,
+            "storedHashNotAcceptedAsSecret": true
+          }
+        },
+        "recoveryEvidence": {
+          "identityRecovered": true,
+          "membershipRecovered": true,
+          "sessionRecovered": true,
+          "apiKeyRecovered": true,
+          "subOrgRecovered": true,
+          "groupRecovered": true,
+          "statePreservationEvidence": {
+            "postgresIdentityAndMembershipPreserved": true,
+            "redisSessionPreservedAcrossReconnect": true,
+            "apiKeyVerificationPreserved": true,
+            "keycloakGroupPreserved": true,
+            "subOrganisationPreserved": true,
+            "tenantBoundaryPreserved": true,
+            "securityBoundaryPreserved": true
+          }
+        },
+        "statePreservationEvidence": {
+          "postgresIdentityAndMembershipPreserved": true,
+          "redisSessionPreservedAcrossReconnect": true,
+          "apiKeyVerificationPreserved": true,
+          "keycloakGroupPreserved": true,
+          "subOrganisationPreserved": true,
+          "tenantBoundaryPreserved": true,
+          "securityBoundaryPreserved": true
+        },
+        "failClosedEvidence": {
+          "invalidSecretReturnedNull": true,
+          "storedHashNotAcceptedAsSecret": true
+        },
+        "observabilityEvidence": {
+          "classification": "proof-emitted-telemetry",
+          "auditEventIds": ["audit:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens"],
+          "metricSamples": [
+            {
+              "name": "usf_l5a_identity_access_capability_passed",
+              "value": 1,
+              "labels": {
+                "capability": "API keys / personal access tokens"
+              }
+            }
+          ],
+          "traceIds": ["trace:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens"],
+          "logCorrelationIds": [
+            "log:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens"
+          ],
+          "observedSubstrateTelemetry": {
+            "auditRecords": [],
+            "metrics": [],
+            "traces": [],
+            "logs": []
+          }
+        },
+        "result": "passed",
+        "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+      },
+      {
+        "capability": "Tenant groups",
+        "substrate": ["Keycloak"],
+        "environment": "test",
+        "providerMode": "compose-local",
+        "l3EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+          "proof:tools-ui-reference-harness-playwright-groups-spec-ts"
+        ],
+        "l4EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        ],
+        "baselineOperation": "create/update/list Keycloak realm group with cleanup",
+        "failureInjected": "unreachable Keycloak admin URL rejects group mutation; invalid bearer rejected",
+        "restartOrReconnectEvidence": {
+          "postgres": {
+            "backendPid": 22288,
+            "backendTerminated": true,
+            "stateReadableAfterReconnect": true,
+            "limitation": "forced backend termination used instead of container restart"
+          },
+          "redis": {
+            "disconnectedClient": true,
+            "reconnectedClientReadExistingSession": true
+          },
+          "keycloak": {
+            "readinessAfterLocalChecks": "ok"
+          }
+        },
+        "timeoutEvidence": {
+          "notApplicable": "non-Postgres capability path"
+        },
+        "retryEvidence": {
+          "postgres": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "redis": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "keycloak": {
+            "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+          }
+        },
+        "concurrencyEvidence": {
+          "concurrentUserMembershipWrites": 2,
+          "concurrentRedisSessions": 2,
+          "concurrentSubOrganisationWrites": 2,
+          "tenantBoundaryConflictRejected": true
+        },
+        "degradedModeEvidence": {
+          "postgres": {
+            "unavailablePoolRejectedIdentityRead": true,
+            "fallbackIdentityProviderUsed": false
+          },
+          "redis": {
+            "unavailableClientRejectedSessionRead": true,
+            "fallbackSessionUsed": false
+          },
+          "keycloak": {
+            "invalidBearerRejected": true,
+            "status": 401
+          },
+          "keycloakUnavailable": {
+            "badAdminUrlRejectedMutation": true,
+            "fallbackGroupProviderUsed": false
+          },
+          "apiKeys": {
+            "invalidSecretReturnedNull": true,
+            "storedHashNotAcceptedAsSecret": true
+          }
+        },
+        "recoveryEvidence": {
+          "identityRecovered": true,
+          "membershipRecovered": true,
+          "sessionRecovered": true,
+          "apiKeyRecovered": true,
+          "subOrgRecovered": true,
+          "groupRecovered": true,
+          "statePreservationEvidence": {
+            "postgresIdentityAndMembershipPreserved": true,
+            "redisSessionPreservedAcrossReconnect": true,
+            "apiKeyVerificationPreserved": true,
+            "keycloakGroupPreserved": true,
+            "subOrganisationPreserved": true,
+            "tenantBoundaryPreserved": true,
+            "securityBoundaryPreserved": true
+          }
+        },
+        "statePreservationEvidence": {
+          "postgresIdentityAndMembershipPreserved": true,
+          "redisSessionPreservedAcrossReconnect": true,
+          "apiKeyVerificationPreserved": true,
+          "keycloakGroupPreserved": true,
+          "subOrganisationPreserved": true,
+          "tenantBoundaryPreserved": true,
+          "securityBoundaryPreserved": true
+        },
+        "failClosedEvidence": {
+          "badAdminUrlRejectedMutation": true,
+          "fallbackGroupProviderUsed": false
+        },
+        "observabilityEvidence": {
+          "classification": "proof-emitted-telemetry",
+          "auditEventIds": ["audit:l5a-ia-1782269314418-e1a584eb:tenant-groups"],
+          "metricSamples": [
+            {
+              "name": "usf_l5a_identity_access_capability_passed",
+              "value": 1,
+              "labels": {
+                "capability": "Tenant groups"
+              }
+            }
+          ],
+          "traceIds": ["trace:l5a-ia-1782269314418-e1a584eb:tenant-groups"],
+          "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:tenant-groups"],
+          "observedSubstrateTelemetry": {
+            "auditRecords": [],
+            "metrics": [],
+            "traces": [],
+            "logs": []
+          }
+        },
+        "result": "passed",
+        "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+      },
+      {
+        "capability": "Sub-organisations",
+        "substrate": ["Postgres"],
+        "environment": "test",
+        "providerMode": "compose-local",
+        "l3EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+          "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+          "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
+        ],
+        "l4EvidenceProofIds": [
+          "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        ],
+        "baselineOperation": "create/list/update tenant-scoped sub-organisation row",
+        "failureInjected": "Postgres timeout and duplicate slug conflict prevent partial/unsafe mutation",
+        "restartOrReconnectEvidence": {
+          "postgres": {
+            "backendPid": 22288,
+            "backendTerminated": true,
+            "stateReadableAfterReconnect": true,
+            "limitation": "forced backend termination used instead of container restart"
+          },
+          "redis": {
+            "disconnectedClient": true,
+            "reconnectedClientReadExistingSession": true
+          },
+          "keycloak": {
+            "readinessAfterLocalChecks": "ok"
+          }
+        },
+        "timeoutEvidence": {
+          "statementTimeoutMs": 50,
+          "postgresErrorCode": "57014",
+          "markerCountsUnchanged": true
+        },
+        "retryEvidence": {
+          "postgres": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "redis": {
+            "attempts": 2,
+            "retrySucceeded": true
+          },
+          "keycloak": {
+            "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+          }
+        },
+        "concurrencyEvidence": {
+          "concurrentUserMembershipWrites": 2,
+          "concurrentRedisSessions": 2,
+          "concurrentSubOrganisationWrites": 2,
+          "tenantBoundaryConflictRejected": true
+        },
+        "degradedModeEvidence": {
+          "postgres": {
+            "unavailablePoolRejectedIdentityRead": true,
+            "fallbackIdentityProviderUsed": false
+          },
+          "redis": {
+            "unavailableClientRejectedSessionRead": true,
+            "fallbackSessionUsed": false
+          },
+          "keycloak": {
+            "invalidBearerRejected": true,
+            "status": 401
+          },
+          "keycloakUnavailable": {
+            "badAdminUrlRejectedMutation": true,
+            "fallbackGroupProviderUsed": false
+          },
+          "apiKeys": {
+            "invalidSecretReturnedNull": true,
+            "storedHashNotAcceptedAsSecret": true
+          }
+        },
+        "recoveryEvidence": {
+          "identityRecovered": true,
+          "membershipRecovered": true,
+          "sessionRecovered": true,
+          "apiKeyRecovered": true,
+          "subOrgRecovered": true,
+          "groupRecovered": true,
+          "statePreservationEvidence": {
+            "postgresIdentityAndMembershipPreserved": true,
+            "redisSessionPreservedAcrossReconnect": true,
+            "apiKeyVerificationPreserved": true,
+            "keycloakGroupPreserved": true,
+            "subOrganisationPreserved": true,
+            "tenantBoundaryPreserved": true,
+            "securityBoundaryPreserved": true
+          }
+        },
+        "statePreservationEvidence": {
+          "postgresIdentityAndMembershipPreserved": true,
+          "redisSessionPreservedAcrossReconnect": true,
+          "apiKeyVerificationPreserved": true,
+          "keycloakGroupPreserved": true,
+          "subOrganisationPreserved": true,
+          "tenantBoundaryPreserved": true,
+          "securityBoundaryPreserved": true
+        },
+        "failClosedEvidence": {
+          "unavailablePoolRejectedIdentityRead": true,
+          "fallbackIdentityProviderUsed": false
+        },
+        "observabilityEvidence": {
+          "classification": "proof-emitted-telemetry",
+          "auditEventIds": ["audit:l5a-ia-1782269314418-e1a584eb:sub-organisations"],
+          "metricSamples": [
+            {
+              "name": "usf_l5a_identity_access_capability_passed",
+              "value": 1,
+              "labels": {
+                "capability": "Sub-organisations"
+              }
+            }
+          ],
+          "traceIds": ["trace:l5a-ia-1782269314418-e1a584eb:sub-organisations"],
+          "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:sub-organisations"],
+          "observedSubstrateTelemetry": {
+            "auditRecords": [],
+            "metrics": [],
+            "traces": [],
+            "logs": []
+          }
+        },
+        "result": "passed",
+        "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+      }
+    ],
+    "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+  },
+  "restartEvidence": {
+    "postgres": {
+      "backendPid": 22288,
+      "backendTerminated": true,
+      "stateReadableAfterReconnect": true,
+      "limitation": "forced backend termination used instead of container restart"
+    },
+    "redis": {
+      "disconnectedClient": true,
+      "reconnectedClientReadExistingSession": true
+    },
+    "keycloak": {
+      "readinessAfterLocalChecks": "ok"
+    }
+  },
+  "restartOrReconnectEvidence": {
+    "postgres": {
+      "backendPid": 22288,
+      "backendTerminated": true,
+      "stateReadableAfterReconnect": true,
+      "limitation": "forced backend termination used instead of container restart"
+    },
+    "redis": {
+      "disconnectedClient": true,
+      "reconnectedClientReadExistingSession": true
+    },
+    "keycloak": {
+      "readinessAfterLocalChecks": "ok"
+    }
+  },
+  "timeoutEvidence": {
+    "statementTimeoutMs": 50,
+    "postgresErrorCode": "57014",
+    "markerCountsUnchanged": true
+  },
+  "retryEvidence": {
+    "postgres": {
+      "attempts": 2,
+      "retrySucceeded": true
+    },
+    "redis": {
+      "attempts": 2,
+      "retrySucceeded": true
+    },
+    "keycloak": {
+      "retryStrategy": "bounded readiness retry is operator-triggered; baseline remained ok"
+    }
+  },
+  "concurrencyEvidence": {
+    "concurrentUserMembershipWrites": 2,
+    "concurrentRedisSessions": 2,
+    "concurrentSubOrganisationWrites": 2,
+    "tenantBoundaryConflictRejected": true
+  },
+  "degradedModeEvidence": {
+    "postgres": {
+      "unavailablePoolRejectedIdentityRead": true,
+      "fallbackIdentityProviderUsed": false
+    },
+    "redis": {
+      "unavailableClientRejectedSessionRead": true,
+      "fallbackSessionUsed": false
+    },
+    "keycloak": {
+      "invalidBearerRejected": true,
+      "status": 401
+    },
+    "keycloakUnavailable": {
+      "badAdminUrlRejectedMutation": true,
+      "fallbackGroupProviderUsed": false
+    },
+    "apiKeys": {
+      "invalidSecretReturnedNull": true,
+      "storedHashNotAcceptedAsSecret": true
+    }
+  },
+  "recoveryEvidence": {
+    "identityRecovered": true,
+    "membershipRecovered": true,
+    "sessionRecovered": true,
+    "apiKeyRecovered": true,
+    "subOrgRecovered": true,
+    "groupRecovered": true,
+    "statePreservationEvidence": {
+      "postgresIdentityAndMembershipPreserved": true,
+      "redisSessionPreservedAcrossReconnect": true,
+      "apiKeyVerificationPreserved": true,
+      "keycloakGroupPreserved": true,
+      "subOrganisationPreserved": true,
+      "tenantBoundaryPreserved": true,
+      "securityBoundaryPreserved": true
+    }
+  },
+  "statePreservationEvidence": {
+    "postgresIdentityAndMembershipPreserved": true,
+    "redisSessionPreservedAcrossReconnect": true,
+    "apiKeyVerificationPreserved": true,
+    "keycloakGroupPreserved": true,
+    "subOrganisationPreserved": true,
+    "tenantBoundaryPreserved": true,
+    "securityBoundaryPreserved": true
+  },
+  "behaviouralContinuityEvidence": {
+    "l3BehaviourContractReused": [
+      "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
+    ],
+    "l4SubstrateEvidenceReused": [
+      "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+    ],
+    "capabilitiesCovered": [
+      "User identity + tenant membership",
+      "Platform login + session",
+      "RBAC (roles + permissions)",
+      "API keys / personal access tokens",
+      "Tenant groups",
+      "Sub-organisations"
+    ],
+    "allBaselineOperationsRecovered": true
+  },
+  "observabilityEvidence": {
+    "classification": "proof-emitted-telemetry",
+    "note": "This L5a batch emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
+    "auditEventIds": [
+      "audit:l5a-ia-1782269314418-e1a584eb:baseline",
+      "audit:l5a-ia-1782269314418-e1a584eb:reconnect",
+      "audit:l5a-ia-1782269314418-e1a584eb:timeout",
+      "audit:l5a-ia-1782269314418-e1a584eb:retry",
+      "audit:l5a-ia-1782269314418-e1a584eb:concurrency",
+      "audit:l5a-ia-1782269314418-e1a584eb:degraded",
+      "audit:l5a-ia-1782269314418-e1a584eb:recovery",
+      "audit:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+      "audit:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+      "audit:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+      "audit:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+      "audit:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+      "audit:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+    ],
+    "metricSamples": [
+      {
+        "name": "usf_l5a_identity_access_scenarios_run_total",
+        "value": 7
+      },
+      {
+        "name": "usf_l5a_identity_access_scenarios_passed_total",
+        "value": 7
+      },
+      {
+        "name": "usf_l5a_identity_access_capabilities_total",
+        "value": 6
+      },
+      {
+        "name": "usf_l5a_identity_access_audit_events_emitted_total",
+        "value": 6
+      }
+    ],
+    "traceIds": [
+      "trace:l5a-ia-1782269314418-e1a584eb:baseline",
+      "trace:l5a-ia-1782269314418-e1a584eb:reconnect",
+      "trace:l5a-ia-1782269314418-e1a584eb:timeout",
+      "trace:l5a-ia-1782269314418-e1a584eb:retry",
+      "trace:l5a-ia-1782269314418-e1a584eb:concurrency",
+      "trace:l5a-ia-1782269314418-e1a584eb:degraded",
+      "trace:l5a-ia-1782269314418-e1a584eb:recovery",
+      "trace:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+      "trace:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+      "trace:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+      "trace:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+      "trace:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+      "trace:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+    ],
+    "logCorrelationIds": ["log:l5a-ia-1782269314418-e1a584eb:l5a-identity-access-resilience"],
+    "observedSubstrateTelemetry": {
+      "auditRecords": [],
+      "metrics": [],
+      "traces": [],
+      "logs": []
+    }
+  },
+  "failureInjectionEvidence": {
+    "postgresBackendTermination": {
+      "backendPid": 22288,
+      "backendTerminated": true,
+      "stateReadableAfterReconnect": true,
+      "limitation": "forced backend termination used instead of container restart"
+    },
+    "redisClientReconnect": {
+      "disconnectedClient": true,
+      "reconnectedClientReadExistingSession": true
+    },
+    "keycloakUnauthorizedBoundary": {
+      "invalidBearerRejected": true,
+      "status": 401
+    },
+    "unavailablePostgres": {
+      "unavailablePoolRejectedIdentityRead": true,
+      "fallbackIdentityProviderUsed": false
+    },
+    "unavailableRedis": {
+      "unavailableClientRejectedSessionRead": true,
+      "fallbackSessionUsed": false
+    },
+    "unavailableKeycloak": {
+      "badAdminUrlRejectedMutation": true,
+      "fallbackGroupProviderUsed": false
+    },
+    "statementTimeout": {
+      "statementTimeoutMs": 50,
+      "postgresErrorCode": "57014",
+      "markerCountsUnchanged": true
+    }
+  },
+  "environment": "test",
+  "proofLevelObserved": "L5",
+  "startTime": "2026-06-24T02:48:34.155Z",
+  "endTime": "2026-06-24T02:48:35.263Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:48:35.263Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "baseline": {
+      "userCreated": true,
+      "membershipCreated": true,
+      "apiKeyCreated": true,
+      "subOrgCreated": true,
+      "groupCreated": true,
+      "sessionCreated": true,
+      "authStateConsumedOnce": true
+    },
+    "reconnect": {
+      "postgresBackendTerminatedAndRecovered": true,
+      "redisReconnectedAndStateReadable": true,
+      "keycloakReadinessRecovered": true
+    },
+    "timeout": {
+      "partialMutationPrevented": true
+    },
+    "retry": {
+      "transientFailuresRetried": true
+    },
+    "concurrency": {
+      "concurrentWritesSucceeded": true,
+      "duplicateSubOrganisationRejected": true
+    },
+    "degradedMode": {
+      "failClosedForUnavailableSubstrates": true
+    },
+    "recovery": {
+      "statePreservedAfterReconnect": true,
+      "behaviourContinuityWithL3L4Evidence": true
+    },
+    "batch": {
+      "identityRowsCreated": true,
+      "membershipRowsCreated": true,
+      "apiKeyRowsCreated": true,
+      "subOrgRowsCreated": true,
+      "allTargetCapabilitiesHaveEvidence": true
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit:l5a-ia-1782269314418-e1a584eb:baseline",
+    "audit:l5a-ia-1782269314418-e1a584eb:reconnect",
+    "audit:l5a-ia-1782269314418-e1a584eb:timeout",
+    "audit:l5a-ia-1782269314418-e1a584eb:retry",
+    "audit:l5a-ia-1782269314418-e1a584eb:concurrency",
+    "audit:l5a-ia-1782269314418-e1a584eb:degraded",
+    "audit:l5a-ia-1782269314418-e1a584eb:recovery",
+    "audit:l5a-ia-1782269314418-e1a584eb:user-identity-tenant-membership",
+    "audit:l5a-ia-1782269314418-e1a584eb:platform-login-session",
+    "audit:l5a-ia-1782269314418-e1a584eb:rbac-roles-permissions",
+    "audit:l5a-ia-1782269314418-e1a584eb:api-keys-personal-access-tokens",
+    "audit:l5a-ia-1782269314418-e1a584eb:tenant-groups",
+    "audit:l5a-ia-1782269314418-e1a584eb:sub-organisations"
+  ],
+  "metricEvidence": [
+    {
+      "name": "usf_l5a_identity_access_scenarios_run_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_identity_access_scenarios_passed_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_identity_access_capabilities_total",
+      "value": 6
+    },
+    {
+      "name": "usf_l5a_identity_access_audit_events_emitted_total",
+      "value": 6
+    }
+  ],
+  "logEvidence": ["log:l5a-ia-1782269314418-e1a584eb:l5a-identity-access-resilience"],
+  "evidenceSignature": "a981b36414a4ca1f13c56342063e70c464d70498a7fb203adaad174323fb022e"
+}

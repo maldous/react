@@ -12059,5 +12059,41 @@
     "sourceCommand": "npm run proof:l5-postgres-tenant-identity-resilience",
     "scriptPath": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
     "expectedFailureMode": "command exits non-zero if compose-local Postgres is unavailable, reconnect/timeout/retry/concurrency/degraded/recovery assertions fail, state is not preserved, or certified L3/L4 evidence cannot be referenced"
+  },
+  {
+    "id": "package.json#proof:l5-identity-access-resilience",
+    "path": "package.json#proof:l5-identity-access-resilience",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-local Postgres, Redis, Keycloak substrates and certified L3/L4 identity/access evidence",
+    "stageCoverage": "compose-local L5a resilience batch proof script (npm run proof:l5-identity-access-resilience)",
+    "failureEvidence": "runtime evidence JSON plus assertion output from reconnect, timeout, retry, concurrency, degraded-mode, recovery, state-preservation, and fail-closed scenarios",
+    "proofLevel": 5,
+    "proofLevelRationale": "L5a local resilience evidence for User identity + tenant membership, Platform login + session, RBAC (roles + permissions), API keys / personal access tokens, Tenant groups, and Sub-organisations. It uses compose-local Postgres, Redis, and Keycloak, reuses certified L3/L4 evidence, and does not claim full staging L5 certification.",
+    "capabilitiesProven": [
+      "User identity + tenant membership",
+      "Platform login + session",
+      "RBAC (roles + permissions)",
+      "API keys / personal access tokens",
+      "Tenant groups",
+      "Sub-organisations"
+    ],
+    "semanticFacetsProven": [
+      "resilience",
+      "statePreservation",
+      "behaviouralContinuity",
+      "tenantIsolation",
+      "securityBoundary",
+      "auditTraceMetric",
+      "deterministicReplay"
+    ],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "npm run proof:l5-identity-access-resilience",
+    "scriptPath": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero if compose-local Postgres, Redis, or Keycloak is unavailable, reconnect/timeout/retry/concurrency/degraded/recovery assertions fail, state is not preserved, or certified L3/L4 evidence cannot be referenced"
   }
 ]

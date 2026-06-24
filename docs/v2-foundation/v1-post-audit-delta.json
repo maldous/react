@@ -6722,6 +6722,30 @@
         "npm run v2:adversarial-usf-audit"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "L5a compose-local resilience proof batch for identity/access capabilities across Postgres, Redis, and Keycloak",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:l5-identity-access-resilience",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for the identity/access L5a compose-local resilience batch",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:l5-identity-access-resilience",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -7104,6 +7128,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 715,
+  "additionCount": 717,
   "deletionCount": 54
 }

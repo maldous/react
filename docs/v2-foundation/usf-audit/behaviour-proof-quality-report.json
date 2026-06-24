@@ -1,11 +1,11 @@
 {
   "artefact": "behaviour-proof-quality-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T01:08:16.214Z",
+  "generatedAt": "2026-06-24T02:50:14.728Z",
   "status": "PASS",
   "scope": "proofs classified as L3 or higher by claimed or observed proof level",
-  "totalProofsAudited": 152,
-  "validBehaviourProofs": 152,
+  "totalProofsAudited": 153,
+  "validBehaviourProofs": 153,
   "invalidBehaviourProofs": 0,
   "weakBehaviouralEvidenceProofs": 0,
   "delegatedBehaviourProofs": 0,
@@ -2802,6 +2802,61 @@
       "recommendedRemediation": "No action required; preserve this proof as the L3 behavioural contract for future L4 substrate work.",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json",
       "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+      "capability": "capability:l5-identity-access-resilience",
+      "capabilities": [],
+      "currentLevel": "L5",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "qualityScore": 100,
+      "confidenceScore": 100,
+      "validBehaviourProof": true,
+      "weakBehaviouralEvidence": false,
+      "wouldFailIfImplementationRegressed": true,
+      "strictDefinition": {
+        "beforeStateCaptured": true,
+        "afterStateCaptured": true,
+        "stateDiffAsserted": true,
+        "sideEffectsAsserted": true,
+        "failurePathExercised": true,
+        "auditEvidenceAsserted": true,
+        "metricEvidenceAsserted": true,
+        "traceEvidenceAsserted": true,
+        "tenantBoundariesAsserted": true,
+        "securityBoundariesAsserted": true,
+        "deterministicReplaySupported": true
+      },
+      "flags": {
+        "delegatedProofImports": false,
+        "wrapperOnlyProof": false,
+        "metadataOnlyProof": false,
+        "assertionFreeProof": false,
+        "weakStateTransitionProof": false,
+        "syntheticFailurePath": false,
+        "nonObservableSideEffects": false,
+        "evidenceInflation": false,
+        "behaviourClaimsUnsupportedByAssertions": false
+      },
+      "sourceEvidence": {
+        "sourceFilesChecked": [
+          "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"
+        ],
+        "assertionCount": 46,
+        "awaitCount": 98,
+        "emitEvidenceCount": 1,
+        "failurePatternCount": 27,
+        "domainOperationCount": 4,
+        "execWrapperCount": 0,
+        "importedRuntimeProofCount": 0,
+        "wrapperOnly": false
+      },
+      "delegatedBehaviourProofImports": [],
+      "blockingIssues": [],
+      "recommendedRemediation": "No action required; preserve this proof as the L3 behavioural contract for future L4 substrate work.",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof.json",
+      "sourceFileRefs": ["apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"]
     },
     {
       "proofId": "proof:apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof-ts",

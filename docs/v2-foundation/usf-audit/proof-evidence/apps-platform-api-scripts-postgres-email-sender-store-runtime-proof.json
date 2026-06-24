@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
-  "startedAt": "2026-06-24T01:07:22.631Z",
-  "endedAt": "2026-06-24T01:07:23.414Z",
+  "startedAt": "2026-06-24T02:49:21.236Z",
+  "endedAt": "2026-06-24T02:49:22.036Z",
   "exitStatus": 0,
-  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,10 +77,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T01:07:23.414Z",
+  "generatedAt": "2026-06-24T02:49:22.036Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782263085791-1316465",
+  "collectorRunId": "proof-run-1782269203982-2077766",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -101,10 +101,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T01:07:22.631Z",
-  "endTime": "2026-06-24T01:07:23.414Z",
-  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
-  "executionTimestamp": "2026-06-24T01:07:23.414Z",
+  "startTime": "2026-06-24T02:49:21.236Z",
+  "endTime": "2026-06-24T02:49:22.036Z",
+  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "executionTimestamp": "2026-06-24T02:49:22.036Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts": {
@@ -130,5 +130,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-email-sender-store-runtime-proof.ts"],
-  "evidenceSignature": "1da991139b4b62eebc91a3c2883acc47a47444d17d97ceeb97c8fbe7191e37d1"
+  "evidenceSignature": "5bf0e55a59b17bbca4b430c4967b5b51df019f6e33ba7227a936bc9642cd3daf"
 }
