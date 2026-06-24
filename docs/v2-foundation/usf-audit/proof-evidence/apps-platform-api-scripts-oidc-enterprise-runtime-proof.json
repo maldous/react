@@ -23,10 +23,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:auth-oidc-enterprise",
-  "startedAt": "2026-06-24T04:10:48.012Z",
-  "endedAt": "2026-06-24T04:10:48.380Z",
+  "startedAt": "2026-06-24T10:17:41.140Z",
+  "endedAt": "2026-06-24T10:17:41.538Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -161,10 +161,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:10:48.380Z",
+  "generatedAt": "2026-06-24T10:17:41.538Z",
   "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -185,10 +185,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:10:48.012Z",
-  "endTime": "2026-06-24T04:10:48.380Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:10:48.380Z",
+  "startTime": "2026-06-24T10:17:41.140Z",
+  "endTime": "2026-06-24T10:17:41.538Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:17:41.538Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-auth-settings-idps": {
@@ -258,5 +258,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
-  "evidenceSignature": "000f4eadd684d828ee925c13609638d930cb2d8ac30c121aa9d50e2c804774c1"
+  "evidenceSignature": "de1a2918619d2a5b1ad32e05d84488a8892303cf4ba96143d62504383ca8c009"
 }

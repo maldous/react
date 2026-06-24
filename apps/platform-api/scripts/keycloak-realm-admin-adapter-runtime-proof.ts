@@ -1,9 +1,11 @@
 /**
- * Provider-level proof wrapper for keycloak-realm-admin-adapter.
+ * Provider-level contract proof for keycloak-realm-admin-adapter.
  *
- * The delegated proof exercises live Keycloak configuration/readiness,
- * unavailable provider classification, forbidden realm operations,
- * credential mutation, and fail-closed misconfiguration paths.
+ * The live Keycloak behavioural checks run as their own proof commands:
+ * auth-settings-runtime-proof.ts and credential-lifecycle-runtime-proof.ts.
+ * This wrapper intentionally verifies that those lower-level live proofs and
+ * adapter/test contracts remain wired, without importing and re-running the
+ * mutable proof modules in the same process.
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -73,6 +75,3 @@ assert.ok(
     authReadinessTestSource.includes("audited clientId, NEVER the secret"),
   "auth settings tests must assert audit ordering, no-secret audit state, and invalid credential failure behavior"
 );
-
-await import("./auth-settings-runtime-proof.ts");
-await import("./credential-lifecycle-runtime-proof.ts");

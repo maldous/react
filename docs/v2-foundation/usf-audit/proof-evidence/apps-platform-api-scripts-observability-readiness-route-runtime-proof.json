@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:observability-readiness-route",
-  "startedAt": "2026-06-24T04:10:46.916Z",
-  "endedAt": "2026-06-24T04:10:47.444Z",
+  "startedAt": "2026-06-24T10:17:40.061Z",
+  "endedAt": "2026-06-24T10:17:40.580Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,10 +81,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:10:47.444Z",
+  "generatedAt": "2026-06-24T10:17:40.580Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -105,10 +105,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:10:46.916Z",
-  "endTime": "2026-06-24T04:10:47.444Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:10:47.444Z",
+  "startTime": "2026-06-24T10:17:40.061Z",
+  "endTime": "2026-06-24T10:17:40.580Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:17:40.580Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-observability-readiness": {
@@ -136,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:observability-readiness-route:runtime-proof"],
-  "evidenceSignature": "3cedffb722a359540cb1e6953738be7b65beccbca7de1aa7e8a0382c7f347f02"
+  "evidenceSignature": "68a8cba553fec13eda87b554ba35cd1224d6cc0d3b4f99fec7ac4154ac309da9"
 }

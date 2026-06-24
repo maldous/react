@@ -40,10 +40,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-billing-catalog",
-  "startedAt": "2026-06-24T04:09:04.999Z",
-  "endedAt": "2026-06-24T04:09:05.038Z",
+  "startedAt": "2026-06-24T10:15:59.691Z",
+  "endedAt": "2026-06-24T10:15:59.730Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -258,10 +258,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:09:05.038Z",
+  "generatedAt": "2026-06-24T10:15:59.730Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -282,10 +282,10 @@
   "failureInjectionEvidence": null,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:09:04.999Z",
-  "endTime": "2026-06-24T04:09:05.038Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:09:05.038Z",
+  "startTime": "2026-06-24T10:15:59.691Z",
+  "endTime": "2026-06-24T10:15:59.730Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:15:59.730Z",
   "stateDiff": {
     "routeMutations": {
       "route:post-api-admin-billing-catalog-products": {
@@ -406,5 +406,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:semantic-dev"],
-  "evidenceSignature": "3649aace5766ac4022152f20aa4fbdf2d7953bdb06089266418c63b75fc24204"
+  "evidenceSignature": "06bd586c9e7128072d69d2aec4aa035d27058ca7789110dedbdfd670de0b8364"
 }

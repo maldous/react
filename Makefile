@@ -61,11 +61,26 @@ all: clean-all \
 ## v2-foundation-assurance — Regenerate and verify V2 formal + USF semantic/runtime assurance
 v2-foundation-assurance:
 	$(call STEP,v2 foundation assurance)
+	$(MAKE) compose-up-default ENV=test
+	$(MAKE) compose-up-identity ENV=test
+	$(MAKE) keycloak-provision ENV=test
+	$(MAKE) compose-up-external-mocks ENV=test
+	$(MAKE) compose-up-observability ENV=test
+	$(MAKE) compose-up-secrets ENV=test
+	$(MAKE) compose-up-workflow-provider ENV=test
+	$(MAKE) compose-up-observability-provider ENV=test
+	$(MAKE) compose-up-antivirus-provider ENV=test
+	$(MAKE) compose-up-web ENV=test
+	bash scripts/compose/wait.sh test 180
+	sleep 20
+	_env_file="$$(bash scripts/env/resolve-env-file.sh test)"; set -a; . "$$_env_file"; set +a; npm run db:migrate
+	_env_file="$$(bash scripts/env/resolve-env-file.sh test)"; set -a; . "$$_env_file"; set +a; npm run db:seed
+	_env_file="$$(bash scripts/env/resolve-env-file.sh test)"; set -a; . "$$_env_file"; set +a; make env-bootstrap-seed ENV=test
 	npm run v2:formal-assurance
 	npm run v2:usf-assurance
+	npm run v2:readiness -- --strict
 	npm run v2:adversarial-usf-audit
 	npx prettier --write docs/v2-foundation/formal-model/*.json docs/v2-foundation/mathematical-assurance-attestation.md docs/v2-foundation/usf-graph/*.json docs/v2-foundation/usf-audit/*.json docs/v2-foundation/usf-audit/*.md docs/v2-foundation/universal-service-foundation-assurance.md
-	npm run v2:readiness -- --strict
 	npm run v2:readiness -- --json
 	npm test -- tools/v2-readiness
 	$(call OK,V2 foundation assurance complete)

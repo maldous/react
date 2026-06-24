@@ -11,12 +11,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L2",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:11:30.116Z",
-  "endedAt": "2026-06-24T04:11:30.254Z",
+  "startedAt": "2026-06-24T10:18:23.114Z",
+  "endedAt": "2026-06-24T10:18:23.149Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -24,27 +24,61 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": ["audit:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
+  "traceIds": ["trace:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": ["log:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:30.254Z",
+  "generatedAt": "2026-06-24T10:18:23.149Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -64,15 +98,35 @@
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
   "environment": "test",
-  "proofLevelObserved": "L2",
-  "startTime": "2026-06-24T04:11:30.116Z",
-  "endTime": "2026-06-24T04:11:30.254Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:30.254Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "de9d244c68261295b61d1a2992291f9a7c277bc7c96c37ca61b46bde8fe85ae6"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-24T10:18:23.114Z",
+  "endTime": "2026-06-24T10:18:23.149Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:23.149Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/postgres-webhook-store-runtime-proof.ts"],
+  "evidenceSignature": "b69d575683a6f6173c07314e9cfc843990e207ebbffab7afd30d11d53338f73a"
 }

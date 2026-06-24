@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:11:23.128Z",
-  "endedAt": "2026-06-24T04:11:23.368Z",
+  "startedAt": "2026-06-24T10:18:16.339Z",
+  "endedAt": "2026-06-24T10:18:16.558Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:23.368Z",
+  "generatedAt": "2026-06-24T10:18:16.558Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -103,10 +103,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:23.128Z",
-  "endTime": "2026-06-24T04:11:23.368Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:23.368Z",
+  "startTime": "2026-06-24T10:18:16.339Z",
+  "endTime": "2026-06-24T10:18:16.558Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:16.558Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts": {
@@ -132,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-entitlement-repository-runtime-proof.ts"],
-  "evidenceSignature": "c0ca80dfdc570366cd39ebe2dcb655ed705fd2bfe982efe52877736e923e4d13"
+  "evidenceSignature": "625b85aa4b9c28636944d54ee9105924873082daca8937c8a4c66d4cc97db6b4"
 }

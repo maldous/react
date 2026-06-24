@@ -95,11 +95,11 @@ async function main(): Promise<void> {
     preferSdk: true,
   });
 
-  const { HealthService } = await import("windmill-client");
-  const windmillHealth = await HealthService.getHealthStatus({ force: true });
-  assert.ok(
-    windmillHealth && typeof windmillHealth === "object",
-    "windmill sdk health check must resolve"
+  const windmillHealth = await windmill.healthCheck();
+  assert.equal(
+    windmillHealth.status,
+    "ready",
+    `configured Windmill endpoint must be ready (${windmillHealth.detail})`
   );
 
   const workflowId = `tenant-a:workflow-${Date.now().toString(36)}`;

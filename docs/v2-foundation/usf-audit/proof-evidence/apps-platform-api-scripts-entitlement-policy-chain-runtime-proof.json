@@ -39,10 +39,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlement-policy-chain",
-  "startedAt": "2026-06-24T04:08:58.101Z",
-  "endedAt": "2026-06-24T04:08:58.228Z",
+  "startedAt": "2026-06-24T10:15:52.590Z",
+  "endedAt": "2026-06-24T10:15:52.718Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -565,10 +565,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:08:58.228Z",
+  "generatedAt": "2026-06-24T10:15:52.718Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlement-policy-chain-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -589,10 +589,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:08:58.101Z",
-  "endTime": "2026-06-24T04:08:58.228Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:08:58.228Z",
+  "startTime": "2026-06-24T10:15:52.590Z",
+  "endTime": "2026-06-24T10:15:52.718Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:15:52.718Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-auth-settings-domains-domain": {
@@ -853,5 +853,5 @@
     "log:entitlement-policy-chain:revoke",
     "log:entitlement-policy-chain:tenant-boundary"
   ],
-  "evidenceSignature": "858672a6236355a8b8f6f3eabc1d8dd9bc3834c3b8c76ceb73adf0fb26c53048"
+  "evidenceSignature": "0016ee7c178433c5691f7a8928a36820e4bb000ca0f6c70562c554a9f06afde8"
 }

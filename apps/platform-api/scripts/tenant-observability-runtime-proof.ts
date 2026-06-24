@@ -8,8 +8,9 @@
  *      provider_unreachable — never faked.
  *
  *   4. LIVE infra signals (ADR-ACT-0224): Grafana + OTel-collector reachability;
- *      metrics not_applicable (no Prometheus); error-capture not_configured (no DSN).
- *      Each is probed honestly — unavailable services are never reported `ok`.
+ *      Prometheus metrics when the composed provider is present; error-capture
+ *      not_configured without a DSN. Each is probed honestly — unavailable services
+ *      are never reported `ok`.
  *
  * Usage: npm run proof:tenant-observability
  *   Loads local .env; derives URLs from GRAFANA_PORT / OTEL_HEALTH_PORT.
@@ -136,8 +137,8 @@ async function main(): Promise<void> {
     readiness.otelCollector !== "unknown"
   );
   check(
-    "metrics honestly not_applicable/not_configured (no local Prometheus)",
-    readiness.metrics === "not_applicable" || readiness.metrics === "not_configured"
+    "metrics honestly observed or not_applicable/not_configured",
+    ["ok", "not_applicable", "not_configured"].includes(readiness.metrics)
   );
   check(
     "error-capture honestly not_configured/ok (Sentry DSN-gated)",

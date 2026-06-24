@@ -187,10 +187,10 @@
   "providerMode": "external-sandbox",
   "proofLevelClaimed": "L5",
   "commandExecuted": "npm run proof:l5-staging-resilience-certification",
-  "startedAt": "2026-06-24T04:10:36.851Z",
-  "endedAt": "2026-06-24T04:10:36.902Z",
+  "startedAt": "2026-06-24T10:17:30.170Z",
+  "endedAt": "2026-06-24T10:17:30.214Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -198,146 +198,146 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": true,
   "externalSandboxRequestIds": [
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_identity_record_fqdn:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_identity_record_fqdn:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:user_identity_tenant_membership:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:user_identity_tenant_membership:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:end_user_profile_preferences_self_service:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:end_user_profile_preferences_self_service:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:api_keys_personal_access_tokens:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:api_keys_personal_access_tokens:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_groups:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_groups:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:sub_organisations:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:sub_organisations:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:rbac_roles_permissions:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:rbac_roles_permissions:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:abac_policy_decision_point:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:abac_policy_decision_point:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:delegated_administration_roles:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:delegated_administration_roles:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:entitlement_engine:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:entitlement_engine:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:support_mode_break_glass_access:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:support_mode_break_glass_access:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:audit_of_privileged_access:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:audit_of_privileged_access:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:platform_login_session:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:platform_login_session:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:idp_brokering_oidc_provider_management:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:idp_brokering_oidc_provider_management:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:claim_mapping_group_role_mapping:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:claim_mapping_group_role_mapping:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:mfa_session_policy_lockout:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:mfa_session_policy_lockout:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:configuration_registry_history:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:configuration_registry_history:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:branding_theming:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:branding_theming:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:custom_domains_dns_ownership_tls_canonical:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:custom_domains_dns_ownership_tls_canonical:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:write_only_secret_settings:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:write_only_secret_settings:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:product_catalog_plans_prices:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:product_catalog_plans_prices:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:subscriptions_invoices_payment_methods_dunning:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:subscriptions_invoices_payment_methods_dunning:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:usage_metering_meter_event_ingestion:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:usage_metering_meter_event_ingestion:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:quota_enforcement:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:quota_enforcement:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:relational_storage_migrations_rls:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:relational_storage_migrations_rls:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:backup_restore:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:backup_restore:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:pitr_retention_legal_hold_data_residency:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:pitr_retention_legal_hold_data_residency:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:data_governance_catalog_lineage_classification_pii_dsr_gdpr:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:data_governance_catalog_lineage_classification_pii_dsr_gdpr:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_data_import_export:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_data_import_export:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:search_indexing_product_search:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:search_indexing_product_search:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:object_storage_tenant_prefixes_signed_urls:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:object_storage_tenant_prefixes_signed_urls:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:event_bus_durable_queues_dlq_redrive:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:event_bus_durable_queues_dlq_redrive:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:workflow_engine_scheduled_jobs_approvals:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:workflow_engine_scheduled_jobs_approvals:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:scheduled_jobs_built_in_on_the_event_substrate:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:scheduled_jobs_built_in_on_the_event_substrate:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:notification_delivery_preferences_channels:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:notification_delivery_preferences_channels:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:background_workers_job_runner:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:background_workers_job_runner:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:runtime_secrets_management:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:runtime_secrets_management:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:logs_aggregation_tenant_scoped_search:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:logs_aggregation_tenant_scoped_search:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:metrics_traces:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:metrics_traces:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:observability_built_in_alerting_incidents:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:observability_built_in_alerting_incidents:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:internal_service_catalog_readiness:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:internal_service_catalog_readiness:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:code_quality_secret_dependency_scanning:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:code_quality_secret_dependency_scanning:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:compliance_reports_access_reviews_evidence_packs:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:compliance_reports_access_reviews_evidence_packs:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_isolation_proof:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_isolation_proof:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:webhooks_developer_facing:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:webhooks_developer_facing:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:api_docs_developer_portal_sdks_rate_limits:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:api_docs_developer_portal_sdks_rate_limits:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:rate_limiting_api:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:rate_limiting_api:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_lifecycle_provision_suspend_delete_export:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_lifecycle_provision_suspend_delete_export:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:support_tickets_customer_health_announcements:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:support_tickets_customer_health_announcements:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:universal_service_foundation_scope_principles:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:universal_service_foundation_scope_principles:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:build_versus_compose_decision_framework:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:build_versus_compose_decision_framework:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:service_catalog_provider_integration_model:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:service_catalog_provider_integration_model:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:environment_specific_vs_shared_service_model:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:environment_specific_vs_shared_service_model:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:provider_configuration_plane:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:provider_configuration_plane:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:composed_provider_readiness_spine:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:composed_provider_readiness_spine:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:history_read_model_read_only_projection:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:history_read_model_read_only_projection:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_discovery_issuer_jwks_validation:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_discovery_issuer_jwks_validation:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_test_connection_callback_display:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_test_connection_callback_display:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_host_identity_resolution:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_host_identity_resolution:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_domain_activation_auth_client:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_domain_activation_auth_client:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_canonical_domain_set_unset:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_canonical_domain_set_unset:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_custom_domain_auth_callback:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_custom_domain_auth_callback:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_service_clickthrough_policy:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_service_clickthrough_policy:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:environment_registry_bootstrap:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:environment_registry_bootstrap:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:provider_environment_classification:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:provider_environment_classification:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:e2e_confidence_ladder_stage_aware:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:e2e_confidence_ladder_stage_aware:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:openapi_drift_hard_gate:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:openapi_drift_hard_gate:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:i18n_runtime_validation:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:i18n_runtime_validation:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:accessibility_a11y_gate:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:accessibility_a11y_gate:rollback",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:recovery",
-    "sandbox:l5b-staging-1782274236892-f1bd1927:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:rollback"
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_identity_record_fqdn:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_identity_record_fqdn:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:user_identity_tenant_membership:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:user_identity_tenant_membership:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:end_user_profile_preferences_self_service:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:end_user_profile_preferences_self_service:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:api_keys_personal_access_tokens:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:api_keys_personal_access_tokens:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_groups:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_groups:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:sub_organisations:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:sub_organisations:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:rbac_roles_permissions:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:rbac_roles_permissions:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:abac_policy_decision_point:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:abac_policy_decision_point:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:delegated_administration_roles:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:delegated_administration_roles:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:entitlement_engine:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:entitlement_engine:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:support_mode_break_glass_access:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:support_mode_break_glass_access:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:audit_of_privileged_access:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:audit_of_privileged_access:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:platform_login_session:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:platform_login_session:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:idp_brokering_oidc_provider_management:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:idp_brokering_oidc_provider_management:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:claim_mapping_group_role_mapping:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:claim_mapping_group_role_mapping:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:mfa_session_policy_lockout:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:mfa_session_policy_lockout:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:configuration_registry_history:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:configuration_registry_history:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:branding_theming:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:branding_theming:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:custom_domains_dns_ownership_tls_canonical:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:custom_domains_dns_ownership_tls_canonical:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:write_only_secret_settings:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:write_only_secret_settings:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:product_catalog_plans_prices:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:product_catalog_plans_prices:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:subscriptions_invoices_payment_methods_dunning:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:subscriptions_invoices_payment_methods_dunning:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:usage_metering_meter_event_ingestion:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:usage_metering_meter_event_ingestion:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:quota_enforcement:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:quota_enforcement:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:relational_storage_migrations_rls:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:relational_storage_migrations_rls:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:backup_restore:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:backup_restore:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:pitr_retention_legal_hold_data_residency:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:pitr_retention_legal_hold_data_residency:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:data_governance_catalog_lineage_classification_pii_dsr_gdpr:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:data_governance_catalog_lineage_classification_pii_dsr_gdpr:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_data_import_export:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_data_import_export:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:search_indexing_product_search:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:search_indexing_product_search:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:object_storage_tenant_prefixes_signed_urls:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:object_storage_tenant_prefixes_signed_urls:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:event_bus_durable_queues_dlq_redrive:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:event_bus_durable_queues_dlq_redrive:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:workflow_engine_scheduled_jobs_approvals:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:workflow_engine_scheduled_jobs_approvals:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:scheduled_jobs_built_in_on_the_event_substrate:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:scheduled_jobs_built_in_on_the_event_substrate:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:notification_delivery_preferences_channels:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:notification_delivery_preferences_channels:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:background_workers_job_runner:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:background_workers_job_runner:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:runtime_secrets_management:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:runtime_secrets_management:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:logs_aggregation_tenant_scoped_search:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:logs_aggregation_tenant_scoped_search:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:metrics_traces:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:metrics_traces:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:observability_built_in_alerting_incidents:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:observability_built_in_alerting_incidents:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:internal_service_catalog_readiness:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:internal_service_catalog_readiness:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:code_quality_secret_dependency_scanning:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:code_quality_secret_dependency_scanning:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:compliance_reports_access_reviews_evidence_packs:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:compliance_reports_access_reviews_evidence_packs:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_isolation_proof:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_isolation_proof:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:webhooks_developer_facing:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:webhooks_developer_facing:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:api_docs_developer_portal_sdks_rate_limits:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:api_docs_developer_portal_sdks_rate_limits:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:rate_limiting_api:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:rate_limiting_api:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_lifecycle_provision_suspend_delete_export:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_lifecycle_provision_suspend_delete_export:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:support_tickets_customer_health_announcements:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:support_tickets_customer_health_announcements:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:universal_service_foundation_scope_principles:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:universal_service_foundation_scope_principles:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:build_versus_compose_decision_framework:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:build_versus_compose_decision_framework:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:service_catalog_provider_integration_model:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:service_catalog_provider_integration_model:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_specific_vs_shared_service_model:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_specific_vs_shared_service_model:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_configuration_plane:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_configuration_plane:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:composed_provider_readiness_spine:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:composed_provider_readiness_spine:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:history_read_model_read_only_projection:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:history_read_model_read_only_projection:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_discovery_issuer_jwks_validation:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_discovery_issuer_jwks_validation:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_test_connection_callback_display:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_test_connection_callback_display:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_host_identity_resolution:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_host_identity_resolution:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_domain_activation_auth_client:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_domain_activation_auth_client:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_canonical_domain_set_unset:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_canonical_domain_set_unset:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_custom_domain_auth_callback:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_custom_domain_auth_callback:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_service_clickthrough_policy:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_service_clickthrough_policy:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_registry_bootstrap:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_registry_bootstrap:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_environment_classification:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_environment_classification:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:e2e_confidence_ladder_stage_aware:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:e2e_confidence_ladder_stage_aware:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:openapi_drift_hard_gate:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:openapi_drift_hard_gate:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:i18n_runtime_validation:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:i18n_runtime_validation:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:accessibility_a11y_gate:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:accessibility_a11y_gate:rollback",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:recovery",
+    "sandbox:l5b-staging-1782296250205-7a79bdbc:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:rollback"
   ],
   "beforeState": {
     "routeMutations": {
@@ -346,7 +346,7 @@
         "proofFile": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts"
       }
     },
-    "marker": "l5b-staging-1782274236892-f1bd1927",
+    "marker": "l5b-staging-1782296250205-7a79bdbc",
     "capabilityCount": 70,
     "stagingProviderMode": "external-sandbox"
   },
@@ -389,8 +389,8 @@
   "sideEffectsAsserted": true,
   "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:staging-resilience-certification"],
-  "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:staging-resilience-certification"],
+  "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:staging-resilience-certification"],
+  "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:staging-resilience-certification"],
   "metricSamples": [
     {
       "name": "usf_l5b_staging_certified_capabilities_total",
@@ -401,7 +401,7 @@
       "value": 70
     }
   ],
-  "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:staging-resilience-certification"],
+  "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:staging-resilience-certification"],
   "cleanupResult": {
     "status": "completed",
     "stagingSyntheticDataPolicy": "synthetic isolated disposable data only",
@@ -410,12 +410,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:10:36.902Z",
+  "generatedAt": "2026-06-24T10:17:30.214Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -664,7 +664,7 @@
             "identity-access.tenant-identity-record-fqdn.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_identity_record_fqdn"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_identity_record_fqdn"
           ],
           "metricSamples": [
             {
@@ -675,9 +675,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_identity_record_fqdn"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_identity_record_fqdn"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_identity_record_fqdn"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_identity_record_fqdn"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -692,8 +692,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_identity_record_fqdn:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_identity_record_fqdn:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_identity_record_fqdn:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_identity_record_fqdn:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -748,7 +748,7 @@
             "identity-access.user-identity-tenant-membership.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:user_identity_tenant_membership"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:user_identity_tenant_membership"
           ],
           "metricSamples": [
             {
@@ -760,10 +760,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:user_identity_tenant_membership"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:user_identity_tenant_membership"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:user_identity_tenant_membership"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:user_identity_tenant_membership"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -778,8 +778,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:user_identity_tenant_membership:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:user_identity_tenant_membership:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:user_identity_tenant_membership:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:user_identity_tenant_membership:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -838,7 +838,7 @@
             "identity-access.end-user-profile-preferences-self-service.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:end_user_profile_preferences_self_service"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:end_user_profile_preferences_self_service"
           ],
           "metricSamples": [
             {
@@ -850,10 +850,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:end_user_profile_preferences_self_service"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:end_user_profile_preferences_self_service"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:end_user_profile_preferences_self_service"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:end_user_profile_preferences_self_service"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -868,8 +868,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:end_user_profile_preferences_self_service:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:end_user_profile_preferences_self_service:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:end_user_profile_preferences_self_service:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:end_user_profile_preferences_self_service:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -926,7 +926,7 @@
             "identity-access.api-keys-personal-access-tokens.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:api_keys_personal_access_tokens"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:api_keys_personal_access_tokens"
           ],
           "metricSamples": [
             {
@@ -938,10 +938,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:api_keys_personal_access_tokens"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:api_keys_personal_access_tokens"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:api_keys_personal_access_tokens"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:api_keys_personal_access_tokens"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -956,8 +956,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:api_keys_personal_access_tokens:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:api_keys_personal_access_tokens:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:api_keys_personal_access_tokens:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:api_keys_personal_access_tokens:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1012,7 +1012,7 @@
             "identity-access.tenant-groups.readiness",
             "identity-access.tenant-groups.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_groups"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_groups"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -1022,8 +1022,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_groups"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_groups"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_groups"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_groups"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -1037,8 +1037,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_groups:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_groups:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_groups:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_groups:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1093,7 +1093,7 @@
             "identity-access.sub-organisations.readiness",
             "identity-access.sub-organisations.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:sub_organisations"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:sub_organisations"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -1103,8 +1103,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:sub_organisations"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:sub_organisations"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:sub_organisations"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:sub_organisations"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -1118,8 +1118,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:sub_organisations:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:sub_organisations:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:sub_organisations:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:sub_organisations:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1173,7 +1173,7 @@
             "identity-access.rbac-roles-permissions.readiness",
             "identity-access.rbac-roles-permissions.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:rbac_roles_permissions"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:rbac_roles_permissions"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -1183,9 +1183,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:rbac_roles_permissions"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:rbac_roles_permissions"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:rbac_roles_permissions"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:rbac_roles_permissions"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1200,8 +1200,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:rbac_roles_permissions:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:rbac_roles_permissions:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:rbac_roles_permissions:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:rbac_roles_permissions:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1257,7 +1257,7 @@
             "identity-access.abac-policy-decision-point.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:abac_policy_decision_point"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:abac_policy_decision_point"
           ],
           "metricSamples": [
             {
@@ -1268,9 +1268,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:abac_policy_decision_point"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:abac_policy_decision_point"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:abac_policy_decision_point"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:abac_policy_decision_point"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1285,8 +1285,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:abac_policy_decision_point:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:abac_policy_decision_point:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:abac_policy_decision_point:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:abac_policy_decision_point:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1342,7 +1342,7 @@
             "identity-access.delegated-administration-roles.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:delegated_administration_roles"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:delegated_administration_roles"
           ],
           "metricSamples": [
             {
@@ -1354,10 +1354,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:delegated_administration_roles"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:delegated_administration_roles"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:delegated_administration_roles"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:delegated_administration_roles"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1372,8 +1372,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:delegated_administration_roles:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:delegated_administration_roles:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:delegated_administration_roles:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:delegated_administration_roles:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1431,7 +1431,7 @@
             "identity-access.entitlement-engine.readiness",
             "identity-access.entitlement-engine.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:entitlement_engine"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:entitlement_engine"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -1441,8 +1441,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:entitlement_engine"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:entitlement_engine"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:entitlement_engine"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:entitlement_engine"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -1456,8 +1456,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:entitlement_engine:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:entitlement_engine:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:entitlement_engine:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:entitlement_engine:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1513,7 +1513,7 @@
             "identity-access.support-mode-break-glass-access.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:support_mode_break_glass_access"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:support_mode_break_glass_access"
           ],
           "metricSamples": [
             {
@@ -1525,10 +1525,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:support_mode_break_glass_access"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:support_mode_break_glass_access"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:support_mode_break_glass_access"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:support_mode_break_glass_access"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1543,8 +1543,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:support_mode_break_glass_access:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:support_mode_break_glass_access:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:support_mode_break_glass_access:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:support_mode_break_glass_access:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1599,7 +1599,7 @@
             "identity-access.audit-of-privileged-access.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:audit_of_privileged_access"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:audit_of_privileged_access"
           ],
           "metricSamples": [
             {
@@ -1610,9 +1610,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:audit_of_privileged_access"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:audit_of_privileged_access"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:audit_of_privileged_access"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:audit_of_privileged_access"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1627,8 +1627,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:audit_of_privileged_access:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:audit_of_privileged_access:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:audit_of_privileged_access:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:audit_of_privileged_access:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1683,7 +1683,7 @@
             "authentication.platform-login-session.readiness",
             "authentication.platform-login-session.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:platform_login_session"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:platform_login_session"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -1693,9 +1693,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:platform_login_session"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:platform_login_session"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:platform_login_session"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:platform_login_session"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1710,8 +1710,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:platform_login_session:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:platform_login_session:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:platform_login_session:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:platform_login_session:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1770,7 +1770,7 @@
             "authentication.idp-brokering-oidc-provider-management.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:idp_brokering_oidc_provider_management"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:idp_brokering_oidc_provider_management"
           ],
           "metricSamples": [
             {
@@ -1782,10 +1782,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:idp_brokering_oidc_provider_management"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:idp_brokering_oidc_provider_management"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:idp_brokering_oidc_provider_management"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:idp_brokering_oidc_provider_management"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1800,8 +1800,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:idp_brokering_oidc_provider_management:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:idp_brokering_oidc_provider_management:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:idp_brokering_oidc_provider_management:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:idp_brokering_oidc_provider_management:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1857,7 +1857,7 @@
             "authentication.claim-mapping-group-role-mapping.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:claim_mapping_group_role_mapping"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:claim_mapping_group_role_mapping"
           ],
           "metricSamples": [
             {
@@ -1869,10 +1869,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:claim_mapping_group_role_mapping"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:claim_mapping_group_role_mapping"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:claim_mapping_group_role_mapping"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:claim_mapping_group_role_mapping"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1887,8 +1887,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:claim_mapping_group_role_mapping:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:claim_mapping_group_role_mapping:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:claim_mapping_group_role_mapping:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:claim_mapping_group_role_mapping:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -1944,7 +1944,7 @@
             "authentication.mfa-session-policy-lockout.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:mfa_session_policy_lockout"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:mfa_session_policy_lockout"
           ],
           "metricSamples": [
             {
@@ -1955,9 +1955,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:mfa_session_policy_lockout"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:mfa_session_policy_lockout"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:mfa_session_policy_lockout"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:mfa_session_policy_lockout"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1972,8 +1972,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:mfa_session_policy_lockout:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:mfa_session_policy_lockout:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:mfa_session_policy_lockout:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:mfa_session_policy_lockout:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2028,7 +2028,7 @@
             "configuration.configuration-registry-history.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:configuration_registry_history"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:configuration_registry_history"
           ],
           "metricSamples": [
             {
@@ -2040,10 +2040,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:configuration_registry_history"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:configuration_registry_history"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:configuration_registry_history"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:configuration_registry_history"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2058,8 +2058,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:configuration_registry_history:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:configuration_registry_history:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:configuration_registry_history:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:configuration_registry_history:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2114,7 +2114,7 @@
             "configuration.branding-theming.readiness",
             "configuration.branding-theming.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:branding_theming"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:branding_theming"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -2124,8 +2124,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:branding_theming"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:branding_theming"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:branding_theming"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:branding_theming"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -2139,8 +2139,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:branding_theming:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:branding_theming:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:branding_theming:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:branding_theming:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2201,7 +2201,7 @@
             "configuration.custom-domains-dns-ownership-tls-canonical.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:custom_domains_dns_ownership_tls_canonical"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:custom_domains_dns_ownership_tls_canonical"
           ],
           "metricSamples": [
             {
@@ -2213,10 +2213,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:custom_domains_dns_ownership_tls_canonical"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:custom_domains_dns_ownership_tls_canonical"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:custom_domains_dns_ownership_tls_canonical"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:custom_domains_dns_ownership_tls_canonical"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2231,8 +2231,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:custom_domains_dns_ownership_tls_canonical:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:custom_domains_dns_ownership_tls_canonical:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:custom_domains_dns_ownership_tls_canonical:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:custom_domains_dns_ownership_tls_canonical:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2287,7 +2287,7 @@
             "configuration.write-only-secret-settings.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:write_only_secret_settings"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:write_only_secret_settings"
           ],
           "metricSamples": [
             {
@@ -2298,9 +2298,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:write_only_secret_settings"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:write_only_secret_settings"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:write_only_secret_settings"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:write_only_secret_settings"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2315,8 +2315,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:write_only_secret_settings:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:write_only_secret_settings:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:write_only_secret_settings:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:write_only_secret_settings:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2373,7 +2373,7 @@
             "entitlements-billing.product-catalog-plans-prices.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:product_catalog_plans_prices"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:product_catalog_plans_prices"
           ],
           "metricSamples": [
             {
@@ -2384,9 +2384,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:product_catalog_plans_prices"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:product_catalog_plans_prices"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:product_catalog_plans_prices"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:product_catalog_plans_prices"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2401,8 +2401,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:product_catalog_plans_prices:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:product_catalog_plans_prices:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:product_catalog_plans_prices:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:product_catalog_plans_prices:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2461,7 +2461,7 @@
             "entitlements-billing.subscriptions-invoices-payment-methods-dunning.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:subscriptions_invoices_payment_methods_dunning"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:subscriptions_invoices_payment_methods_dunning"
           ],
           "metricSamples": [
             {
@@ -2473,10 +2473,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:subscriptions_invoices_payment_methods_dunning"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:subscriptions_invoices_payment_methods_dunning"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:subscriptions_invoices_payment_methods_dunning"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:subscriptions_invoices_payment_methods_dunning"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2491,8 +2491,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:subscriptions_invoices_payment_methods_dunning:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:subscriptions_invoices_payment_methods_dunning:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:subscriptions_invoices_payment_methods_dunning:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:subscriptions_invoices_payment_methods_dunning:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2551,7 +2551,7 @@
             "entitlements-billing.usage-metering-meter-event-ingestion.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:usage_metering_meter_event_ingestion"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:usage_metering_meter_event_ingestion"
           ],
           "metricSamples": [
             {
@@ -2563,10 +2563,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:usage_metering_meter_event_ingestion"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:usage_metering_meter_event_ingestion"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:usage_metering_meter_event_ingestion"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:usage_metering_meter_event_ingestion"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2581,8 +2581,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:usage_metering_meter_event_ingestion:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:usage_metering_meter_event_ingestion:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:usage_metering_meter_event_ingestion:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:usage_metering_meter_event_ingestion:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2638,7 +2638,7 @@
             "entitlements-billing.quota-enforcement.readiness",
             "entitlements-billing.quota-enforcement.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:quota_enforcement"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:quota_enforcement"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -2648,8 +2648,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:quota_enforcement"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:quota_enforcement"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:quota_enforcement"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:quota_enforcement"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -2663,8 +2663,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:quota_enforcement:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:quota_enforcement:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:quota_enforcement:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:quota_enforcement:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2721,7 +2721,7 @@
             "data-platform.relational-storage-migrations-rls.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:relational_storage_migrations_rls"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:relational_storage_migrations_rls"
           ],
           "metricSamples": [
             {
@@ -2733,10 +2733,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:relational_storage_migrations_rls"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:relational_storage_migrations_rls"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:relational_storage_migrations_rls"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:relational_storage_migrations_rls"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2751,8 +2751,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:relational_storage_migrations_rls:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:relational_storage_migrations_rls:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:relational_storage_migrations_rls:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:relational_storage_migrations_rls:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2807,7 +2807,7 @@
             "data-platform.backup-restore.readiness",
             "data-platform.backup-restore.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:backup_restore"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:backup_restore"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -2817,8 +2817,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:backup_restore"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:backup_restore"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:backup_restore"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:backup_restore"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -2832,8 +2832,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:backup_restore:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:backup_restore:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:backup_restore:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:backup_restore:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2892,7 +2892,7 @@
             "data-platform.pitr-retention-legal-hold-data-residency.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:pitr_retention_legal_hold_data_residency"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:pitr_retention_legal_hold_data_residency"
           ],
           "metricSamples": [
             {
@@ -2904,10 +2904,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:pitr_retention_legal_hold_data_residency"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:pitr_retention_legal_hold_data_residency"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:pitr_retention_legal_hold_data_residency"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:pitr_retention_legal_hold_data_residency"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -2922,8 +2922,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:pitr_retention_legal_hold_data_residency:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:pitr_retention_legal_hold_data_residency:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:pitr_retention_legal_hold_data_residency:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:pitr_retention_legal_hold_data_residency:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -2981,7 +2981,7 @@
             "data-platform.data-governance-catalog-lineage-classification-pii-dsr-gdpr.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
           ],
           "metricSamples": [
             {
@@ -2993,10 +2993,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3011,8 +3011,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:data_governance_catalog_lineage_classification_pii_dsr_gdpr:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:data_governance_catalog_lineage_classification_pii_dsr_gdpr:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:data_governance_catalog_lineage_classification_pii_dsr_gdpr:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:data_governance_catalog_lineage_classification_pii_dsr_gdpr:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3068,7 +3068,7 @@
             "data-platform.tenant-data-import-export.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_data_import_export"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_data_import_export"
           ],
           "metricSamples": [
             {
@@ -3079,9 +3079,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_data_import_export"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_data_import_export"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_data_import_export"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_data_import_export"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3096,8 +3096,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_data_import_export:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_data_import_export:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_data_import_export:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_data_import_export:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3155,7 +3155,7 @@
             "search.search-indexing-product-search.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:search_indexing_product_search"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:search_indexing_product_search"
           ],
           "metricSamples": [
             {
@@ -3167,10 +3167,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:search_indexing_product_search"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:search_indexing_product_search"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:search_indexing_product_search"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:search_indexing_product_search"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3185,8 +3185,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:search_indexing_product_search:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:search_indexing_product_search:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:search_indexing_product_search:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:search_indexing_product_search:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3244,7 +3244,7 @@
             "storage.object-storage-tenant-prefixes-signed-urls.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:object_storage_tenant_prefixes_signed_urls"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:object_storage_tenant_prefixes_signed_urls"
           ],
           "metricSamples": [
             {
@@ -3256,10 +3256,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:object_storage_tenant_prefixes_signed_urls"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:object_storage_tenant_prefixes_signed_urls"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:object_storage_tenant_prefixes_signed_urls"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:object_storage_tenant_prefixes_signed_urls"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3274,8 +3274,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:object_storage_tenant_prefixes_signed_urls:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:object_storage_tenant_prefixes_signed_urls:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:object_storage_tenant_prefixes_signed_urls:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:object_storage_tenant_prefixes_signed_urls:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3334,7 +3334,7 @@
             "events-workflow.event-bus-durable-queues-dlq-redrive.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:event_bus_durable_queues_dlq_redrive"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:event_bus_durable_queues_dlq_redrive"
           ],
           "metricSamples": [
             {
@@ -3346,10 +3346,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:event_bus_durable_queues_dlq_redrive"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:event_bus_durable_queues_dlq_redrive"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:event_bus_durable_queues_dlq_redrive"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:event_bus_durable_queues_dlq_redrive"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3364,8 +3364,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:event_bus_durable_queues_dlq_redrive:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:event_bus_durable_queues_dlq_redrive:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:event_bus_durable_queues_dlq_redrive:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:event_bus_durable_queues_dlq_redrive:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3423,7 +3423,7 @@
             "events-workflow.workflow-engine-scheduled-jobs-approvals.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:workflow_engine_scheduled_jobs_approvals"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:workflow_engine_scheduled_jobs_approvals"
           ],
           "metricSamples": [
             {
@@ -3435,10 +3435,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:workflow_engine_scheduled_jobs_approvals"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:workflow_engine_scheduled_jobs_approvals"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:workflow_engine_scheduled_jobs_approvals"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:workflow_engine_scheduled_jobs_approvals"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3453,8 +3453,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:workflow_engine_scheduled_jobs_approvals:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:workflow_engine_scheduled_jobs_approvals:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:workflow_engine_scheduled_jobs_approvals:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:workflow_engine_scheduled_jobs_approvals:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3513,7 +3513,7 @@
             "events-workflow.scheduled-jobs-built-in-on-the-event-substrate.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:scheduled_jobs_built_in_on_the_event_substrate"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:scheduled_jobs_built_in_on_the_event_substrate"
           ],
           "metricSamples": [
             {
@@ -3525,10 +3525,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:scheduled_jobs_built_in_on_the_event_substrate"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:scheduled_jobs_built_in_on_the_event_substrate"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:scheduled_jobs_built_in_on_the_event_substrate"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:scheduled_jobs_built_in_on_the_event_substrate"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3543,8 +3543,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:scheduled_jobs_built_in_on_the_event_substrate:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:scheduled_jobs_built_in_on_the_event_substrate:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:scheduled_jobs_built_in_on_the_event_substrate:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:scheduled_jobs_built_in_on_the_event_substrate:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3606,7 +3606,7 @@
             "events-workflow.notification-delivery-preferences-channels.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:notification_delivery_preferences_channels"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:notification_delivery_preferences_channels"
           ],
           "metricSamples": [
             {
@@ -3618,10 +3618,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:notification_delivery_preferences_channels"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:notification_delivery_preferences_channels"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:notification_delivery_preferences_channels"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:notification_delivery_preferences_channels"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3636,8 +3636,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:notification_delivery_preferences_channels:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:notification_delivery_preferences_channels:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:notification_delivery_preferences_channels:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:notification_delivery_preferences_channels:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3693,7 +3693,7 @@
             "compute-runtime.background-workers-job-runner.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:background_workers_job_runner"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:background_workers_job_runner"
           ],
           "metricSamples": [
             {
@@ -3705,10 +3705,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:background_workers_job_runner"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:background_workers_job_runner"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:background_workers_job_runner"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:background_workers_job_runner"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3723,8 +3723,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:background_workers_job_runner:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:background_workers_job_runner:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:background_workers_job_runner:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:background_workers_job_runner:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3782,7 +3782,7 @@
             "compute-runtime.runtime-secrets-management.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:runtime_secrets_management"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:runtime_secrets_management"
           ],
           "metricSamples": [
             {
@@ -3793,9 +3793,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:runtime_secrets_management"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:runtime_secrets_management"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:runtime_secrets_management"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:runtime_secrets_management"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3810,8 +3810,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:runtime_secrets_management:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:runtime_secrets_management:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:runtime_secrets_management:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:runtime_secrets_management:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3869,7 +3869,7 @@
             "observability-ops.logs-aggregation-tenant-scoped-search.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:logs_aggregation_tenant_scoped_search"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:logs_aggregation_tenant_scoped_search"
           ],
           "metricSamples": [
             {
@@ -3881,10 +3881,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:logs_aggregation_tenant_scoped_search"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:logs_aggregation_tenant_scoped_search"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:logs_aggregation_tenant_scoped_search"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:logs_aggregation_tenant_scoped_search"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -3899,8 +3899,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:logs_aggregation_tenant_scoped_search:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:logs_aggregation_tenant_scoped_search:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:logs_aggregation_tenant_scoped_search:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:logs_aggregation_tenant_scoped_search:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -3956,7 +3956,7 @@
             "observability-ops.metrics-traces.readiness",
             "observability-ops.metrics-traces.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:metrics_traces"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:metrics_traces"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -3966,8 +3966,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:metrics_traces"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:metrics_traces"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:metrics_traces"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:metrics_traces"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -3981,8 +3981,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:metrics_traces:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:metrics_traces:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:metrics_traces:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:metrics_traces:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4043,7 +4043,7 @@
             "observability-ops.observability-built-in-alerting-incidents.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:observability_built_in_alerting_incidents"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:observability_built_in_alerting_incidents"
           ],
           "metricSamples": [
             {
@@ -4055,10 +4055,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:observability_built_in_alerting_incidents"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:observability_built_in_alerting_incidents"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:observability_built_in_alerting_incidents"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:observability_built_in_alerting_incidents"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4073,8 +4073,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:observability_built_in_alerting_incidents:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:observability_built_in_alerting_incidents:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:observability_built_in_alerting_incidents:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:observability_built_in_alerting_incidents:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4131,7 +4131,7 @@
             "observability-ops.internal-service-catalog-readiness.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:internal_service_catalog_readiness"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:internal_service_catalog_readiness"
           ],
           "metricSamples": [
             {
@@ -4143,10 +4143,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:internal_service_catalog_readiness"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:internal_service_catalog_readiness"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:internal_service_catalog_readiness"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:internal_service_catalog_readiness"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4161,8 +4161,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:internal_service_catalog_readiness:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:internal_service_catalog_readiness:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:internal_service_catalog_readiness:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:internal_service_catalog_readiness:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4219,7 +4219,7 @@
             "security-governance.code-quality-secret-dependency-scanning.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:code_quality_secret_dependency_scanning"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:code_quality_secret_dependency_scanning"
           ],
           "metricSamples": [
             {
@@ -4231,10 +4231,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:code_quality_secret_dependency_scanning"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:code_quality_secret_dependency_scanning"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:code_quality_secret_dependency_scanning"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:code_quality_secret_dependency_scanning"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4249,8 +4249,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:code_quality_secret_dependency_scanning:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:code_quality_secret_dependency_scanning:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:code_quality_secret_dependency_scanning:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:code_quality_secret_dependency_scanning:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4307,7 +4307,7 @@
             "security-governance.compliance-reports-access-reviews-evidence-packs.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:compliance_reports_access_reviews_evidence_packs"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:compliance_reports_access_reviews_evidence_packs"
           ],
           "metricSamples": [
             {
@@ -4319,10 +4319,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:compliance_reports_access_reviews_evidence_packs"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:compliance_reports_access_reviews_evidence_packs"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:compliance_reports_access_reviews_evidence_packs"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:compliance_reports_access_reviews_evidence_packs"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4337,8 +4337,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:compliance_reports_access_reviews_evidence_packs:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:compliance_reports_access_reviews_evidence_packs:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:compliance_reports_access_reviews_evidence_packs:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:compliance_reports_access_reviews_evidence_packs:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4393,7 +4393,7 @@
             "security-governance.tenant-isolation-proof.readiness",
             "security-governance.tenant-isolation-proof.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_isolation_proof"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_isolation_proof"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -4403,9 +4403,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_isolation_proof"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_isolation_proof"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_isolation_proof"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_isolation_proof"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4420,8 +4420,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_isolation_proof:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_isolation_proof:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_isolation_proof:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_isolation_proof:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4478,7 +4478,7 @@
             "developer-platform.webhooks-developer-facing.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:webhooks_developer_facing"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:webhooks_developer_facing"
           ],
           "metricSamples": [
             {
@@ -4489,9 +4489,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:webhooks_developer_facing"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:webhooks_developer_facing"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:webhooks_developer_facing"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:webhooks_developer_facing"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4506,8 +4506,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:webhooks_developer_facing:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:webhooks_developer_facing:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:webhooks_developer_facing:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:webhooks_developer_facing:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4565,7 +4565,7 @@
             "developer-platform.api-docs-developer-portal-sdks-rate-limits.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:api_docs_developer_portal_sdks_rate_limits"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:api_docs_developer_portal_sdks_rate_limits"
           ],
           "metricSamples": [
             {
@@ -4577,10 +4577,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:api_docs_developer_portal_sdks_rate_limits"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:api_docs_developer_portal_sdks_rate_limits"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:api_docs_developer_portal_sdks_rate_limits"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:api_docs_developer_portal_sdks_rate_limits"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4595,8 +4595,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:api_docs_developer_portal_sdks_rate_limits:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:api_docs_developer_portal_sdks_rate_limits:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:api_docs_developer_portal_sdks_rate_limits:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:api_docs_developer_portal_sdks_rate_limits:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4653,7 +4653,7 @@
             "developer-platform.rate-limiting-api.readiness",
             "developer-platform.rate-limiting-api.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:rate_limiting_api"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:rate_limiting_api"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -4663,8 +4663,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:rate_limiting_api"],
-          "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b:rate_limiting_api"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:rate_limiting_api"],
+          "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b:rate_limiting_api"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -4678,8 +4678,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:rate_limiting_api:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:rate_limiting_api:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:rate_limiting_api:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:rate_limiting_api:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4737,7 +4737,7 @@
             "support-admin.tenant-lifecycle-provision-suspend-delete-export.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_lifecycle_provision_suspend_delete_export"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_lifecycle_provision_suspend_delete_export"
           ],
           "metricSamples": [
             {
@@ -4749,10 +4749,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_lifecycle_provision_suspend_delete_export"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_lifecycle_provision_suspend_delete_export"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_lifecycle_provision_suspend_delete_export"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_lifecycle_provision_suspend_delete_export"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4767,8 +4767,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_lifecycle_provision_suspend_delete_export:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_lifecycle_provision_suspend_delete_export:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_lifecycle_provision_suspend_delete_export:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_lifecycle_provision_suspend_delete_export:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4825,7 +4825,7 @@
             "support-admin.support-tickets-customer-health-announcements.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:support_tickets_customer_health_announcements"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:support_tickets_customer_health_announcements"
           ],
           "metricSamples": [
             {
@@ -4837,10 +4837,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:support_tickets_customer_health_announcements"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:support_tickets_customer_health_announcements"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:support_tickets_customer_health_announcements"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:support_tickets_customer_health_announcements"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4855,8 +4855,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:support_tickets_customer_health_announcements:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:support_tickets_customer_health_announcements:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:support_tickets_customer_health_announcements:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:support_tickets_customer_health_announcements:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -4913,7 +4913,7 @@
             "foundation.universal-service-foundation-scope-principles.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:universal_service_foundation_scope_principles"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:universal_service_foundation_scope_principles"
           ],
           "metricSamples": [
             {
@@ -4925,10 +4925,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:universal_service_foundation_scope_principles"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:universal_service_foundation_scope_principles"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:universal_service_foundation_scope_principles"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:universal_service_foundation_scope_principles"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -4943,8 +4943,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:universal_service_foundation_scope_principles:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:universal_service_foundation_scope_principles:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:universal_service_foundation_scope_principles:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:universal_service_foundation_scope_principles:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5001,7 +5001,7 @@
             "foundation.build-versus-compose-decision-framework.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:build_versus_compose_decision_framework"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:build_versus_compose_decision_framework"
           ],
           "metricSamples": [
             {
@@ -5013,10 +5013,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:build_versus_compose_decision_framework"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:build_versus_compose_decision_framework"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:build_versus_compose_decision_framework"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:build_versus_compose_decision_framework"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5031,8 +5031,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:build_versus_compose_decision_framework:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:build_versus_compose_decision_framework:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:build_versus_compose_decision_framework:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:build_versus_compose_decision_framework:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5093,7 +5093,7 @@
             "foundation.service-catalog-provider-integration-model.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:service_catalog_provider_integration_model"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:service_catalog_provider_integration_model"
           ],
           "metricSamples": [
             {
@@ -5105,10 +5105,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:service_catalog_provider_integration_model"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:service_catalog_provider_integration_model"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:service_catalog_provider_integration_model"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:service_catalog_provider_integration_model"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5123,8 +5123,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:service_catalog_provider_integration_model:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:service_catalog_provider_integration_model:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:service_catalog_provider_integration_model:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:service_catalog_provider_integration_model:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5181,7 +5181,7 @@
             "foundation.environment-specific-vs-shared-service-model.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:environment_specific_vs_shared_service_model"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:environment_specific_vs_shared_service_model"
           ],
           "metricSamples": [
             {
@@ -5193,10 +5193,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:environment_specific_vs_shared_service_model"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:environment_specific_vs_shared_service_model"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:environment_specific_vs_shared_service_model"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:environment_specific_vs_shared_service_model"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5211,8 +5211,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:environment_specific_vs_shared_service_model:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:environment_specific_vs_shared_service_model:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_specific_vs_shared_service_model:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_specific_vs_shared_service_model:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5269,7 +5269,7 @@
             "foundation.provider-configuration-plane.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:provider_configuration_plane"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:provider_configuration_plane"
           ],
           "metricSamples": [
             {
@@ -5280,9 +5280,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:provider_configuration_plane"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:provider_configuration_plane"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:provider_configuration_plane"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:provider_configuration_plane"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5297,8 +5297,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:provider_configuration_plane:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:provider_configuration_plane:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_configuration_plane:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_configuration_plane:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5354,7 +5354,7 @@
             "foundation.composed-provider-readiness-spine.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:composed_provider_readiness_spine"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:composed_provider_readiness_spine"
           ],
           "metricSamples": [
             {
@@ -5366,10 +5366,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:composed_provider_readiness_spine"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:composed_provider_readiness_spine"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:composed_provider_readiness_spine"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:composed_provider_readiness_spine"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5384,8 +5384,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:composed_provider_readiness_spine:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:composed_provider_readiness_spine:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:composed_provider_readiness_spine:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:composed_provider_readiness_spine:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5443,7 +5443,7 @@
             "data-platform.history-read-model-read-only-projection.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:history_read_model_read_only_projection"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:history_read_model_read_only_projection"
           ],
           "metricSamples": [
             {
@@ -5455,10 +5455,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:history_read_model_read_only_projection"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:history_read_model_read_only_projection"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:history_read_model_read_only_projection"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:history_read_model_read_only_projection"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5473,8 +5473,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:history_read_model_read_only_projection:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:history_read_model_read_only_projection:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:history_read_model_read_only_projection:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:history_read_model_read_only_projection:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5532,7 +5532,7 @@
             "authentication.oidc-discovery-issuer-jwks-validation.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:oidc_discovery_issuer_jwks_validation"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:oidc_discovery_issuer_jwks_validation"
           ],
           "metricSamples": [
             {
@@ -5544,10 +5544,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:oidc_discovery_issuer_jwks_validation"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:oidc_discovery_issuer_jwks_validation"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:oidc_discovery_issuer_jwks_validation"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:oidc_discovery_issuer_jwks_validation"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5562,8 +5562,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_discovery_issuer_jwks_validation:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_discovery_issuer_jwks_validation:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_discovery_issuer_jwks_validation:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_discovery_issuer_jwks_validation:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5621,7 +5621,7 @@
             "authentication.oidc-test-connection-callback-display.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:oidc_test_connection_callback_display"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:oidc_test_connection_callback_display"
           ],
           "metricSamples": [
             {
@@ -5633,10 +5633,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:oidc_test_connection_callback_display"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:oidc_test_connection_callback_display"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:oidc_test_connection_callback_display"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:oidc_test_connection_callback_display"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5651,8 +5651,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_test_connection_callback_display:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:oidc_test_connection_callback_display:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_test_connection_callback_display:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:oidc_test_connection_callback_display:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5709,7 +5709,7 @@
             "identity-access.tenant-host-identity-resolution.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_host_identity_resolution"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_host_identity_resolution"
           ],
           "metricSamples": [
             {
@@ -5721,10 +5721,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_host_identity_resolution"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_host_identity_resolution"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_host_identity_resolution"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_host_identity_resolution"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5739,8 +5739,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_host_identity_resolution:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_host_identity_resolution:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_host_identity_resolution:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_host_identity_resolution:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5798,7 +5798,7 @@
             "configuration.tenant-domain-activation-auth-client.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_domain_activation_auth_client"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_domain_activation_auth_client"
           ],
           "metricSamples": [
             {
@@ -5810,10 +5810,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_domain_activation_auth_client"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_domain_activation_auth_client"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_domain_activation_auth_client"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_domain_activation_auth_client"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5828,8 +5828,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_domain_activation_auth_client:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_domain_activation_auth_client:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_domain_activation_auth_client:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_domain_activation_auth_client:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5885,7 +5885,7 @@
             "configuration.tenant-canonical-domain-set-unset.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_canonical_domain_set_unset"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_canonical_domain_set_unset"
           ],
           "metricSamples": [
             {
@@ -5897,10 +5897,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_canonical_domain_set_unset"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_canonical_domain_set_unset"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_canonical_domain_set_unset"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_canonical_domain_set_unset"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -5915,8 +5915,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_canonical_domain_set_unset:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_canonical_domain_set_unset:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_canonical_domain_set_unset:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_canonical_domain_set_unset:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -5972,7 +5972,7 @@
             "authentication.tenant-custom-domain-auth-callback.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_custom_domain_auth_callback"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_custom_domain_auth_callback"
           ],
           "metricSamples": [
             {
@@ -5984,10 +5984,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_custom_domain_auth_callback"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_custom_domain_auth_callback"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_custom_domain_auth_callback"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_custom_domain_auth_callback"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6002,8 +6002,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_custom_domain_auth_callback:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_custom_domain_auth_callback:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_custom_domain_auth_callback:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_custom_domain_auth_callback:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6060,7 +6060,7 @@
             "observability-ops.tenant-service-clickthrough-policy.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:tenant_service_clickthrough_policy"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_service_clickthrough_policy"
           ],
           "metricSamples": [
             {
@@ -6072,10 +6072,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:tenant_service_clickthrough_policy"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_service_clickthrough_policy"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:tenant_service_clickthrough_policy"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:tenant_service_clickthrough_policy"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6090,8 +6090,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_service_clickthrough_policy:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:tenant_service_clickthrough_policy:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_service_clickthrough_policy:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:tenant_service_clickthrough_policy:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6149,7 +6149,7 @@
             "foundation.environment-registry-bootstrap.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:environment_registry_bootstrap"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:environment_registry_bootstrap"
           ],
           "metricSamples": [
             {
@@ -6161,10 +6161,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:environment_registry_bootstrap"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:environment_registry_bootstrap"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:environment_registry_bootstrap"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:environment_registry_bootstrap"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6179,8 +6179,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:environment_registry_bootstrap:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:environment_registry_bootstrap:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_registry_bootstrap:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:environment_registry_bootstrap:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6236,7 +6236,7 @@
             "foundation.provider-environment-classification.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:provider_environment_classification"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:provider_environment_classification"
           ],
           "metricSamples": [
             {
@@ -6248,10 +6248,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:provider_environment_classification"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:provider_environment_classification"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:provider_environment_classification"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:provider_environment_classification"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6266,8 +6266,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:provider_environment_classification:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:provider_environment_classification:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_environment_classification:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:provider_environment_classification:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6322,7 +6322,7 @@
             "foundation.e2e-confidence-ladder-stage-aware.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:e2e_confidence_ladder_stage_aware"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:e2e_confidence_ladder_stage_aware"
           ],
           "metricSamples": [
             {
@@ -6334,10 +6334,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:e2e_confidence_ladder_stage_aware"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:e2e_confidence_ladder_stage_aware"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:e2e_confidence_ladder_stage_aware"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:e2e_confidence_ladder_stage_aware"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6352,8 +6352,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:e2e_confidence_ladder_stage_aware:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:e2e_confidence_ladder_stage_aware:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:e2e_confidence_ladder_stage_aware:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:e2e_confidence_ladder_stage_aware:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6407,7 +6407,7 @@
             "developer-platform.openapi-drift-hard-gate.readiness",
             "developer-platform.openapi-drift-hard-gate.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:openapi_drift_hard_gate"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:openapi_drift_hard_gate"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -6417,9 +6417,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:openapi_drift_hard_gate"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:openapi_drift_hard_gate"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:openapi_drift_hard_gate"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:openapi_drift_hard_gate"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6434,8 +6434,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:openapi_drift_hard_gate:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:openapi_drift_hard_gate:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:openapi_drift_hard_gate:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:openapi_drift_hard_gate:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6489,7 +6489,7 @@
             "foundation.i18n-runtime-validation.readiness",
             "foundation.i18n-runtime-validation.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:i18n_runtime_validation"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:i18n_runtime_validation"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -6499,9 +6499,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:i18n_runtime_validation"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:i18n_runtime_validation"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:i18n_runtime_validation"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:i18n_runtime_validation"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6516,8 +6516,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:i18n_runtime_validation:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:i18n_runtime_validation:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:i18n_runtime_validation:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:i18n_runtime_validation:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6571,7 +6571,7 @@
             "foundation.accessibility-a11y-gate.readiness",
             "foundation.accessibility-a11y-gate.errors"
           ],
-          "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b:accessibility_a11y_gate"],
+          "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b:accessibility_a11y_gate"],
           "metricSamples": [
             {
               "name": "usf_l5b_capability_certified_total",
@@ -6581,9 +6581,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b:accessibility_a11y_gate"],
+          "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b:accessibility_a11y_gate"],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:accessibility_a11y_gate"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:accessibility_a11y_gate"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6598,8 +6598,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:accessibility_a11y_gate:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:accessibility_a11y_gate:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:accessibility_a11y_gate:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:accessibility_a11y_gate:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6656,7 +6656,7 @@
             "observability-ops.browser-telemetry-grafana-faro-rum-browser-to-bff-tracing.errors"
           ],
           "auditEventIds": [
-            "audit:l5b-staging-1782274236892-f1bd1927:l5b:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
+            "audit:l5b-staging-1782296250205-7a79bdbc:l5b:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
           ],
           "metricSamples": [
             {
@@ -6668,10 +6668,10 @@
             }
           ],
           "traceIds": [
-            "trace:l5b-staging-1782274236892-f1bd1927:l5b:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
+            "trace:l5b-staging-1782296250205-7a79bdbc:l5b:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
           ],
           "logCorrelationIds": [
-            "log:l5b-staging-1782274236892-f1bd1927:l5b:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
+            "log:l5b-staging-1782296250205-7a79bdbc:l5b:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -6686,8 +6686,8 @@
           "dataLoss": "none"
         },
         "externalSandboxRequestIds": [
-          "sandbox:l5b-staging-1782274236892-f1bd1927:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:incident-recovery",
-          "sandbox:l5b-staging-1782274236892-f1bd1927:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:rollback"
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:incident-recovery",
+          "sandbox:l5b-staging-1782296250205-7a79bdbc:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing:rollback"
         ],
         "result": "PASS",
         "gaps": [],
@@ -6697,52 +6697,52 @@
     "restartEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "timeoutEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "retryEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "concurrencyEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "degradedModeEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "recoveryEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "backupRestoreEvidence": {
       "status": "certified",
       "phase": "L5B_STAGING",
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "statePreservationEvidence": {
       "status": "certified",
       "noSilentDataLoss": true,
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "behaviouralContinuityEvidence": {
       "status": "certified",
       "l3ContractMaintained": true,
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "failureInjectionEvidence": {
       "status": "certified",
       "controlledStagingFailureModel": true,
-      "marker": "l5b-staging-1782274236892-f1bd1927"
+      "marker": "l5b-staging-1782296250205-7a79bdbc"
     },
     "observabilityEvidence": {
       "classification": "proof-emitted-telemetry",
@@ -6754,10 +6754,10 @@
         "logs": []
       },
       "proofEmittedTelemetry": {
-        "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b-staging-certification"],
+        "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b-staging-certification"],
         "metricNames": ["usf_l5b_staging_certified_capabilities_total"],
-        "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b-staging-certification"],
-        "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b-staging-certification"]
+        "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b-staging-certification"],
+        "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b-staging-certification"]
       }
     },
     "conclusion": "RESILIENCE_PROVEN"
@@ -6765,43 +6765,43 @@
   "restartEvidence": {
     "status": "certified",
     "phase": "L5B_STAGING",
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "restartOrReconnectEvidence": null,
   "timeoutEvidence": {
     "status": "certified",
     "phase": "L5B_STAGING",
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "retryEvidence": {
     "status": "certified",
     "phase": "L5B_STAGING",
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "concurrencyEvidence": {
     "status": "certified",
     "phase": "L5B_STAGING",
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "degradedModeEvidence": {
     "status": "certified",
     "phase": "L5B_STAGING",
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "recoveryEvidence": {
     "status": "certified",
     "phase": "L5B_STAGING",
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "statePreservationEvidence": {
     "status": "certified",
     "noSilentDataLoss": true,
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "behaviouralContinuityEvidence": {
     "status": "certified",
     "l3ContractMaintained": true,
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "observabilityEvidence": {
     "classification": "proof-emitted-telemetry",
@@ -6813,23 +6813,23 @@
       "logs": []
     },
     "proofEmittedTelemetry": {
-      "auditEventIds": ["audit:l5b-staging-1782274236892-f1bd1927:l5b-staging-certification"],
+      "auditEventIds": ["audit:l5b-staging-1782296250205-7a79bdbc:l5b-staging-certification"],
       "metricNames": ["usf_l5b_staging_certified_capabilities_total"],
-      "traceIds": ["trace:l5b-staging-1782274236892-f1bd1927:l5b-staging-certification"],
-      "logCorrelationIds": ["log:l5b-staging-1782274236892-f1bd1927:l5b-staging-certification"]
+      "traceIds": ["trace:l5b-staging-1782296250205-7a79bdbc:l5b-staging-certification"],
+      "logCorrelationIds": ["log:l5b-staging-1782296250205-7a79bdbc:l5b-staging-certification"]
     }
   },
   "failureInjectionEvidence": {
     "status": "certified",
     "controlledStagingFailureModel": true,
-    "marker": "l5b-staging-1782274236892-f1bd1927"
+    "marker": "l5b-staging-1782296250205-7a79bdbc"
   },
   "environment": "staging",
   "proofLevelObserved": "L5",
-  "startTime": "2026-06-24T04:10:36.851Z",
-  "endTime": "2026-06-24T04:10:36.902Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:10:36.902Z",
+  "startTime": "2026-06-24T10:17:30.170Z",
+  "endTime": "2026-06-24T10:17:30.214Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:17:30.214Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts": {
@@ -6851,7 +6851,7 @@
     }
   },
   "failureMode": "exercised",
-  "auditIds": ["audit:l5b-staging-1782274236892-f1bd1927:staging-resilience-certification"],
+  "auditIds": ["audit:l5b-staging-1782296250205-7a79bdbc:staging-resilience-certification"],
   "metricEvidence": [
     {
       "name": "usf_l5b_staging_certified_capabilities_total",
@@ -6862,6 +6862,6 @@
       "value": 70
     }
   ],
-  "logEvidence": ["log:l5b-staging-1782274236892-f1bd1927:staging-resilience-certification"],
-  "evidenceSignature": "c73a0d745e995f61d33f5d0f2d149b54ca936278b268b7d38bb5fdd8336c03b4"
+  "logEvidence": ["log:l5b-staging-1782296250205-7a79bdbc:staging-resilience-certification"],
+  "evidenceSignature": "9116e50145719a2005da76307b1d9dbfdfb727b7e8185528aa68250e67cd792a"
 }

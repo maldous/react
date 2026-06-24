@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:08:53.564Z",
-  "endedAt": "2026-06-24T04:08:53.598Z",
+  "startedAt": "2026-06-24T10:15:48.031Z",
+  "endedAt": "2026-06-24T10:15:48.063Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:08:53.598Z",
+  "generatedAt": "2026-06-24T10:15:48.063Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -99,10 +99,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:08:53.564Z",
-  "endTime": "2026-06-24T04:08:53.598Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:08:53.598Z",
+  "startTime": "2026-06-24T10:15:48.031Z",
+  "endTime": "2026-06-24T10:15:48.063Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:15:48.063Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/compliance-report-runtime-proof.ts": {
@@ -128,5 +128,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
-  "evidenceSignature": "f514366fe437e61379376084ff86cb1a0a74b6fa7b074b2ded16789223aead8e"
+  "evidenceSignature": "ce97645bcc20398aa86aca713ffa86bc1b22291632342b626c96a789f6aa04ad"
 }

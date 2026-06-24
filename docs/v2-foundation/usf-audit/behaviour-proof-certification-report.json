@@ -1,7 +1,7 @@
 {
   "artefact": "behaviour-proof-certification-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T04:12:15.562Z",
+  "generatedAt": "2026-06-24T10:19:08.327Z",
   "status": "PASS",
   "milestone": "L3 Behaviour Proven",
   "prerequisiteForFutureL4Work": true,
@@ -18,8 +18,8 @@
     "readinessStatus": "PASS",
     "lockingStatus": "PASS",
     "capabilityReadinessStatus": "PASS",
-    "l3ProofsAudited": 155,
-    "validL3Proofs": 155,
+    "l3ProofsAudited": 157,
+    "validL3Proofs": 157,
     "invalidL3Proofs": 0,
     "delegatedBehaviouralProofs": 0,
     "weakBehaviouralClassifications": 0,
@@ -356,6 +356,13 @@
     {
       "proofId": "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
       "capability": "Observability — built-in alerting + incidents",
+      "currentLevel": "L3",
+      "qualityScore": 100,
+      "confidenceScore": 100
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-keycloak-realm-admin-adapter-runtime-proof-ts",
+      "capability": "unknown",
       "currentLevel": "L3",
       "qualityScore": 100,
       "confidenceScore": 100
@@ -705,6 +712,13 @@
     },
     {
       "proofId": "proof:apps-platform-api-scripts-postgres-tenant-domain-registry-runtime-proof-ts",
+      "capability": "unknown",
+      "currentLevel": "L3",
+      "qualityScore": 100,
+      "confidenceScore": 100
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-postgres-webhook-store-runtime-proof-ts",
       "capability": "unknown",
       "currentLevel": "L3",
       "qualityScore": 100,

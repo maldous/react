@@ -23,32 +23,6 @@
     "sourceFileRefs": ["apps/platform-api/tests/unit/events.test.ts"]
   },
   {
-    "eventId": "event:boom-event",
-    "eventName": "boom.event",
-    "semanticDefinition": true,
-    "typedPayload": true,
-    "version": 0,
-    "producer": "test or runtime-proof fixture only",
-    "consumer": ["test fixture handler"],
-    "idempotencyKey": "fixture idempotency key scoped to disposable proof/test tenant",
-    "correlation": "none for product audit; fixture redrive evidence remains proof-only",
-    "retryPolicy": "uses event-bus retry path only to prove infrastructure behaviour",
-    "dlqPolicy": "uses event-bus DLQ path only to prove infrastructure behaviour",
-    "retention": "discarded with test/proof data",
-    "privacyClassification": "fixture",
-    "auditRelationship": "none for product audit; fixture redrive evidence remains proof-only",
-    "proofRef": "proof:event-worker; proof:event-redrive",
-    "proofExercisesPublishConsume": true,
-    "proofSourceFileRefs": [
-      "apps/platform-api/scripts/event-redrive-runtime-proof.ts",
-      "apps/platform-api/scripts/event-worker-runtime-proof.ts"
-    ],
-    "sourceFileRefs": [
-      "apps/platform-api/scripts/event-worker-runtime-proof.ts",
-      "apps/platform-api/scripts/event-redrive-runtime-proof.ts"
-    ]
-  },
-  {
     "eventId": "event:no-handler",
     "eventName": "no.handler",
     "semanticDefinition": true,

@@ -51,5 +51,9 @@ assert.ok(
     adapterSource.includes("healthCheck"),
   "webhook store proof must assert no-secret payloads, null missing secret, retry/dead-letter, and degraded health failure modes"
 );
-
-await import("./webhooks-runtime-proof.ts");
+assert.ok(
+  webhooksProofSource.includes("# Tenant webhooks runtime proof") &&
+    workerProofSource.includes("# Webhook durable delivery worker runtime proof") &&
+    redriveProofSource.includes("# Webhook dead-letter redrive + metrics runtime proof"),
+  "provider binding must reference independently registered webhook lifecycle, worker, and redrive runtime proofs"
+);

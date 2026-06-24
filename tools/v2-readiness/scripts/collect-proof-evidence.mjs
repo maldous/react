@@ -62,8 +62,10 @@ for (const proof of selectedProofs) {
     sourceFileRefs: proof.sourceFileRefs || [proof.file],
   };
   const mode = proofExecutionMode(proof);
+  const runtimeEnv = runtimeProofEnv(loadRuntimeEnv(mode.environmentMode));
   const env = {
     ...process.env,
+    ...runtimeEnv,
     NODE_OPTIONS: appendNodeImport(process.env.NODE_OPTIONS, runtimeHook),
     USF_PROOF_EVIDENCE_FILE: evidencePath,
     USF_PROOF_EVIDENCE_METADATA: JSON.stringify(metadata),
@@ -188,6 +190,78 @@ function proofExecutionMode(proof) {
     return { environmentMode: "staging", providerMode: "external-sandbox" };
   }
   return { environmentMode: "test", providerMode: "compose-local" };
+}
+
+function loadRuntimeEnv(environmentMode) {
+  const envFile = path.join(repoRoot, ".env", `${environmentMode}.env`);
+  if (!fs.existsSync(envFile)) return {};
+  const out = {};
+  for (const line of fs.readFileSync(envFile, "utf8").split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const match = /^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/.exec(trimmed);
+    if (!match) continue;
+    out[match[1]] = unquoteEnvValue(match[2]);
+  }
+  return out;
+}
+
+function runtimeProofEnv(rawEnv) {
+  const out = { ...rawEnv };
+  const postgresPort = out.POSTGRES_PORT || "5433";
+  const redisPort = out.REDIS_PORT || "6379";
+  const minioPort = out.MINIO_API_PORT || "9000";
+  const keycloakPort = out.KEYCLOAK_PORT || "8090";
+  const openBaoPort = out.OPENBAO_PORT || "8200";
+  const prometheusPort = out.PROMETHEUS_PORT || "9090";
+  const tempoPort = out.TEMPO_HTTP_PORT || "3201";
+  const lokiPort = out.LOKI_PORT || "3100";
+  const clamAvPort = out.CLAMAV_PORT || "3310";
+  const windmillPort = out.WINDMILL_PORT || "8000";
+  const temporalPort = out.TEMPORAL_PORT || "7233";
+  const alertmanagerPort = out.ALERTMANAGER_PORT || "9093";
+
+  out.POSTGRES_URL =
+    out.POSTGRES_URL || `postgresql://platform:platformpassword@localhost:${postgresPort}/platform`;
+  out.POSTGRES_APP_URL =
+    out.POSTGRES_APP_URL ||
+    `postgresql://platform_app:platformapppassword@localhost:${postgresPort}/platform`;
+  out.DATABASE_URL = out.POSTGRES_URL;
+  out.REDIS_URL = out.REDIS_URL || `redis://localhost:${redisPort}`;
+  out.MINIO_ENDPOINT = out.MINIO_ENDPOINT || `http://localhost:${minioPort}`;
+  out.KEYCLOAK_URL = out.KEYCLOAK_URL || `http://localhost:${keycloakPort}/kc`;
+  out.KEYCLOAK_PUBLIC_URL = out.KEYCLOAK_PUBLIC_URL || out.KEYCLOAK_URL;
+  out.OPENBAO_PORT = openBaoPort;
+  out.OPENBAO_ADDR = out.OPENBAO_ADDR || `http://localhost:${openBaoPort}`;
+  out.PROMETHEUS_PORT = prometheusPort;
+  out.PROMETHEUS_URL = out.PROMETHEUS_URL || `http://localhost:${prometheusPort}`;
+  out.TEMPO_HTTP_PORT = tempoPort;
+  out.TEMPO_URL = out.TEMPO_URL || `http://localhost:${tempoPort}`;
+  out.LOKI_PORT = lokiPort;
+  out.LOKI_URL = out.LOKI_URL || `http://localhost:${lokiPort}`;
+  out.CLAMAV_PORT = clamAvPort;
+  out.CLAMAV_HOST = out.CLAMAV_HOST || "localhost";
+  out.WINDMILL_PORT = windmillPort;
+  out.WINDMILL_URL =
+    out.WINDMILL_URL || out.WINDMILL_BASE_URL || `http://localhost:${windmillPort}`;
+  out.WINDMILL_BASE_URL = out.WINDMILL_BASE_URL || out.WINDMILL_URL;
+  out.TEMPORAL_PORT = temporalPort;
+  out.TEMPORAL_ADDRESS = out.TEMPORAL_ADDRESS || `localhost:${temporalPort}`;
+  out.ALERTMANAGER_PORT = alertmanagerPort;
+  out.ALERTMANAGER_URL = out.ALERTMANAGER_URL || `http://localhost:${alertmanagerPort}`;
+
+  return out;
+}
+
+function unquoteEnvValue(value) {
+  const text = String(value);
+  if (
+    (text.startsWith('"') && text.endsWith('"')) ||
+    (text.startsWith("'") && text.endsWith("'"))
+  ) {
+    return text.slice(1, -1);
+  }
+  return text;
 }
 
 function tail(value) {

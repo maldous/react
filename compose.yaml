@@ -578,7 +578,7 @@ services:
     command:
       - |
         sed "s/__PLATFORM_API_PORT__/${PLATFORM_API_PORT:-3001}/g" /etc/prometheus/prometheus.yml > /tmp/prometheus.yml
-        exec /bin/prometheus --config.file=/tmp/prometheus.yml --storage.tsdb.path=/prometheus --web.enable-lifecycle
+        exec /bin/prometheus --config.file=/tmp/prometheus.yml --storage.tsdb.path=/prometheus --web.enable-lifecycle --web.external-url="${PROMETHEUS_EXTERNAL_URL:-/prometheus/}" --web.route-prefix="${PROMETHEUS_ROUTE_PREFIX:-/}"
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
     volumes:

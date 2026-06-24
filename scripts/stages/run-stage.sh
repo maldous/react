@@ -112,14 +112,19 @@ if [ "$STAGE_RESULT" -eq 0 ]; then
     if [ "$EXECUTOR" = "tilt" ]; then
         bash scripts/tilt/up-dev.sh || STAGE_RESULT=1
     else
-        # All compose stages (destructive + preserve) start the full profile set so
-        # every environment is capability-identical: default + all profiles + web.
+        # All compose stages (destructive + preserve) start the full profile set required
+        # by the V2 proof collector so every environment is capability-identical for
+        # contract/runtime evidence: default + identity + mocks + provider substrates + web.
         # up.sh calls are idempotent — already-running preserve containers are no-ops.
         bash scripts/compose/up.sh "$STAGE" default || STAGE_RESULT=1
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" identity || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { make keycloak-provision ENV="$STAGE" || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" external-mocks || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" observability || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" secrets || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" workflow-provider || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" observability-provider || STAGE_RESULT=1; }
+        [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" antivirus-provider || STAGE_RESULT=1; }
         [ "$STAGE_RESULT" -eq 0 ] && { bash scripts/compose/up.sh "$STAGE" web || STAGE_RESULT=1; }
     fi
 fi

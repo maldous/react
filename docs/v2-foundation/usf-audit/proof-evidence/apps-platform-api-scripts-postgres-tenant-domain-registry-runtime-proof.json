@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:11:29.907Z",
-  "endedAt": "2026-06-24T04:11:30.044Z",
+  "startedAt": "2026-06-24T10:18:22.917Z",
+  "endedAt": "2026-06-24T10:18:23.043Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:30.044Z",
+  "generatedAt": "2026-06-24T10:18:23.043Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -103,10 +103,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:29.907Z",
-  "endTime": "2026-06-24T04:11:30.044Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:30.044Z",
+  "startTime": "2026-06-24T10:18:22.917Z",
+  "endTime": "2026-06-24T10:18:23.043Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:23.043Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts": {
@@ -132,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
-  "evidenceSignature": "61c45d955575d69fb87d0b8a959fdd8595310c0fa4e42a0dbcb3cc209773fce6"
+  "evidenceSignature": "6384d07fb98eb88391ad79c52f415319b61c3657034aa9f062bb8f148143fd87"
 }

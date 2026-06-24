@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:11:27.992Z",
-  "endedAt": "2026-06-24T04:11:28.063Z",
+  "startedAt": "2026-06-24T10:18:21.044Z",
+  "endedAt": "2026-06-24T10:18:21.121Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-retention-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:28.063Z",
+  "generatedAt": "2026-06-24T10:18:21.121Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-retention-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -99,10 +99,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:27.992Z",
-  "endTime": "2026-06-24T04:11:28.063Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:28.063Z",
+  "startTime": "2026-06-24T10:18:21.044Z",
+  "endTime": "2026-06-24T10:18:21.121Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:21.121Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-retention-runtime-proof.ts": {
@@ -128,5 +128,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-retention-runtime-proof.ts"],
-  "evidenceSignature": "2ae73875206b6c2047df2339f1562991ead251ba557041173beb0a4e5d33783c"
+  "evidenceSignature": "e809530dfc02e2340c14f67d78e3c446cf0edd6703ff3bdde7f18063c9dd08a7"
 }

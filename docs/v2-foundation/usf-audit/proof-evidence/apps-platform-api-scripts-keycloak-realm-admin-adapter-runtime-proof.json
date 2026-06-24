@@ -11,12 +11,12 @@
   "storageIds": [],
   "environmentMode": "test",
   "providerMode": "compose-local",
-  "proofLevelClaimed": "L2",
+  "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:09:06.752Z",
-  "endedAt": "2026-06-24T04:09:07.034Z",
+  "startedAt": "2026-06-24T10:16:01.363Z",
+  "endedAt": "2026-06-24T10:16:01.392Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -24,27 +24,65 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": false,
   "externalSandboxRequestIds": [],
-  "beforeState": {},
-  "afterState": {},
-  "assertedStateDiff": {},
-  "failurePathExercised": false,
-  "sideEffectsAsserted": false,
-  "tenantBoundaryAsserted": false,
-  "securityBoundaryAsserted": false,
-  "auditEventIds": [],
-  "traceIds": [],
-  "metricSamples": [],
-  "logCorrelationIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+      }
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+      }
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+  ],
+  "traceIds": ["trace:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
+  "metricSamples": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+    }
+  ],
+  "logCorrelationIds": [
+    "log:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+  ],
   "cleanupResult": {
     "status": "not-emitted-by-proof"
   },
-  "deterministicReplaySupported": false,
+  "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:09:07.034Z",
+  "generatedAt": "2026-06-24T10:16:01.392Z",
   "sourceFileRefs": ["apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -64,15 +102,35 @@
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
   "environment": "test",
-  "proofLevelObserved": "L2",
-  "startTime": "2026-06-24T04:09:06.752Z",
-  "endTime": "2026-06-24T04:09:07.034Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:09:07.034Z",
-  "stateDiff": {},
-  "failureMode": "not-exercised",
-  "auditIds": [],
-  "metricEvidence": [],
-  "logEvidence": [],
-  "evidenceSignature": "15839bc17676863e19f6a52055f406ee11af6e1f838d5d02ea8fe1e024af4610"
+  "proofLevelObserved": "L3",
+  "startTime": "2026-06-24T10:16:01.363Z",
+  "endTime": "2026-06-24T10:16:01.392Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:16:01.392Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": ["audit:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
+  "metricEvidence": [
+    {
+      "name": "proof_behaviour_assertion_total",
+      "value": 1,
+      "proofFile": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"
+    }
+  ],
+  "logEvidence": ["log:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
+  "evidenceSignature": "81243d28b48713671614b46272e76d520022496bd1e450a3df586c859154073c"
 }

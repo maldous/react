@@ -174,6 +174,12 @@ run_group() {
         ;;
 
       contract)
+        if [ "$STAGE" = "dev" ] || [ "$STAGE" = "test" ]; then
+            POSTGRES_URL="$_pg_url" npm run db:migrate
+            POSTGRES_URL="$_pg_url" npm run db:seed
+            POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" \
+            npm run v2:collect-proof-evidence
+        fi
         POSTGRES_URL="$_pg_url" POSTGRES_APP_URL="$_pg_app_url" REDIS_URL="$_rd_url" \
         npm run test:architecture
         ;;

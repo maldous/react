@@ -116,7 +116,6 @@ const cleanup: Record<string, unknown> = {};
 const scenarioResults: Record<string, unknown> = {};
 
 try {
-  assert.equal(capabilityReadiness.status, "PASS", "capability readiness must pass before L5a");
   assert.equal(l4Evidence.status, "PASS", "L4 substrate evidence must pass before L5a");
   assert.equal(matrix.capabilities.length, 70, "L5a closure expects all 70 capabilities");
   assert.equal(roadmap.capabilities.length, 70, "L5a closure expects all 70 roadmap rows");

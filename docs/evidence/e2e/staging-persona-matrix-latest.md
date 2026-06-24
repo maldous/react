@@ -44,17 +44,17 @@ Generated (ADR-ACT-0285 Phase 6 sub-project A). DO NOT EDIT — regenerate via `
 - ✅ [scaffold-system-admin] expected-route `/admin` → expected loads + data APIs 2xx, got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/logs` → expected loads + data APIs 2xx, got loads
 - ✅ [scaffold-system-admin] expected-route `/admin/clickthrough` → expected loads + data APIs 2xx, got loads
-- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/kc/admin/master/console/>
-- ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/grafana/>
+- ✅ [scaffold-system-admin] clickthrough-granted `keycloak /kc/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/kc/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fstaging.aldous.info%2Fkc%2Fadmin%2Fmaster%2Fconsole%2F&state=47df8635-3ccf-4e09-8821-165bf21dc260&response_mode=query&response_type=code&scope=openid&nonce=9db77f9b-b90c-43bb-9282-555b2bfa6429&code_challenge=VCRp7HpaZHY0yyC62WkQ3T43IVQ7_xpNtCef-9jGeBg&code_challenge_method=S256>
+- ✅ [scaffold-system-admin] clickthrough-granted `grafana /grafana/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/grafana/?orgId=1&from=now-6h&to=now&timezone=browser>
 - ✅ [scaffold-system-admin] clickthrough-granted `mailpit /mailpit/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/mailpit/>
 - ✅ [scaffold-system-admin] clickthrough-granted `sonarqube /sonar/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/sonar/>
 - ✅ [scaffold-system-admin] clickthrough-granted `minio /minio/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/minio/>
 - ✅ [scaffold-system-admin] clickthrough-granted `pgadmin /pgadmin/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/pgadmin/login?next=/pgadmin/>
 - ✅ [scaffold-system-admin] clickthrough-granted `sentry /sentry/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/sentry/auth/login/>
 - ✅ [scaffold-system-admin] clickthrough-granted `clickhouse /clickhouse/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/clickhouse/>
-- ✅ [scaffold-system-admin] clickthrough-granted-skipped `prometheus /prometheus/` → expected service unavailable on this stage, got status=502 url=<https://staging.aldous.info/prometheus/>
-- ✅ [scaffold-system-admin] clickthrough-granted-skipped `alertmanager /alertmanager/` → expected service unavailable on this stage, got status=502 url=<https://staging.aldous.info/alertmanager/>
-- ✅ [scaffold-system-admin] clickthrough-granted-skipped `windmill /windmill/` → expected service unavailable on this stage, got status=502 url=<https://staging.aldous.info/windmill/>
+- ✅ [scaffold-system-admin] clickthrough-granted `prometheus /prometheus/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/prometheus/graph?g0.expr=&g0.tab=1&g0.display_mode=lines&g0.show_exemplars=0&g0.range_input=1h>
+- ✅ [scaffold-system-admin] clickthrough-granted `alertmanager /alertmanager/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/alertmanager/#/alerts>
+- ✅ [scaffold-system-admin] clickthrough-granted `windmill /windmill/` → expected service UI (status<400, not SPA), got status=200 url=<https://staging.aldous.info/windmill/>
 - ✅ [scaffold-system-admin] clickthrough-granted-skipped `temporal /temporal/` → expected service unavailable on this stage, got status=502 url=<https://staging.aldous.info/temporal/>
 - ✅ [scaffold-tenant-admin] session-roles `/api/session` → expected ["tenant-admin"], got ["tenant-admin"]
 - ✅ [scaffold-tenant-admin] forbidden-route `/admin/logs` → expected denied (redirect / sign-in / forbidden-state), got denied

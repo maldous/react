@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:11:27.761Z",
-  "endedAt": "2026-06-24T04:11:27.926Z",
+  "startedAt": "2026-06-24T10:18:20.812Z",
+  "endedAt": "2026-06-24T10:18:20.971Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:27.926Z",
+  "generatedAt": "2026-06-24T10:18:20.971Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -103,10 +103,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:27.761Z",
-  "endTime": "2026-06-24T04:11:27.926Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:27.926Z",
+  "startTime": "2026-06-24T10:18:20.812Z",
+  "endTime": "2026-06-24T10:18:20.971Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:20.971Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts": {
@@ -132,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-rate-limit-repository-runtime-proof.ts"],
-  "evidenceSignature": "97f24840f1f62e8e1ed2b0242da844c42f56739b67b8eb94f3f76e63e378a228"
+  "evidenceSignature": "51702b7e5eb7730887735b36c34b156413115f8bb6b4829b5029736a3d2952d5"
 }

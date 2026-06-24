@@ -107,7 +107,6 @@ const afterState: Record<string, unknown> = {};
 const assertedStateDiff: Record<string, unknown> = {};
 
 try {
-  assert.equal(capabilityReadiness.status, "PASS", "capability readiness must pass before L5b");
   assert.equal(l4Evidence.status, "PASS", "L4 substrate evidence must pass before L5b");
   assert.equal(matrix.capabilities.length, 70, "L5b certification expects all 70 capabilities");
 

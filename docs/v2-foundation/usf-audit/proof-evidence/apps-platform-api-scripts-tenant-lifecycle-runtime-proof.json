@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-lifecycle",
-  "startedAt": "2026-06-24T04:11:46.613Z",
-  "endedAt": "2026-06-24T04:11:46.648Z",
+  "startedAt": "2026-06-24T10:18:39.293Z",
+  "endedAt": "2026-06-24T10:18:39.329Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:46.648Z",
+  "generatedAt": "2026-06-24T10:18:39.329Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -165,10 +165,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:46.613Z",
-  "endTime": "2026-06-24T04:11:46.648Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:46.648Z",
+  "startTime": "2026-06-24T10:18:39.293Z",
+  "endTime": "2026-06-24T10:18:39.329Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:39.329Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-export": {
@@ -227,5 +227,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "5d560890e63d810579580eecf7935da746e050fd1f16c46002de3ae86ef422c6"
+  "evidenceSignature": "1c6c2157f0ed4932671293bd677ac7014ae331caa00624f6c68859d21c25f24c"
 }

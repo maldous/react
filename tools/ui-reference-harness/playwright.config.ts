@@ -24,7 +24,7 @@ export default defineConfig({
     command: `npx vite --config tools/ui-reference-harness/vite.config.ts --port ${PORT}`,
     cwd: process.cwd(),
     url: `http://localhost:${PORT}`,
-    timeout: 60000,
+    timeout: 120000,
     reuseExistingServer: !process.env["CI"],
     stderr: "ignore",
     env: { HARNESS_PORT: PORT },

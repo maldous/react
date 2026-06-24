@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:quota-enforcement",
-  "startedAt": "2026-06-24T04:11:33.011Z",
-  "endedAt": "2026-06-24T04:11:33.271Z",
+  "startedAt": "2026-06-24T10:18:25.894Z",
+  "endedAt": "2026-06-24T10:18:26.142Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,10 +121,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:33.271Z",
+  "generatedAt": "2026-06-24T10:18:26.142Z",
   "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -145,10 +145,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:33.011Z",
-  "endTime": "2026-06-24T04:11:33.271Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:33.271Z",
+  "startTime": "2026-06-24T10:18:25.894Z",
+  "endTime": "2026-06-24T10:18:26.142Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:26.142Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-quotas": {
@@ -196,5 +196,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
-  "evidenceSignature": "e25b20cbcc0a3445c4ca60e7b559bdd9db98f8ee953af1dc913e3c212577a346"
+  "evidenceSignature": "1657cee0b50cd1fc2050b4708a904b4f2ee7ca96616d463ab38d92e8de3e428d"
 }

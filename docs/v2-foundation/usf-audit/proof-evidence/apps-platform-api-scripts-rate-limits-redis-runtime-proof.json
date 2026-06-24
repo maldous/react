@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:rate-limits-redis",
-  "startedAt": "2026-06-24T04:11:33.435Z",
-  "endedAt": "2026-06-24T04:11:34.918Z",
+  "startedAt": "2026-06-24T10:18:26.307Z",
+  "endedAt": "2026-06-24T10:18:27.775Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,10 +121,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:34.918Z",
+  "generatedAt": "2026-06-24T10:18:27.775Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -145,10 +145,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:33.435Z",
-  "endTime": "2026-06-24T04:11:34.918Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:34.918Z",
+  "startTime": "2026-06-24T10:18:26.307Z",
+  "endTime": "2026-06-24T10:18:27.775Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:27.775Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-rate-limits": {
@@ -196,5 +196,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/rate-limits-redis-runtime-proof.ts"],
-  "evidenceSignature": "6c525e02528e93e35f17042408c1276127ffa4bd738047ccb77ac1a2d0d4fe59"
+  "evidenceSignature": "14e307c6834a63bf52f0e4d791918797c9ee851e174b7ceba2e544c2388fea6e"
 }

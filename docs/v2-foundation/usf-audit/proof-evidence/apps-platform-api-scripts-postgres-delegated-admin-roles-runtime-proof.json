@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-  "startedAt": "2026-06-24T04:11:22.133Z",
-  "endedAt": "2026-06-24T04:11:22.174Z",
+  "startedAt": "2026-06-24T10:18:15.360Z",
+  "endedAt": "2026-06-24T10:18:15.398Z",
   "exitStatus": 0,
-  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T04:11:22.174Z",
+  "generatedAt": "2026-06-24T10:18:15.398Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782274124680-2753765",
+  "collectorRunId": "proof-run-1782296138803-1960117",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -103,10 +103,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T04:11:22.133Z",
-  "endTime": "2026-06-24T04:11:22.174Z",
-  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
-  "executionTimestamp": "2026-06-24T04:11:22.174Z",
+  "startTime": "2026-06-24T10:18:15.360Z",
+  "endTime": "2026-06-24T10:18:15.398Z",
+  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "executionTimestamp": "2026-06-24T10:18:15.398Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts": {
@@ -132,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"],
-  "evidenceSignature": "742393a9ca50dfd31f12099b31536cadd74905529dd3a20b5844db6f9502093f"
+  "evidenceSignature": "c68f6cb7e75fb0b4d0846472a5e4cf2f4cd98923af4211525282d218dfa5adfb"
 }

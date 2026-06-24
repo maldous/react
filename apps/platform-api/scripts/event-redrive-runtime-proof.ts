@@ -118,21 +118,21 @@ async function main(): Promise<void> {
   };
   let orgA: string | null = null;
   try {
+    const proofSuffix = Date.now().toString(36);
+    const eventType = `boom.event.${proofSuffix}`;
+    const idempotencyKey = `k1-${proofSuffix}`;
     orgA = (
       await su.query<{ id: string }>(
         "INSERT INTO public.organisations (slug, display_name) VALUES ($1,$2) RETURNING id",
-        ["proof-erd-a-" + Date.now().toString(36), "Proof ERD A"]
+        [`proof-erd-a-${proofSuffix}`, "Proof ERD A"]
       )
     ).rows[0]!.id;
 
     // produce a dead letter via the server-internal worker tick (max_attempts=1)
-    await publishEvent(
-      { organisationId: orgA, eventType: "boom.event", idempotencyKey: "k1", maxAttempts: 1 },
-      deps
-    );
+    await publishEvent({ organisationId: orgA, eventType, idempotencyKey, maxAttempts: 1 }, deps);
     await processNext(
       {
-        "boom.event": async () => {
+        [eventType]: async () => {
           throw new Error("intentional failure");
         },
       },
@@ -173,7 +173,7 @@ async function main(): Promise<void> {
     const handled: string[] = [];
     const after = await processNext(
       {
-        "boom.event": async (e) => {
+        [eventType]: async (e) => {
           handled.push(e.id);
         },
       },
@@ -184,7 +184,7 @@ async function main(): Promise<void> {
     );
     check(
       "the requeued event is processed on the next worker tick",
-      after.processed === 1 && handled.length === 1
+      after.processed >= 1 && handled.includes(rdBody.eventId ?? "")
     );
 
     // events route lists events for the tenant
