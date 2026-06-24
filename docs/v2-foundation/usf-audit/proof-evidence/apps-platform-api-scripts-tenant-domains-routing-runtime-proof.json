@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domains-routing",
-  "startedAt": "2026-06-24T02:49:44.662Z",
-  "endedAt": "2026-06-24T02:49:44.868Z",
+  "startedAt": "2026-06-24T03:22:29.293Z",
+  "endedAt": "2026-06-24T03:22:29.490Z",
   "exitStatus": 0,
-  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,10 +201,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T02:49:44.868Z",
+  "generatedAt": "2026-06-24T03:22:29.490Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782269203982-2077766",
+  "collectorRunId": "proof-run-1782271168457-2327494",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -225,10 +225,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T02:49:44.662Z",
-  "endTime": "2026-06-24T02:49:44.868Z",
-  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
-  "executionTimestamp": "2026-06-24T02:49:44.868Z",
+  "startTime": "2026-06-24T03:22:29.293Z",
+  "endTime": "2026-06-24T03:22:29.490Z",
+  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "executionTimestamp": "2026-06-24T03:22:29.490Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-domains-domain": {
@@ -320,5 +320,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
-  "evidenceSignature": "ccc72245a0bb06421589d5863ddeb9e87d4f908654e6fbef638142b1ee43f342"
+  "evidenceSignature": "fde2ec7a94b5245202d765fb98c64212367ad35b7ac2b1a9c7cba8da87aa371d"
 }

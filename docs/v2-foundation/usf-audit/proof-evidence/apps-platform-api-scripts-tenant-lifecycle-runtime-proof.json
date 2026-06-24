@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-lifecycle",
-  "startedAt": "2026-06-24T02:49:45.421Z",
-  "endedAt": "2026-06-24T02:49:45.457Z",
+  "startedAt": "2026-06-24T03:22:30.039Z",
+  "endedAt": "2026-06-24T03:22:30.077Z",
   "exitStatus": 0,
-  "commit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
+  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T02:49:45.457Z",
+  "generatedAt": "2026-06-24T03:22:30.077Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782269203982-2077766",
+  "collectorRunId": "proof-run-1782271168457-2327494",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -165,10 +165,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T02:49:45.421Z",
-  "endTime": "2026-06-24T02:49:45.457Z",
-  "gitCommit": "0c9a2e45466e33f22ae3f0f94fe39e8aac948ef7",
-  "executionTimestamp": "2026-06-24T02:49:45.457Z",
+  "startTime": "2026-06-24T03:22:30.039Z",
+  "endTime": "2026-06-24T03:22:30.077Z",
+  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "executionTimestamp": "2026-06-24T03:22:30.077Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-export": {
@@ -227,5 +227,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "f74e0958df4fea2bae96ba5e6646c6987e60b7c387a6cf6c10fea94c568dea92"
+  "evidenceSignature": "21c0195ccb68f03e09d9129356119efa17ccc36fb4c7066471e74556757d40dc"
 }
