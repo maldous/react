@@ -1,7 +1,7 @@
 {
   "artefact": "v2-readiness-summary",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T00:21:34.150Z",
+  "generatedAt": "2026-06-24T01:08:16.247Z",
   "status": "PASS",
   "answers": {
     "isL3Complete": true,
@@ -39,6 +39,14 @@
       "proposedL5ProofCommand": "npm run proof:l5-tenant-identity-record-fqdn-resilience",
       "rationale": "Highest-risk, lowest-order substrate target for beginning resilience proof work."
     },
+    "resilienceReadinessStatus": "PASS",
+    "fullL5Status": "INCOMPLETE",
+    "l5CompleteCapabilities": 0,
+    "l5aLocalResilienceProvenCapabilities": 1,
+    "l5bStagingCertifiedCapabilities": 0,
+    "l5PilotCapability": "Tenant identity (record + FQDN)",
+    "l5PilotSubstrate": "Postgres",
+    "l5ResilienceEvidenceStatus": "PASS",
     "l0DiscoveryStatus": "PASS",
     "l0RuntimeNodes": 70,
     "l0RuntimeNodesMissingInMemoryImplementation": 0,

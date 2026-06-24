@@ -1,0 +1,653 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+    "package.json#proof:l5-postgres-tenant-identity-resilience",
+    "proof:l5-postgres-tenant-identity-resilience",
+    "proof:l5-tenant-identity-record-fqdn-resilience",
+    "Tenant identity (record + FQDN)",
+    "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+  ],
+  "subjectId": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+  "capabilityId": "capability:l5-postgres-tenant-identity-resilience",
+  "providerId": "postgres-tenant-identity-resilience",
+  "routeIds": [],
+  "workflowIds": [],
+  "eventIds": ["postgres:l5a-1782263196669-8c975a0a:backend-terminated:17351"],
+  "storageIds": [
+    "postgres:organisations:00000000-0000-4000-8000-000000000001",
+    "postgres:users:f91a6bae-fd6e-44ce-9814-c06655aeadbd",
+    "postgres:external_identities:3baa3a8e-48fb-45a2-910b-bdd8bb043807",
+    "postgres:tenant_domains:l5a-1782263196669-8c975a0a.resilience.test.localhost",
+    "postgres:users:00d85415-b73b-4496-befa-7802c36d0945",
+    "postgres:external_identities:e17fdc7d-1ff6-4c4c-bb6f-71557fa79fce",
+    "postgres:users:f1d1279f-789a-4793-8b62-791a4b7a582b",
+    "postgres:external_identities:0db2d6be-1bc9-4d59-b00b-a797f29c2795",
+    "postgres:users:cd494930-d3c2-4d0d-9273-9cd06ab72564",
+    "postgres:external_identities:1702dc9c-07b0-4d01-99eb-e20733753264",
+    "postgres:tenant_domains:l5a-1782263196669-8c975a0a-concurrent-0.test.localhost",
+    "postgres:tenant_domains:l5a-1782263196669-8c975a0a-concurrent-1.test.localhost",
+    "postgres:tenant_domains:l5a-1782263196669-8c975a0a-concurrent-2.test.localhost",
+    "postgres:tenant_domains:l5a-1782263196669-8c975a0a.conflict.test.localhost",
+    "postgres:organisations:d510ff6f-bffd-4c48-84b9-b9e7db6eb7f4"
+  ],
+  "environmentMode": "test",
+  "providerMode": "compose-local",
+  "proofLevelClaimed": "L5",
+  "commandExecuted": "npm run proof:l5-postgres-tenant-identity-resilience",
+  "startedAt": "2026-06-24T01:06:36.511Z",
+  "endedAt": "2026-06-24T01:06:36.874Z",
+  "exitStatus": 0,
+  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": true,
+  "externalSandboxProviderUsed": false,
+  "externalSandboxRequestIds": [],
+  "beforeState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+      }
+    },
+    "baseline": {
+      "organisationId": "00000000-0000-4000-8000-000000000001",
+      "originalDisplayName": "L5a Tenant Identity l5a-1782262654813-c094175d",
+      "markerUsers": 0,
+      "markerExternalIdentities": 0,
+      "markerDomains": 0
+    },
+    "baselineReadWrite": {
+      "displayName": "L5a Tenant Identity l5a-1782262654813-c094175d",
+      "externalIdentity": null,
+      "fqdnResolution": "not-yet-asserted"
+    },
+    "forcedReconnect": {
+      "backendPid": 17351,
+      "connectionAlive": true
+    },
+    "timeout": {
+      "users": 1,
+      "externalIdentities": 1,
+      "domains": 1
+    },
+    "retry": {
+      "attempts": 0,
+      "transientFailureInjected": false
+    },
+    "concurrency": {
+      "concurrentOperations": 0,
+      "conflictDomainOwner": null
+    },
+    "degradedMode": {
+      "substrateAvailable": true
+    },
+    "recovery": {
+      "expectedDisplayName": "L5a Tenant Identity l5a-1782263196669-8c975a0a",
+      "expectedIdentitySubject": "l5a-1782263196669-8c975a0a:subject"
+    }
+  },
+  "afterState": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+      }
+    },
+    "baselineReadWrite": {
+      "displayName": "L5a Tenant Identity l5a-1782263196669-8c975a0a",
+      "externalIdentityUserId": "f91a6bae-fd6e-44ce-9814-c06655aeadbd",
+      "fqdnResolutionOrganisationId": "00000000-0000-4000-8000-000000000001",
+      "domain": "l5a-1782263196669-8c975a0a.resilience.test.localhost"
+    },
+    "forcedReconnect": {
+      "connectionAlive": false,
+      "recoveredOrganisationId": "00000000-0000-4000-8000-000000000001"
+    },
+    "timeout": {
+      "users": 1,
+      "externalIdentities": 1,
+      "domains": 1
+    },
+    "retry": {
+      "attempts": 2,
+      "transientFailureInjected": true,
+      "retriedOperation": "organisationRepository.getById",
+      "retrySucceeded": true
+    },
+    "concurrency": {
+      "concurrentUserCreates": 3,
+      "concurrentDomainCreates": 3,
+      "crossTenantConflictRejected": true,
+      "conflictDomain": "l5a-1782263196669-8c975a0a.conflict.test.localhost"
+    },
+    "degradedMode": {
+      "substrateAvailable": false,
+      "failClosed": true
+    },
+    "recovery": {
+      "displayName": "L5a Tenant Identity l5a-1782263196669-8c975a0a",
+      "externalIdentityFound": true,
+      "fqdnOrganisationId": "00000000-0000-4000-8000-000000000001",
+      "behaviourContinuityWithL3Contract": true,
+      "l4SubstrateBaselineStillValid": true
+    },
+    "baseline": {
+      "markerUsers": 4,
+      "markerExternalIdentities": 4,
+      "markerDomains": 5,
+      "recoveredDisplayName": "L5a Tenant Identity l5a-1782263196669-8c975a0a",
+      "recoveredFqdnOrganisationId": "00000000-0000-4000-8000-000000000001"
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "baselineReadWrite": {
+      "organisationDisplayNameUpdated": true,
+      "externalIdentityCreated": true,
+      "fqdnResolutionAsserted": true
+    },
+    "forcedReconnect": {
+      "backendTerminated": true,
+      "reconnectReadSucceeded": true
+    },
+    "timeout": {
+      "partialMutationPrevented": true,
+      "markerCountsUnchanged": true
+    },
+    "retry": {
+      "firstAttemptFailed": true,
+      "secondAttemptSucceeded": true
+    },
+    "concurrency": {
+      "concurrentUsersCreated": 3,
+      "concurrentDomainsCreated": 3,
+      "tenantBoundaryConflictRejected": true
+    },
+    "degradedMode": {
+      "unavailableSubstrateDidNotReturnIdentity": true
+    },
+    "recovery": {
+      "displayNamePreserved": true,
+      "externalIdentityPreserved": true,
+      "fqdnResolutionPreserved": true
+    },
+    "baseline": {
+      "usersCreated": 4,
+      "externalIdentitiesCreated": 4,
+      "domainsCreated": 5,
+      "displayNameChanged": "L5a Tenant Identity l5a-1782262654813-c094175d->L5a Tenant Identity l5a-1782263196669-8c975a0a"
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "audit:l5a-1782263196669-8c975a0a:baseline",
+    "audit:l5a-1782263196669-8c975a0a:forced-reconnect",
+    "audit:l5a-1782263196669-8c975a0a:timeout",
+    "audit:l5a-1782263196669-8c975a0a:retry",
+    "audit:l5a-1782263196669-8c975a0a:concurrency",
+    "audit:l5a-1782263196669-8c975a0a:degraded",
+    "audit:l5a-1782263196669-8c975a0a:recovery"
+  ],
+  "traceIds": [
+    "trace:l5a-1782263196669-8c975a0a:baseline",
+    "trace:l5a-1782263196669-8c975a0a:forced-reconnect",
+    "trace:l5a-1782263196669-8c975a0a:timeout",
+    "trace:l5a-1782263196669-8c975a0a:retry",
+    "trace:l5a-1782263196669-8c975a0a:concurrency",
+    "trace:l5a-1782263196669-8c975a0a:degraded",
+    "trace:l5a-1782263196669-8c975a0a:recovery"
+  ],
+  "metricSamples": [
+    {
+      "name": "usf_l5a_resilience_scenarios_run_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_resilience_scenarios_passed_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_postgres_connection_terminations_total",
+      "value": 1
+    },
+    {
+      "name": "usf_l5a_transient_failures_retried_total",
+      "value": 1
+    }
+  ],
+  "logCorrelationIds": ["log:l5a-1782263196669-8c975a0a:l5a-postgres-tenant-identity"],
+  "cleanupResult": {
+    "status": "pending-finally",
+    "marker": "l5a-1782263196669-8c975a0a"
+  },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-24T01:06:36.874Z",
+  "sourceFileRefs": [
+    "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+  ],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782263085791-1316465",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
+  "localResiliencePhase": "L5A_COMPOSE_LOCAL",
+  "l3EvidenceProofIds": [
+    "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
+  ],
+  "l4EvidenceProofIds": ["proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"],
+  "resilienceEvidence": {
+    "capability": "Tenant identity (record + FQDN)",
+    "substrate": "Postgres",
+    "environment": "test",
+    "providerMode": "compose-local",
+    "l3EvidenceProofIds": [
+      "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
+    ],
+    "l4EvidenceProofIds": ["proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"],
+    "scenariosRun": [
+      "baseline tenant identity read/write",
+      "Postgres forced reconnect",
+      "Postgres timeout without partial mutation",
+      "retry after transient Postgres failure",
+      "concurrent tenant identity operations",
+      "fail-closed behaviour during unavailable substrate",
+      "recovery after substrate availability returns"
+    ],
+    "scenariosPassed": [
+      "baseline tenant identity read/write",
+      "Postgres forced reconnect",
+      "Postgres timeout without partial mutation",
+      "retry after transient Postgres failure",
+      "concurrent tenant identity operations",
+      "fail-closed behaviour during unavailable substrate",
+      "recovery after substrate availability returns"
+    ],
+    "restartOrReconnectEvidence": {
+      "mechanism": "pg_terminate_backend on a proof-owned Postgres connection",
+      "limitation": "container restart is intentionally not used inside the proof runner; forced backend termination exercises reconnect/recovery without disrupting other tests",
+      "backendTerminated": true,
+      "stateReadableAfterReconnect": true
+    },
+    "timeoutEvidence": {
+      "statementTimeoutMs": 50,
+      "postgresErrorCode": "57014",
+      "partialMutationPrevented": true,
+      "before": {
+        "users": 1,
+        "externalIdentities": 1,
+        "domains": 1
+      },
+      "after": {
+        "users": 1,
+        "externalIdentities": 1,
+        "domains": 1
+      }
+    },
+    "retryEvidence": {
+      "attempts": 2,
+      "transientFailureInjected": true,
+      "retriedOperation": "organisationRepository.getById",
+      "retrySucceeded": true
+    },
+    "concurrencyEvidence": {
+      "concurrentUserCreates": 3,
+      "concurrentDomainCreates": 3,
+      "crossTenantConflictRejected": true,
+      "conflictDomain": "l5a-1782263196669-8c975a0a.conflict.test.localhost"
+    },
+    "degradedModeEvidence": {
+      "unavailablePoolEnded": true,
+      "identityReadFailedClosed": true,
+      "fallbackProviderUsed": false,
+      "noSyntheticIdentityReturned": true
+    },
+    "recoveryEvidence": {
+      "displayName": "L5a Tenant Identity l5a-1782263196669-8c975a0a",
+      "externalIdentityFound": true,
+      "fqdnOrganisationId": "00000000-0000-4000-8000-000000000001",
+      "behaviourContinuityWithL3Contract": true,
+      "l4SubstrateBaselineStillValid": true
+    },
+    "statePreservationEvidence": {
+      "displayNamePreserved": true,
+      "externalIdentityPreserved": true,
+      "fqdnResolutionPreserved": true,
+      "markerCounts": {
+        "users": 4,
+        "externalIdentities": 4,
+        "domains": 5
+      }
+    },
+    "behaviouralContinuityEvidence": {
+      "l3BehaviourContractReused": [
+        "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
+      ],
+      "l4SubstrateEvidenceReused": [
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+      ],
+      "baselineReadWriteStillValid": true,
+      "fqdnResolutionStillValid": true
+    },
+    "observabilityEvidence": {
+      "classification": "proof-emitted-telemetry",
+      "note": "This L5a pilot emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
+      "auditEventIds": [
+        "audit:l5a-1782263196669-8c975a0a:baseline",
+        "audit:l5a-1782263196669-8c975a0a:forced-reconnect",
+        "audit:l5a-1782263196669-8c975a0a:timeout",
+        "audit:l5a-1782263196669-8c975a0a:retry",
+        "audit:l5a-1782263196669-8c975a0a:concurrency",
+        "audit:l5a-1782263196669-8c975a0a:degraded",
+        "audit:l5a-1782263196669-8c975a0a:recovery"
+      ],
+      "metricSamples": [
+        {
+          "name": "usf_l5a_resilience_scenarios_run_total",
+          "value": 7
+        },
+        {
+          "name": "usf_l5a_resilience_scenarios_passed_total",
+          "value": 7
+        },
+        {
+          "name": "usf_l5a_postgres_connection_terminations_total",
+          "value": 1
+        },
+        {
+          "name": "usf_l5a_transient_failures_retried_total",
+          "value": 1
+        }
+      ],
+      "traceIds": [
+        "trace:l5a-1782263196669-8c975a0a:baseline",
+        "trace:l5a-1782263196669-8c975a0a:forced-reconnect",
+        "trace:l5a-1782263196669-8c975a0a:timeout",
+        "trace:l5a-1782263196669-8c975a0a:retry",
+        "trace:l5a-1782263196669-8c975a0a:concurrency",
+        "trace:l5a-1782263196669-8c975a0a:degraded",
+        "trace:l5a-1782263196669-8c975a0a:recovery"
+      ],
+      "logCorrelationIds": ["log:l5a-1782263196669-8c975a0a:l5a-postgres-tenant-identity"],
+      "observedSubstrateTelemetry": {
+        "auditRecords": [],
+        "metrics": [],
+        "traces": [],
+        "logs": []
+      }
+    },
+    "conclusion": "L5A_LOCAL_RESILIENCE_PROVEN"
+  },
+  "restartEvidence": {
+    "mechanism": "pg_terminate_backend on a proof-owned Postgres connection",
+    "limitation": "container restart is intentionally not used inside the proof runner; forced backend termination exercises reconnect/recovery without disrupting other tests",
+    "backendTerminated": true,
+    "stateReadableAfterReconnect": true
+  },
+  "restartOrReconnectEvidence": {
+    "mechanism": "pg_terminate_backend on a proof-owned Postgres connection",
+    "limitation": "container restart is intentionally not used inside the proof runner; forced backend termination exercises reconnect/recovery without disrupting other tests",
+    "backendTerminated": true,
+    "stateReadableAfterReconnect": true
+  },
+  "timeoutEvidence": {
+    "statementTimeoutMs": 50,
+    "postgresErrorCode": "57014",
+    "partialMutationPrevented": true,
+    "before": {
+      "users": 1,
+      "externalIdentities": 1,
+      "domains": 1
+    },
+    "after": {
+      "users": 1,
+      "externalIdentities": 1,
+      "domains": 1
+    }
+  },
+  "retryEvidence": {
+    "attempts": 2,
+    "transientFailureInjected": true,
+    "retriedOperation": "organisationRepository.getById",
+    "retrySucceeded": true
+  },
+  "concurrencyEvidence": {
+    "concurrentUserCreates": 3,
+    "concurrentDomainCreates": 3,
+    "crossTenantConflictRejected": true,
+    "conflictDomain": "l5a-1782263196669-8c975a0a.conflict.test.localhost"
+  },
+  "degradedModeEvidence": {
+    "unavailablePoolEnded": true,
+    "identityReadFailedClosed": true,
+    "fallbackProviderUsed": false,
+    "noSyntheticIdentityReturned": true
+  },
+  "recoveryEvidence": {
+    "displayName": "L5a Tenant Identity l5a-1782263196669-8c975a0a",
+    "externalIdentityFound": true,
+    "fqdnOrganisationId": "00000000-0000-4000-8000-000000000001",
+    "behaviourContinuityWithL3Contract": true,
+    "l4SubstrateBaselineStillValid": true
+  },
+  "statePreservationEvidence": {
+    "displayNamePreserved": true,
+    "externalIdentityPreserved": true,
+    "fqdnResolutionPreserved": true,
+    "markerCounts": {
+      "users": 4,
+      "externalIdentities": 4,
+      "domains": 5
+    }
+  },
+  "behaviouralContinuityEvidence": {
+    "l3BehaviourContractReused": [
+      "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
+    ],
+    "l4SubstrateEvidenceReused": [
+      "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+    ],
+    "baselineReadWriteStillValid": true,
+    "fqdnResolutionStillValid": true
+  },
+  "observabilityEvidence": {
+    "classification": "proof-emitted-telemetry",
+    "note": "This L5a pilot emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
+    "auditEventIds": [
+      "audit:l5a-1782263196669-8c975a0a:baseline",
+      "audit:l5a-1782263196669-8c975a0a:forced-reconnect",
+      "audit:l5a-1782263196669-8c975a0a:timeout",
+      "audit:l5a-1782263196669-8c975a0a:retry",
+      "audit:l5a-1782263196669-8c975a0a:concurrency",
+      "audit:l5a-1782263196669-8c975a0a:degraded",
+      "audit:l5a-1782263196669-8c975a0a:recovery"
+    ],
+    "metricSamples": [
+      {
+        "name": "usf_l5a_resilience_scenarios_run_total",
+        "value": 7
+      },
+      {
+        "name": "usf_l5a_resilience_scenarios_passed_total",
+        "value": 7
+      },
+      {
+        "name": "usf_l5a_postgres_connection_terminations_total",
+        "value": 1
+      },
+      {
+        "name": "usf_l5a_transient_failures_retried_total",
+        "value": 1
+      }
+    ],
+    "traceIds": [
+      "trace:l5a-1782263196669-8c975a0a:baseline",
+      "trace:l5a-1782263196669-8c975a0a:forced-reconnect",
+      "trace:l5a-1782263196669-8c975a0a:timeout",
+      "trace:l5a-1782263196669-8c975a0a:retry",
+      "trace:l5a-1782263196669-8c975a0a:concurrency",
+      "trace:l5a-1782263196669-8c975a0a:degraded",
+      "trace:l5a-1782263196669-8c975a0a:recovery"
+    ],
+    "logCorrelationIds": ["log:l5a-1782263196669-8c975a0a:l5a-postgres-tenant-identity"],
+    "observedSubstrateTelemetry": {
+      "auditRecords": [],
+      "metrics": [],
+      "traces": [],
+      "logs": []
+    }
+  },
+  "failureInjectionEvidence": {
+    "connectionTermination": {
+      "mechanism": "pg_terminate_backend on a proof-owned Postgres connection",
+      "limitation": "container restart is intentionally not used inside the proof runner; forced backend termination exercises reconnect/recovery without disrupting other tests",
+      "backendTerminated": true,
+      "stateReadableAfterReconnect": true
+    },
+    "unavailablePool": {
+      "unavailablePoolEnded": true,
+      "identityReadFailedClosed": true,
+      "fallbackProviderUsed": false,
+      "noSyntheticIdentityReturned": true
+    },
+    "statementTimeout": {
+      "statementTimeoutMs": 50,
+      "postgresErrorCode": "57014",
+      "partialMutationPrevented": true,
+      "before": {
+        "users": 1,
+        "externalIdentities": 1,
+        "domains": 1
+      },
+      "after": {
+        "users": 1,
+        "externalIdentities": 1,
+        "domains": 1
+      }
+    }
+  },
+  "environment": "test",
+  "proofLevelObserved": "L5",
+  "startTime": "2026-06-24T01:06:36.511Z",
+  "endTime": "2026-06-24T01:06:36.874Z",
+  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "executionTimestamp": "2026-06-24T01:06:36.874Z",
+  "stateDiff": {
+    "routeMutations": {
+      "proof:apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "baselineReadWrite": {
+      "organisationDisplayNameUpdated": true,
+      "externalIdentityCreated": true,
+      "fqdnResolutionAsserted": true
+    },
+    "forcedReconnect": {
+      "backendTerminated": true,
+      "reconnectReadSucceeded": true
+    },
+    "timeout": {
+      "partialMutationPrevented": true,
+      "markerCountsUnchanged": true
+    },
+    "retry": {
+      "firstAttemptFailed": true,
+      "secondAttemptSucceeded": true
+    },
+    "concurrency": {
+      "concurrentUsersCreated": 3,
+      "concurrentDomainsCreated": 3,
+      "tenantBoundaryConflictRejected": true
+    },
+    "degradedMode": {
+      "unavailableSubstrateDidNotReturnIdentity": true
+    },
+    "recovery": {
+      "displayNamePreserved": true,
+      "externalIdentityPreserved": true,
+      "fqdnResolutionPreserved": true
+    },
+    "baseline": {
+      "usersCreated": 4,
+      "externalIdentitiesCreated": 4,
+      "domainsCreated": 5,
+      "displayNameChanged": "L5a Tenant Identity l5a-1782262654813-c094175d->L5a Tenant Identity l5a-1782263196669-8c975a0a"
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "audit:l5a-1782263196669-8c975a0a:baseline",
+    "audit:l5a-1782263196669-8c975a0a:forced-reconnect",
+    "audit:l5a-1782263196669-8c975a0a:timeout",
+    "audit:l5a-1782263196669-8c975a0a:retry",
+    "audit:l5a-1782263196669-8c975a0a:concurrency",
+    "audit:l5a-1782263196669-8c975a0a:degraded",
+    "audit:l5a-1782263196669-8c975a0a:recovery"
+  ],
+  "metricEvidence": [
+    {
+      "name": "usf_l5a_resilience_scenarios_run_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_resilience_scenarios_passed_total",
+      "value": 7
+    },
+    {
+      "name": "usf_l5a_postgres_connection_terminations_total",
+      "value": 1
+    },
+    {
+      "name": "usf_l5a_transient_failures_retried_total",
+      "value": 1
+    }
+  ],
+  "logEvidence": ["log:l5a-1782263196669-8c975a0a:l5a-postgres-tenant-identity"],
+  "evidenceSignature": "012e76e88358538c6c11d58545637cc5a5d2e5c574a2cc8518acf5aab010747b"
+}

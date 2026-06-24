@@ -100,6 +100,9 @@ test("observed level is calculated from emitted evidence fields only", () => {
         recoveryEvidence: { status: "verified" },
         backupRestoreEvidence: { status: "verified" },
         degradedModeEvidence: { status: "verified" },
+        statePreservationEvidence: { status: "verified" },
+        behaviouralContinuityEvidence: { status: "verified" },
+        observabilityEvidence: { status: "verified" },
         failureInjectionEvidence: { status: "verified" },
       })
     ),

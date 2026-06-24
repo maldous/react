@@ -174,6 +174,9 @@ function proofExecutionMode(proof) {
   if (proof.file.includes("route-contracts-runtime-proof")) {
     return { environmentMode: "test", providerMode: "route-contract" };
   }
+  if (proof.file.includes("l5-postgres-tenant-identity-resilience-runtime-proof")) {
+    return { environmentMode: "test", providerMode: "compose-local" };
+  }
   if (proof.proofLevelClaimed === "L5" || proof.proofLevelClaimed === "L6") {
     return { environmentMode: "staging", providerMode: "external-sandbox" };
   }

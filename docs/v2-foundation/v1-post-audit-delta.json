@@ -6674,6 +6674,54 @@
       "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/tools-ui-reference-harness-playwright-sub-organisations-spec.json",
       "protectingTests": ["npm run v2:adversarial-usf-audit"],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "L5a compose-local resilience proof for Tenant identity on Postgres",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:l5-postgres-tenant-identity-resilience",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/l5-resilience-evidence-report.json",
+      "introducingCommit": "pending",
+      "purpose": "L5 resilience evidence report including compose-local pilot status",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/l5-resilience-evidence-report.json",
+      "protectingTests": [
+        "npm run proof:l5-postgres-tenant-identity-resilience",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for Tenant identity Postgres L5a resilience pilot",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:l5-postgres-tenant-identity-resilience",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/resilience-readiness-report.json",
+      "introducingCommit": "pending",
+      "purpose": "resilience readiness report distinguishing L5a local pilot status from full L5 closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/resilience-readiness-report.json",
+      "protectingTests": [
+        "npm run proof:l5-postgres-tenant-identity-resilience",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -7056,6 +7104,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 711,
+  "additionCount": 715,
   "deletionCount": 54
 }

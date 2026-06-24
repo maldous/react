@@ -27,6 +27,21 @@ type RuntimeProofEvidenceOverrides = {
   assertionsObserved?: boolean;
   expectedOutputsAsserted?: boolean;
   perCapabilityL4Evidence?: Array<Record<string, unknown>>;
+  localResiliencePhase?: string;
+  l3EvidenceProofIds?: string[];
+  l4EvidenceProofIds?: string[];
+  resilienceEvidence?: Record<string, unknown>;
+  restartEvidence?: Record<string, unknown>;
+  restartOrReconnectEvidence?: Record<string, unknown>;
+  timeoutEvidence?: Record<string, unknown>;
+  retryEvidence?: Record<string, unknown>;
+  concurrencyEvidence?: Record<string, unknown>;
+  degradedModeEvidence?: Record<string, unknown>;
+  recoveryEvidence?: Record<string, unknown>;
+  statePreservationEvidence?: Record<string, unknown>;
+  behaviouralContinuityEvidence?: Record<string, unknown>;
+  observabilityEvidence?: Record<string, unknown>;
+  failureInjectionEvidence?: Record<string, unknown>;
 };
 
 const proofEvidenceKey = "__USF_PROOF_EVIDENCE_OVERRIDES__";

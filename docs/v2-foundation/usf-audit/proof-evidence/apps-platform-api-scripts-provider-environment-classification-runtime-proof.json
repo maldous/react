@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:provider-environment-classification",
-  "startedAt": "2026-06-24T00:19:00.895Z",
-  "endedAt": "2026-06-24T00:19:00.930Z",
+  "startedAt": "2026-06-24T01:07:32.248Z",
+  "endedAt": "2026-06-24T01:07:32.285Z",
   "exitStatus": 0,
-  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -85,21 +85,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T00:19:00.930Z",
+  "generatedAt": "2026-06-24T01:07:32.285Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782260176397-913822",
+  "collectorRunId": "proof-run-1782263085791-1316465",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
+  "localResiliencePhase": null,
+  "l3EvidenceProofIds": [],
+  "l4EvidenceProofIds": [],
+  "resilienceEvidence": null,
+  "restartEvidence": null,
+  "restartOrReconnectEvidence": null,
+  "timeoutEvidence": null,
+  "retryEvidence": null,
+  "concurrencyEvidence": null,
+  "degradedModeEvidence": null,
+  "recoveryEvidence": null,
+  "statePreservationEvidence": null,
+  "behaviouralContinuityEvidence": null,
+  "observabilityEvidence": null,
+  "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T00:19:00.895Z",
-  "endTime": "2026-06-24T00:19:00.930Z",
-  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
-  "executionTimestamp": "2026-06-24T00:19:00.930Z",
+  "startTime": "2026-06-24T01:07:32.248Z",
+  "endTime": "2026-06-24T01:07:32.285Z",
+  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "executionTimestamp": "2026-06-24T01:07:32.285Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts": {
@@ -129,5 +144,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/provider-environment-classification-runtime-proof.ts"
   ],
-  "evidenceSignature": "24a435d3f1dd789b2bac7317e5988975de0e8d5d8bfe767c6cfb91e1bc2bdb97"
+  "evidenceSignature": "8464b33775e38f2296c1081ed6867b1d8eae15467f0d2cf0f0c4794d467da02f"
 }

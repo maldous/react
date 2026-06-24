@@ -15,10 +15,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T00:18:52.436Z",
-  "endedAt": "2026-06-24T00:18:52.557Z",
+  "startedAt": "2026-06-24T01:07:23.834Z",
+  "endedAt": "2026-06-24T01:07:23.951Z",
   "exitStatus": 0,
-  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,21 +83,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T00:18:52.557Z",
+  "generatedAt": "2026-06-24T01:07:23.951Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782260176397-913822",
+  "collectorRunId": "proof-run-1782263085791-1316465",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
+  "localResiliencePhase": null,
+  "l3EvidenceProofIds": [],
+  "l4EvidenceProofIds": [],
+  "resilienceEvidence": null,
+  "restartEvidence": null,
+  "restartOrReconnectEvidence": null,
+  "timeoutEvidence": null,
+  "retryEvidence": null,
+  "concurrencyEvidence": null,
+  "degradedModeEvidence": null,
+  "recoveryEvidence": null,
+  "statePreservationEvidence": null,
+  "behaviouralContinuityEvidence": null,
+  "observabilityEvidence": null,
+  "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T00:18:52.436Z",
-  "endTime": "2026-06-24T00:18:52.557Z",
-  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
-  "executionTimestamp": "2026-06-24T00:18:52.557Z",
+  "startTime": "2026-06-24T01:07:23.834Z",
+  "endTime": "2026-06-24T01:07:23.951Z",
+  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "executionTimestamp": "2026-06-24T01:07:23.951Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts": {
@@ -127,5 +142,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "dbfd4ab801396c64f3974deffdf87d3ad5cf5ea3b7d55b18ff6609b3fa410dcf"
+  "evidenceSignature": "6f26a4ed58a6cbcdf5a38bc97322dd0c241f8c5cbcdfb3833957a47bb97fa73d"
 }

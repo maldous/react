@@ -339,6 +339,19 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     l4SubstrateEvidence,
     substrateRoadmap,
   });
+  const l5ResilienceEvidence = buildL5ResilienceEvidenceReport({
+    ctx,
+    records: evidence.records,
+    capabilityReadiness,
+    l4SubstrateEvidence,
+  });
+  const resilienceReadiness = buildResilienceReadinessReport({
+    ctx,
+    capabilityReadiness,
+    l4SubstrateEvidence,
+    l5ResilienceEvidence,
+    resilienceRoadmap,
+  });
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
   const weakProofBacklog = buildWeakProofBacklog(
     requiredProofs,
@@ -375,6 +388,8 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     substrateRoadmap,
     substrateProofReadiness,
     resilienceRoadmap,
+    resilienceReadiness,
+    l5ResilienceEvidence,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -389,6 +404,8 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     substrateRoadmap,
     substrateProofReadiness,
     resilienceRoadmap,
+    resilienceReadiness,
+    l5ResilienceEvidence,
     l4SubstrateEvidence,
     strengthMatrix,
     ladderCompliance,
@@ -412,6 +429,8 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     substrateRoadmap,
     substrateProofReadiness,
     resilienceRoadmap,
+    resilienceReadiness,
+    l5ResilienceEvidence,
     l4SubstrateEvidence,
     capabilityReadiness,
     inMemoryParity,
@@ -862,14 +881,7 @@ export function observedLevelFromEvidence(record) {
     record.realLocalProviderUsed === true &&
     record.fakeProviderUsed !== true;
   const hasStagingResilience =
-    hasBehaviour &&
-    env === "staging" &&
-    (record.providerMode === "external-sandbox" ||
-      record.providerMode === "sandbox-external" ||
-      record.providerMode === "prod-shaped-sandbox") &&
-    record.externalSandboxProviderUsed === true &&
-    (record.externalSandboxRequestIds || []).length > 0 &&
-    resilienceGaps(record).length === 0;
+    hasBehaviour && (isFullL5ResilienceRecord(record) || isL5aLocalResilienceRecord(record));
   const hasFoundation =
     proofLevelNumber(record.proofLevelClaimed) >= 6 &&
     l6CorrelationComplete(record) &&
@@ -903,14 +915,16 @@ function environmentConsistencyGaps(record) {
     env === "staging" && claimed === 6 && l6CorrelationComplete(record);
   const stagingCompleteJourneyObserved =
     env === "staging" && observed === 6 && l6CorrelationComplete(record);
-  if (claimed > model.maxLevel && !stagingCompleteJourneyClaim) {
+  const localL5aClaim = env === "test" && claimed === 5 && isL5aLocalResilienceRecord(record);
+  const localL5aObserved = env === "test" && observed === 5 && isL5aLocalResilienceRecord(record);
+  if (claimed > model.maxLevel && !stagingCompleteJourneyClaim && !localL5aClaim) {
     gaps.push({
       kind: "environment-level-forbidden",
       subject: record.subjectId,
       message: `${env.toUpperCase()} proof cannot claim ${proofLevelId(claimed)}`,
     });
   }
-  if (observed > model.maxLevel && !stagingCompleteJourneyObserved) {
+  if (observed > model.maxLevel && !stagingCompleteJourneyObserved && !localL5aObserved) {
     gaps.push({
       kind: "environment-observed-level-forbidden",
       subject: record.subjectId,
@@ -1606,7 +1620,7 @@ function buildL4SubstrateEvidenceReport({
     (capabilityReadiness?.capabilities || []).map((row) => [row.capability, row])
   );
   const umbrellaL4Proofs = records
-    .filter((record) => observedLevelFromEvidence(record) >= 4)
+    .filter((record) => isL4SubstrateEvidenceCandidate(record))
     .map((record) => {
       const perCapability = normalizePerCapabilityL4Evidence(record.perCapabilityL4Evidence);
       return {
@@ -1640,9 +1654,8 @@ function buildL4SubstrateEvidenceReport({
       l2Pass &&
       behaviourCandidates.length > 0 &&
       behaviourCandidates.every((record) => behaviourGaps(record).length === 0);
-    const l4Candidates = allCapabilityRecords.filter(
-      (record) =>
-        observedLevelFromEvidence(record) >= 4 || proofLevelNumber(record.proofLevelClaimed) >= 4
+    const l4Candidates = allCapabilityRecords.filter((record) =>
+      isL4SubstrateEvidenceCandidate(record)
     );
     const evaluations = l4Candidates.map((record) =>
       evaluateCapabilityL4Evidence(capability, record)
@@ -1904,6 +1917,137 @@ function buildResilienceProofRoadmap({
   };
 }
 
+function buildL5ResilienceEvidenceReport({
+  ctx,
+  records,
+  capabilityReadiness,
+  l4SubstrateEvidence,
+}) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const l4ByCapability = new Map(
+    (l4SubstrateEvidence?.perCapabilityL4Evidence || []).map((row) => [row.capability, row])
+  );
+  const readinessByCapability = new Map(
+    (capabilityReadiness?.capabilities || []).map((row) => [row.capability, row])
+  );
+  const localPilotRecords = records.filter(isL5aLocalResilienceRecord);
+  const fullL5Records = records.filter(isFullL5ResilienceRecord);
+  const rows = capabilities.map((capability) => {
+    const matchingLocalRecords = localPilotRecords.filter((record) =>
+      resilienceRecordMatchesCapability(record, capability.capability)
+    );
+    const matchingFullRecords = fullL5Records.filter((record) =>
+      resilienceRecordMatchesCapability(record, capability.capability)
+    );
+    const l4Row = l4ByCapability.get(capability.capability);
+    const readiness = readinessByCapability.get(capability.capability);
+    const localResilienceEvidence = matchingLocalRecords.map((record) =>
+      l5LocalResilienceEvidenceForCapability(record, capability.capability)
+    );
+    const l5aLocalResilienceProven = localResilienceEvidence.some((entry) => entry.valid);
+    const l5Complete = matchingFullRecords.length > 0;
+    const gaps = [];
+    if (l4Row?.l4Pass !== true) gaps.push("l4-substrate-not-proven");
+    if (!l5aLocalResilienceProven) gaps.push("missing-l5a-compose-local-resilience-evidence");
+    if (!l5Complete) gaps.push("missing-l5b-staging-resilience-certification");
+    return {
+      capability: capability.capability,
+      currentReadiness: readiness?.readiness || "UNKNOWN",
+      l4Pass: l4Row?.l4Pass === true,
+      l5aLocalResilienceProven,
+      l5bStagingCertified: l5Complete,
+      l5Complete,
+      l5aEvidenceProofIds: uniq(matchingLocalRecords.map((record) => record.proofId)),
+      l5bEvidenceProofIds: uniq(matchingFullRecords.map((record) => record.proofId)),
+      localResilienceEvidence,
+      gaps,
+      conclusion: l5Complete
+        ? "RESILIENCE_PROVEN"
+        : l5aLocalResilienceProven
+          ? "L5A_LOCAL_RESILIENCE_PROVEN"
+          : "SUBSTRATE_PROVEN_AWAITING_L5",
+    };
+  });
+  const pilotRows = rows.filter((row) => row.l5aLocalResilienceProven);
+  const l5CompleteRows = rows.filter((row) => row.l5Complete);
+  const invalidLocalRecords = localPilotRecords.filter(
+    (record) => l5LocalResilienceRecordGaps(record).length > 0
+  );
+  const remainingL5Work = rows
+    .filter((row) => !row.l5Complete)
+    .map((row) => ({
+      capability: row.capability,
+      missing: row.gaps,
+      nextPhase: row.l5aLocalResilienceProven
+        ? "staging resilience certification"
+        : "compose-local resilience proof",
+    }));
+  const pilotCapability =
+    pilotRows.find((row) => row.capability === "Tenant identity (record + FQDN)")?.capability ||
+    pilotRows[0]?.capability ||
+    null;
+  return {
+    artefact: "l5-resilience-evidence-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: invalidLocalRecords.length === 0 ? "PASS" : "FAIL",
+    totalCapabilities: capabilities.length,
+    l5CompleteCapabilities: l5CompleteRows.length,
+    l5aLocalResilienceProvenCapabilities: pilotRows.length,
+    l5bStagingCertifiedCapabilities: l5CompleteRows.length,
+    resilienceGapCount: remainingL5Work.length,
+    pilotCapability,
+    pilotSubstrate: pilotCapability ? "Postgres" : null,
+    invalidLocalPilotRecordCount: invalidLocalRecords.length,
+    invalidLocalPilotRecords: invalidLocalRecords.map((record) => ({
+      proofId: record.proofId,
+      subjectId: record.subjectId,
+      gaps: l5LocalResilienceRecordGaps(record),
+    })),
+    remainingL5Work,
+    nextRecommendedL5Pilot: nextRecommendedL5Pilot(rows),
+    capabilities: rows,
+  };
+}
+
+function buildResilienceReadinessReport({
+  ctx,
+  capabilityReadiness,
+  l4SubstrateEvidence,
+  l5ResilienceEvidence,
+  resilienceRoadmap,
+}) {
+  const totalCapabilities =
+    ctx.foundation?.["environment-capability-matrix.json"]?.capabilities?.length || 0;
+  const gaps = [];
+  if (capabilityReadiness?.status !== "PASS") gaps.push("capability-readiness-not-pass");
+  if (l4SubstrateEvidence?.status !== "PASS") gaps.push("l4-substrate-evidence-not-pass");
+  if (resilienceRoadmap?.status !== "PASS") gaps.push("resilience-roadmap-not-pass");
+  if (l5ResilienceEvidence?.status !== "PASS") gaps.push("l5-resilience-evidence-not-pass");
+  if ((l5ResilienceEvidence?.l5CompleteCapabilities || 0) < totalCapabilities) {
+    gaps.push("full-l5-resilience-incomplete");
+  }
+  return {
+    artefact: "resilience-readiness-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status:
+      gaps.filter((gap) => gap !== "full-l5-resilience-incomplete").length === 0 ? "PASS" : "FAIL",
+    fullL5Status: gaps.includes("full-l5-resilience-incomplete") ? "INCOMPLETE" : "PASS",
+    totalCapabilities,
+    l5CompleteCapabilities: l5ResilienceEvidence?.l5CompleteCapabilities || 0,
+    l5aLocalResilienceProvenCapabilities:
+      l5ResilienceEvidence?.l5aLocalResilienceProvenCapabilities || 0,
+    l5bStagingCertifiedCapabilities: l5ResilienceEvidence?.l5bStagingCertifiedCapabilities || 0,
+    resilienceGapCount: l5ResilienceEvidence?.resilienceGapCount || totalCapabilities,
+    pilotCapability: l5ResilienceEvidence?.pilotCapability || null,
+    pilotSubstrate: l5ResilienceEvidence?.pilotSubstrate || null,
+    remainingL5Work: l5ResilienceEvidence?.remainingL5Work || [],
+    nextRecommendedL5Pilot: l5ResilienceEvidence?.nextRecommendedL5Pilot || null,
+    gaps,
+  };
+}
+
 function buildV2ReadinessSummary({
   behaviourReadiness,
   capabilityReadiness,
@@ -1911,6 +2055,8 @@ function buildV2ReadinessSummary({
   substrateRoadmap,
   substrateProofReadiness,
   resilienceRoadmap,
+  resilienceReadiness,
+  l5ResilienceEvidence,
   l4SubstrateEvidence,
   strengthMatrix,
   ladderCompliance,
@@ -1986,6 +2132,15 @@ function buildV2ReadinessSummary({
       resilienceRoadmapStatus: resilienceRoadmap.status,
       resilienceRoadmapCapabilityCount: resilienceRoadmap.totalCapabilities,
       recommendedFirstL5Target: resilienceRoadmap.recommendedFirstTarget,
+      resilienceReadinessStatus: resilienceReadiness.status,
+      fullL5Status: resilienceReadiness.fullL5Status,
+      l5CompleteCapabilities: resilienceReadiness.l5CompleteCapabilities,
+      l5aLocalResilienceProvenCapabilities:
+        resilienceReadiness.l5aLocalResilienceProvenCapabilities,
+      l5bStagingCertifiedCapabilities: resilienceReadiness.l5bStagingCertifiedCapabilities,
+      l5PilotCapability: resilienceReadiness.pilotCapability,
+      l5PilotSubstrate: resilienceReadiness.pilotSubstrate,
+      l5ResilienceEvidenceStatus: l5ResilienceEvidence.status,
       l0DiscoveryStatus: l0DiscoveryReadiness.status,
       l0RuntimeNodes: l0DiscoveryReadiness.runtimeNodes,
       l0RuntimeNodesMissingInMemoryImplementation:
@@ -2151,8 +2306,7 @@ export function buildCapabilityProofReadinessReport(
     const l4Evidence = l4ByCapability.get(capability.capability);
     const substrateProven = behaviourComplete && l4Evidence?.l4Pass === true;
     const resilienceProven =
-      substrateProven &&
-      allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 5);
+      substrateProven && allCapabilityRecords.some((record) => isFullL5ResilienceRecord(record));
     const foundationProven =
       resilienceProven &&
       allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 6);
@@ -4013,26 +4167,176 @@ function resilienceGaps(record) {
       message: "L5 Resilience Proven requires complete L4 Substrate Proven evidence first",
     });
   }
+  const localL5a = isL5aLocalResilienceShape(record);
   const requirements = [
-    ["restartEvidence", "missing-restart-evidence", "restart evidence"],
+    [
+      ["restartEvidence", "restartOrReconnectEvidence"],
+      "missing-restart-evidence",
+      "restart/reconnect evidence",
+    ],
     ["timeoutEvidence", "missing-timeout-evidence", "timeout evidence"],
     ["retryEvidence", "missing-retry-evidence", "retry evidence"],
     ["concurrencyEvidence", "missing-concurrency-evidence", "concurrency evidence"],
     ["recoveryEvidence", "missing-recovery-evidence", "recovery evidence"],
-    ["backupRestoreEvidence", "missing-backup-restore-evidence", "backup/restore evidence"],
     ["degradedModeEvidence", "missing-degraded-mode-evidence", "degraded-mode evidence"],
+    [
+      "statePreservationEvidence",
+      "missing-state-preservation-evidence",
+      "state preservation evidence",
+    ],
+    [
+      "behaviouralContinuityEvidence",
+      "missing-behavioural-continuity-evidence",
+      "behavioural continuity evidence",
+    ],
+    [
+      "observabilityEvidence",
+      "missing-resilience-observability-evidence",
+      "observability evidence",
+    ],
     [
       "failureInjectionEvidence",
       "missing-failure-injection-evidence",
       "failure injection evidence",
     ],
   ];
+  if (!localL5a) {
+    requirements.push([
+      "backupRestoreEvidence",
+      "missing-backup-restore-evidence",
+      "backup/restore evidence",
+    ]);
+  }
   for (const [field, kind, label] of requirements) {
-    if (!isMeaningfulEvidence(record[field])) {
+    if (!isMeaningfulEvidence(resilienceField(record, field))) {
       gaps.push({ kind, message: `L5 Resilience Proven requires ${label}` });
     }
   }
   return gaps;
+}
+
+function isL4SubstrateEvidenceCandidate(record) {
+  return (
+    !isL5aLocalResilienceShape(record) &&
+    (observedLevelFromEvidence(record) >= 4 || proofLevelNumber(record.proofLevelClaimed) >= 4)
+  );
+}
+
+function resilienceField(record, field) {
+  const fields = Array.isArray(field) ? field : [field];
+  for (const name of fields) {
+    if (isMeaningfulEvidence(record[name])) return record[name];
+    if (isMeaningfulEvidence(record.resilienceEvidence?.[name])) {
+      return record.resilienceEvidence[name];
+    }
+  }
+  return null;
+}
+
+function isL5aLocalResilienceShape(record) {
+  return (
+    record.localResiliencePhase === "L5A_COMPOSE_LOCAL" ||
+    record.resilienceEvidence?.conclusion === "L5A_LOCAL_RESILIENCE_PROVEN"
+  );
+}
+
+function isL5aLocalResilienceRecord(record) {
+  const env = record.environmentMode || record.environment;
+  return (
+    isL5aLocalResilienceShape(record) &&
+    env === "test" &&
+    record.providerMode === "compose-local" &&
+    record.realLocalProviderUsed === true &&
+    record.inMemoryProviderUsed !== true &&
+    record.fakeProviderUsed !== true &&
+    resilienceGaps(record).length === 0
+  );
+}
+
+function isFullL5ResilienceRecord(record) {
+  const env = record.environmentMode || record.environment;
+  return (
+    (env === "staging" || env === "e2e") &&
+    record.externalSandboxProviderUsed === true &&
+    (record.externalSandboxRequestIds || []).length > 0 &&
+    resilienceGaps(record).length === 0
+  );
+}
+
+function l5LocalResilienceRecordGaps(record) {
+  const gaps = [];
+  const env = record.environmentMode || record.environment;
+  if (!isL5aLocalResilienceShape(record)) gaps.push("missing-l5a-local-resilience-phase");
+  if (env !== "test") gaps.push("l5a-environment-not-test");
+  if (record.providerMode !== "compose-local") gaps.push("l5a-provider-mode-not-compose-local");
+  if (record.realLocalProviderUsed !== true) gaps.push("l5a-real-local-provider-not-used");
+  if (record.inMemoryProviderUsed === true) gaps.push("l5a-in-memory-provider-used");
+  if (record.fakeProviderUsed === true) gaps.push("l5a-fake-provider-used");
+  if (
+    !isMeaningfulEvidence(
+      record.l3EvidenceProofIds || record.resilienceEvidence?.l3EvidenceProofIds
+    )
+  ) {
+    gaps.push("missing-l3-evidence-proof-ids");
+  }
+  if (
+    !isMeaningfulEvidence(
+      record.l4EvidenceProofIds || record.resilienceEvidence?.l4EvidenceProofIds
+    )
+  ) {
+    gaps.push("missing-l4-evidence-proof-ids");
+  }
+  for (const gap of resilienceGaps(record)) gaps.push(gap.kind);
+  return uniq(gaps);
+}
+
+function l5LocalResilienceEvidenceForCapability(record, capability) {
+  const evidence = record.resilienceEvidence || {};
+  const matches = resilienceRecordMatchesCapability(record, capability);
+  const gaps = matches ? l5LocalResilienceRecordGaps(record) : ["capability-not-covered-by-record"];
+  return {
+    proofId: record.proofId,
+    commandExecuted: record.commandExecuted,
+    valid: gaps.length === 0,
+    capability: evidence.capability || capability,
+    substrate: evidence.substrate || null,
+    environment: record.environmentMode || record.environment,
+    providerMode: record.providerMode,
+    l3EvidenceProofIds: evidence.l3EvidenceProofIds || record.l3EvidenceProofIds || [],
+    l4EvidenceProofIds: evidence.l4EvidenceProofIds || record.l4EvidenceProofIds || [],
+    scenariosRun: evidence.scenariosRun || [],
+    scenariosPassed: evidence.scenariosPassed || [],
+    restartOrReconnectEvidence:
+      evidence.restartOrReconnectEvidence || record.restartOrReconnectEvidence,
+    timeoutEvidence: evidence.timeoutEvidence || record.timeoutEvidence,
+    retryEvidence: evidence.retryEvidence || record.retryEvidence,
+    concurrencyEvidence: evidence.concurrencyEvidence || record.concurrencyEvidence,
+    degradedModeEvidence: evidence.degradedModeEvidence || record.degradedModeEvidence,
+    recoveryEvidence: evidence.recoveryEvidence || record.recoveryEvidence,
+    statePreservationEvidence:
+      evidence.statePreservationEvidence || record.statePreservationEvidence,
+    observabilityEvidence: evidence.observabilityEvidence || record.observabilityEvidence,
+    conclusion: evidence.conclusion || "UNKNOWN",
+    gaps,
+  };
+}
+
+function resilienceRecordMatchesCapability(record, capability) {
+  return (
+    sameCapabilityName(record.resilienceEvidence?.capability, capability) ||
+    (record.subjectIds || []).some((subject) => sameCapabilityName(subject, capability))
+  );
+}
+
+function nextRecommendedL5Pilot(rows) {
+  const remaining = rows
+    .filter((row) => !row.l5aLocalResilienceProven)
+    .find((row) => row.currentReadiness === "SUBSTRATE_PROVEN" && row.l4Pass === true);
+  if (!remaining) return null;
+  return {
+    capability: remaining.capability,
+    recommendedPhase: "compose-local resilience proof",
+  };
 }
 
 function foundationGaps(record) {

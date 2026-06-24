@@ -12030,5 +12030,34 @@
     "sourceCommand": "npm test -- tools/v2-readiness/tests/rules.test.mjs",
     "scriptPath": null,
     "expectedFailureMode": "command exits non-zero with assertion/spec failure when the protected semantic contract is broken"
+  },
+  {
+    "id": "package.json#proof:l5-postgres-tenant-identity-resilience",
+    "path": "package.json#proof:l5-postgres-tenant-identity-resilience",
+    "kind": "proof",
+    "behaviourProtected": true,
+    "fixtureEnvDependency": "compose-local Postgres substrate and certified L3/L4 tenant identity evidence",
+    "stageCoverage": "compose-local L5a resilience pilot proof script (npm run proof:l5-postgres-tenant-identity-resilience)",
+    "failureEvidence": "runtime evidence JSON plus assertion output from reconnect, timeout, retry, concurrency, degraded-mode, recovery, and state-preservation scenarios",
+    "proofLevel": 5,
+    "proofLevelRationale": "L5a local resilience evidence for Tenant identity (record + FQDN) uses compose-local Postgres, reuses certified L3/L4 evidence, exercises controlled connection termination instead of container restart, timeout, retry, concurrency, fail-closed degraded mode, recovery, state preservation, behavioural continuity, and proof-emitted observability evidence. It does not claim full staging L5 certification.",
+    "capabilitiesProven": ["Tenant identity (record + FQDN)"],
+    "semanticFacetsProven": [
+      "resilience",
+      "statePreservation",
+      "behaviouralContinuity",
+      "tenantIsolation",
+      "securityBoundary",
+      "auditTraceMetric",
+      "deterministicReplay"
+    ],
+    "environment": "test",
+    "providerClass": "compose-local",
+    "liveSubstrateUsed": true,
+    "destructive": false,
+    "prodSafe": true,
+    "sourceCommand": "npm run proof:l5-postgres-tenant-identity-resilience",
+    "scriptPath": "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+    "expectedFailureMode": "command exits non-zero if compose-local Postgres is unavailable, reconnect/timeout/retry/concurrency/degraded/recovery assertions fail, state is not preserved, or certified L3/L4 evidence cannot be referenced"
   }
 ]

@@ -1,0 +1,578 @@
+{
+  "artefact": "resilience-readiness-report",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-24T01:08:16.243Z",
+  "status": "PASS",
+  "fullL5Status": "INCOMPLETE",
+  "totalCapabilities": 70,
+  "l5CompleteCapabilities": 0,
+  "l5aLocalResilienceProvenCapabilities": 1,
+  "l5bStagingCertifiedCapabilities": 0,
+  "resilienceGapCount": 70,
+  "pilotCapability": "Tenant identity (record + FQDN)",
+  "pilotSubstrate": "Postgres",
+  "remainingL5Work": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "missing": ["missing-l5b-staging-resilience-certification"],
+      "nextPhase": "staging resilience certification"
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant groups",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Sub-organisations",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Delegated administration roles",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Entitlement engine",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Audit of privileged access",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Platform login + session",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Configuration registry + history",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Branding + theming",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Write-only secret settings",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Quota enforcement",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Backup + restore",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant data import / export",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Background workers / job runner",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Runtime secrets management",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Metrics + traces",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Provider configuration plane",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Provider environment classification",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "missing": [
+        "missing-l5a-compose-local-resilience-evidence",
+        "missing-l5b-staging-resilience-certification"
+      ],
+      "nextPhase": "compose-local resilience proof"
+    }
+  ],
+  "nextRecommendedL5Pilot": {
+    "capability": "User identity + tenant membership",
+    "recommendedPhase": "compose-local resilience proof"
+  },
+  "gaps": ["full-l5-resilience-incomplete"]
+}

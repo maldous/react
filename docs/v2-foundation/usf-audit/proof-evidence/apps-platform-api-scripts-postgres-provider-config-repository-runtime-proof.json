@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T00:18:56.227Z",
-  "endedAt": "2026-06-24T00:18:56.331Z",
+  "startedAt": "2026-06-24T01:07:27.607Z",
+  "endedAt": "2026-06-24T01:07:27.711Z",
   "exitStatus": 0,
-  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "commit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,21 +81,36 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T00:18:56.331Z",
+  "generatedAt": "2026-06-24T01:07:27.711Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782260176397-913822",
+  "collectorRunId": "proof-run-1782263085791-1316465",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
+  "localResiliencePhase": null,
+  "l3EvidenceProofIds": [],
+  "l4EvidenceProofIds": [],
+  "resilienceEvidence": null,
+  "restartEvidence": null,
+  "restartOrReconnectEvidence": null,
+  "timeoutEvidence": null,
+  "retryEvidence": null,
+  "concurrencyEvidence": null,
+  "degradedModeEvidence": null,
+  "recoveryEvidence": null,
+  "statePreservationEvidence": null,
+  "behaviouralContinuityEvidence": null,
+  "observabilityEvidence": null,
+  "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T00:18:56.227Z",
-  "endTime": "2026-06-24T00:18:56.331Z",
-  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
-  "executionTimestamp": "2026-06-24T00:18:56.331Z",
+  "startTime": "2026-06-24T01:07:27.607Z",
+  "endTime": "2026-06-24T01:07:27.711Z",
+  "gitCommit": "5647b121c733a48b480ca6104743ac06b6f6c5af",
+  "executionTimestamp": "2026-06-24T01:07:27.711Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts": {
@@ -125,5 +140,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-provider-config-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "1a8e1d9f05d75cf9f7007f1a295ae7f0f3cf3c68baf8dcbb26ad88744a2f540f"
+  "evidenceSignature": "4a78bf2c71b97831bae9059429853a98f727e9d412e1c04b5e0d49b95a888052"
 }

@@ -5251,6 +5251,41 @@
     "docDriftsFromBehaviour": false
   },
   {
+    "name": "npm proof:l5-postgres-tenant-identity-resilience",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for the L5a compose-local resilience pilot for Tenant identity (record + FQDN) on Postgres.",
+    "inputs": [
+      "running app/backend",
+      "compose-local Postgres",
+      "certified L3 tenant identity behaviour evidence",
+      "certified L4 tenant identity substrate evidence"
+    ],
+    "outputs": ["proof evidence (stdout/registry)"],
+    "prerequisites": [
+      "platform-api loader",
+      "L4 substrate certification",
+      "reachable compose-local Postgres"
+    ],
+    "sideEffects": [
+      "creates and cleans up marker tenant identity rows",
+      "terminates one proof-owned Postgres backend connection",
+      "restores fixture tenant display name"
+    ],
+    "envScope": "test",
+    "failureSemantics": "exit-nonzero on resilience proof failure; no skipped resilience scenario accepted",
+    "idempotent": true,
+    "safetyControls": [
+      "marker-scoped rows",
+      "cleanup of proof users, domains, and temporary organisation",
+      "forced reconnect uses pg_terminate_backend on proof-owned connection only"
+    ],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
     "name": "npm proof:workflow-readiness-route",
     "kind": "npm",
     "purpose": "Runtime proof harness for workflow readiness route.",

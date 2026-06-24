@@ -107,6 +107,21 @@ if (evidenceFile && rawMetadata) {
           defaultEvidence?.expectedOutputsAsserted === true ||
           (suppressDefaultBehaviourEvidence && code === 0),
         perCapabilityL4Evidence: proofOverrides.perCapabilityL4Evidence || [],
+        localResiliencePhase: proofOverrides.localResiliencePhase || null,
+        l3EvidenceProofIds: proofOverrides.l3EvidenceProofIds || [],
+        l4EvidenceProofIds: proofOverrides.l4EvidenceProofIds || [],
+        resilienceEvidence: proofOverrides.resilienceEvidence || null,
+        restartEvidence: proofOverrides.restartEvidence || null,
+        restartOrReconnectEvidence: proofOverrides.restartOrReconnectEvidence || null,
+        timeoutEvidence: proofOverrides.timeoutEvidence || null,
+        retryEvidence: proofOverrides.retryEvidence || null,
+        concurrencyEvidence: proofOverrides.concurrencyEvidence || null,
+        degradedModeEvidence: proofOverrides.degradedModeEvidence || null,
+        recoveryEvidence: proofOverrides.recoveryEvidence || null,
+        statePreservationEvidence: proofOverrides.statePreservationEvidence || null,
+        behaviouralContinuityEvidence: proofOverrides.behaviouralContinuityEvidence || null,
+        observabilityEvidence: proofOverrides.observabilityEvidence || null,
+        failureInjectionEvidence: proofOverrides.failureInjectionEvidence || null,
       });
       fs.writeFileSync(evidenceFile, `${JSON.stringify(record, null, 2)}\n`);
     });
