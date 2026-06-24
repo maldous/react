@@ -6886,5 +6886,71 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:l6-foundation-journey",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for the L6 Foundation Proven journey gate across all 70 USF capabilities, preserving certified L3/L4/L5 evidence while proving tenancy, security, observability, operational recovery, governance, ownership, lifecycle, and production-shaped service posture.",
+    "inputs": [
+      "L0 discovery readiness report",
+      "L4 substrate evidence report",
+      "L5 resilience evidence report",
+      "capability proof readiness report",
+      "production environment manifest"
+    ],
+    "outputs": ["L6 foundation journey runtime evidence"],
+    "prerequisites": [
+      "platform-api loader",
+      "L5 Resilience Proven locked",
+      "real production provider readiness represented"
+    ],
+    "sideEffects": ["emits foundation journey evidence only", "does not mutate production data"],
+    "envScope": "e2e",
+    "failureSemantics": "exit-nonzero on missing lower-level evidence, partial foundation journey evidence, mock-only production auth posture, or missing ownership/governance/lifecycle evidence",
+    "idempotent": true,
+    "safetyControls": [
+      "evidence-only runtime assertions",
+      "rejects partial, stale, mock-only, and advisory evidence",
+      "preserves L3/L4/L5 evidence without relabelling"
+    ],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:l6-prod-shaped-certification",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for the L6 production-shaped certification gate, proving real provider auth posture and observed audit, metric, trace, and log evidence before Foundation Proven can be claimed.",
+    "inputs": [
+      "production-shaped stage evidence",
+      "prod observability correlation evidence",
+      "prod failure-rootcause evidence",
+      "prod Sentry evidence",
+      "production environment manifest",
+      "capability proof readiness report"
+    ],
+    "outputs": ["L6 production-shaped certification runtime evidence"],
+    "prerequisites": [
+      "platform-api loader",
+      "L5 Resilience Proven locked",
+      "prod auth provider mode real",
+      "observed production-shaped telemetry artefacts"
+    ],
+    "sideEffects": ["emits certification evidence only", "does not mutate production data"],
+    "envScope": "e2e",
+    "failureSemantics": "exit-nonzero on mock production IdP posture, missing observed telemetry, incomplete prod-shaped stage evidence, missing L5 evidence, or remaining mock-idp production route",
+    "idempotent": true,
+    "safetyControls": [
+      "observed substrate telemetry required",
+      "mock-only evidence rejected",
+      "production mock-idp route absence asserted"
+    ],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

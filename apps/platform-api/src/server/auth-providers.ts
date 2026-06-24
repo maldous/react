@@ -105,9 +105,9 @@ export function resolveEffectiveMode(setting?: TenantAuthProvidersConfig["mode"]
   return environmentDefaultMode();
 }
 
-/** Mock providers may run here? Always in dev/test; in prod-like only with the override. */
+/** Mock providers may run here? Only in dev/test. The prod-like override is retired. */
 export function mockAllowedHere(): boolean {
-  return !isProdLikeEnv() || mockOverrideEnabled();
+  return !isProdLikeEnv();
 }
 
 // ---------------------------------------------------------------------------
@@ -316,39 +316,36 @@ export interface ProviderModeWarning {
  *  - explicit AUTH_PROVIDER_MODE=real with NO real provider configured → refuse
  *    to start (operator asked for real but supplied none). A *defaulted* real
  *    mode (env unset) does not fail — it simply shows platform-only.
- *  - mock in staging/prod WITH the override → start, but emit a loud warning
- *    (the visible "evidence" that a temporary bootstrap is active).
+ *  - the historical mock override is now rejected in prod-like environments;
+ *    production posture must use real providers or platform-only internal login.
  */
 export function validateProviderModeAtStartup(): ProviderModeWarning[] {
   const mode = getProviderMode();
   const env = platformEnv();
   const warnings: ProviderModeWarning[] = [];
 
+  if (isProdLikeEnv() && mockOverrideEnabled()) {
+    throw new Error(
+      `${MOCK_OVERRIDE_FLAG}=true is no longer accepted in '${env}'. The temporary ` +
+        `mock IdP bootstrap has been retired; configure REAL_<PROVIDER>_ISSUER/` +
+        `_CLIENT_ID/_CLIENT_SECRET or leave AUTH_PROVIDER_MODE unset for platform-only real posture.`
+    );
+  }
+
   if (mode === "mock" && isProdLikeEnv() && !mockOverrideEnabled()) {
     throw new Error(
       `AUTH_PROVIDER_MODE=mock is refused in '${env}'. Mock identity providers are a ` +
-        `non-production fixture. To run them temporarily before real providers are ` +
-        `configured, you MUST set ${MOCK_OVERRIDE_FLAG}=true (and remove it once real ` +
-        `providers exist). See docs/local-development/mock-identity.md.`
+        `non-production fixture. Configure real providers or use platform-only login. ` +
+        `See docs/local-development/mock-identity.md.`
     );
   }
 
   if (mode === "real" && modeExplicitlySet() && !anyRealProviderConfigured()) {
     throw new Error(
       `AUTH_PROVIDER_MODE=real but no real provider is configured. Set REAL_<PROVIDER>_ISSUER/` +
-        `_CLIENT_ID/_CLIENT_SECRET (e.g. REAL_GOOGLE_ISSUER), or use AUTH_PROVIDER_MODE=mock ` +
-        `with ${MOCK_OVERRIDE_FLAG}=true as a temporary bootstrap.`
+        `_CLIENT_ID/_CLIENT_SECRET (e.g. REAL_GOOGLE_ISSUER), or leave AUTH_PROVIDER_MODE unset ` +
+        `for platform-only real posture.`
     );
-  }
-
-  if (mode === "mock" && isProdLikeEnv() && mockOverrideEnabled()) {
-    warnings.push({
-      level: "warn",
-      message:
-        `⚠ TEMPORARY: mock identity providers are ENABLED in '${env}' via ${MOCK_OVERRIDE_FLAG}. ` +
-        `This is a non-production bootstrap and MUST be removed once real providers are configured.`,
-      fields: { providerMode: mode, env, override: MOCK_OVERRIDE_FLAG },
-    });
   }
 
   return warnings;

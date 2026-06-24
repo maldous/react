@@ -38,10 +38,14 @@ type RuntimeProofEvidenceOverrides = {
   concurrencyEvidence?: Record<string, unknown>;
   degradedModeEvidence?: Record<string, unknown>;
   recoveryEvidence?: Record<string, unknown>;
+  backupRestoreEvidence?: Record<string, unknown>;
   statePreservationEvidence?: Record<string, unknown>;
   behaviouralContinuityEvidence?: Record<string, unknown>;
   observabilityEvidence?: Record<string, unknown>;
   failureInjectionEvidence?: Record<string, unknown>;
+  foundationEvidence?: Record<string, unknown>;
+  observedTelemetryEvidence?: Record<string, unknown>;
+  prodProviderReadinessEvidence?: Record<string, unknown>;
 };
 
 const proofEvidenceKey = "__USF_PROOF_EVIDENCE_OVERRIDES__";

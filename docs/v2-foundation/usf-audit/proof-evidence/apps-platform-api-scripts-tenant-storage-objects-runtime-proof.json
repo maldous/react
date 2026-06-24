@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-storage-objects",
-  "startedAt": "2026-06-24T10:24:30.784Z",
-  "endedAt": "2026-06-24T10:24:31.420Z",
+  "startedAt": "2026-06-24T15:13:58.741Z",
+  "endedAt": "2026-06-24T15:13:59.379Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -221,10 +221,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:31.420Z",
+  "generatedAt": "2026-06-24T15:13:59.379Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -239,16 +239,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:30.784Z",
-  "endTime": "2026-06-24T10:24:31.420Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:31.420Z",
+  "startTime": "2026-06-24T15:13:58.741Z",
+  "endTime": "2026-06-24T15:13:59.379Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:59.379Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-storage-objects-objectkey": {
@@ -351,5 +355,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
-  "evidenceSignature": "baba14c636d4aaa681d2b333becb5f50e0b11ddf94714ec81811cd64e7f91f63"
+  "evidenceSignature": "b40dcbf491a9e5ef75fd1610be4d88fc4fee9066575245dde352b082d29fa1d6"
 }

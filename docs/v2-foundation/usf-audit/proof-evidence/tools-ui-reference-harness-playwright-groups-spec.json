@@ -22,10 +22,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L1",
   "commandExecuted": "npm run proof:ui-semantic-groups",
-  "startedAt": "2026-06-24T10:24:44.523Z",
-  "endedAt": "2026-06-24T10:24:51.848Z",
+  "startedAt": "2026-06-24T15:14:12.034Z",
+  "endedAt": "2026-06-24T15:14:19.325Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "tools/ui-reference-harness/playwright/groups.spec.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -122,10 +122,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:51.848Z",
+  "generatedAt": "2026-06-24T15:14:19.325Z",
   "sourceFileRefs": ["tools/ui-reference-harness/playwright/groups.spec.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -140,16 +140,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:44.523Z",
-  "endTime": "2026-06-24T10:24:51.848Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:51.848Z",
+  "startTime": "2026-06-24T15:14:12.034Z",
+  "endTime": "2026-06-24T15:14:19.325Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:14:19.325Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-groups-groupid": {
@@ -197,5 +201,5 @@
     }
   ],
   "logEvidence": ["log:tools/ui-reference-harness/playwright/groups.spec.ts"],
-  "evidenceSignature": "29f2e080f74d5903d8bcbbe10625f6868e6e2a4006ba5226f3b0058c14783553"
+  "evidenceSignature": "a777cd3970c578191ff29603367df01719c2baf2228a8c8ba4d6502496d7f794"
 }

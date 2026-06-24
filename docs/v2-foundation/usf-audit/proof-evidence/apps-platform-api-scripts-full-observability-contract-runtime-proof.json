@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:full-observability-contract",
-  "startedAt": "2026-06-24T10:21:46.991Z",
-  "endedAt": "2026-06-24T10:21:47.061Z",
+  "startedAt": "2026-06-24T15:11:15.280Z",
+  "endedAt": "2026-06-24T15:11:15.349Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/full-observability-contract-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,10 +81,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:47.061Z",
+  "generatedAt": "2026-06-24T15:11:15.349Z",
   "sourceFileRefs": ["apps/platform-api/scripts/full-observability-contract-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -99,16 +99,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:46.991Z",
-  "endTime": "2026-06-24T10:21:47.061Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:47.061Z",
+  "startTime": "2026-06-24T15:11:15.280Z",
+  "endTime": "2026-06-24T15:11:15.349Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:11:15.349Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/full-observability-contract-runtime-proof.ts": {
@@ -136,5 +140,5 @@
     }
   ],
   "logEvidence": ["log:full-observability-contract:runtime-proof"],
-  "evidenceSignature": "6a9a202d864faed0cffac35054e374cd59f0f29ec53d059665306ff85b41bd3a"
+  "evidenceSignature": "33a8deb006182511e901c6ab0b9104dc2da55dce1a8bc95aa55f5199afad8a9b"
 }

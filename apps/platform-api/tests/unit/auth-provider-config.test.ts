@@ -171,18 +171,36 @@ describe("setTenantAuthProviders", () => {
 });
 
 describe("tenant-aware provider resolution (auth-providers)", () => {
-  const prev = process.env["AUTH_PROVIDER_MODE"];
+  const envKeys = [
+    "AUTH_PROVIDER_MODE",
+    "PLATFORM_ENV",
+    "REAL_GOOGLE_ISSUER",
+    "REAL_GOOGLE_CLIENT_ID",
+    "REAL_GOOGLE_CLIENT_SECRET",
+  ] as const;
+  let prev: Record<(typeof envKeys)[number], string | undefined>;
+
   before(() => {
-    process.env["AUTH_PROVIDER_MODE"] = "mock"; // deterministic: third-party enabled in dev/test
+    prev = {} as Record<(typeof envKeys)[number], string | undefined>;
+    for (const key of envKeys) prev[key] = process.env[key];
+    process.env["PLATFORM_ENV"] = "production";
+    process.env["AUTH_PROVIDER_MODE"] = "real";
+    process.env["REAL_GOOGLE_ISSUER"] = "https://accounts.google.com";
+    process.env["REAL_GOOGLE_CLIENT_ID"] = "tenant-aware-real-client";
+    process.env["REAL_GOOGLE_CLIENT_SECRET"] = "tenant-aware-real-secret";
   });
+
   after(() => {
-    if (prev === undefined) delete process.env["AUTH_PROVIDER_MODE"];
-    else process.env["AUTH_PROVIDER_MODE"] = prev;
+    for (const key of envKeys) {
+      if (prev[key] === undefined) delete process.env[key];
+      else process.env[key] = prev[key];
+    }
   });
 
   it("resolveEffectiveMode: 'default' inherits env; explicit overrides", () => {
-    assert.equal(resolveEffectiveMode("default"), "mock");
-    assert.equal(resolveEffectiveMode(undefined), "mock");
+    assert.equal(resolveEffectiveMode("default"), "real");
+    assert.equal(resolveEffectiveMode(undefined), "real");
+    assert.equal(resolveEffectiveMode("mock"), "mock");
     assert.equal(resolveEffectiveMode("disabled"), "disabled");
     assert.equal(resolveEffectiveMode("real"), "real");
   });

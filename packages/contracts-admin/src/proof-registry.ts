@@ -43,6 +43,8 @@ export const PROOF_LADDER = [
   "proof:l5-identity-access-resilience",
   "proof:l5-postgres-tenant-identity-resilience",
   "proof:l5-staging-resilience-certification",
+  "proof:l6-foundation-journey",
+  "proof:l6-prod-shaped-certification",
   "proof:temporal-workflow-provider",
   "proof:windmill-automation-provider",
   "proof:workflow-adapters",

@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:24:06.047Z",
-  "endedAt": "2026-06-24T10:24:06.085Z",
+  "startedAt": "2026-06-24T15:13:33.978Z",
+  "endedAt": "2026-06-24T15:13:34.017Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:06.085Z",
+  "generatedAt": "2026-06-24T15:13:34.017Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -97,16 +97,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:06.047Z",
-  "endTime": "2026-06-24T10:24:06.085Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:06.085Z",
+  "startTime": "2026-06-24T15:13:33.978Z",
+  "endTime": "2026-06-24T15:13:34.017Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:34.017Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts": {
@@ -132,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-delegated-admin-roles-runtime-proof.ts"],
-  "evidenceSignature": "57bd35542e228d06f334d2e0d0392a7b0d3d2cf80891db3b7628f3cb2c44c46f"
+  "evidenceSignature": "f45184955017ea275faf231d192dca82c61a8f16147902d706d2f1bfc6037916"
 }

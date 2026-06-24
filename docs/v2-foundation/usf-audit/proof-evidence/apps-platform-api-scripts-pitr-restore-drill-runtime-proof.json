@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:pitr-restore-drill",
-  "startedAt": "2026-06-24T10:23:32.687Z",
-  "endedAt": "2026-06-24T10:24:03.934Z",
+  "startedAt": "2026-06-24T15:13:00.703Z",
+  "endedAt": "2026-06-24T15:13:31.882Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,10 +201,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:03.934Z",
+  "generatedAt": "2026-06-24T15:13:31.882Z",
   "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -219,16 +219,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:23:32.687Z",
-  "endTime": "2026-06-24T10:24:03.934Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:03.934Z",
+  "startTime": "2026-06-24T15:13:00.703Z",
+  "endTime": "2026-06-24T15:13:31.882Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:31.882Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-admin-data-legal-holds": {
@@ -320,5 +324,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
-  "evidenceSignature": "5e21296129c1ef122bf504031ef26372e754260c65f53babbcae5d532deb5e1f"
+  "evidenceSignature": "5461f557ed8d007fe05b0a7fbc498552d9995a1120b47ea77ba32ee988d5c442"
 }

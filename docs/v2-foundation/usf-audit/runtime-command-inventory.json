@@ -612,6 +612,18 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:proof-l6-foundation-journey",
+    "name": "npm run proof:l6-foundation-journey",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-l6-prod-shaped-certification",
+    "name": "npm run proof:l6-prod-shaped-certification",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:proof-lago-billing-provider",
     "name": "npm run proof:lago-billing-provider",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/lago-billing-provider-runtime-proof.ts",

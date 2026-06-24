@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:23:32.270Z",
-  "endedAt": "2026-06-24T10:23:32.297Z",
+  "startedAt": "2026-06-24T15:13:00.277Z",
+  "endedAt": "2026-06-24T15:13:00.305Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:23:32.297Z",
+  "generatedAt": "2026-06-24T15:13:00.305Z",
   "sourceFileRefs": ["apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -93,16 +93,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:23:32.270Z",
-  "endTime": "2026-06-24T10:23:32.297Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:23:32.297Z",
+  "startTime": "2026-06-24T15:13:00.277Z",
+  "endTime": "2026-06-24T15:13:00.305Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:00.305Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts": {
@@ -128,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/openapi-drift-validator-runtime-proof.ts"],
-  "evidenceSignature": "3de309f6d1c2285ea8b71fb986dfe11eca37c025265f123ff782cb4b7dc21c20"
+  "evidenceSignature": "5868676b072d1bb1d5b084378232c6c1a0d88226364fc121649d8f76a63eabcc"
 }

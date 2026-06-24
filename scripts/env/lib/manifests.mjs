@@ -125,6 +125,10 @@ export const SECRET_ENV_KEYS = [
   "GRAFANA_OIDC_CLIENT_SECRET",
   "SONAR_OIDC_CLIENT_SECRET",
   "PGADMIN_OIDC_CLIENT_SECRET",
+  // Production third-party IdP confidential client secrets. The issuer/client-id
+  // are non-secret bootstrap intent in the manifest; client secrets are generated
+  // from seeded material or local-bootstrap and never committed.
+  "REAL_GOOGLE_CLIENT_SECRET",
 ];
 
 // Shared cross-environment services (single instance, react-sonar / react-shared

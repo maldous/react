@@ -55,6 +55,6 @@ The semantic USF graph is not treated as sufficient proof. Runtime-derived inven
 | Show every alert without runbook.                                   |                        0 |
 | Show every capability blocked from Behaviour Proven L3.             |                        0 |
 | Show every capability eligible for future Substrate Proven L4 work. |                       70 |
-| Show every capability already Foundation Proven L6.                 |                        0 |
+| Show every capability already Foundation Proven L6.                 |                       70 |
 
 See `docs/v2-foundation/usf-audit/v1-correction-backlog.md` for classified gaps.

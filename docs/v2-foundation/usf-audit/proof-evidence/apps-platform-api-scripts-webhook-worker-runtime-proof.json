@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:webhook-worker",
-  "startedAt": "2026-06-24T10:24:32.844Z",
-  "endedAt": "2026-06-24T10:24:33.042Z",
+  "startedAt": "2026-06-24T15:14:00.804Z",
+  "endedAt": "2026-06-24T15:14:01.013Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/webhook-worker-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:33.042Z",
+  "generatedAt": "2026-06-24T15:14:01.013Z",
   "sourceFileRefs": ["apps/platform-api/scripts/webhook-worker-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -97,16 +97,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:32.844Z",
-  "endTime": "2026-06-24T10:24:33.042Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:33.042Z",
+  "startTime": "2026-06-24T15:14:00.804Z",
+  "endTime": "2026-06-24T15:14:01.013Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:14:01.013Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/webhook-worker-runtime-proof.ts": {
@@ -132,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/webhook-worker-runtime-proof.ts"],
-  "evidenceSignature": "1260085e6246408f75465b1eb31281e7c3aca5650c8672b351fc542f090d0c90"
+  "evidenceSignature": "bdc1367450d0c6244b4a88105696b37871931ac2b439a4a88a23a6a1ea445980"
 }

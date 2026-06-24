@@ -27,30 +27,30 @@
   "providerId": "identity-access-compose-local-resilience",
   "routeIds": [],
   "workflowIds": [],
-  "eventIds": ["postgres:l5a-ia-1782296599260-b1df8391:backend-terminated:3772"],
+  "eventIds": ["postgres:l5a-ia-1782313966861-5674bede:backend-terminated:3796"],
   "storageIds": [
-    "postgres:users:937b4868-bcee-447f-863f-845b50729202",
-    "postgres:external_identities:c8586334-6434-4e3a-b23f-376e5fb2c27f",
-    "postgres:memberships:937b4868-bcee-447f-863f-845b50729202:00000000-0000-4000-8000-000000000001",
-    "redis:session:6800e25f-ac2c-4dd3-9a39-059562753d1c",
-    "postgres:api_keys:29c82a28-dc29-4aa9-b23a-130db958e5a2",
-    "postgres:organisations:18dc189f-4f78-4ab0-b2b5-8950d1db6a54",
-    "keycloak:groups:aa85f9a3-c75d-42d0-9e64-2a75d642f42d",
-    "postgres:users:f0974ec3-8408-4b83-af5b-54d1d7a18c9c",
-    "postgres:external_identities:62522e26-3806-403b-8269-7a2b606df2d9",
-    "postgres:users:4ea972bb-8a77-46c2-8023-6abbdc9c4791",
-    "postgres:external_identities:e6fe4734-d1ed-4b6c-bf40-0261f809c430",
-    "redis:session:baab686e-280a-4150-b918-c1d72bea7024",
-    "redis:session:d5cf400d-5715-4904-bc4c-580134b381cb"
+    "postgres:users:2973e51c-f22d-4d63-8cc0-07e6093023ad",
+    "postgres:external_identities:a9a5f5c2-6036-46b3-a379-54f758fcd5c1",
+    "postgres:memberships:2973e51c-f22d-4d63-8cc0-07e6093023ad:00000000-0000-4000-8000-000000000001",
+    "redis:session:85a66c26-c6d6-491e-b782-f63c14456c32",
+    "postgres:api_keys:8afcbd17-c07c-4eb1-a133-b6564254fee8",
+    "postgres:organisations:e12cb85c-2947-404c-b864-7bed0c09191b",
+    "keycloak:groups:ea6269f0-b818-41be-bf69-70beb2e06866",
+    "postgres:users:864ee194-acdb-46ff-883f-2c36cba7c970",
+    "postgres:external_identities:62706adf-9bc1-40a1-916e-dfc6b081f5f6",
+    "postgres:users:f954e417-90eb-4608-af0e-6cee40dcc986",
+    "postgres:external_identities:69f20110-c0ca-4eb5-a44a-c0159aa32f92",
+    "redis:session:c5856175-af1e-4572-bf75-e99d79cc5fe5",
+    "redis:session:6fc9b799-fbff-4fa3-b4af-81976fcd9262"
   ],
   "environmentMode": "test",
   "providerMode": "compose-local",
   "proofLevelClaimed": "L5",
   "commandExecuted": "npm run proof:l5-identity-access-resilience",
-  "startedAt": "2026-06-24T10:23:19.036Z",
-  "endedAt": "2026-06-24T10:23:20.110Z",
+  "startedAt": "2026-06-24T15:12:46.633Z",
+  "endedAt": "2026-06-24T15:12:47.700Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -96,8 +96,8 @@
       "substratesAvailable": true
     },
     "recovery": {
-      "expectedUserId": "937b4868-bcee-447f-863f-845b50729202",
-      "expectedSessionId": "6800e25f-ac2c-4dd3-9a39-059562753d1c"
+      "expectedUserId": "2973e51c-f22d-4d63-8cc0-07e6093023ad",
+      "expectedSessionId": "85a66c26-c6d6-491e-b782-f63c14456c32"
     }
   },
   "afterState": {
@@ -115,14 +115,14 @@
         "apiKeys": 1,
         "subOrgs": 1
       },
-      "sessionId": "6800e25f-ac2c-4dd3-9a39-059562753d1c",
-      "keycloakGroupId": "aa85f9a3-c75d-42d0-9e64-2a75d642f42d",
-      "apiKeyId": "29c82a28-dc29-4aa9-b23a-130db958e5a2",
-      "subOrgId": "18dc189f-4f78-4ab0-b2b5-8950d1db6a54"
+      "sessionId": "85a66c26-c6d6-491e-b782-f63c14456c32",
+      "keycloakGroupId": "ea6269f0-b818-41be-bf69-70beb2e06866",
+      "apiKeyId": "8afcbd17-c07c-4eb1-a133-b6564254fee8",
+      "subOrgId": "e12cb85c-2947-404c-b864-7bed0c09191b"
     },
     "reconnect": {
       "postgres": {
-        "backendPid": 3772,
+        "backendPid": 3796,
         "backendTerminated": true,
         "stateReadableAfterReconnect": true,
         "limitation": "forced backend termination used instead of container restart"
@@ -271,34 +271,34 @@
   "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
   "auditEventIds": [
-    "audit:l5a-ia-1782296599260-b1df8391:baseline",
-    "audit:l5a-ia-1782296599260-b1df8391:reconnect",
-    "audit:l5a-ia-1782296599260-b1df8391:timeout",
-    "audit:l5a-ia-1782296599260-b1df8391:retry",
-    "audit:l5a-ia-1782296599260-b1df8391:concurrency",
-    "audit:l5a-ia-1782296599260-b1df8391:degraded",
-    "audit:l5a-ia-1782296599260-b1df8391:recovery",
-    "audit:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-    "audit:l5a-ia-1782296599260-b1df8391:platform-login-session",
-    "audit:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-    "audit:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-    "audit:l5a-ia-1782296599260-b1df8391:tenant-groups",
-    "audit:l5a-ia-1782296599260-b1df8391:sub-organisations"
+    "audit:l5a-ia-1782313966861-5674bede:baseline",
+    "audit:l5a-ia-1782313966861-5674bede:reconnect",
+    "audit:l5a-ia-1782313966861-5674bede:timeout",
+    "audit:l5a-ia-1782313966861-5674bede:retry",
+    "audit:l5a-ia-1782313966861-5674bede:concurrency",
+    "audit:l5a-ia-1782313966861-5674bede:degraded",
+    "audit:l5a-ia-1782313966861-5674bede:recovery",
+    "audit:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+    "audit:l5a-ia-1782313966861-5674bede:platform-login-session",
+    "audit:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+    "audit:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+    "audit:l5a-ia-1782313966861-5674bede:tenant-groups",
+    "audit:l5a-ia-1782313966861-5674bede:sub-organisations"
   ],
   "traceIds": [
-    "trace:l5a-ia-1782296599260-b1df8391:baseline",
-    "trace:l5a-ia-1782296599260-b1df8391:reconnect",
-    "trace:l5a-ia-1782296599260-b1df8391:timeout",
-    "trace:l5a-ia-1782296599260-b1df8391:retry",
-    "trace:l5a-ia-1782296599260-b1df8391:concurrency",
-    "trace:l5a-ia-1782296599260-b1df8391:degraded",
-    "trace:l5a-ia-1782296599260-b1df8391:recovery",
-    "trace:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-    "trace:l5a-ia-1782296599260-b1df8391:platform-login-session",
-    "trace:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-    "trace:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-    "trace:l5a-ia-1782296599260-b1df8391:tenant-groups",
-    "trace:l5a-ia-1782296599260-b1df8391:sub-organisations"
+    "trace:l5a-ia-1782313966861-5674bede:baseline",
+    "trace:l5a-ia-1782313966861-5674bede:reconnect",
+    "trace:l5a-ia-1782313966861-5674bede:timeout",
+    "trace:l5a-ia-1782313966861-5674bede:retry",
+    "trace:l5a-ia-1782313966861-5674bede:concurrency",
+    "trace:l5a-ia-1782313966861-5674bede:degraded",
+    "trace:l5a-ia-1782313966861-5674bede:recovery",
+    "trace:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+    "trace:l5a-ia-1782313966861-5674bede:platform-login-session",
+    "trace:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+    "trace:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+    "trace:l5a-ia-1782313966861-5674bede:tenant-groups",
+    "trace:l5a-ia-1782313966861-5674bede:sub-organisations"
   ],
   "metricSamples": [
     {
@@ -318,9 +318,9 @@
       "value": 6
     }
   ],
-  "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:l5a-identity-access-resilience"],
+  "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:l5a-identity-access-resilience"],
   "cleanupResult": {
-    "marker": "l5a-ia-1782296599260-b1df8391",
+    "marker": "l5a-ia-1782313966861-5674bede",
     "postgres": "marker identity, membership, api key, entitlement, and sub-org rows cleaned",
     "redis": "marker sessions and auth states cleaned",
     "keycloak": "marker groups cleaned"
@@ -328,10 +328,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:23:20.110Z",
+  "generatedAt": "2026-06-24T15:12:47.700Z",
   "sourceFileRefs": ["apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -393,7 +393,7 @@
     ],
     "restartOrReconnectEvidence": {
       "postgres": {
-        "backendPid": 3772,
+        "backendPid": 3796,
         "backendTerminated": true,
         "stateReadableAfterReconnect": true,
         "limitation": "forced backend termination used instead of container restart"
@@ -507,19 +507,19 @@
       "classification": "proof-emitted-telemetry",
       "note": "This L5a batch emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
       "auditEventIds": [
-        "audit:l5a-ia-1782296599260-b1df8391:baseline",
-        "audit:l5a-ia-1782296599260-b1df8391:reconnect",
-        "audit:l5a-ia-1782296599260-b1df8391:timeout",
-        "audit:l5a-ia-1782296599260-b1df8391:retry",
-        "audit:l5a-ia-1782296599260-b1df8391:concurrency",
-        "audit:l5a-ia-1782296599260-b1df8391:degraded",
-        "audit:l5a-ia-1782296599260-b1df8391:recovery",
-        "audit:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-        "audit:l5a-ia-1782296599260-b1df8391:platform-login-session",
-        "audit:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-        "audit:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-        "audit:l5a-ia-1782296599260-b1df8391:tenant-groups",
-        "audit:l5a-ia-1782296599260-b1df8391:sub-organisations"
+        "audit:l5a-ia-1782313966861-5674bede:baseline",
+        "audit:l5a-ia-1782313966861-5674bede:reconnect",
+        "audit:l5a-ia-1782313966861-5674bede:timeout",
+        "audit:l5a-ia-1782313966861-5674bede:retry",
+        "audit:l5a-ia-1782313966861-5674bede:concurrency",
+        "audit:l5a-ia-1782313966861-5674bede:degraded",
+        "audit:l5a-ia-1782313966861-5674bede:recovery",
+        "audit:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+        "audit:l5a-ia-1782313966861-5674bede:platform-login-session",
+        "audit:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+        "audit:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+        "audit:l5a-ia-1782313966861-5674bede:tenant-groups",
+        "audit:l5a-ia-1782313966861-5674bede:sub-organisations"
       ],
       "metricSamples": [
         {
@@ -540,21 +540,21 @@
         }
       ],
       "traceIds": [
-        "trace:l5a-ia-1782296599260-b1df8391:baseline",
-        "trace:l5a-ia-1782296599260-b1df8391:reconnect",
-        "trace:l5a-ia-1782296599260-b1df8391:timeout",
-        "trace:l5a-ia-1782296599260-b1df8391:retry",
-        "trace:l5a-ia-1782296599260-b1df8391:concurrency",
-        "trace:l5a-ia-1782296599260-b1df8391:degraded",
-        "trace:l5a-ia-1782296599260-b1df8391:recovery",
-        "trace:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-        "trace:l5a-ia-1782296599260-b1df8391:platform-login-session",
-        "trace:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-        "trace:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-        "trace:l5a-ia-1782296599260-b1df8391:tenant-groups",
-        "trace:l5a-ia-1782296599260-b1df8391:sub-organisations"
+        "trace:l5a-ia-1782313966861-5674bede:baseline",
+        "trace:l5a-ia-1782313966861-5674bede:reconnect",
+        "trace:l5a-ia-1782313966861-5674bede:timeout",
+        "trace:l5a-ia-1782313966861-5674bede:retry",
+        "trace:l5a-ia-1782313966861-5674bede:concurrency",
+        "trace:l5a-ia-1782313966861-5674bede:degraded",
+        "trace:l5a-ia-1782313966861-5674bede:recovery",
+        "trace:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+        "trace:l5a-ia-1782313966861-5674bede:platform-login-session",
+        "trace:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+        "trace:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+        "trace:l5a-ia-1782313966861-5674bede:tenant-groups",
+        "trace:l5a-ia-1782313966861-5674bede:sub-organisations"
       ],
-      "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:l5a-identity-access-resilience"],
+      "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:l5a-identity-access-resilience"],
       "observedSubstrateTelemetry": {
         "auditRecords": [],
         "metrics": [],
@@ -581,7 +581,7 @@
         "failureInjected": "Postgres backend termination, transient connection failure, unavailable identity pool",
         "restartOrReconnectEvidence": {
           "postgres": {
-            "backendPid": 3772,
+            "backendPid": 3796,
             "backendTerminated": true,
             "stateReadableAfterReconnect": true,
             "limitation": "forced backend termination used instead of container restart"
@@ -672,7 +672,7 @@
         },
         "observabilityEvidence": {
           "classification": "proof-emitted-telemetry",
-          "auditEventIds": ["audit:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership"],
+          "auditEventIds": ["audit:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership"],
           "metricSamples": [
             {
               "name": "usf_l5a_identity_access_capability_passed",
@@ -682,9 +682,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership"],
+          "traceIds": ["trace:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership"],
           "logCorrelationIds": [
-            "log:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership"
+            "log:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -715,7 +715,7 @@
         "failureInjected": "Redis disconnect/reconnect and unavailable session client",
         "restartOrReconnectEvidence": {
           "postgres": {
-            "backendPid": 3772,
+            "backendPid": 3796,
             "backendTerminated": true,
             "stateReadableAfterReconnect": true,
             "limitation": "forced backend termination used instead of container restart"
@@ -804,7 +804,7 @@
         },
         "observabilityEvidence": {
           "classification": "proof-emitted-telemetry",
-          "auditEventIds": ["audit:l5a-ia-1782296599260-b1df8391:platform-login-session"],
+          "auditEventIds": ["audit:l5a-ia-1782313966861-5674bede:platform-login-session"],
           "metricSamples": [
             {
               "name": "usf_l5a_identity_access_capability_passed",
@@ -814,8 +814,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5a-ia-1782296599260-b1df8391:platform-login-session"],
-          "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:platform-login-session"],
+          "traceIds": ["trace:l5a-ia-1782313966861-5674bede:platform-login-session"],
+          "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:platform-login-session"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -844,7 +844,7 @@
         "failureInjected": "unavailable identity substrate plus fail-closed invalid/empty access boundary",
         "restartOrReconnectEvidence": {
           "postgres": {
-            "backendPid": 3772,
+            "backendPid": 3796,
             "backendTerminated": true,
             "stateReadableAfterReconnect": true,
             "limitation": "forced backend termination used instead of container restart"
@@ -935,7 +935,7 @@
         },
         "observabilityEvidence": {
           "classification": "proof-emitted-telemetry",
-          "auditEventIds": ["audit:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions"],
+          "auditEventIds": ["audit:l5a-ia-1782313966861-5674bede:rbac-roles-permissions"],
           "metricSamples": [
             {
               "name": "usf_l5a_identity_access_capability_passed",
@@ -945,8 +945,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions"],
-          "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions"],
+          "traceIds": ["trace:l5a-ia-1782313966861-5674bede:rbac-roles-permissions"],
+          "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:rbac-roles-permissions"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -977,7 +977,7 @@
         "failureInjected": "invalid secret returns null; unavailable Postgres would fail closed",
         "restartOrReconnectEvidence": {
           "postgres": {
-            "backendPid": 3772,
+            "backendPid": 3796,
             "backendTerminated": true,
             "stateReadableAfterReconnect": true,
             "limitation": "forced backend termination used instead of container restart"
@@ -1068,7 +1068,7 @@
         },
         "observabilityEvidence": {
           "classification": "proof-emitted-telemetry",
-          "auditEventIds": ["audit:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens"],
+          "auditEventIds": ["audit:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens"],
           "metricSamples": [
             {
               "name": "usf_l5a_identity_access_capability_passed",
@@ -1078,9 +1078,9 @@
               }
             }
           ],
-          "traceIds": ["trace:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens"],
+          "traceIds": ["trace:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens"],
           "logCorrelationIds": [
-            "log:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens"
+            "log:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens"
           ],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
@@ -1111,7 +1111,7 @@
         "failureInjected": "unreachable Keycloak admin URL rejects group mutation; invalid bearer rejected",
         "restartOrReconnectEvidence": {
           "postgres": {
-            "backendPid": 3772,
+            "backendPid": 3796,
             "backendTerminated": true,
             "stateReadableAfterReconnect": true,
             "limitation": "forced backend termination used instead of container restart"
@@ -1200,7 +1200,7 @@
         },
         "observabilityEvidence": {
           "classification": "proof-emitted-telemetry",
-          "auditEventIds": ["audit:l5a-ia-1782296599260-b1df8391:tenant-groups"],
+          "auditEventIds": ["audit:l5a-ia-1782313966861-5674bede:tenant-groups"],
           "metricSamples": [
             {
               "name": "usf_l5a_identity_access_capability_passed",
@@ -1210,8 +1210,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5a-ia-1782296599260-b1df8391:tenant-groups"],
-          "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:tenant-groups"],
+          "traceIds": ["trace:l5a-ia-1782313966861-5674bede:tenant-groups"],
+          "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:tenant-groups"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -1241,7 +1241,7 @@
         "failureInjected": "Postgres timeout and duplicate slug conflict prevent partial/unsafe mutation",
         "restartOrReconnectEvidence": {
           "postgres": {
-            "backendPid": 3772,
+            "backendPid": 3796,
             "backendTerminated": true,
             "stateReadableAfterReconnect": true,
             "limitation": "forced backend termination used instead of container restart"
@@ -1332,7 +1332,7 @@
         },
         "observabilityEvidence": {
           "classification": "proof-emitted-telemetry",
-          "auditEventIds": ["audit:l5a-ia-1782296599260-b1df8391:sub-organisations"],
+          "auditEventIds": ["audit:l5a-ia-1782313966861-5674bede:sub-organisations"],
           "metricSamples": [
             {
               "name": "usf_l5a_identity_access_capability_passed",
@@ -1342,8 +1342,8 @@
               }
             }
           ],
-          "traceIds": ["trace:l5a-ia-1782296599260-b1df8391:sub-organisations"],
-          "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:sub-organisations"],
+          "traceIds": ["trace:l5a-ia-1782313966861-5674bede:sub-organisations"],
+          "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:sub-organisations"],
           "observedSubstrateTelemetry": {
             "auditRecords": [],
             "metrics": [],
@@ -1359,7 +1359,7 @@
   },
   "restartEvidence": {
     "postgres": {
-      "backendPid": 3772,
+      "backendPid": 3796,
       "backendTerminated": true,
       "stateReadableAfterReconnect": true,
       "limitation": "forced backend termination used instead of container restart"
@@ -1374,7 +1374,7 @@
   },
   "restartOrReconnectEvidence": {
     "postgres": {
-      "backendPid": 3772,
+      "backendPid": 3796,
       "backendTerminated": true,
       "stateReadableAfterReconnect": true,
       "limitation": "forced backend termination used instead of container restart"
@@ -1450,6 +1450,7 @@
       "securityBoundaryPreserved": true
     }
   },
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": {
     "postgresIdentityAndMembershipPreserved": true,
     "redisSessionPreservedAcrossReconnect": true,
@@ -1488,19 +1489,19 @@
     "classification": "proof-emitted-telemetry",
     "note": "This L5a batch emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
     "auditEventIds": [
-      "audit:l5a-ia-1782296599260-b1df8391:baseline",
-      "audit:l5a-ia-1782296599260-b1df8391:reconnect",
-      "audit:l5a-ia-1782296599260-b1df8391:timeout",
-      "audit:l5a-ia-1782296599260-b1df8391:retry",
-      "audit:l5a-ia-1782296599260-b1df8391:concurrency",
-      "audit:l5a-ia-1782296599260-b1df8391:degraded",
-      "audit:l5a-ia-1782296599260-b1df8391:recovery",
-      "audit:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-      "audit:l5a-ia-1782296599260-b1df8391:platform-login-session",
-      "audit:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-      "audit:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-      "audit:l5a-ia-1782296599260-b1df8391:tenant-groups",
-      "audit:l5a-ia-1782296599260-b1df8391:sub-organisations"
+      "audit:l5a-ia-1782313966861-5674bede:baseline",
+      "audit:l5a-ia-1782313966861-5674bede:reconnect",
+      "audit:l5a-ia-1782313966861-5674bede:timeout",
+      "audit:l5a-ia-1782313966861-5674bede:retry",
+      "audit:l5a-ia-1782313966861-5674bede:concurrency",
+      "audit:l5a-ia-1782313966861-5674bede:degraded",
+      "audit:l5a-ia-1782313966861-5674bede:recovery",
+      "audit:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+      "audit:l5a-ia-1782313966861-5674bede:platform-login-session",
+      "audit:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+      "audit:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+      "audit:l5a-ia-1782313966861-5674bede:tenant-groups",
+      "audit:l5a-ia-1782313966861-5674bede:sub-organisations"
     ],
     "metricSamples": [
       {
@@ -1521,21 +1522,21 @@
       }
     ],
     "traceIds": [
-      "trace:l5a-ia-1782296599260-b1df8391:baseline",
-      "trace:l5a-ia-1782296599260-b1df8391:reconnect",
-      "trace:l5a-ia-1782296599260-b1df8391:timeout",
-      "trace:l5a-ia-1782296599260-b1df8391:retry",
-      "trace:l5a-ia-1782296599260-b1df8391:concurrency",
-      "trace:l5a-ia-1782296599260-b1df8391:degraded",
-      "trace:l5a-ia-1782296599260-b1df8391:recovery",
-      "trace:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-      "trace:l5a-ia-1782296599260-b1df8391:platform-login-session",
-      "trace:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-      "trace:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-      "trace:l5a-ia-1782296599260-b1df8391:tenant-groups",
-      "trace:l5a-ia-1782296599260-b1df8391:sub-organisations"
+      "trace:l5a-ia-1782313966861-5674bede:baseline",
+      "trace:l5a-ia-1782313966861-5674bede:reconnect",
+      "trace:l5a-ia-1782313966861-5674bede:timeout",
+      "trace:l5a-ia-1782313966861-5674bede:retry",
+      "trace:l5a-ia-1782313966861-5674bede:concurrency",
+      "trace:l5a-ia-1782313966861-5674bede:degraded",
+      "trace:l5a-ia-1782313966861-5674bede:recovery",
+      "trace:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+      "trace:l5a-ia-1782313966861-5674bede:platform-login-session",
+      "trace:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+      "trace:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+      "trace:l5a-ia-1782313966861-5674bede:tenant-groups",
+      "trace:l5a-ia-1782313966861-5674bede:sub-organisations"
     ],
-    "logCorrelationIds": ["log:l5a-ia-1782296599260-b1df8391:l5a-identity-access-resilience"],
+    "logCorrelationIds": ["log:l5a-ia-1782313966861-5674bede:l5a-identity-access-resilience"],
     "observedSubstrateTelemetry": {
       "auditRecords": [],
       "metrics": [],
@@ -1545,7 +1546,7 @@
   },
   "failureInjectionEvidence": {
     "postgresBackendTermination": {
-      "backendPid": 3772,
+      "backendPid": 3796,
       "backendTerminated": true,
       "stateReadableAfterReconnect": true,
       "limitation": "forced backend termination used instead of container restart"
@@ -1576,12 +1577,15 @@
       "markerCountsUnchanged": true
     }
   },
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L5",
-  "startTime": "2026-06-24T10:23:19.036Z",
-  "endTime": "2026-06-24T10:23:20.110Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:23:20.110Z",
+  "startTime": "2026-06-24T15:12:46.633Z",
+  "endTime": "2026-06-24T15:12:47.700Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:12:47.700Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts": {
@@ -1637,19 +1641,19 @@
   },
   "failureMode": "exercised",
   "auditIds": [
-    "audit:l5a-ia-1782296599260-b1df8391:baseline",
-    "audit:l5a-ia-1782296599260-b1df8391:reconnect",
-    "audit:l5a-ia-1782296599260-b1df8391:timeout",
-    "audit:l5a-ia-1782296599260-b1df8391:retry",
-    "audit:l5a-ia-1782296599260-b1df8391:concurrency",
-    "audit:l5a-ia-1782296599260-b1df8391:degraded",
-    "audit:l5a-ia-1782296599260-b1df8391:recovery",
-    "audit:l5a-ia-1782296599260-b1df8391:user-identity-tenant-membership",
-    "audit:l5a-ia-1782296599260-b1df8391:platform-login-session",
-    "audit:l5a-ia-1782296599260-b1df8391:rbac-roles-permissions",
-    "audit:l5a-ia-1782296599260-b1df8391:api-keys-personal-access-tokens",
-    "audit:l5a-ia-1782296599260-b1df8391:tenant-groups",
-    "audit:l5a-ia-1782296599260-b1df8391:sub-organisations"
+    "audit:l5a-ia-1782313966861-5674bede:baseline",
+    "audit:l5a-ia-1782313966861-5674bede:reconnect",
+    "audit:l5a-ia-1782313966861-5674bede:timeout",
+    "audit:l5a-ia-1782313966861-5674bede:retry",
+    "audit:l5a-ia-1782313966861-5674bede:concurrency",
+    "audit:l5a-ia-1782313966861-5674bede:degraded",
+    "audit:l5a-ia-1782313966861-5674bede:recovery",
+    "audit:l5a-ia-1782313966861-5674bede:user-identity-tenant-membership",
+    "audit:l5a-ia-1782313966861-5674bede:platform-login-session",
+    "audit:l5a-ia-1782313966861-5674bede:rbac-roles-permissions",
+    "audit:l5a-ia-1782313966861-5674bede:api-keys-personal-access-tokens",
+    "audit:l5a-ia-1782313966861-5674bede:tenant-groups",
+    "audit:l5a-ia-1782313966861-5674bede:sub-organisations"
   ],
   "metricEvidence": [
     {
@@ -1669,6 +1673,6 @@
       "value": 6
     }
   ],
-  "logEvidence": ["log:l5a-ia-1782296599260-b1df8391:l5a-identity-access-resilience"],
-  "evidenceSignature": "6740fd5f42f994cec8367213127e1b489e8d196052d39654e289e804e92e14b0"
+  "logEvidence": ["log:l5a-ia-1782313966861-5674bede:l5a-identity-access-resilience"],
+  "evidenceSignature": "208711d5745155d13351a30569bd295cbe0b2ea9b8a030aa9cf461408c5fbb56"
 }

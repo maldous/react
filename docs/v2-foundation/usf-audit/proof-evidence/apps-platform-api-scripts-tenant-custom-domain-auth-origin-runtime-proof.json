@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-custom-domain-auth-origin",
-  "startedAt": "2026-06-24T10:24:27.877Z",
-  "endedAt": "2026-06-24T10:24:28.256Z",
+  "startedAt": "2026-06-24T15:13:55.829Z",
+  "endedAt": "2026-06-24T15:13:56.204Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,10 +83,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:28.256Z",
+  "generatedAt": "2026-06-24T15:13:56.204Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -101,16 +101,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:27.877Z",
-  "endTime": "2026-06-24T10:24:28.256Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:28.256Z",
+  "startTime": "2026-06-24T15:13:55.829Z",
+  "endTime": "2026-06-24T15:13:56.204Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:56.204Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts": {
@@ -138,5 +142,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/tenant-custom-domain-auth-origin-runtime-proof.ts"
   ],
-  "evidenceSignature": "8630fa472ecc8f605c854b020b6c1a8de9546c37208d4ec28617be4b557b530b"
+  "evidenceSignature": "f66754e5c35111ecabfa629c3008647a6563ef7815531a9d03c54fda36da265d"
 }

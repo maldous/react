@@ -1,7 +1,7 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-24T10:24:59.620Z",
+  "generatedAt": "2026-06-24T15:10:56.566Z",
   "status": "PASS",
   "levels": [
     {
@@ -57,14 +57,14 @@
     "L3": 152,
     "L4": 1,
     "L5": 4,
-    "L6": 0
+    "L6": 2
   },
   "byProviderEvidenceClass": {
     "contract-or-unit-proof": 160,
     "in-memory-provider-proof": 5,
     "fake-http-adapter-proof": 1,
     "local-real-provider-proof": 4,
-    "external-sandbox-proof": 1
+    "external-sandbox-proof": 3
   },
   "records": [
     {
@@ -704,6 +704,28 @@
       "perCapabilityL4EvidenceCount": 0,
       "l4CapabilityEvidenceMode": "not-l4",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L6",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "external-sandbox-proof",
+      "perCapabilityL4EvidenceCount": 0,
+      "l4CapabilityEvidenceMode": "not-l4",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-foundation-journey-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L6",
+      "proofLevelObserved": "L6",
+      "providerEvidenceClass": "external-sandbox-proof",
+      "perCapabilityL4EvidenceCount": 0,
+      "l4CapabilityEvidenceMode": "not-l4",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",

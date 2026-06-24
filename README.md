@@ -185,6 +185,8 @@ proof:l5-compose-local-resilience-closure
 proof:l5-identity-access-resilience
 proof:l5-postgres-tenant-identity-resilience
 proof:l5-staging-resilience-certification
+proof:l6-foundation-journey
+proof:l6-prod-shaped-certification
 proof:lago-billing-provider
 proof:metering
 proof:metering-quota-routes

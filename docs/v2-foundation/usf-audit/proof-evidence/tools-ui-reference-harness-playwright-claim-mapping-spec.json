@@ -22,10 +22,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L1",
   "commandExecuted": "npm run proof:ui-semantic-claim-mapping",
-  "startedAt": "2026-06-24T10:24:36.421Z",
-  "endedAt": "2026-06-24T10:24:44.387Z",
+  "startedAt": "2026-06-24T15:14:04.464Z",
+  "endedAt": "2026-06-24T15:14:11.894Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "tools/ui-reference-harness/playwright/claim-mapping.spec.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -122,10 +122,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:44.387Z",
+  "generatedAt": "2026-06-24T15:14:11.894Z",
   "sourceFileRefs": ["tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -140,16 +140,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:36.421Z",
-  "endTime": "2026-06-24T10:24:44.387Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:44.387Z",
+  "startTime": "2026-06-24T15:14:04.464Z",
+  "endTime": "2026-06-24T15:14:11.894Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:14:11.894Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-auth-settings-idps-alias": {
@@ -197,5 +201,5 @@
     }
   ],
   "logEvidence": ["log:tools/ui-reference-harness/playwright/claim-mapping.spec.ts"],
-  "evidenceSignature": "e0d191c51ff4456556f14d10690f179c71c989f85b5d9b864ab0fef8ef684485"
+  "evidenceSignature": "2de453e20394336081deda3a0916a37baa707559ee6aea1ebf3be74b22f731ec"
 }

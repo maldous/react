@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:alert-incident-closure",
-  "startedAt": "2026-06-24T10:21:29.385Z",
-  "endedAt": "2026-06-24T10:21:29.615Z",
+  "startedAt": "2026-06-24T15:10:57.622Z",
+  "endedAt": "2026-06-24T15:10:57.840Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:29.615Z",
+  "generatedAt": "2026-06-24T15:10:57.840Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -97,16 +97,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:29.385Z",
-  "endTime": "2026-06-24T10:21:29.615Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:29.615Z",
+  "startTime": "2026-06-24T15:10:57.622Z",
+  "endTime": "2026-06-24T15:10:57.840Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:10:57.840Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts": {
@@ -132,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/alert-incident-closure-runtime-proof.ts"],
-  "evidenceSignature": "a4fd5a82a3ad6c6373acd6cb526f6b05f406705dade100cfe82fcf4877370dad"
+  "evidenceSignature": "9997ce87f69c3fdc3c129b03b4b608966bc7abcf98de6ab31364c36a2e2c56b8"
 }

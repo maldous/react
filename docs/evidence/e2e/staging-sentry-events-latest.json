@@ -1,17 +1,17 @@
 {
   "stage": "staging",
-  "testRunId": "run-staging-1782294472-e4a72f3d",
+  "testRunId": "run-staging-1782312050-d75d7cd5",
   "result": "PASSED",
   "checks": [
     {
       "name": "trigger-synthetic-failure",
       "httpStatus": 500,
-      "requestId": "52858a49-aa0f-4f9e-bb25-1dc9247e6af8",
+      "requestId": "5ddc04c5-0b78-43ec-b1cd-1dca48cc1649",
       "expected": 500
     },
     {
       "name": "event-metadata",
-      "eventId": "17fe7065d9474b99b7fe2cd0fba537e1",
+      "eventId": "bdc067205590487caac115d37beddd27",
       "ok": true,
       "failures": [],
       "checks": [
@@ -27,13 +27,13 @@
         },
         {
           "name": "tag:requestId",
-          "expected": "52858a49-aa0f-4f9e-bb25-1dc9247e6af8",
-          "actual": "52858a49-aa0f-4f9e-bb25-1dc9247e6af8"
+          "expected": "5ddc04c5-0b78-43ec-b1cd-1dca48cc1649",
+          "actual": "5ddc04c5-0b78-43ec-b1cd-1dca48cc1649"
         },
         {
           "name": "tag:testRunId",
-          "expected": "run-staging-1782294472-e4a72f3d",
-          "actual": "run-staging-1782294472-e4a72f3d"
+          "expected": "run-staging-1782312050-d75d7cd5",
+          "actual": "run-staging-1782312050-d75d7cd5"
         },
         {
           "name": "tag:scenarioId",
@@ -43,14 +43,14 @@
         {
           "name": "tag:trace_id",
           "present": true,
-          "actual": "9c6a606377d32074230763914b6ebc3f"
+          "actual": "2e19e165fedd0d52c38bbe26f2d6d99f"
         }
       ]
     }
   ],
   "lines": [
-    "Triggered synthetic failure → HTTP 500 (x-request-id=52858a49-aa0f-4f9e-bb25-1dc9247e6af8).",
-    "Sentry event 17fe7065d9474b99b7fe2cd0fba537e1 carries environment + requestId + trace_id + testRunId + scenarioId."
+    "Triggered synthetic failure → HTTP 500 (x-request-id=5ddc04c5-0b78-43ec-b1cd-1dca48cc1649).",
+    "Sentry event bdc067205590487caac115d37beddd27 carries environment + requestId + trace_id + testRunId + scenarioId."
   ],
   "generatedFor": "ADR-ACT-0285 Phase 5.5"
 }

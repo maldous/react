@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:observability-signals",
-  "startedAt": "2026-06-24T10:23:31.395Z",
-  "endedAt": "2026-06-24T10:23:31.618Z",
+  "startedAt": "2026-06-24T15:12:59.420Z",
+  "endedAt": "2026-06-24T15:12:59.635Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-signals-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -183,10 +183,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:23:31.618Z",
+  "generatedAt": "2026-06-24T15:12:59.635Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-signals-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -201,16 +201,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:23:31.395Z",
-  "endTime": "2026-06-24T10:23:31.618Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:23:31.618Z",
+  "startTime": "2026-06-24T15:12:59.420Z",
+  "endTime": "2026-06-24T15:12:59.635Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:12:59.635Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-alerts": {
@@ -293,5 +297,5 @@
     }
   ],
   "logEvidence": ["log:observability-signals:runtime-proof"],
-  "evidenceSignature": "546a5a0023938ec72c0bdedb382a3029b93729ea50d7ef9e174f33a3f6dafd1f"
+  "evidenceSignature": "e6811fcff2231f4c288f29a4238ec18165aa1ab4c038c47ab92bed58173fb192"
 }

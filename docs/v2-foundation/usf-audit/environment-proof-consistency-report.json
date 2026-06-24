@@ -1,7 +1,7 @@
 {
   "artefact": "environment-proof-consistency-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-24T10:24:59.622Z",
+  "generatedAt": "2026-06-24T15:10:56.568Z",
   "status": "PASS",
   "environmentModel": {
     "dev": {
@@ -742,6 +742,30 @@
       "environmentValid": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
+      "environment": "e2e",
+      "providerMode": "prod-shaped-sandbox",
+      "providerEvidenceClass": "external-sandbox-proof",
+      "proofLevelClaimed": "L6",
+      "proofLevelObserved": "L6",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-foundation-journey-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+      "environment": "e2e",
+      "providerMode": "prod-shaped-sandbox",
+      "providerEvidenceClass": "external-sandbox-proof",
+      "proofLevelClaimed": "L6",
+      "proofLevelObserved": "L6",
+      "environmentValid": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",

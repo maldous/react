@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/workflow-control-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:24:34.922Z",
-  "endedAt": "2026-06-24T10:24:34.982Z",
+  "startedAt": "2026-06-24T15:14:02.950Z",
+  "endedAt": "2026-06-24T15:14:03.015Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-control-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:34.982Z",
+  "generatedAt": "2026-06-24T15:14:03.015Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-control-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -93,16 +93,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:34.922Z",
-  "endTime": "2026-06-24T10:24:34.982Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:34.982Z",
+  "startTime": "2026-06-24T15:14:02.950Z",
+  "endTime": "2026-06-24T15:14:03.015Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:14:03.015Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/workflow-control-runtime-proof.ts": {
@@ -128,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/workflow-control-runtime-proof.ts"],
-  "evidenceSignature": "d91e893d663fe5effb8647b2bdb86e11cf2fcbf4babe9a06050f0f82ff2fcc31"
+  "evidenceSignature": "e2e50a0c3fd72fc1f54eb40c8dd46414b415b1dcbf68567924cfd9c543b6d658"
 }

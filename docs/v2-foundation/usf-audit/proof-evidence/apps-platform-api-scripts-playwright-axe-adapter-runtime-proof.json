@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:24:04.430Z",
-  "endedAt": "2026-06-24T10:24:04.463Z",
+  "startedAt": "2026-06-24T15:13:32.367Z",
+  "endedAt": "2026-06-24T15:13:32.399Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:04.463Z",
+  "generatedAt": "2026-06-24T15:13:32.399Z",
   "sourceFileRefs": ["apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -93,16 +93,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:04.430Z",
-  "endTime": "2026-06-24T10:24:04.463Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:04.463Z",
+  "startTime": "2026-06-24T15:13:32.367Z",
+  "endTime": "2026-06-24T15:13:32.399Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:32.399Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts": {
@@ -128,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/playwright-axe-adapter-runtime-proof.ts"],
-  "evidenceSignature": "83c249bc37711d422592f230ef84dcf4c8053d833c5e4c4ed88e816be2438a84"
+  "evidenceSignature": "e32ab3e7ed2bba5b5c7c17cc1cfbd7fc053a922a718822b1e4853df989992c9a"
 }

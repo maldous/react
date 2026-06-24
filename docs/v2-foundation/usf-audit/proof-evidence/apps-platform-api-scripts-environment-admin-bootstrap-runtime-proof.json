@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:environment-admin-bootstrap",
-  "startedAt": "2026-06-24T10:21:44.577Z",
-  "endedAt": "2026-06-24T10:21:44.911Z",
+  "startedAt": "2026-06-24T15:11:12.834Z",
+  "endedAt": "2026-06-24T15:11:13.172Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,10 +81,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:44.911Z",
+  "generatedAt": "2026-06-24T15:11:13.172Z",
   "sourceFileRefs": ["apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -99,16 +99,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:44.577Z",
-  "endTime": "2026-06-24T10:21:44.911Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:44.911Z",
+  "startTime": "2026-06-24T15:11:12.834Z",
+  "endTime": "2026-06-24T15:11:13.172Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:11:13.172Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts": {
@@ -134,5 +138,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/environment-admin-bootstrap-runtime-proof.ts"],
-  "evidenceSignature": "f63e2fac40c8de4b0909a3a1c878723d6d4bf7db7f0bc0cc6a65b2e8831cc9ad"
+  "evidenceSignature": "8cb8b94ad62a5d257d95e3620235be0751b9db16c3bc335ea816dd2c15286cd4"
 }

@@ -18,12 +18,11 @@
   },
   "allowedProfiles": ["default", "identity", "observability", "web"],
   "allowedMocks": [],
-  "temporaryMockException": {
-    "reason": "Pre-real-provider bootstrap: mock Google/Microsoft/Apple presented on aldous.info/login via Keycloak brokering until real provider tenants exist.",
-    "adr": "ADR-ACT-0157",
-    "overrideFlag": "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS",
-    "removeWhen": "real provider tenants configured (AUTH_PROVIDER_MODE=real); drop the override, stop identity-mocks profile, remove Cloudflare DNS + Caddy handle for mock-idp.aldous.info",
-    "providers": ["mock-oidc"]
+  "realProviderReadiness": {
+    "classification": "prod-shaped-real-provider-posture",
+    "rationale": "Production identity no longer exposes or permits the mock-idp bootstrap. Third-party login uses real Keycloak broker aliases and requires REAL_<PROVIDER> credentials from generated/seeded runtime secret material.",
+    "providers": ["google"],
+    "approvingRule": "L6 foundation gate: prod-auth-real-provider-posture"
   },
   "secretStoreProvider": "openbao",
   "adminIdentity": {
@@ -135,10 +134,11 @@
     "E2E_FAILURE_ENDPOINT_ENABLED": "true",
     "E2E_ALLOW_PROD_SYNTHETIC_FAILURE": "true",
     "SENTRY_EVENT_RETENTION_DAYS": "90",
-    "AUTH_PROVIDER_MODE": "mock",
-    "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS": "true",
+    "AUTH_PROVIDER_MODE": "real",
+    "REAL_GOOGLE_ISSUER": "https://accounts.google.com",
+    "REAL_GOOGLE_CLIENT_ID": "prod-google-oidc-client-id-from-provider-console",
     "MOCK_OIDC_PORT": "9083",
-    "MOCK_OIDC_PUBLIC_URL": "https://mock-idp.aldous.info",
+    "MOCK_OIDC_PUBLIC_URL": "http://localhost:9083",
     "MOCK_OIDC_INTERNAL_URL": "http://mock-oidc:8080",
     "MOCK_OIDC_KC_BROKER_BASE": "https://aldous.info/kc/realms/platform-production/broker"
   }

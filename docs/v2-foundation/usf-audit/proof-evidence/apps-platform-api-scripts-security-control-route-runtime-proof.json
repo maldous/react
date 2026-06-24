@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:security-control-route",
-  "startedAt": "2026-06-24T10:24:24.952Z",
-  "endedAt": "2026-06-24T10:24:25.492Z",
+  "startedAt": "2026-06-24T15:13:52.888Z",
+  "endedAt": "2026-06-24T15:13:53.423Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/security-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:25.492Z",
+  "generatedAt": "2026-06-24T15:13:53.423Z",
   "sourceFileRefs": ["apps/platform-api/scripts/security-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -97,16 +97,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:24.952Z",
-  "endTime": "2026-06-24T10:24:25.492Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:25.492Z",
+  "startTime": "2026-06-24T15:13:52.888Z",
+  "endTime": "2026-06-24T15:13:53.423Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:53.423Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-security": {
@@ -132,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/security-control-route-runtime-proof.ts"],
-  "evidenceSignature": "2feaa5e21384cdbfd5f09963b310fc7d2d1838efe960095d6129261d8b6bc71c"
+  "evidenceSignature": "6f5870dffb94c5a6c2d41b5c6d5f951062301f34eeb06edba35bf9c007429d57"
 }

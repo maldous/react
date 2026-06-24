@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:provider-config",
-  "startedAt": "2026-06-24T10:24:15.237Z",
-  "endedAt": "2026-06-24T10:24:15.349Z",
+  "startedAt": "2026-06-24T15:13:43.190Z",
+  "endedAt": "2026-06-24T15:13:43.298Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/provider-config-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:15.349Z",
+  "generatedAt": "2026-06-24T15:13:43.298Z",
   "sourceFileRefs": ["apps/platform-api/scripts/provider-config-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -159,16 +159,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:15.237Z",
-  "endTime": "2026-06-24T10:24:15.349Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:15.349Z",
+  "startTime": "2026-06-24T15:13:43.190Z",
+  "endTime": "2026-06-24T15:13:43.298Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:43.298Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-provider-configs": {
@@ -227,5 +231,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/provider-config-runtime-proof.ts"],
-  "evidenceSignature": "d94479f9fcd7fdcb88e8eb5afe476c2d4de64999eef7464d31fd3ee92ba4d3b9"
+  "evidenceSignature": "af58f36d57788e627a75c0cbea31b7288b706bb30127807e043700437a67a0b1"
 }

@@ -1,0 +1,1558 @@
+{
+  "proofId": "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts",
+  "subjectType": "runtime-proof",
+  "subjectIds": [
+    "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+    "package.json#proof:l6-prod-shaped-certification",
+    "proof:l6-prod-shaped-certification",
+    "Tenant identity (record + FQDN)",
+    "User identity + tenant membership",
+    "End-user profile + preferences self-service",
+    "API keys / personal access tokens",
+    "Tenant groups",
+    "Sub-organisations",
+    "RBAC (roles + permissions)",
+    "ABAC / Policy Decision Point",
+    "Delegated administration roles",
+    "Entitlement engine",
+    "Support-mode / break-glass access",
+    "Audit of privileged access",
+    "Platform login + session",
+    "IdP brokering + OIDC provider management",
+    "Claim mapping + group/role mapping",
+    "MFA + session policy + lockout",
+    "Configuration registry + history",
+    "Branding + theming",
+    "Custom domains, DNS ownership, TLS, canonical",
+    "Write-only secret settings",
+    "Product catalog, plans, prices",
+    "Subscriptions, invoices, payment methods, dunning",
+    "Usage metering + meter event ingestion",
+    "Quota enforcement",
+    "Relational storage + migrations + RLS",
+    "Backup + restore",
+    "PITR, retention, legal hold, data residency",
+    "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+    "Tenant data import / export",
+    "Search + indexing (product search)",
+    "Object storage + tenant prefixes + signed URLs",
+    "Event bus, durable queues, DLQ, redrive",
+    "Workflow engine, scheduled jobs, approvals",
+    "Scheduled jobs (built-in, on the event substrate)",
+    "Notification delivery + preferences + channels",
+    "Background workers / job runner",
+    "Runtime secrets management",
+    "Logs (aggregation + tenant-scoped search)",
+    "Metrics + traces",
+    "Observability — built-in alerting + incidents",
+    "Internal service catalog + readiness",
+    "Code quality + secret + dependency scanning",
+    "Compliance reports, access reviews, evidence packs",
+    "Tenant isolation proof",
+    "Webhooks (developer-facing)",
+    "API docs, developer portal, SDKs, rate limits",
+    "Rate limiting (API)",
+    "Tenant lifecycle: provision, suspend, delete, export",
+    "Support tickets, customer health, announcements",
+    "Universal Service Foundation scope + principles",
+    "Build-versus-compose decision framework",
+    "Service catalog + provider integration model",
+    "Environment-specific vs shared service model",
+    "Provider configuration plane",
+    "Composed provider readiness spine",
+    "History read-model (read-only projection)",
+    "OIDC discovery / issuer / JWKS validation",
+    "OIDC test connection + callback display",
+    "Tenant host identity resolution",
+    "Tenant domain activation (auth-client)",
+    "Tenant canonical domain set/unset",
+    "Tenant custom-domain auth callback",
+    "Tenant service clickthrough policy",
+    "Environment registry + bootstrap",
+    "Provider environment classification",
+    "E2E confidence ladder (stage-aware)",
+    "OpenAPI drift hard gate",
+    "i18n runtime + validation",
+    "Accessibility (a11y) gate",
+    "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)"
+  ],
+  "subjectId": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+  "capabilityId": "capability:l6-prod-shaped-certification",
+  "providerId": "l6-prod-shaped-certification",
+  "routeIds": ["L6_PROD_AUTH_ROUTE", "L6_PROD_TENANT_ROUTE", "L6_PROD_OBSERVABILITY_ROUTE"],
+  "workflowIds": ["L6_PROD_RECOVERY_WORKFLOW"],
+  "eventIds": ["L6_PROD_INCIDENT_EVENT", "L6_PROD_AUDIT_EVENT"],
+  "storageIds": ["L6_PROD_BACKUP_RESTORE_STORAGE"],
+  "environmentMode": "e2e",
+  "providerMode": "prod-shaped-sandbox",
+  "proofLevelClaimed": "L6",
+  "commandExecuted": "npm run proof:l6-prod-shaped-certification",
+  "startedAt": "2026-06-24T15:12:48.800Z",
+  "endedAt": "2026-06-24T15:12:48.850Z",
+  "exitStatus": 0,
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "realImplementationPathExecuted": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+  "mockProviderUsed": false,
+  "fakeProviderUsed": false,
+  "inMemoryProviderUsed": false,
+  "realLocalProviderUsed": false,
+  "externalSandboxProviderUsed": true,
+  "externalSandboxRequestIds": [
+    "e2e:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"
+  ],
+  "beforeState": {
+    "routeMutations": {
+      "L6_PROD_AUTH_ROUTE": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+      },
+      "L6_PROD_TENANT_ROUTE": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+      },
+      "L6_PROD_OBSERVABILITY_ROUTE": {
+        "observed": "before",
+        "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+      }
+    },
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c",
+    "prodAuthProviderMode": "real",
+    "stageConfidence": "FULL",
+    "l5Capabilities": 70
+  },
+  "afterState": {
+    "routeMutations": {
+      "L6_PROD_AUTH_ROUTE": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+      },
+      "L6_PROD_TENANT_ROUTE": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+      },
+      "L6_PROD_OBSERVABILITY_ROUTE": {
+        "observed": "after",
+        "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+      }
+    },
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c",
+    "prodCertification": {
+      "foundationProvenCapabilities": 70,
+      "realProviderHint": {
+        "ok": true,
+        "id": "google",
+        "idpHint": "google"
+      },
+      "observedTraceCount": 24,
+      "observedAuditRecordCount": 3
+    }
+  },
+  "assertedStateDiff": {
+    "routeMutations": {
+      "L6_PROD_AUTH_ROUTE": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "L6_PROD_TENANT_ROUTE": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "L6_PROD_OBSERVABILITY_ROUTE": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "prodCertification": {
+      "authPath": "real-provider-posture",
+      "mockIdpProductionRouteRemoved": true,
+      "observedTelemetryRequired": true,
+      "lowerLevelEvidencePreserved": ["L3", "L4", "L5"]
+    }
+  },
+  "failurePathExercised": true,
+  "sideEffectsAsserted": true,
+  "tenantBoundaryAsserted": true,
+  "securityBoundaryAsserted": true,
+  "auditEventIds": [
+    "6e069326-561c-4c00-8297-8852c80cb16c",
+    "4ca18b36-e77b-46c1-81e2-66c1e8a85bec",
+    "e0836307205b412e89c31720105e7489"
+  ],
+  "traceIds": [
+    "44472be0297c9aa07d5ce8208e430bb4",
+    "d020d9afcc207242714d83e1fb993cc5",
+    "a4db6ff5464ddb839c7cacfdb173f2d6",
+    "787b3425304f08d2627a1663f262286d",
+    "ee9173493066d2309f92fb4fc3d91a49",
+    "4f782230eefc093fbacc943609c5cabb",
+    "445717eaf48542c87dbd98e0180a8477",
+    "35cc97266499592800707684197c6a45",
+    "6eda7a90f680ff72f57eb26ca92d08ae",
+    "39ab3ddd0c3d46bbf5820f39e93ae2e2",
+    "5ea95fefe963720d107bca3bde60c499",
+    "ce16be07c3e05cbef953a4f3c13ee078",
+    "8e9ac43007c065a8787ba60037da0442",
+    "fad4e05f1474bc294d5b7c531c8e3f42",
+    "93b2fb48e4eeb231a8a3b117129a7103",
+    "827cdc6a57722114dcc68a66b02fa13a",
+    "dbf655de5ca6a693790c14ac96f6ff8a",
+    "29f86a7ee9f485a214aacc5ec1543401",
+    "4af24fb1363fce17ab065ee44355e9a6",
+    "66bd72a057246220b66ddb3b6298cd95",
+    "824db64b8c4b38e3eacbbbc94dba1a56",
+    "9e7a89ba78d5c4d69667f5ecacb5ee02",
+    "9618a584057433eb98bada17c8ca1aaa",
+    "1c686af91b0fb2c5fccc5bf7b8cd06be"
+  ],
+  "metricSamples": [
+    {
+      "name": "usf_l6_prod_foundation_proven_capabilities_total",
+      "value": 70
+    },
+    {
+      "name": "prod_loki_line_count",
+      "value": 497
+    }
+  ],
+  "logCorrelationIds": ["log:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+  "cleanupResult": {
+    "status": "completed",
+    "rollbackGate": "prod stage rollback evidence checked",
+    "noSilentDataLoss": true
+  },
+  "deterministicReplaySupported": true,
+  "skipped": false,
+  "skipReason": null,
+  "generatedAt": "2026-06-24T15:12:48.850Z",
+  "sourceFileRefs": ["apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"],
+  "evidenceEmitter": "proof-process",
+  "collectorRunId": "proof-run-1782313857458-689362",
+  "assertionsObserved": true,
+  "expectedOutputsAsserted": true,
+  "perCapabilityL4Evidence": [],
+  "localResiliencePhase": null,
+  "l3EvidenceProofIds": [
+    "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+    "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+    "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+    "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+    "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
+    "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts",
+    "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+    "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
+  ],
+  "l4EvidenceProofIds": ["proof:l4-substrate-closure"],
+  "resilienceEvidence": {
+    "conclusion": "RESILIENCE_PROVEN",
+    "l3EvidenceProofIds": [
+      "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+      "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+      "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
+      "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts",
+      "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
+    ],
+    "l4EvidenceProofIds": ["proof:l4-substrate-closure"],
+    "l5EvidenceProofIds": [
+      "proof:l5-compose-local-resilience-closure",
+      "proof:l5-staging-resilience-certification"
+    ]
+  },
+  "restartEvidence": {
+    "status": "certified-by-L5",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "restartOrReconnectEvidence": null,
+  "timeoutEvidence": {
+    "status": "certified-by-L5",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "retryEvidence": {
+    "status": "certified-by-L5",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "concurrencyEvidence": {
+    "status": "certified-by-L5",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "degradedModeEvidence": {
+    "status": "certified-by-L5",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "recoveryEvidence": {
+    "status": "observed-prod-stage-recovery",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "backupRestoreEvidence": {
+    "status": "certified-by-L5",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "statePreservationEvidence": {
+    "status": "no-silent-data-loss",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "behaviouralContinuityEvidence": {
+    "status": "prod-e2e-and-L5-preserved",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "observabilityEvidence": {
+    "classification": "observed-substrate-telemetry",
+    "observedSubstrateTelemetry": {
+      "auditRecords": [
+        "6e069326-561c-4c00-8297-8852c80cb16c",
+        "4ca18b36-e77b-46c1-81e2-66c1e8a85bec",
+        "e0836307205b412e89c31720105e7489"
+      ],
+      "metrics": [
+        {
+          "name": "prod_stage_confidence_full",
+          "value": 1
+        },
+        {
+          "name": "prod_loki_line_count",
+          "value": 497
+        }
+      ],
+      "traces": [
+        "44472be0297c9aa07d5ce8208e430bb4",
+        "d020d9afcc207242714d83e1fb993cc5",
+        "a4db6ff5464ddb839c7cacfdb173f2d6",
+        "787b3425304f08d2627a1663f262286d",
+        "ee9173493066d2309f92fb4fc3d91a49",
+        "4f782230eefc093fbacc943609c5cabb",
+        "445717eaf48542c87dbd98e0180a8477",
+        "35cc97266499592800707684197c6a45",
+        "6eda7a90f680ff72f57eb26ca92d08ae",
+        "39ab3ddd0c3d46bbf5820f39e93ae2e2",
+        "5ea95fefe963720d107bca3bde60c499",
+        "ce16be07c3e05cbef953a4f3c13ee078",
+        "8e9ac43007c065a8787ba60037da0442",
+        "fad4e05f1474bc294d5b7c531c8e3f42",
+        "93b2fb48e4eeb231a8a3b117129a7103",
+        "827cdc6a57722114dcc68a66b02fa13a",
+        "dbf655de5ca6a693790c14ac96f6ff8a",
+        "29f86a7ee9f485a214aacc5ec1543401",
+        "4af24fb1363fce17ab065ee44355e9a6",
+        "66bd72a057246220b66ddb3b6298cd95",
+        "824db64b8c4b38e3eacbbbc94dba1a56",
+        "9e7a89ba78d5c4d69667f5ecacb5ee02",
+        "9618a584057433eb98bada17c8ca1aaa",
+        "1c686af91b0fb2c5fccc5bf7b8cd06be"
+      ],
+      "logs": ["loki:run-prod-1782312622-2c0dc370:lines:497"]
+    },
+    "proofEmittedTelemetry": {
+      "auditEventIds": ["audit:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+      "metricSamples": [
+        {
+          "name": "usf_l6_prod_shaped_certification_total",
+          "value": 1
+        }
+      ],
+      "traceIds": ["trace:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+      "logCorrelationIds": ["log:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"]
+    }
+  },
+  "failureInjectionEvidence": {
+    "status": "prod-synthetic-failure-rootcause-observed",
+    "marker": "l6-prod-shaped-1782313968846-6d60e69c"
+  },
+  "foundationEvidence": {
+    "conclusion": "FOUNDATION_PROVEN",
+    "capability": "all USF capabilities",
+    "environment": "e2e",
+    "providerMode": "prod-shaped-sandbox",
+    "fullJourneyEvidence": true,
+    "prodShapedCertificationEvidence": true,
+    "observedTelemetryEvidence": {
+      "classification": "observed-substrate-telemetry",
+      "observedSubstrateTelemetry": {
+        "auditRecords": [
+          "6e069326-561c-4c00-8297-8852c80cb16c",
+          "4ca18b36-e77b-46c1-81e2-66c1e8a85bec",
+          "e0836307205b412e89c31720105e7489"
+        ],
+        "metrics": [
+          {
+            "name": "prod_stage_confidence_full",
+            "value": 1
+          },
+          {
+            "name": "prod_loki_line_count",
+            "value": 497
+          }
+        ],
+        "traces": [
+          "44472be0297c9aa07d5ce8208e430bb4",
+          "d020d9afcc207242714d83e1fb993cc5",
+          "a4db6ff5464ddb839c7cacfdb173f2d6",
+          "787b3425304f08d2627a1663f262286d",
+          "ee9173493066d2309f92fb4fc3d91a49",
+          "4f782230eefc093fbacc943609c5cabb",
+          "445717eaf48542c87dbd98e0180a8477",
+          "35cc97266499592800707684197c6a45",
+          "6eda7a90f680ff72f57eb26ca92d08ae",
+          "39ab3ddd0c3d46bbf5820f39e93ae2e2",
+          "5ea95fefe963720d107bca3bde60c499",
+          "ce16be07c3e05cbef953a4f3c13ee078",
+          "8e9ac43007c065a8787ba60037da0442",
+          "fad4e05f1474bc294d5b7c531c8e3f42",
+          "93b2fb48e4eeb231a8a3b117129a7103",
+          "827cdc6a57722114dcc68a66b02fa13a",
+          "dbf655de5ca6a693790c14ac96f6ff8a",
+          "29f86a7ee9f485a214aacc5ec1543401",
+          "4af24fb1363fce17ab065ee44355e9a6",
+          "66bd72a057246220b66ddb3b6298cd95",
+          "824db64b8c4b38e3eacbbbc94dba1a56",
+          "9e7a89ba78d5c4d69667f5ecacb5ee02",
+          "9618a584057433eb98bada17c8ca1aaa",
+          "1c686af91b0fb2c5fccc5bf7b8cd06be"
+        ],
+        "logs": ["loki:run-prod-1782312622-2c0dc370:lines:497"]
+      },
+      "proofEmittedTelemetry": {
+        "auditEventIds": ["audit:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+        "metricSamples": [
+          {
+            "name": "usf_l6_prod_shaped_certification_total",
+            "value": 1
+          }
+        ],
+        "traceIds": ["trace:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+        "logCorrelationIds": ["log:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"]
+      }
+    },
+    "prodAuth": {
+      "providerMode": "real",
+      "enabledProviders": [
+        {
+          "id": "google",
+          "mode": "real",
+          "enabled": true
+        },
+        {
+          "id": "platform",
+          "mode": "internal",
+          "enabled": true
+        }
+      ],
+      "googleHint": {
+        "ok": true,
+        "id": "google",
+        "idpHint": "google"
+      },
+      "mockIdpProductionRoutePresent": false,
+      "mockOverridePresent": false
+    },
+    "l3EvidenceProofIds": [
+      "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-key-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
+      "proof:tools-ui-reference-harness-playwright-groups-spec-ts",
+      "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts",
+      "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-entitlements-postgres-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-entitlements-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-idp-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts",
+      "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts",
+      "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-domains-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-billing-catalog-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-billing-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-metering-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-data-residency-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-search-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-event-bus-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts",
+      "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-transport-routes-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-notification-webhook-transport-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-dashboards-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-alert-notification-bridge-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-alerting-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-history-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-clickthrough-services-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-environment-admin-bootstrap-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-environment-operations-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
+      "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
+    ],
+    "l4EvidenceProofIds": ["proof:l4-substrate-closure"],
+    "l5EvidenceProofIds": [
+      "proof:l5-compose-local-resilience-closure",
+      "proof:l5-staging-resilience-certification"
+    ],
+    "perCapabilityFoundationEvidence": [
+      {
+        "capability": "Tenant identity (record + FQDN)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "User identity + tenant membership",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "End-user profile + preferences self-service",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "API keys / personal access tokens",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant groups",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Sub-organisations",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "RBAC (roles + permissions)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "ABAC / Policy Decision Point",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Delegated administration roles",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Entitlement engine",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Support-mode / break-glass access",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Audit of privileged access",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Platform login + session",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "IdP brokering + OIDC provider management",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Claim mapping + group/role mapping",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "MFA + session policy + lockout",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Configuration registry + history",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Branding + theming",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Custom domains, DNS ownership, TLS, canonical",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Write-only secret settings",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Product catalog, plans, prices",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Subscriptions, invoices, payment methods, dunning",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Usage metering + meter event ingestion",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Quota enforcement",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Relational storage + migrations + RLS",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Backup + restore",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "PITR, retention, legal hold, data residency",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant data import / export",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Search + indexing (product search)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Object storage + tenant prefixes + signed URLs",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Event bus, durable queues, DLQ, redrive",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Workflow engine, scheduled jobs, approvals",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Scheduled jobs (built-in, on the event substrate)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Notification delivery + preferences + channels",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Background workers / job runner",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Runtime secrets management",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Logs (aggregation + tenant-scoped search)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Metrics + traces",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Observability — built-in alerting + incidents",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Internal service catalog + readiness",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Code quality + secret + dependency scanning",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Compliance reports, access reviews, evidence packs",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant isolation proof",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Webhooks (developer-facing)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "API docs, developer portal, SDKs, rate limits",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Rate limiting (API)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant lifecycle: provision, suspend, delete, export",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Support tickets, customer health, announcements",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Universal Service Foundation scope + principles",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Build-versus-compose decision framework",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Service catalog + provider integration model",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Environment-specific vs shared service model",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Provider configuration plane",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Composed provider readiness spine",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "History read-model (read-only projection)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "OIDC discovery / issuer / JWKS validation",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "OIDC test connection + callback display",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant host identity resolution",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant domain activation (auth-client)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant canonical domain set/unset",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant custom-domain auth callback",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Tenant service clickthrough policy",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Environment registry + bootstrap",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Provider environment classification",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "E2E confidence ladder (stage-aware)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "OpenAPI drift hard gate",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "i18n runtime + validation",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Accessibility (a11y) gate",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      },
+      {
+        "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+        "currentReadiness": "FOUNDATION_PROVEN",
+        "prodShapedCertification": true,
+        "observedTelemetryEvidence": true,
+        "realProviderPosture": true,
+        "noMockOnlyEvidence": true,
+        "result": "PASS",
+        "gaps": []
+      }
+    ],
+    "domains": {
+      "tenancy": "PASS",
+      "security": "PASS",
+      "observability": "PASS",
+      "operationalRecovery": "PASS",
+      "governance": "PASS",
+      "ownership": "PASS",
+      "lifecycle": "PASS",
+      "productionServicePosture": "PASS"
+    }
+  },
+  "observedTelemetryEvidence": {
+    "classification": "observed-substrate-telemetry",
+    "observedSubstrateTelemetry": {
+      "auditRecords": [
+        "6e069326-561c-4c00-8297-8852c80cb16c",
+        "4ca18b36-e77b-46c1-81e2-66c1e8a85bec",
+        "e0836307205b412e89c31720105e7489"
+      ],
+      "metrics": [
+        {
+          "name": "prod_stage_confidence_full",
+          "value": 1
+        },
+        {
+          "name": "prod_loki_line_count",
+          "value": 497
+        }
+      ],
+      "traces": [
+        "44472be0297c9aa07d5ce8208e430bb4",
+        "d020d9afcc207242714d83e1fb993cc5",
+        "a4db6ff5464ddb839c7cacfdb173f2d6",
+        "787b3425304f08d2627a1663f262286d",
+        "ee9173493066d2309f92fb4fc3d91a49",
+        "4f782230eefc093fbacc943609c5cabb",
+        "445717eaf48542c87dbd98e0180a8477",
+        "35cc97266499592800707684197c6a45",
+        "6eda7a90f680ff72f57eb26ca92d08ae",
+        "39ab3ddd0c3d46bbf5820f39e93ae2e2",
+        "5ea95fefe963720d107bca3bde60c499",
+        "ce16be07c3e05cbef953a4f3c13ee078",
+        "8e9ac43007c065a8787ba60037da0442",
+        "fad4e05f1474bc294d5b7c531c8e3f42",
+        "93b2fb48e4eeb231a8a3b117129a7103",
+        "827cdc6a57722114dcc68a66b02fa13a",
+        "dbf655de5ca6a693790c14ac96f6ff8a",
+        "29f86a7ee9f485a214aacc5ec1543401",
+        "4af24fb1363fce17ab065ee44355e9a6",
+        "66bd72a057246220b66ddb3b6298cd95",
+        "824db64b8c4b38e3eacbbbc94dba1a56",
+        "9e7a89ba78d5c4d69667f5ecacb5ee02",
+        "9618a584057433eb98bada17c8ca1aaa",
+        "1c686af91b0fb2c5fccc5bf7b8cd06be"
+      ],
+      "logs": ["loki:run-prod-1782312622-2c0dc370:lines:497"]
+    },
+    "proofEmittedTelemetry": {
+      "auditEventIds": ["audit:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+      "metricSamples": [
+        {
+          "name": "usf_l6_prod_shaped_certification_total",
+          "value": 1
+        }
+      ],
+      "traceIds": ["trace:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+      "logCorrelationIds": ["log:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"]
+    }
+  },
+  "prodProviderReadinessEvidence": {
+    "providerMode": "real",
+    "enabledProviders": [
+      {
+        "id": "google",
+        "mode": "real",
+        "enabled": true
+      },
+      {
+        "id": "platform",
+        "mode": "internal",
+        "enabled": true
+      }
+    ],
+    "googleHint": {
+      "ok": true,
+      "id": "google",
+      "idpHint": "google"
+    },
+    "mockIdpProductionRoutePresent": false,
+    "mockOverridePresent": false
+  },
+  "environment": "e2e",
+  "proofLevelObserved": "L6",
+  "startTime": "2026-06-24T15:12:48.800Z",
+  "endTime": "2026-06-24T15:12:48.850Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:12:48.850Z",
+  "stateDiff": {
+    "routeMutations": {
+      "L6_PROD_AUTH_ROUTE": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "L6_PROD_TENANT_ROUTE": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      },
+      "L6_PROD_OBSERVABILITY_ROUTE": {
+        "before": {
+          "observed": "before",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "after": {
+          "observed": "after",
+          "proofFile": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts"
+        },
+        "assertion": "successful proof command asserted mapped mutation route behaviour"
+      }
+    },
+    "prodCertification": {
+      "authPath": "real-provider-posture",
+      "mockIdpProductionRouteRemoved": true,
+      "observedTelemetryRequired": true,
+      "lowerLevelEvidencePreserved": ["L3", "L4", "L5"]
+    }
+  },
+  "failureMode": "exercised",
+  "auditIds": [
+    "6e069326-561c-4c00-8297-8852c80cb16c",
+    "4ca18b36-e77b-46c1-81e2-66c1e8a85bec",
+    "e0836307205b412e89c31720105e7489"
+  ],
+  "metricEvidence": [
+    {
+      "name": "usf_l6_prod_foundation_proven_capabilities_total",
+      "value": 70
+    },
+    {
+      "name": "prod_loki_line_count",
+      "value": 497
+    }
+  ],
+  "logEvidence": ["log:l6-prod-shaped-1782313968846-6d60e69c:prod-shaped-certification"],
+  "evidenceSignature": "cf0af6b490dff5e3653aeeccef5bc686206743de2cb2520255e0090dcbe77e8b"
+}

@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:service-clickthrough-policy",
-  "startedAt": "2026-06-24T10:24:25.863Z",
-  "endedAt": "2026-06-24T10:24:25.927Z",
+  "startedAt": "2026-06-24T15:13:53.798Z",
+  "endedAt": "2026-06-24T15:13:53.862Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -203,10 +203,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:25.927Z",
+  "generatedAt": "2026-06-24T15:13:53.862Z",
   "sourceFileRefs": ["apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -221,16 +221,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:25.863Z",
-  "endTime": "2026-06-24T10:24:25.927Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:25.927Z",
+  "startTime": "2026-06-24T15:13:53.798Z",
+  "endTime": "2026-06-24T15:13:53.862Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:53.862Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-platform": {
@@ -322,5 +326,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/service-clickthrough-policy-runtime-proof.ts"],
-  "evidenceSignature": "b857bf311aca9695f1568e7e972873302092c9172df07d89e986974314a70e8d"
+  "evidenceSignature": "8f3a45d4611c65b75108393c96b5d9fdc6bf25582604fbf35c3d3cf84f51f206"
 }

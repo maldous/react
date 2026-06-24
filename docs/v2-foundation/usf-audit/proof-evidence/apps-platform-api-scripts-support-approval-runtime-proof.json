@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:approval-workflow",
-  "startedAt": "2026-06-24T10:24:27.215Z",
-  "endedAt": "2026-06-24T10:24:27.284Z",
+  "startedAt": "2026-06-24T15:13:55.150Z",
+  "endedAt": "2026-06-24T15:13:55.222Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/support-approval-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -182,10 +182,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:27.284Z",
+  "generatedAt": "2026-06-24T15:13:55.222Z",
   "sourceFileRefs": ["apps/platform-api/scripts/support-approval-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -200,16 +200,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:27.215Z",
-  "endTime": "2026-06-24T10:24:27.284Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:27.284Z",
+  "startTime": "2026-06-24T15:13:55.150Z",
+  "endTime": "2026-06-24T15:13:55.222Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:55.222Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-support-health": {
@@ -290,5 +294,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/support-approval-runtime-proof.ts"],
-  "evidenceSignature": "88ff524add30f8c94902b1c987f895ed10e9e1871c490c042e83b5fa267d8f32"
+  "evidenceSignature": "20962b6ec05328775dd206d35bf0159028c0b1e9a44464feceb978647a16d42d"
 }

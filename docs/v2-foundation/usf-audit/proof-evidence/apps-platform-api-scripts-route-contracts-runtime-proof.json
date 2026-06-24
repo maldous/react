@@ -90,10 +90,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:route-contracts",
-  "startedAt": "2026-06-24T10:24:20.802Z",
-  "endedAt": "2026-06-24T10:24:21.343Z",
+  "startedAt": "2026-06-24T15:13:48.716Z",
+  "endedAt": "2026-06-24T15:13:49.252Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/route-contracts-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -875,10 +875,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:21.343Z",
+  "generatedAt": "2026-06-24T15:13:49.252Z",
   "sourceFileRefs": ["apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -893,16 +893,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:20.802Z",
-  "endTime": "2026-06-24T10:24:21.343Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:21.343Z",
+  "startTime": "2026-06-24T15:13:48.716Z",
+  "endTime": "2026-06-24T15:13:49.252Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:49.252Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-config-key": {
@@ -1346,5 +1350,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/route-contracts-runtime-proof.ts"],
-  "evidenceSignature": "3461ca415456aab7754e91a173e7363edd78b7d86c26a29bb3c18aaee8dae105"
+  "evidenceSignature": "a19ff79a7b0e01ed1722cad075ffd15e6617363d411790694fbb707d4c03cf07"
 }

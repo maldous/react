@@ -431,20 +431,19 @@ services:
   # mock-oidc: NON-PRODUCTION upstream OIDC identity-provider fixture. Keycloak
   # brokers it as mock-google / mock-azure / mock-apple (ADR-ACT-0157).
   #
-  # PER-ENV (not shared): one instance per project (react-dev/test/staging/prod),
-  # each on its own host MOCK_OIDC_PORT (dev 9080 / test 9081 / staging 9082 /
-  # prod 9083) emitting its own MOCK_OIDC_PUBLIC_URL issuer. A single
+  # PER-ENV (not shared): one instance per non-production project, each on its
+  # own host MOCK_OIDC_PORT (dev 9080 / test 9081 / staging 9082) emitting its own
+  # MOCK_OIDC_PUBLIC_URL issuer. A single
   # node-oidc-provider instance can only emit ONE issuer, so per-env instances let
   # all environments run concurrently. Keycloak (same project network) reaches the
   # backchannel (token/jwks/userinfo) at http://mock-oidc:8080/<provider>; the
   # browser uses the published MOCK_OIDC_PUBLIC_URL for authorize + the picker.
   #
-  # GUARDRAIL: this profile must NEVER be started silently in staging/prod. It is
-  # only valid there as an explicit, temporary pre-real-provider bootstrap
-  # (AUTH_PROVIDER_MODE=mock + ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true),
-  # which the BFF startup check logs loudly. WireMock is NOT an OIDC provider
-  # (Keycloak runs a real auth-code flow and validates signed ID tokens with a
-  # dynamic nonce). See docs/local-development/mock-identity.md.
+  # GUARDRAIL: this profile must NEVER be used for production identity. The old
+  # ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS bootstrap is retired and the BFF
+  # startup check fails closed in prod-like environments. WireMock is NOT an OIDC
+  # provider (Keycloak runs a real auth-code flow and validates signed ID tokens
+  # with a dynamic nonce). See docs/local-development/mock-identity.md.
   # ---------------------------------------------------------------------------
 
   mock-oidc:
@@ -462,7 +461,7 @@ services:
     ports:
       # host:container ? host port MUST equal the port in MOCK_OIDC_PUBLIC_URL so
       # the browser-facing issuer and the published port agree. Per-env offset:
-      # dev 9080 / test 9081 / staging 9082 / prod 9083 (set MOCK_OIDC_PORT in .env.<env>).
+      # dev 9080 / test 9081 / staging 9082 (set MOCK_OIDC_PORT in .env.<env>).
       - "${MOCK_OIDC_PORT:-9080}:8080"
     # Runs in this env's own project (react-<env>) alongside that env's Keycloak,
     # which reaches it in-network at http://mock-oidc:8080 (MOCK_OIDC_INTERNAL_URL).
@@ -1504,13 +1503,14 @@ services:
       KEYCLOAK_PROVISIONER_CLIENT_SECRET: ${KEYCLOAK_PROVISIONER_CLIENT_SECRET:-local-dev-provisioner-secret}
       # Brokered third-party identity provider mode (ADR-ACT-0157). Read by the BFF
       # (apps/platform-api/src/server/auth-providers.ts). Unset => "real" in prod-like
-      # envs (PLATFORM_ENV=staging|prod), which lists ONLY the platform login until
-      # real providers exist. "mock" is a TEMPORARY pre-real-provider bootstrap and
-      # ALSO requires ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true, or the BFF
-      # refuses to start (validateProviderModeAtStartup). MOCK_OIDC_* point the BFF
-      # seed at the shared mock-oidc fixture (browser issuer vs Keycloak backchannel).
+      # envs (PLATFORM_ENV=staging|prod), which lists platform login plus configured
+      # REAL_* providers. Mock provider mode is refused in prod-like environments; the
+      # ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS bootstrap flag is retired.
       AUTH_PROVIDER_MODE: ${AUTH_PROVIDER_MODE:-}
       ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS: ${ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS:-}
+      REAL_GOOGLE_ISSUER: ${REAL_GOOGLE_ISSUER:-}
+      REAL_GOOGLE_CLIENT_ID: ${REAL_GOOGLE_CLIENT_ID:-}
+      REAL_GOOGLE_CLIENT_SECRET: ${REAL_GOOGLE_CLIENT_SECRET:-}
       MOCK_OIDC_PUBLIC_URL: ${MOCK_OIDC_PUBLIC_URL:-http://localhost:9080}
       MOCK_OIDC_INTERNAL_URL: ${MOCK_OIDC_INTERNAL_URL:-http://mock-oidc:8080}
       MOCK_OIDC_CLIENT_SECRET: ${MOCK_OIDC_CLIENT_SECRET:-mock-oidc-shared-secret}

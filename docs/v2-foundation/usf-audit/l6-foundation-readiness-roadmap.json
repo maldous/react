@@ -1,0 +1,1598 @@
+{
+  "artefact": "l6-foundation-readiness-roadmap",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-24T15:10:56.638Z",
+  "status": "PASS",
+  "l6ClaimedByThisArtifact": false,
+  "acceptanceCriteria": [
+    {
+      "id": "preserved-l3-l4-l5",
+      "description": "Foundation Proven requires preserved Behaviour, Substrate, and Resilience Proven evidence.",
+      "rejects": ["missing lower-level proof ids", "stale lower-level evidence"]
+    },
+    {
+      "id": "complete-foundation-journey",
+      "description": "Foundation Proven requires complete journey evidence spanning tenancy, security, observability, operational recovery, governance, ownership, lifecycle, and production-shaped service posture.",
+      "rejects": ["per-capability-only proof counts", "advisory-only evidence", "partial journeys"]
+    },
+    {
+      "id": "prod-real-provider-posture",
+      "description": "Production identity must use real provider posture; mock-only or temporary mock override evidence cannot certify L6.",
+      "rejects": ["mock-only IdP brokering", "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS"]
+    },
+    {
+      "id": "observed-telemetry",
+      "description": "L6 requires observed audit records, metrics, traces, and logs for production-shaped journeys.",
+      "rejects": ["proof-emitted telemetry only", "missing trace/log/metric/audit observation"]
+    },
+    {
+      "id": "operational-survivability",
+      "description": "L6 requires backup, restore, failover, recovery, rollback/readiness gates, and no silent data loss.",
+      "rejects": ["container restart only", "unvalidated rollback", "silent data loss risk"]
+    }
+  ],
+  "totalCapabilities": 70,
+  "l5CompleteCapabilities": 70,
+  "proofCommandsToRun": [
+    "npm run proof:l6-foundation-journey",
+    "npm run proof:l6-prod-shaped-certification"
+  ],
+  "hardRejectionRules": [
+    "partial foundation journey evidence",
+    "stale lower-level evidence",
+    "mock-only production identity evidence",
+    "advisory-only telemetry",
+    "proof-emitted telemetry without required observed telemetry",
+    "missing per-capability journey evidence"
+  ],
+  "gaps": [],
+  "capabilities": [
+    {
+      "capability": "Tenant identity (record + FQDN)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "User identity + tenant membership",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "End-user profile + preferences self-service",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant groups",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Sub-organisations",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "RBAC (roles + permissions)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "ABAC / Policy Decision Point",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Delegated administration roles",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Entitlement engine",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Support-mode / break-glass access",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Audit of privileged access",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Platform login + session",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "IdP brokering + OIDC provider management",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Claim mapping + group/role mapping",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "MFA + session policy + lockout",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Configuration registry + history",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Branding + theming",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Custom domains, DNS ownership, TLS, canonical",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Write-only secret settings",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Product catalog, plans, prices",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Subscriptions, invoices, payment methods, dunning",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Usage metering + meter event ingestion",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Quota enforcement",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Relational storage + migrations + RLS",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Backup + restore",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "PITR, retention, legal hold, data residency",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant data import / export",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Search + indexing (product search)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Object storage + tenant prefixes + signed URLs",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Event bus, durable queues, DLQ, redrive",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Workflow engine, scheduled jobs, approvals",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Scheduled jobs (built-in, on the event substrate)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Notification delivery + preferences + channels",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Background workers / job runner",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Runtime secrets management",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Logs (aggregation + tenant-scoped search)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Metrics + traces",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Observability — built-in alerting + incidents",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Internal service catalog + readiness",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Code quality + secret + dependency scanning",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Compliance reports, access reviews, evidence packs",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant isolation proof",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Webhooks (developer-facing)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "API docs, developer portal, SDKs, rate limits",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Rate limiting (API)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant lifecycle: provision, suspend, delete, export",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Support tickets, customer health, announcements",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Universal Service Foundation scope + principles",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Build-versus-compose decision framework",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Service catalog + provider integration model",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Environment-specific vs shared service model",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Provider configuration plane",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "History read-model (read-only projection)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "OIDC discovery / issuer / JWKS validation",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "OIDC test connection + callback display",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant host identity resolution",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant domain activation (auth-client)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant canonical domain set/unset",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant custom-domain auth callback",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Tenant service clickthrough policy",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Environment registry + bootstrap",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Provider environment classification",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "E2E confidence ladder (stage-aware)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "OpenAPI drift hard gate",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "i18n runtime + validation",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Accessibility (a11y) gate",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    },
+    {
+      "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
+      "currentReadiness": "RESILIENCE_PROVEN",
+      "l5EvidenceProofIds": [
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts"
+      ],
+      "requiredJourneyDomains": [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture"
+      ],
+      "requiredL6Proofs": ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      "gaps": []
+    }
+  ]
+}

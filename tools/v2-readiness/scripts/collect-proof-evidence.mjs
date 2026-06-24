@@ -186,6 +186,9 @@ function proofExecutionMode(proof) {
   if (proof.file.includes("l5-staging-resilience-certification-runtime-proof")) {
     return { environmentMode: "staging", providerMode: "external-sandbox" };
   }
+  if (proof.file.includes("l6-")) {
+    return { environmentMode: "e2e", providerMode: "prod-shaped-sandbox" };
+  }
   if (proof.proofLevelClaimed === "L5" || proof.proofLevelClaimed === "L6") {
     return { environmentMode: "staging", providerMode: "external-sandbox" };
   }

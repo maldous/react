@@ -118,10 +118,14 @@ if (evidenceFile && rawMetadata) {
         concurrencyEvidence: proofOverrides.concurrencyEvidence || null,
         degradedModeEvidence: proofOverrides.degradedModeEvidence || null,
         recoveryEvidence: proofOverrides.recoveryEvidence || null,
+        backupRestoreEvidence: proofOverrides.backupRestoreEvidence || null,
         statePreservationEvidence: proofOverrides.statePreservationEvidence || null,
         behaviouralContinuityEvidence: proofOverrides.behaviouralContinuityEvidence || null,
         observabilityEvidence: proofOverrides.observabilityEvidence || null,
         failureInjectionEvidence: proofOverrides.failureInjectionEvidence || null,
+        foundationEvidence: proofOverrides.foundationEvidence || null,
+        observedTelemetryEvidence: proofOverrides.observedTelemetryEvidence || null,
+        prodProviderReadinessEvidence: proofOverrides.prodProviderReadinessEvidence || null,
       });
       fs.writeFileSync(evidenceFile, `${JSON.stringify(record, null, 2)}\n`);
     });

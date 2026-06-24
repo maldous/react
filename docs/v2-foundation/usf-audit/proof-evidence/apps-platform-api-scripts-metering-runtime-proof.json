@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:metering",
-  "startedAt": "2026-06-24T10:23:22.229Z",
-  "endedAt": "2026-06-24T10:23:22.451Z",
+  "startedAt": "2026-06-24T15:12:50.210Z",
+  "endedAt": "2026-06-24T15:12:50.432Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metering-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:23:22.451Z",
+  "generatedAt": "2026-06-24T15:12:50.432Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metering-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -159,16 +159,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:23:22.229Z",
-  "endTime": "2026-06-24T10:23:22.451Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:23:22.451Z",
+  "startTime": "2026-06-24T15:12:50.210Z",
+  "endTime": "2026-06-24T15:12:50.432Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:12:50.432Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-usage": {
@@ -227,5 +231,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/metering-runtime-proof.ts"],
-  "evidenceSignature": "359da090771e41aca642ce1c8ab60b1101dcf8c3e5af19e15630e946da667ecb"
+  "evidenceSignature": "569adbbcee858ba7d103a6cd9ccd4d2e87900df0e656ed675550216ffcb4afd7"
 }

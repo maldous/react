@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:billing-control-route",
-  "startedAt": "2026-06-24T10:21:34.660Z",
-  "endedAt": "2026-06-24T10:21:35.181Z",
+  "startedAt": "2026-06-24T15:11:02.940Z",
+  "endedAt": "2026-06-24T15:11:03.458Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/billing-control-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:35.181Z",
+  "generatedAt": "2026-06-24T15:11:03.458Z",
   "sourceFileRefs": ["apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -97,16 +97,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:34.660Z",
-  "endTime": "2026-06-24T10:21:35.181Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:35.181Z",
+  "startTime": "2026-06-24T15:11:02.940Z",
+  "endTime": "2026-06-24T15:11:03.458Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:11:03.458Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-billing": {
@@ -132,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/billing-control-route-runtime-proof.ts"],
-  "evidenceSignature": "14ba29df3dc30fd394ecb43b1e937eb9a23242d4b20cfec0671aaea671c2b207"
+  "evidenceSignature": "7b2ddda8e951832e2811eb5f51e82726dbf0c9afdf9293236c92b7631ebd2f60"
 }

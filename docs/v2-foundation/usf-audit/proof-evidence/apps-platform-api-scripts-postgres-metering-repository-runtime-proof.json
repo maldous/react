@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:24:08.774Z",
-  "endedAt": "2026-06-24T10:24:09.029Z",
+  "startedAt": "2026-06-24T15:13:36.688Z",
+  "endedAt": "2026-06-24T15:13:36.907Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:09.029Z",
+  "generatedAt": "2026-06-24T15:13:36.907Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -97,16 +97,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:08.774Z",
-  "endTime": "2026-06-24T10:24:09.029Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:09.029Z",
+  "startTime": "2026-06-24T15:13:36.688Z",
+  "endTime": "2026-06-24T15:13:36.907Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:36.907Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts": {
@@ -132,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
-  "evidenceSignature": "257653b1b7d950a2ba801f3ec366c6eb99d356dc2765a7a5ec3a66c1c4cb4d48"
+  "evidenceSignature": "af5b66ac99752e0c0b0ec6fc655e58447703971a720fff10a6f18ce4cf9ad175"
 }

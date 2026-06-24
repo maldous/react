@@ -35,10 +35,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-provider-runtime",
-  "startedAt": "2026-06-24T10:21:50.198Z",
-  "endedAt": "2026-06-24T10:21:50.378Z",
+  "startedAt": "2026-06-24T15:11:18.500Z",
+  "endedAt": "2026-06-24T15:11:18.678Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -279,10 +279,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:50.378Z",
+  "generatedAt": "2026-06-24T15:11:18.678Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -297,16 +297,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:50.198Z",
-  "endTime": "2026-06-24T10:21:50.378Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:50.378Z",
+  "startTime": "2026-06-24T15:11:18.500Z",
+  "endTime": "2026-06-24T15:11:18.678Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:11:18.678Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-provider-runtime-proof.ts": {
@@ -476,5 +480,5 @@
     }
   ],
   "logEvidence": ["log:storage.info:tenant-semantic-dev/hello.txt"],
-  "evidenceSignature": "19ca750f4a402eee3179664a8e584a6c96922718b5f1c3a0d648096909ae518d"
+  "evidenceSignature": "1f8383f1ad7568d14ab559193f1340d9196cb0664d87fde6a0d3ec0861d4d2f9"
 }

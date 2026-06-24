@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:observability-metrics-traces-closure",
-  "startedAt": "2026-06-24T10:23:29.286Z",
-  "endedAt": "2026-06-24T10:23:29.800Z",
+  "startedAt": "2026-06-24T15:12:57.322Z",
+  "endedAt": "2026-06-24T15:12:57.849Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,12 +81,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:23:29.800Z",
+  "generatedAt": "2026-06-24T15:12:57.849Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -101,16 +101,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:23:29.286Z",
-  "endTime": "2026-06-24T10:23:29.800Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:23:29.800Z",
+  "startTime": "2026-06-24T15:12:57.322Z",
+  "endTime": "2026-06-24T15:12:57.849Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:12:57.849Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/observability-metrics-traces-closure-runtime-proof.ts": {
@@ -138,5 +142,5 @@
     }
   ],
   "logEvidence": ["log:observability-metrics-traces-closure:runtime-proof"],
-  "evidenceSignature": "d86c30f5f98eac19b1a60f00a4e0c7d68f512a2fe9bcd52727dc0abfc21e0d93"
+  "evidenceSignature": "cc70ce09de5c5d88f921fee986bde63596d803366b50aa709cef5e205b3278c3"
 }

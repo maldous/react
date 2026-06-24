@@ -61,13 +61,15 @@ describe("provider mode", () => {
     assert.equal(getProviderMode(), "disabled");
   });
 
-  test("mock is allowed in dev but not prod-like without the override", () => {
+  test("mock is allowed in dev but not prod-like; the old override no longer permits it", () => {
     process.env["PLATFORM_ENV"] = "development";
     assert.equal(mockAllowedHere(), true);
     process.env["PLATFORM_ENV"] = "production";
     assert.equal(mockAllowedHere(), false);
     process.env["ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS"] = "true";
-    assert.equal(mockAllowedHere(), true);
+    assert.equal(mockAllowedHere(), false);
+    process.env["AUTH_PROVIDER_MODE"] = "mock";
+    assert.throws(() => validateProviderModeAtStartup(), /no longer accepted/);
   });
 });
 
@@ -214,19 +216,26 @@ describe("validateProviderModeAtStartup (guardrails)", () => {
     assert.throws(() => validateProviderModeAtStartup(), /refused in 'production'/);
   });
 
-  test("allows mock in prod-like env with the override but warns loudly", () => {
+  test("rejects mock in prod-like env even with the retired override", () => {
     process.env["PLATFORM_ENV"] = "staging";
     process.env["AUTH_PROVIDER_MODE"] = "mock";
     process.env["ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS"] = "true";
-    const warnings = validateProviderModeAtStartup();
-    assert.equal(warnings.length, 1);
-    assert.match(warnings[0]!.message, /TEMPORARY/);
+    assert.throws(() => validateProviderModeAtStartup(), /no longer accepted/);
   });
 
   test("throws when AUTH_PROVIDER_MODE=real is explicit but no real provider configured", () => {
     process.env["PLATFORM_ENV"] = "production";
     process.env["AUTH_PROVIDER_MODE"] = "real";
     assert.throws(() => validateProviderModeAtStartup(), /no real provider is configured/);
+  });
+
+  test("allows explicit real mode when a real provider is configured", () => {
+    process.env["PLATFORM_ENV"] = "production";
+    process.env["AUTH_PROVIDER_MODE"] = "real";
+    process.env["REAL_GOOGLE_ISSUER"] = "https://accounts.google.com";
+    process.env["REAL_GOOGLE_CLIENT_ID"] = "real-client";
+    process.env["REAL_GOOGLE_CLIENT_SECRET"] = "real-secret";
+    assert.deepEqual(validateProviderModeAtStartup(), []);
   });
 
   test("does not throw for the default (dev → mock)", () => {

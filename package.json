@@ -280,6 +280,8 @@
     "proof:l5-identity-access-resilience": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
     "proof:l5-compose-local-resilience-closure": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
     "proof:l5-staging-resilience-certification": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+    "proof:l6-foundation-journey": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
+    "proof:l6-prod-shaped-certification": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
     "proof:http-engine-providers": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-engine-provider-runtime-proof.ts",
     "proof:composed-provider-runtime-closure": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/composed-provider-runtime-closure-proof.ts",
     "proof:temporal-workflow-provider": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/temporal-workflow-provider-runtime-proof.ts",

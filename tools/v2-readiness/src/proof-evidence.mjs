@@ -300,7 +300,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     records: evidence.records,
     l0DiscoveryReadiness,
   });
-  const capabilityReadiness = buildCapabilityProofReadinessReport(
+  let capabilityReadiness = buildCapabilityProofReadinessReport(
     ctx,
     evidence.records,
     l0DiscoveryReadiness,
@@ -352,6 +352,34 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     l5ResilienceEvidence,
     resilienceRoadmap,
   });
+  const l6FoundationRoadmap = buildL6FoundationRoadmap({
+    ctx,
+    capabilityReadiness,
+    resilienceReadiness,
+    l5ResilienceEvidence,
+  });
+  const l6FoundationEvidence = buildL6FoundationEvidenceReport({
+    ctx,
+    records: evidence.records,
+    capabilityReadiness,
+    resilienceReadiness,
+    l5ResilienceEvidence,
+    l6FoundationRoadmap,
+  });
+  const foundationReadiness = buildFoundationReadinessReport({
+    ctx,
+    capabilityReadiness,
+    resilienceReadiness,
+    l6FoundationRoadmap,
+    l6FoundationEvidence,
+  });
+  capabilityReadiness = buildCapabilityProofReadinessReport(
+    ctx,
+    evidence.records,
+    l0DiscoveryReadiness,
+    l4SubstrateEvidence,
+    l6FoundationEvidence
+  );
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
   const weakProofBacklog = buildWeakProofBacklog(
     requiredProofs,
@@ -390,6 +418,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     resilienceRoadmap,
     resilienceReadiness,
     l5ResilienceEvidence,
+    l6FoundationRoadmap,
+    l6FoundationEvidence,
+    foundationReadiness,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -406,6 +437,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     resilienceRoadmap,
     resilienceReadiness,
     l5ResilienceEvidence,
+    l6FoundationRoadmap,
+    l6FoundationEvidence,
+    foundationReadiness,
     l4SubstrateEvidence,
     strengthMatrix,
     ladderCompliance,
@@ -431,6 +465,9 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     resilienceRoadmap,
     resilienceReadiness,
     l5ResilienceEvidence,
+    l6FoundationRoadmap,
+    l6FoundationEvidence,
+    foundationReadiness,
     l4SubstrateEvidence,
     capabilityReadiness,
     inMemoryParity,
@@ -817,6 +854,13 @@ function validateRecordShape(record, gaps, ctx, allowNegativeControls) {
   }
   if (proofLevelNumber(record.proofLevelClaimed) >= 6) {
     for (const gap of foundationGaps(record)) gaps.push({ ...gap, subject: record.subjectId });
+    for (const gap of l6FoundationRecordGaps(record)) {
+      gaps.push({
+        kind: gap,
+        subject: record.subjectId,
+        message: `L6 foundation evidence gap: ${gap}`,
+      });
+    }
   }
   if (observabilitySubject(record) && !observabilityComplete(record)) {
     gaps.push({
@@ -885,7 +929,8 @@ export function observedLevelFromEvidence(record) {
   const hasFoundation =
     proofLevelNumber(record.proofLevelClaimed) >= 6 &&
     l6CorrelationComplete(record) &&
-    foundationGaps(record).length === 0;
+    foundationGaps(record).length === 0 &&
+    l6FoundationRecordGaps(record).length === 0;
   if (hasFoundation) return 6;
   if (hasStagingResilience) return 5;
   if (hasRealLocal) return 4;
@@ -2062,6 +2107,259 @@ function buildResilienceReadinessReport({
   };
 }
 
+function buildL6FoundationRoadmap({
+  ctx,
+  capabilityReadiness,
+  resilienceReadiness,
+  l5ResilienceEvidence,
+}) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const readinessByCapability = new Map(
+    (capabilityReadiness?.capabilities || []).map((row) => [row.capability, row])
+  );
+  const l5ByCapability = new Map(
+    (l5ResilienceEvidence?.capabilities || []).map((row) => [row.capability, row])
+  );
+  const acceptanceCriteria = [
+    {
+      id: "preserved-l3-l4-l5",
+      description:
+        "Foundation Proven requires preserved Behaviour, Substrate, and Resilience Proven evidence.",
+      rejects: ["missing lower-level proof ids", "stale lower-level evidence"],
+    },
+    {
+      id: "complete-foundation-journey",
+      description:
+        "Foundation Proven requires complete journey evidence spanning tenancy, security, observability, operational recovery, governance, ownership, lifecycle, and production-shaped service posture.",
+      rejects: ["per-capability-only proof counts", "advisory-only evidence", "partial journeys"],
+    },
+    {
+      id: "prod-real-provider-posture",
+      description:
+        "Production identity must use real provider posture; mock-only or temporary mock override evidence cannot certify L6.",
+      rejects: ["mock-only IdP brokering", "ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS"],
+    },
+    {
+      id: "observed-telemetry",
+      description:
+        "L6 requires observed audit records, metrics, traces, and logs for production-shaped journeys.",
+      rejects: ["proof-emitted telemetry only", "missing trace/log/metric/audit observation"],
+    },
+    {
+      id: "operational-survivability",
+      description:
+        "L6 requires backup, restore, failover, recovery, rollback/readiness gates, and no silent data loss.",
+      rejects: ["container restart only", "unvalidated rollback", "silent data loss risk"],
+    },
+  ];
+  const rows = capabilities.map((capability) => {
+    const readiness = readinessByCapability.get(capability.capability);
+    const l5 = l5ByCapability.get(capability.capability);
+    const gaps = [];
+    if (readiness?.highestResilienceLevelAchieved !== "L5") gaps.push("missing-l5");
+    if (l5?.l5Complete !== true) gaps.push("missing-l5-evidence");
+    if (!capability.staging?.promotionGate) gaps.push("missing-promotion-gate");
+    if (!capability.staging?.rollbackGate) gaps.push("missing-rollback-gate");
+    return {
+      capability: capability.capability,
+      currentReadiness: readiness?.readiness || "UNKNOWN",
+      l5EvidenceProofIds: uniq([
+        ...(l5?.l5aEvidenceProofIds || []),
+        ...(l5?.l5bEvidenceProofIds || []),
+      ]),
+      requiredJourneyDomains: [
+        "tenancy",
+        "security",
+        "observability",
+        "operationalRecovery",
+        "governance",
+        "ownership",
+        "lifecycle",
+        "productionServicePosture",
+      ],
+      requiredL6Proofs: ["proof:l6-foundation-journey", "proof:l6-prod-shaped-certification"],
+      gaps,
+    };
+  });
+  const gaps = rows.flatMap((row) =>
+    row.gaps.map((kind) => ({
+      kind,
+      capability: row.capability,
+      message: `${row.capability}: ${kind}`,
+    }))
+  );
+  if (resilienceReadiness?.fullL5Status !== "PASS") {
+    gaps.push({
+      kind: "l6-roadmap-blocked-by-l5",
+      capability: "all",
+      message: "L6 roadmap is blocked until full L5 is PASS.",
+    });
+  }
+  return {
+    artefact: "l6-foundation-readiness-roadmap",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    l6ClaimedByThisArtifact: false,
+    acceptanceCriteria,
+    totalCapabilities: capabilities.length,
+    l5CompleteCapabilities: resilienceReadiness?.l5CompleteCapabilities || 0,
+    proofCommandsToRun: [
+      "npm run proof:l6-foundation-journey",
+      "npm run proof:l6-prod-shaped-certification",
+    ],
+    hardRejectionRules: [
+      "partial foundation journey evidence",
+      "stale lower-level evidence",
+      "mock-only production identity evidence",
+      "advisory-only telemetry",
+      "proof-emitted telemetry without required observed telemetry",
+      "missing per-capability journey evidence",
+    ],
+    gaps,
+    capabilities: rows,
+  };
+}
+
+function buildL6FoundationEvidenceReport({
+  ctx,
+  records,
+  capabilityReadiness,
+  resilienceReadiness,
+  l5ResilienceEvidence,
+  l6FoundationRoadmap,
+}) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const readinessByCapability = new Map(
+    (capabilityReadiness?.capabilities || []).map((row) => [row.capability, row])
+  );
+  const l5ByCapability = new Map(
+    (l5ResilienceEvidence?.capabilities || []).map((row) => [row.capability, row])
+  );
+  const journeyRecords = records.filter(isL6FoundationJourneyRecord);
+  const prodCertificationRecords = records.filter(isL6ProdShapedCertificationRecord);
+  const allL6Records = uniqRecords([...journeyRecords, ...prodCertificationRecords]);
+  const rows = capabilities.map((capability) => {
+    const readiness = readinessByCapability.get(capability.capability);
+    const l5 = l5ByCapability.get(capability.capability);
+    const journeyEvidence = journeyRecords
+      .map((record) => l6EvidenceForCapability(record, capability.capability))
+      .filter(Boolean);
+    const prodEvidence = prodCertificationRecords
+      .map((record) => l6EvidenceForCapability(record, capability.capability))
+      .filter(Boolean);
+    const observedTelemetryEvidence = mergeL6ObservedTelemetry([
+      ...journeyEvidence,
+      ...prodEvidence,
+    ]);
+    const gaps = [];
+    if (resilienceReadiness?.fullL5Status !== "PASS") gaps.push("full-l5-not-pass");
+    if (readiness?.highestResilienceLevelAchieved !== "L5") gaps.push("capability-not-l5");
+    if (l5?.l5Complete !== true) gaps.push("missing-l5-evidence");
+    if (journeyEvidence.length === 0) gaps.push("missing-foundation-journey-evidence");
+    if (prodEvidence.length === 0) gaps.push("missing-prod-shaped-certification-evidence");
+    if (!l6ObservedTelemetryComplete(observedTelemetryEvidence)) {
+      gaps.push("missing-observed-substrate-telemetry");
+    }
+    return {
+      capability: capability.capability,
+      currentReadiness: readiness?.readiness || "UNKNOWN",
+      l5Pass: readiness?.highestResilienceLevelAchieved === "L5" && l5?.l5Complete === true,
+      l6Pass: gaps.length === 0,
+      l6EvidenceProofIds: uniq([
+        ...journeyEvidence.map((entry) => entry.proofId),
+        ...prodEvidence.map((entry) => entry.proofId),
+      ]),
+      foundationJourneyEvidence: journeyEvidence,
+      prodShapedCertificationEvidence: prodEvidence,
+      observedTelemetryEvidence,
+      result: gaps.length === 0 ? "PASS" : "FAIL",
+      gaps,
+      conclusion: gaps.length === 0 ? "FOUNDATION_PROVEN" : "RESILIENCE_PROVEN_AWAITING_L6",
+    };
+  });
+  const invalidL6Records = allL6Records
+    .map((record) => ({ record, gaps: l6FoundationRecordGaps(record) }))
+    .filter((entry) => entry.gaps.length > 0);
+  const gaps = [
+    ...(l6FoundationRoadmap?.gaps || []).map((gap) => ({
+      kind: `roadmap-${gap.kind}`,
+      capability: gap.capability,
+      message: gap.message,
+    })),
+    ...invalidL6Records.map((entry) => ({
+      kind: "invalid-l6-proof-record",
+      capability: entry.record.subjectId,
+      message: `${entry.record.proofId} has L6 gaps: ${entry.gaps.join(", ")}`,
+    })),
+    ...rows.flatMap((row) =>
+      row.gaps.map((kind) => ({
+        kind,
+        capability: row.capability,
+        message: `${row.capability}: ${kind}`,
+      }))
+    ),
+  ];
+  return {
+    artefact: "l6-foundation-evidence-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    totalCapabilities: capabilities.length,
+    foundationProvenCapabilities: rows.filter((row) => row.l6Pass).length,
+    resilienceOnlyCapabilities: rows.filter((row) => !row.l6Pass).length,
+    invalidL6Claims: invalidL6Records.length,
+    l6GapCount: gaps.length,
+    foundationJourneyProofIds: journeyRecords.map((record) => record.proofId),
+    prodShapedCertificationProofIds: prodCertificationRecords.map((record) => record.proofId),
+    rejectedEvidenceClasses: [
+      "partial",
+      "stale",
+      "mock-only",
+      "advisory-only",
+      "proof-emitted-telemetry-only",
+    ],
+    gaps,
+    capabilities: rows,
+  };
+}
+
+function buildFoundationReadinessReport({
+  ctx,
+  capabilityReadiness,
+  resilienceReadiness,
+  l6FoundationRoadmap,
+  l6FoundationEvidence,
+}) {
+  const totalCapabilities =
+    ctx.foundation?.["environment-capability-matrix.json"]?.capabilities?.length || 0;
+  const gaps = [];
+  if (capabilityReadiness?.status !== "PASS") gaps.push("capability-readiness-not-pass");
+  if (resilienceReadiness?.fullL5Status !== "PASS") gaps.push("full-l5-not-pass");
+  if (l6FoundationRoadmap?.status !== "PASS") gaps.push("l6-roadmap-not-pass");
+  if (l6FoundationEvidence?.status !== "PASS") gaps.push("l6-evidence-not-pass");
+  if ((l6FoundationEvidence?.foundationProvenCapabilities || 0) !== totalCapabilities) {
+    gaps.push("foundation-capability-coverage-incomplete");
+  }
+  return {
+    artefact: "foundation-readiness-report",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 ? "PASS" : "FAIL",
+    fullL6Status: gaps.length === 0 ? "PASS" : "INCOMPLETE",
+    totalCapabilities,
+    foundationProvenCapabilities: l6FoundationEvidence?.foundationProvenCapabilities || 0,
+    l6GapCount: l6FoundationEvidence?.l6GapCount ?? totalCapabilities,
+    l5Status: resilienceReadiness?.fullL5Status || "UNKNOWN",
+    readinessCounts: capabilityReadiness?.readinessCounts || {},
+    gaps,
+    nextMilestone:
+      gaps.length === 0
+        ? "Foundation Proven is complete; do not start any post-L6 milestone without a new programme objective."
+        : "Close L6 foundation journey and production-shaped certification evidence gaps.",
+  };
+}
+
 function buildV2ReadinessSummary({
   behaviourReadiness,
   capabilityReadiness,
@@ -2071,6 +2369,9 @@ function buildV2ReadinessSummary({
   resilienceRoadmap,
   resilienceReadiness,
   l5ResilienceEvidence,
+  l6FoundationRoadmap,
+  l6FoundationEvidence,
+  foundationReadiness,
   l4SubstrateEvidence,
   strengthMatrix,
   ladderCompliance,
@@ -2091,6 +2392,8 @@ function buildV2ReadinessSummary({
   const consistencyGaps = buildReadinessConsistencyGaps({
     capabilityReadiness,
     l4SubstrateEvidence,
+    l6FoundationEvidence,
+    foundationReadiness,
     strengthMatrix,
     ladderCompliance,
   });
@@ -2113,19 +2416,33 @@ function buildV2ReadinessSummary({
       areAllCapabilitiesEligibleForL4: allCapabilitiesEligibleForL4,
       areAllCapabilitiesSubstrateProven: allCapabilitiesSubstrateProven,
       isSubstrateExpansionUnblocked: formalGapTaxonomy.futureSubstrateExpansionBlocked === false,
-      nextExactMilestone: allCapabilitiesSubstrateProven
-        ? "Start L5 Resilience Proven planning only after preserving L4 per-capability substrate evidence."
-        : "Implement per-capability L4 Substrate Proven proofs from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
-      whatRemainsBeforeFoundationProven: allCapabilitiesSubstrateProven
-        ? [
-            "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
-            "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
-          ]
-        : [
-            `Implement and pass L4 Substrate Proven proofs for ${l4SubstrateEvidence.behaviourOnlyCapabilities} BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.`,
-            "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
-            "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
-          ],
+      nextExactMilestone:
+        foundationReadiness?.fullL6Status === "PASS"
+          ? "L6 Foundation Proven complete; preserve evidence and await an explicit post-L6 programme objective."
+          : resilienceReadiness?.fullL5Status === "PASS"
+            ? "Complete L6 Foundation Proven certification through full foundation journey and production-shaped evidence gates."
+            : allCapabilitiesSubstrateProven
+              ? "Complete L5 Resilience Proven before claiming Foundation Proven."
+              : "Implement per-capability L4 Substrate Proven proofs from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
+      whatRemainsBeforeFoundationProven:
+        foundationReadiness?.fullL6Status === "PASS"
+          ? []
+          : resilienceReadiness?.fullL5Status === "PASS"
+            ? [
+                "Pass L6 foundation journey proof for tenancy, security, observability, operational recovery, governance, ownership, lifecycle, and production-shaped service posture.",
+                "Pass L6 production-shaped certification with observed audit records, metrics, traces, and logs.",
+                "Reject partial, stale, mock-only, and advisory-only foundation evidence.",
+              ]
+            : allCapabilitiesSubstrateProven
+              ? [
+                  "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
+                  "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
+                ]
+              : [
+                  `Implement and pass L4 Substrate Proven proofs for ${l4SubstrateEvidence.behaviourOnlyCapabilities} BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.`,
+                  "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
+                  "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
+                ],
     },
     evidence: {
       behaviourReadinessStatus: behaviourReadiness.status,
@@ -2155,6 +2472,15 @@ function buildV2ReadinessSummary({
       l5PilotCapability: resilienceReadiness.pilotCapability,
       l5PilotSubstrate: resilienceReadiness.pilotSubstrate,
       l5ResilienceEvidenceStatus: l5ResilienceEvidence.status,
+      l6FoundationRoadmapStatus: l6FoundationRoadmap?.status || "MISSING",
+      l6FoundationEvidenceStatus: l6FoundationEvidence?.status || "MISSING",
+      foundationReadinessStatus: foundationReadiness?.status || "MISSING",
+      fullL6Status: foundationReadiness?.fullL6Status || "INCOMPLETE",
+      foundationProvenCapabilities:
+        foundationReadiness?.foundationProvenCapabilities ||
+        capabilityReadiness.readinessCounts?.FOUNDATION_PROVEN ||
+        0,
+      l6GapCount: foundationReadiness?.l6GapCount ?? null,
       l0DiscoveryStatus: l0DiscoveryReadiness.status,
       l0RuntimeNodes: l0DiscoveryReadiness.runtimeNodes,
       l0RuntimeNodesMissingInMemoryImplementation:
@@ -2289,7 +2615,8 @@ export function buildCapabilityProofReadinessReport(
   ctx,
   records,
   l0DiscoveryReadiness = null,
-  l4SubstrateEvidence = null
+  l4SubstrateEvidence = null,
+  l6FoundationEvidence = null
 ) {
   const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
   const bySubject = recordsBySubject(records);
@@ -2298,6 +2625,9 @@ export function buildCapabilityProofReadinessReport(
   );
   const l4ByCapability = new Map(
     (l4SubstrateEvidence?.perCapabilityL4Evidence || []).map((row) => [row.capability, row])
+  );
+  const l6ByCapability = new Map(
+    (l6FoundationEvidence?.capabilities || []).map((row) => [row.capability, row])
   );
   const rows = capabilities.map((capability) => {
     const l0Node = l0ByCapability.get(capability.capability);
@@ -2321,9 +2651,9 @@ export function buildCapabilityProofReadinessReport(
     const substrateProven = behaviourComplete && l4Evidence?.l4Pass === true;
     const resilienceProven =
       substrateProven && allCapabilityRecords.some((record) => isFullL5ResilienceRecord(record));
+    const l6Evidence = l6ByCapability.get(capability.capability);
     const foundationProven =
-      resilienceProven &&
-      allCapabilityRecords.some((record) => observedLevelFromEvidence(record) >= 6);
+      resilienceProven && l6FoundationEvidence?.status === "PASS" && l6Evidence?.l6Pass === true;
     const readiness = capabilityReadinessState({
       discovery: l0Proven ? 0 : -1,
       executable: l0Proven && highestLevel >= 1 ? 1 : 0,
@@ -2368,6 +2698,7 @@ export function buildCapabilityProofReadinessReport(
       fullServiceVerified: substrateProven,
       fullyProven: foundationProven,
       evidenceProofIds: uniq(allCapabilityRecords.map((record) => record.proofId)),
+      l6EvidenceProofIds: l6Evidence?.l6EvidenceProofIds || [],
       missingRequiredLevels,
       missingRequiredBands: missingRequiredLevels,
       advancementBlockers: capabilityAdvancementBlockers({
@@ -3491,19 +3822,29 @@ function l4CapabilityGapMessage(kind, capability) {
 function buildReadinessConsistencyGaps({
   capabilityReadiness,
   l4SubstrateEvidence,
+  l6FoundationEvidence = null,
+  foundationReadiness = null,
   strengthMatrix,
   ladderCompliance,
 }) {
   const gaps = [];
   const capabilityL4Count = capabilityReadiness.ladderLevelDistribution?.L4 || 0;
+  const capabilityL5Count = capabilityReadiness.ladderLevelDistribution?.L5 || 0;
+  const capabilityL6Count = capabilityReadiness.ladderLevelDistribution?.L6 || 0;
   const readinessAtLeastL4Count =
     (capabilityReadiness.readinessCounts?.SUBSTRATE_PROVEN || 0) +
     (capabilityReadiness.readinessCounts?.RESILIENCE_PROVEN || 0) +
     (capabilityReadiness.readinessCounts?.FOUNDATION_PROVEN || 0);
+  const readinessFoundationCount = capabilityReadiness.readinessCounts?.FOUNDATION_PROVEN || 0;
   const l4EvidenceCount = l4SubstrateEvidence.substrateProvenCapabilities || 0;
+  const l6EvidenceCount = l6FoundationEvidence?.foundationProvenCapabilities || 0;
   const strengthL4Count = strengthMatrix.byObservedLevel?.L4 || 0;
+  const strengthL6Count = strengthMatrix.byObservedLevel?.L6 || 0;
   const ladderObservedL4Count = (ladderCompliance.records || []).filter(
     (record) => record.proofLevelObserved === "L4"
+  ).length;
+  const ladderObservedL6Count = (ladderCompliance.records || []).filter(
+    (record) => record.proofLevelObserved === "L6"
   ).length;
   if (capabilityL4Count !== readinessAtLeastL4Count) {
     gaps.push({
@@ -3527,6 +3868,48 @@ function buildReadinessConsistencyGaps({
     gaps.push({
       kind: "ladder-compliance-strength-l4-disagreement",
       message: `proof-ladder-compliance observed L4 count ${ladderObservedL4Count} disagrees with proof-strength-matrix observed L4 count ${strengthL4Count}`,
+    });
+  }
+  if (capabilityL6Count !== readinessFoundationCount) {
+    gaps.push({
+      kind: "capability-readiness-l6-count-disagreement",
+      message: `ladderLevelDistribution.L6=${capabilityL6Count} but readiness FOUNDATION_PROVEN=${readinessFoundationCount}`,
+    });
+  }
+  if (l6FoundationEvidence && capabilityL6Count !== l6EvidenceCount) {
+    gaps.push({
+      kind: "capability-l6-evidence-disagreement",
+      message: `capability readiness L6 count ${capabilityL6Count} disagrees with l6-foundation-evidence-report count ${l6EvidenceCount}`,
+    });
+  }
+  if (
+    foundationReadiness?.fullL6Status === "PASS" &&
+    capabilityL6Count !== capabilityReadiness.capabilityCount
+  ) {
+    gaps.push({
+      kind: "foundation-pass-without-all-capabilities-l6",
+      message: `fullL6Status=PASS but ladderLevelDistribution.L6=${capabilityL6Count} for ${capabilityReadiness.capabilityCount} capabilities`,
+    });
+  }
+  if (
+    foundationReadiness?.fullL6Status === "PASS" &&
+    foundationReadiness.foundationProvenCapabilities !== capabilityReadiness.capabilityCount
+  ) {
+    gaps.push({
+      kind: "foundation-pass-capability-count-disagreement",
+      message: `fullL6Status=PASS but foundationProvenCapabilities=${foundationReadiness.foundationProvenCapabilities} for ${capabilityReadiness.capabilityCount} capabilities`,
+    });
+  }
+  if ((l6FoundationEvidence?.invalidL6Claims || 0) > 0) {
+    gaps.push({
+      kind: "post-l6-invalid-l6-claims",
+      message: `invalidL6Claims=${l6FoundationEvidence.invalidL6Claims}`,
+    });
+  }
+  if (ladderObservedL6Count !== strengthL6Count) {
+    gaps.push({
+      kind: "ladder-compliance-strength-l6-disagreement",
+      message: `proof-ladder-compliance observed L6 count ${ladderObservedL6Count} disagrees with proof-strength-matrix observed L6 count ${strengthL6Count}`,
     });
   }
   for (const row of capabilityReadiness.capabilities || []) {
@@ -3558,6 +3941,26 @@ function buildReadinessConsistencyGaps({
         kind: "post-l4-stale-l5-blocker",
         capability: row.capability,
         message: `${row.capability} is L4 but L5 is reported as blocked by missing L4`,
+      });
+    }
+    if (row.readiness === "FOUNDATION_PROVEN" && row.highestFoundationLevelAchieved !== "L6") {
+      gaps.push({
+        kind: "foundation-proven-without-l6",
+        capability: row.capability,
+        message: `${row.capability} is FOUNDATION_PROVEN but highestFoundationLevelAchieved is ${row.highestFoundationLevelAchieved}`,
+      });
+    }
+    const staleL6Blocker = (row.advancementBlockers || []).some(
+      (blocker) =>
+        blocker.targetLevel === "L6" &&
+        blocker.blockedBy === "L5" &&
+        row.highestResilienceLevelAchieved === "L5"
+    );
+    if (staleL6Blocker) {
+      gaps.push({
+        kind: "post-l5-stale-l6-blocker",
+        capability: row.capability,
+        message: `${row.capability} is L5 but L6 is reported as blocked by missing L5`,
       });
     }
   }
@@ -4398,6 +4801,161 @@ function nextRecommendedL5Pilot(rows) {
   };
 }
 
+function isL6FoundationJourneyRecord(record) {
+  return (
+    proofLevelNumber(record.proofLevelClaimed) >= 6 &&
+    record.foundationEvidence?.conclusion === "FOUNDATION_JOURNEY_PROVEN" &&
+    l6FoundationRecordGaps(record).length === 0
+  );
+}
+
+function isL6ProdShapedCertificationRecord(record) {
+  return (
+    proofLevelNumber(record.proofLevelClaimed) >= 6 &&
+    record.foundationEvidence?.conclusion === "FOUNDATION_PROVEN" &&
+    l6FoundationRecordGaps(record).length === 0
+  );
+}
+
+function l6FoundationRecordGaps(record) {
+  const gaps = [];
+  const foundation = record.foundationEvidence || {};
+  const domains = foundation.domains || {};
+  const perCapability = foundation.perCapabilityFoundationEvidence || [];
+  if (
+    foundation.lowerLevelEvidencePreserved !== true &&
+    foundation.conclusion !== "FOUNDATION_PROVEN"
+  ) {
+    gaps.push("lower-level-evidence-not-preserved");
+  }
+  if (!isMeaningfulEvidence(foundation.l3EvidenceProofIds || record.l3EvidenceProofIds)) {
+    gaps.push("missing-l3-foundation-prerequisite");
+  }
+  if (!isMeaningfulEvidence(foundation.l4EvidenceProofIds || record.l4EvidenceProofIds)) {
+    gaps.push("missing-l4-foundation-prerequisite");
+  }
+  if (
+    !isMeaningfulEvidence(foundation.l5EvidenceProofIds || foundation.resilienceEvidenceProofIds)
+  ) {
+    gaps.push("missing-l5-foundation-prerequisite");
+  }
+  for (const domain of [
+    "tenancy",
+    "security",
+    "observability",
+    "operationalRecovery",
+    "governance",
+    "ownership",
+    "lifecycle",
+    "productionServicePosture",
+  ]) {
+    if (domains[domain] !== "PASS") gaps.push(`missing-foundation-domain-${domain}`);
+  }
+  if (!Array.isArray(perCapability) || perCapability.length !== 70) {
+    gaps.push("missing-per-capability-foundation-evidence");
+  }
+  if (
+    Array.isArray(perCapability) &&
+    perCapability.some((entry) => String(entry?.result || "").toUpperCase() !== "PASS")
+  ) {
+    gaps.push("per-capability-foundation-evidence-not-pass");
+  }
+  const telemetry = mergeL6ObservedTelemetry([l6EvidenceForRecord(record)]);
+  if (!l6ObservedTelemetryComplete(telemetry)) gaps.push("missing-observed-l6-telemetry");
+  if (foundation.prodAuth?.mockOverridePresent === true) gaps.push("mock-override-present");
+  if (foundation.prodAuth?.mockIdpProductionRoutePresent === true) {
+    gaps.push("mock-idp-production-route-present");
+  }
+  if (foundation.prodAuth?.providerMode && foundation.prodAuth.providerMode !== "real") {
+    gaps.push("prod-provider-mode-not-real");
+  }
+  return uniq(gaps);
+}
+
+function l6EvidenceForCapability(record, capability) {
+  const entry = (record.foundationEvidence?.perCapabilityFoundationEvidence || []).find((row) =>
+    sameCapabilityName(row?.capability, capability)
+  );
+  if (!entry || String(entry.result || "").toUpperCase() !== "PASS") return null;
+  return {
+    proofId: record.proofId,
+    commandExecuted: record.commandExecuted,
+    capability: entry.capability || capability,
+    result: entry.result,
+    journeyCoverage: entry.journeyCoverage || null,
+    prodShapedCertification: entry.prodShapedCertification === true,
+    realProviderPosture:
+      entry.realProviderPosture === true ||
+      record.foundationEvidence?.prodAuth?.providerMode === "real",
+    observedTelemetryEvidence: l6EvidenceForRecord(record).observedTelemetryEvidence,
+    gaps: l6FoundationRecordGaps(record),
+  };
+}
+
+function l6EvidenceForRecord(record) {
+  return {
+    proofId: record.proofId,
+    observedTelemetryEvidence:
+      record.foundationEvidence?.observedTelemetryEvidence ||
+      record.observedTelemetryEvidence ||
+      record.observabilityEvidence ||
+      {},
+  };
+}
+
+function mergeL6ObservedTelemetry(entries) {
+  const observed = {
+    auditRecords: [],
+    metrics: [],
+    traces: [],
+    logs: [],
+  };
+  const proofEmitted = {
+    auditEventIds: [],
+    metricSamples: [],
+    traceIds: [],
+    logCorrelationIds: [],
+  };
+  for (const entry of entries) {
+    const telemetry = entry?.observedTelemetryEvidence || {};
+    const observedTelemetry = telemetry.observedSubstrateTelemetry || {};
+    observed.auditRecords.push(...(observedTelemetry.auditRecords || []));
+    observed.metrics.push(...(observedTelemetry.metrics || []));
+    observed.traces.push(...(observedTelemetry.traces || []));
+    observed.logs.push(...(observedTelemetry.logs || []));
+    const emitted = telemetry.proofEmittedTelemetry || {};
+    proofEmitted.auditEventIds.push(...(emitted.auditEventIds || []));
+    proofEmitted.metricSamples.push(...(emitted.metricSamples || []));
+    proofEmitted.traceIds.push(...(emitted.traceIds || []));
+    proofEmitted.logCorrelationIds.push(...(emitted.logCorrelationIds || []));
+  }
+  return {
+    classification: "observed-substrate-telemetry",
+    observedSubstrateTelemetry: {
+      auditRecords: uniq(observed.auditRecords),
+      metrics: observed.metrics,
+      traces: uniq(observed.traces),
+      logs: uniq(observed.logs),
+    },
+    proofEmittedTelemetry: {
+      auditEventIds: uniq(proofEmitted.auditEventIds),
+      metricSamples: proofEmitted.metricSamples,
+      traceIds: uniq(proofEmitted.traceIds),
+      logCorrelationIds: uniq(proofEmitted.logCorrelationIds),
+    },
+  };
+}
+
+function l6ObservedTelemetryComplete(telemetry) {
+  const observed = telemetry?.observedSubstrateTelemetry || {};
+  return (
+    isMeaningfulEvidence(observed.auditRecords) &&
+    isMeaningfulEvidence(observed.metrics) &&
+    isMeaningfulEvidence(observed.traces) &&
+    isMeaningfulEvidence(observed.logs)
+  );
+}
+
 function foundationGaps(record) {
   const gaps = [];
   if (resilienceGaps(record).length > 0) {
@@ -4788,7 +5346,15 @@ function capabilityAdvancementBlockers({
     );
   }
   if (!foundationProven) {
-    blockers.push({ targetLevel: "L6", blockedBy: "L5", message: "L6 blocked by missing L5" });
+    blockers.push(
+      resilienceProven
+        ? {
+            targetLevel: "L6",
+            blockedBy: "foundation-evidence",
+            message: "L6 blocked by missing foundation journey evidence",
+          }
+        : { targetLevel: "L6", blockedBy: "L5", message: "L6 blocked by missing L5" }
+    );
   }
   return blockers;
 }

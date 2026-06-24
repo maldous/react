@@ -1,7 +1,7 @@
 {
   "artefact": "behaviour-proof-certification-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T10:24:59.678Z",
+  "generatedAt": "2026-06-24T15:10:56.617Z",
   "status": "PASS",
   "milestone": "L3 Behaviour Proven",
   "prerequisiteForFutureL4Work": true,
@@ -18,8 +18,8 @@
     "readinessStatus": "PASS",
     "lockingStatus": "PASS",
     "capabilityReadinessStatus": "PASS",
-    "l3ProofsAudited": 157,
-    "validL3Proofs": 157,
+    "l3ProofsAudited": 159,
+    "validL3Proofs": 159,
     "invalidL3Proofs": 0,
     "delegatedBehaviouralProofs": 0,
     "weakBehaviouralClassifications": 0,
@@ -399,6 +399,20 @@
       "proofId": "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
       "capability": "ABAC / Policy Decision Point; API docs, developer portal, SDKs, rate limits; API keys / personal access tokens; Accessibility (a11y) gate; Audit of privileged access; Background workers / job runner; Backup + restore; Branding + theming; Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing); Build-versus-compose decision framework; Claim mapping + group/role mapping; Code quality + secret + dependency scanning; Compliance reports, access reviews, evidence packs; Composed provider readiness spine; Configuration registry + history; Custom domains, DNS ownership, TLS, canonical; Data governance: catalog, lineage, classification, PII, DSR/GDPR; Delegated administration roles; E2E confidence ladder (stage-aware); End-user profile + preferences self-service; Entitlement engine; Environment registry + bootstrap; Environment-specific vs shared service model; Event bus, durable queues, DLQ, redrive; History read-model (read-only projection); IdP brokering + OIDC provider management; Internal service catalog + readiness; Logs (aggregation + tenant-scoped search); MFA + session policy + lockout; Metrics + traces; Notification delivery + preferences + channels; OIDC discovery / issuer / JWKS validation; OIDC test connection + callback display; Object storage + tenant prefixes + signed URLs; Observability — built-in alerting + incidents; OpenAPI drift hard gate; PITR, retention, legal hold, data residency; Platform login + session; Product catalog, plans, prices; Provider configuration plane; Provider environment classification; Quota enforcement; RBAC (roles + permissions); Rate limiting (API); Relational storage + migrations + RLS; Runtime secrets management; Scheduled jobs (built-in, on the event substrate); Search + indexing (product search); Service catalog + provider integration model; Sub-organisations; Subscriptions, invoices, payment methods, dunning; Support tickets, customer health, announcements; Support-mode / break-glass access; Tenant canonical domain set/unset; Tenant custom-domain auth callback; Tenant data import / export; Tenant domain activation (auth-client); Tenant groups; Tenant host identity resolution; Tenant identity (record + FQDN); Tenant isolation proof; Tenant lifecycle: provision, suspend, delete, export; Tenant service clickthrough policy; Universal Service Foundation scope + principles; Usage metering + meter event ingestion; User identity + tenant membership; Webhooks (developer-facing); Workflow engine, scheduled jobs, approvals; Write-only secret settings; i18n runtime + validation",
       "currentLevel": "L5",
+      "qualityScore": 100,
+      "confidenceScore": 100
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l6-foundation-journey-runtime-proof-ts",
+      "capability": "capability:l6-foundation-journey",
+      "currentLevel": "L6",
+      "qualityScore": 100,
+      "confidenceScore": 100
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof-ts",
+      "capability": "capability:l6-prod-shaped-certification",
+      "currentLevel": "L6",
       "qualityScore": 100,
       "confidenceScore": 100
     },

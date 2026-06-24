@@ -20,10 +20,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:workflow-readiness-route",
-  "startedAt": "2026-06-24T10:24:35.627Z",
-  "endedAt": "2026-06-24T10:24:36.147Z",
+  "startedAt": "2026-06-24T15:14:03.668Z",
+  "endedAt": "2026-06-24T15:14:04.185Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -101,10 +101,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:36.147Z",
+  "generatedAt": "2026-06-24T15:14:04.185Z",
   "sourceFileRefs": ["apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -119,16 +119,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:35.627Z",
-  "endTime": "2026-06-24T10:24:36.147Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:36.147Z",
+  "startTime": "2026-06-24T15:14:03.668Z",
+  "endTime": "2026-06-24T15:14:04.185Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:14:04.185Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-workflows-readiness": {
@@ -165,5 +169,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/workflow-readiness-route-runtime-proof.ts"],
-  "evidenceSignature": "9e8c01a34e8ec63a317656205b3ecd173b7b842e3815a79ceebe08891949deb7"
+  "evidenceSignature": "c3c9b27158fc01126e25dd72cdb3dc49d47ec28bf01f1435f4b6ac408d561056"
 }

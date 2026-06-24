@@ -22,10 +22,10 @@
   "providerMode": "route-contract",
   "proofLevelClaimed": "L1",
   "commandExecuted": "npm run proof:ui-semantic-sub-organisations",
-  "startedAt": "2026-06-24T10:24:51.997Z",
-  "endedAt": "2026-06-24T10:24:58.880Z",
+  "startedAt": "2026-06-24T15:14:19.462Z",
+  "endedAt": "2026-06-24T15:14:26.384Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "tools/ui-reference-harness/playwright/sub-organisations.spec.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -122,10 +122,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:58.880Z",
+  "generatedAt": "2026-06-24T15:14:26.384Z",
   "sourceFileRefs": ["tools/ui-reference-harness/playwright/sub-organisations.spec.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -140,16 +140,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:51.997Z",
-  "endTime": "2026-06-24T10:24:58.880Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:58.880Z",
+  "startTime": "2026-06-24T15:14:19.462Z",
+  "endTime": "2026-06-24T15:14:26.384Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:14:26.384Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-sub-organisations-suborgid": {
@@ -197,5 +201,5 @@
     }
   ],
   "logEvidence": ["log:tools/ui-reference-harness/playwright/sub-organisations.spec.ts"],
-  "evidenceSignature": "37ed11ced56ab0dfc7b822b81e4a753973aef050d728739f95df8fd9760b5521"
+  "evidenceSignature": "fbc56e40f1a4c87725883b5ae75c72cc18f9521bb690b9a1f575e6aa45233f05"
 }

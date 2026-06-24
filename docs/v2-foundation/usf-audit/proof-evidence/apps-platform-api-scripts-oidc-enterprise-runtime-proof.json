@@ -23,10 +23,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:auth-oidc-enterprise",
-  "startedAt": "2026-06-24T10:23:31.780Z",
-  "endedAt": "2026-06-24T10:23:32.188Z",
+  "startedAt": "2026-06-24T15:12:59.797Z",
+  "endedAt": "2026-06-24T15:13:00.202Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -161,10 +161,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:23:32.188Z",
+  "generatedAt": "2026-06-24T15:13:00.202Z",
   "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -179,16 +179,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:23:31.780Z",
-  "endTime": "2026-06-24T10:23:32.188Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:23:32.188Z",
+  "startTime": "2026-06-24T15:12:59.797Z",
+  "endTime": "2026-06-24T15:13:00.202Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:00.202Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-auth-settings-idps": {
@@ -258,5 +262,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
-  "evidenceSignature": "e4854adfa8b63665703eeafe63bff86d01a6973426b27a61fa8813c1e26a3f50"
+  "evidenceSignature": "12ea1dd1448010193a9b5db5f64c57b83a8fd1c6aef0db414e371a5258d16069"
 }

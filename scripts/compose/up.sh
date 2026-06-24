@@ -96,7 +96,11 @@ case "$PROFILE" in
     EXTRA_FLAGS="--build"
     ;;
   web)
-    SERVICES=""
+    # Keep this explicit. An empty service list makes the retry cleanup operate on
+    # the whole active profile set, while including default services makes a
+    # transient web build retry recreate shared dependencies underneath already
+    # started provider profiles before the V2 proof collector runs.
+    SERVICES="pgadmin platform-api react-app"
     PROFILE_FLAG="--profile web"
     TIMEOUT=420
     EXTRA_FLAGS="--build"

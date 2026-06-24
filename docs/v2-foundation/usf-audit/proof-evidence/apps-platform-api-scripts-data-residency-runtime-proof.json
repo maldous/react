@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:data-residency",
-  "startedAt": "2026-06-24T10:21:41.314Z",
-  "endedAt": "2026-06-24T10:21:41.355Z",
+  "startedAt": "2026-06-24T15:11:09.597Z",
+  "endedAt": "2026-06-24T15:11:09.639Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/data-residency-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,10 +201,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:41.355Z",
+  "generatedAt": "2026-06-24T15:11:09.639Z",
   "sourceFileRefs": ["apps/platform-api/scripts/data-residency-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -219,16 +219,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:41.314Z",
-  "endTime": "2026-06-24T10:21:41.355Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:41.355Z",
+  "startTime": "2026-06-24T15:11:09.597Z",
+  "endTime": "2026-06-24T15:11:09.639Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:11:09.639Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-admin-data-legal-holds": {
@@ -320,5 +324,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/data-residency-runtime-proof.ts"],
-  "evidenceSignature": "d5227bfe724d1ee74ad2019693e637adb9bb664c7dd23cc62c57c1cb77677845"
+  "evidenceSignature": "dadc2d4723af18e68f41a8325f98e06e7898100fefd58c059163f340f3e46d5f"
 }

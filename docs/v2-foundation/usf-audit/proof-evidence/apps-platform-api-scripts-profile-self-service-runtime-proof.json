@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:profile-self-service",
-  "startedAt": "2026-06-24T10:24:14.030Z",
-  "endedAt": "2026-06-24T10:24:14.148Z",
+  "startedAt": "2026-06-24T15:13:41.985Z",
+  "endedAt": "2026-06-24T15:13:42.103Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/profile-self-service-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -117,10 +117,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:14.148Z",
+  "generatedAt": "2026-06-24T15:13:42.103Z",
   "sourceFileRefs": ["apps/platform-api/scripts/profile-self-service-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -135,16 +135,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:14.030Z",
-  "endTime": "2026-06-24T10:24:14.148Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:14.148Z",
+  "startTime": "2026-06-24T15:13:41.985Z",
+  "endTime": "2026-06-24T15:13:42.103Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:42.103Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-account": {
@@ -192,5 +196,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/profile-self-service-runtime-proof.ts"],
-  "evidenceSignature": "634abd507a827626a27e66ea3b4cda14e9f3bc7899ff1609ab82fead7d81696b"
+  "evidenceSignature": "7a14cc20d3810ca5a71ddd4f40f1331a22979622324e58222cfc17ffe7ce2258"
 }

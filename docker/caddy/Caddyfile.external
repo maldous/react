@@ -73,27 +73,17 @@
 	}
 
 	# =========================================================================
-	# NON-PRODUCTION pre-real-provider BOOTSTRAP (ADR-ACT-0157)
+	# NON-PRODUCTION mock IdP fixture (ADR-ACT-0157)
 	# -------------------------------------------------------------------------
-	# mock-idp.* reverse-proxy this env's PER-ENV mock-oidc fixture so external
-	# stakeholders can complete the brokered MOCK Google/Microsoft/Apple flow from
-	# their own browser. external-caddy is network_mode:host, so each env's
-	# host-published mock-oidc port is reached directly (prod 9083 / staging 9082).
+	# mock-idp.staging.* can reverse-proxy the staging PER-ENV mock-oidc fixture for
+	# non-production validation only. Production mock-idp.aldous.info was removed
+	# when prod switched to AUTH_PROVIDER_MODE=real.
 	#
 	#   * These are MOCK identity providers — never real Google/Microsoft/Apple.
-	#   * Only valid while AUTH_PROVIDER_MODE=mock AND
-	#     ALLOW_MOCK_IDP_IN_PROD_UNTIL_REAL_PROVIDERS=true on that env (.env.<env>).
-	#   * Never put real provider credentials behind these hosts. REMOVE the handle
-	#     block AND the Cloudflare DNS once real providers are configured (mode=real).
+	#   * Never put real provider credentials behind these hosts.
+	#   * The production host has no route here; requests fall through to normal
+	#     production routing and must not reach mock-oidc.
 	# =========================================================================
-	@mock_idp_prod host mock-idp.aldous.info
-	handle @mock_idp_prod {
-		reverse_proxy localhost:9083 {
-			header_up X-Forwarded-Host {host}
-			header_up X-Forwarded-Proto https
-		}
-	}
-
 	# Staging mock-idp — NOT ACTIVE until Cloudflare TLS covers the second-level
 	# wildcard. mock-idp.staging.aldous.info is under *.staging.aldous.info, which
 	# Cloudflare Universal SSL does NOT cover; it needs a paid Advanced Certificate

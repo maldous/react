@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:24:12.145Z",
-  "endedAt": "2026-06-24T10:24:12.278Z",
+  "startedAt": "2026-06-24T15:13:40.113Z",
+  "endedAt": "2026-06-24T15:13:40.239Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -77,10 +77,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:24:12.278Z",
+  "generatedAt": "2026-06-24T15:13:40.239Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -95,16 +95,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:24:12.145Z",
-  "endTime": "2026-06-24T10:24:12.278Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:24:12.278Z",
+  "startTime": "2026-06-24T15:13:40.113Z",
+  "endTime": "2026-06-24T15:13:40.239Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:13:40.239Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts": {
@@ -130,5 +134,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-search-repository-runtime-proof.ts"],
-  "evidenceSignature": "9268d951bb51bddc3513ce735ce8866db1438789c14837da215059283bbda28b"
+  "evidenceSignature": "9751851396908670dea6ca30fe5cdb709f1e94f848ba3f166feb346726990cf2"
 }

@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:alert-notification-bridge",
-  "startedAt": "2026-06-24T10:21:29.785Z",
-  "endedAt": "2026-06-24T10:21:30.013Z",
+  "startedAt": "2026-06-24T15:10:58.009Z",
+  "endedAt": "2026-06-24T15:10:58.257Z",
   "exitStatus": 0,
-  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -181,10 +181,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:21:30.013Z",
+  "generatedAt": "2026-06-24T15:10:58.257Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296489212-2023980",
+  "collectorRunId": "proof-run-1782313857458-689362",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -199,16 +199,20 @@
   "concurrencyEvidence": null,
   "degradedModeEvidence": null,
   "recoveryEvidence": null,
+  "backupRestoreEvidence": null,
   "statePreservationEvidence": null,
   "behaviouralContinuityEvidence": null,
   "observabilityEvidence": null,
   "failureInjectionEvidence": null,
+  "foundationEvidence": null,
+  "observedTelemetryEvidence": null,
+  "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:21:29.785Z",
-  "endTime": "2026-06-24T10:21:30.013Z",
-  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
-  "executionTimestamp": "2026-06-24T10:21:30.013Z",
+  "startTime": "2026-06-24T15:10:58.009Z",
+  "endTime": "2026-06-24T15:10:58.257Z",
+  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "executionTimestamp": "2026-06-24T15:10:58.257Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-alerts": {
@@ -289,5 +293,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/alert-notification-bridge-runtime-proof.ts"],
-  "evidenceSignature": "88144ffb6446ebe9fea251a3559332015a0e2996fa011eb03521e62dbcd13780"
+  "evidenceSignature": "b47abd5406594a7e336ef3e13536ebda6aa242742e7ce562540245f68b90c676"
 }
