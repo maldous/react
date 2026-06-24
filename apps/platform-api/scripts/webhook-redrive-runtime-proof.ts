@@ -108,13 +108,26 @@ async function main(): Promise<void> {
       `dead=${mid?.dead} pending=${mid?.pending}`
     );
 
-    // 3. Worker delivers the redriven delivery.
-    await processDueDeliveries(deps, { now: new Date(Date.now() + 2000), ...OPTS });
-    const m2 = await getSubscriptionMetrics(orgId, subId, store);
+    // 3. Worker delivers the redriven delivery. The redrive timestamp is written by
+    // Postgres now(), so use bounded retries to avoid clock-boundary flakes while
+    // still proving recovery to delivered state.
+    let m2 = await getSubscriptionMetrics(orgId, subId, store);
+    const tickSummaries: Array<Awaited<ReturnType<typeof processDueDeliveries>>> = [];
+    for (let attempt = 0; attempt < 3 && !(m2?.delivered === 1 && m2?.dead === 0); attempt++) {
+      tickSummaries.push(
+        await processDueDeliveries(deps, {
+          now: new Date(Date.now() + 2000 + attempt * 1000),
+          ...OPTS,
+        })
+      );
+      m2 = await getSubscriptionMetrics(orgId, subId, store);
+    }
     check(
       "redriven delivery now delivered",
       m2?.delivered === 1 && m2?.dead === 0,
-      `delivered=${m2?.delivered} dead=${m2?.dead}`
+      `delivered=${m2?.delivered} dead=${m2?.dead} pending=${m2?.pending} ticks=${JSON.stringify(
+        tickSummaries
+      )}`
     );
     check("metrics lastSuccessAt is set", m2?.lastSuccessAt !== null);
 

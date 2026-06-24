@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:rate-limits",
-  "startedAt": "2026-06-24T15:13:46.611Z",
-  "endedAt": "2026-06-24T15:13:46.760Z",
+  "startedAt": "2026-06-24T19:13:03.209Z",
+  "endedAt": "2026-06-24T19:13:03.355Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/rate-limits-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,10 +121,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:46.760Z",
+  "generatedAt": "2026-06-24T19:13:03.355Z",
   "sourceFileRefs": ["apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -149,10 +149,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:46.611Z",
-  "endTime": "2026-06-24T15:13:46.760Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:46.760Z",
+  "startTime": "2026-06-24T19:13:03.209Z",
+  "endTime": "2026-06-24T19:13:03.355Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:13:03.355Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-rate-limits": {
@@ -200,5 +200,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/rate-limits-runtime-proof.ts"],
-  "evidenceSignature": "750a586d7a823a9c3de8d592a379b54004426c9582047385f13b8e55fb3b8dd3"
+  "evidenceSignature": "7a070df31221af04664ba6f85047d924a0ec757591be8bf68962e4da5a75ceb2"
 }

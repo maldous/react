@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:quota-enforcement",
-  "startedAt": "2026-06-24T15:13:44.576Z",
-  "endedAt": "2026-06-24T15:13:44.817Z",
+  "startedAt": "2026-06-24T19:13:01.154Z",
+  "endedAt": "2026-06-24T19:13:01.413Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,10 +121,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:44.817Z",
+  "generatedAt": "2026-06-24T19:13:01.413Z",
   "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -149,10 +149,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:44.576Z",
-  "endTime": "2026-06-24T15:13:44.817Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:44.817Z",
+  "startTime": "2026-06-24T19:13:01.154Z",
+  "endTime": "2026-06-24T19:13:01.413Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:13:01.413Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-quotas": {
@@ -200,5 +200,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
-  "evidenceSignature": "77068f5a09edb60457cf89b5ffd477bf5e553d1e8c1aa5f569fca77f39e434d1"
+  "evidenceSignature": "eaf0c0ef260c1a4ee0aa91c4adce6bf12fc459a5c23f4f5608f3cb7411334cfc"
 }

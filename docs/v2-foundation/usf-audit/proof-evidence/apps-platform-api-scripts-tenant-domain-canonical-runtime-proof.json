@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domain-canonical",
-  "startedAt": "2026-06-24T15:13:56.722Z",
-  "endedAt": "2026-06-24T15:13:56.861Z",
+  "startedAt": "2026-06-24T19:13:13.299Z",
+  "endedAt": "2026-06-24T19:13:13.433Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -282,10 +282,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:56.861Z",
+  "generatedAt": "2026-06-24T19:13:13.433Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -310,10 +310,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:56.722Z",
-  "endTime": "2026-06-24T15:13:56.861Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:56.861Z",
+  "startTime": "2026-06-24T19:13:13.299Z",
+  "endTime": "2026-06-24T19:13:13.433Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:13:13.433Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-domains-domain": {
@@ -449,5 +449,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
-  "evidenceSignature": "caa2d4918fa8cb011e6c9fab03dc7df0fb197e43ca6ed2473f95ad5cf4edcad8"
+  "evidenceSignature": "2dd31b89b2004856b2fd788a1a6923807a25fc879549e2b00f18e86507e7134d"
 }

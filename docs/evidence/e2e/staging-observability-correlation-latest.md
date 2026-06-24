@@ -3,10 +3,10 @@
 Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e2e-observability-correlation make target.
 
 - Result: **FULL**
-- testRunId: `run-staging-1782312050-d75d7cd5`
+- testRunId: `run-staging-1782326720-750995f8`
 - Loki: reachable
 - Tempo: reachable (required)
-- Total log lines: 497
+- Total log lines: 510
 - Required log scenarios: 8; missing: 0; unexpected observed: 0
 
 ## Per-scenario log correlation
@@ -19,7 +19,7 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 | `persona-authz` | true | true | 32 | OK |
 | `browser-bff-trace` | true | true | 4 | OK |
 | `persona-matrix:unauthenticated-visitor` | true | true | 48 | OK |
-| `persona-matrix:scaffold-system-admin` | false | true | 129 | OBSERVED |
+| `persona-matrix:scaffold-system-admin` | false | true | 142 | OBSERVED |
 | `persona-matrix:scaffold-tenant-admin` | true | true | 64 | OK |
 | `persona-matrix:scaffold-tenant-manager` | true | true | 46 | OK |
 | `persona-matrix:scaffold-tenant-member` | true | true | 46 | OK |
@@ -37,10 +37,10 @@ Generated (ADR-ACT-0285 Phase 3 + closure). DO NOT EDIT — regenerate via the e
 | scenarioId | traceId | found | services | route | result |
 | --- | --- | --- | --- | --- | --- |
 | `pipeline-health-probe` | `—` | true | platform-api | true | PASSED |
-| `browser-bff-trace` | `—` | true | platform-api, react-enterprise-app | true | PASSED |
+| `browser-bff-trace` | `—` | true | react-enterprise-app, platform-api | true | PASSED |
 
 ## Notes
 
-- Correlated 497 line(s); all 8 required scenario(s) observed.
-- Trace 4436149eaa4c00a1561d47ccf4152210 for 'pipeline-health-probe' matched in Tempo: services [platform-api].
-- Trace a497790a700a339d9ad48fd55822569d for 'browser-bff-trace' matched in Tempo: services [platform-api, react-enterprise-app].
+- Correlated 510 line(s); all 8 required scenario(s) observed.
+- Trace 2f0b8a98cfed2aab5b725577a5493863 for 'pipeline-health-probe' matched in Tempo: services [platform-api].
+- Trace 04344c30c05b42d4d3d7a3717e3b3fa4 for 'browser-bff-trace' matched in Tempo: services [react-enterprise-app, platform-api].

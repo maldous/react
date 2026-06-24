@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-lifecycle",
-  "startedAt": "2026-06-24T15:13:58.036Z",
-  "endedAt": "2026-06-24T15:13:58.074Z",
+  "startedAt": "2026-06-24T19:13:14.623Z",
+  "endedAt": "2026-06-24T19:13:14.659Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:58.074Z",
+  "generatedAt": "2026-06-24T19:13:14.659Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -169,10 +169,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:58.036Z",
-  "endTime": "2026-06-24T15:13:58.074Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:58.074Z",
+  "startTime": "2026-06-24T19:13:14.623Z",
+  "endTime": "2026-06-24T19:13:14.659Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:13:14.659Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-export": {
@@ -231,5 +231,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "188f7aaad633e8df1ca251d8bd5df36dd057a43df7353776b5029cf4044ef188"
+  "evidenceSignature": "82095cd69eda0472a0c5826d775f8af03419a21c32d1d6766a148fc57725c3e7"
 }

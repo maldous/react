@@ -40,10 +40,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-billing-catalog",
-  "startedAt": "2026-06-24T15:11:18.177Z",
-  "endedAt": "2026-06-24T15:11:18.221Z",
+  "startedAt": "2026-06-24T19:10:34.675Z",
+  "endedAt": "2026-06-24T19:10:34.712Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -258,10 +258,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:11:18.221Z",
+  "generatedAt": "2026-06-24T19:10:34.712Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -286,10 +286,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:11:18.177Z",
-  "endTime": "2026-06-24T15:11:18.221Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:11:18.221Z",
+  "startTime": "2026-06-24T19:10:34.675Z",
+  "endTime": "2026-06-24T19:10:34.712Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:10:34.712Z",
   "stateDiff": {
     "routeMutations": {
       "route:post-api-admin-billing-catalog-products": {
@@ -410,5 +410,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:semantic-dev"],
-  "evidenceSignature": "6e97690751b614fb1cc38ad8b31a423de2e05e01e04c6544e61f6cf26c441401"
+  "evidenceSignature": "f73d01366c78fd16f687ba0e8e3dc08d57f353a6dce81d517dd9f38f011b2458"
 }

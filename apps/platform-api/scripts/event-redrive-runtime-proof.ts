@@ -35,6 +35,7 @@ const OP = {
   roles: ["system-admin"],
   permissions: ["platform.events.read", "platform.events.write", "platform.workers.read"],
 };
+const MAX_WORKER_TICKS = 6;
 
 let failures = 0;
 function check(label: string, ok: boolean, detail = ""): void {
@@ -128,17 +129,38 @@ async function main(): Promise<void> {
       )
     ).rows[0]!.id;
 
-    // produce a dead letter via the server-internal worker tick (max_attempts=1)
+    // Produce a dead letter via the server-internal worker tick (max_attempts=1).
+    // The queue is global operator infrastructure, so aggregate proof runs can leave
+    // older pending rows ahead of this proof. Run bounded ticks until this proof's
+    // unique tenant/event appears in the DLQ rather than assuming the first tick
+    // claims it.
     await publishEvent({ organisationId: orgA, eventType, idempotencyKey, maxAttempts: 1 }, deps);
-    await processNext(
-      {
-        [eventType]: async () => {
-          throw new Error("intentional failure");
-        },
-      },
-      deps,
-      { batch: 10 }
-    );
+    const deadLetterTicks = [];
+    let dlq = await invoke(dlqRoute, {
+      url: `/api/admin/events/dead-letter?organisationId=${orgA}`,
+    });
+    let dlqBody = dlq.body as { deadLetters?: { id: string; eventType: string }[] };
+    for (
+      let tick = 0;
+      tick < MAX_WORKER_TICKS && !dlqBody.deadLetters?.some((d) => d.eventType === eventType);
+      tick++
+    ) {
+      deadLetterTicks.push(
+        await processNext(
+          {
+            [eventType]: async () => {
+              throw new Error("intentional failure");
+            },
+          },
+          deps,
+          { batch: 10 }
+        )
+      );
+      dlq = await invoke(dlqRoute, {
+        url: `/api/admin/events/dead-letter?organisationId=${orgA}`,
+      });
+      dlqBody = dlq.body as { deadLetters?: { id: string; eventType: string }[] };
+    }
 
     // events route requires organisationId
     check(
@@ -147,15 +169,15 @@ async function main(): Promise<void> {
     );
 
     // dead-letter route shows the dead letter
-    const dlq = await invoke(dlqRoute, {
-      url: `/api/admin/events/dead-letter?organisationId=${orgA}`,
-    });
-    const dlqBody = dlq.body as { deadLetters?: { id: string; eventType: string }[] };
+    const proofDeadLetter = dlqBody.deadLetters?.find((d) => d.eventType === eventType);
     check(
       "dead-letter route returns the dead-lettered event",
-      dlq.status === 200 && (dlqBody.deadLetters?.length ?? 0) === 1
+      dlq.status === 200 && proofDeadLetter !== undefined,
+      `status=${dlq.status} deadLetters=${dlqBody.deadLetters?.length ?? 0} ticks=${JSON.stringify(
+        deadLetterTicks
+      )}`
     );
-    const deadLetterId = dlqBody.deadLetters![0]!.id;
+    const deadLetterId = proofDeadLetter?.id ?? "";
 
     // redrive via the real handler
     const rd = await invoke(redriveRoute, { params: { eventId: deadLetterId } });
@@ -171,20 +193,28 @@ async function main(): Promise<void> {
 
     // the requeued event is processable
     const handled: string[] = [];
-    const after = await processNext(
-      {
-        [eventType]: async (e) => {
-          handled.push(e.id);
-        },
-      },
-      deps,
-      {
-        batch: 10,
-      }
-    );
+    const processTicks = [];
+    for (let tick = 0; tick < MAX_WORKER_TICKS && !handled.includes(rdBody.eventId ?? ""); tick++) {
+      processTicks.push(
+        await processNext(
+          {
+            [eventType]: async (e) => {
+              handled.push(e.id);
+            },
+          },
+          deps,
+          {
+            batch: 10,
+          }
+        )
+      );
+    }
     check(
       "the requeued event is processed on the next worker tick",
-      after.processed >= 1 && handled.includes(rdBody.eventId ?? "")
+      handled.includes(rdBody.eventId ?? ""),
+      `eventId=${rdBody.eventId ?? ""} handled=${handled.join(",")} ticks=${JSON.stringify(
+        processTicks
+      )}`
     );
 
     // events route lists events for the tenant

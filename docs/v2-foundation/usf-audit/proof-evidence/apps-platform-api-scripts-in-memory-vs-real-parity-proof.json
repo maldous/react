@@ -61,10 +61,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-24T15:11:18.855Z",
-  "endedAt": "2026-06-24T15:11:19.179Z",
+  "startedAt": "2026-06-24T19:10:35.335Z",
+  "endedAt": "2026-06-24T19:10:35.654Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -120,7 +120,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-24T15:11:19.108Z"
+      "createdAt": "2026-06-24T19:10:35.583Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -654,10 +654,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:11:19.179Z",
+  "generatedAt": "2026-06-24T19:10:35.654Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -682,10 +682,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:11:18.855Z",
-  "endTime": "2026-06-24T15:11:19.179Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:11:19.179Z",
+  "startTime": "2026-06-24T19:10:35.335Z",
+  "endTime": "2026-06-24T19:10:35.654Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:10:35.654Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts": {
@@ -979,5 +979,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "c321b9f68ff87f8c148793b335e5e08a6306f24766776c160425845908bdc4df"
+  "evidenceSignature": "8756d39c1e4e4aa9cc8818c6dc3c9b4b48a7d049fd5a66dc18f193e366638fb3"
 }

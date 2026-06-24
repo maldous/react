@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlements-postgres",
-  "startedAt": "2026-06-24T15:11:11.396Z",
-  "endedAt": "2026-06-24T15:11:11.624Z",
+  "startedAt": "2026-06-24T19:10:27.943Z",
+  "endedAt": "2026-06-24T19:10:28.159Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,10 +141,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:11:11.624Z",
+  "generatedAt": "2026-06-24T19:10:28.159Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -169,10 +169,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:11:11.396Z",
-  "endTime": "2026-06-24T15:11:11.624Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:11:11.624Z",
+  "startTime": "2026-06-24T19:10:27.943Z",
+  "endTime": "2026-06-24T19:10:28.159Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:10:28.159Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-entitlements": {
@@ -231,5 +231,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts"],
-  "evidenceSignature": "2a9e264a34248011a9d1e357cd2aafdb0bf0fff0fa360efc595a1dc26bf46b0e"
+  "evidenceSignature": "40b8318bb60ee020820c29619cbb97a62afdb4e6768444b8378ec72edb40817e"
 }

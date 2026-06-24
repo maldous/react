@@ -97,6 +97,7 @@ for (const proof of selectedProofs) {
     timedOut: result.error?.code === "ETIMEDOUT",
     evidenceEmitted,
     evidenceFile: evidenceEmitted ? path.relative(repoRoot, evidencePath) : null,
+    stdoutTail: tail(result.stdout || ""),
     stderrTail: tail(result.stderr || ""),
   });
 }

@@ -23,10 +23,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:auth-oidc-enterprise",
-  "startedAt": "2026-06-24T15:12:59.797Z",
-  "endedAt": "2026-06-24T15:13:00.202Z",
+  "startedAt": "2026-06-24T19:12:16.323Z",
+  "endedAt": "2026-06-24T19:12:16.743Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -161,10 +161,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:00.202Z",
+  "generatedAt": "2026-06-24T19:12:16.743Z",
   "sourceFileRefs": ["apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -189,10 +189,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:12:59.797Z",
-  "endTime": "2026-06-24T15:13:00.202Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:00.202Z",
+  "startTime": "2026-06-24T19:12:16.323Z",
+  "endTime": "2026-06-24T19:12:16.743Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:12:16.743Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-auth-settings-idps": {
@@ -262,5 +262,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/oidc-enterprise-runtime-proof.ts"],
-  "evidenceSignature": "12ea1dd1448010193a9b5db5f64c57b83a8fd1c6aef0db414e371a5258d16069"
+  "evidenceSignature": "cf183c249fff5a9bb94c455c0cb3155529a95f4970a67e67a6d8da9efb2fc07c"
 }

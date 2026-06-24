@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-storage-objects",
-  "startedAt": "2026-06-24T15:13:58.741Z",
-  "endedAt": "2026-06-24T15:13:59.379Z",
+  "startedAt": "2026-06-24T19:13:15.334Z",
+  "endedAt": "2026-06-24T19:13:15.954Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -221,10 +221,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:59.379Z",
+  "generatedAt": "2026-06-24T19:13:15.954Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -249,10 +249,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:58.741Z",
-  "endTime": "2026-06-24T15:13:59.379Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:59.379Z",
+  "startTime": "2026-06-24T19:13:15.334Z",
+  "endTime": "2026-06-24T19:13:15.954Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:13:15.954Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-storage-objects-objectkey": {
@@ -355,5 +355,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
-  "evidenceSignature": "b40dcbf491a9e5ef75fd1610be4d88fc4fee9066575245dde352b082d29fa1d6"
+  "evidenceSignature": "057cf2830c2fd6974920b46fd67e78c9b99cde1108a0cc03e2e267a75e23fcbd"
 }

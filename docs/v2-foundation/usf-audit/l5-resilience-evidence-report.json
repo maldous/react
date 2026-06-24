@@ -1,7 +1,7 @@
 {
   "artefact": "l5-resilience-evidence-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T15:10:56.637Z",
+  "generatedAt": "2026-06-24T19:10:13.273Z",
   "status": "PASS",
   "totalCapabilities": 70,
   "l5CompleteCapabilities": 70,
@@ -75,7 +75,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -104,7 +104,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_identity_record_fqdn"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_identity_record_fqdn"
             ],
             "metricSamples": [
               {
@@ -116,10 +116,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_identity_record_fqdn"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_identity_record_fqdn"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_identity_record_fqdn"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_identity_record_fqdn"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -203,7 +203,7 @@
             "concurrentUserCreates": 3,
             "concurrentDomainCreates": 3,
             "crossTenantConflictRejected": true,
-            "conflictDomain": "l5a-1782313757644-ec61421b.conflict.test.localhost"
+            "conflictDomain": "l5a-1782328114303-9fdfb11a.conflict.test.localhost"
           },
           "degradedModeEvidence": {
             "unavailablePoolEnded": true,
@@ -212,7 +212,7 @@
             "noSyntheticIdentityReturned": true
           },
           "recoveryEvidence": {
-            "displayName": "L5a Tenant Identity l5a-1782313757644-ec61421b",
+            "displayName": "L5a Tenant Identity l5a-1782328114303-9fdfb11a",
             "externalIdentityFound": true,
             "fqdnOrganisationId": "00000000-0000-4000-8000-000000000001",
             "behaviourContinuityWithL3Contract": true,
@@ -232,13 +232,13 @@
             "classification": "proof-emitted-telemetry",
             "note": "This L5a pilot emits correlated audit, metric, trace, and log evidence from the proof harness; it does not claim observed substrate telemetry.",
             "auditEventIds": [
-              "audit:l5a-1782313757644-ec61421b:baseline",
-              "audit:l5a-1782313757644-ec61421b:forced-reconnect",
-              "audit:l5a-1782313757644-ec61421b:timeout",
-              "audit:l5a-1782313757644-ec61421b:retry",
-              "audit:l5a-1782313757644-ec61421b:concurrency",
-              "audit:l5a-1782313757644-ec61421b:degraded",
-              "audit:l5a-1782313757644-ec61421b:recovery"
+              "audit:l5a-1782328114303-9fdfb11a:baseline",
+              "audit:l5a-1782328114303-9fdfb11a:forced-reconnect",
+              "audit:l5a-1782328114303-9fdfb11a:timeout",
+              "audit:l5a-1782328114303-9fdfb11a:retry",
+              "audit:l5a-1782328114303-9fdfb11a:concurrency",
+              "audit:l5a-1782328114303-9fdfb11a:degraded",
+              "audit:l5a-1782328114303-9fdfb11a:recovery"
             ],
             "metricSamples": [
               {
@@ -259,15 +259,15 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-1782313757644-ec61421b:baseline",
-              "trace:l5a-1782313757644-ec61421b:forced-reconnect",
-              "trace:l5a-1782313757644-ec61421b:timeout",
-              "trace:l5a-1782313757644-ec61421b:retry",
-              "trace:l5a-1782313757644-ec61421b:concurrency",
-              "trace:l5a-1782313757644-ec61421b:degraded",
-              "trace:l5a-1782313757644-ec61421b:recovery"
+              "trace:l5a-1782328114303-9fdfb11a:baseline",
+              "trace:l5a-1782328114303-9fdfb11a:forced-reconnect",
+              "trace:l5a-1782328114303-9fdfb11a:timeout",
+              "trace:l5a-1782328114303-9fdfb11a:retry",
+              "trace:l5a-1782328114303-9fdfb11a:concurrency",
+              "trace:l5a-1782328114303-9fdfb11a:degraded",
+              "trace:l5a-1782328114303-9fdfb11a:recovery"
             ],
-            "logCorrelationIds": ["log:l5a-1782313757644-ec61421b:l5a-postgres-tenant-identity"],
+            "logCorrelationIds": ["log:l5a-1782328114303-9fdfb11a:l5a-postgres-tenant-identity"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -341,7 +341,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -370,7 +370,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:user_identity_tenant_membership"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:user_identity_tenant_membership"
             ],
             "metricSamples": [
               {
@@ -382,10 +382,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:user_identity_tenant_membership"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:user_identity_tenant_membership"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:user_identity_tenant_membership"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:user_identity_tenant_membership"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -441,7 +441,7 @@
           },
           "restartOrReconnectEvidence": {
             "postgres": {
-              "backendPid": 3282,
+              "backendPid": 2871,
               "backendTerminated": true,
               "stateReadableAfterReconnect": true,
               "limitation": "forced backend termination used instead of container restart"
@@ -529,7 +529,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-ia-1782313756475-b35452b4:user-identity-tenant-membership"
+              "audit:l5a-ia-1782328113155-23a4c807:user-identity-tenant-membership"
             ],
             "metricSamples": [
               {
@@ -540,9 +540,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-ia-1782313756475-b35452b4:user-identity-tenant-membership"],
+            "traceIds": ["trace:l5a-ia-1782328113155-23a4c807:user-identity-tenant-membership"],
             "logCorrelationIds": [
-              "log:l5a-ia-1782313756475-b35452b4:user-identity-tenant-membership"
+              "log:l5a-ia-1782328113155-23a4c807:user-identity-tenant-membership"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -618,7 +618,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -647,7 +647,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:end_user_profile_preferences_self_service"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:end_user_profile_preferences_self_service"
             ],
             "metricSamples": [
               {
@@ -659,10 +659,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:end_user_profile_preferences_self_service"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:end_user_profile_preferences_self_service"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:end_user_profile_preferences_self_service"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:end_user_profile_preferences_self_service"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -739,7 +739,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -768,7 +768,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:api_keys_personal_access_tokens"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:api_keys_personal_access_tokens"
             ],
             "metricSamples": [
               {
@@ -780,10 +780,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:api_keys_personal_access_tokens"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:api_keys_personal_access_tokens"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:api_keys_personal_access_tokens"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:api_keys_personal_access_tokens"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -841,7 +841,7 @@
           },
           "restartOrReconnectEvidence": {
             "postgres": {
-              "backendPid": 3282,
+              "backendPid": 2871,
               "backendTerminated": true,
               "stateReadableAfterReconnect": true,
               "limitation": "forced backend termination used instead of container restart"
@@ -929,7 +929,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-ia-1782313756475-b35452b4:api-keys-personal-access-tokens"
+              "audit:l5a-ia-1782328113155-23a4c807:api-keys-personal-access-tokens"
             ],
             "metricSamples": [
               {
@@ -940,9 +940,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-ia-1782313756475-b35452b4:api-keys-personal-access-tokens"],
+            "traceIds": ["trace:l5a-ia-1782328113155-23a4c807:api-keys-personal-access-tokens"],
             "logCorrelationIds": [
-              "log:l5a-ia-1782313756475-b35452b4:api-keys-personal-access-tokens"
+              "log:l5a-ia-1782328113155-23a4c807:api-keys-personal-access-tokens"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -1018,7 +1018,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -1046,7 +1046,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_groups"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_groups"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -1056,8 +1056,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_groups"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_groups"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_groups"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_groups"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -1113,7 +1113,7 @@
           },
           "restartOrReconnectEvidence": {
             "postgres": {
-              "backendPid": 3282,
+              "backendPid": 2871,
               "backendTerminated": true,
               "stateReadableAfterReconnect": true,
               "limitation": "forced backend termination used instead of container restart"
@@ -1198,7 +1198,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-ia-1782313756475-b35452b4:tenant-groups"],
+            "auditEventIds": ["audit:l5a-ia-1782328113155-23a4c807:tenant-groups"],
             "metricSamples": [
               {
                 "name": "usf_l5a_identity_access_capability_passed",
@@ -1208,8 +1208,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-ia-1782313756475-b35452b4:tenant-groups"],
-            "logCorrelationIds": ["log:l5a-ia-1782313756475-b35452b4:tenant-groups"],
+            "traceIds": ["trace:l5a-ia-1782328113155-23a4c807:tenant-groups"],
+            "logCorrelationIds": ["log:l5a-ia-1782328113155-23a4c807:tenant-groups"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -1284,7 +1284,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -1312,7 +1312,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:sub_organisations"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:sub_organisations"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -1322,8 +1322,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:sub_organisations"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:sub_organisations"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:sub_organisations"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:sub_organisations"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -1379,7 +1379,7 @@
           },
           "restartOrReconnectEvidence": {
             "postgres": {
-              "backendPid": 3282,
+              "backendPid": 2871,
               "backendTerminated": true,
               "stateReadableAfterReconnect": true,
               "limitation": "forced backend termination used instead of container restart"
@@ -1466,7 +1466,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-ia-1782313756475-b35452b4:sub-organisations"],
+            "auditEventIds": ["audit:l5a-ia-1782328113155-23a4c807:sub-organisations"],
             "metricSamples": [
               {
                 "name": "usf_l5a_identity_access_capability_passed",
@@ -1476,8 +1476,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-ia-1782313756475-b35452b4:sub-organisations"],
-            "logCorrelationIds": ["log:l5a-ia-1782313756475-b35452b4:sub-organisations"],
+            "traceIds": ["trace:l5a-ia-1782328113155-23a4c807:sub-organisations"],
+            "logCorrelationIds": ["log:l5a-ia-1782328113155-23a4c807:sub-organisations"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -1551,7 +1551,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -1580,7 +1580,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:rbac_roles_permissions"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:rbac_roles_permissions"
             ],
             "metricSamples": [
               {
@@ -1591,9 +1591,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:rbac_roles_permissions"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:rbac_roles_permissions"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:rbac_roles_permissions"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:rbac_roles_permissions"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -1649,7 +1649,7 @@
           },
           "restartOrReconnectEvidence": {
             "postgres": {
-              "backendPid": 3282,
+              "backendPid": 2871,
               "backendTerminated": true,
               "stateReadableAfterReconnect": true,
               "limitation": "forced backend termination used instead of container restart"
@@ -1736,7 +1736,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-ia-1782313756475-b35452b4:rbac-roles-permissions"],
+            "auditEventIds": ["audit:l5a-ia-1782328113155-23a4c807:rbac-roles-permissions"],
             "metricSamples": [
               {
                 "name": "usf_l5a_identity_access_capability_passed",
@@ -1746,8 +1746,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-ia-1782313756475-b35452b4:rbac-roles-permissions"],
-            "logCorrelationIds": ["log:l5a-ia-1782313756475-b35452b4:rbac-roles-permissions"],
+            "traceIds": ["trace:l5a-ia-1782328113155-23a4c807:rbac-roles-permissions"],
+            "logCorrelationIds": ["log:l5a-ia-1782328113155-23a4c807:rbac-roles-permissions"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -1821,7 +1821,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -1850,7 +1850,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:abac_policy_decision_point"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:abac_policy_decision_point"
             ],
             "metricSamples": [
               {
@@ -1861,9 +1861,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:abac_policy_decision_point"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:abac_policy_decision_point"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:abac_policy_decision_point"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:abac_policy_decision_point"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -1938,7 +1938,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -1967,7 +1967,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:delegated_administration_roles"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:delegated_administration_roles"
             ],
             "metricSamples": [
               {
@@ -1979,10 +1979,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:delegated_administration_roles"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:delegated_administration_roles"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:delegated_administration_roles"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:delegated_administration_roles"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -2060,7 +2060,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2088,7 +2088,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:entitlement_engine"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:entitlement_engine"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -2098,8 +2098,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:entitlement_engine"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:entitlement_engine"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:entitlement_engine"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:entitlement_engine"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -2173,7 +2173,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2202,7 +2202,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:support_mode_break_glass_access"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:support_mode_break_glass_access"
             ],
             "metricSamples": [
               {
@@ -2214,10 +2214,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:support_mode_break_glass_access"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:support_mode_break_glass_access"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:support_mode_break_glass_access"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:support_mode_break_glass_access"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -2291,7 +2291,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2320,7 +2320,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:audit_of_privileged_access"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:audit_of_privileged_access"
             ],
             "metricSamples": [
               {
@@ -2331,9 +2331,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:audit_of_privileged_access"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:audit_of_privileged_access"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:audit_of_privileged_access"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:audit_of_privileged_access"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -2409,7 +2409,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2438,7 +2438,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:platform_login_session"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:platform_login_session"
             ],
             "metricSamples": [
               {
@@ -2449,9 +2449,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:platform_login_session"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:platform_login_session"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:platform_login_session"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:platform_login_session"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -2508,7 +2508,7 @@
           },
           "restartOrReconnectEvidence": {
             "postgres": {
-              "backendPid": 3282,
+              "backendPid": 2871,
               "backendTerminated": true,
               "stateReadableAfterReconnect": true,
               "limitation": "forced backend termination used instead of container restart"
@@ -2593,7 +2593,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-ia-1782313756475-b35452b4:platform-login-session"],
+            "auditEventIds": ["audit:l5a-ia-1782328113155-23a4c807:platform-login-session"],
             "metricSamples": [
               {
                 "name": "usf_l5a_identity_access_capability_passed",
@@ -2603,8 +2603,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-ia-1782313756475-b35452b4:platform-login-session"],
-            "logCorrelationIds": ["log:l5a-ia-1782313756475-b35452b4:platform-login-session"],
+            "traceIds": ["trace:l5a-ia-1782328113155-23a4c807:platform-login-session"],
+            "logCorrelationIds": ["log:l5a-ia-1782328113155-23a4c807:platform-login-session"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -2679,7 +2679,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2708,7 +2708,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:idp_brokering_oidc_provider_management"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:idp_brokering_oidc_provider_management"
             ],
             "metricSamples": [
               {
@@ -2720,10 +2720,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:idp_brokering_oidc_provider_management"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:idp_brokering_oidc_provider_management"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:idp_brokering_oidc_provider_management"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:idp_brokering_oidc_provider_management"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -2798,7 +2798,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2827,7 +2827,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:claim_mapping_group_role_mapping"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:claim_mapping_group_role_mapping"
             ],
             "metricSamples": [
               {
@@ -2839,10 +2839,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:claim_mapping_group_role_mapping"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:claim_mapping_group_role_mapping"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:claim_mapping_group_role_mapping"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:claim_mapping_group_role_mapping"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -2917,7 +2917,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -2946,7 +2946,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:mfa_session_policy_lockout"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:mfa_session_policy_lockout"
             ],
             "metricSamples": [
               {
@@ -2957,9 +2957,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:mfa_session_policy_lockout"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:mfa_session_policy_lockout"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:mfa_session_policy_lockout"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:mfa_session_policy_lockout"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3033,7 +3033,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3062,7 +3062,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:configuration_registry_history"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:configuration_registry_history"
             ],
             "metricSamples": [
               {
@@ -3074,10 +3074,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:configuration_registry_history"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:configuration_registry_history"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:configuration_registry_history"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:configuration_registry_history"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3152,7 +3152,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3180,7 +3180,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:branding_theming"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:branding_theming"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -3190,8 +3190,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:branding_theming"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:branding_theming"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:branding_theming"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:branding_theming"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -3268,7 +3268,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3297,7 +3297,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:custom_domains_dns_ownership_tls_canonical"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:custom_domains_dns_ownership_tls_canonical"
             ],
             "metricSamples": [
               {
@@ -3309,10 +3309,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:custom_domains_dns_ownership_tls_canonical"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:custom_domains_dns_ownership_tls_canonical"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:custom_domains_dns_ownership_tls_canonical"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:custom_domains_dns_ownership_tls_canonical"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3398,7 +3398,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3427,7 +3427,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:write_only_secret_settings"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:write_only_secret_settings"
             ],
             "metricSamples": [
               {
@@ -3438,9 +3438,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:write_only_secret_settings"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:write_only_secret_settings"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:write_only_secret_settings"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:write_only_secret_settings"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3528,7 +3528,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3557,7 +3557,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:product_catalog_plans_prices"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:product_catalog_plans_prices"
             ],
             "metricSamples": [
               {
@@ -3569,10 +3569,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:product_catalog_plans_prices"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:product_catalog_plans_prices"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:product_catalog_plans_prices"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:product_catalog_plans_prices"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3648,7 +3648,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3677,7 +3677,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:subscriptions_invoices_payment_methods_dunning"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:subscriptions_invoices_payment_methods_dunning"
             ],
             "metricSamples": [
               {
@@ -3689,10 +3689,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:subscriptions_invoices_payment_methods_dunning"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:subscriptions_invoices_payment_methods_dunning"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:subscriptions_invoices_payment_methods_dunning"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:subscriptions_invoices_payment_methods_dunning"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3768,7 +3768,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3797,7 +3797,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:usage_metering_meter_event_ingestion"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:usage_metering_meter_event_ingestion"
             ],
             "metricSamples": [
               {
@@ -3809,10 +3809,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:usage_metering_meter_event_ingestion"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:usage_metering_meter_event_ingestion"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:usage_metering_meter_event_ingestion"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:usage_metering_meter_event_ingestion"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -3888,7 +3888,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -3916,7 +3916,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:quota_enforcement"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:quota_enforcement"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -3926,8 +3926,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:quota_enforcement"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:quota_enforcement"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:quota_enforcement"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:quota_enforcement"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -4000,7 +4000,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4029,7 +4029,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:relational_storage_migrations_rls"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:relational_storage_migrations_rls"
             ],
             "metricSamples": [
               {
@@ -4041,10 +4041,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:relational_storage_migrations_rls"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:relational_storage_migrations_rls"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:relational_storage_migrations_rls"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:relational_storage_migrations_rls"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4119,7 +4119,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4147,7 +4147,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:backup_restore"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:backup_restore"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -4157,8 +4157,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:backup_restore"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:backup_restore"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:backup_restore"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:backup_restore"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -4233,7 +4233,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4262,7 +4262,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:pitr_retention_legal_hold_data_residency"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:pitr_retention_legal_hold_data_residency"
             ],
             "metricSamples": [
               {
@@ -4274,10 +4274,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:pitr_retention_legal_hold_data_residency"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:pitr_retention_legal_hold_data_residency"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:pitr_retention_legal_hold_data_residency"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:pitr_retention_legal_hold_data_residency"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4352,7 +4352,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4381,7 +4381,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
             ],
             "metricSamples": [
               {
@@ -4393,10 +4393,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4471,7 +4471,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4500,7 +4500,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_data_import_export"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_data_import_export"
             ],
             "metricSamples": [
               {
@@ -4511,9 +4511,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_data_import_export"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_data_import_export"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_data_import_export"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_data_import_export"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4590,7 +4590,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4619,7 +4619,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:search_indexing_product_search"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:search_indexing_product_search"
             ],
             "metricSamples": [
               {
@@ -4631,10 +4631,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:search_indexing_product_search"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:search_indexing_product_search"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:search_indexing_product_search"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:search_indexing_product_search"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4709,7 +4709,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4738,7 +4738,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:object_storage_tenant_prefixes_signed_urls"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:object_storage_tenant_prefixes_signed_urls"
             ],
             "metricSamples": [
               {
@@ -4750,10 +4750,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:object_storage_tenant_prefixes_signed_urls"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:object_storage_tenant_prefixes_signed_urls"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:object_storage_tenant_prefixes_signed_urls"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:object_storage_tenant_prefixes_signed_urls"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4829,7 +4829,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4858,7 +4858,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:event_bus_durable_queues_dlq_redrive"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:event_bus_durable_queues_dlq_redrive"
             ],
             "metricSamples": [
               {
@@ -4870,10 +4870,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:event_bus_durable_queues_dlq_redrive"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:event_bus_durable_queues_dlq_redrive"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:event_bus_durable_queues_dlq_redrive"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:event_bus_durable_queues_dlq_redrive"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -4948,7 +4948,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -4977,7 +4977,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:workflow_engine_scheduled_jobs_approvals"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:workflow_engine_scheduled_jobs_approvals"
             ],
             "metricSamples": [
               {
@@ -4989,10 +4989,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:workflow_engine_scheduled_jobs_approvals"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:workflow_engine_scheduled_jobs_approvals"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:workflow_engine_scheduled_jobs_approvals"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:workflow_engine_scheduled_jobs_approvals"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5068,7 +5068,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5097,7 +5097,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:scheduled_jobs_built_in_on_the_event_substrate"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:scheduled_jobs_built_in_on_the_event_substrate"
             ],
             "metricSamples": [
               {
@@ -5109,10 +5109,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:scheduled_jobs_built_in_on_the_event_substrate"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:scheduled_jobs_built_in_on_the_event_substrate"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:scheduled_jobs_built_in_on_the_event_substrate"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:scheduled_jobs_built_in_on_the_event_substrate"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5191,7 +5191,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5220,7 +5220,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:notification_delivery_preferences_channels"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:notification_delivery_preferences_channels"
             ],
             "metricSamples": [
               {
@@ -5232,10 +5232,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:notification_delivery_preferences_channels"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:notification_delivery_preferences_channels"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:notification_delivery_preferences_channels"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:notification_delivery_preferences_channels"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5310,7 +5310,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5339,7 +5339,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:background_workers_job_runner"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:background_workers_job_runner"
             ],
             "metricSamples": [
               {
@@ -5351,10 +5351,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:background_workers_job_runner"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:background_workers_job_runner"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:background_workers_job_runner"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:background_workers_job_runner"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5431,7 +5431,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5460,7 +5460,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:runtime_secrets_management"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:runtime_secrets_management"
             ],
             "metricSamples": [
               {
@@ -5471,9 +5471,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:runtime_secrets_management"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:runtime_secrets_management"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:runtime_secrets_management"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:runtime_secrets_management"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5548,7 +5548,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5577,7 +5577,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:logs_aggregation_tenant_scoped_search"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:logs_aggregation_tenant_scoped_search"
             ],
             "metricSamples": [
               {
@@ -5589,10 +5589,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:logs_aggregation_tenant_scoped_search"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:logs_aggregation_tenant_scoped_search"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:logs_aggregation_tenant_scoped_search"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:logs_aggregation_tenant_scoped_search"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5668,7 +5668,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5696,7 +5696,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:metrics_traces"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:metrics_traces"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -5706,8 +5706,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:metrics_traces"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:metrics_traces"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:metrics_traces"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:metrics_traces"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -5784,7 +5784,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5813,7 +5813,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:observability_built_in_alerting_incidents"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:observability_built_in_alerting_incidents"
             ],
             "metricSamples": [
               {
@@ -5825,10 +5825,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:observability_built_in_alerting_incidents"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:observability_built_in_alerting_incidents"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:observability_built_in_alerting_incidents"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:observability_built_in_alerting_incidents"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -5904,7 +5904,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -5933,7 +5933,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:internal_service_catalog_readiness"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:internal_service_catalog_readiness"
             ],
             "metricSamples": [
               {
@@ -5945,10 +5945,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:internal_service_catalog_readiness"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:internal_service_catalog_readiness"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:internal_service_catalog_readiness"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:internal_service_catalog_readiness"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6022,7 +6022,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6051,7 +6051,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:code_quality_secret_dependency_scanning"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:code_quality_secret_dependency_scanning"
             ],
             "metricSamples": [
               {
@@ -6063,10 +6063,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:code_quality_secret_dependency_scanning"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:code_quality_secret_dependency_scanning"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:code_quality_secret_dependency_scanning"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:code_quality_secret_dependency_scanning"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6140,7 +6140,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6169,7 +6169,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:compliance_reports_access_reviews_evidence_packs"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:compliance_reports_access_reviews_evidence_packs"
             ],
             "metricSamples": [
               {
@@ -6181,10 +6181,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:compliance_reports_access_reviews_evidence_packs"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:compliance_reports_access_reviews_evidence_packs"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:compliance_reports_access_reviews_evidence_packs"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:compliance_reports_access_reviews_evidence_packs"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6259,7 +6259,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6288,7 +6288,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_isolation_proof"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_isolation_proof"
             ],
             "metricSamples": [
               {
@@ -6299,9 +6299,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_isolation_proof"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_isolation_proof"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_isolation_proof"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_isolation_proof"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6377,7 +6377,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6406,7 +6406,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:webhooks_developer_facing"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:webhooks_developer_facing"
             ],
             "metricSamples": [
               {
@@ -6417,9 +6417,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:webhooks_developer_facing"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:webhooks_developer_facing"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:webhooks_developer_facing"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:webhooks_developer_facing"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6494,7 +6494,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6523,7 +6523,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:api_docs_developer_portal_sdks_rate_limits"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:api_docs_developer_portal_sdks_rate_limits"
             ],
             "metricSamples": [
               {
@@ -6535,10 +6535,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:api_docs_developer_portal_sdks_rate_limits"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:api_docs_developer_portal_sdks_rate_limits"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:api_docs_developer_portal_sdks_rate_limits"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:api_docs_developer_portal_sdks_rate_limits"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6615,7 +6615,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6643,7 +6643,7 @@
           },
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
-            "auditEventIds": ["audit:l5a-closure-1782313755858-a538b2b0:l5a:rate_limiting_api"],
+            "auditEventIds": ["audit:l5a-closure-1782328112531-1907e2d5:l5a:rate_limiting_api"],
             "metricSamples": [
               {
                 "name": "usf_l5a_capability_resilience_passed_total",
@@ -6653,8 +6653,8 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:rate_limiting_api"],
-            "logCorrelationIds": ["log:l5a-closure-1782313755858-a538b2b0:l5a:rate_limiting_api"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:rate_limiting_api"],
+            "logCorrelationIds": ["log:l5a-closure-1782328112531-1907e2d5:l5a:rate_limiting_api"],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
               "metrics": [],
@@ -6728,7 +6728,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6757,7 +6757,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_lifecycle_provision_suspend_delete_export"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_lifecycle_provision_suspend_delete_export"
             ],
             "metricSamples": [
               {
@@ -6769,10 +6769,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_lifecycle_provision_suspend_delete_export"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_lifecycle_provision_suspend_delete_export"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_lifecycle_provision_suspend_delete_export"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_lifecycle_provision_suspend_delete_export"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6846,7 +6846,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6875,7 +6875,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:support_tickets_customer_health_announcements"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:support_tickets_customer_health_announcements"
             ],
             "metricSamples": [
               {
@@ -6887,10 +6887,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:support_tickets_customer_health_announcements"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:support_tickets_customer_health_announcements"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:support_tickets_customer_health_announcements"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:support_tickets_customer_health_announcements"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -6964,7 +6964,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -6993,7 +6993,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:universal_service_foundation_scope_principles"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:universal_service_foundation_scope_principles"
             ],
             "metricSamples": [
               {
@@ -7005,10 +7005,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:universal_service_foundation_scope_principles"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:universal_service_foundation_scope_principles"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:universal_service_foundation_scope_principles"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:universal_service_foundation_scope_principles"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7082,7 +7082,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7111,7 +7111,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:build_versus_compose_decision_framework"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:build_versus_compose_decision_framework"
             ],
             "metricSamples": [
               {
@@ -7123,10 +7123,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:build_versus_compose_decision_framework"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:build_versus_compose_decision_framework"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:build_versus_compose_decision_framework"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:build_versus_compose_decision_framework"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7204,7 +7204,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7233,7 +7233,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:service_catalog_provider_integration_model"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:service_catalog_provider_integration_model"
             ],
             "metricSamples": [
               {
@@ -7245,10 +7245,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:service_catalog_provider_integration_model"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:service_catalog_provider_integration_model"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:service_catalog_provider_integration_model"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:service_catalog_provider_integration_model"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7322,7 +7322,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7351,7 +7351,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:environment_specific_vs_shared_service_model"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:environment_specific_vs_shared_service_model"
             ],
             "metricSamples": [
               {
@@ -7363,10 +7363,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:environment_specific_vs_shared_service_model"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:environment_specific_vs_shared_service_model"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:environment_specific_vs_shared_service_model"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:environment_specific_vs_shared_service_model"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7442,7 +7442,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7471,7 +7471,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:provider_configuration_plane"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:provider_configuration_plane"
             ],
             "metricSamples": [
               {
@@ -7483,10 +7483,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:provider_configuration_plane"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:provider_configuration_plane"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:provider_configuration_plane"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:provider_configuration_plane"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7561,7 +7561,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7590,7 +7590,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:composed_provider_readiness_spine"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:composed_provider_readiness_spine"
             ],
             "metricSamples": [
               {
@@ -7602,10 +7602,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:composed_provider_readiness_spine"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:composed_provider_readiness_spine"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:composed_provider_readiness_spine"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:composed_provider_readiness_spine"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7680,7 +7680,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7709,7 +7709,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:history_read_model_read_only_projection"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:history_read_model_read_only_projection"
             ],
             "metricSamples": [
               {
@@ -7721,10 +7721,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:history_read_model_read_only_projection"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:history_read_model_read_only_projection"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:history_read_model_read_only_projection"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:history_read_model_read_only_projection"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7799,7 +7799,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7828,7 +7828,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:oidc_discovery_issuer_jwks_validation"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:oidc_discovery_issuer_jwks_validation"
             ],
             "metricSamples": [
               {
@@ -7840,10 +7840,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:oidc_discovery_issuer_jwks_validation"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:oidc_discovery_issuer_jwks_validation"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:oidc_discovery_issuer_jwks_validation"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:oidc_discovery_issuer_jwks_validation"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -7918,7 +7918,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -7947,7 +7947,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:oidc_test_connection_callback_display"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:oidc_test_connection_callback_display"
             ],
             "metricSamples": [
               {
@@ -7959,10 +7959,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:oidc_test_connection_callback_display"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:oidc_test_connection_callback_display"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:oidc_test_connection_callback_display"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:oidc_test_connection_callback_display"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8038,7 +8038,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8067,7 +8067,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_host_identity_resolution"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_host_identity_resolution"
             ],
             "metricSamples": [
               {
@@ -8079,10 +8079,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_host_identity_resolution"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_host_identity_resolution"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_host_identity_resolution"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_host_identity_resolution"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8157,7 +8157,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8186,7 +8186,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_domain_activation_auth_client"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_domain_activation_auth_client"
             ],
             "metricSamples": [
               {
@@ -8198,10 +8198,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_domain_activation_auth_client"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_domain_activation_auth_client"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_domain_activation_auth_client"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_domain_activation_auth_client"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8276,7 +8276,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8305,7 +8305,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_canonical_domain_set_unset"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_canonical_domain_set_unset"
             ],
             "metricSamples": [
               {
@@ -8317,10 +8317,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_canonical_domain_set_unset"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_canonical_domain_set_unset"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_canonical_domain_set_unset"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_canonical_domain_set_unset"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8395,7 +8395,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8424,7 +8424,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_custom_domain_auth_callback"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_custom_domain_auth_callback"
             ],
             "metricSamples": [
               {
@@ -8436,10 +8436,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_custom_domain_auth_callback"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_custom_domain_auth_callback"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_custom_domain_auth_callback"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_custom_domain_auth_callback"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8515,7 +8515,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8544,7 +8544,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:tenant_service_clickthrough_policy"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:tenant_service_clickthrough_policy"
             ],
             "metricSamples": [
               {
@@ -8556,10 +8556,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:tenant_service_clickthrough_policy"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:tenant_service_clickthrough_policy"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:tenant_service_clickthrough_policy"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:tenant_service_clickthrough_policy"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8636,7 +8636,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8665,7 +8665,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:environment_registry_bootstrap"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:environment_registry_bootstrap"
             ],
             "metricSamples": [
               {
@@ -8677,10 +8677,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:environment_registry_bootstrap"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:environment_registry_bootstrap"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:environment_registry_bootstrap"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:environment_registry_bootstrap"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8755,7 +8755,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8784,7 +8784,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:provider_environment_classification"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:provider_environment_classification"
             ],
             "metricSamples": [
               {
@@ -8796,10 +8796,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:provider_environment_classification"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:provider_environment_classification"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:provider_environment_classification"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:provider_environment_classification"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8873,7 +8873,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -8902,7 +8902,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:e2e_confidence_ladder_stage_aware"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:e2e_confidence_ladder_stage_aware"
             ],
             "metricSamples": [
               {
@@ -8914,10 +8914,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:e2e_confidence_ladder_stage_aware"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:e2e_confidence_ladder_stage_aware"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:e2e_confidence_ladder_stage_aware"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:e2e_confidence_ladder_stage_aware"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -8991,7 +8991,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -9020,7 +9020,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:openapi_drift_hard_gate"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:openapi_drift_hard_gate"
             ],
             "metricSamples": [
               {
@@ -9031,9 +9031,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:openapi_drift_hard_gate"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:openapi_drift_hard_gate"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:openapi_drift_hard_gate"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:openapi_drift_hard_gate"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -9107,7 +9107,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -9136,7 +9136,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:i18n_runtime_validation"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:i18n_runtime_validation"
             ],
             "metricSamples": [
               {
@@ -9147,9 +9147,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:i18n_runtime_validation"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:i18n_runtime_validation"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:i18n_runtime_validation"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:i18n_runtime_validation"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -9223,7 +9223,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -9252,7 +9252,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:accessibility_a11y_gate"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:accessibility_a11y_gate"
             ],
             "metricSamples": [
               {
@@ -9263,9 +9263,9 @@
                 }
               }
             ],
-            "traceIds": ["trace:l5a-closure-1782313755858-a538b2b0:l5a:accessibility_a11y_gate"],
+            "traceIds": ["trace:l5a-closure-1782328112531-1907e2d5:l5a:accessibility_a11y_gate"],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:accessibility_a11y_gate"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:accessibility_a11y_gate"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],
@@ -9339,7 +9339,7 @@
           },
           "restartOrReconnectEvidence": {
             "status": "verified",
-            "marker": "l5a-closure-1782313755858-a538b2b0"
+            "marker": "l5a-closure-1782328112531-1907e2d5"
           },
           "timeoutEvidence": {
             "status": "verified",
@@ -9368,7 +9368,7 @@
           "observabilityEvidence": {
             "classification": "proof-emitted-telemetry",
             "auditEventIds": [
-              "audit:l5a-closure-1782313755858-a538b2b0:l5a:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
+              "audit:l5a-closure-1782328112531-1907e2d5:l5a:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
             ],
             "metricSamples": [
               {
@@ -9380,10 +9380,10 @@
               }
             ],
             "traceIds": [
-              "trace:l5a-closure-1782313755858-a538b2b0:l5a:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
+              "trace:l5a-closure-1782328112531-1907e2d5:l5a:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
             ],
             "logCorrelationIds": [
-              "log:l5a-closure-1782313755858-a538b2b0:l5a:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
+              "log:l5a-closure-1782328112531-1907e2d5:l5a:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing"
             ],
             "observedSubstrateTelemetry": {
               "auditRecords": [],

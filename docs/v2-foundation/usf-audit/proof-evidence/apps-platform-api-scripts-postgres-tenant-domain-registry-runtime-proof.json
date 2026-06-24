@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
-  "startedAt": "2026-06-24T15:13:41.594Z",
-  "endedAt": "2026-06-24T15:13:41.718Z",
+  "startedAt": "2026-06-24T19:12:58.126Z",
+  "endedAt": "2026-06-24T19:12:58.248Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:41.718Z",
+  "generatedAt": "2026-06-24T19:12:58.248Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -107,10 +107,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:41.594Z",
-  "endTime": "2026-06-24T15:13:41.718Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:41.718Z",
+  "startTime": "2026-06-24T19:12:58.126Z",
+  "endTime": "2026-06-24T19:12:58.248Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:12:58.248Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts": {
@@ -136,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-tenant-domain-registry-runtime-proof.ts"],
-  "evidenceSignature": "7d9ff8c6ead0e2c30316bde4cfd8b39fcab0f2db9f19bc8cbc34f664061c963f"
+  "evidenceSignature": "7c8f3839b069ae27311d32110ccc7cc7010e62fe46ce3c8288b8acdfc5601fc2"
 }

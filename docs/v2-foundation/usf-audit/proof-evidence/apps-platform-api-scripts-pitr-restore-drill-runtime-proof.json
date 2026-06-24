@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:pitr-restore-drill",
-  "startedAt": "2026-06-24T15:13:00.703Z",
-  "endedAt": "2026-06-24T15:13:31.882Z",
+  "startedAt": "2026-06-24T19:12:17.238Z",
+  "endedAt": "2026-06-24T19:12:48.450Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,10 +201,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:31.882Z",
+  "generatedAt": "2026-06-24T19:12:48.450Z",
   "sourceFileRefs": ["apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -229,10 +229,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:00.703Z",
-  "endTime": "2026-06-24T15:13:31.882Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:31.882Z",
+  "startTime": "2026-06-24T19:12:17.238Z",
+  "endTime": "2026-06-24T19:12:48.450Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:12:48.450Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-admin-data-legal-holds": {
@@ -324,5 +324,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/pitr-restore-drill-runtime-proof.ts"],
-  "evidenceSignature": "5461f557ed8d007fe05b0a7fbc498552d9995a1120b47ea77ba32ee988d5c442"
+  "evidenceSignature": "61a2233e3e239b388906c88f5ebe8f79af308ef41bf3fed690befb384855f365"
 }

@@ -6794,6 +6794,93 @@
         "npm run v2:adversarial-usf-audit"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "L6 Foundation Proven journey runtime proof requiring preserved L3/L4/L5 evidence, complete foundation journeys, real provider posture, and observed telemetry",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:l6-foundation-journey",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "L6 prod-shaped/e2e certification proof for real provider auth posture, observed telemetry, operational recovery, and foundation certification",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l6-prod-shaped-certification-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:l6-prod-shaped-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/foundation-readiness-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated L6 Foundation Proven readiness report and strict gate output",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/foundation-readiness-report.json",
+      "protectingTests": [
+        "npm run proof:l6-foundation-journey",
+        "npm run proof:l6-prod-shaped-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/l6-foundation-evidence-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated per-capability L6 foundation evidence report requiring complete journey evidence for all 70 capabilities",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/l6-foundation-evidence-report.json",
+      "protectingTests": [
+        "npm run proof:l6-foundation-journey",
+        "npm run proof:l6-prod-shaped-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/l6-foundation-readiness-roadmap.json",
+      "introducingCommit": "pending",
+      "purpose": "formal L6 Foundation Proven contract and roadmap artefact defining journey, telemetry, provider, governance, lifecycle, and evidence-pack acceptance criteria",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/l6-foundation-readiness-roadmap.json",
+      "protectingTests": [
+        "npm run proof:l6-foundation-journey",
+        "npm run proof:l6-prod-shaped-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-foundation-journey-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for the L6 Foundation Proven journey proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-foundation-journey-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:l6-foundation-journey",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for the L6 prod-shaped/e2e certification proof",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l6-prod-shaped-certification-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:l6-prod-shaped-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -7176,6 +7263,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 721,
+  "additionCount": 728,
   "deletionCount": 54
 }

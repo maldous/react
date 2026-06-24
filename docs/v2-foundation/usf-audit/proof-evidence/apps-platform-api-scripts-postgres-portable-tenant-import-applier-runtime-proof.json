@@ -15,10 +15,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
-  "startedAt": "2026-06-24T15:13:38.098Z",
-  "endedAt": "2026-06-24T15:13:38.646Z",
+  "startedAt": "2026-06-24T19:12:54.713Z",
+  "endedAt": "2026-06-24T19:12:55.261Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,12 +83,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:13:38.646Z",
+  "generatedAt": "2026-06-24T19:12:55.261Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -113,10 +113,10 @@
   "prodProviderReadinessEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T15:13:38.098Z",
-  "endTime": "2026-06-24T15:13:38.646Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:13:38.646Z",
+  "startTime": "2026-06-24T19:12:54.713Z",
+  "endTime": "2026-06-24T19:12:55.261Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:12:55.261Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts": {
@@ -146,5 +146,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-portable-tenant-import-applier-runtime-proof.ts"
   ],
-  "evidenceSignature": "ffb939e5e36f548caea2e71151f1fb4453bcab41eedb4ace3cedd7ac7d8d074c"
+  "evidenceSignature": "e0090cb492d8ddc607277b09da6dcea31ac5740c527893c34b484e94598adacb"
 }

@@ -87,10 +87,10 @@
   "providerMode": "prod-shaped-sandbox",
   "proofLevelClaimed": "L6",
   "commandExecuted": "npm run proof:l6-foundation-journey",
-  "startedAt": "2026-06-24T15:12:48.590Z",
-  "endedAt": "2026-06-24T15:12:48.637Z",
+  "startedAt": "2026-06-24T19:12:05.070Z",
+  "endedAt": "2026-06-24T19:12:05.115Z",
   "exitStatus": 0,
-  "commit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
+  "commit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
   "realImplementationPathExecuted": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -98,7 +98,7 @@
   "realLocalProviderUsed": false,
   "externalSandboxProviderUsed": true,
   "externalSandboxRequestIds": [
-    "e2e:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"
+    "e2e:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"
   ],
   "beforeState": {
     "routeMutations": {
@@ -111,7 +111,7 @@
         "proofFile": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts"
       }
     },
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251",
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824",
     "baseline": "L5 Resilience Proven locked",
     "capabilityCount": 70,
     "previousDistribution": {
@@ -135,7 +135,7 @@
         "proofFile": "apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts"
       }
     },
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251",
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824",
     "foundationJourney": {
       "capabilitiesEvaluated": 70,
       "preservedL5Capabilities": 70,
@@ -187,15 +187,15 @@
   "sideEffectsAsserted": true,
   "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
-  "auditEventIds": ["audit:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
-  "traceIds": ["trace:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
+  "auditEventIds": ["audit:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
+  "traceIds": ["trace:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
   "metricSamples": [
     {
       "name": "usf_l6_foundation_journey_capabilities_total",
       "value": 70
     }
   ],
-  "logCorrelationIds": ["log:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
+  "logCorrelationIds": ["log:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
   "cleanupResult": {
     "status": "completed",
     "rollbackGate": "validated",
@@ -204,10 +204,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T15:12:48.637Z",
+  "generatedAt": "2026-06-24T19:12:05.115Z",
   "sourceFileRefs": ["apps/platform-api/scripts/l6-foundation-journey-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782313857458-689362",
+  "collectorRunId": "proof-run-1782328214098-3246346",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -389,69 +389,69 @@
   },
   "restartEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "restartOrReconnectEvidence": null,
   "timeoutEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "retryEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "concurrencyEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "degradedModeEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "recoveryEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "backupRestoreEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "statePreservationEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "behaviouralContinuityEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "observabilityEvidence": {
     "classification": "observed-substrate-telemetry-required-for-l6",
     "observedSubstrateTelemetry": {
-      "auditRecords": ["audit:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
+      "auditRecords": ["audit:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
       "metrics": [
         {
           "name": "usf_l6_foundation_journey_capabilities_total",
           "value": 70
         }
       ],
-      "traces": ["trace:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
-      "logs": ["log:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"]
+      "traces": ["trace:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
+      "logs": ["log:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"]
     },
     "proofEmittedTelemetry": {
-      "auditEventIds": ["audit:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"],
+      "auditEventIds": ["audit:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"],
       "metricSamples": [
         {
           "name": "usf_l6_foundation_journey_proof_total",
           "value": 1
         }
       ],
-      "traceIds": ["trace:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"],
-      "logCorrelationIds": ["log:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"]
+      "traceIds": ["trace:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"],
+      "logCorrelationIds": ["log:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"]
     }
   },
   "failureInjectionEvidence": {
     "status": "preserved-from-L5",
-    "marker": "l6-foundation-journey-1782313968627-c1c4d251"
+    "marker": "l6-foundation-journey-1782328325105-0ef2b824"
   },
   "foundationEvidence": {
     "conclusion": "FOUNDATION_JOURNEY_PROVEN",
@@ -2337,52 +2337,52 @@
     "observedTelemetryEvidence": {
       "classification": "observed-substrate-telemetry-required-for-l6",
       "observedSubstrateTelemetry": {
-        "auditRecords": ["audit:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
+        "auditRecords": ["audit:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
         "metrics": [
           {
             "name": "usf_l6_foundation_journey_capabilities_total",
             "value": 70
           }
         ],
-        "traces": ["trace:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
-        "logs": ["log:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"]
+        "traces": ["trace:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
+        "logs": ["log:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"]
       },
       "proofEmittedTelemetry": {
-        "auditEventIds": ["audit:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"],
+        "auditEventIds": ["audit:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"],
         "metricSamples": [
           {
             "name": "usf_l6_foundation_journey_proof_total",
             "value": 1
           }
         ],
-        "traceIds": ["trace:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"],
-        "logCorrelationIds": ["log:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"]
+        "traceIds": ["trace:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"],
+        "logCorrelationIds": ["log:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"]
       }
     }
   },
   "observedTelemetryEvidence": {
     "classification": "observed-substrate-telemetry-required-for-l6",
     "observedSubstrateTelemetry": {
-      "auditRecords": ["audit:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
+      "auditRecords": ["audit:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
       "metrics": [
         {
           "name": "usf_l6_foundation_journey_capabilities_total",
           "value": 70
         }
       ],
-      "traces": ["trace:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
-      "logs": ["log:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"]
+      "traces": ["trace:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
+      "logs": ["log:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"]
     },
     "proofEmittedTelemetry": {
-      "auditEventIds": ["audit:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"],
+      "auditEventIds": ["audit:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"],
       "metricSamples": [
         {
           "name": "usf_l6_foundation_journey_proof_total",
           "value": 1
         }
       ],
-      "traceIds": ["trace:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"],
-      "logCorrelationIds": ["log:l6-foundation-journey-1782313968627-c1c4d251:proof-emitted"]
+      "traceIds": ["trace:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"],
+      "logCorrelationIds": ["log:l6-foundation-journey-1782328325105-0ef2b824:proof-emitted"]
     }
   },
   "prodProviderReadinessEvidence": {
@@ -2398,10 +2398,10 @@
   },
   "environment": "e2e",
   "proofLevelObserved": "L6",
-  "startTime": "2026-06-24T15:12:48.590Z",
-  "endTime": "2026-06-24T15:12:48.637Z",
-  "gitCommit": "1b07eecf181ba76bf621e67a56f63e3000f4d7d7",
-  "executionTimestamp": "2026-06-24T15:12:48.637Z",
+  "startTime": "2026-06-24T19:12:05.070Z",
+  "endTime": "2026-06-24T19:12:05.115Z",
+  "gitCommit": "32195d249bbd297cb579b5116f7aac7dbc0431b9",
+  "executionTimestamp": "2026-06-24T19:12:05.115Z",
   "stateDiff": {
     "routeMutations": {
       "L6_FOUNDATION_TENANT_JOURNEY": {
@@ -2443,13 +2443,13 @@
     }
   },
   "failureMode": "exercised",
-  "auditIds": ["audit:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
+  "auditIds": ["audit:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
   "metricEvidence": [
     {
       "name": "usf_l6_foundation_journey_capabilities_total",
       "value": 70
     }
   ],
-  "logEvidence": ["log:l6-foundation-journey-1782313968627-c1c4d251:foundation-journey"],
-  "evidenceSignature": "0c6a3aaddd0735d2360ce835b61de3f15e9e8d5b4d9ce12a4bb981926bce30c2"
+  "logEvidence": ["log:l6-foundation-journey-1782328325105-0ef2b824:foundation-journey"],
+  "evidenceSignature": "23f4495de9e3ea4178d96f5bee79574e70231fc03ccd68821ae522d9cbc5e1a0"
 }
