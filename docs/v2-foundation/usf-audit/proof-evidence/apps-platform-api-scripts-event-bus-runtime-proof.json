@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:event-bus",
-  "startedAt": "2026-06-23T22:58:39.881Z",
-  "endedAt": "2026-06-23T22:58:40.018Z",
+  "startedAt": "2026-06-24T00:16:32.703Z",
+  "endedAt": "2026-06-24T00:16:32.839Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,19 +141,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:58:40.018Z",
+  "generatedAt": "2026-06-24T00:16:32.839Z",
   "sourceFileRefs": ["apps/platform-api/scripts/event-bus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:58:39.881Z",
-  "endTime": "2026-06-23T22:58:40.018Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T22:58:40.018Z",
+  "startTime": "2026-06-24T00:16:32.703Z",
+  "endTime": "2026-06-24T00:16:32.839Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:16:32.839Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-events": {
@@ -212,5 +212,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/event-bus-runtime-proof.ts"],
-  "evidenceSignature": "929eb9eb67ca34984036b6b5cb2566db465acf4bd5e036e1f393726b965933ab"
+  "evidenceSignature": "d44b9fda0a510aa088dbfe03ed82482c546eb635b17c99a6dc1405051d2fdf97"
 }

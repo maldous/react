@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/compliance-report-runtime-proof.ts",
-  "startedAt": "2026-06-23T22:58:32.853Z",
-  "endedAt": "2026-06-23T22:58:32.890Z",
+  "startedAt": "2026-06-24T00:16:25.439Z",
+  "endedAt": "2026-06-24T00:16:25.473Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/compliance-report-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,19 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:58:32.890Z",
+  "generatedAt": "2026-06-24T00:16:25.473Z",
   "sourceFileRefs": ["apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:58:32.853Z",
-  "endTime": "2026-06-23T22:58:32.890Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T22:58:32.890Z",
+  "startTime": "2026-06-24T00:16:25.439Z",
+  "endTime": "2026-06-24T00:16:25.473Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:16:25.473Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/compliance-report-runtime-proof.ts": {
@@ -113,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/compliance-report-runtime-proof.ts"],
-  "evidenceSignature": "3689d5df33dc6a654e0d8e972361f10489d6eddc3ff34079d8da91aa95665845"
+  "evidenceSignature": "19299b314538d5dec79c20fc782934909d5b010684d3d07ea1aee631cb47915a"
 }

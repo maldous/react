@@ -6595,6 +6595,33 @@
       "decisionRefs": ["ADR-ACT-0292"]
     },
     {
+      "path": "docs/v2-foundation/usf-audit/substrate-proof-readiness-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated L4 Substrate Proven readiness report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/substrate-proof-readiness-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/l4-substrate-evidence-report.json",
+      "introducingCommit": "pending",
+      "purpose": "generated per-capability L4 Substrate Proven evidence report",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/l4-substrate-evidence-report.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/resilience-proof-roadmap.json",
+      "introducingCommit": "pending",
+      "purpose": "generated L5 Resilience Proven planning roadmap after L4 closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/resilience-proof-roadmap.json",
+      "protectingTests": ["npm run v2:adversarial-usf-audit"],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
       "path": "docs/v2-foundation/usf-audit/v2-readiness-summary.json",
       "introducingCommit": "pending",
       "purpose": "generated concise USF V2 readiness summary after L3/formal closure",
@@ -7029,6 +7056,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 708,
+  "additionCount": 711,
   "deletionCount": 54
 }

@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T23:01:01.901Z",
-  "endedAt": "2026-06-23T23:01:02.139Z",
+  "startedAt": "2026-06-24T00:18:55.056Z",
+  "endedAt": "2026-06-24T00:18:55.288Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -65,21 +65,21 @@
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:02.139Z",
+  "generatedAt": "2026-06-24T00:18:55.288Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-observability-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L2",
-  "startTime": "2026-06-23T23:01:01.901Z",
-  "endTime": "2026-06-23T23:01:02.139Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:02.139Z",
+  "startTime": "2026-06-24T00:18:55.056Z",
+  "endTime": "2026-06-24T00:18:55.288Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:18:55.288Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
   "auditIds": [
@@ -106,5 +106,5 @@
     "log:postgres-observability-repository:runtime-proof",
     "log:observability-signals:runtime-proof"
   ],
-  "evidenceSignature": "3d24538ab3f3bd6499d738986797ee392501afbe293b279247b688d133d1060b"
+  "evidenceSignature": "9d23783d6e4275d81d998c3bb5755d8f72adffdd813fa8a4c14ac08de6127389"
 }

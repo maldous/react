@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:entitlements-postgres",
-  "startedAt": "2026-06-23T22:58:37.568Z",
-  "endedAt": "2026-06-23T22:58:37.794Z",
+  "startedAt": "2026-06-24T00:16:30.277Z",
+  "endedAt": "2026-06-24T00:16:30.548Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -141,19 +141,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:58:37.794Z",
+  "generatedAt": "2026-06-24T00:16:30.548Z",
   "sourceFileRefs": ["apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:58:37.568Z",
-  "endTime": "2026-06-23T22:58:37.794Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T22:58:37.794Z",
+  "startTime": "2026-06-24T00:16:30.277Z",
+  "endTime": "2026-06-24T00:16:30.548Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:16:30.548Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-entitlements": {
@@ -212,5 +212,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/entitlements-postgres-runtime-proof.ts"],
-  "evidenceSignature": "7f9905afdf52776141fac743e8f47647572085a369e60f2e82a9a155052b6d50"
+  "evidenceSignature": "5768192c3875707fd927652e357b31990b45e41822e8ade79cd4ab06e1a2ecf5"
 }

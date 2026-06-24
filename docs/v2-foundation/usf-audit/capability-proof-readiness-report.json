@@ -1,7 +1,7 @@
 {
   "artefact": "capability-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-23T23:02:37.153Z",
+  "generatedAt": "2026-06-24T00:21:34.135Z",
   "status": "PASS",
   "modelConsistencyStatus": "PASS",
   "migrationReadinessStatus": "PASS",
@@ -27,7 +27,7 @@
     {
       "capability": "Tenant identity (record + FQDN)",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -54,8 +54,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -63,12 +63,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "User identity + tenant membership",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -93,8 +97,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -102,12 +106,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "End-user profile + preferences self-service",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -134,8 +142,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -143,12 +151,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "API keys / personal access tokens",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -175,8 +187,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -184,12 +196,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant groups",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -215,8 +231,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -224,12 +240,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Sub-organisations",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -255,8 +275,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -264,12 +284,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "RBAC (roles + permissions)",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -294,8 +318,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -303,12 +327,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -334,8 +362,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -343,12 +371,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Delegated administration roles",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -374,8 +406,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -383,12 +415,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Entitlement engine",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -417,8 +453,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -426,12 +462,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Support-mode / break-glass access",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -457,8 +497,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -466,12 +506,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Audit of privileged access",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -496,8 +540,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -505,12 +549,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Platform login + session",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -536,8 +584,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -545,12 +593,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "IdP brokering + OIDC provider management",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -577,8 +629,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -586,12 +638,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Claim mapping + group/role mapping",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -617,8 +673,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -626,12 +682,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "MFA + session policy + lockout",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -657,8 +717,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -666,12 +726,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Configuration registry + history",
       "category": "configuration",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -696,8 +760,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -705,12 +769,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Branding + theming",
       "category": "configuration",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -736,8 +804,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -745,12 +813,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
       "category": "configuration",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -779,8 +851,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -788,12 +860,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Write-only secret settings",
       "category": "configuration",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -818,8 +894,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -827,12 +903,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Product catalog, plans, prices",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -859,8 +939,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -868,12 +948,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -900,8 +984,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -909,12 +993,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Usage metering + meter event ingestion",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -941,8 +1029,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -950,12 +1038,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Quota enforcement",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -982,8 +1074,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -991,12 +1083,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Relational storage + migrations + RLS",
       "category": "data-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1021,8 +1117,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1030,12 +1126,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Backup + restore",
       "category": "data-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1061,8 +1161,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1070,12 +1170,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1102,8 +1206,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1111,12 +1215,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
       "category": "data-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1142,8 +1250,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1151,12 +1259,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant data import / export",
       "category": "data-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1182,8 +1294,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1191,12 +1303,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Search + indexing (product search)",
       "category": "search",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1224,8 +1340,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1233,12 +1349,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
       "category": "storage",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1264,8 +1384,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1273,12 +1393,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
       "category": "events-workflow",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1305,8 +1429,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1314,12 +1438,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
       "category": "events-workflow",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1345,8 +1473,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1354,12 +1482,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
       "category": "events-workflow",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1386,8 +1518,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1395,12 +1527,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Notification delivery + preferences + channels",
       "category": "events-workflow",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1430,8 +1566,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1439,12 +1575,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Background workers / job runner",
       "category": "compute-runtime",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1470,8 +1610,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1479,12 +1619,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Runtime secrets management",
       "category": "compute-runtime",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1512,8 +1656,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1521,12 +1665,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
       "category": "observability-ops",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1552,8 +1700,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1561,12 +1709,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Metrics + traces",
       "category": "observability-ops",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1593,8 +1745,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1602,12 +1754,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Observability — built-in alerting + incidents",
       "category": "observability-ops",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1636,8 +1792,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1645,12 +1801,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Internal service catalog + readiness",
       "category": "observability-ops",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1677,8 +1837,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1686,12 +1846,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Code quality + secret + dependency scanning",
       "category": "security-governance",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1716,8 +1880,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1725,12 +1889,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1755,8 +1923,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1764,12 +1932,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant isolation proof",
       "category": "security-governance",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1795,8 +1967,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1804,12 +1976,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Webhooks (developer-facing)",
       "category": "developer-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1836,8 +2012,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1845,12 +2021,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
       "category": "developer-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1876,8 +2056,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1885,12 +2065,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Rate limiting (API)",
       "category": "developer-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1918,8 +2102,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1927,12 +2111,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
       "category": "support-admin",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1958,8 +2146,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -1967,12 +2155,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Support tickets, customer health, announcements",
       "category": "support-admin",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1997,8 +2189,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2006,12 +2198,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Universal Service Foundation scope + principles",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2036,8 +2232,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2045,12 +2241,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Build-versus-compose decision framework",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2075,8 +2275,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2084,12 +2284,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Service catalog + provider integration model",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2118,8 +2322,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2127,12 +2331,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Environment-specific vs shared service model",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2157,8 +2365,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2166,12 +2374,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Provider configuration plane",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2198,8 +2410,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2207,12 +2419,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Composed provider readiness spine",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2238,8 +2454,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2247,12 +2463,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "History read-model (read-only projection)",
       "category": "data-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2278,8 +2498,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2287,12 +2507,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2318,8 +2542,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2327,12 +2551,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "OIDC test connection + callback display",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2358,8 +2586,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2367,12 +2595,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant host identity resolution",
       "category": "identity-access",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2399,8 +2631,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2408,12 +2640,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant domain activation (auth-client)",
       "category": "configuration",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2439,8 +2675,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2448,12 +2684,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant canonical domain set/unset",
       "category": "configuration",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2479,8 +2719,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2488,12 +2728,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant custom-domain auth callback",
       "category": "authentication",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2519,8 +2763,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2528,12 +2772,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Tenant service clickthrough policy",
       "category": "observability-ops",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2560,8 +2808,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2569,12 +2817,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Environment registry + bootstrap",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2602,8 +2854,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2611,12 +2863,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Provider environment classification",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2642,8 +2898,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2651,12 +2907,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2681,8 +2941,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2690,12 +2950,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "OpenAPI drift hard gate",
       "category": "developer-platform",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2720,8 +2984,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2729,12 +2993,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "i18n runtime + validation",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2759,8 +3027,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2768,12 +3036,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Accessibility (a11y) gate",
       "category": "foundation",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2798,8 +3070,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2807,12 +3079,16 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "category": "observability-ops",
-      "currentClosureTarget": "L3 Behaviour Proven",
+      "currentClosureTarget": "L5 Resilience Planning",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2837,8 +3113,8 @@
       "advancementBlockers": [
         {
           "targetLevel": "L5",
-          "blockedBy": "L4",
-          "message": "L5 blocked by missing L4"
+          "blockedBy": "resilience-evidence",
+          "message": "L5 blocked by missing resilience evidence"
         },
         {
           "targetLevel": "L6",
@@ -2846,7 +3122,11 @@
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": ["foundation-L6-blocked-until-L5", "foundation-not-yet-proven"]
+      "futureBlockedLevels": [
+        "resilience-L5-evidence-missing",
+        "foundation-L6-blocked-until-L5",
+        "foundation-not-yet-proven"
+      ]
     }
   ]
 }

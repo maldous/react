@@ -26,10 +26,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-storage-objects",
-  "startedAt": "2026-06-23T23:01:23.004Z",
-  "endedAt": "2026-06-23T23:01:23.642Z",
+  "startedAt": "2026-06-24T00:19:16.365Z",
+  "endedAt": "2026-06-24T00:19:17.001Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -221,19 +221,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:23.642Z",
+  "generatedAt": "2026-06-24T00:19:17.001Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:01:23.004Z",
-  "endTime": "2026-06-23T23:01:23.642Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:23.642Z",
+  "startTime": "2026-06-24T00:19:16.365Z",
+  "endTime": "2026-06-24T00:19:17.001Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:19:17.001Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-storage-objects-objectkey": {
@@ -336,5 +336,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-storage-objects-runtime-proof.ts"],
-  "evidenceSignature": "d0858f104b71f44817f9cb330de638962231de4565b73acca5aa52f44f845425"
+  "evidenceSignature": "d464a8a041f5e917b49188a5dae8222c2dffdc01c3aa5a32c2d1298cb6cdb3a1"
 }

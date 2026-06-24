@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domains-routing",
-  "startedAt": "2026-06-23T23:01:21.509Z",
-  "endedAt": "2026-06-23T23:01:21.714Z",
+  "startedAt": "2026-06-24T00:19:14.926Z",
+  "endedAt": "2026-06-24T00:19:15.124Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -201,19 +201,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:21.714Z",
+  "generatedAt": "2026-06-24T00:19:15.124Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:01:21.509Z",
-  "endTime": "2026-06-23T23:01:21.714Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:21.714Z",
+  "startTime": "2026-06-24T00:19:14.926Z",
+  "endTime": "2026-06-24T00:19:15.124Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:19:15.124Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-domains-domain": {
@@ -305,5 +305,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-domains-routing-runtime-proof.ts"],
-  "evidenceSignature": "f5820e7dd2c8937f0133e619722956fdad6742d823954f9bdfed2cc2980b1063"
+  "evidenceSignature": "4ba9adbd60b5d03ed653dc51e2622ee9ea792d0b9773f23895795fc5a420db4d"
 }

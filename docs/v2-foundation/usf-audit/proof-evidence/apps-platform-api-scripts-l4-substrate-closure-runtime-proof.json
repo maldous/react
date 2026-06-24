@@ -110,7 +110,7 @@
   "capabilityId": "capability:l4-substrate-closure",
   "providerId": "compose-local-substrate-closure",
   "routeIds": [],
-  "workflowIds": ["temporal:default:usf-l4-usf-l4-1782255526646-0be45708"],
+  "workflowIds": ["temporal:default:usf-l4-usf-l4-1782260199437-df4b22bf"],
   "eventIds": [
     "keycloak:platform-test:discovery",
     "observability:prometheus:ready",
@@ -120,19 +120,19 @@
     "windmill:health-and-auth-boundary"
   ],
   "storageIds": [
-    "postgres:usf_l4_substrate_probe:usf-l4-1782255526646-0be45708",
-    "redis:usf:l4:usf-l4-1782255526646-0be45708",
-    "minio:usf-l4-usf-l4-1782255526646-0be45708/state/probe.txt",
-    "openbao:sys/health:usf-l4-1782255526646-0be45708"
+    "postgres:usf_l4_substrate_probe:usf-l4-1782260199437-df4b22bf",
+    "redis:usf:l4:usf-l4-1782260199437-df4b22bf",
+    "minio:usf-l4-usf-l4-1782260199437-df4b22bf/state/probe.txt",
+    "openbao:sys/health:usf-l4-1782260199437-df4b22bf"
   ],
   "environmentMode": "test",
   "providerMode": "compose-local",
   "proofLevelClaimed": "L4",
   "commandExecuted": "npm run proof:l4-substrate-closure",
-  "startedAt": "2026-06-23T22:58:46.362Z",
-  "endedAt": "2026-06-23T23:00:12.719Z",
+  "startedAt": "2026-06-24T00:16:39.133Z",
+  "endedAt": "2026-06-24T00:18:05.770Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -147,7 +147,7 @@
         "proofFile": "apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"
       }
     },
-    "marker": "usf-l4-1782255526646-0be45708",
+    "marker": "usf-l4-1782260199437-df4b22bf",
     "capabilityCount": 70,
     "roadmapCapabilityCount": 70,
     "substrateCounts": {
@@ -304,7 +304,7 @@
       "tempo": 200
     },
     "temporal": {
-      "workflowId": "usf-l4-usf-l4-1782255526646-0be45708",
+      "workflowId": "usf-l4-usf-l4-1782260199437-df4b22bf",
       "status": "RUNNING"
     },
     "windmill": {
@@ -349,11 +349,11 @@
       "updatedValue": "before->after"
     },
     "redis": {
-      "set": "usf:l4:usf-l4-1782255526646-0be45708",
+      "set": "usf:l4:usf-l4-1782260199437-df4b22bf",
       "value": "before->after"
     },
     "minio": {
-      "bucketCreated": "usf-l4-usf-l4-1782255526646-0be45708",
+      "bucketCreated": "usf-l4-usf-l4-1782260199437-df4b22bf",
       "objectWritten": "state/probe.txt"
     },
     "keycloak": {
@@ -395,18 +395,18 @@
   "tenantBoundaryAsserted": true,
   "securityBoundaryAsserted": true,
   "auditEventIds": [
-    "audit:usf-l4-1782255526646-0be45708:postgres-state-diff",
-    "audit:usf-l4-1782255526646-0be45708:redis-state-diff",
-    "audit:usf-l4-1782255526646-0be45708:minio-state-diff",
-    "audit:usf-l4-1782255526646-0be45708:openbao-health",
-    "audit:usf-l4-1782255526646-0be45708:workflow-provider-boundary"
+    "audit:usf-l4-1782260199437-df4b22bf:postgres-state-diff",
+    "audit:usf-l4-1782260199437-df4b22bf:redis-state-diff",
+    "audit:usf-l4-1782260199437-df4b22bf:minio-state-diff",
+    "audit:usf-l4-1782260199437-df4b22bf:openbao-health",
+    "audit:usf-l4-1782260199437-df4b22bf:workflow-provider-boundary"
   ],
   "traceIds": [
-    "trace:usf-l4-1782255526646-0be45708:postgres",
-    "trace:usf-l4-1782255526646-0be45708:redis",
-    "trace:usf-l4-1782255526646-0be45708:minio",
-    "trace:usf-l4-1782255526646-0be45708:temporal",
-    "trace:usf-l4-1782255526646-0be45708:observability"
+    "trace:usf-l4-1782260199437-df4b22bf:postgres",
+    "trace:usf-l4-1782260199437-df4b22bf:redis",
+    "trace:usf-l4-1782260199437-df4b22bf:minio",
+    "trace:usf-l4-1782260199437-df4b22bf:temporal",
+    "trace:usf-l4-1782260199437-df4b22bf:observability"
   ],
   "metricSamples": [
     {
@@ -430,7 +430,7 @@
       "value": 77
     }
   ],
-  "logCorrelationIds": ["log:usf-l4-1782255526646-0be45708:l4-substrate-closure"],
+  "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4-substrate-closure"],
   "cleanupResult": {
     "status": "completed",
     "postgres": "probe-row-deleted",
@@ -440,10 +440,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:00:12.719Z",
+  "generatedAt": "2026-06-24T00:18:05.770Z",
   "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [
@@ -517,14 +517,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:tenant_identity_record_fqdn_"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_identity_record_fqdn_"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -534,8 +534,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:tenant_identity_record_fqdn_"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_identity_record_fqdn_"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_identity_record_fqdn_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_identity_record_fqdn_"],
       "result": "PASS"
     },
     {
@@ -590,14 +590,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:user_identity_tenant_membership"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:user_identity_tenant_membership"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -607,8 +607,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:user_identity_tenant_membership"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:user_identity_tenant_membership"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:user_identity_tenant_membership"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:user_identity_tenant_membership"],
       "result": "PASS"
     },
     {
@@ -684,7 +684,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -692,7 +692,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:end_user_profile_preferences_self_service"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:end_user_profile_preferences_self_service"
       ],
       "metricEvidence": [
         {
@@ -704,10 +704,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:end_user_profile_preferences_self_service"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:end_user_profile_preferences_self_service"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:end_user_profile_preferences_self_service"
+        "log:usf-l4-1782260199437-df4b22bf:l4:end_user_profile_preferences_self_service"
       ],
       "result": "PASS"
     },
@@ -784,14 +784,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:api_keys_personal_access_tokens"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:api_keys_personal_access_tokens"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -801,8 +801,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:api_keys_personal_access_tokens"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:api_keys_personal_access_tokens"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:api_keys_personal_access_tokens"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:api_keys_personal_access_tokens"],
       "result": "PASS"
     },
     {
@@ -865,14 +865,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:tenant_groups"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_groups"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -882,8 +882,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:tenant_groups"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_groups"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_groups"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_groups"],
       "result": "PASS"
     },
     {
@@ -949,14 +949,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:sub_organisations"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:sub_organisations"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -966,8 +966,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:sub_organisations"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:sub_organisations"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:sub_organisations"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:sub_organisations"],
       "result": "PASS"
     },
     {
@@ -1022,14 +1022,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:rbac_roles_permissions_"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:rbac_roles_permissions_"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1039,8 +1039,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:rbac_roles_permissions_"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:rbac_roles_permissions_"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:rbac_roles_permissions_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:rbac_roles_permissions_"],
       "result": "PASS"
     },
     {
@@ -1106,14 +1106,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:abac_policy_decision_point"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:abac_policy_decision_point"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1123,8 +1123,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:abac_policy_decision_point"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:abac_policy_decision_point"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:abac_policy_decision_point"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:abac_policy_decision_point"],
       "result": "PASS"
     },
     {
@@ -1187,14 +1187,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:delegated_administration_roles"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:delegated_administration_roles"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1204,8 +1204,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:delegated_administration_roles"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:delegated_administration_roles"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:delegated_administration_roles"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:delegated_administration_roles"],
       "result": "PASS"
     },
     {
@@ -1295,14 +1295,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 5
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:entitlement_engine"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:entitlement_engine"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1312,8 +1312,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:entitlement_engine"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:entitlement_engine"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:entitlement_engine"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:entitlement_engine"],
       "result": "PASS"
     },
     {
@@ -1376,14 +1376,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:support_mode_break_glass_access"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:support_mode_break_glass_access"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1393,8 +1393,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:support_mode_break_glass_access"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:support_mode_break_glass_access"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:support_mode_break_glass_access"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:support_mode_break_glass_access"],
       "result": "PASS"
     },
     {
@@ -1449,14 +1449,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:audit_of_privileged_access"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:audit_of_privileged_access"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1466,8 +1466,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:audit_of_privileged_access"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:audit_of_privileged_access"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:audit_of_privileged_access"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:audit_of_privileged_access"],
       "result": "PASS"
     },
     {
@@ -1530,14 +1530,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:platform_login_session"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:platform_login_session"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1547,8 +1547,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:platform_login_session"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:platform_login_session"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:platform_login_session"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:platform_login_session"],
       "result": "PASS"
     },
     {
@@ -1621,7 +1621,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -1629,7 +1629,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:idp_brokering_oidc_provider_management"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:idp_brokering_oidc_provider_management"
       ],
       "metricEvidence": [
         {
@@ -1641,10 +1641,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:idp_brokering_oidc_provider_management"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:idp_brokering_oidc_provider_management"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:idp_brokering_oidc_provider_management"
+        "log:usf-l4-1782260199437-df4b22bf:l4:idp_brokering_oidc_provider_management"
       ],
       "result": "PASS"
     },
@@ -1711,14 +1711,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:claim_mapping_group_role_mapping"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:claim_mapping_group_role_mapping"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1728,8 +1728,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:claim_mapping_group_role_mapping"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:claim_mapping_group_role_mapping"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:claim_mapping_group_role_mapping"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:claim_mapping_group_role_mapping"],
       "result": "PASS"
     },
     {
@@ -1792,14 +1792,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:mfa_session_policy_lockout"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:mfa_session_policy_lockout"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1809,8 +1809,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:mfa_session_policy_lockout"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:mfa_session_policy_lockout"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:mfa_session_policy_lockout"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:mfa_session_policy_lockout"],
       "result": "PASS"
     },
     {
@@ -1865,14 +1865,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:configuration_registry_history"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:configuration_registry_history"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1882,8 +1882,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:configuration_registry_history"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:configuration_registry_history"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:configuration_registry_history"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:configuration_registry_history"],
       "result": "PASS"
     },
     {
@@ -1946,14 +1946,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:branding_theming"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:branding_theming"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -1963,8 +1963,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:branding_theming"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:branding_theming"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:branding_theming"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:branding_theming"],
       "result": "PASS"
     },
     {
@@ -2051,7 +2051,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -2059,7 +2059,7 @@
         "commandCount": 5
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:custom_domains_dns_ownership_tls_canonical"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:custom_domains_dns_ownership_tls_canonical"
       ],
       "metricEvidence": [
         {
@@ -2071,10 +2071,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:custom_domains_dns_ownership_tls_canonical"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:custom_domains_dns_ownership_tls_canonical"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:custom_domains_dns_ownership_tls_canonical"
+        "log:usf-l4-1782260199437-df4b22bf:l4:custom_domains_dns_ownership_tls_canonical"
       ],
       "result": "PASS"
     },
@@ -2130,14 +2130,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:write_only_secret_settings"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:write_only_secret_settings"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -2147,8 +2147,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:write_only_secret_settings"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:write_only_secret_settings"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:write_only_secret_settings"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:write_only_secret_settings"],
       "result": "PASS"
     },
     {
@@ -2211,14 +2211,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:product_catalog_plans_prices"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:product_catalog_plans_prices"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -2228,8 +2228,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:product_catalog_plans_prices"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:product_catalog_plans_prices"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:product_catalog_plans_prices"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:product_catalog_plans_prices"],
       "result": "PASS"
     },
     {
@@ -2305,7 +2305,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -2313,7 +2313,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:subscriptions_invoices_payment_methods_dunning"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:subscriptions_invoices_payment_methods_dunning"
       ],
       "metricEvidence": [
         {
@@ -2325,10 +2325,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:subscriptions_invoices_payment_methods_dunning"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:subscriptions_invoices_payment_methods_dunning"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:subscriptions_invoices_payment_methods_dunning"
+        "log:usf-l4-1782260199437-df4b22bf:l4:subscriptions_invoices_payment_methods_dunning"
       ],
       "result": "PASS"
     },
@@ -2402,7 +2402,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -2410,7 +2410,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:usage_metering_meter_event_ingestion"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:usage_metering_meter_event_ingestion"
       ],
       "metricEvidence": [
         {
@@ -2422,9 +2422,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:usage_metering_meter_event_ingestion"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:usage_metering_meter_event_ingestion"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:usage_metering_meter_event_ingestion"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:usage_metering_meter_event_ingestion"],
       "result": "PASS"
     },
     {
@@ -2497,14 +2497,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:quota_enforcement"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:quota_enforcement"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -2514,8 +2514,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:quota_enforcement"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:quota_enforcement"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:quota_enforcement"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:quota_enforcement"],
       "result": "PASS"
     },
     {
@@ -2570,14 +2570,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:relational_storage_migrations_rls"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:relational_storage_migrations_rls"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -2587,8 +2587,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:relational_storage_migrations_rls"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:relational_storage_migrations_rls"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:relational_storage_migrations_rls"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:relational_storage_migrations_rls"],
       "result": "PASS"
     },
     {
@@ -2651,14 +2651,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:backup_restore"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:backup_restore"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -2668,8 +2668,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:backup_restore"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:backup_restore"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:backup_restore"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:backup_restore"],
       "result": "PASS"
     },
     {
@@ -2742,7 +2742,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -2750,7 +2750,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:pitr_retention_legal_hold_data_residency"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:pitr_retention_legal_hold_data_residency"
       ],
       "metricEvidence": [
         {
@@ -2762,10 +2762,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:pitr_retention_legal_hold_data_residency"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:pitr_retention_legal_hold_data_residency"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:pitr_retention_legal_hold_data_residency"
+        "log:usf-l4-1782260199437-df4b22bf:l4:pitr_retention_legal_hold_data_residency"
       ],
       "result": "PASS"
     },
@@ -2832,7 +2832,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -2840,7 +2840,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
       ],
       "metricEvidence": [
         {
@@ -2852,10 +2852,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+        "log:usf-l4-1782260199437-df4b22bf:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
       ],
       "result": "PASS"
     },
@@ -2919,14 +2919,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:tenant_data_import_export"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_data_import_export"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -2936,8 +2936,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:tenant_data_import_export"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_data_import_export"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_data_import_export"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_data_import_export"],
       "result": "PASS"
     },
     {
@@ -3017,14 +3017,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 4
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:search_indexing_product_search_"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:search_indexing_product_search_"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -3034,8 +3034,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:search_indexing_product_search_"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:search_indexing_product_search_"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:search_indexing_product_search_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:search_indexing_product_search_"],
       "result": "PASS"
     },
     {
@@ -3104,7 +3104,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3112,7 +3112,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:object_storage_tenant_prefixes_signed_urls"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:object_storage_tenant_prefixes_signed_urls"
       ],
       "metricEvidence": [
         {
@@ -3124,10 +3124,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:object_storage_tenant_prefixes_signed_urls"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:object_storage_tenant_prefixes_signed_urls"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:object_storage_tenant_prefixes_signed_urls"
+        "log:usf-l4-1782260199437-df4b22bf:l4:object_storage_tenant_prefixes_signed_urls"
       ],
       "result": "PASS"
     },
@@ -3201,7 +3201,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3209,7 +3209,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:event_bus_durable_queues_dlq_redrive"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:event_bus_durable_queues_dlq_redrive"
       ],
       "metricEvidence": [
         {
@@ -3221,9 +3221,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:event_bus_durable_queues_dlq_redrive"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:event_bus_durable_queues_dlq_redrive"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:event_bus_durable_queues_dlq_redrive"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:event_bus_durable_queues_dlq_redrive"],
       "result": "PASS"
     },
     {
@@ -3289,7 +3289,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3297,7 +3297,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:workflow_engine_scheduled_jobs_approvals"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:workflow_engine_scheduled_jobs_approvals"
       ],
       "metricEvidence": [
         {
@@ -3309,10 +3309,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:workflow_engine_scheduled_jobs_approvals"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:workflow_engine_scheduled_jobs_approvals"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:workflow_engine_scheduled_jobs_approvals"
+        "log:usf-l4-1782260199437-df4b22bf:l4:workflow_engine_scheduled_jobs_approvals"
       ],
       "result": "PASS"
     },
@@ -3386,7 +3386,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3394,7 +3394,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:scheduled_jobs_built_in_on_the_event_substrate_"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:scheduled_jobs_built_in_on_the_event_substrate_"
       ],
       "metricEvidence": [
         {
@@ -3406,10 +3406,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:scheduled_jobs_built_in_on_the_event_substrate_"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:scheduled_jobs_built_in_on_the_event_substrate_"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:scheduled_jobs_built_in_on_the_event_substrate_"
+        "log:usf-l4-1782260199437-df4b22bf:l4:scheduled_jobs_built_in_on_the_event_substrate_"
       ],
       "result": "PASS"
     },
@@ -3504,7 +3504,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3512,7 +3512,7 @@
         "commandCount": 6
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:notification_delivery_preferences_channels"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:notification_delivery_preferences_channels"
       ],
       "metricEvidence": [
         {
@@ -3524,10 +3524,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:notification_delivery_preferences_channels"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:notification_delivery_preferences_channels"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:notification_delivery_preferences_channels"
+        "log:usf-l4-1782260199437-df4b22bf:l4:notification_delivery_preferences_channels"
       ],
       "result": "PASS"
     },
@@ -3591,14 +3591,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:background_workers_job_runner"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:background_workers_job_runner"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -3608,8 +3608,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:background_workers_job_runner"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:background_workers_job_runner"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:background_workers_job_runner"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:background_workers_job_runner"],
       "result": "PASS"
     },
     {
@@ -3689,14 +3689,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 4
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:runtime_secrets_management"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:runtime_secrets_management"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -3706,8 +3706,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:runtime_secrets_management"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:runtime_secrets_management"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:runtime_secrets_management"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:runtime_secrets_management"],
       "result": "PASS"
     },
     {
@@ -3773,7 +3773,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3781,7 +3781,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:logs_aggregation_tenant_scoped_search_"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:logs_aggregation_tenant_scoped_search_"
       ],
       "metricEvidence": [
         {
@@ -3793,10 +3793,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:logs_aggregation_tenant_scoped_search_"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:logs_aggregation_tenant_scoped_search_"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:logs_aggregation_tenant_scoped_search_"
+        "log:usf-l4-1782260199437-df4b22bf:l4:logs_aggregation_tenant_scoped_search_"
       ],
       "result": "PASS"
     },
@@ -3870,14 +3870,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:metrics_traces"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:metrics_traces"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -3887,8 +3887,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:metrics_traces"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:metrics_traces"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:metrics_traces"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:metrics_traces"],
       "result": "PASS"
     },
     {
@@ -3975,7 +3975,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -3983,7 +3983,7 @@
         "commandCount": 5
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:observability_built_in_alerting_incidents"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:observability_built_in_alerting_incidents"
       ],
       "metricEvidence": [
         {
@@ -3995,10 +3995,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:observability_built_in_alerting_incidents"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:observability_built_in_alerting_incidents"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:observability_built_in_alerting_incidents"
+        "log:usf-l4-1782260199437-df4b22bf:l4:observability_built_in_alerting_incidents"
       ],
       "result": "PASS"
     },
@@ -4072,7 +4072,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4080,7 +4080,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:internal_service_catalog_readiness"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:internal_service_catalog_readiness"
       ],
       "metricEvidence": [
         {
@@ -4092,9 +4092,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:internal_service_catalog_readiness"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:internal_service_catalog_readiness"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:internal_service_catalog_readiness"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:internal_service_catalog_readiness"],
       "result": "PASS"
     },
     {
@@ -4149,7 +4149,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4157,7 +4157,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:code_quality_secret_dependency_scanning"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:code_quality_secret_dependency_scanning"
       ],
       "metricEvidence": [
         {
@@ -4169,10 +4169,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:code_quality_secret_dependency_scanning"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:code_quality_secret_dependency_scanning"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:code_quality_secret_dependency_scanning"
+        "log:usf-l4-1782260199437-df4b22bf:l4:code_quality_secret_dependency_scanning"
       ],
       "result": "PASS"
     },
@@ -4228,7 +4228,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4236,7 +4236,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:compliance_reports_access_reviews_evidence_packs"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:compliance_reports_access_reviews_evidence_packs"
       ],
       "metricEvidence": [
         {
@@ -4248,10 +4248,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:compliance_reports_access_reviews_evidence_packs"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:compliance_reports_access_reviews_evidence_packs"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:compliance_reports_access_reviews_evidence_packs"
+        "log:usf-l4-1782260199437-df4b22bf:l4:compliance_reports_access_reviews_evidence_packs"
       ],
       "result": "PASS"
     },
@@ -4318,14 +4318,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:tenant_isolation_proof"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_isolation_proof"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -4335,8 +4335,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:tenant_isolation_proof"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_isolation_proof"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_isolation_proof"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_isolation_proof"],
       "result": "PASS"
     },
     {
@@ -4409,14 +4409,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:webhooks_developer_facing_"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:webhooks_developer_facing_"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -4426,8 +4426,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:webhooks_developer_facing_"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:webhooks_developer_facing_"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:webhooks_developer_facing_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:webhooks_developer_facing_"],
       "result": "PASS"
     },
     {
@@ -4490,7 +4490,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4498,7 +4498,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:api_docs_developer_portal_sdks_rate_limits"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:api_docs_developer_portal_sdks_rate_limits"
       ],
       "metricEvidence": [
         {
@@ -4510,10 +4510,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:api_docs_developer_portal_sdks_rate_limits"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:api_docs_developer_portal_sdks_rate_limits"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:api_docs_developer_portal_sdks_rate_limits"
+        "log:usf-l4-1782260199437-df4b22bf:l4:api_docs_developer_portal_sdks_rate_limits"
       ],
       "result": "PASS"
     },
@@ -4597,14 +4597,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 4
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:rate_limiting_api_"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:rate_limiting_api_"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -4614,8 +4614,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:rate_limiting_api_"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:rate_limiting_api_"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:rate_limiting_api_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:rate_limiting_api_"],
       "result": "PASS"
     },
     {
@@ -4678,7 +4678,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4686,7 +4686,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:tenant_lifecycle_provision_suspend_delete_export"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_lifecycle_provision_suspend_delete_export"
       ],
       "metricEvidence": [
         {
@@ -4698,10 +4698,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:tenant_lifecycle_provision_suspend_delete_export"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:tenant_lifecycle_provision_suspend_delete_export"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:tenant_lifecycle_provision_suspend_delete_export"
+        "log:usf-l4-1782260199437-df4b22bf:l4:tenant_lifecycle_provision_suspend_delete_export"
       ],
       "result": "PASS"
     },
@@ -4757,7 +4757,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4765,7 +4765,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:support_tickets_customer_health_announcements"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:support_tickets_customer_health_announcements"
       ],
       "metricEvidence": [
         {
@@ -4777,10 +4777,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:support_tickets_customer_health_announcements"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:support_tickets_customer_health_announcements"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:support_tickets_customer_health_announcements"
+        "log:usf-l4-1782260199437-df4b22bf:l4:support_tickets_customer_health_announcements"
       ],
       "result": "PASS"
     },
@@ -4836,7 +4836,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4844,7 +4844,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:universal_service_foundation_scope_principles"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:universal_service_foundation_scope_principles"
       ],
       "metricEvidence": [
         {
@@ -4856,10 +4856,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:universal_service_foundation_scope_principles"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:universal_service_foundation_scope_principles"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:universal_service_foundation_scope_principles"
+        "log:usf-l4-1782260199437-df4b22bf:l4:universal_service_foundation_scope_principles"
       ],
       "result": "PASS"
     },
@@ -4915,7 +4915,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -4923,7 +4923,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:build_versus_compose_decision_framework"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:build_versus_compose_decision_framework"
       ],
       "metricEvidence": [
         {
@@ -4935,10 +4935,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:build_versus_compose_decision_framework"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:build_versus_compose_decision_framework"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:build_versus_compose_decision_framework"
+        "log:usf-l4-1782260199437-df4b22bf:l4:build_versus_compose_decision_framework"
       ],
       "result": "PASS"
     },
@@ -5026,7 +5026,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5034,7 +5034,7 @@
         "commandCount": 5
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:service_catalog_provider_integration_model"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:service_catalog_provider_integration_model"
       ],
       "metricEvidence": [
         {
@@ -5046,10 +5046,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:service_catalog_provider_integration_model"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:service_catalog_provider_integration_model"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:service_catalog_provider_integration_model"
+        "log:usf-l4-1782260199437-df4b22bf:l4:service_catalog_provider_integration_model"
       ],
       "result": "PASS"
     },
@@ -5105,7 +5105,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5113,7 +5113,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:environment_specific_vs_shared_service_model"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:environment_specific_vs_shared_service_model"
       ],
       "metricEvidence": [
         {
@@ -5125,10 +5125,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:environment_specific_vs_shared_service_model"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:environment_specific_vs_shared_service_model"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:environment_specific_vs_shared_service_model"
+        "log:usf-l4-1782260199437-df4b22bf:l4:environment_specific_vs_shared_service_model"
       ],
       "result": "PASS"
     },
@@ -5202,14 +5202,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:provider_configuration_plane"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:provider_configuration_plane"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -5219,8 +5219,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:provider_configuration_plane"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:provider_configuration_plane"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:provider_configuration_plane"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:provider_configuration_plane"],
       "result": "PASS"
     },
     {
@@ -5286,14 +5286,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:composed_provider_readiness_spine"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:composed_provider_readiness_spine"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -5303,8 +5303,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:composed_provider_readiness_spine"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:composed_provider_readiness_spine"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:composed_provider_readiness_spine"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:composed_provider_readiness_spine"],
       "result": "PASS"
     },
     {
@@ -5364,7 +5364,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5372,7 +5372,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:history_read_model_read_only_projection_"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:history_read_model_read_only_projection_"
       ],
       "metricEvidence": [
         {
@@ -5384,10 +5384,10 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:history_read_model_read_only_projection_"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:history_read_model_read_only_projection_"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:history_read_model_read_only_projection_"
+        "log:usf-l4-1782260199437-df4b22bf:l4:history_read_model_read_only_projection_"
       ],
       "result": "PASS"
     },
@@ -5454,7 +5454,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5462,7 +5462,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:oidc_discovery_issuer_jwks_validation"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:oidc_discovery_issuer_jwks_validation"
       ],
       "metricEvidence": [
         {
@@ -5474,9 +5474,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:oidc_discovery_issuer_jwks_validation"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:oidc_discovery_issuer_jwks_validation"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:oidc_discovery_issuer_jwks_validation"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:oidc_discovery_issuer_jwks_validation"],
       "result": "PASS"
     },
     {
@@ -5542,7 +5542,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5550,7 +5550,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:oidc_test_connection_callback_display"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:oidc_test_connection_callback_display"
       ],
       "metricEvidence": [
         {
@@ -5562,9 +5562,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:oidc_test_connection_callback_display"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:oidc_test_connection_callback_display"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:oidc_test_connection_callback_display"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:oidc_test_connection_callback_display"],
       "result": "PASS"
     },
     {
@@ -5637,14 +5637,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 3
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:tenant_host_identity_resolution"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_host_identity_resolution"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -5654,8 +5654,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:tenant_host_identity_resolution"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_host_identity_resolution"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_host_identity_resolution"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_host_identity_resolution"],
       "result": "PASS"
     },
     {
@@ -5721,7 +5721,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5729,7 +5729,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:tenant_domain_activation_auth_client_"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_domain_activation_auth_client_"
       ],
       "metricEvidence": [
         {
@@ -5741,9 +5741,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:tenant_domain_activation_auth_client_"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:tenant_domain_activation_auth_client_"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_domain_activation_auth_client_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_domain_activation_auth_client_"],
       "result": "PASS"
     },
     {
@@ -5809,14 +5809,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 2
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:tenant_canonical_domain_set_unset"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_canonical_domain_set_unset"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -5826,8 +5826,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:tenant_canonical_domain_set_unset"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_canonical_domain_set_unset"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_canonical_domain_set_unset"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_canonical_domain_set_unset"],
       "result": "PASS"
     },
     {
@@ -5893,7 +5893,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5901,7 +5901,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:tenant_custom_domain_auth_callback"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_custom_domain_auth_callback"
       ],
       "metricEvidence": [
         {
@@ -5913,9 +5913,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:tenant_custom_domain_auth_callback"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:tenant_custom_domain_auth_callback"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_custom_domain_auth_callback"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_custom_domain_auth_callback"],
       "result": "PASS"
     },
     {
@@ -5988,7 +5988,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -5996,7 +5996,7 @@
         "commandCount": 3
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:tenant_service_clickthrough_policy"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_service_clickthrough_policy"
       ],
       "metricEvidence": [
         {
@@ -6008,9 +6008,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:tenant_service_clickthrough_policy"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:tenant_service_clickthrough_policy"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:tenant_service_clickthrough_policy"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_service_clickthrough_policy"],
       "result": "PASS"
     },
     {
@@ -6090,14 +6090,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 4
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:environment_registry_bootstrap"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:environment_registry_bootstrap"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -6107,8 +6107,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:environment_registry_bootstrap"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:environment_registry_bootstrap"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:environment_registry_bootstrap"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:environment_registry_bootstrap"],
       "result": "PASS"
     },
     {
@@ -6177,7 +6177,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -6185,7 +6185,7 @@
         "commandCount": 2
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:provider_environment_classification"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:provider_environment_classification"
       ],
       "metricEvidence": [
         {
@@ -6197,9 +6197,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:provider_environment_classification"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:provider_environment_classification"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:provider_environment_classification"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:provider_environment_classification"],
       "result": "PASS"
     },
     {
@@ -6254,7 +6254,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -6262,7 +6262,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:e2e_confidence_ladder_stage_aware_"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:e2e_confidence_ladder_stage_aware_"
       ],
       "metricEvidence": [
         {
@@ -6274,9 +6274,9 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:e2e_confidence_ladder_stage_aware_"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:e2e_confidence_ladder_stage_aware_"
       ],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:e2e_confidence_ladder_stage_aware_"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:e2e_confidence_ladder_stage_aware_"],
       "result": "PASS"
     },
     {
@@ -6331,14 +6331,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:openapi_drift_hard_gate"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:openapi_drift_hard_gate"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -6348,8 +6348,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:openapi_drift_hard_gate"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:openapi_drift_hard_gate"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:openapi_drift_hard_gate"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:openapi_drift_hard_gate"],
       "result": "PASS"
     },
     {
@@ -6404,14 +6404,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:i18n_runtime_validation"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:i18n_runtime_validation"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -6421,8 +6421,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:i18n_runtime_validation"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:i18n_runtime_validation"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:i18n_runtime_validation"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:i18n_runtime_validation"],
       "result": "PASS"
     },
     {
@@ -6477,14 +6477,14 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
         "composeLocalFailureSemanticsPreserved": true,
         "commandCount": 1
       },
-      "auditEvidence": ["audit:usf-l4-1782255526646-0be45708:l4:accessibility_a11y_gate"],
+      "auditEvidence": ["audit:usf-l4-1782260199437-df4b22bf:l4:accessibility_a11y_gate"],
       "metricEvidence": [
         {
           "name": "usf_l4_capability_l3_replay_passed_total",
@@ -6494,8 +6494,8 @@
           }
         }
       ],
-      "traceEvidence": ["trace:usf-l4-1782255526646-0be45708:l4:accessibility_a11y_gate"],
-      "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4:accessibility_a11y_gate"],
+      "traceEvidence": ["trace:usf-l4-1782260199437-df4b22bf:l4:accessibility_a11y_gate"],
+      "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4:accessibility_a11y_gate"],
       "result": "PASS"
     },
     {
@@ -6550,7 +6550,7 @@
       "sideEffectsEvidence": {
         "composeLocalReplayExecuted": true,
         "certifiedL3SideEffectsReasserted": true,
-        "realSubstrateProbeMarker": "usf-l4-1782255526646-0be45708"
+        "realSubstrateProbeMarker": "usf-l4-1782260199437-df4b22bf"
       },
       "failurePathEvidence": {
         "certifiedL3FailurePathsReplayed": true,
@@ -6558,7 +6558,7 @@
         "commandCount": 1
       },
       "auditEvidence": [
-        "audit:usf-l4-1782255526646-0be45708:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+        "audit:usf-l4-1782260199437-df4b22bf:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
       ],
       "metricEvidence": [
         {
@@ -6570,20 +6570,20 @@
         }
       ],
       "traceEvidence": [
-        "trace:usf-l4-1782255526646-0be45708:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+        "trace:usf-l4-1782260199437-df4b22bf:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
       ],
       "logEvidence": [
-        "log:usf-l4-1782255526646-0be45708:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+        "log:usf-l4-1782260199437-df4b22bf:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
       ],
       "result": "PASS"
     }
   ],
   "environment": "test",
   "proofLevelObserved": "L4",
-  "startTime": "2026-06-23T22:58:46.362Z",
-  "endTime": "2026-06-23T23:00:12.719Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:00:12.719Z",
+  "startTime": "2026-06-24T00:16:39.133Z",
+  "endTime": "2026-06-24T00:18:05.770Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:18:05.770Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts": {
@@ -6607,11 +6607,11 @@
       "updatedValue": "before->after"
     },
     "redis": {
-      "set": "usf:l4:usf-l4-1782255526646-0be45708",
+      "set": "usf:l4:usf-l4-1782260199437-df4b22bf",
       "value": "before->after"
     },
     "minio": {
-      "bucketCreated": "usf-l4-usf-l4-1782255526646-0be45708",
+      "bucketCreated": "usf-l4-usf-l4-1782260199437-df4b22bf",
       "objectWritten": "state/probe.txt"
     },
     "keycloak": {
@@ -6650,11 +6650,11 @@
   },
   "failureMode": "exercised",
   "auditIds": [
-    "audit:usf-l4-1782255526646-0be45708:postgres-state-diff",
-    "audit:usf-l4-1782255526646-0be45708:redis-state-diff",
-    "audit:usf-l4-1782255526646-0be45708:minio-state-diff",
-    "audit:usf-l4-1782255526646-0be45708:openbao-health",
-    "audit:usf-l4-1782255526646-0be45708:workflow-provider-boundary"
+    "audit:usf-l4-1782260199437-df4b22bf:postgres-state-diff",
+    "audit:usf-l4-1782260199437-df4b22bf:redis-state-diff",
+    "audit:usf-l4-1782260199437-df4b22bf:minio-state-diff",
+    "audit:usf-l4-1782260199437-df4b22bf:openbao-health",
+    "audit:usf-l4-1782260199437-df4b22bf:workflow-provider-boundary"
   ],
   "metricEvidence": [
     {
@@ -6678,6 +6678,6 @@
       "value": 77
     }
   ],
-  "logEvidence": ["log:usf-l4-1782255526646-0be45708:l4-substrate-closure"],
-  "evidenceSignature": "48f4995f04c5dca0dfad3ef835b610df5dcc93afc3a10b090f0085af46fe9540"
+  "logEvidence": ["log:usf-l4-1782260199437-df4b22bf:l4-substrate-closure"],
+  "evidenceSignature": "95f11aeb218bf3e4fa0c86efa64d912951d68b289a643865a1d967ca94f78bd9"
 }

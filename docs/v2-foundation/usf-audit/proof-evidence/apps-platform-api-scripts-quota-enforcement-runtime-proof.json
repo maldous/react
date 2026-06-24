@@ -21,10 +21,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:quota-enforcement",
-  "startedAt": "2026-06-23T23:01:08.687Z",
-  "endedAt": "2026-06-23T23:01:08.972Z",
+  "startedAt": "2026-06-24T00:19:01.987Z",
+  "endedAt": "2026-06-24T00:19:02.249Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/quota-enforcement-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -121,19 +121,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:08.972Z",
+  "generatedAt": "2026-06-24T00:19:02.249Z",
   "sourceFileRefs": ["apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:01:08.687Z",
-  "endTime": "2026-06-23T23:01:08.972Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:08.972Z",
+  "startTime": "2026-06-24T00:19:01.987Z",
+  "endTime": "2026-06-24T00:19:02.249Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:19:02.249Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-tenants-tenantid-quotas": {
@@ -181,5 +181,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/quota-enforcement-runtime-proof.ts"],
-  "evidenceSignature": "a3aaf6874d1d9173301aaaf8c104fed891895de0047767d3b53aa644e32cb575"
+  "evidenceSignature": "267714b71f77b7808902ef59e9ca64d38570dd8b4b1589bc77e2105721b929fa"
 }

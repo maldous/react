@@ -22,10 +22,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:metrics-prometheus",
-  "startedAt": "2026-06-23T23:00:14.475Z",
-  "endedAt": "2026-06-23T23:00:14.633Z",
+  "startedAt": "2026-06-24T00:18:07.601Z",
+  "endedAt": "2026-06-24T00:18:07.766Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -143,19 +143,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:00:14.633Z",
+  "generatedAt": "2026-06-24T00:18:07.766Z",
   "sourceFileRefs": ["apps/platform-api/scripts/metrics-prometheus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:00:14.475Z",
-  "endTime": "2026-06-23T23:00:14.633Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:00:14.633Z",
+  "startTime": "2026-06-24T00:18:07.601Z",
+  "endTime": "2026-06-24T00:18:07.766Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:18:07.766Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-admin-monitoring": {
@@ -216,5 +216,5 @@
     }
   ],
   "logEvidence": ["log:metrics-prometheus:runtime-proof"],
-  "evidenceSignature": "1ecbfc1b7b31904f22eec1ec2a7609a2e09eda110127ffeff367e6b8681defc7"
+  "evidenceSignature": "7bb4129c418422aed9efd65230efbe3e5615e6b981216efdf54da8e1f124c6a4"
 }

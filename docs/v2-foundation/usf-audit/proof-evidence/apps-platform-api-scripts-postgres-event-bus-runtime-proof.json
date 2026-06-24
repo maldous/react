@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
-  "startedAt": "2026-06-23T23:00:59.401Z",
-  "endedAt": "2026-06-23T23:01:00.023Z",
+  "startedAt": "2026-06-24T00:18:52.626Z",
+  "endedAt": "2026-06-24T00:18:53.250Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,19 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:00.023Z",
+  "generatedAt": "2026-06-24T00:18:53.250Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:00:59.401Z",
-  "endTime": "2026-06-23T23:01:00.023Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:00.023Z",
+  "startTime": "2026-06-24T00:18:52.626Z",
+  "endTime": "2026-06-24T00:18:53.250Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:18:53.250Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts": {
@@ -113,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-event-bus-runtime-proof.ts"],
-  "evidenceSignature": "bb46b1ca8abb6127d96f2dd5ec0291ba9c95e8c7a7d66eac16b4d80049a16db2"
+  "evidenceSignature": "14f4ae0839d00df439bbabf23b63cb46e624b90512e01aa5ab30c420da81c84f"
 }

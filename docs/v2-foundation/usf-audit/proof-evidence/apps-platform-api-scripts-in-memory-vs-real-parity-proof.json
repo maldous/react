@@ -61,10 +61,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-vs-real-parity",
-  "startedAt": "2026-06-23T22:58:44.850Z",
-  "endedAt": "2026-06-23T22:58:45.171Z",
+  "startedAt": "2026-06-24T00:16:37.631Z",
+  "endedAt": "2026-06-24T00:16:37.949Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": true,
@@ -120,7 +120,7 @@
       "externalAccountId": "acct_tenant-a",
       "organisationId": "tenant-a",
       "currency": "USD",
-      "createdAt": "2026-06-23T22:58:45.101Z"
+      "createdAt": "2026-06-24T00:16:37.878Z"
     },
     "fakeLagoBillingAccount": {
       "externalAccountId": "acct_tenant-a",
@@ -654,19 +654,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T22:58:45.171Z",
+  "generatedAt": "2026-06-24T00:16:37.949Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T22:58:44.850Z",
-  "endTime": "2026-06-23T22:58:45.171Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T22:58:45.171Z",
+  "startTime": "2026-06-24T00:16:37.631Z",
+  "endTime": "2026-06-24T00:16:37.949Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:16:37.949Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-vs-real-parity-proof.ts": {
@@ -960,5 +960,5 @@
     "log:antivirus-parity-rejected",
     "log:antivirus-parity-injected-failure"
   ],
-  "evidenceSignature": "bda84a41a4854d96de3e8cf5ae9ffb1b57d79a4a8d305dacdc216831002df844"
+  "evidenceSignature": "79ff7e0d18d5fa478ca9587959068351ef695284d2f6c262895bb179dd23a3ac"
 }

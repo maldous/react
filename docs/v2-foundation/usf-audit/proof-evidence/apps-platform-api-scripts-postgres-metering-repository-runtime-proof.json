@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
-  "startedAt": "2026-06-23T23:01:00.710Z",
-  "endedAt": "2026-06-23T23:01:00.978Z",
+  "startedAt": "2026-06-24T00:18:53.913Z",
+  "endedAt": "2026-06-24T00:18:54.147Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,19 +79,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:00.978Z",
+  "generatedAt": "2026-06-24T00:18:54.147Z",
   "sourceFileRefs": ["apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:01:00.710Z",
-  "endTime": "2026-06-23T23:01:00.978Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:00.978Z",
+  "startTime": "2026-06-24T00:18:53.913Z",
+  "endTime": "2026-06-24T00:18:54.147Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:18:54.147Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts": {
@@ -117,5 +117,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/postgres-metering-repository-runtime-proof.ts"],
-  "evidenceSignature": "42bfd2bd194bdc157c5529095bc2a0f0fa3f7e5684ab370aeb51c56764d9279c"
+  "evidenceSignature": "86f039de074a857449c196a73b123c7a53ae3ae4edc731e3a45b580967e4932c"
 }

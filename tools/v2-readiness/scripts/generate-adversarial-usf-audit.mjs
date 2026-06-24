@@ -55,6 +55,7 @@ writeJson("behaviour-proof-certification-report.json", proofEvidence.behaviourCe
 writeJson("substrate-proof-roadmap.json", proofEvidence.substrateRoadmap);
 writeJson("substrate-proof-readiness-report.json", proofEvidence.substrateProofReadiness);
 writeJson("l4-substrate-evidence-report.json", proofEvidence.l4SubstrateEvidence);
+writeJson("resilience-proof-roadmap.json", proofEvidence.resilienceRoadmap);
 writeJson("v2-readiness-summary.json", proofEvidence.v2ReadinessSummary);
 writeJson("capability-proof-readiness-report.json", proofEvidence.capabilityReadiness);
 writeJson("in-memory-provider-parity-report.json", proofEvidence.inMemoryParity);

@@ -1,7 +1,7 @@
 {
   "artefact": "v2-readiness-summary",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T23:02:37.165Z",
+  "generatedAt": "2026-06-24T00:21:34.150Z",
   "status": "PASS",
   "answers": {
     "isL3Complete": true,
@@ -11,7 +11,6 @@
     "isSubstrateExpansionUnblocked": true,
     "nextExactMilestone": "Start L5 Resilience Proven planning only after preserving L4 per-capability substrate evidence.",
     "whatRemainsBeforeFoundationProven": [
-      "Implement and pass L4 Substrate Proven proofs for 0 BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.",
       "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
       "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle."
     ]
@@ -32,6 +31,14 @@
     "substrateProofReadinessStatus": "PASS",
     "readinessConsistencyStatus": "PASS",
     "readinessConsistencyGaps": [],
+    "resilienceRoadmapStatus": "PASS",
+    "resilienceRoadmapCapabilityCount": 70,
+    "recommendedFirstL5Target": {
+      "capability": "Tenant identity (record + FQDN)",
+      "substrates": ["Postgres"],
+      "proposedL5ProofCommand": "npm run proof:l5-tenant-identity-record-fqdn-resilience",
+      "rationale": "Highest-risk, lowest-order substrate target for beginning resilience proof work."
+    },
     "l0DiscoveryStatus": "PASS",
     "l0RuntimeNodes": 70,
     "l0RuntimeNodesMissingInMemoryImplementation": 0,

@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-23T23:01:18.122Z",
-  "endedAt": "2026-06-23T23:01:18.904Z",
+  "startedAt": "2026-06-24T00:19:11.559Z",
+  "endedAt": "2026-06-24T00:19:12.339Z",
   "exitStatus": 0,
-  "commit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
+  "commit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
   "realImplementationPathExecuted": "apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,19 +75,19 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-23T23:01:18.904Z",
+  "generatedAt": "2026-06-24T00:19:12.339Z",
   "sourceFileRefs": ["apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782255504099-325829",
+  "collectorRunId": "proof-run-1782260176397-913822",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-23T23:01:18.122Z",
-  "endTime": "2026-06-23T23:01:18.904Z",
-  "gitCommit": "c8a9494f4adad81bfb6030b1c2fbef63c12da7cf",
-  "executionTimestamp": "2026-06-23T23:01:18.904Z",
+  "startTime": "2026-06-24T00:19:11.559Z",
+  "endTime": "2026-06-24T00:19:12.339Z",
+  "gitCommit": "cc4a0cd5f1855ffc77a3c18df4330ddd66abb661",
+  "executionTimestamp": "2026-06-24T00:19:12.339Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts": {
@@ -113,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/smtp-email-adapter-runtime-proof.ts"],
-  "evidenceSignature": "e70787615e435db43b46b94804a77d760c28cdd67eb67a64beb1059577b602a3"
+  "evidenceSignature": "8fd74751a1de618bb694bba5baa3c0a942773c1c3754d264589043c8ea2c778c"
 }

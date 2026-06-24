@@ -138,6 +138,17 @@ export const ENVIRONMENT_PROOF_MODEL = {
   },
 };
 
+const L5_RESILIENCE_SUBSTRATES = [
+  "Postgres",
+  "Redis",
+  "MinIO",
+  "OpenBao",
+  "Keycloak",
+  "Temporal",
+  "Windmill",
+  "Observability stack",
+];
+
 export const PROOF_EVIDENCE_DIR = "docs/v2-foundation/usf-audit/proof-evidence";
 
 export const LEGACY_ROUTE_PROOF_ALIASES = {
@@ -322,6 +333,12 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     strengthMatrix,
     ladderCompliance,
   });
+  const resilienceRoadmap = buildResilienceProofRoadmap({
+    ctx,
+    capabilityReadiness,
+    l4SubstrateEvidence,
+    substrateRoadmap,
+  });
   const inMemoryParity = buildInMemoryProviderParityReport(ctx, evidence.records);
   const weakProofBacklog = buildWeakProofBacklog(
     requiredProofs,
@@ -357,6 +374,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     behaviourCertification,
     substrateRoadmap,
     substrateProofReadiness,
+    resilienceRoadmap,
     capabilityReadiness,
     inMemoryParity,
     routeSubjectMap,
@@ -370,6 +388,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     formalGapTaxonomy,
     substrateRoadmap,
     substrateProofReadiness,
+    resilienceRoadmap,
     l4SubstrateEvidence,
     strengthMatrix,
     ladderCompliance,
@@ -392,6 +411,7 @@ export function buildProofEvidenceAssurance(ctx, audit) {
     behaviourCertification,
     substrateRoadmap,
     substrateProofReadiness,
+    resilienceRoadmap,
     l4SubstrateEvidence,
     capabilityReadiness,
     inMemoryParity,
@@ -1657,6 +1677,7 @@ function buildL4SubstrateEvidenceReport({
     const substrateProviderMode = uniq(
       validEvaluations.map((evaluation) => evaluation.providerMode)
     );
+    const telemetryEvidence = mergeL4TelemetryEvidence(validEvaluations);
     return {
       capability: capability.capability,
       currentReadiness,
@@ -1686,6 +1707,7 @@ function buildL4SubstrateEvidenceReport({
       observabilityEvidence:
         validEvaluations.length > 0 &&
         validEvaluations.every((evaluation) => evaluation.observabilityEvidence),
+      telemetryEvidence,
       conclusion: l4Pass
         ? "SUBSTRATE_PROVEN"
         : l3Pass
@@ -1701,13 +1723,15 @@ function buildL4SubstrateEvidenceReport({
   const behaviourOnlyCapabilities = perCapabilityL4Evidence.filter(
     (row) => row.l3Pass && !row.l4Pass
   ).length;
-  const gaps = perCapabilityL4Evidence.flatMap((row) =>
+  const rowGaps = perCapabilityL4Evidence.flatMap((row) =>
     row.gaps.map((gap) => ({
       kind: gap,
       capability: row.capability,
       message: l4CapabilityGapMessage(gap, row.capability),
     }))
   );
+  const l4IntegrityGaps = buildL4IntegrityGaps(perCapabilityL4Evidence);
+  const gaps = [...rowGaps, ...l4IntegrityGaps];
   return {
     artefact: "l4-substrate-evidence-report",
     schemaVersion: 1,
@@ -1715,7 +1739,9 @@ function buildL4SubstrateEvidenceReport({
     status:
       capabilities.length > 0 &&
       substrateProvenCapabilities === capabilities.length &&
-      invalidL4ClaimDetails.length === 0
+      invalidL4ClaimDetails.length === 0 &&
+      gaps.length === 0 &&
+      l4IntegrityGaps.length === 0
         ? "PASS"
         : "FAIL",
     totalCapabilities: capabilities.length,
@@ -1723,6 +1749,9 @@ function buildL4SubstrateEvidenceReport({
     behaviourOnlyCapabilities,
     invalidL4Claims: invalidL4ClaimDetails.length,
     invalidL4ClaimDetails,
+    l4GapCount: gaps.length,
+    l4IntegrityGapCount: l4IntegrityGaps.length,
+    l4IntegrityGaps,
     umbrellaL4Proofs,
     observedL4ProofCount: umbrellaL4Proofs.length,
     perCapabilityL4Evidence,
@@ -1761,12 +1790,127 @@ function buildSubstrateProofReadinessReport({
   };
 }
 
+function buildResilienceProofRoadmap({
+  ctx,
+  capabilityReadiness,
+  l4SubstrateEvidence,
+  substrateRoadmap,
+}) {
+  const capabilities = ctx.foundation?.["environment-capability-matrix.json"]?.capabilities || [];
+  const readinessByCapability = new Map(
+    (capabilityReadiness.capabilities || []).map((row) => [row.capability, row])
+  );
+  const l4ByCapability = new Map(
+    (l4SubstrateEvidence.perCapabilityL4Evidence || []).map((row) => [row.capability, row])
+  );
+  const substrateByCapability = new Map(
+    (substrateRoadmap.capabilities || []).map((row) => [row.capability, row])
+  );
+  const rows = capabilities.map((capability) => {
+    const readiness = readinessByCapability.get(capability.capability);
+    const l4Evidence = l4ByCapability.get(capability.capability);
+    const substrate = substrateByCapability.get(capability.capability);
+    const substrates = substrate?.requiredComposeSubstrates || [];
+    const riskLevel = resilienceRiskLevel(substrates, substrate?.migrationEffort);
+    return {
+      capability: capability.capability,
+      currentReadiness: readiness?.readiness || "UNPROVEN",
+      l4EvidenceProofIds: l4Evidence?.l4EvidenceProofIds || [],
+      currentL5Phase: "compose-local resilience planning",
+      stagingRequiredToBeginPlanning: false,
+      resilienceExecutionPhases: [
+        {
+          phase: "compose-local resilience",
+          purpose:
+            "first L5 execution phase using the already-certified local substrate stack and L3/L4 evidence",
+          prerequisite: "SUBSTRATE_PROVEN capability with certified L4 evidence",
+          certificationRole: "planning-and-local-proof-readiness",
+        },
+        {
+          phase: "staging resilience certification",
+          purpose:
+            "final L5 certification phase after compose-local resilience evidence is complete",
+          prerequisite: "compose-local resilience evidence passed",
+          certificationRole: "final-certification",
+        },
+      ],
+      requiredResilienceScenarios: [
+        "restart recovery",
+        "timeout recovery",
+        "retry recovery",
+        "concurrency behaviour",
+        "degraded-mode behaviour",
+        "backup/restore behaviour",
+        "failover/recovery behaviour",
+      ],
+      substrateResilienceScenarios: substrates.map((substrate) =>
+        substrateResilienceScenario(substrate)
+      ),
+      restartScenarios: restartScenariosForSubstrates(substrates),
+      timeoutScenarios: timeoutScenariosForSubstrates(substrates),
+      retryScenarios: retryScenariosForSubstrates(substrates),
+      concurrencyScenarios: concurrencyScenariosForCapability(capability.capability, substrates),
+      degradedModeScenarios: degradedModeScenariosForSubstrates(substrates),
+      backupRestoreScenarios: backupRestoreScenariosForSubstrates(substrates),
+      failoverRecoveryScenarios: failoverRecoveryScenariosForSubstrates(substrates),
+      substratesInvolved: substrates,
+      proposedL5ProofCommand: `npm run proof:l5-${slugify(capability.capability)}-resilience`,
+      expectedEvidence: [
+        "reuse the certified L4 proof evidence IDs as substrate baseline",
+        "run the first resilience phase against compose-local substrates before staging certification",
+        "capture before-state and after-state around each failure injection",
+        "assert recovery state diff and no tenant-boundary regression",
+        "emit or observe audit, metric, trace, and log evidence for each resilience scenario",
+        "prove cleanup and deterministic replay after recovery",
+      ],
+      riskLevel,
+      recommendedImplementationOrder: resilienceImplementationOrder(riskLevel, substrates),
+    };
+  });
+  const gaps = rows.flatMap((row) => {
+    const out = [];
+    if (row.currentReadiness !== "SUBSTRATE_PROVEN") {
+      out.push({
+        kind: "l5-roadmap-capability-not-l4",
+        capability: row.capability,
+        message: `${row.capability} is not SUBSTRATE_PROVEN; L5 planning is blocked`,
+      });
+    }
+    if (row.l4EvidenceProofIds.length === 0) {
+      out.push({
+        kind: "l5-roadmap-missing-l4-evidence",
+        capability: row.capability,
+        message: `${row.capability} has no L4 evidence proof IDs to reuse`,
+      });
+    }
+    return out;
+  });
+  return {
+    artefact: "resilience-proof-roadmap",
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    status: gaps.length === 0 && rows.length === capabilities.length ? "PASS" : "FAIL",
+    roadmapScope: "Planning only. No L5 proof implementation is introduced by this artefact.",
+    l5ProofsImplementedByThisArtifact: false,
+    totalCapabilities: rows.length,
+    substrateProvenCapabilities: rows.filter((row) => row.currentReadiness === "SUBSTRATE_PROVEN")
+      .length,
+    substrateScenarioCatalogue: L5_RESILIENCE_SUBSTRATES.map((substrate) =>
+      substrateResilienceScenario(substrate)
+    ),
+    recommendedFirstTarget: recommendedFirstL5Target(rows),
+    gaps,
+    capabilities: rows,
+  };
+}
+
 function buildV2ReadinessSummary({
   behaviourReadiness,
   capabilityReadiness,
   formalGapTaxonomy,
   substrateRoadmap,
   substrateProofReadiness,
+  resilienceRoadmap,
   l4SubstrateEvidence,
   strengthMatrix,
   ladderCompliance,
@@ -1798,6 +1942,7 @@ function buildV2ReadinessSummary({
       l3Complete &&
       formalBlockersClosed &&
       allCapabilitiesSubstrateProven &&
+      resilienceRoadmap.status === "PASS" &&
       formalGapTaxonomy.futureSubstrateExpansionBlocked === false &&
       consistencyGaps.length === 0
         ? "PASS"
@@ -1811,11 +1956,16 @@ function buildV2ReadinessSummary({
       nextExactMilestone: allCapabilitiesSubstrateProven
         ? "Start L5 Resilience Proven planning only after preserving L4 per-capability substrate evidence."
         : "Implement per-capability L4 Substrate Proven proofs from substrate-proof-roadmap.json, reusing certified L3 behavioural contracts unchanged against compose-local real substrates.",
-      whatRemainsBeforeFoundationProven: [
-        `Implement and pass L4 Substrate Proven proofs for ${l4SubstrateEvidence.behaviourOnlyCapabilities} BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.`,
-        "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
-        "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
-      ],
+      whatRemainsBeforeFoundationProven: allCapabilitiesSubstrateProven
+        ? [
+            "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
+            "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
+          ]
+        : [
+            `Implement and pass L4 Substrate Proven proofs for ${l4SubstrateEvidence.behaviourOnlyCapabilities} BEHAVIOUR_PROVEN capabilities still missing per-capability substrate evidence.`,
+            "Implement and pass L5 resilience proofs for restart, timeout, retry, concurrency, degraded operation, backup/restore, failover, and operational recovery.",
+            "Evaluate L6 Foundation Proven criteria for tenancy, security, observability, operational recovery, governance, ownership, and lifecycle.",
+          ],
     },
     evidence: {
       behaviourReadinessStatus: behaviourReadiness.status,
@@ -1833,6 +1983,9 @@ function buildV2ReadinessSummary({
       substrateProofReadinessStatus: substrateProofReadiness.status,
       readinessConsistencyStatus: consistencyGaps.length === 0 ? "PASS" : "FAIL",
       readinessConsistencyGaps: consistencyGaps,
+      resilienceRoadmapStatus: resilienceRoadmap.status,
+      resilienceRoadmapCapabilityCount: resilienceRoadmap.totalCapabilities,
+      recommendedFirstL5Target: resilienceRoadmap.recommendedFirstTarget,
       l0DiscoveryStatus: l0DiscoveryReadiness.status,
       l0RuntimeNodes: l0DiscoveryReadiness.runtimeNodes,
       l0RuntimeNodesMissingInMemoryImplementation:
@@ -2026,7 +2179,12 @@ export function buildCapabilityProofReadinessReport(
     return {
       capability: capability.capability,
       category: capability.category,
-      currentClosureTarget: "L3 Behaviour Proven",
+      currentClosureTarget: capabilityCurrentClosureTarget({
+        behaviourComplete,
+        substrateProven,
+        resilienceProven,
+        foundationProven,
+      }),
       l0DiscoveryProven: l0Proven,
       l0BlockingIssues: l0Node?.gaps || ["missing-l0-discovery-record"],
       highestDiscoveryLevelAchieved: l0Proven ? "L0" : "NONE",
@@ -2951,6 +3109,7 @@ function evaluateCapabilityL4Evidence(capability, record) {
       valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.failurePathEvidence),
     observabilityEvidence:
       valid && entryEvaluations.every((entryEvaluation) => entryEvaluation.observabilityEvidence),
+    telemetryEvidence: mergeL4EntryTelemetry(entryEvaluations),
   };
 }
 
@@ -3022,7 +3181,76 @@ function evaluateL4Entry(record, entry) {
       isMeaningfulEvidence(auditEvidence) &&
       isMeaningfulEvidence(metricEvidence) &&
       (isMeaningfulEvidence(traceEvidence) || isMeaningfulEvidence(logEvidence)),
+    telemetryEvidence: {
+      proofEmittedTelemetry: {
+        auditEventIds: evidenceArray(auditEvidence),
+        metricSamples: evidenceArray(metricEvidence),
+        traceIds: evidenceArray(traceEvidence),
+        logCorrelationIds: evidenceArray(logEvidence),
+      },
+      observedSubstrateTelemetry: {
+        auditRecords: entry.observedAuditRecords || [],
+        metrics: entry.observedMetrics || [],
+        traces: entry.observedTraces || [],
+        logs: entry.observedLogs || [],
+      },
+    },
   };
+}
+
+function mergeL4EntryTelemetry(entryEvaluations) {
+  const proofEmittedTelemetry = {
+    auditEventIds: [],
+    metricSamples: [],
+    traceIds: [],
+    logCorrelationIds: [],
+  };
+  const observedSubstrateTelemetry = {
+    auditRecords: [],
+    metrics: [],
+    traces: [],
+    logs: [],
+  };
+  for (const entry of entryEvaluations) {
+    proofEmittedTelemetry.auditEventIds.push(
+      ...(entry.telemetryEvidence?.proofEmittedTelemetry?.auditEventIds || [])
+    );
+    proofEmittedTelemetry.metricSamples.push(
+      ...(entry.telemetryEvidence?.proofEmittedTelemetry?.metricSamples || [])
+    );
+    proofEmittedTelemetry.traceIds.push(
+      ...(entry.telemetryEvidence?.proofEmittedTelemetry?.traceIds || [])
+    );
+    proofEmittedTelemetry.logCorrelationIds.push(
+      ...(entry.telemetryEvidence?.proofEmittedTelemetry?.logCorrelationIds || [])
+    );
+    observedSubstrateTelemetry.auditRecords.push(
+      ...(entry.telemetryEvidence?.observedSubstrateTelemetry?.auditRecords || [])
+    );
+    observedSubstrateTelemetry.metrics.push(
+      ...(entry.telemetryEvidence?.observedSubstrateTelemetry?.metrics || [])
+    );
+    observedSubstrateTelemetry.traces.push(
+      ...(entry.telemetryEvidence?.observedSubstrateTelemetry?.traces || [])
+    );
+    observedSubstrateTelemetry.logs.push(
+      ...(entry.telemetryEvidence?.observedSubstrateTelemetry?.logs || [])
+    );
+  }
+  return {
+    proofEmittedTelemetry: {
+      auditEventIds: uniq(proofEmittedTelemetry.auditEventIds),
+      metricSamples: proofEmittedTelemetry.metricSamples,
+      traceIds: uniq(proofEmittedTelemetry.traceIds),
+      logCorrelationIds: uniq(proofEmittedTelemetry.logCorrelationIds),
+    },
+    observedSubstrateTelemetry,
+  };
+}
+
+function evidenceArray(value) {
+  if (!isMeaningfulEvidence(value)) return [];
+  return Array.isArray(value) ? value : [value];
 }
 
 function directCapabilityRecordMatch(capability, record) {
@@ -3130,7 +3358,372 @@ function buildReadinessConsistencyGaps({
       message: `proof-ladder-compliance observed L4 count ${ladderObservedL4Count} disagrees with proof-strength-matrix observed L4 count ${strengthL4Count}`,
     });
   }
+  for (const row of capabilityReadiness.capabilities || []) {
+    if (row.readiness === "SUBSTRATE_PROVEN" && row.highestSubstrateLevelAchieved !== "L4") {
+      gaps.push({
+        kind: "substrate-proven-without-l4",
+        capability: row.capability,
+        message: `${row.capability} is SUBSTRATE_PROVEN but highestSubstrateLevelAchieved is ${row.highestSubstrateLevelAchieved}`,
+      });
+    }
+    if (
+      row.highestSubstrateLevelAchieved === "L4" &&
+      row.currentClosureTarget === "L3 Behaviour Proven"
+    ) {
+      gaps.push({
+        kind: "post-l4-stale-closure-target",
+        capability: row.capability,
+        message: `${row.capability} is L4 but currentClosureTarget still points to L3`,
+      });
+    }
+    const staleL5Blocker = (row.advancementBlockers || []).some(
+      (blocker) =>
+        blocker.targetLevel === "L5" &&
+        blocker.blockedBy === "L4" &&
+        row.highestSubstrateLevelAchieved === "L4"
+    );
+    if (staleL5Blocker) {
+      gaps.push({
+        kind: "post-l4-stale-l5-blocker",
+        capability: row.capability,
+        message: `${row.capability} is L4 but L5 is reported as blocked by missing L4`,
+      });
+    }
+  }
+  if (
+    capabilityL4Count === capabilityReadiness.capabilityCount &&
+    l4EvidenceCount !== capabilityReadiness.capabilityCount
+  ) {
+    gaps.push({
+      kind: "post-l4-l4-count-substrate-count-disagreement",
+      message: `L4=${capabilityL4Count} but substrateProvenCapabilityCount=${l4EvidenceCount}`,
+    });
+  }
+  if ((l4SubstrateEvidence.invalidL4Claims || 0) > 0) {
+    gaps.push({
+      kind: "post-l4-invalid-l4-claims",
+      message: `invalidL4Claims=${l4SubstrateEvidence.invalidL4Claims}`,
+    });
+  }
+  if (
+    (l4SubstrateEvidence.perCapabilityL4Evidence || []).length !==
+    l4SubstrateEvidence.totalCapabilities
+  ) {
+    gaps.push({
+      kind: "post-l4-missing-per-capability-l4-evidence",
+      message: `perCapabilityL4Evidence has ${(l4SubstrateEvidence.perCapabilityL4Evidence || []).length} entries for ${l4SubstrateEvidence.totalCapabilities} capabilities`,
+    });
+  }
   return gaps;
+}
+
+function buildL4IntegrityGaps(rows) {
+  const requiredBooleanFields = [
+    "realImplementationPathExecuted",
+    "composeLocalEvidence",
+    "stateDiffEvidence",
+    "sideEffectsEvidence",
+    "failurePathEvidence",
+    "observabilityEvidence",
+  ];
+  const gaps = [];
+  for (const row of rows) {
+    if (!isNonEmptyString(row.capability)) {
+      gaps.push({
+        kind: "l4-integrity-missing-capability-name",
+        capability: row.capability || "unknown",
+        message: "L4 evidence row is missing explicit capability name",
+      });
+    }
+    if (!Array.isArray(row.l4EvidenceProofIds) || row.l4EvidenceProofIds.length === 0) {
+      gaps.push({
+        kind: "l4-integrity-missing-proof-ids",
+        capability: row.capability,
+        message: `${row.capability} has no l4EvidenceProofIds`,
+      });
+    }
+    if (!(row.substrateProviderMode || []).includes("compose-local")) {
+      gaps.push({
+        kind: "l4-integrity-missing-compose-local",
+        capability: row.capability,
+        message: `${row.capability} does not include compose-local substrate provider mode`,
+      });
+    }
+    for (const field of requiredBooleanFields) {
+      if (row[field] !== true) {
+        gaps.push({
+          kind: `l4-integrity-${field}`,
+          capability: row.capability,
+          message: `${row.capability} must have ${field}=true`,
+        });
+      }
+    }
+    if ((row.gaps || []).length > 0) {
+      gaps.push({
+        kind: "l4-integrity-row-has-gaps",
+        capability: row.capability,
+        message: `${row.capability} has L4 row gaps`,
+      });
+    }
+  }
+  return gaps;
+}
+
+function mergeL4TelemetryEvidence(evaluations) {
+  const generated = {
+    auditEventIds: [],
+    metricSamples: [],
+    traceIds: [],
+    logCorrelationIds: [],
+  };
+  const observed = {
+    auditRecords: [],
+    metrics: [],
+    traces: [],
+    logs: [],
+  };
+  for (const evaluation of evaluations) {
+    const telemetry = evaluation.telemetryEvidence || {};
+    generated.auditEventIds.push(...(telemetry.proofEmittedTelemetry?.auditEventIds || []));
+    generated.metricSamples.push(...(telemetry.proofEmittedTelemetry?.metricSamples || []));
+    generated.traceIds.push(...(telemetry.proofEmittedTelemetry?.traceIds || []));
+    generated.logCorrelationIds.push(...(telemetry.proofEmittedTelemetry?.logCorrelationIds || []));
+    observed.auditRecords.push(...(telemetry.observedSubstrateTelemetry?.auditRecords || []));
+    observed.metrics.push(...(telemetry.observedSubstrateTelemetry?.metrics || []));
+    observed.traces.push(...(telemetry.observedSubstrateTelemetry?.traces || []));
+    observed.logs.push(...(telemetry.observedSubstrateTelemetry?.logs || []));
+  }
+  return {
+    classification: "proof-emitted-telemetry",
+    note: "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+    proofEmittedTelemetry: {
+      auditEventIds: uniq(generated.auditEventIds),
+      metricSamples: generated.metricSamples,
+      traceIds: uniq(generated.traceIds),
+      logCorrelationIds: uniq(generated.logCorrelationIds),
+    },
+    observedSubstrateTelemetry: observed,
+  };
+}
+
+function restartScenariosForSubstrates(substrates) {
+  return substrates.map((substrate) => substrateResilienceScenario(substrate).restartScenario);
+}
+
+function timeoutScenariosForSubstrates(substrates) {
+  return substrates.map((substrate) => substrateResilienceScenario(substrate).timeoutScenario);
+}
+
+function retryScenariosForSubstrates(substrates) {
+  return substrates.map((substrate) => substrateResilienceScenario(substrate).retryScenario);
+}
+
+function concurrencyScenariosForCapability(capability, substrates) {
+  return [
+    `${capability} concurrent requests preserve tenant isolation and idempotency`,
+    ...substrates.map((substrate) => substrateResilienceScenario(substrate).concurrencyScenario),
+  ];
+}
+
+function degradedModeScenariosForSubstrates(substrates) {
+  return substrates.map(
+    (substrate) => substrateResilienceScenario(substrate).degradedOperationScenario
+  );
+}
+
+function backupRestoreScenariosForSubstrates(substrates) {
+  return substrates.map(
+    (substrate) => substrateResilienceScenario(substrate).backupRestoreScenario
+  );
+}
+
+function failoverRecoveryScenariosForSubstrates(substrates) {
+  return substrates.map((substrate) => substrateResilienceScenario(substrate).failoverScenario);
+}
+
+function substrateResilienceScenario(substrate) {
+  const text = String(substrate || "");
+  const lower = text.toLowerCase();
+  if (lower.includes("postgres")) {
+    return {
+      substrate: text,
+      restartScenario: "Postgres restart preserves committed tenant rows and replayed L3 behaviour",
+      timeoutScenario:
+        "Postgres query timeout returns typed failure without partial state mutation",
+      retryScenario:
+        "Postgres transient connection loss retries idempotent operations without duplicate rows",
+      concurrencyScenario:
+        "Postgres concurrent mutations preserve RLS/tenant isolation and state diff invariants",
+      degradedOperationScenario:
+        "Postgres unavailable mode reports degraded readiness and blocks unsafe writes",
+      recoveryScenario:
+        "Postgres reconnect restores certified L4 behaviour using existing migrations/schema",
+      backupRestoreScenario:
+        "Postgres backup/restore preserves tenant state, audit rows, and L4 replay contract",
+      failoverScenario: "Postgres failover or reconnection returns to certified L4 baseline",
+    };
+  }
+  if (lower.includes("redis")) {
+    return {
+      substrate: text,
+      restartScenario:
+        "Redis restart preserves or explicitly rebuilds rate-limit/session-derived state",
+      timeoutScenario: "Redis timeout degrades safely without granting extra quota or access",
+      retryScenario: "Redis transient failure retries without double-counting counters",
+      concurrencyScenario: "Redis concurrent increments preserve atomic limit semantics",
+      degradedOperationScenario:
+        "Redis unavailable mode fails closed for rate limiting and exposes degraded readiness",
+      recoveryScenario:
+        "Redis recovery resumes counters consistently with documented TTL semantics",
+      backupRestoreScenario:
+        "Redis volatile state non-applicability is documented or snapshot restore is asserted where configured",
+      failoverScenario: "Redis failover preserves atomic counter semantics after reconnect",
+    };
+  }
+  if (lower.includes("minio") || lower.includes("object") || lower.includes("storage")) {
+    return {
+      substrate: text,
+      restartScenario: "MinIO restart preserves tenant object prefixes and signed-object behaviour",
+      timeoutScenario:
+        "MinIO timeout returns typed storage failure without exposing partial downloads",
+      retryScenario:
+        "MinIO retry completes idempotent object writes without duplicate tenant-visible objects",
+      concurrencyScenario: "MinIO concurrent tenant object operations preserve prefix isolation",
+      degradedOperationScenario:
+        "MinIO unavailable mode blocks unsafe object mutations and reports degraded readiness",
+      recoveryScenario: "MinIO recovery restores object read/write/delete lifecycle behaviour",
+      backupRestoreScenario:
+        "MinIO backup/restore preserves object bytes, metadata, and tenant prefix boundaries",
+      failoverScenario: "MinIO failover/reconnect preserves object lifecycle semantics",
+    };
+  }
+  if (lower.includes("openbao") || lower.includes("secret")) {
+    return {
+      substrate: text,
+      restartScenario:
+        "OpenBao restart preserves secret readability only after valid unseal/health state",
+      timeoutScenario: "OpenBao timeout fails closed for secret reads and writes",
+      retryScenario:
+        "OpenBao transient failure retries do not duplicate secret versions unexpectedly",
+      concurrencyScenario:
+        "OpenBao concurrent secret rotations preserve version and permission semantics",
+      degradedOperationScenario:
+        "OpenBao unavailable mode blocks secret-dependent mutations and reports degraded readiness",
+      recoveryScenario: "OpenBao recovery restores typed secret resolution and audit behaviour",
+      backupRestoreScenario:
+        "OpenBao backup/restore preserves secret metadata and access boundaries",
+      failoverScenario:
+        "OpenBao failover preserves secret access policy and sealed/unsealed safety",
+    };
+  }
+  if (lower.includes("keycloak") || lower.includes("idp") || lower.includes("oidc")) {
+    return {
+      substrate: text,
+      restartScenario:
+        "Keycloak restart preserves realm discovery, issuer, JWKS, and client configuration behaviour",
+      timeoutScenario:
+        "Keycloak timeout triggers static fallback only where explicitly allowed and fails closed otherwise",
+      retryScenario:
+        "Keycloak transient authz failure retries without granting unauthorised access",
+      concurrencyScenario: "Keycloak concurrent auth checks preserve tenant and policy boundaries",
+      degradedOperationScenario:
+        "Keycloak unavailable mode distinguishes degraded fallback from sole-UMA fail-closed routes",
+      recoveryScenario: "Keycloak recovery restores OIDC discovery and policy-decision behaviour",
+      backupRestoreScenario:
+        "Keycloak realm/client backup restore preserves issuer and callback semantics",
+      failoverScenario: "Keycloak failover preserves realm discovery and policy decision behaviour",
+    };
+  }
+  if (lower.includes("temporal") || lower.includes("workflow")) {
+    return {
+      substrate: text,
+      restartScenario: "Temporal restart preserves workflow state and resumes scheduled work",
+      timeoutScenario: "Temporal activity timeout records typed failure and respects retry policy",
+      retryScenario: "Temporal retry resumes workflow without duplicate side effects",
+      concurrencyScenario: "Temporal concurrent workflow starts preserve workflow ID idempotency",
+      degradedOperationScenario:
+        "Temporal unavailable mode reports degraded workflow readiness and queues or blocks work safely",
+      recoveryScenario: "Temporal recovery resumes workflow execution from durable history",
+      backupRestoreScenario:
+        "Temporal persistence backup/restore preserves workflow histories where configured",
+      failoverScenario: "Temporal worker or service failover resumes durable workflow progress",
+    };
+  }
+  if (lower.includes("windmill") || lower.includes("automation")) {
+    return {
+      substrate: text,
+      restartScenario: "Windmill restart preserves job visibility and access-boundary behaviour",
+      timeoutScenario: "Windmill job timeout records failure without orphaned privileged execution",
+      retryScenario: "Windmill retry preserves idempotent automation semantics",
+      concurrencyScenario:
+        "Windmill concurrent job submissions preserve tenant and permission boundaries",
+      degradedOperationScenario:
+        "Windmill unavailable mode blocks automation mutations and reports degraded readiness",
+      recoveryScenario: "Windmill recovery resumes safe job dispatch and preserves audit trail",
+      backupRestoreScenario:
+        "Windmill backup/restore preserves job definitions and access controls where configured",
+      failoverScenario: "Windmill worker failover does not duplicate non-idempotent jobs",
+    };
+  }
+  if (/observability|prometheus|grafana|loki|tempo|metrics|traces|logs/i.test(text)) {
+    return {
+      substrate: text,
+      restartScenario:
+        "Observability stack restart preserves scrape/readiness and log/trace ingestion continuity",
+      timeoutScenario:
+        "Observability timeout does not block core mutations and records degraded telemetry state",
+      retryScenario:
+        "Observability export retries avoid duplicate misleading metric samples where possible",
+      concurrencyScenario:
+        "Observability concurrent telemetry ingestion preserves tenant correlation labels",
+      degradedOperationScenario:
+        "Observability unavailable mode reports degraded visibility without fabricating green health",
+      recoveryScenario:
+        "Observability recovery resumes audit, metric, trace, and log correlation visibility",
+      backupRestoreScenario:
+        "Observability retention/backup preserves incident-relevant telemetry where configured",
+      failoverScenario:
+        "Observability failover preserves alerting and trace/log query continuity where applicable",
+    };
+  }
+  return {
+    substrate: text,
+    restartScenario: `${text} restart preserves certified L4 behaviour`,
+    timeoutScenario: `${text} timeout fails closed or returns typed degraded state`,
+    retryScenario: `${text} transient failure is retried without duplicate side effects`,
+    concurrencyScenario: `${text} concurrent mutation pressure preserves state diff invariants`,
+    degradedOperationScenario: `${text} unavailable mode exposes degraded readiness and blocks unsafe mutations`,
+    recoveryScenario: `${text} recovery returns to certified L4 behaviour`,
+    backupRestoreScenario: `${text} backup/restore applicability is proven or documented as not applicable`,
+    failoverScenario: `${text} failover/recovery returns to certified L4 baseline where applicable`,
+  };
+}
+
+function resilienceRiskLevel(substrates, migrationEffort) {
+  const joined = substrates.join(" ");
+  if (/postgres|minio|openbao|keycloak|temporal|windmill/i.test(joined)) return "high";
+  if (migrationEffort === "large" || substrates.length > 2) return "high";
+  if (migrationEffort === "medium" || /redis|lago|smtp|clamav/i.test(joined)) return "medium";
+  return "low";
+}
+
+function resilienceImplementationOrder(riskLevel, substrates) {
+  const priority = { high: 1, medium: 2, low: 3 };
+  const substrateWeight = substrates.some((substrate) => /postgres/i.test(substrate)) ? 0 : 1;
+  return priority[riskLevel] * 100 + substrateWeight * 10 + substrates.length;
+}
+
+function recommendedFirstL5Target(rows) {
+  const first = [...rows]
+    .filter((row) => row.currentReadiness === "SUBSTRATE_PROVEN")
+    .sort((a, b) => a.recommendedImplementationOrder - b.recommendedImplementationOrder)[0];
+  if (!first) return null;
+  return {
+    capability: first.capability,
+    substrates: first.substratesInvolved,
+    proposedL5ProofCommand: first.proposedL5ProofCommand,
+    rationale: "Highest-risk, lowest-order substrate target for beginning resilience proof work.",
+  };
 }
 
 function proofAliasForScript(scriptPath, packageJsonScripts = {}) {
@@ -3770,9 +4363,23 @@ function capabilityFutureBlockedLevels({
   const blocked = [];
   if (!behaviourComplete) blocked.push("substrate-L4-blocked-until-L3");
   if (!substrateProven) blocked.push("resilience-L5-blocked-until-L4");
+  if (substrateProven && !resilienceProven) blocked.push("resilience-L5-evidence-missing");
   if (!resilienceProven) blocked.push("foundation-L6-blocked-until-L5");
   if (!foundationProven) blocked.push("foundation-not-yet-proven");
   return blocked;
+}
+
+function capabilityCurrentClosureTarget({
+  behaviourComplete,
+  substrateProven,
+  resilienceProven,
+  foundationProven,
+}) {
+  if (!behaviourComplete) return "L3 Behaviour Proven";
+  if (!substrateProven) return "L4 Substrate Proven";
+  if (!resilienceProven) return "L5 Resilience Planning";
+  if (!foundationProven) return "L6 Foundation Proven";
+  return "Foundation Proven";
 }
 
 function capabilityAdvancementBlockers({
@@ -3807,7 +4414,15 @@ function capabilityAdvancementBlockers({
     blockers.push({ targetLevel: "L4", blockedBy: "L3", message: "L4 blocked by missing L3" });
   }
   if (!resilienceProven) {
-    blockers.push({ targetLevel: "L5", blockedBy: "L4", message: "L5 blocked by missing L4" });
+    blockers.push(
+      substrateProven
+        ? {
+            targetLevel: "L5",
+            blockedBy: "resilience-evidence",
+            message: "L5 blocked by missing resilience evidence",
+          }
+        : { targetLevel: "L5", blockedBy: "L4", message: "L5 blocked by missing L4" }
+    );
   }
   if (!foundationProven) {
     blockers.push({ targetLevel: "L6", blockedBy: "L5", message: "L6 blocked by missing L5" });

@@ -1,7 +1,7 @@
 {
   "artefact": "substrate-proof-readiness-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-23T23:02:37.161Z",
+  "generatedAt": "2026-06-24T00:21:34.144Z",
   "status": "PASS",
   "totalCapabilities": 70,
   "substrateProvenCapabilityCount": 70,
@@ -35,6 +35,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_identity_record_fqdn_"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "tenant_identity_record_fqdn_"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_identity_record_fqdn_"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_identity_record_fqdn_"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -59,6 +83,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:user_identity_tenant_membership"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "user_identity_tenant_membership"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:user_identity_tenant_membership"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:user_identity_tenant_membership"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -83,6 +135,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:end_user_profile_preferences_self_service"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "end_user_profile_preferences_self_service"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:end_user_profile_preferences_self_service"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:end_user_profile_preferences_self_service"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -107,6 +189,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:api_keys_personal_access_tokens"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "api_keys_personal_access_tokens"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:api_keys_personal_access_tokens"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:api_keys_personal_access_tokens"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -131,6 +241,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_groups"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_groups"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_groups"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_groups"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -155,6 +289,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:sub_organisations"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "sub_organisations"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:sub_organisations"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:sub_organisations"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -179,6 +337,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:rbac_roles_permissions_"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "rbac_roles_permissions_"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:rbac_roles_permissions_"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:rbac_roles_permissions_"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -203,6 +385,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:abac_policy_decision_point"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "abac_policy_decision_point"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:abac_policy_decision_point"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:abac_policy_decision_point"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -227,6 +433,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:delegated_administration_roles"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "delegated_administration_roles"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:delegated_administration_roles"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:delegated_administration_roles"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -251,6 +485,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:entitlement_engine"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 5,
+              "labels": {
+                "capability": "entitlement_engine"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:entitlement_engine"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:entitlement_engine"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -275,6 +533,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:support_mode_break_glass_access"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "support_mode_break_glass_access"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:support_mode_break_glass_access"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:support_mode_break_glass_access"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -299,6 +585,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:audit_of_privileged_access"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "audit_of_privileged_access"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:audit_of_privileged_access"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:audit_of_privileged_access"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -323,6 +633,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:platform_login_session"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "platform_login_session"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:platform_login_session"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:platform_login_session"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -347,6 +681,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:idp_brokering_oidc_provider_management"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "idp_brokering_oidc_provider_management"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:idp_brokering_oidc_provider_management"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:idp_brokering_oidc_provider_management"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -371,6 +735,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:claim_mapping_group_role_mapping"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "claim_mapping_group_role_mapping"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:claim_mapping_group_role_mapping"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:claim_mapping_group_role_mapping"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -395,6 +787,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:mfa_session_policy_lockout"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "mfa_session_policy_lockout"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:mfa_session_policy_lockout"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:mfa_session_policy_lockout"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -419,6 +835,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:configuration_registry_history"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "configuration_registry_history"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:configuration_registry_history"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:configuration_registry_history"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -443,6 +887,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:branding_theming"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "branding_theming"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:branding_theming"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:branding_theming"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -467,6 +935,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:custom_domains_dns_ownership_tls_canonical"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 5,
+              "labels": {
+                "capability": "custom_domains_dns_ownership_tls_canonical"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:custom_domains_dns_ownership_tls_canonical"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:custom_domains_dns_ownership_tls_canonical"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -491,6 +989,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:write_only_secret_settings"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "write_only_secret_settings"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:write_only_secret_settings"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:write_only_secret_settings"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -515,6 +1037,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:product_catalog_plans_prices"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "product_catalog_plans_prices"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:product_catalog_plans_prices"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:product_catalog_plans_prices"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -539,6 +1085,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:subscriptions_invoices_payment_methods_dunning"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "subscriptions_invoices_payment_methods_dunning"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:subscriptions_invoices_payment_methods_dunning"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:subscriptions_invoices_payment_methods_dunning"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -563,6 +1139,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:usage_metering_meter_event_ingestion"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "usage_metering_meter_event_ingestion"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:usage_metering_meter_event_ingestion"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:usage_metering_meter_event_ingestion"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -587,6 +1193,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:quota_enforcement"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "quota_enforcement"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:quota_enforcement"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:quota_enforcement"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -611,6 +1241,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:relational_storage_migrations_rls"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "relational_storage_migrations_rls"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:relational_storage_migrations_rls"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:relational_storage_migrations_rls"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -635,6 +1293,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:backup_restore"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "backup_restore"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:backup_restore"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:backup_restore"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -659,6 +1341,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:pitr_retention_legal_hold_data_residency"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "pitr_retention_legal_hold_data_residency"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:pitr_retention_legal_hold_data_residency"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:pitr_retention_legal_hold_data_residency"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -683,6 +1395,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:data_governance_catalog_lineage_classification_pii_dsr_gdpr"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -707,6 +1449,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_data_import_export"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_data_import_export"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_data_import_export"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_data_import_export"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -731,6 +1497,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:search_indexing_product_search_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 4,
+              "labels": {
+                "capability": "search_indexing_product_search_"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:search_indexing_product_search_"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:search_indexing_product_search_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -755,6 +1549,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:object_storage_tenant_prefixes_signed_urls"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "object_storage_tenant_prefixes_signed_urls"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:object_storage_tenant_prefixes_signed_urls"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:object_storage_tenant_prefixes_signed_urls"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -779,6 +1603,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:event_bus_durable_queues_dlq_redrive"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "event_bus_durable_queues_dlq_redrive"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:event_bus_durable_queues_dlq_redrive"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:event_bus_durable_queues_dlq_redrive"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -803,6 +1657,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:workflow_engine_scheduled_jobs_approvals"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "workflow_engine_scheduled_jobs_approvals"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:workflow_engine_scheduled_jobs_approvals"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:workflow_engine_scheduled_jobs_approvals"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -827,6 +1711,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:scheduled_jobs_built_in_on_the_event_substrate_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "scheduled_jobs_built_in_on_the_event_substrate_"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:scheduled_jobs_built_in_on_the_event_substrate_"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:scheduled_jobs_built_in_on_the_event_substrate_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -851,6 +1765,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:notification_delivery_preferences_channels"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 6,
+              "labels": {
+                "capability": "notification_delivery_preferences_channels"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:notification_delivery_preferences_channels"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:notification_delivery_preferences_channels"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -875,6 +1819,32 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:background_workers_job_runner"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "background_workers_job_runner"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:background_workers_job_runner"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:background_workers_job_runner"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -899,6 +1869,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:runtime_secrets_management"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 4,
+              "labels": {
+                "capability": "runtime_secrets_management"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:runtime_secrets_management"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:runtime_secrets_management"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -923,6 +1917,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:logs_aggregation_tenant_scoped_search_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "logs_aggregation_tenant_scoped_search_"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:logs_aggregation_tenant_scoped_search_"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:logs_aggregation_tenant_scoped_search_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -947,6 +1971,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:metrics_traces"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "metrics_traces"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:metrics_traces"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:metrics_traces"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -971,6 +2019,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:observability_built_in_alerting_incidents"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 5,
+              "labels": {
+                "capability": "observability_built_in_alerting_incidents"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:observability_built_in_alerting_incidents"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:observability_built_in_alerting_incidents"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -995,6 +2073,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:internal_service_catalog_readiness"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "internal_service_catalog_readiness"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:internal_service_catalog_readiness"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:internal_service_catalog_readiness"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1019,6 +2125,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:code_quality_secret_dependency_scanning"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "code_quality_secret_dependency_scanning"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:code_quality_secret_dependency_scanning"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:code_quality_secret_dependency_scanning"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1043,6 +2179,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:compliance_reports_access_reviews_evidence_packs"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "compliance_reports_access_reviews_evidence_packs"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:compliance_reports_access_reviews_evidence_packs"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:compliance_reports_access_reviews_evidence_packs"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1067,6 +2233,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:tenant_isolation_proof"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_isolation_proof"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_isolation_proof"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:tenant_isolation_proof"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1091,6 +2281,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:webhooks_developer_facing_"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "webhooks_developer_facing_"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:webhooks_developer_facing_"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:webhooks_developer_facing_"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1115,6 +2329,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:api_docs_developer_portal_sdks_rate_limits"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "api_docs_developer_portal_sdks_rate_limits"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:api_docs_developer_portal_sdks_rate_limits"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:api_docs_developer_portal_sdks_rate_limits"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1139,6 +2383,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:rate_limiting_api_"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 4,
+              "labels": {
+                "capability": "rate_limiting_api_"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:rate_limiting_api_"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:rate_limiting_api_"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1163,6 +2431,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_lifecycle_provision_suspend_delete_export"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_lifecycle_provision_suspend_delete_export"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:tenant_lifecycle_provision_suspend_delete_export"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:tenant_lifecycle_provision_suspend_delete_export"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1187,6 +2485,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:support_tickets_customer_health_announcements"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "support_tickets_customer_health_announcements"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:support_tickets_customer_health_announcements"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:support_tickets_customer_health_announcements"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1211,6 +2539,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:universal_service_foundation_scope_principles"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "universal_service_foundation_scope_principles"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:universal_service_foundation_scope_principles"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:universal_service_foundation_scope_principles"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1235,6 +2593,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:build_versus_compose_decision_framework"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "build_versus_compose_decision_framework"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:build_versus_compose_decision_framework"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:build_versus_compose_decision_framework"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1259,6 +2647,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:service_catalog_provider_integration_model"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 5,
+              "labels": {
+                "capability": "service_catalog_provider_integration_model"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:service_catalog_provider_integration_model"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:service_catalog_provider_integration_model"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1283,6 +2701,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:environment_specific_vs_shared_service_model"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "environment_specific_vs_shared_service_model"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:environment_specific_vs_shared_service_model"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:environment_specific_vs_shared_service_model"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1307,6 +2755,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:provider_configuration_plane"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "provider_configuration_plane"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:provider_configuration_plane"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:provider_configuration_plane"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1331,6 +2803,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:composed_provider_readiness_spine"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "composed_provider_readiness_spine"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:composed_provider_readiness_spine"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:composed_provider_readiness_spine"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1355,6 +2855,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:history_read_model_read_only_projection_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "history_read_model_read_only_projection_"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:history_read_model_read_only_projection_"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:history_read_model_read_only_projection_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1379,6 +2909,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:oidc_discovery_issuer_jwks_validation"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "oidc_discovery_issuer_jwks_validation"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:oidc_discovery_issuer_jwks_validation"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:oidc_discovery_issuer_jwks_validation"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1403,6 +2963,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:oidc_test_connection_callback_display"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "oidc_test_connection_callback_display"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:oidc_test_connection_callback_display"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:oidc_test_connection_callback_display"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1427,6 +3017,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_host_identity_resolution"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "tenant_host_identity_resolution"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_host_identity_resolution"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:tenant_host_identity_resolution"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1451,6 +3069,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_domain_activation_auth_client_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_domain_activation_auth_client_"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:tenant_domain_activation_auth_client_"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:tenant_domain_activation_auth_client_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1475,6 +3123,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_canonical_domain_set_unset"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_canonical_domain_set_unset"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_canonical_domain_set_unset"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:tenant_canonical_domain_set_unset"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1499,6 +3175,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_custom_domain_auth_callback"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "tenant_custom_domain_auth_callback"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_custom_domain_auth_callback"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:tenant_custom_domain_auth_callback"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1523,6 +3227,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:tenant_service_clickthrough_policy"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 3,
+              "labels": {
+                "capability": "tenant_service_clickthrough_policy"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:tenant_service_clickthrough_policy"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:tenant_service_clickthrough_policy"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1547,6 +3279,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:environment_registry_bootstrap"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 4,
+              "labels": {
+                "capability": "environment_registry_bootstrap"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:environment_registry_bootstrap"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:environment_registry_bootstrap"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1571,6 +3331,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:provider_environment_classification"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 2,
+              "labels": {
+                "capability": "provider_environment_classification"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:provider_environment_classification"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:provider_environment_classification"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1595,6 +3385,34 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:e2e_confidence_ladder_stage_aware_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "e2e_confidence_ladder_stage_aware_"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:e2e_confidence_ladder_stage_aware_"],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:e2e_confidence_ladder_stage_aware_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1619,6 +3437,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:openapi_drift_hard_gate"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "openapi_drift_hard_gate"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:openapi_drift_hard_gate"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:openapi_drift_hard_gate"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1643,6 +3485,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:i18n_runtime_validation"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "i18n_runtime_validation"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:i18n_runtime_validation"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:i18n_runtime_validation"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1667,6 +3533,30 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": ["audit:usf-l4-1782260199437-df4b22bf:l4:accessibility_a11y_gate"],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "accessibility_a11y_gate"
+              }
+            }
+          ],
+          "traceIds": ["trace:usf-l4-1782260199437-df4b22bf:l4:accessibility_a11y_gate"],
+          "logCorrelationIds": ["log:usf-l4-1782260199437-df4b22bf:l4:accessibility_a11y_gate"]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     },
@@ -1691,6 +3581,36 @@
       "sideEffectsEvidence": true,
       "failurePathEvidence": true,
       "observabilityEvidence": true,
+      "telemetryEvidence": {
+        "classification": "proof-emitted-telemetry",
+        "note": "Audit, metric, trace, and log IDs in current L4 capability rows are proof-emitted correlation evidence unless observedSubstrateTelemetry is populated.",
+        "proofEmittedTelemetry": {
+          "auditEventIds": [
+            "audit:usf-l4-1782260199437-df4b22bf:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+          ],
+          "metricSamples": [
+            {
+              "name": "usf_l4_capability_l3_replay_passed_total",
+              "value": 1,
+              "labels": {
+                "capability": "browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+              }
+            }
+          ],
+          "traceIds": [
+            "trace:usf-l4-1782260199437-df4b22bf:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+          ],
+          "logCorrelationIds": [
+            "log:usf-l4-1782260199437-df4b22bf:l4:browser_telemetry_grafana_faro_rum_browser_to_bff_tracing_"
+          ]
+        },
+        "observedSubstrateTelemetry": {
+          "auditRecords": [],
+          "metrics": [],
+          "traces": [],
+          "logs": []
+        }
+      },
       "conclusion": "SUBSTRATE_PROVEN",
       "gaps": []
     }
