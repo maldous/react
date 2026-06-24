@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:18:18.361Z",
-  "endedAt": "2026-06-24T10:18:18.423Z",
+  "startedAt": "2026-06-24T10:24:09.102Z",
+  "endedAt": "2026-06-24T10:24:09.167Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,12 +81,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:18:18.423Z",
+  "generatedAt": "2026-06-24T10:24:09.167Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -107,10 +107,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:18:18.361Z",
-  "endTime": "2026-06-24T10:18:18.423Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:18:18.423Z",
+  "startTime": "2026-06-24T10:24:09.102Z",
+  "endTime": "2026-06-24T10:24:09.167Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:24:09.167Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts": {
@@ -140,5 +140,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-migration-storage-provider-runtime-proof.ts"
   ],
-  "evidenceSignature": "f7ec7da65206724a971805051c5898c9fadf4cde1326015e10c50e872abaccd8"
+  "evidenceSignature": "5964862ba8eb5892becff0c93f91370da3fa342372117c1671e984b7369811b7"
 }

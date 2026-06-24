@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:16:01.363Z",
-  "endedAt": "2026-06-24T10:16:01.392Z",
+  "startedAt": "2026-06-24T10:21:51.629Z",
+  "endedAt": "2026-06-24T10:21:51.660Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -79,10 +79,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:16:01.392Z",
+  "generatedAt": "2026-06-24T10:21:51.660Z",
   "sourceFileRefs": ["apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -103,10 +103,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:16:01.363Z",
-  "endTime": "2026-06-24T10:16:01.392Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:16:01.392Z",
+  "startTime": "2026-06-24T10:21:51.629Z",
+  "endTime": "2026-06-24T10:21:51.660Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:21:51.660Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts": {
@@ -132,5 +132,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/keycloak-realm-admin-adapter-runtime-proof.ts"],
-  "evidenceSignature": "81243d28b48713671614b46272e76d520022496bd1e450a3df586c859154073c"
+  "evidenceSignature": "3de0c68acbc43415a24b79a52ee19516be1bcd71423b55c245b229ba4fe32f3c"
 }

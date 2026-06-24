@@ -40,10 +40,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:in-memory-billing-catalog",
-  "startedAt": "2026-06-24T10:15:59.691Z",
-  "endedAt": "2026-06-24T10:15:59.730Z",
+  "startedAt": "2026-06-24T10:21:49.880Z",
+  "endedAt": "2026-06-24T10:21:49.921Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -258,10 +258,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:15:59.730Z",
+  "generatedAt": "2026-06-24T10:21:49.921Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-catalog-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -282,10 +282,10 @@
   "failureInjectionEvidence": null,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:15:59.691Z",
-  "endTime": "2026-06-24T10:15:59.730Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:15:59.730Z",
+  "startTime": "2026-06-24T10:21:49.880Z",
+  "endTime": "2026-06-24T10:21:49.921Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:21:49.921Z",
   "stateDiff": {
     "routeMutations": {
       "route:post-api-admin-billing-catalog-products": {
@@ -406,5 +406,5 @@
     }
   ],
   "logEvidence": ["log:billing-catalog:semantic-dev"],
-  "evidenceSignature": "06bd586c9e7128072d69d2aec4aa035d27058ca7789110dedbdfd670de0b8364"
+  "evidenceSignature": "d574a777f8fb2ceb3105534dfd880defa8956c4c5608d18cdfb9ba3a7bef3c17"
 }

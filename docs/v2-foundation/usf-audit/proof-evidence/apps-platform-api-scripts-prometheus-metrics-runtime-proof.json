@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
-  "startedAt": "2026-06-24T10:18:23.498Z",
-  "endedAt": "2026-06-24T10:18:23.657Z",
+  "startedAt": "2026-06-24T10:24:14.224Z",
+  "endedAt": "2026-06-24T10:24:14.386Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -62,10 +62,10 @@
   "deterministicReplaySupported": false,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:18:23.657Z",
+  "generatedAt": "2026-06-24T10:24:14.386Z",
   "sourceFileRefs": ["apps/platform-api/scripts/prometheus-metrics-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -86,10 +86,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L2",
-  "startTime": "2026-06-24T10:18:23.498Z",
-  "endTime": "2026-06-24T10:18:23.657Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:18:23.657Z",
+  "startTime": "2026-06-24T10:24:14.224Z",
+  "endTime": "2026-06-24T10:24:14.386Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:24:14.386Z",
   "stateDiff": {},
   "failureMode": "not-exercised",
   "auditIds": [
@@ -113,5 +113,5 @@
     }
   ],
   "logEvidence": ["log:prometheus-metrics:runtime-proof", "log:metrics-prometheus:runtime-proof"],
-  "evidenceSignature": "81994f957eb2216b61e28f0b4e8d051846b6dec4e4f296a283cc6e6c3b782535"
+  "evidenceSignature": "6b4b07930f1e888e2a8ee556f41e54285932d08fa88a824fb1a42c430f3c0ed4"
 }

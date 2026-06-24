@@ -25,10 +25,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domain-claim-lifecycle",
-  "startedAt": "2026-06-24T10:18:38.289Z",
-  "endedAt": "2026-06-24T10:18:38.409Z",
+  "startedAt": "2026-06-24T10:24:29.064Z",
+  "endedAt": "2026-06-24T10:24:29.185Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -205,10 +205,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:18:38.409Z",
+  "generatedAt": "2026-06-24T10:24:29.185Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -229,10 +229,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:18:38.289Z",
-  "endTime": "2026-06-24T10:18:38.409Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:18:38.409Z",
+  "startTime": "2026-06-24T10:24:29.064Z",
+  "endTime": "2026-06-24T10:24:29.185Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:24:29.185Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-domains-domain": {
@@ -324,5 +324,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-domain-claim-lifecycle-runtime-proof.ts"],
-  "evidenceSignature": "c3853119fa6ceaf6fe1bbac59b375a93574c8366620056cb8fd0acf651079938"
+  "evidenceSignature": "1ae8fe44e40c08c3e3945561246ddefcfd9d8b620cdf2493c67ee7cd0c3f2d60"
 }

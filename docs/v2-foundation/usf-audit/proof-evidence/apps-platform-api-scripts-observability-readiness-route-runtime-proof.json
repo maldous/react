@@ -17,10 +17,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L2",
   "commandExecuted": "npm run proof:observability-readiness-route",
-  "startedAt": "2026-06-24T10:17:40.061Z",
-  "endedAt": "2026-06-24T10:17:40.580Z",
+  "startedAt": "2026-06-24T10:23:30.666Z",
+  "endedAt": "2026-06-24T10:23:31.211Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,10 +81,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:17:40.580Z",
+  "generatedAt": "2026-06-24T10:23:31.211Z",
   "sourceFileRefs": ["apps/platform-api/scripts/observability-readiness-route-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -105,10 +105,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:17:40.061Z",
-  "endTime": "2026-06-24T10:17:40.580Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:17:40.580Z",
+  "startTime": "2026-06-24T10:23:30.666Z",
+  "endTime": "2026-06-24T10:23:31.211Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:23:31.211Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-observability-readiness": {
@@ -136,5 +136,5 @@
     }
   ],
   "logEvidence": ["log:observability-readiness-route:runtime-proof"],
-  "evidenceSignature": "68a8cba553fec13eda87b554ba35cd1224d6cc0d3b4f99fec7ac4154ac309da9"
+  "evidenceSignature": "2cf7286d5e059b944794b71c5682ed8b53556aedef1b83d06e157d15e1b233d4"
 }

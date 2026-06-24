@@ -24,10 +24,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:alerting",
-  "startedAt": "2026-06-24T10:15:39.794Z",
-  "endedAt": "2026-06-24T10:15:40.038Z",
+  "startedAt": "2026-06-24T10:21:30.176Z",
+  "endedAt": "2026-06-24T10:21:30.407Z",
   "exitStatus": 0,
-  "commit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
+  "commit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
   "realImplementationPathExecuted": "apps/platform-api/scripts/alerting-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -181,10 +181,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T10:15:40.038Z",
+  "generatedAt": "2026-06-24T10:21:30.407Z",
   "sourceFileRefs": ["apps/platform-api/scripts/alerting-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782296138803-1960117",
+  "collectorRunId": "proof-run-1782296489212-2023980",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -205,10 +205,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T10:15:39.794Z",
-  "endTime": "2026-06-24T10:15:40.038Z",
-  "gitCommit": "448c7938c0bfc33f8e2c6df65bd422364de81673",
-  "executionTimestamp": "2026-06-24T10:15:40.038Z",
+  "startTime": "2026-06-24T10:21:30.176Z",
+  "endTime": "2026-06-24T10:21:30.407Z",
+  "gitCommit": "a94ec72f3826fdbc308612e00b74d3a387b75812",
+  "executionTimestamp": "2026-06-24T10:21:30.407Z",
   "stateDiff": {
     "routeMutations": {
       "route:get-api-admin-alerts": {
@@ -289,5 +289,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/alerting-runtime-proof.ts"],
-  "evidenceSignature": "ffd4ed7f7388d3edcda586868224c133154f2eec736bd0998a14f7baefe1f3f9"
+  "evidenceSignature": "4677ac4488163b84a7df9adf88fa169e68ebc0e6822aab2b0649ea69221a11bc"
 }
