@@ -1,12 +1,12 @@
 {
   "artefact": "resilience-proof-roadmap",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T03:22:59.073Z",
+  "generatedAt": "2026-06-24T04:12:15.566Z",
   "status": "PASS",
   "roadmapScope": "Planning only. No L5 proof implementation is introduced by this artefact.",
   "l5ProofsImplementedByThisArtifact": false,
   "totalCapabilities": 70,
-  "substrateProvenCapabilities": 70,
+  "substrateProvenCapabilities": 0,
   "substrateScenarioCatalogue": [
     {
       "substrate": "Postgres",
@@ -97,17 +97,12 @@
       "failoverScenario": "Observability failover preserves alerting and trace/log query continuity where applicable"
     }
   ],
-  "recommendedFirstTarget": {
-    "capability": "Tenant identity (record + FQDN)",
-    "substrates": ["Postgres"],
-    "proposedL5ProofCommand": "npm run proof:l5-tenant-identity-record-fqdn-resilience",
-    "rationale": "Highest-risk, lowest-order substrate target for beginning resilience proof work."
-  },
+  "recommendedFirstTarget": null,
   "gaps": [],
   "capabilities": [
     {
       "capability": "Tenant identity (record + FQDN)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -186,7 +181,7 @@
     },
     {
       "capability": "User identity + tenant membership",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -265,7 +260,7 @@
     },
     {
       "capability": "End-user profile + preferences self-service",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -344,7 +339,7 @@
     },
     {
       "capability": "API keys / personal access tokens",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -423,7 +418,7 @@
     },
     {
       "capability": "Tenant groups",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -502,7 +497,7 @@
     },
     {
       "capability": "Sub-organisations",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -581,7 +576,7 @@
     },
     {
       "capability": "RBAC (roles + permissions)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -660,7 +655,7 @@
     },
     {
       "capability": "ABAC / Policy Decision Point",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -739,7 +734,7 @@
     },
     {
       "capability": "Delegated administration roles",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -818,7 +813,7 @@
     },
     {
       "capability": "Entitlement engine",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -897,7 +892,7 @@
     },
     {
       "capability": "Support-mode / break-glass access",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -972,7 +967,7 @@
     },
     {
       "capability": "Audit of privileged access",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1051,7 +1046,7 @@
     },
     {
       "capability": "Platform login + session",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1130,7 +1125,7 @@
     },
     {
       "capability": "IdP brokering + OIDC provider management",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1209,7 +1204,7 @@
     },
     {
       "capability": "Claim mapping + group/role mapping",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1288,7 +1283,7 @@
     },
     {
       "capability": "MFA + session policy + lockout",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1367,7 +1362,7 @@
     },
     {
       "capability": "Configuration registry + history",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1446,7 +1441,7 @@
     },
     {
       "capability": "Branding + theming",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1525,7 +1520,7 @@
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1604,7 +1599,7 @@
     },
     {
       "capability": "Write-only secret settings",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1701,7 +1696,7 @@
     },
     {
       "capability": "Product catalog, plans, prices",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1798,7 +1793,7 @@
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1871,7 +1866,7 @@
     },
     {
       "capability": "Usage metering + meter event ingestion",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -1950,7 +1945,7 @@
     },
     {
       "capability": "Quota enforcement",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2029,7 +2024,7 @@
     },
     {
       "capability": "Relational storage + migrations + RLS",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2108,7 +2103,7 @@
     },
     {
       "capability": "Backup + restore",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2185,7 +2180,7 @@
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2264,7 +2259,7 @@
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2343,7 +2338,7 @@
     },
     {
       "capability": "Tenant data import / export",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2422,7 +2417,7 @@
     },
     {
       "capability": "Search + indexing (product search)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2501,7 +2496,7 @@
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2580,7 +2575,7 @@
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2659,7 +2654,7 @@
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2734,7 +2729,7 @@
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2813,7 +2808,7 @@
     },
     {
       "capability": "Notification delivery + preferences + channels",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2890,7 +2885,7 @@
     },
     {
       "capability": "Background workers / job runner",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -2969,7 +2964,7 @@
     },
     {
       "capability": "Runtime secrets management",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3046,7 +3041,7 @@
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3125,7 +3120,7 @@
     },
     {
       "capability": "Metrics + traces",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3204,7 +3199,7 @@
     },
     {
       "capability": "Observability — built-in alerting + incidents",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3283,7 +3278,7 @@
     },
     {
       "capability": "Internal service catalog + readiness",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3362,7 +3357,7 @@
     },
     {
       "capability": "Code quality + secret + dependency scanning",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3439,7 +3434,7 @@
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3516,7 +3511,7 @@
     },
     {
       "capability": "Tenant isolation proof",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3595,7 +3590,7 @@
     },
     {
       "capability": "Webhooks (developer-facing)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3674,7 +3669,7 @@
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3749,7 +3744,7 @@
     },
     {
       "capability": "Rate limiting (API)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3824,7 +3819,7 @@
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3901,7 +3896,7 @@
     },
     {
       "capability": "Support tickets, customer health, announcements",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -3980,7 +3975,7 @@
     },
     {
       "capability": "Universal Service Foundation scope + principles",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4057,7 +4052,7 @@
     },
     {
       "capability": "Build-versus-compose decision framework",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4134,7 +4129,7 @@
     },
     {
       "capability": "Service catalog + provider integration model",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4213,7 +4208,7 @@
     },
     {
       "capability": "Environment-specific vs shared service model",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4290,7 +4285,7 @@
     },
     {
       "capability": "Provider configuration plane",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4369,7 +4364,7 @@
     },
     {
       "capability": "Composed provider readiness spine",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4448,7 +4443,7 @@
     },
     {
       "capability": "History read-model (read-only projection)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4527,7 +4522,7 @@
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4606,7 +4601,7 @@
     },
     {
       "capability": "OIDC test connection + callback display",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4685,7 +4680,7 @@
     },
     {
       "capability": "Tenant host identity resolution",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4764,7 +4759,7 @@
     },
     {
       "capability": "Tenant domain activation (auth-client)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4843,7 +4838,7 @@
     },
     {
       "capability": "Tenant canonical domain set/unset",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -4922,7 +4917,7 @@
     },
     {
       "capability": "Tenant custom-domain auth callback",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5001,7 +4996,7 @@
     },
     {
       "capability": "Tenant service clickthrough policy",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5078,7 +5073,7 @@
     },
     {
       "capability": "Environment registry + bootstrap",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5157,7 +5152,7 @@
     },
     {
       "capability": "Provider environment classification",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5236,7 +5231,7 @@
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5313,7 +5308,7 @@
     },
     {
       "capability": "OpenAPI drift hard gate",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5390,7 +5385,7 @@
     },
     {
       "capability": "i18n runtime + validation",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5467,7 +5462,7 @@
     },
     {
       "capability": "Accessibility (a11y) gate",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],
@@ -5544,7 +5539,7 @@
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
-      "currentReadiness": "SUBSTRATE_PROVEN",
+      "currentReadiness": "RESILIENCE_PROVEN",
       "l4EvidenceProofIds": [
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
       ],

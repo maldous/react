@@ -181,8 +181,10 @@ proof:in-memory-billing-catalog
 proof:in-memory-provider-runtime
 proof:in-memory-vs-real-parity
 proof:l4-substrate-closure
+proof:l5-compose-local-resilience-closure
 proof:l5-identity-access-resilience
 proof:l5-postgres-tenant-identity-resilience
+proof:l5-staging-resilience-certification
 proof:lago-billing-provider
 proof:metering
 proof:metering-quota-routes

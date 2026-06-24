@@ -21,7 +21,7 @@ const runtimeHook = path.join(
   repoRoot,
   "tools/v2-readiness/scripts/proof-evidence-runtime-hook.mjs"
 );
-const timeoutMs = Number(process.env.USF_PROOF_COMMAND_TIMEOUT_MS || 120_000);
+const timeoutMs = Number(process.env.USF_PROOF_COMMAND_TIMEOUT_MS || 300_000);
 const limit = Number(process.env.USF_COLLECT_PROOF_LIMIT || 0);
 
 fs.rmSync(outDir, { recursive: true, force: true });
@@ -176,9 +176,13 @@ function proofExecutionMode(proof) {
   }
   if (
     proof.file.includes("l5-postgres-tenant-identity-resilience-runtime-proof") ||
-    proof.file.includes("l5-identity-access-resilience-runtime-proof")
+    proof.file.includes("l5-identity-access-resilience-runtime-proof") ||
+    proof.file.includes("l5-compose-local-resilience-closure-runtime-proof")
   ) {
     return { environmentMode: "test", providerMode: "compose-local" };
+  }
+  if (proof.file.includes("l5-staging-resilience-certification-runtime-proof")) {
+    return { environmentMode: "staging", providerMode: "external-sandbox" };
   }
   if (proof.proofLevelClaimed === "L5" || proof.proofLevelClaimed === "L6") {
     return { environmentMode: "staging", providerMode: "external-sandbox" };

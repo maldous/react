@@ -6746,6 +6746,54 @@
         "npm run v2:adversarial-usf-audit"
       ],
       "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "L5a compose-local resilience closure proof for all 70 Universal Service Foundation capabilities",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for all-capability L5a compose-local resilience closure",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+      "introducingCommit": "pending",
+      "purpose": "L5b staging/prod-shaped resilience certification proof for all 70 Universal Service Foundation capabilities",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+      "protectingTests": [
+        "npm run proof:l5-staging-resilience-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
+    },
+    {
+      "path": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json",
+      "introducingCommit": "pending",
+      "purpose": "generated runtime proof evidence for all-capability L5b staging/prod-shaped resilience certification",
+      "v2Disposition": "reuse-unchanged",
+      "v2Target": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json",
+      "protectingTests": [
+        "npm run proof:l5-staging-resilience-certification",
+        "npm run v2:adversarial-usf-audit"
+      ],
+      "decisionRefs": ["ADR-ACT-0292"]
     }
   ],
   "deletions": [
@@ -7128,6 +7176,6 @@
       "evidence": "docs/evidence/lifecycle/removal/profile-configuration/removal-evidence.json"
     }
   ],
-  "additionCount": 717,
+  "additionCount": 721,
   "deletionCount": 54
 }

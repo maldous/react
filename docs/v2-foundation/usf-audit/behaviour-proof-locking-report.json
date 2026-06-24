@@ -1,10 +1,10 @@
 {
   "artefact": "behaviour-proof-locking-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T03:22:59.049Z",
+  "generatedAt": "2026-06-24T04:12:15.537Z",
   "status": "PASS",
-  "totalBehaviourCandidates": 153,
-  "completeBehaviourProofs": 153,
+  "totalBehaviourCandidates": 155,
+  "completeBehaviourProofs": 155,
   "incompleteBehaviourProofs": 0,
   "gaps": [],
   "proofs": [
@@ -1401,6 +1401,37 @@
       "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"]
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "environmentMode": "test",
+      "providerMode": "compose-local",
+      "complete": true,
+      "missingBeforeState": false,
+      "missingAfterState": false,
+      "missingAssertedStateDiff": false,
+      "missingSideEffectAssertion": false,
+      "missingFailurePathEvidence": false,
+      "missingAuditEvidence": false,
+      "missingMetricEvidence": false,
+      "missingTraceEvidence": false,
+      "missingTenantBoundaryEvidence": false,
+      "missingSecurityBoundaryEvidence": false,
+      "missingDeterministicReplayEvidence": false,
+      "delegatedBehaviourProofImports": [],
+      "behaviouralEvidenceInconsistencies": [],
+      "behaviouralEvidenceOverstatingConfidence": false,
+      "severity": "none",
+      "remediationEffort": "none",
+      "exactClosureAction": "No action required.",
+      "blockingDeficiencies": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof.json",
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts"
+      ]
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
       "subjectId": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
       "proofLevelClaimed": "L5",
@@ -1458,6 +1489,37 @@
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof.json",
       "sourceFileRefs": [
         "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+      ]
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "environmentMode": "staging",
+      "providerMode": "external-sandbox",
+      "complete": true,
+      "missingBeforeState": false,
+      "missingAfterState": false,
+      "missingAssertedStateDiff": false,
+      "missingSideEffectAssertion": false,
+      "missingFailurePathEvidence": false,
+      "missingAuditEvidence": false,
+      "missingMetricEvidence": false,
+      "missingTraceEvidence": false,
+      "missingTenantBoundaryEvidence": false,
+      "missingSecurityBoundaryEvidence": false,
+      "missingDeterministicReplayEvidence": false,
+      "delegatedBehaviourProofImports": [],
+      "behaviouralEvidenceInconsistencies": [],
+      "behaviouralEvidenceOverstatingConfidence": false,
+      "severity": "none",
+      "remediationEffort": "none",
+      "exactClosureAction": "No action required.",
+      "blockingDeficiencies": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json",
+      "sourceFileRefs": [
+        "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts"
       ]
     },
     {

@@ -19,10 +19,10 @@
   "providerMode": "semantic-dev",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
-  "startedAt": "2026-06-24T03:19:49.095Z",
-  "endedAt": "2026-06-24T03:19:49.132Z",
+  "startedAt": "2026-06-24T04:09:05.114Z",
+  "endedAt": "2026-06-24T04:09:05.156Z",
   "exitStatus": 0,
-  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
   "realImplementationPathExecuted": "apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -173,10 +173,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T03:19:49.132Z",
+  "generatedAt": "2026-06-24T04:09:05.156Z",
   "sourceFileRefs": ["apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782271168457-2327494",
+  "collectorRunId": "proof-run-1782274124680-2753765",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -197,10 +197,10 @@
   "failureInjectionEvidence": null,
   "environment": "dev",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T03:19:49.095Z",
-  "endTime": "2026-06-24T03:19:49.132Z",
-  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
-  "executionTimestamp": "2026-06-24T03:19:49.132Z",
+  "startTime": "2026-06-24T04:09:05.114Z",
+  "endTime": "2026-06-24T04:09:05.156Z",
+  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "executionTimestamp": "2026-06-24T04:09:05.156Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/in-memory-billing-provider-runtime-proof.ts": {
@@ -273,5 +273,5 @@
     "log:in-memory-billing-injected-failure",
     "log:in-memory-billing-unavailable"
   ],
-  "evidenceSignature": "f87222a7829adde809fc67c0a699cb482e1de6366c39551131c2783af20515f9"
+  "evidenceSignature": "161a5f02d251740f02ba62bcd710df2e6550f968812caf3d80fc9e59d588daac"
 }

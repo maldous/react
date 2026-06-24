@@ -7,7 +7,7 @@
 
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import pg from "pg";
 import {
   createRedisClient,
@@ -41,6 +41,12 @@ type CapabilityReadinessReport = {
 
 type L4EvidenceReport = {
   perCapabilityL4Evidence: Array<{ capability: string; l4EvidenceProofIds: string[] }>;
+};
+type L4RuntimeEvidenceRecord = {
+  proofId?: string;
+  exitStatus?: number;
+  proofLevelClaimed?: string;
+  perCapabilityL4Evidence?: Array<{ capability: string; result?: string }>;
 };
 
 type CapabilityTarget = {
@@ -88,9 +94,7 @@ const proofAuthStatePrefix = `l5a:${marker}:auth_state:`;
 const capabilityReadiness = readJson<CapabilityReadinessReport>(
   "docs/v2-foundation/usf-audit/capability-proof-readiness-report.json"
 );
-const l4EvidenceReport = readJson<L4EvidenceReport>(
-  "docs/v2-foundation/usf-audit/l4-substrate-evidence-report.json"
-);
+const l4EvidenceReport = loadL4Evidence();
 
 const l3ByCapability = new Map<string, string[]>();
 const l4ByCapability = new Map<string, string[]>();
@@ -1105,6 +1109,32 @@ function assertValue<T>(value: T | null | undefined, label: string): T {
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
+}
+
+function loadL4Evidence(): L4EvidenceReport {
+  const report = readJson<L4EvidenceReport>(
+    "docs/v2-foundation/usf-audit/l4-substrate-evidence-report.json"
+  );
+  const targetNames = new Set(TARGETS.map((target) => target.capability));
+  const reportRowsWithEvidence = report.perCapabilityL4Evidence.filter(
+    (row) => targetNames.has(row.capability) && row.l4EvidenceProofIds.length > 0
+  );
+  if (reportRowsWithEvidence.length === TARGETS.length) return report;
+  const evidencePath =
+    "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json";
+  if (!existsSync(evidencePath)) return report;
+  const record = readJson<L4RuntimeEvidenceRecord>(evidencePath);
+  const rows = record.perCapabilityL4Evidence || [];
+  if (record.exitStatus !== 0 || record.proofLevelClaimed !== "L4" || rows.length !== 70) {
+    return report;
+  }
+  return {
+    perCapabilityL4Evidence: rows.map((row) => ({
+      capability: row.capability,
+      l4EvidenceProofIds:
+        row.result === "PASS" ? [record.proofId || "proof:l4-substrate-closure"] : [],
+    })),
+  };
 }
 
 function uniq(values: string[]): string[] {

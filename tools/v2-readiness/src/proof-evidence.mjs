@@ -1882,11 +1882,11 @@ function buildResilienceProofRoadmap({
   });
   const gaps = rows.flatMap((row) => {
     const out = [];
-    if (row.currentReadiness !== "SUBSTRATE_PROVEN") {
+    if (!readinessAtLeast(row.currentReadiness, "SUBSTRATE_PROVEN")) {
       out.push({
         kind: "l5-roadmap-capability-not-l4",
         capability: row.capability,
-        message: `${row.capability} is not SUBSTRATE_PROVEN; L5 planning is blocked`,
+        message: `${row.capability} has not reached SUBSTRATE_PROVEN; L5 planning is blocked`,
       });
     }
     if (row.l4EvidenceProofIds.length === 0) {
@@ -1915,6 +1915,20 @@ function buildResilienceProofRoadmap({
     gaps,
     capabilities: rows,
   };
+}
+
+function readinessAtLeast(actual, required) {
+  const order = [
+    "UNPROVEN",
+    "DISCOVERY_PROVEN",
+    "EXECUTABLE_PROVEN",
+    "CONTRACT_PROVEN",
+    "BEHAVIOUR_PROVEN",
+    "SUBSTRATE_PROVEN",
+    "RESILIENCE_PROVEN",
+    "FOUNDATION_PROVEN",
+  ];
+  return order.indexOf(actual) >= order.indexOf(required);
 }
 
 function buildL5ResilienceEvidenceReport({
@@ -2024,7 +2038,7 @@ function buildResilienceReadinessReport({
   if (l4SubstrateEvidence?.status !== "PASS") gaps.push("l4-substrate-evidence-not-pass");
   if (resilienceRoadmap?.status !== "PASS") gaps.push("resilience-roadmap-not-pass");
   if (l5ResilienceEvidence?.status !== "PASS") gaps.push("l5-resilience-evidence-not-pass");
-  if ((l5ResilienceEvidence?.l5CompleteCapabilities || 0) < totalCapabilities) {
+  if ((l5ResilienceEvidence?.l5CompleteCapabilities ?? 0) < totalCapabilities) {
     gaps.push("full-l5-resilience-incomplete");
   }
   return {
@@ -2035,11 +2049,11 @@ function buildResilienceReadinessReport({
       gaps.filter((gap) => gap !== "full-l5-resilience-incomplete").length === 0 ? "PASS" : "FAIL",
     fullL5Status: gaps.includes("full-l5-resilience-incomplete") ? "INCOMPLETE" : "PASS",
     totalCapabilities,
-    l5CompleteCapabilities: l5ResilienceEvidence?.l5CompleteCapabilities || 0,
+    l5CompleteCapabilities: l5ResilienceEvidence?.l5CompleteCapabilities ?? 0,
     l5aLocalResilienceProvenCapabilities:
-      l5ResilienceEvidence?.l5aLocalResilienceProvenCapabilities || 0,
-    l5bStagingCertifiedCapabilities: l5ResilienceEvidence?.l5bStagingCertifiedCapabilities || 0,
-    resilienceGapCount: l5ResilienceEvidence?.resilienceGapCount || totalCapabilities,
+      l5ResilienceEvidence?.l5aLocalResilienceProvenCapabilities ?? 0,
+    l5bStagingCertifiedCapabilities: l5ResilienceEvidence?.l5bStagingCertifiedCapabilities ?? 0,
+    resilienceGapCount: l5ResilienceEvidence?.resilienceGapCount ?? totalCapabilities,
     pilotCapability: l5ResilienceEvidence?.pilotCapability || null,
     pilotSubstrate: l5ResilienceEvidence?.pilotSubstrate || null,
     remainingL5Work: l5ResilienceEvidence?.remainingL5Work || [],
@@ -3482,16 +3496,19 @@ function buildReadinessConsistencyGaps({
 }) {
   const gaps = [];
   const capabilityL4Count = capabilityReadiness.ladderLevelDistribution?.L4 || 0;
-  const readinessL4Count = capabilityReadiness.readinessCounts?.SUBSTRATE_PROVEN || 0;
+  const readinessAtLeastL4Count =
+    (capabilityReadiness.readinessCounts?.SUBSTRATE_PROVEN || 0) +
+    (capabilityReadiness.readinessCounts?.RESILIENCE_PROVEN || 0) +
+    (capabilityReadiness.readinessCounts?.FOUNDATION_PROVEN || 0);
   const l4EvidenceCount = l4SubstrateEvidence.substrateProvenCapabilities || 0;
   const strengthL4Count = strengthMatrix.byObservedLevel?.L4 || 0;
   const ladderObservedL4Count = (ladderCompliance.records || []).filter(
     (record) => record.proofLevelObserved === "L4"
   ).length;
-  if (capabilityL4Count !== readinessL4Count) {
+  if (capabilityL4Count !== readinessAtLeastL4Count) {
     gaps.push({
       kind: "capability-readiness-l4-count-disagreement",
-      message: `ladderLevelDistribution.L4=${capabilityL4Count} but readinessCounts.SUBSTRATE_PROVEN=${readinessL4Count}`,
+      message: `ladderLevelDistribution.L4=${capabilityL4Count} but readiness at or above SUBSTRATE_PROVEN=${readinessAtLeastL4Count}`,
     });
   }
   if (capabilityL4Count !== l4EvidenceCount) {
@@ -4216,9 +4233,13 @@ function resilienceGaps(record) {
 }
 
 function isL4SubstrateEvidenceCandidate(record) {
+  const observed = observedLevelFromEvidence(record);
+  const claimed = proofLevelNumber(record.proofLevelClaimed);
   return (
     !isL5aLocalResilienceShape(record) &&
-    (observedLevelFromEvidence(record) >= 4 || proofLevelNumber(record.proofLevelClaimed) >= 4)
+    observed < 5 &&
+    claimed < 5 &&
+    (observed >= 4 || claimed >= 4)
   );
 }
 

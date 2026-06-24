@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T03:22:11.489Z",
-  "endedAt": "2026-06-24T03:22:11.683Z",
+  "startedAt": "2026-06-24T04:11:28.132Z",
+  "endedAt": "2026-06-24T04:11:28.322Z",
   "exitStatus": 0,
-  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -81,12 +81,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T03:22:11.683Z",
+  "generatedAt": "2026-06-24T04:11:28.322Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782271168457-2327494",
+  "collectorRunId": "proof-run-1782274124680-2753765",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -107,10 +107,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T03:22:11.489Z",
-  "endTime": "2026-06-24T03:22:11.683Z",
-  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
-  "executionTimestamp": "2026-06-24T03:22:11.683Z",
+  "startTime": "2026-06-24T04:11:28.132Z",
+  "endTime": "2026-06-24T04:11:28.322Z",
+  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "executionTimestamp": "2026-06-24T04:11:28.322Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts": {
@@ -140,5 +140,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-scheduled-job-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "10f072fe1c2fb4d1e6fa189db2b6f618ffd8bbbb8a68999da766c764b898d207"
+  "evidenceSignature": "3c0a656d161b79955418d46ae8deda9ff9d7c7d6914aae66da9634dd9a22c00c"
 }

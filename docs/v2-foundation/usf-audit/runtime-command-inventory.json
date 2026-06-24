@@ -588,6 +588,12 @@
     "sourceFileRefs": ["package.json"]
   },
   {
+    "commandId": "npm-script:proof-l5-compose-local-resilience-closure",
+    "name": "npm run proof:l5-compose-local-resilience-closure",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
     "commandId": "npm-script:proof-l5-identity-access-resilience",
     "name": "npm run proof:l5-identity-access-resilience",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
@@ -597,6 +603,12 @@
     "commandId": "npm-script:proof-l5-postgres-tenant-identity-resilience",
     "name": "npm run proof:l5-postgres-tenant-identity-resilience",
     "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts",
+    "sourceFileRefs": ["package.json"]
+  },
+  {
+    "commandId": "npm-script:proof-l5-staging-resilience-certification",
+    "name": "npm run proof:l5-staging-resilience-certification",
+    "command": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
     "sourceFileRefs": ["package.json"]
   },
   {

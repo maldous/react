@@ -15,10 +15,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
-  "startedAt": "2026-06-24T03:22:06.833Z",
-  "endedAt": "2026-06-24T03:22:06.953Z",
+  "startedAt": "2026-06-24T04:11:23.444Z",
+  "endedAt": "2026-06-24T04:11:23.560Z",
   "exitStatus": 0,
-  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
   "realImplementationPathExecuted": "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -83,12 +83,12 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T03:22:06.953Z",
+  "generatedAt": "2026-06-24T04:11:23.560Z",
   "sourceFileRefs": [
     "apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
   ],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782271168457-2327494",
+  "collectorRunId": "proof-run-1782274124680-2753765",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -109,10 +109,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T03:22:06.833Z",
-  "endTime": "2026-06-24T03:22:06.953Z",
-  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
-  "executionTimestamp": "2026-06-24T03:22:06.953Z",
+  "startTime": "2026-06-24T04:11:23.444Z",
+  "endTime": "2026-06-24T04:11:23.560Z",
+  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "executionTimestamp": "2026-06-24T04:11:23.560Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts": {
@@ -142,5 +142,5 @@
   "logEvidence": [
     "log:apps/platform-api/scripts/postgres-environment-registry-repository-runtime-proof.ts"
   ],
-  "evidenceSignature": "5cb619c78771791059ce422503c8e801fb2b4e2fcabadc918ba30a033f5ab5fb"
+  "evidenceSignature": "24fae87f72db1776f99434fe4d0c6cfa3a178ec72e3b79c629fec31d1d56601a"
 }

@@ -1,7 +1,7 @@
 {
   "artefact": "l0-discovery-readiness-report",
   "schemaVersion": 1,
-  "generatedAt": "2026-06-24T03:22:59.051Z",
+  "generatedAt": "2026-06-24T04:12:15.539Z",
   "status": "PASS",
   "l0Status": "PASS",
   "totalNodes": 70,
@@ -30,6 +30,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-custom-domain-resolution"
       ],
       "exception": null,
@@ -52,7 +54,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -75,6 +79,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:notification-dispatch",
         "npm run proof:profile-self-service"
       ],
@@ -100,7 +106,9 @@
         "npm run proof:api-keys",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -123,6 +131,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:ui-semantic-groups"
       ],
       "exception": null,
@@ -146,6 +156,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:ui-semantic-sub-organisations"
       ],
       "exception": null,
@@ -168,7 +180,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -191,7 +205,9 @@
         "npm run proof:entitlement-policy-chain",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -214,7 +230,9 @@
         "npm run proof:delegated-admin",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -240,7 +258,9 @@
         "npm run proof:entitlements-routes",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -263,7 +283,9 @@
         "npm run proof:approval-workflow",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -285,7 +307,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -308,7 +332,9 @@
         "npm run proof:auth-settings",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -332,7 +358,9 @@
         "npm run proof:auth-oidc-enterprise",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -355,6 +383,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:ui-semantic-claim-mapping"
       ],
       "exception": null,
@@ -378,7 +408,9 @@
         "npm run proof:auth-settings",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -400,7 +432,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -423,6 +457,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:route-contracts"
       ],
       "exception": null,
@@ -446,6 +482,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-domain-canonical",
         "npm run proof:tenant-domain-claim-lifecycle",
         "npm run proof:tenant-domains",
@@ -471,7 +509,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -495,7 +535,9 @@
         "npm run proof:in-memory-billing-catalog",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -519,6 +561,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:lago-billing-provider"
       ],
       "exception": null,
@@ -542,6 +586,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:metering",
         "npm run proof:metering-quota-routes"
       ],
@@ -566,6 +612,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:metering-quota-routes",
         "npm run proof:quota-enforcement"
       ],
@@ -589,7 +637,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -612,7 +662,9 @@
         "npm run proof:backup-local",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -636,6 +688,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:pitr-restore-drill"
       ],
       "exception": null,
@@ -659,7 +713,9 @@
         "npm run proof:data-governance",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -682,7 +738,9 @@
         "npm run proof:data-portability",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -705,6 +763,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:search",
         "npm run proof:search-isolation",
         "npm run proof:search-routes"
@@ -730,6 +790,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-storage-objects"
       ],
       "exception": null,
@@ -754,7 +816,9 @@
         "npm run proof:event-redrive",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -777,6 +841,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:workflow-provider-live"
       ],
       "exception": null,
@@ -800,6 +866,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:scheduled-job-routes",
         "npm run proof:scheduled-jobs"
       ],
@@ -824,6 +892,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:notification-dispatch",
         "npm run proof:notification-email-transport",
         "npm run proof:notification-preferences",
@@ -851,7 +921,9 @@
         "npm run proof:event-worker",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -874,6 +946,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:provider-secrets-readiness",
         "npm run proof:secret-store-contract",
         "npm run proof:secrets-openbao"
@@ -899,6 +973,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-observability"
       ],
       "exception": null,
@@ -923,6 +999,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:metrics-prometheus"
       ],
       "exception": null,
@@ -949,6 +1027,8 @@
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:incident-foundation",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:observability-signals"
       ],
       "exception": null,
@@ -972,6 +1052,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:platform-services",
         "npm run proof:service-clickthrough-policy"
       ],
@@ -995,7 +1077,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1017,7 +1101,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1040,7 +1126,9 @@
         "npm run proof:domain-identity-matrix",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1063,6 +1151,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:webhook-redrive",
         "npm run proof:webhooks"
       ],
@@ -1087,6 +1177,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:route-contracts"
       ],
       "exception": null,
@@ -1111,6 +1203,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:rate-limits",
         "npm run proof:rate-limits-redis"
       ],
@@ -1135,6 +1229,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-lifecycle"
       ],
       "exception": null,
@@ -1157,7 +1253,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1179,7 +1277,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1201,7 +1301,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1225,6 +1327,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:platform-services",
         "npm run proof:service-catalog-registry",
         "npm run proof:service-clickthrough-policy"
@@ -1249,7 +1353,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1272,6 +1378,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:provider-config",
         "npm run proof:provider-readiness-contract"
       ],
@@ -1296,7 +1404,9 @@
         "npm run proof:composed-provider-readiness",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1319,7 +1429,9 @@
         "npm run proof:history",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1342,7 +1454,9 @@
         "npm run proof:auth-oidc-enterprise",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1365,7 +1479,9 @@
         "npm run proof:auth-oidc-enterprise",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1389,6 +1505,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-custom-domain-resolution"
       ],
       "exception": null,
@@ -1412,6 +1530,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-domain-canonical"
       ],
       "exception": null,
@@ -1435,6 +1555,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-domain-canonical"
       ],
       "exception": null,
@@ -1458,6 +1580,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:tenant-custom-domain-auth-origin"
       ],
       "exception": null,
@@ -1482,6 +1606,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:service-clickthrough-policy"
       ],
       "exception": null,
@@ -1507,7 +1633,9 @@
         "npm run proof:environment-registry",
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1530,6 +1658,8 @@
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
         "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification",
         "npm run proof:provider-environment-classification"
       ],
       "exception": null,
@@ -1552,7 +1682,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1574,7 +1706,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1596,7 +1730,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1618,7 +1754,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,
@@ -1640,7 +1778,9 @@
       "proofCommands": [
         "npm run proof:in-memory-provider-runtime",
         "npm run proof:in-memory-vs-real-parity",
-        "npm run proof:l4-substrate-closure"
+        "npm run proof:l4-substrate-closure",
+        "npm run proof:l5-compose-local-resilience-closure",
+        "npm run proof:l5-staging-resilience-certification"
       ],
       "exception": null,
       "l0DiscoveryProven": true,

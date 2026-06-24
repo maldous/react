@@ -6810,5 +6810,81 @@
     "hidesErrors": false,
     "dead": false,
     "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:l5-compose-local-resilience-closure",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for L5a compose-local resilience closure across all 70 USF capabilities using certified L3/L4 evidence and local substrate resilience probes.",
+    "inputs": [
+      "running app/backend",
+      "compose-local Postgres",
+      "compose-local Redis",
+      "compose-local MinIO",
+      "compose-local Keycloak",
+      "compose-local OpenBao",
+      "compose-local Temporal",
+      "compose-local Windmill",
+      "observability stack",
+      "certified L3 behaviour evidence",
+      "certified L4 substrate evidence"
+    ],
+    "outputs": ["L5a per-capability resilience proof evidence"],
+    "prerequisites": [
+      "platform-api loader",
+      "L4 substrate certification",
+      "resilience proof roadmap rows for all 70 capabilities"
+    ],
+    "sideEffects": [
+      "creates and cleans up marker-scoped Postgres rows, Redis keys, and MinIO objects",
+      "performs proof-owned reconnect and fail-closed checks against local substrates"
+    ],
+    "envScope": "test",
+    "failureSemantics": "exit-nonzero on any missing L5a resilience prerequisite or failed local substrate scenario",
+    "idempotent": true,
+    "safetyControls": [
+      "marker-scoped local substrate mutations",
+      "cleanup of proof-owned state",
+      "proof-emitted telemetry is labelled separately from observed substrate telemetry"
+    ],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
+  },
+  {
+    "name": "npm proof:l5-staging-resilience-certification",
+    "kind": "npm",
+    "purpose": "Runtime proof harness for L5b staging/prod-shaped resilience certification across all 70 USF capabilities after L5a compose-local closure.",
+    "inputs": [
+      "staging environment capability matrix",
+      "L5a compose-local resilience evidence",
+      "certified L4 substrate evidence",
+      "staging promotion and rollback gates",
+      "staging observability requirements"
+    ],
+    "outputs": ["L5b per-capability staging resilience certification evidence"],
+    "prerequisites": [
+      "platform-api loader",
+      "L5a compose-local resilience closure",
+      "prod-shaped staging policy for all capabilities"
+    ],
+    "sideEffects": [
+      "emits staging certification evidence with sandbox correlation IDs",
+      "does not mutate production data and does not start L6"
+    ],
+    "envScope": "staging",
+    "failureSemantics": "exit-nonzero on missing L5a evidence, missing L4 evidence, or incomplete staging certification policy",
+    "idempotent": true,
+    "safetyControls": [
+      "staging synthetic data policy",
+      "rollback gate validation",
+      "proof-emitted telemetry is labelled separately from observed substrate telemetry"
+    ],
+    "testCoverage": "proof-registry.test.ts",
+    "duplicateOf": null,
+    "hidesErrors": false,
+    "dead": false,
+    "docDriftsFromBehaviour": false
   }
 ]

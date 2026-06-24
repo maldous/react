@@ -1,7 +1,7 @@
 {
   "artefact": "proof-strength-matrix",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-24T03:22:59.026Z",
+  "generatedAt": "2026-06-24T04:12:15.511Z",
   "status": "PASS",
   "levels": [
     {
@@ -49,21 +49,22 @@
   ],
   "overclaimCount": 0,
   "observedL4ProofCount": 1,
-  "localRealProviderProofCount": 3,
+  "localRealProviderProofCount": 4,
   "byObservedLevel": {
     "L0": 0,
     "L1": 0,
     "L2": 16,
     "L3": 150,
     "L4": 1,
-    "L5": 2,
+    "L5": 4,
     "L6": 0
   },
   "byProviderEvidenceClass": {
     "contract-or-unit-proof": 160,
     "in-memory-provider-proof": 5,
     "fake-http-adapter-proof": 1,
-    "local-real-provider-proof": 3
+    "local-real-provider-proof": 4,
+    "external-sandbox-proof": 1
   },
   "records": [
     {
@@ -661,6 +662,17 @@
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json"
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "providerEvidenceClass": "local-real-provider-proof",
+      "perCapabilityL4EvidenceCount": 0,
+      "l4CapabilityEvidenceMode": "not-l4",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof.json"
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
       "subjectId": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
       "subjectType": "runtime-proof",
@@ -681,6 +693,17 @@
       "perCapabilityL4EvidenceCount": 0,
       "l4CapabilityEvidenceMode": "not-l4",
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+      "subjectType": "runtime-proof",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "providerEvidenceClass": "external-sandbox-proof",
+      "perCapabilityL4EvidenceCount": 0,
+      "l4CapabilityEvidenceMode": "not-l4",
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",

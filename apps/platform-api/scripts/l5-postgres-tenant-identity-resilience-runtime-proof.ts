@@ -10,7 +10,7 @@
 import assert from "node:assert/strict";
 import http from "node:http";
 import { randomUUID } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import pg from "pg";
 import {
   PostgresIdentityRepository,
@@ -26,6 +26,12 @@ type CapabilityReadinessReport = {
 };
 type L4EvidenceReport = {
   perCapabilityL4Evidence: Array<{ capability: string; l4EvidenceProofIds: string[] }>;
+};
+type L4RuntimeEvidenceRecord = {
+  proofId?: string;
+  exitStatus?: number;
+  proofLevelClaimed?: string;
+  perCapabilityL4Evidence?: Array<{ capability: string; result?: string }>;
 };
 
 const CAPABILITY = "Tenant identity (record + FQDN)";
@@ -54,9 +60,7 @@ const concurrentInputs = Array.from({ length: 3 }, (_, index) => ({
 const capabilityReadiness = readJson<CapabilityReadinessReport>(
   "docs/v2-foundation/usf-audit/capability-proof-readiness-report.json"
 );
-const l4EvidenceReport = readJson<L4EvidenceReport>(
-  "docs/v2-foundation/usf-audit/l4-substrate-evidence-report.json"
-);
+const l4EvidenceReport = loadL4Evidence();
 const capabilityRow = capabilityReadiness.capabilities.find((row) => row.capability === CAPABILITY);
 const l4Row = l4EvidenceReport.perCapabilityL4Evidence.find((row) => row.capability === CAPABILITY);
 assert.ok(capabilityRow, `${CAPABILITY} must exist in capability readiness`);
@@ -601,4 +605,29 @@ function req(headers: Record<string, string>): http.IncomingMessage {
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
+}
+
+function loadL4Evidence(): L4EvidenceReport {
+  const report = readJson<L4EvidenceReport>(
+    "docs/v2-foundation/usf-audit/l4-substrate-evidence-report.json"
+  );
+  const hasReportEvidence = report.perCapabilityL4Evidence.some(
+    (row) => row.capability === CAPABILITY && row.l4EvidenceProofIds.length > 0
+  );
+  if (hasReportEvidence) return report;
+  const evidencePath =
+    "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json";
+  if (!existsSync(evidencePath)) return report;
+  const record = readJson<L4RuntimeEvidenceRecord>(evidencePath);
+  const rows = record.perCapabilityL4Evidence || [];
+  if (record.exitStatus !== 0 || record.proofLevelClaimed !== "L4" || rows.length !== 70) {
+    return report;
+  }
+  return {
+    perCapabilityL4Evidence: rows.map((row) => ({
+      capability: row.capability,
+      l4EvidenceProofIds:
+        row.result === "PASS" ? [record.proofId || "proof:l4-substrate-closure"] : [],
+    })),
+  };
 }

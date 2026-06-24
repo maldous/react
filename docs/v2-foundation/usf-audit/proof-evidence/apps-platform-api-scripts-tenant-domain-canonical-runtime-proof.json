@@ -30,10 +30,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "npm run proof:tenant-domain-canonical",
-  "startedAt": "2026-06-24T03:22:28.704Z",
-  "endedAt": "2026-06-24T03:22:28.830Z",
+  "startedAt": "2026-06-24T04:11:45.261Z",
+  "endedAt": "2026-06-24T04:11:45.398Z",
   "exitStatus": 0,
-  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
   "realImplementationPathExecuted": "apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -282,10 +282,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T03:22:28.830Z",
+  "generatedAt": "2026-06-24T04:11:45.398Z",
   "sourceFileRefs": ["apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782271168457-2327494",
+  "collectorRunId": "proof-run-1782274124680-2753765",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -306,10 +306,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T03:22:28.704Z",
-  "endTime": "2026-06-24T03:22:28.830Z",
-  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
-  "executionTimestamp": "2026-06-24T03:22:28.830Z",
+  "startTime": "2026-06-24T04:11:45.261Z",
+  "endTime": "2026-06-24T04:11:45.398Z",
+  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "executionTimestamp": "2026-06-24T04:11:45.398Z",
   "stateDiff": {
     "routeMutations": {
       "route:delete-api-org-domains-domain": {
@@ -445,5 +445,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/tenant-domain-canonical-runtime-proof.ts"],
-  "evidenceSignature": "52d86d26591e3380239c59a9d4e2f9f0e6ef50426e7073431eee351e1f11195d"
+  "evidenceSignature": "623d72830bf755b52089f40bb9c06686270ffec739fc8dede7e5880d6b6b8233"
 }

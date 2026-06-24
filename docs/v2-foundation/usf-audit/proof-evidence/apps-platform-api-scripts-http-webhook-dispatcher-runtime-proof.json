@@ -13,10 +13,10 @@
   "providerMode": "compose-local",
   "proofLevelClaimed": "L3",
   "commandExecuted": "node --loader \"$(pwd)/apps/platform-api/loader.mjs\" apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
-  "startedAt": "2026-06-24T03:19:47.018Z",
-  "endedAt": "2026-06-24T03:19:47.792Z",
+  "startedAt": "2026-06-24T04:09:03.043Z",
+  "endedAt": "2026-06-24T04:09:03.828Z",
   "exitStatus": 0,
-  "commit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
+  "commit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
   "realImplementationPathExecuted": "apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts",
   "mockProviderUsed": false,
   "fakeProviderUsed": false,
@@ -75,10 +75,10 @@
   "deterministicReplaySupported": true,
   "skipped": false,
   "skipReason": null,
-  "generatedAt": "2026-06-24T03:19:47.792Z",
+  "generatedAt": "2026-06-24T04:09:03.828Z",
   "sourceFileRefs": ["apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
   "evidenceEmitter": "proof-process",
-  "collectorRunId": "proof-run-1782271168457-2327494",
+  "collectorRunId": "proof-run-1782274124680-2753765",
   "assertionsObserved": true,
   "expectedOutputsAsserted": true,
   "perCapabilityL4Evidence": [],
@@ -99,10 +99,10 @@
   "failureInjectionEvidence": null,
   "environment": "test",
   "proofLevelObserved": "L3",
-  "startTime": "2026-06-24T03:19:47.018Z",
-  "endTime": "2026-06-24T03:19:47.792Z",
-  "gitCommit": "b49286f231e2b89bba306a8a54dfb78f19b736a6",
-  "executionTimestamp": "2026-06-24T03:19:47.792Z",
+  "startTime": "2026-06-24T04:09:03.043Z",
+  "endTime": "2026-06-24T04:09:03.828Z",
+  "gitCommit": "c3b4e1ee8e651e45b096e8745227fa870e0a8055",
+  "executionTimestamp": "2026-06-24T04:09:03.828Z",
   "stateDiff": {
     "routeMutations": {
       "proof:apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts": {
@@ -128,5 +128,5 @@
     }
   ],
   "logEvidence": ["log:apps/platform-api/scripts/http-webhook-dispatcher-runtime-proof.ts"],
-  "evidenceSignature": "e2158c1779129edcb6c2ad825dcb452377fd1be99d209c261636d27abd7675f9"
+  "evidenceSignature": "15c826911b901f05a313bd9ce677c5692f804385e06e797d499f951b1c012e3d"
 }

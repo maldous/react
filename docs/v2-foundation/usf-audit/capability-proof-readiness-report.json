@@ -1,7 +1,7 @@
 {
   "artefact": "capability-proof-readiness-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-24T03:22:59.063Z",
+  "generatedAt": "2026-06-24T04:12:15.553Z",
   "status": "PASS",
   "modelConsistencyStatus": "PASS",
   "migrationReadinessStatus": "PASS",
@@ -11,7 +11,7 @@
   "behaviourProvenCapabilityCount": 70,
   "substrateEligibleCapabilityCount": 70,
   "readinessCounts": {
-    "SUBSTRATE_PROVEN": 70
+    "RESILIENCE_PROVEN": 70
   },
   "ladderLevelDistribution": {
     "L0": 70,
@@ -19,7 +19,7 @@
     "L2": 70,
     "L3": 70,
     "L4": 70,
-    "L5": 0,
+    "L5": 70,
     "L6": 0
   },
   "gaps": [],
@@ -27,7 +27,7 @@
     {
       "capability": "Tenant identity (record + FQDN)",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -35,9 +35,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -47,32 +47,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "User identity + tenant membership",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -80,52 +73,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
-      "l3BehaviourComplete": true,
-      "eligibleForSubstrateProvenWork": true,
-      "fullServiceVerified": true,
-      "fullyProven": false,
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
-      ],
-      "missingRequiredLevels": [],
-      "missingRequiredBands": [],
-      "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
-          "targetLevel": "L6",
-          "blockedBy": "L5",
-          "message": "L6 blocked by missing L5"
-        }
-      ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
-    },
-    {
-      "capability": "End-user profile + preferences self-service",
-      "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
-      "l0DiscoveryProven": true,
-      "l0BlockingIssues": [],
-      "highestDiscoveryLevelAchieved": "L0",
-      "highestExecutableLevelAchieved": "L1",
-      "highestContractLevelAchieved": "L2",
-      "highestBehaviourLevelAchieved": "L3",
-      "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
-      "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -134,33 +84,24 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
-      "capability": "API keys / personal access tokens",
+      "capability": "End-user profile + preferences self-service",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -168,9 +109,47 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
+      "l3BehaviourComplete": true,
+      "eligibleForSubstrateProvenWork": true,
+      "fullServiceVerified": true,
+      "fullyProven": false,
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-profile-self-service-runtime-proof-ts"
+      ],
+      "missingRequiredLevels": [],
+      "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
+    },
+    {
+      "capability": "API keys / personal access tokens",
+      "category": "identity-access",
+      "currentClosureTarget": "L6 Foundation Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
+      "highestDiscoveryLevelAchieved": "L0",
+      "highestExecutableLevelAchieved": "L1",
+      "highestContractLevelAchieved": "L2",
+      "highestBehaviourLevelAchieved": "L3",
+      "highestSubstrateLevelAchieved": "L4",
+      "highestResilienceLevelAchieved": "L5",
+      "highestFoundationLevelAchieved": "NONE",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -180,32 +159,25 @@
         "proof:apps-platform-api-scripts-api-keys-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant groups",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -213,9 +185,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -224,32 +196,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-groups-spec-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Sub-organisations",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -257,9 +222,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -268,32 +233,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-sub-organisations-spec-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "RBAC (roles + permissions)",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -301,9 +259,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -311,32 +269,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "ABAC / Policy Decision Point",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -344,9 +295,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -355,32 +306,25 @@
         "proof:apps-platform-api-scripts-entitlement-policy-chain-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Delegated administration roles",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -388,9 +332,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -399,32 +343,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-v1c04-delegated-admin-roles-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Entitlement engine",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -432,9 +369,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -446,32 +383,25 @@
         "proof:apps-platform-api-scripts-entitlements-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Support-mode / break-glass access",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -479,9 +409,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -490,32 +420,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-support-approval-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Audit of privileged access",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -523,9 +446,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -533,32 +456,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Platform login + session",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -566,9 +482,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -577,32 +493,25 @@
         "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "IdP brokering + OIDC provider management",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -610,9 +519,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -622,32 +531,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Claim mapping + group/role mapping",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -655,9 +557,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -666,32 +568,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:tools-ui-reference-harness-playwright-claim-mapping-spec-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "MFA + session policy + lockout",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -699,9 +594,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -710,32 +605,25 @@
         "proof:apps-platform-api-scripts-auth-settings-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Configuration registry + history",
       "category": "configuration",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -743,52 +631,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
-      "l3BehaviourComplete": true,
-      "eligibleForSubstrateProvenWork": true,
-      "fullServiceVerified": true,
-      "fullyProven": false,
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
-      ],
-      "missingRequiredLevels": [],
-      "missingRequiredBands": [],
-      "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
-          "targetLevel": "L6",
-          "blockedBy": "L5",
-          "message": "L6 blocked by missing L5"
-        }
-      ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
-    },
-    {
-      "capability": "Branding + theming",
-      "category": "configuration",
-      "currentClosureTarget": "L5 Resilience Planning",
-      "l0DiscoveryProven": true,
-      "l0BlockingIssues": [],
-      "highestDiscoveryLevelAchieved": "L0",
-      "highestExecutableLevelAchieved": "L1",
-      "highestContractLevelAchieved": "L2",
-      "highestBehaviourLevelAchieved": "L3",
-      "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
-      "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -797,32 +642,61 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
+      ],
+      "missingRequiredLevels": [],
+      "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
+    },
+    {
+      "capability": "Branding + theming",
+      "category": "configuration",
+      "currentClosureTarget": "L6 Foundation Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
+      "highestDiscoveryLevelAchieved": "L0",
+      "highestExecutableLevelAchieved": "L1",
+      "highestContractLevelAchieved": "L2",
+      "highestBehaviourLevelAchieved": "L3",
+      "highestSubstrateLevelAchieved": "L4",
+      "highestResilienceLevelAchieved": "L5",
+      "highestFoundationLevelAchieved": "NONE",
+      "readiness": "RESILIENCE_PROVEN",
+      "l3BehaviourComplete": true,
+      "eligibleForSubstrateProvenWork": true,
+      "fullServiceVerified": true,
+      "fullyProven": false,
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Custom domains, DNS ownership, TLS, canonical",
       "category": "configuration",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -830,9 +704,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -841,6 +715,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-claim-lifecycle-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domains-routing-runtime-proof-ts",
@@ -850,26 +726,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Write-only secret settings",
       "category": "configuration",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -877,9 +744,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -887,32 +754,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Product catalog, plans, prices",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -920,9 +780,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -932,32 +792,25 @@
         "proof:apps-platform-api-scripts-in-memory-billing-catalog-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Subscriptions, invoices, payment methods, dunning",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -965,9 +818,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -977,32 +830,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Usage metering + meter event ingestion",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1010,9 +856,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1021,6 +867,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-runtime-proof-ts"
       ],
@@ -1028,26 +876,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Quota enforcement",
       "category": "entitlements-billing",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1055,9 +894,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1066,6 +905,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metering-quota-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-quota-enforcement-runtime-proof-ts"
       ],
@@ -1073,26 +914,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Relational storage + migrations + RLS",
       "category": "data-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1100,9 +932,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1110,32 +942,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Backup + restore",
       "category": "data-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1143,9 +968,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1154,32 +979,25 @@
         "proof:apps-platform-api-scripts-backup-local-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "PITR, retention, legal hold, data residency",
       "category": "data-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1187,9 +1005,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1199,32 +1017,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-pitr-restore-drill-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Data governance: catalog, lineage, classification, PII, DSR/GDPR",
       "category": "data-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1232,9 +1043,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1243,32 +1054,25 @@
         "proof:apps-platform-api-scripts-data-governance-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant data import / export",
       "category": "data-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1276,9 +1080,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1287,32 +1091,25 @@
         "proof:apps-platform-api-scripts-data-portability-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Search + indexing (product search)",
       "category": "search",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1320,9 +1117,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1331,6 +1128,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-isolation-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-search-runtime-proof-ts"
@@ -1339,26 +1138,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Object storage + tenant prefixes + signed URLs",
       "category": "storage",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1366,9 +1156,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1377,32 +1167,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-storage-objects-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Event bus, durable queues, DLQ, redrive",
       "category": "events-workflow",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1410,9 +1193,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1422,32 +1205,25 @@
         "proof:apps-platform-api-scripts-event-redrive-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Workflow engine, scheduled jobs, approvals",
       "category": "events-workflow",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1455,9 +1231,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1466,32 +1242,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-workflow-provider-live-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Scheduled jobs (built-in, on the event substrate)",
       "category": "events-workflow",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1499,9 +1268,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1510,6 +1279,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-scheduled-job-routes-runtime-proof-ts",
         "proof:apps-platform-api-scripts-scheduled-jobs-runtime-proof-ts"
       ],
@@ -1517,26 +1288,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Notification delivery + preferences + channels",
       "category": "events-workflow",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1544,9 +1306,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1555,6 +1317,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-dispatch-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-email-transport-runtime-proof-ts",
         "proof:apps-platform-api-scripts-notification-preferences-runtime-proof-ts",
@@ -1565,26 +1329,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Background workers / job runner",
       "category": "compute-runtime",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1592,9 +1347,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1603,32 +1358,25 @@
         "proof:apps-platform-api-scripts-event-worker-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Runtime secrets management",
       "category": "compute-runtime",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1636,9 +1384,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1647,6 +1395,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-secrets-readiness-runtime-proof-ts",
         "proof:apps-platform-api-scripts-secret-store-contract-runtime-proof-ts",
         "proof:apps-platform-api-scripts-secrets-openbao-runtime-proof-ts"
@@ -1655,26 +1405,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Logs (aggregation + tenant-scoped search)",
       "category": "observability-ops",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1682,9 +1423,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1693,32 +1434,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-observability-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Metrics + traces",
       "category": "observability-ops",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1726,9 +1460,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1738,32 +1472,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-metrics-prometheus-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Observability — built-in alerting + incidents",
       "category": "observability-ops",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1771,9 +1498,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1785,32 +1512,25 @@
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-incident-foundation-runtime-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-observability-signals-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Internal service catalog + readiness",
       "category": "observability-ops",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1818,9 +1538,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1829,6 +1549,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
       ],
@@ -1836,26 +1558,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Code quality + secret + dependency scanning",
       "category": "security-governance",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1863,9 +1576,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1873,32 +1586,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Compliance reports, access reviews, evidence packs",
       "category": "security-governance",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1906,9 +1612,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1916,32 +1622,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant isolation proof",
       "category": "security-governance",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1949,9 +1648,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -1960,32 +1659,25 @@
         "proof:apps-platform-api-scripts-domain-identity-matrix-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Webhooks (developer-facing)",
       "category": "developer-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -1993,9 +1685,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2004,6 +1696,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-webhook-redrive-runtime-proof-ts",
         "proof:apps-platform-api-scripts-webhooks-runtime-proof-ts"
       ],
@@ -2011,26 +1705,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "API docs, developer portal, SDKs, rate limits",
       "category": "developer-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2038,9 +1723,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2049,32 +1734,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-route-contracts-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Rate limiting (API)",
       "category": "developer-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2082,9 +1760,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2094,6 +1772,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-redis-runtime-proof-ts",
         "proof:apps-platform-api-scripts-rate-limits-runtime-proof-ts"
       ],
@@ -2101,26 +1781,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant lifecycle: provision, suspend, delete, export",
       "category": "support-admin",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2128,9 +1799,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2139,32 +1810,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-lifecycle-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Support tickets, customer health, announcements",
       "category": "support-admin",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2172,9 +1836,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2182,32 +1846,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Universal Service Foundation scope + principles",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2215,9 +1872,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2225,32 +1882,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Build-versus-compose decision framework",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2258,9 +1908,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2268,32 +1918,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Service catalog + provider integration model",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2301,9 +1944,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2313,6 +1956,8 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-platform-services-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-catalog-registry-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
@@ -2321,26 +1966,17 @@
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Environment-specific vs shared service model",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2348,52 +1984,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
-      "l3BehaviourComplete": true,
-      "eligibleForSubstrateProvenWork": true,
-      "fullServiceVerified": true,
-      "fullyProven": false,
-      "evidenceProofIds": [
-        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
-      ],
-      "missingRequiredLevels": [],
-      "missingRequiredBands": [],
-      "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
-          "targetLevel": "L6",
-          "blockedBy": "L5",
-          "message": "L6 blocked by missing L5"
-        }
-      ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
-    },
-    {
-      "capability": "Provider configuration plane",
-      "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
-      "l0DiscoveryProven": true,
-      "l0BlockingIssues": [],
-      "highestDiscoveryLevelAchieved": "L0",
-      "highestExecutableLevelAchieved": "L1",
-      "highestContractLevelAchieved": "L2",
-      "highestBehaviourLevelAchieved": "L3",
-      "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
-      "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2402,33 +1995,24 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
-        "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
-      "capability": "Composed provider readiness spine",
+      "capability": "Provider configuration plane",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2436,9 +2020,47 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
+      "l3BehaviourComplete": true,
+      "eligibleForSubstrateProvenWork": true,
+      "fullServiceVerified": true,
+      "fullyProven": false,
+      "evidenceProofIds": [
+        "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-provider-config-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-provider-readiness-contract-runtime-proof-ts"
+      ],
+      "missingRequiredLevels": [],
+      "missingRequiredBands": [],
+      "advancementBlockers": [
+        {
+          "targetLevel": "L6",
+          "blockedBy": "L5",
+          "message": "L6 blocked by missing L5"
+        }
+      ],
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
+    },
+    {
+      "capability": "Composed provider readiness spine",
+      "category": "foundation",
+      "currentClosureTarget": "L6 Foundation Proven",
+      "l0DiscoveryProven": true,
+      "l0BlockingIssues": [],
+      "highestDiscoveryLevelAchieved": "L0",
+      "highestExecutableLevelAchieved": "L1",
+      "highestContractLevelAchieved": "L2",
+      "highestBehaviourLevelAchieved": "L3",
+      "highestSubstrateLevelAchieved": "L4",
+      "highestResilienceLevelAchieved": "L5",
+      "highestFoundationLevelAchieved": "NONE",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2447,32 +2069,25 @@
         "proof:apps-platform-api-scripts-composed-provider-readiness-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "History read-model (read-only projection)",
       "category": "data-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2480,9 +2095,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2491,32 +2106,25 @@
         "proof:apps-platform-api-scripts-history-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "OIDC discovery / issuer / JWKS validation",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2524,9 +2132,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2535,32 +2143,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "OIDC test connection + callback display",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2568,9 +2169,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2579,32 +2180,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-oidc-enterprise-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant host identity resolution",
       "category": "identity-access",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2612,9 +2206,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2624,32 +2218,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-resolution-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant domain activation (auth-client)",
       "category": "configuration",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2657,9 +2244,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2668,32 +2255,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant canonical domain set/unset",
       "category": "configuration",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2701,9 +2281,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2712,32 +2292,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-domain-canonical-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant custom-domain auth callback",
       "category": "authentication",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2745,9 +2318,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2756,32 +2329,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-tenant-custom-domain-auth-origin-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Tenant service clickthrough policy",
       "category": "observability-ops",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2789,9 +2355,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2801,32 +2367,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-service-clickthrough-policy-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Environment registry + bootstrap",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2834,9 +2393,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2847,32 +2406,25 @@
         "proof:apps-platform-api-scripts-environment-registry-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Provider environment classification",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2880,9 +2432,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2891,32 +2443,25 @@
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
         "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
         "proof:apps-platform-api-scripts-provider-environment-classification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
         {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
-        {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "E2E confidence ladder (stage-aware)",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2924,9 +2469,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2934,32 +2479,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "OpenAPI drift hard gate",
       "category": "developer-platform",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -2967,9 +2505,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -2977,32 +2515,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "i18n runtime + validation",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -3010,9 +2541,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -3020,32 +2551,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Accessibility (a11y) gate",
       "category": "foundation",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -3053,9 +2577,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -3063,32 +2587,25 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     },
     {
       "capability": "Browser telemetry (Grafana Faro RUM + browser-to-BFF tracing)",
       "category": "observability-ops",
-      "currentClosureTarget": "L5 Resilience Planning",
+      "currentClosureTarget": "L6 Foundation Proven",
       "l0DiscoveryProven": true,
       "l0BlockingIssues": [],
       "highestDiscoveryLevelAchieved": "L0",
@@ -3096,9 +2613,9 @@
       "highestContractLevelAchieved": "L2",
       "highestBehaviourLevelAchieved": "L3",
       "highestSubstrateLevelAchieved": "L4",
-      "highestResilienceLevelAchieved": "NONE",
+      "highestResilienceLevelAchieved": "L5",
       "highestFoundationLevelAchieved": "NONE",
-      "readiness": "SUBSTRATE_PROVEN",
+      "readiness": "RESILIENCE_PROVEN",
       "l3BehaviourComplete": true,
       "eligibleForSubstrateProvenWork": true,
       "fullServiceVerified": true,
@@ -3106,27 +2623,20 @@
       "evidenceProofIds": [
         "proof:apps-platform-api-scripts-in-memory-provider-runtime-proof-ts",
         "proof:apps-platform-api-scripts-in-memory-vs-real-parity-proof-ts",
-        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts"
+        "proof:apps-platform-api-scripts-l4-substrate-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+        "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts"
       ],
       "missingRequiredLevels": [],
       "missingRequiredBands": [],
       "advancementBlockers": [
-        {
-          "targetLevel": "L5",
-          "blockedBy": "resilience-evidence",
-          "message": "L5 blocked by missing resilience evidence"
-        },
         {
           "targetLevel": "L6",
           "blockedBy": "L5",
           "message": "L6 blocked by missing L5"
         }
       ],
-      "futureBlockedLevels": [
-        "resilience-L5-evidence-missing",
-        "foundation-L6-blocked-until-L5",
-        "foundation-not-yet-proven"
-      ]
+      "futureBlockedLevels": ["foundation-not-yet-proven"]
     }
   ]
 }

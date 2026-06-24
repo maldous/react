@@ -1,7 +1,7 @@
 {
   "artefact": "proof-ladder-compliance-report",
   "schemaVersion": 2,
-  "generatedAt": "2026-06-24T03:22:59.026Z",
+  "generatedAt": "2026-06-24T04:12:15.512Z",
   "status": "PASS",
   "ladder": [
     {
@@ -686,6 +686,17 @@
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l4-substrate-closure-runtime-proof.json"
     },
     {
+      "proofId": "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+      "environment": "test",
+      "providerMode": "compose-local",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "compliant": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof.json"
+    },
+    {
       "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
       "subjectId": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
       "environment": "test",
@@ -706,6 +717,17 @@
       "compliant": true,
       "gaps": [],
       "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-postgres-tenant-identity-resilience-runtime-proof.json"
+    },
+    {
+      "proofId": "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+      "subjectId": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+      "environment": "staging",
+      "providerMode": "external-sandbox",
+      "proofLevelClaimed": "L5",
+      "proofLevelObserved": "L5",
+      "compliant": true,
+      "gaps": [],
+      "evidenceFile": "docs/v2-foundation/usf-audit/proof-evidence/apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof.json"
     },
     {
       "proofId": "proof:apps-platform-api-scripts-lago-billing-provider-runtime-proof-ts",

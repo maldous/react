@@ -874,6 +874,23 @@
     "sourceFileRefs": ["apps/platform-api/scripts/l4-substrate-closure-runtime-proof.ts"]
   },
   {
+    "proofId": "proof:apps-platform-api-scripts-l5-compose-local-resilience-closure-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts",
+      "proof:l5-compose-local-resilience-closure"
+    ],
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": [
+      "apps/platform-api/scripts/l5-compose-local-resilience-closure-runtime-proof.ts"
+    ]
+  },
+  {
     "proofId": "proof:apps-platform-api-scripts-l5-identity-access-resilience-runtime-proof-ts",
     "file": "apps/platform-api/scripts/l5-identity-access-resilience-runtime-proof.ts",
     "level": 4,
@@ -903,6 +920,23 @@
     "assertsObservabilityOrAudit": true,
     "sourceFileRefs": [
       "apps/platform-api/scripts/l5-postgres-tenant-identity-resilience-runtime-proof.ts"
+    ]
+  },
+  {
+    "proofId": "proof:apps-platform-api-scripts-l5-staging-resilience-certification-runtime-proof-ts",
+    "file": "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+    "level": 4,
+    "classification": "live substrate behaviour",
+    "routeRefs": [],
+    "subjectRefs": [
+      "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts",
+      "proof:l5-staging-resilience-certification"
+    ],
+    "assertsSideEffects": true,
+    "assertsFailureMode": true,
+    "assertsObservabilityOrAudit": true,
+    "sourceFileRefs": [
+      "apps/platform-api/scripts/l5-staging-resilience-certification-runtime-proof.ts"
     ]
   },
   {
